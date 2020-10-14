@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Entertainment Fee Application</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- overlayScrollbars -->
+  <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+  <!-- jquery-ui css -->
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <!-- custom css -->
+  <link rel="stylesheet" href="../../dist/css/custom.css">
+  <link rel="stylesheet" href="../../dist/css/custom-detail.css">
+  <!-- Google Font: Source Sans Pro -->
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+  <link rel="stylesheet" href="../../dist/css/font-awesome.min.css">
+  
+  <!-- jQuery -->
+  <script src="../../plugins/jquery/jquery.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <!-- Bootstrap 4 -->
+  <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- AdminLTE App -->
+  <script src="../../dist/js/adminlte.min.js"></script>
+  <!-- AdminLTE for demo purposes -->
+  <script src="../../dist/js/demo.js"></script>
+  <script type="text/javascript" >
+    $(document).ready(function() {
+        $('.main-sidebar').load('user_sidebar.html');
+    });
+  </script>
+  <script>
+  $(function() {
+      $.datepicker.regional["ja"] = {
+          dateFormat: "yy/mm/dd",
+          firstDay: 0,
+          isRTL: false,
+          showMonthAfterYear: true,
+          changeMonth: true,
+          changeYear: true,
+          minDate: new Date(2000, 0, 1),
+          maxDate: new Date(2099, 11, 31),
+          yearRange: "2000:2099",
+      };
+      $.datepicker.setDefaults($.datepicker.regional["en"]);
+  });
+    // datepicerセット.
+    $(function() {
+        $('.datetimepicker-input').datepicker().datepicker("setDate", new Date());;
+    });
+
+  </script>
+  <!-- Datatable JS -->
+  <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>	
+  <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+  <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+
+</head>
+<body class="hold-transition sidebar-mini">
+<!-- Site wrapper -->
+<div class="wrapper">
+  <!-- Navbar -->
+  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+    <!-- Left navbar links -->
+    <ul class="navbar-nav bg-custom">
+      <li class="nav-item">
+        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+      </li>
+    </ul>
+    <!-- Right navbar links -->
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item user-panel-custom">
+        <!-- user -->
+        <div class="user-panel d-flex">
+          <div class="user-deparment">
+            <span class="d-block">Department Name</span>
+          </div>
+          <div class="info">
+            <a href="#" class="d-block">Username</a>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </nav>
+  <!-- /.navbar -->
+  <!-- Main Sidebar Container -->
+  <aside class="main-sidebar sidebar-primary elevation-4 sidebar-no-expand">
+  </aside>
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+    </section>
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="main-top">
+            <h4 class="mb-2">Entertainment Fee Application</h4>
+            <a class="btn btn-outline-dark" role="button" href="#">Export</a>
+            </div>
+            <div class="card card-company">
+              <div class="card-body">
+                <form>                  
+                        <div class="form-group row ">
+                          <label class="col-lg-2 col-form-label text-center">Application No</label>
+                          <div class="col-lg-10">
+                            <input type="text" class="form-control" placeholder="ET-0001">
+                          </div>
+                        </div>
+                        <hr>
+                        <div class="form-group row ">
+                            <label class="col-lg-2 col-form-label text-center">Date & Time</label>
+                            <div class="col-lg-2">
+                                <div class="input-group date">
+                                    <input id="str_date" readonly type="text" class="form-control datetimepicker-input"
+                                         name="str_date" autocomplete="off" style="background-color: white;"> 
+                                    <div class="input-group-append" data-target="#str_date" onclick="$('#str_date').focus();">
+                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                    </div>
+                                </div>                               
+                            </div>
+                          </div>
+                          <hr>
+                          <div class="form-group row ">
+                            <label class="col-lg-2 col-form-label text-center">Place</label>
+                            <div class="col-lg-10">
+                              <input type="text" class="form-control">
+                            </div>
+                          </div>
+                          <hr>
+
+                          <div class="form-group row ">
+                            <label class="col-lg-2 col-form-label text-center">During biz trip</label>
+                            <div class="col-lg-10 text-lg-left text-center">
+                              <label class="radio-inline com_title col-form-label" ><input type="radio" name="optradio1" checked> Yes</label>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                              <label class="radio-inline com_title col-form-label"><input type="radio" name="optradio1"> No</label>
+                            </div>
+                          </div>
+                          <hr>
+                          <div class="form-group row ">
+                            <label class="col-lg-2 col-form-label text-center d-flex align-items-center justify-content-center">Entrainment Infomation</label>
+                            <div class="col-lg-10">
+                              <!-- form chil -->
+                              <div  class="card card-body card-company">
+                                <div class="form-group row ">
+                                    <label class="col-lg-3 col-form-label com_title text-center">Company Name</label>
+                                    <div class="col-lg-9"><input type="text" class="form-control"></div>
+                                </div>
+                                <div class="form-group row ">
+                                    <label class="col-lg-3 col-form-label com_title text-center">Title</label>
+                                    <div class="col-lg-9"><input type="text" class="form-control"></div>
+                                </div>
+                                <div class="form-group row ">
+                                    <label class="col-lg-3 col-form-label com_title text-center">Name of Attendants</label>
+                                    <div class="col-lg-9"><input type="text" class="form-control"></div>
+                                </div>
+                                <div class="form-group row ">
+                                    <label class="col-lg-3 col-form-label com_title text-center">Details of dutles</label>
+                                    <div class="col-lg-9"><input type="text" class="form-control"></div>
+                                </div>
+                                </div>
+                                <div class="text-lg-left text-center"><a class="btn btn-outline-dark" role="button" href="#">+ Add</a></div>                                
+                              <!-- ./form chil -->
+                            </div>
+                          </div>
+                          <hr> 
+
+                          <div class="form-group row ">
+                            <label class="col-lg-2 col-form-label text-center">Confirmation of Compliance with Laws</label>
+                            <div class="col-lg-10 text-lg-left text-center">
+                              <label class="radio-inline com_title col-form-label" ><input type="radio" name="optradio2" checked> Yes</label>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                              <label class="radio-inline com_title col-form-label"><input type="radio" name="optradio2"> No</label>
+                            </div>
+                          </div>
+                          <hr>
+                          <div class="form-group row ">
+                            <label class="col-lg-2 col-form-label text-center">No. of Entertainment for past 1 year</label>
+                            <div class="col-lg-10 text-lg-left text-center">
+                              <label class="radio-inline com_title col-form-label" ><input type="radio" name="optradio3" checked> Yes</label>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                              <label class="radio-inline com_title col-form-label"><input type="radio" name="optradio3"> No</label>
+                            </div>
+                          </div>
+                          <hr>
+                          <div class="form-group row ">
+                            <label class="col-lg-2 col-form-label text-center">Existence of projects</label>
+                            <div class="col-lg-10 text-lg-left text-center">
+                              <label class="radio-inline com_title col-form-label" ><input type="radio" name="optradio4" checked> Yes</label>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                              <label class="radio-inline com_title col-form-label"><input type="radio" name="optradio4"> No</label>
+                            </div>
+                          </div>
+                          <hr>
+                          <div class="form-group row ">
+                            <label class="col-lg-2 col-form-label text-center">Includes its Family/Friend</label>
+                            <div class="col-lg-10 text-lg-left text-center">
+                              <label class="radio-inline com_title col-form-label" ><input type="radio" name="optradio5" checked> Yes</label>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                              <label class="radio-inline com_title col-form-label"><input type="radio" name="optradio5"> No</label>
+                            </div>
+                          </div>
+                          <hr>
+                          <div class="form-group row ">
+                            <label class="col-lg-2 col-form-label text-center">Project Name</br><i class="fa fa-asterisk" aria-hidden="true"></i>If any</label>
+                            <div class="col-lg-10">
+                                <textarea id="text_content" class="form-control" rows="2"></textarea>
+                            </div>
+                          </div>
+                          <hr>
+                          <div class="form-group row ">
+                            <label class="col-lg-2 col-form-label text-center d-flex align-items-center justify-content-center">Reason for the Entertainment</label>
+                            <div class="col-lg-10">
+                                <textarea id="text_content" class="form-control" rows="4"></textarea>
+                            </div>
+                          </div>
+                          <hr>
+                          <div class="form-group row ">
+                            <label class="col-lg-2 col-form-label text-center ">Total Number of Person</label>
+                            <div class="col-lg-10">
+                                <div class="form-group row ">
+                                <div class="col-lg-2"><input type="text" class="form-control"></div>
+                                <label class="col-lg-10 col-form-label com_title text-lg-left text-center">Persons</label>
+                              </div>
+                            </div>
+                          </div>
+                          <hr>
+                          <div class="form-group row ">
+                            <label class="col-lg-2 col-form-label text-center">Estimated Amount</label>
+                            <div class="col-lg-10 text-lg-left text-center">
+                                <div class="form-group row ">
+                                <div class="col-lg-4"><input type="text" class="form-control"></div>
+                                <label class="col-lg-8 col-form-label com_title text-lg-left text-center">Per Person(Excluding VND)</label>
+                              </div>
+                            </div>
+                          </div>
+                          <hr>
+                          <div class="form-group row ">
+                            <label class="col-lg-3 col-form-label text-center text-danger d-flex align-items-center justify-content-center">Describe if the amount per person exceeds 4mil VND (PO:2mil VND)</label>
+                            <div class="col-lg-9">
+                                <textarea id="text_content" class="form-control" rows="2"></textarea>
+                            </div>
+                          </div>
+                          <hr>
+                          <div class="form-group row ">
+                            <label class="col-lg-2 col-form-label text-center text-danger">Subsequent</label>
+                            <div class="col-lg-10 text-lg-left text-center">
+                                <label class="radio-inline com_title col-form-label"><input type="checkbox" checked> ON</label>
+                            </div>
+                          </div>
+                </form>
+              </div>
+              <!-- /.card-body -->              
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-lg-9">
+                    <div class="col-lg-1"></div>
+                    <a class="col-lg-2 btn btn-outline-dark btn-warning" role="button" href="#">Apply</a>
+                    <a class="col-lg-2 btn btn-outline-dark" role="button" href="#">Draft</a>
+                    <a class="col-lg-2 btn btn-outline-dark" role="button" href="#">Cancel</a>
+                   </div>
+                </div>
+                <br>
+          </div>
+        </div>
+      </div>
+      <!-- /.card -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+  <footer class="main-footer">
+    <!-- Footer content -->
+  </footer>
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+</body>
+</html>

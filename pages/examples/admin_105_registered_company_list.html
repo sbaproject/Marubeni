@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Employee List</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- overlayScrollbars -->
+  <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+  <!-- jquery-ui css -->
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <!-- custom css -->
+  <link rel="stylesheet" href="../../dist/css/custom.css">
+  <link rel="stylesheet" href="../../dist/css/custom-detail.css">
+  <link rel="stylesheet" href="../../dist/css/custom-other.css">
+  <!-- Google Font: Source Sans Pro -->
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+</head>
+<body class="hold-transition sidebar-mini">
+<!-- Site wrapper -->
+<div class="wrapper">
+  <!-- Navbar -->
+  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+    <!-- Left navbar links -->
+    <ul class="navbar-nav bg-custom">
+      <li class="nav-item">
+        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+      </li>
+    </ul>
+
+    <!-- Right navbar links -->
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item user-panel-custom">
+        <!-- user -->
+        <div class="user-panel d-flex">
+          ADMIN
+        </div>
+      </li>
+    </ul>
+  </nav>
+  <!-- /.navbar -->
+
+  <!-- Main Sidebar Container -->
+  <aside class="main-sidebar sidebar-primary elevation-4 sidebar-no-expand">
+
+  </aside>
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-lg-6">
+            <h1>SEARCH</h1>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-8 col-lg-10">
+          <div class="card">
+            <div class="card-body">
+              <div class="search-content">
+                <form>
+                  <div class="row">
+                    <div class="col-lg-10 col-xl-9">
+                      <div class="form-group row">
+                        <label for="inputCompanyName" class="col-lg-3 col-form-label text-center font-weight-normal">Company name</label>
+                        <div class="col-lg-9">
+                            <input type="text" class="form-control" id="inputCompanyName" placeholder="Company name">
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label for="inputAttendantsName" class="col-lg-3 col-form-label text-center font-weight-normal">Attendants Name</label>
+                        <div class="col-lg-9">
+                          <input type="text" class="form-control" id="inputAttendantsName" placeholder="Attendants name">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                      <div class="col-lg-10 col-xl-9">
+                        <div class="form-group row">
+                          <label for="inputKeyword" class="col-lg-3 col-form-label text-center font-weight-normal">Keyword</label>
+                          <div class="col-lg-9">
+                            <input type="text" class="form-control" id="inputKeyword" placeholder="Keyword">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-lg-2 col-xl-3">
+                        <div class="form-group row">
+                          <div class="col-lg-10">
+                            <button type="submit" class="btn btn-primary search_bt">
+                              <i class="nav-icon fas fa-search"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="button_wrap">
+        <button type="button" class="bt_new" >New</button>
+      </div>
+      <div class="card">
+        <div class="card-body p-0 ">
+		    <div class="wrap_tbl_ad">
+          <table class="table table-bordered " style="min-width: 500px;">
+            <thead>
+            <tr>
+              <th rowspan="2" class="align-middle" style="width: 10px;">No</th>
+              <th colspan="3" class="miss-border">Company Information</th>
+              <th colspan="2" class="miss-border">Attendants Information</th>
+              <th rowspan="2" class="align-middle" style="width: 40px;">Actions</th>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <th>Address</th>
+                <th>Tell</th>
+                <th>Name</th>
+                <th>Department</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>001</td>
+                <td>TEXT TEXT</td>
+                <td>TEXT TEXT</td>
+                <td>00000000</td>
+                <td>Ada Lovelace</td>
+                <td>Sales</td>
+                <td><a href="" class="text-primary"><u>Edit</u></td>
+            </tr>
+            <tr>
+                <td>002</td>
+                <td>TEXT TEXT</td>
+                <td>TEXT TEXT</td>
+                <td>11111111</td>
+                <td>Grace Hopper</td>
+                <td>Admin</td>
+                <td><a href="" class="text-primary"><u>Edit</u></td>
+            </tr>
+            <tr>
+                <td>001</td>
+                <td>TEXT TEXT</td>
+                <td>TEXT TEXT</td>
+                <td>00000000</td>
+                <td>Ada Lovelace</td>
+                <td>Sales</td>
+                <td><a href="" class="text-primary"><u>Edit</u></td>
+            </tr>
+            <tr>
+                <td>002</td>
+                <td>TEXT TEXT</td>
+                <td>TEXT TEXT</td>
+                <td>11111111</td>
+                <td>Grace Hopper</td>
+                <td>Admin</td>
+                <td><a href="" class="text-primary"><u>Edit</u></td>
+            </tr>
+            <tr>
+                <td>001</td>
+                <td>TEXT TEXT</td>
+                <td>TEXT TEXT</td>
+                <td>00000000</td>
+                <td>Ada Lovelace</td>
+                <td>Sales</td>
+                <td><a href="" class="text-primary"><u>Edit</u></td>
+            </tr>
+            <tr>
+                <td>002</td>
+                <td>TEXT TEXT</td>
+                <td>TEXT TEXT</td>
+                <td>11111111</td>
+                <td>Grace Hopper</td>
+                <td>Admin</td>
+                <td><a href="" class="text-primary"><u>Edit</u></td>
+            </tr>
+            <tr>
+                <td>001</td>
+                <td>TEXT TEXT</td>
+                <td>TEXT TEXT</td>
+                <td>00000000</td>
+                <td>Ada Lovelace</td>
+                <td>Sales</td>
+                <td><a href="" class="text-primary"><u>Edit</u></td>
+            </tr>
+            <tr>
+                <td>002</td>
+                <td>TEXT TEXT</td>
+                <td>TEXT TEXT</td>
+                <td>11111111</td>
+                <td>Grace Hopper</td>
+                <td>Admin</td>
+                <td><a href="" class="text-primary"><u>Edit</u></td>
+            </tr>
+            <tr>
+                <td>001</td>
+                <td>TEXT TEXT</td>
+                <td>TEXT TEXT</td>
+                <td>00000000</td>
+                <td>Ada Lovelace</td>
+                <td>Sales</td>
+                <td><a href="" class="text-primary"><u>Edit</u></td>
+            </tr>
+            <tr>
+                <td>002</td>
+                <td>TEXT TEXT</td>
+                <td>TEXT TEXT</td>
+                <td>11111111</td>
+                <td>Grace Hopper</td>
+                <td>Admin</td>
+                <td><a href="" class="text-primary"><u>Edit</u></td>
+            </tr>
+            </tbody>
+          </table>
+          <div class="clearfix p-0 text-center pb-3">
+            <div class="pager-wrap">
+              <ul class="pagination pagination-sm pager_custom ">
+                <li class="page-item"><a class="page-link" href="#">«</a></li>
+                <li class="page-item"><a class="page-link active_page" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item"><a class="page-link" href="#">4</a></li>
+                <li class="page-item"><a class="page-link" href="#">5</a></li>
+                <li class="page-item"><a class="page-link" href="#">6</a></li>
+                <li class="page-item"><a class="page-link" href="#">7</a></li>
+                <li class="page-item"><a class="page-link" href="#">8</a></li>
+                <li class="page-item"><a class="page-link" href="#">9</a></li>
+                <li class="page-item"><a class="page-link" href="#">»</a></li>
+              </ul>
+              <div class="bt_direct">
+                <button type="button" class="bt_left float-left btn"><i class="fa fa-long-arrow-alt-left " ></i> Back</button>
+                <button type="button" class="bt_right float-right btn">Next <i class="nav-icon fas fa-long-arrow-alt-right" ></i></button>
+              </div>
+            </div>
+          </div>
+		  </div>
+
+        </div>
+        <!-- /.card-body -->
+      </div>
+      <!-- /.card -->
+
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+  <footer class="main-footer">
+    <!-- Footer content -->
+  </footer>
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery -->
+<script src="../../plugins/jquery/jquery.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<!-- Bootstrap 4 -->
+<script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE App -->
+<script src="../../dist/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="../../dist/js/demo.js"></script>
+<script type="text/javascript" >
+    $(document).ready(function() {
+        $('.main-sidebar').load('admin_sidebar.html');
+    });
+</script>
+</body>
+</html>

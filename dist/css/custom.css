@@ -1,0 +1,126 @@
+
+.content-wrapper {
+    padding: 0rem 4rem 0 2rem;
+}
+
+.user-panel-custom {
+    margin-right: 3rem !important;
+    padding: 6px 0px;
+}
+
+.user-deparment{
+    font-size: 0.9rem;
+    margin-top: -2px;
+}
+
+.brand-link {
+    padding: 1rem .5rem;
+    text-align: center;
+    background: #f16060;
+    color: white;
+}
+
+.brand-link:hover {
+    background: #d21818;
+}
+
+.color-white {
+    color: white;
+}
+
+.content-header {
+    margin-bottom: 1rem;
+}
+
+.table th, td {
+    text-align: center;
+}
+
+.nav-treeview {
+    padding-left: 2rem !important;
+}
+
+.nav-sidebar>.nav-item {
+    border-bottom: 1px solid #b5b5b5;
+}
+
+.right-number {
+    float: right;
+}
+
+.card-wrap-items {
+    border: 1px solid #f9abab;
+    padding: 2rem 2rem;
+}
+
+.datepicker-wrap {
+    background-color: #f16060;
+    padding: 8px 10px 8px 20px;
+    display: flex;
+}
+
+.ui-datepicker-trigger {
+    width: 28px;
+    cursor: pointer;
+}
+
+.input-datepicker {
+    margin-left: 20px;
+    border: none;
+    background: none;
+    outline: none;
+    color: white;
+    cursor: unset;
+}
+
+a {
+    color: unset;
+}
+
+.application-item {
+    text-align: center;
+    font-weight: bold;
+    padding: 1rem;
+    border: 1px solid #9d9d9d;
+    border-radius: 4px;
+    background: #d6d6d6;
+}
+
+.main-top {
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.form-check-inline {
+    margin-right: 2rem;
+}
+
+.btn-custom {
+    margin-right: 30px;
+    min-width: 130px;
+}
+
+.leave-application .form-group, .business-trip-application .form-group {
+    margin-bottom: 0;
+}
+
+.leave-application .row, .business-trip-application .row {
+    align-items: center;
+}
+
+.input-custom {
+    display: inline;
+    width: 50%;
+}
+
+.input-custom-2 {
+    display: inline;
+    width: 30%;
+}
+
+.card-itinerary-transport {
+    border: 1px solid #898989;
+    border-radius: 0px;
+}
+

@@ -1,0 +1,6 @@
+.table thead th.miss-border {
+    border-bottom: 1px solid #d7d7d7;
+}
+.justify-between {
+    justify-content: space-between;
+}
