@@ -22,12 +22,14 @@ class CreateUsersTableV1 extends Migration
             $table->tinyInteger('location')->unsigned();
             $table->bigInteger('created_by')->unsigned()->nullable();
             $table->bigInteger('updated_by')->unsigned()->nullable();
+            $table->bigInteger('deleted_by')->unsigned()->nullable();
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
 
             $table->foreign('created_by')->references('id')->on('m_users');
             $table->foreign('updated_by')->references('id')->on('m_users');
+            $table->foreign('deleted_by')->references('id')->on('m_users');
             $table->foreign('department_id')->references('id')->on('m_departments');
         });
     }
