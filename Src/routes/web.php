@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\User\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,4 +14,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/',[UserController::class,'index']);
+// allows only logged-in users
+// Route::middleware('auth')->group(function(){
+// 	Route::get('/', [UserController::class, 'index']);
+// });
+
+// allows only guest users
+Route::middleware('guest')->group(function () {
+	Route::get('/', [UserController::class, 'index']);
+});

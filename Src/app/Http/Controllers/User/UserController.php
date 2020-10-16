@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
@@ -11,11 +11,17 @@ class UserController extends Controller
     public function index(){
         // $user = User::where('id','=',1)->update(['name' => 'ssss']);
 
+        // $user = User::where('password','=','123')->delete();
+
+        // $user = User::find(1)->delete();
+
         $user = User::find(1);
+
+        $user->password = 456;
 
         // $user = User::firstOrCreate(['id'=> 3]);
 
-        $user->name = 'abscwwws';
+        // $user->name = 'abscwwws';
 
         // $user = User::findOrCreate()
 
@@ -27,8 +33,8 @@ class UserController extends Controller
         // $user->save();
 
         // creating
-        $user->update();
-        return 1;
+        // $user->update();
+        return view('welcome');
     }
 
 }

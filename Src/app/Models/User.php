@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
+use App\Http\Traits\MySoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Hash;
 
 class User extends Model
 {
@@ -19,10 +21,20 @@ class User extends Model
      */
     protected $table = 'm_users';
 
+    /**
+     * Mass assignment
+     */
     protected $fillable = ['id'];
 
-    // protected static function booted()
-    // {
+    /**
+     * Mutator
+     */
+    public function setPasswordAttribute($value){
+        $this->attributes['password'] = Hash::make($value);
+    }
+
+    protected static function booted()
+    {
     //     static::creating(function ($user) {
     //         $user->created_by = 1;
     //     });
@@ -37,14 +49,14 @@ class User extends Model
     //         $user->updated_by = 2;
     //     });
 
-    //     static::deleting(function ($user) {
-    //         $user->deleted_by = 2;
-    //     });
+        // static::deleting(function ($user) {
+        //     $user->deleted_by = 2;
+        // });
 
-    //     static::deleted(function ($user) {
-    //         $user->deleted_by = 2;
-    //     });
-    // }
+        // static::deleted(function ($user) {
+        //     $user->deleted_by = 2;
+        // });
+    }
 
     // public function save(array $options = []){
     //     // new model
@@ -55,7 +67,7 @@ class User extends Model
     //     else {
     //         $this->updated_by = 1;
     //     }
-    //     parent::save();
+    //     parent::save()
     // }
 
     // public function update(array $attributes = [], array $options = []){
