@@ -17,7 +17,7 @@ class CreateUsersTableV1 extends Migration
             $table->id();
             $table->bigInteger('department_id')->unsigned();
             $table->string('name');
-            $table->string('mail')->unique();
+            $table->string('email')->unique();
             $table->string('password');
             $table->tinyInteger('location')->unsigned();
             $table->bigInteger('created_by')->unsigned()->nullable();

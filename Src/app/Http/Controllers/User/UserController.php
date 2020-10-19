@@ -15,9 +15,9 @@ class UserController extends Controller
 
         // $user = User::find(1)->delete();
 
-        $user = User::find(1);
+        // $user = User::find(1);
 
-        $user->password = 456;
+        // $user->password = 456;
 
         // $user = User::firstOrCreate(['id'=> 3]);
 
