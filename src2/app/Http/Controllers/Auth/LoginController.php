@@ -50,7 +50,8 @@ class LoginController extends Controller
     protected function credentials($request)
     {
         $credentials = $request->only($this->username(), 'password');
-        $credentials['deleted_at'] = null;
+        // add more conditions here
+        // $credentials['filed_here'] = 'value_here';
         return $credentials;
     }
 

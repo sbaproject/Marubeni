@@ -26,7 +26,7 @@ Route::get('/', function () {
 Auth::routes([
     'verify' => false, // turn off
     'confirm' => false, // turn off
-    'register' => false
+    'register' => true
 ]);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -46,6 +46,6 @@ Route::middleware('auth')->group(function () {
      */
     Route::prefix('user')->name('user.')->group(function () {
         Route::get('edit/{user}', [UserEditController::class, 'show'])->name('show');
-        Route::put('edit/{user}', [UserEditController::class, 'update'])->name('update');
+        Route::put('edit/{user}', [UserEditController::class, 'edit'])->name('edit');
     });
 });
