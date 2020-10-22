@@ -60,12 +60,7 @@ class LoginController extends Controller
      */
     protected function authenticated($request, $user)
     {
-        if ($user->role === 1) {
-            // redirect to before login
-            return redirect()->intended();
-        } else {
-            return;
-        }
+
     }
 
     /**

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUsersTableV1 extends Migration
+class CreateDepartmentsTableV1 extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,12 @@ class CreateUsersTableV1 extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->unsignedTinyInteger('role')->default(0);
+        Schema::create('departments', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->text('memo')->nullable();
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -25,8 +29,8 @@ class CreateUsersTableV1 extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('role');
+        Schema::drop('departments', function (Blueprint $table) {
+            //
         });
     }
 }
