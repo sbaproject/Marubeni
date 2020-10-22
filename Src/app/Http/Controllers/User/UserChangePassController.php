@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\User;
 
+use App\Libs\Common;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -9,8 +10,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Validator;
 
 class UserChangePassController extends Controller
 {
@@ -73,6 +74,6 @@ class UserChangePassController extends Controller
 
         Auth::user()->password = $user->password;
 
-        return redirect()->back();
+        return Common::redirectBackWithAlertSuccess();
     }
 }

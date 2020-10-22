@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers\User;
 
+use App\Libs\Common;
 use App\Models\User;
+use App\Libs\Constant;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
 class UserEditController extends Controller
@@ -34,11 +37,11 @@ class UserEditController extends Controller
         ]);
         
         if($validator->fails()){
-            return view('user.edit', compact('user'))->withErrors($validator);
+            return Common::redirectViewWithAlertFail('user.edit', compact('user'))->withErrors($validator);
         }
 
         $user->save();
 
-        return redirect()->back();
+        return Common::redirectBackWithAlertSuccess();
     }
 }
