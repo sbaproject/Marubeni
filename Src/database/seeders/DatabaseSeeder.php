@@ -45,7 +45,8 @@ class DatabaseSeeder extends Seeder
             'name' => 'admin',
             'email' => 'admin@gmail.com',
             'password' => Hash::make('123'),
-            'role_id' => 6, // admin
+            // 'role_id' => 6, // admin
+            'role' => 99, // admin
             'department_id' => 3, // ADMI
             'approval' => 0 // OFF
         ]);
@@ -53,7 +54,8 @@ class DatabaseSeeder extends Seeder
             'name' => 'user1',
             'email' => 'user1@gmail.com',
             'password' => Hash::make('123'),
-            'role_id' => 1, // Staff
+            // 'role_id' => 1, // Staff
+            'role' => 1, // Staff
             'department_id' => 1, // Sales
             'approval' => 0 // OFF
         ]);
@@ -61,7 +63,8 @@ class DatabaseSeeder extends Seeder
             'name' => 'user2',
             'email' => 'user2@gmail.com',
             'password' => Hash::make('123'),
-            'role_id' => 2, // GM
+            // 'role_id' => 2, // GM
+            'role' => 2, // GM
             'department_id' => 1, // Sales
             'approval' => 1 // ON
         ]);
@@ -131,6 +134,19 @@ class DatabaseSeeder extends Seeder
             'company_name' => 'Nokia',
             'attendants_name' => 'Micheal',
             'email' => 'micheal@gmail.com'
+        ]);
+
+        /**
+         * applications
+         */
+        DB::Table('applications')->insert([
+            'name' => 'Entertaiment'
+        ]);
+        DB::Table('applications')->insert([
+            'name' => 'Business Trip'
+        ]);
+        DB::Table('applications')->insert([
+            'name' => 'Leave'
         ]);
     }
 }

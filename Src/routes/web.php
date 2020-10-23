@@ -3,8 +3,9 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\UserEditController;
-use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\User\UserDashboardController;
 use App\Http\Controllers\User\UserChangePassController;
+use App\Http\Controllers\Admin\AdminDashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,22 +40,34 @@ Route::middleware('auth')->group(function () {
     /**
      * Admin routes
      */
-    Route::prefix('admin')->group(function () {
-        Route::get('/dashboard', [DashboardController::class, 'show'])->name('dashboard');
+    Route::middelware('role:'.ROLE['Admin'])->group(function () {
+
+        Route::prefix('admin')->name('admin.')->group(function(){
+            Route::get('/dashboard', [AdminDashboardController::class, 'show'])->name('dashboard');
+        });
+        /**
+         * register user
+         */
+        Route::get('/user/register', [UserEditController::class, 'show'])->name('user.register.show');
+        Route::post('/user/register', [UserEditController::class, 'store'])->name('user.register.store');
     });
     /**
      * User mangement routes
      */
     Route::prefix('user')->name('user.')->group(function () {
         /**
-         * change pass
+         * Dashboard
          */
-        Route::get('changepass', [UserChangePassController::class, 'show'])->name('changepass.show');
-        Route::put('changepass', [UserChangePassController::class, 'update'])->name('changepass.update');
+        Route::get('/dashboard', [UserDashboardController::class, 'show'])->name('dashboard');
         /**
          * edit
          */
         Route::get('edit/{user}', [UserEditController::class, 'show'])->name('edit.show');
         Route::put('edit/{user}', [UserEditController::class, 'update'])->name('edit.update');
+        /**
+         * change pass
+         */
+        Route::get('changepass', [UserChangePassController::class, 'show'])->name('changepass.show');
+        Route::put('changepass', [UserChangePassController::class, 'update'])->name('changepass.update');
     });
 });

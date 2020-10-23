@@ -20,7 +20,8 @@ class CreateUsersTableV1 extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('phone')->nullable();
-            $table->unsignedBigInteger('role_id');
+            $table->unsignedTinyInteger('role');
+            // $table->unsignedBigInteger('role_id');
             $table->unsignedTinyInteger('location')->default(0)->comment('0: Ha Noi, 1: Ho Chi minh');
             $table->unsignedBigInteger('department_id');
             $table->unsignedTinyInteger('approval')->comment('0: OFF, 1: ON');
@@ -32,7 +33,7 @@ class CreateUsersTableV1 extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('role_id')->references('id')->on('roles');
+            // $table->foreign('role_id')->references('id')->on('roles');
             $table->foreign('department_id')->references('id')->on('departments');
         });
     }
