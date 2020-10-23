@@ -1,0 +1,90 @@
+.content-header {
+    background-color: #fff;
+    border: #fff;
+    padding-top: 10px;
+}
+
+.lbl-from {
+    margin-left: 20px;
+}
+
+.lbl-to {
+    margin-left: 20px;
+}
+
+#date-from{
+    margin: 0 20px 20px 20px;
+}
+#date-from > span:hover{
+    cursor: pointer;
+}
+
+#date-to {
+    margin: 0 20px 20px 20px;
+}
+#date-to > span:hover{
+    cursor: pointer;
+}
+
+input.form-control.calendar-from {
+    background-color: #fff;
+    width: 100%;
+}
+
+.btn-search {
+    width: 100%;
+    display: inline-grid;
+    padding: 25px;
+}
+
+.sty-search {
+    background-color: #AA0000;
+    color: #fff;
+}
+
+.sty-search:hover {
+    background-color: #AA0000;
+    color: #fff;
+}
+
+.content-dashboard {
+    margin-top: 20px;
+    background-color: #fff;
+    border: #fff;
+    padding: 25px;
+}
+
+.total-prj {
+    width: 122%;
+    text-align: center;
+}
+
+.card-body.card-wrap-items:hover{
+    background-color: #AA0000;
+    color: #fff;
+}
+
+.total-links a{
+    text-decoration: none;
+}
+
+.card {
+    margin-top: 20px;
+}
+
+.list-title th{
+    border-right: 1px solid #fff;
+    background: darkgray;
+    text-align: center;
+}
+
+tr.list-content td
+{
+    border-right: 1px solid darkgray;
+    text-align: center;
+}
+
+tr.list-content td.status
+{
+    border: 1px solid darkgray;
+}
