@@ -221,7 +221,7 @@
                         <div class="input-group date" id="dateLeaveFrom" data-target-input="nearest">
                           <input type="text" name="dateLeaveFrom" class="form-control datetimepicker-input" data-target="#dateLeaveFrom"/>
                           <div class="input-group-append" data-target="#dateLeaveFrom" data-toggle="datetimepicker">
-                              <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                              <div class="input-group-text"><i class="fa fa-calendar-alt"></i></div>
                           </div>
                         </div>
                       </div>
@@ -234,7 +234,7 @@
                         <div class="input-group date" id="dateLeaveTo" data-target-input="nearest">
                           <input type="text" name="dateLeaveTo" class="form-control datetimepicker-input" data-target="#dateLeaveTo"/>
                           <div class="input-group-append" data-target="#dateLeaveTo" data-toggle="datetimepicker">
-                              <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                              <div class="input-group-text"><i class="fa fa-calendar-alt"></i></div>
                           </div>
                         </div>
                       </div>
@@ -258,7 +258,7 @@
                           <div class="input-group date" id="timeLeaveDate" data-target-input="nearest">
                             <input type="text" name="timeLeaveDate" class="form-control datetimepicker-input" data-target="#timeLeaveDate"/>
                             <div class="input-group-append" data-target="#timeLeaveDate" data-toggle="datetimepicker">
-                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                <div class="input-group-text"><i class="fa fa-calendar-alt"></i></div>
                             </div>
                           </div>
                         </div>
@@ -296,7 +296,7 @@
                         <div class="input-group date" id="maternityLeaveFrom" data-target-input="nearest">
                           <input type="text" name="maternityLeaveFrom" class="form-control datetimepicker-input" data-target="#maternityLeaveFrom"/>
                           <div class="input-group-append" data-target="#maternityLeaveFrom" data-toggle="datetimepicker">
-                              <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                              <div class="input-group-text"><i class="fa fa-calendar-alt"></i></div>
                           </div>
                         </div>
                       </div>
@@ -309,7 +309,7 @@
                         <div class="input-group date" id="maternityLeaveTo" data-target-input="nearest">
                           <input type="text" name="maternityLeaveTo" class="form-control datetimepicker-input" data-target="#maternityLeaveTo"/>
                           <div class="input-group-append" data-target="#maternityLeaveTo" data-toggle="datetimepicker">
-                              <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                              <div class="input-group-text"><i class="fa fa-calendar-alt"></i></div>
                           </div>
                         </div>
                       </div>
@@ -429,7 +429,7 @@
   $(function() {
     //Date picker
     $('#dateLeaveFrom').datetimepicker({
-      format: 'L',
+      format: 'ddd, DD/MM/YYYY',
       defaultDate: moment()
     });
     $('#dateLeaveTo').datetimepicker({

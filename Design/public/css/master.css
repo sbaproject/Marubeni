@@ -22,19 +22,19 @@
 .nav-item i {
 	color: #ffffff;
 }
-
-.nav-item>.rg-menu i{
-	color: grey;
-}
 .nav-sidebar>.nav-item {
 	border-bottom: 0.5px solid #ffffff;
+}
+
+.nav-sidebar>.nav-item:hover {
+	background: AA0000;
 }
 
 .nav-item>.nav-link i .icon-links {
 	float: right !important;
 }
 
-:not(.layout-fixed) .main-sidebar{
+.main-sidebar{
     background:#AA0000;
 }
 

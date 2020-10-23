@@ -12,17 +12,17 @@
     margin-left: 20px;
 }
 
-#date-from{
+#dateFrom{
     margin: 0 20px 20px 20px;
 }
-#date-from > span:hover{
+#dateFrom > span:hover{
     cursor: pointer;
 }
 
-#date-to {
+#dateTo {
     margin: 0 20px 20px 20px;
 }
-#date-to > span:hover{
+#dateTo > span:hover{
     cursor: pointer;
 }
 
@@ -34,7 +34,7 @@ input.form-control.calendar-from {
 .btn-search {
     width: 100%;
     display: inline-grid;
-    padding: 25px;
+    padding: 32px 10px 0px 24px;
 }
 
 .sty-search {
@@ -51,17 +51,22 @@ input.form-control.calendar-from {
     margin-top: 20px;
     background-color: #fff;
     border: #fff;
-    padding: 25px;
+    padding: 0px 25px 25px 25px;
 }
 
-.total-prj {
-    width: 122%;
-    text-align: center;
+.content-dashboard .row .col-xs-5ths a{
+    color: #000;
+    font-weight: 600;
+}
+
+.content-dashboard .row .col-xs-5ths a:hover{
+    text-decoration: none;
 }
 
 .card-body.card-wrap-items:hover{
     background-color: #AA0000;
     color: #fff;
+    text-decoration: none;
 }
 
 .total-links a{
@@ -84,7 +89,89 @@ tr.list-content td
     text-align: center;
 }
 
-tr.list-content td.status
+tr.list-content td div.status-apply
 {
-    border: 1px solid darkgray;
+    font-size: 15px;
+    color: #fff;
+    background: #25992B;
+    border-radius: 2px;
 }
+
+tr.list-content td div.status-approval
+{
+    font-size: 15px;
+    color: #fff;
+    background: #96000C;
+    border-radius: 2px;
+}
+
+tr.list-content td div.status-declined
+{
+    font-size: 16px;
+    color: #fff;
+    background: #B78E00;
+    border-radius: 2px;
+}
+
+tr.list-content td div.status-reject
+{
+    font-size: 15px;
+    color: #fff;
+    background: #656565;
+    border-radius: 2px;
+}
+
+.btn-details {
+    border: 1px solid #000;
+    padding: 5px;
+    border-radius: 5px;
+    color: #000;
+}
+
+.bootstrap-datetimepicker-widget table td.active, .bootstrap-datetimepicker-widget table td.active:hover {
+    background-color: #96000C;
+    color: #ffffff;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+}
+
+.bootstrap-datetimepicker-widget table thead:first-child tr:first-child{
+    background-color: gray;
+    color: #fff;
+}
+
+  .col-xs-5ths,
+  .col-sm-5ths,
+  .col-md-5ths,
+  .col-lg-5ths {
+    position: relative;
+    min-height: 1px;
+    padding-right: 10px;
+    padding-left: 10px;
+  }
+  
+  .col-xs-5ths {
+    width: 20%;
+    float: left;
+  }
+  
+  @media (min-width: 768px) {
+    .col-sm-5ths {
+      width: 20%;
+      float: left;
+    }
+  }
+  
+  @media (min-width: 992px) {
+    .col-md-5ths {
+      width: 20%;
+      float: left;
+    }
+  }
+  
+  @media (min-width: 1200px) {
+    .col-lg-5ths {
+      width: 20%;
+      float: left;
+    }
+  }
