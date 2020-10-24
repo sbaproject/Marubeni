@@ -18,11 +18,13 @@
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
   <!-- custom css -->
-  <link rel="stylesheet" href="../../dist/css/custom.css">
-  <link rel="stylesheet" href="../../dist/css/custom-detail.css">
+  <link href="../../public/css/master.css" rel="stylesheet">
+  <link href="../../public/css/03_application_list.css" rel="stylesheet">
+  <!-- <link rel="stylesheet" href="../../dist/css/custom.css">
+  <link rel="stylesheet" href="../../dist/css/custom-detail.css"> -->
 
 
-  
+
 </head>
 <body class="hold-transition sidebar-mini">
 <!-- Site wrapper -->
@@ -32,22 +34,26 @@
     <!-- Left navbar links -->
     <ul class="navbar-nav bg-custom">
       <li class="nav-item">
-        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars" style="color: darkgray;"></i></a>
       </li>
     </ul>
 
     <!-- Right navbar links -->
-    <ul class="navbar-nav ml-auto">
+    <ul class="navbar-nav ml-auto info-user">
       <li class="nav-item user-panel-custom">
-        <!-- user -->
-        <div class="user-panel d-flex">
-          <div class="user-deparment">
-            <span class="d-block">Department Name</span>
-          </div>
-          <div class="info">
-            <a href="#" class="d-block">Username</a>
-          </div>
+        <div class="user-deparment">Department Name,
         </div>
+      </li>
+      <li class="nav-item user-panel-custom">
+        <div class="info">
+            <a href="#" class="text-name">Username</a>
+          </div>
+      </li>
+      <li class="nav-item user-panel-custom">
+        <div class="tab">
+            <a class="tablink-VN" href="">VN</a>
+            <a class="tablink-EN" href="">EN</a>
+          </div>
       </li>
     </ul>
   </nav>
@@ -157,9 +163,6 @@
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-    </section>
 
     <!-- Main content -->
     <section class="content">
