@@ -157,7 +157,13 @@ return [
         'new_password' => 'New password',
         'confirm_new_password' => 'Confirm new password',
         'email' => 'E-Mail',
-        'name' => 'Name'
+        'name' => 'Name',
+        'location' => 'Location',
+        'department' => 'Department',
+        'role' => 'Role',
+        'phone' => 'Phone',
+        'approval' => 'Approval',
+        'memo' => 'Memo',
     ],
 
 ];

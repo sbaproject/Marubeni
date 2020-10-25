@@ -6,6 +6,7 @@ use App\Http\Controllers\User\UserEditController;
 use App\Http\Controllers\User\UserDashboardController;
 use App\Http\Controllers\User\UserChangePassController;
 use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\User\UserRegisterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,7 +20,7 @@ use App\Http\Controllers\Admin\AdminDashboardController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('login');
 });
 
 /**
@@ -28,46 +29,51 @@ Route::get('/', function () {
 Auth::routes([
     'verify' => false, // turn off
     'confirm' => false, // turn off
-    'register' => true
+    'register' => false
 ]);
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 /**
  * Authenticated user
  */
 Route::middleware('auth')->group(function () {
-    /**
-     * Admin routes
-     */
-    Route::middelware('role:'.ROLE['Admin'])->group(function () {
 
-        Route::prefix('admin')->name('admin.')->group(function(){
+    /**----------------------------------------*
+     * Admin routes (for Admin role)
+     *-----------------------------------------*/
+    Route::middleware('can:admin-gate')->group(function () {
+        // Dashboard
+        Route::prefix('admin')->name('admin.')->group(function () {
             Route::get('/dashboard', [AdminDashboardController::class, 'show'])->name('dashboard');
         });
-        /**
-         * register user
-         */
-        Route::get('/user/register', [UserEditController::class, 'show'])->name('user.register.show');
-        Route::post('/user/register', [UserEditController::class, 'store'])->name('user.register.store');
+        Route::prefix('user')->name('user.')->group(function () {
+            // Register new user
+            Route::get('register', [UserRegisterController::class, 'show'])->name('register.show');
+            Route::post('register', [UserRegisterController::class, 'store'])->name('register.store');
+            // Edit user
+            Route::get('edit/{user}', [UserEditController::class, 'show'])->name('edit.show');
+            Route::put('edit/{user}', [UserEditController::class, 'update'])->name('edit.update');
+        });
     });
-    /**
-     * User mangement routes
-     */
+
+    /**----------------------------------------*
+     * User routes
+     *-----------------------------------------*/
     Route::prefix('user')->name('user.')->group(function () {
-        /**
-         * Dashboard
-         */
-        Route::get('/dashboard', [UserDashboardController::class, 'show'])->name('dashboard');
-        /**
-         * edit
-         */
-        Route::get('edit/{user}', [UserEditController::class, 'show'])->name('edit.show');
-        Route::put('edit/{user}', [UserEditController::class, 'update'])->name('edit.update');
-        /**
-         * change pass
-         */
+        /**----------------------------------------*
+         * Only user role
+         *-----------------------------------------*/
+        Route::middleware('can:user-gate')->group(function () {
+            // Dashboard
+            Route::get('/dashboard', [UserDashboardController::class, 'show'])->name('dashboard');
+        });
+        /**----------------------------------------*
+         * Both of Admin & User
+         *-----------------------------------------*/
+        // Change pass
         Route::get('changepass', [UserChangePassController::class, 'show'])->name('changepass.show');
         Route::put('changepass', [UserChangePassController::class, 'update'])->name('changepass.update');
     });
-});
+    });
+

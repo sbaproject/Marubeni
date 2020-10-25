@@ -41,7 +41,7 @@ return [
     'distinct' => 'The :attribute field has a duplicate value.',
     'email' => ':attribute đã nhập không đúng định dạng email.',
     'ends_with' => 'The :attribute must end with one of the following: :values.',
-    'exists' => 'The selected :attribute is invalid.',
+    'exists' => ':attribute đã chọn không hợp lệ.',
     'file' => 'The :attribute must be a file.',
     'filled' => 'The :attribute field must have a value.',
     'gt' => [
@@ -57,7 +57,7 @@ return [
         'array' => 'The :attribute must have :value items or more.',
     ],
     'image' => 'The :attribute must be an image.',
-    'in' => 'The selected :attribute is invalid.',
+    'in' => ':attribute đã chọn không hợp lệ.',
     'in_array' => 'The :attribute field does not exist in :other.',
     'integer' => 'The :attribute must be an integer.',
     'ip' => 'The :attribute must be a valid IP address.',
@@ -157,7 +157,13 @@ return [
         'new_password' => 'Mật khẩu mới',
         'confirm_new_password' => 'Xác nhận mật khẩu mới',
         'email' => 'E-Mail',
-        'name' => 'Tên'
+        'name' => 'Tên',
+        'location' => 'Chi Nhánh',
+        'department' => 'Phòng ban',
+        'role' => 'Vai trò',
+        'phone' => 'Điện thoại',
+        'approval' => 'Phê duyệt',
+        'memo' => 'Ghi chú',
     ],
 
 ];

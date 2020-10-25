@@ -7,7 +7,7 @@
 			<div class="card">
 				<div class="card-header">Admin Dashboard</div>
 				<div class="card-body">
-					
+					{{ config('const.role.Admin') }}
 				</div>
 			</div>
 		</div>

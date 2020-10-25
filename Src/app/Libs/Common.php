@@ -15,7 +15,21 @@ class Common {
 		if(isEmpty($msg)){
 			$msg = __('msg.save_success');
 		}
-		Session::flash(KEY_SUCCESS, $msg);
+		Session::flash(config('const.keymsg.success'), $msg);
+		return redirect()->back();
+	}
+
+	/**
+	 * redirect to back location with alert fail message
+	 * @param string|null $msg - alert fail message
+	 */
+	public static function redirectBackWithAlertFail($msg = null)
+	{
+		// show fail success message on the top of the form
+		if (isEmpty($msg)) {
+			$msg = __('msg.save_fail');
+		}
+		Session::flash(config('const.keymsg.error'), $msg);
 		return redirect()->back();
 	}
 
@@ -30,7 +44,7 @@ class Common {
 		if (isEmpty($msg)) {
 			$msg = __('msg.save_fail');
 		}
-		Session::flash(KEY_ERROR, $msg);
+		Session::flash(config('const.keymsg.error'), $msg);
 		// return view
 		return view($viewName, $compact);
 	}
