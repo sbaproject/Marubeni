@@ -8,11 +8,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
+  <link rel="stylesheet" href="../../public/css/fontawesome-free/css/all.min.css">
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   <!-- overlayScrollbars -->
-  <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+  <link rel="stylesheet" href="../../public/css/adminlte.min.css">
   <!-- jquery-ui css -->
   <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <!-- Google Font: Source Sans Pro -->
@@ -20,11 +20,6 @@
   <!-- custom css -->
   <link href="../../public/css/master.css" rel="stylesheet">
   <link href="../../public/css/03_application_list.css" rel="stylesheet">
-  <!-- <link rel="stylesheet" href="../../dist/css/custom.css">
-  <link rel="stylesheet" href="../../dist/css/custom-detail.css"> -->
-
-
-
 </head>
 <body class="hold-transition sidebar-mini">
 <!-- Site wrapper -->
@@ -63,7 +58,7 @@
   <aside class="main-sidebar sidebar-primary elevation-4 sidebar-no-expand">
     <!-- Brand Logo -->
     <a href="/" class="brand-link">
-      <img src="../../dist/img/logo.png" alt="Logo" class="" style="max-width: 100%;">
+      <img src="../../public/images/logo.png" alt="Logo" class="" style="max-width: 100%;">
     </a>
     <!-- Sidebar -->
     <div class="sidebar">
@@ -74,13 +69,13 @@
           <li class="nav-item">
             <a href="/pages/examples/03-application-list.html" class="nav-link">
               <i class="nav-icon fa fa-home"></i>
-              <p>Application</p>
+              <p>APPLICATION</p>
             </a>
           </li>
           <li class="nav-item">
             <a href="" class="nav-link">
               <i class="nav-icon fas fa-edit"></i>
-              <p>Draft</p>
+              <p>DRAFT</p>
             </a>
           </li>
           <li class="nav-item has-treeview">
@@ -88,8 +83,8 @@
               <!--<i class="nav-icon fas fa-list-alt"></i>-->
               <i class="nav-icon fas fa-file-alt" aria-hidden="true"></i>
               <p>
-                Status
-                <i class="fas fa-angle-left right"></i>
+                STATUS
+                <i class="fas fa-angle-down right"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
@@ -123,12 +118,18 @@
                   <p>Reject</p>
                 </a>
               </li>
+              <li class="nav-item">
+                <a href="/pages/examples/user-status.html" class="nav-link">
+                  <i class="fas fa-angle-right left"></i>
+                  <p>Completed</p>
+                </a>
+              </li>
             </ul>
           </li>
           <li class="nav-item">
             <a href="/pages/examples/08_waiting_approval_list.html" class="nav-link">
               <i class="nav-icon fa fa-check-square"></i>
-              <p>Approval</p>
+              <p>APPROVAL</p>
             </a>
           </li>
           <li class="nav-item has-treeview">
@@ -136,7 +137,7 @@
               <i class="nav-icon fas fa-cog"></i>
               <p>
                 SETTINGS
-                <i class="right fas fa-angle-left"></i>
+                <i class="right fas fa-angle-down"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
@@ -218,14 +219,12 @@
 <!-- ./wrapper -->
 
 <!-- jQuery -->
-<script src="../../plugins/jquery/jquery.min.js"></script>
+<script src="../../public/js/jquery/jquery.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <!-- Bootstrap 4 -->
-<script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="../../public/js/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
-<script src="../../dist/js/adminlte.min.js"></script>
-<!-- AdminLTE for demo purposes -->
-<!-- <script src="../../dist/js/demo.js"></script> -->
+<script src="../../public/js/adminlte.min.js"></script>
 
 </body>
 </html>
