@@ -33,6 +33,23 @@
     color: #868484;
     padding: 3px 20px;
 }
-.wrap_tbl_ad {
+.content_roll {
     overflow-x: scroll;
+}
+.justify-between {
+    justify-content: space-between;
+}
+.table th, td {
+    text-align: center;
+}
+.bootstrap-datetimepicker-widget table td.active, .bootstrap-datetimepicker-widget table td.active:hover {
+    background-color: #96000C;
+    color: #ffffff;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+}
+
+.bootstrap-datetimepicker-widget table thead:first-child tr:first-child{
+    background-color: gray;
+    color: #fff;
 }

@@ -45,12 +45,11 @@
             <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto info-user">
               <li class="nav-item user-panel-custom">
-                <div class="user-deparment">Department Name,
-                </div>
+                <div class="user-deparment"></div>
               </li>
               <li class="nav-item user-panel-custom">
                 <div class="info">
-                    <a href="#" class="text-name">Username</a>
+                    <a href="#" class="text-name">Admin</a>
                   </div>
               </li>
               <li class="nav-item user-panel-custom">
@@ -71,95 +70,97 @@
             <div class="sidebar">
               <!-- Sidebar Menu -->
               <nav class="mt-2">
-                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                  <!-- Add icons to the links using the .nav-icon class with font-awesome or any other icon font library -->
-                  <li class="nav-item">
-                    <a href="/pages/examples/03-application-list.html" class="nav-link">
-                      <i class="nav-icon fa fa-home"></i>
-                      <p>APPLICATION</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="" class="nav-link">
-                      <i class="nav-icon fas fa-edit"></i>
-                      <p>DRAFT</p>
-                    </a>
-                  </li>
-                  <li class="nav-item has-treeview">
-                    <a href="" class="nav-link">
-                      <!--<i class="nav-icon fas fa-list-alt"></i>-->
-                      <i class="nav-icon fas fa-file-alt" aria-hidden="true"></i>
-                      <p>
-                        STATUS
-                        <i class="fas fa-angle-down right"></i>
-                      </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                      <li class="nav-item">
-                        <a href="/pages/examples/user-status.html" class="nav-link">
-                          <i class="fas fa-angle-right left"></i>
-                          <p>Applying</p>
-                        </a>
+                  <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                      <!-- Add icons to the links using the .nav-icon class
+                           with font-awesome or any other icon font library -->
+                      <li class="nav-item has-treeview">
+                          <a href="" class="nav-link">
+                              <i class="nav-icon fas fa-list-alt"></i>
+                              <p>
+                                  Application List
+                                  <i class="fas fa-angle-down right"></i>
+                              </p>
+                          </a>
+                          <ul class="nav nav-treeview">
+                              <li class="nav-item">
+                                  <a href="" class="nav-link">
+                                      <i class="fas fa-angle-right left"></i>
+                                      <p>Applying</p>
+                                  </a>
+                              </li>
+                              <li class="nav-item">
+                                  <a href="/pages/examples/user-status.html" class="nav-link">
+                                      <i class="fas fa-angle-right left"></i>
+                                      <p>Approved/Under payment</p>
+                                  </a>
+                              </li>
+                              <li class="nav-item">
+                                  <a href="/pages/examples/user-status.html" class="nav-link">
+                                      <i class="fas fa-angle-right left"></i>
+                                      <p>Approved/in-processing <br>of payment</p>
+                                  </a>
+                              </li>
+                              <li class="nav-item">
+                                  <a href="/pages/examples/user-status.html" class="nav-link">
+                                      <i class="fas fa-angle-right left"></i>
+                                      <p>Declined</p>
+                                  </a>
+                              </li>
+                              <li class="nav-item">
+                                  <a href="/pages/examples/user-status.html" class="nav-link">
+                                      <i class="fas fa-angle-right left"></i>
+                                      <p>Reject</p>
+                                  </a>
+                              </li>
+                          </ul>
+                      </li>
+                      <li class="nav-item has-treeview">
+                          <a href="" class="nav-link">
+                              <i class="nav-icon fas fa-cog"></i>
+                              <p>
+                                  SETTINGS
+                                  <i class="right fas fa-angle-down"></i>
+                              </p>
+                          </a>
+                          <ul class="nav nav-treeview" style="display: none;">
+                              <li class="nav-item">
+                                  <a href="/pages/examples/admin_102_shain_ichiran.html" class="nav-link">
+                                      <i class="fas fa-angle-right left"></i>
+                                      <p>Employee Setting</p>
+                                  </a>
+                              </li>
+                              <li class="nav-item">
+                                  <a href="" class="nav-link">
+                                      <i class="fas fa-angle-right left"></i>
+                                      <p>Budget setting</p>
+                                  </a>
+                              </li>
+                              <li class="nav-item">
+                                  <a href="" class="nav-link">
+                                      <i class="fas fa-angle-right left"></i>
+                                      <p>Approval Flow Setting</p>
+                                  </a>
+                              </li>
+                              <li class="nav-item">
+                                  <a href="" class="nav-link">
+                                      <i class="fas fa-angle-right left"></i>
+                                      <p>Change Password</p>
+                                  </a>
+                              </li>
+                          </ul>
                       </li>
                       <li class="nav-item">
-                        <a href="/pages/examples/user-status.html" class="nav-link">
-                          <i class="fas fa-angle-right left"></i>
-                          <p>Approved/Under payment</p>
-                        </a>
+                          <a href="" class="nav-link">
+                              <i class="nav-icon far fa-building"></i>
+                              <p>
+                                  Company Registration
+                              </p>
+                          </a>
                       </li>
-                      <li class="nav-item">
-                        <a href="/pages/examples/user-status.html" class="nav-link">
-                          <i class="fas fa-angle-right left"></i>
-                          <p>Approved/in-processing <br />of payment</p>
-                        </a>
-                      </li>
-                      <li class="nav-item">
-                        <a href="/pages/examples/user-status.html" class="nav-link">
-                          <i class="fas fa-angle-right left"></i>
-                          <p>Declined</p>
-                        </a>
-                      </li>
-                      <li class="nav-item">
-                        <a href="/pages/examples/user-status.html" class="nav-link">
-                          <i class="fas fa-angle-right left"></i>
-                          <p>Reject</p>
-                        </a>
-                      </li>
-                    </ul>
-                  </li>
-                  <li class="nav-item">
-                    <a href="/pages/examples/08_waiting_approval_list.html" class="nav-link">
-                      <i class="nav-icon fa fa-check-square"></i>
-                      <p>APPROVAL</p>
-                    </a>
-                  </li>
-                  <li class="nav-item has-treeview">
-                    <a href="" class="nav-link">
-                      <i class="nav-icon fas fa-cog"></i>
-                      <p>
-                        SETTINGS
-                        <i class="right fas fa-angle-down"></i>
-                      </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                      <li class="nav-item">
-                        <a href="/pages/examples/10_company_registration.html" class="nav-link">
-                          <i class="fas fa-angle-right left"></i>
-                          <p>Company Registration</p>
-                        </a>
-                      </li>
-                      <li class="nav-item">
-                        <a href="" class="nav-link">
-                          <i class="fas fa-angle-right left"></i>
-                          <p>Change Password</p>
-                        </a>
-                      </li>
-                    </ul>
-                  </li>
-                </ul>
+                  </ul>
               </nav>
               <!-- /.sidebar-menu -->
-            </div>
+          </div>
             <!-- /.sidebar -->
           </aside>
           <!-- Content Wrapper. Contains page content -->
@@ -245,6 +246,7 @@
               <div class="card">
                 <div class="card-body p-0 ">
             <div class="wrap_tbl_ad">
+              <div class="content_roll">
                   <table class="table table-bordered " style="min-width: 500px;">
                     <thead>
                     <tr>
@@ -327,6 +329,7 @@
                     </tr>
                     </tbody>
                   </table>
+                </div>
                   <div class="clearfix p-0 text-center pb-3">
                     <div class="pager-wrap">
                       <ul class="pagination pagination-sm pager_custom ">
