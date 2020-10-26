@@ -14,7 +14,11 @@ return [
     'fail' => 'Fail',
     'hn' => 'Ha Noi',
     'hcm' => 'Ho Chi Minh',
-    'select...' => 'Select...',
+    'select' => 'Select',
     'on' => 'ON',
-    'off' => 'OFF'
+    'off' => 'OFF',
+    'paginator' => [
+        'prev' => 'Previous',
+        'next' => 'Next',
+    ]
 ];

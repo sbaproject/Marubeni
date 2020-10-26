@@ -14,8 +14,11 @@ return [
     'fail' => 'Thất bại',
     'hn' => 'Hà Nội',
     'hcm' => 'Hồ Chí Minh',
-    'select...' => 'Vui lòng chọn...',
+    'select' => 'Vui lòng chọn',
     'on' => 'Bật',
-    'off' => 'Tắt'
-
+    'off' => 'Tắt',
+    'paginator' => [
+        'prev' => 'Trang trước',
+        'next' => 'Trang sau',
+    ]
 ];

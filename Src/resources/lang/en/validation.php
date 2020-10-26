@@ -117,6 +117,7 @@ return [
     'uploaded' => 'The :attribute failed to upload.',
     'url' => 'The :attribute format is invalid.',
     'uuid' => 'The :attribute must be a valid UUID.',
+    'phone_number' => 'The :attribute is invalid.',
 
     /*
     |--------------------------------------------------------------------------
@@ -160,7 +161,7 @@ return [
         'name' => 'Name',
         'location' => 'Location',
         'department' => 'Department',
-        'role' => 'Role',
+        'role' => 'Position',
         'phone' => 'Phone',
         'approval' => 'Approval',
         'memo' => 'Memo',

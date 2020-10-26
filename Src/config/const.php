@@ -33,5 +33,11 @@ return [
 	'keymsg' => [
 		'success' => 'key_msg_success',
 		'error' => 'key_msg_error'
+	],
+	/**
+	 * Paginator
+	 */
+	'paginator' => [
+		'items' => 5 // Items per page
 	]
 ];

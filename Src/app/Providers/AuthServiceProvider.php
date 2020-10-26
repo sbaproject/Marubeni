@@ -25,15 +25,14 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        /**
-         * Just only Admin role to access to ADMIN routes
-         */
+        /**---------------------------------------------/
+         * Define Gates
+         *---------------------------------------------*/
+        // Just only Admin role to access to ADMIN routes
         Gate::define('admin-gate',function($user){
             return $user->role === config('const.role.Admin');
         });
-        /**
-         * Just only NOT Admin role to access to USER routes
-         */
+        // Just only NOT Admin role to access to USER routes
         Gate::define('user-gate', function ($user) {
             return $user->role !== config('const.role.Admin');
         });
