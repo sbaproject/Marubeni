@@ -58,6 +58,10 @@ input.form-control.calendar-from {
     margin-top: 20px;
 }
 
+.card-list-items {
+    overflow-x: scroll;
+}
+
 .list-title th{
     border-right: 1px solid #fff;
     background: darkgray;
@@ -81,10 +85,37 @@ tr.list-content td
     background-color: #96000C;
     color: #ffffff;
     text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-    border-radius: 5px;
 }
 
 .bootstrap-datetimepicker-widget table thead:first-child tr:first-child{
+    background-color: gray;
+    color: #fff;
+    border-radius: 0px;
+}
+
+.bootstrap-datetimepicker-widget table thead:first-child tr:first-child .prev{
+    border-radius: 0px;
+}
+
+.bootstrap-datetimepicker-widget table thead:first-child tr:first-child .prev:hover{
+    background-color: gray;
+    color: #fff;
+}
+
+.bootstrap-datetimepicker-widget table thead:first-child tr:first-child .picker-switch{
+    border-radius: 0px;
+}
+
+.bootstrap-datetimepicker-widget table thead:first-child tr:first-child .picker-switch:hover{
+    background-color: gray;
+    color: #fff;
+}
+
+.bootstrap-datetimepicker-widget table thead:first-child tr:first-child .next{
+    border-radius: 0px;
+}
+
+.bootstrap-datetimepicker-widget table thead:first-child tr:first-child .next:hover{
     background-color: gray;
     color: #fff;
 }
