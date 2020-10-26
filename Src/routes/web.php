@@ -50,7 +50,7 @@ Route::middleware('auth')->group(function () {
         });
         Route::prefix('user')->name('user.')->group(function () {
             // List Users
-            Route::get('/', [UserListCotroller::class, 'show'])->name('list');
+            Route::get('/list', [UserListCotroller::class, 'show'])->name('list');
             // Register new user
             Route::get('register', [UserRegisterController::class, 'show'])->name('register.show');
             Route::post('register', [UserRegisterController::class, 'store'])->name('register.store');

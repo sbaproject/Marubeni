@@ -21,6 +21,7 @@ class UserListCotroller extends Controller
 
         // make [where] filter
         $where = [];
+        $whereUserNo = '1=1';
         if (isset($conditions['location'])) {
             $where[] = ['location', '=', $conditions['location']];
         }
@@ -30,11 +31,16 @@ class UserListCotroller extends Controller
         if (isset($conditions['name'])) {
             $where[] = ['name', 'LIKE', '%' . trim($conditions['name']) . '%'];
         }
+        if (isset($conditions['user_no'])) {
+            $fillZero = config('const.num_fillzero');
+            $whereUserNo = "(id LIKE '%{$conditions['user_no']}%' OR LPAD('{$conditions['user_no']}', {$fillZero}, '0') = LPAD(id, {$fillZero}, '0'))";
+        }
 
         // get data
         $users = User::where($where)
+            ->whereRaw($whereUserNo)
             ->orderBy('id')
-            ->orderBy('name')
+            ->with('department')
             ->paginate(config('const.paginator.items'));
 
         return view('user.list', compact('conditions', 'locations', 'departments', 'users'));

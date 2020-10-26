@@ -24,6 +24,14 @@
 								</select>
 							</div>
 						</div>
+						{{-- Employee No --}}
+						<div class="form-group row">
+							<label for="user_no" class="col-md-4 col-form-label text-md-right">{{ __('validation.attributes.user_no') }}</label>
+							<div class="col-md-6">
+								<input id="user_no" type="text" class="form-control" name="user_no"
+									value="@isset($conditions['user_no']){{ $conditions['user_no'] }}@endisset">
+							</div>
+						</div>
 						{{-- Department --}}
 						<div class="form-group row">
 							<label for="department"
@@ -57,32 +65,40 @@
 							</div>
 						</div>
 					</form>
-
+					{{-- Add new button --}}
+					<div class="container mt-5">
+						<a href="{{ route('user.register.show') }}" class="btn btn-warning">{{ __('label.addnew') }}</a>
+					</div>
 					{{-- List Users --}}
 					<div class="container mt-5">
 						<table class="table table-bordered mb-5">
 							<thead>
 								<tr class="table-success">
-									<th scope="col">No</th>
-									<th scope="col">Department</th>
-									<th scope="col">Name</th>
-									<th scope="col">Acitons</th>
+									<th scope="col">{{ __('label._no_') }}</th>
+									<th scope="col">{{ __('validation.attributes.department') }}</th>
+									<th scope="col">{{ __('validation.attributes.name') }}</th>
+									<th scope="col">{{ __('label.action') }}</th>
 								</tr>
 							</thead>
 							<tbody>
 								@foreach($users as $user)
 								<tr>
-									<th scope="row">{{ $user->id }}</th>
+									<th scope="row">{{ str_pad($user->id, config('const.num_fillzero'), "0", STR_PAD_LEFT) }}</th>
 									<td>{{ $user->department->name }}</td>
 									<td>{{ $user->name }}</td>
 									<td>
-										<a href="{{ route('user.edit.show', $user->id) }}">Edit</a>
+										<a href="{{ route('user.edit.show', $user->id) }}">{{ __('label.edit') }}</a>
 									</td>
 								</tr>
 								@endforeach
 							</tbody>
 						</table>
 					</div>
+					@if ($users->total() === 0)
+					<div class="d-flex justify-content-center">
+						{{ __('msg.no_data') }}
+					</div>
+					@endif
 					{{-- paginator --}}
 					<div class="d-flex justify-content-center">
 						{{$users->withQueryString()->links('paginator')}}

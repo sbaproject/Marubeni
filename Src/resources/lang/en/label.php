@@ -6,6 +6,9 @@ return [
      */
     'update' => 'Update',
     'register' => 'Register',
+    'addnew' => 'Add New',
+    'edit' => 'Edit',
+    'search' => 'Search',
     'login' => 'Login',
     'logout' => 'Logout',
     'rememberme' => 'Remember me',
@@ -20,5 +23,7 @@ return [
     'paginator' => [
         'prev' => 'Previous',
         'next' => 'Next',
-    ]
+    ],
+    'action' => 'Action',
+    '_no_' => 'NO.'
 ];

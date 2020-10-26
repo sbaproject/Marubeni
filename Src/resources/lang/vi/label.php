@@ -6,6 +6,9 @@ return [
      */
     'update' => 'Cập nhật',
     'register' => 'Đăng ký',
+    'addnew' => 'Thêm mới',
+    'edit' => 'Chỉnh sửa',
+    'search' => 'Tìm kiếm',
     'login' => 'Đăng nhập',
     'logout' => 'Đăng xuất',
     'rememberme' => 'Nhớ đăng nhập',
@@ -20,5 +23,7 @@ return [
     'paginator' => [
         'prev' => 'Trang trước',
         'next' => 'Trang sau',
-    ]
+    ],
+    'action' => 'Chức năng',
+    '_no_' => 'Mã số'
 ];

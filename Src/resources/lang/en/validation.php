@@ -165,6 +165,7 @@ return [
         'phone' => 'Phone',
         'approval' => 'Approval',
         'memo' => 'Memo',
+        'user_no' => 'Employee No',
     ],
 
 ];
