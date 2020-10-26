@@ -1,0 +1,38 @@
+.bt_new {
+    background: #FB8F15;
+    color: #ffffff;
+    padding: 4px 30px;
+    border: 0px;
+    border-radius: 4px;
+}
+.pager-wrap {
+    display: inline-block;
+}
+.pager_custom {
+    justify-content: center;
+}
+.bt_direct button:hover {
+    border: 1px solid #E3E6E9;
+    border-radius: 20px;
+    color: #0056b3;
+    overflow: hidden;
+}
+.button_wrap {
+    margin-bottom: 5px;
+}
+.bt_direct button:hover {
+    border: 1px solid #E3E6E9;
+    border-radius: 20px;
+    color: #0056b3;
+    overflow: hidden;
+}
+.bt_direct button {
+    border: 1px solid #E3E6E9;
+    border-radius: 20px;
+    background: #ffffff;
+    color: #868484;
+    padding: 3px 20px;
+}
+.wrap_tbl_ad {
+    overflow-x: scroll;
+}
