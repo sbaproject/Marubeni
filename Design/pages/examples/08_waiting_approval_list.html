@@ -8,18 +8,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
+  <link rel="stylesheet" href="../../public/css/fontawesome-free/css/all.min.css">
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-  <!-- overlayScrollbars -->
-  <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="../../public/css/adminlte.min.css">
   <!-- jquery-ui css -->
   <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  <!-- custom css -->
-  <link rel="stylesheet" href="../../dist/css/custom.css">
-  <link rel="stylesheet" href="../../dist/css/custom-detail.css">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  <!-- custom css -->
+  <link href="../../public/css/master.css" rel="stylesheet">
+  <link href="../../public/css/08_waiting_approval_list.css" rel="stylesheet">
 </head>
 <body class="hold-transition sidebar-mini">
 <!-- Site wrapper -->
@@ -29,22 +29,26 @@
     <!-- Left navbar links -->
     <ul class="navbar-nav bg-custom">
       <li class="nav-item">
-        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars" style="color: darkgray;"></i></a>
       </li>
     </ul>
 
     <!-- Right navbar links -->
-    <ul class="navbar-nav ml-auto">
+    <ul class="navbar-nav ml-auto info-user">
       <li class="nav-item user-panel-custom">
-        <!-- user -->
-        <div class="user-panel d-flex">
-          <div class="user-deparment">
-            <span class="d-block">Department Name</span>
-          </div>
-          <div class="info">
-            <a href="#" class="d-block">Username</a>
-          </div>
+        <div class="user-deparment">Department Name,
         </div>
+      </li>
+      <li class="nav-item user-panel-custom">
+        <div class="info">
+            <a href="#" class="text-name">Username</a>
+          </div>
+      </li>
+      <li class="nav-item user-panel-custom">
+        <div class="tab">
+            <a class="tablink-VN" href="">VN</a>
+            <a class="tablink-EN" href="">EN</a>
+          </div>
       </li>
     </ul>
   </nav>
@@ -52,7 +56,110 @@
 
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-primary elevation-4 sidebar-no-expand">
-
+    <!-- Brand Logo -->
+    <a href="../../pages/examples/01_dashboard.html" class="brand-link">
+      <img src="../../public/images/logo.png" alt="Logo" class="" style="max-width: 100%;">
+    </a>
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <!-- Sidebar Menu -->
+      <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          <!-- Add icons to the links using the .nav-icon class with font-awesome or any other icon font library -->
+          <li class="nav-item">
+            <a href="/pages/examples/03-application-list.html" class="nav-link">
+              <i class="nav-icon fa fa-home"></i>
+              <p>APPLICATION</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="" class="nav-link">
+              <i class="nav-icon fas fa-edit"></i>
+              <p>DRAFT</p>
+            </a>
+          </li>
+          <li class="nav-item has-treeview">
+            <a href="" class="nav-link">
+              <!--<i class="nav-icon fas fa-list-alt"></i>-->
+              <i class="nav-icon fas fa-file-alt" aria-hidden="true"></i>
+              <p>
+                STATUS
+                <i class="fas fa-angle-down right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="/pages/examples/user-status.html" class="nav-link">
+                  <i class="fas fa-angle-right left"></i>
+                  <p>Applying</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/pages/examples/user-status.html" class="nav-link">
+                  <i class="fas fa-angle-right left"></i>
+                  <p>Approved/Under payment</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/pages/examples/user-status.html" class="nav-link">
+                  <i class="fas fa-angle-right left"></i>
+                  <p>Approved/in-processing <br />of payment</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/pages/examples/user-status.html" class="nav-link">
+                  <i class="fas fa-angle-right left"></i>
+                  <p>Declined</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/pages/examples/user-status.html" class="nav-link">
+                  <i class="fas fa-angle-right left"></i>
+                  <p>Reject</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/pages/examples/user-status.html" class="nav-link">
+                  <i class="fas fa-angle-right left"></i>
+                  <p>Completed</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a href="/pages/examples/08_waiting_approval_list.html" class="nav-link">
+              <i class="nav-icon fa fa-check-square"></i>
+              <p>APPROVAL</p>
+            </a>
+          </li>
+          <li class="nav-item has-treeview">
+            <a href="" class="nav-link">
+              <i class="nav-icon fas fa-cog"></i>
+              <p>
+                SETTINGS
+                <i class="right fas fa-angle-down"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="/pages/examples/10_company_registration.html" class="nav-link">
+                  <i class="fas fa-angle-right left"></i>
+                  <p>Company Registration</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="" class="nav-link">
+                  <i class="fas fa-angle-right left"></i>
+                  <p>Change Password</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
   </aside>
 
   <!-- Content Wrapper. Contains page content -->
@@ -62,7 +169,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>SEARCH</h1>
+            <h4 style="font-weight: 600;">SEARCH</h4>
           </div>
         </div>
       </div>
@@ -119,96 +226,75 @@
 
     <!-- Main content -->
     <section class="content">
-
-      <h4 class="mb-2">PENDING APPROVAL DOCUMENT</h4>
+      <h4 class="mb-2" style="font-weight: 600;"><i class="nav-icon fas fa-file-alt" aria-hidden="true" style="margin-right: 5px;"></i>PENDING APPROVAL DOCUMENT</h4>
       <div class="card">
-        <div class="card-body p-0 ">
-		<div class="wrap_tbl">
-          <table class="table table-hover table-pending">
+        <div class="card-body p-0 card-list-items">
+          <table class="table">
             <thead>
-            <tr>
-              <th>Application No</th>
-              <th>Application type</th>
-              <th>Apply Date</th>
-              <th>Applicant</th>
-              <th></th>
-            </tr>
+              <tr class="list-title">
+                <th>Application No</th>
+                <th>Application type</th>
+                <th>Apply Date</th>
+                <th>Next Approver</th>
+                <th></th>
+              </tr>
             </thead>
             <tbody>
-            <tr>
-              <td>NO-TM-0000</td>
-              <td>交際費申請</td>
-              <td>13 agu 2018</td>
-              <td>text text</td>
-              <td>
-                <button type="button" class="btn   btn-secondary">Details</button>
-              </td>
-            </tr>
-            <tr>
-              <td>NO-TM-0001</td>
-              <td>出張申請</td>
-              <td>13 agu 2018</td>
-              <td>text text</td>
-              <td>
-                <button type="button" class="btn   btn-secondary">Details</button>
-              </td>
-            </tr>
-            <tr>
-              <td>NO-TM-0000</td>
-              <td>交際費申請</td>
-              <td>13 agu 2018</td>
-              <td>text text</td>
-              <td>
-                <button type="button" class="btn   btn-secondary">Details</button>
-              </td>
-            </tr>
-            <tr>
-              <td>NO-TM-0001</td>
-              <td>出張申請</td>
-              <td>13 agu 2018</td>
-              <td>text text</td>
-              <td>
-                <button type="button" class="btn   btn-secondary">Details</button>
-              </td>
-            </tr>
+              <tr class="list-content">
+                <td>NO-TM-0000</td>
+                <td>交際費申請</td>
+                <td>2020/10/22</td>
+                <td>text text</td>
+                <td>
+                  <a class="btn btn-details" href="/pages/examples/09_application_info.html">View Details<i class="fas fa-angle-right" style="margin-left: 5px;"></i></a>
+                </td>
+              </tr>
+              <tr class="list-content">
+                <td>NO-TM-0001</td>
+                <td>出張申請</td>
+                <td>2020/10/22</td>
+                <td>text text</td>
+                <td>
+                  <a class="btn btn-details" href="/pages/examples/09_application_info.html">View Details<i class="fas fa-angle-right" style="margin-left: 5px;"></i></a>
+                </td>
+              </tr>
+              <tr class="list-content">
+                <td>NO-TM-0000</td>
+                <td>交際費申請</td>
+                <td>2020/10/22</td>
+                <td>text text</td>
+                <td>
+                  <a class="btn btn-details" href="/pages/examples/09_application_info.html">View Details<i class="fas fa-angle-right" style="margin-left: 5px;"></i></a>
+                </td>
+              </tr>
+              <tr class="list-content">
+                <td>NO-TM-0001</td>
+                <td>出張申請</td>
+                <td>2020/10/22</td>
+                <td>text text</td>
+                <td>
+                  <a class="btn btn-details" href="/pages/examples/09_application_info.html">View Details<i class="fas fa-angle-right" style="margin-left: 5px;"></i></a>
+                </td>
+              </tr>
             </tbody>
           </table>
-		  </div>
         </div>
         <!-- /.card-body -->
       </div>
       <!-- /.card -->
-
     </section>
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
-
-  <footer class="main-footer">
-    <!-- Footer content -->
-  </footer>
-
-  <!-- Control Sidebar -->
-  <aside class="control-sidebar control-sidebar-dark">
-    <!-- Control sidebar content goes here -->
-  </aside>
-  <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
 
 <!-- jQuery -->
-<script src="../../plugins/jquery/jquery.min.js"></script>
+<script src="../../public/js/jquery/jquery.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <!-- Bootstrap 4 -->
-<script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="../../public/js/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
-<script src="../../dist/js/adminlte.min.js"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="../../dist/js/demo.js"></script>
-<script type="text/javascript" >
-    $(document).ready(function() {
-        $('.main-sidebar').load('user_sidebar.html');
-    });
-</script>
+<script src="../../public/js/adminlte.min.js"></script>
 </body>
 </html>
