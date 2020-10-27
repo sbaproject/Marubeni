@@ -7,53 +7,60 @@
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
+  <link rel="stylesheet" href="../../public/css/fontawesome-free/css/all.min.css">
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   <!-- Tempusdominus Bbootstrap 4 -->
-  <link rel="stylesheet" href="../../plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+  <link rel="stylesheet" href="../../public/css/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
   <!-- Theme style -->
-  <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+  <link rel="stylesheet" href="../../public/css/adminlte.min.css">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
   <!-- custom css -->
-  <link rel="stylesheet" href="../../dist/css/custom.css">
-  <link rel="stylesheet" href="../../dist/css/custom-detail.css">
+  <link href="../../public/css/master.css" rel="stylesheet">
+  <link href="../../public/css/04_leave_application.css" rel="stylesheet">
+
 </head>
 <body class="hold-transition sidebar-mini">
 <!-- Site wrapper -->
 <div class="wrapper">
   <!-- Navbar -->
+  <!-- Navbar -->
   <nav class="main-header navbar navbar-expand navbar-white navbar-light">
     <!-- Left navbar links -->
     <ul class="navbar-nav bg-custom">
       <li class="nav-item">
-        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars" style="color: darkgray;"></i></a>
       </li>
     </ul>
 
     <!-- Right navbar links -->
-    <ul class="navbar-nav ml-auto">
+    <ul class="navbar-nav ml-auto info-user">
       <li class="nav-item user-panel-custom">
-        <!-- user -->
-        <div class="user-panel d-flex">
-          <div class="user-deparment">
-            <span class="d-block">Department Name</span>
-          </div>
-          <div class="info">
-            <a href="#" class="d-block">Username</a>
-          </div>
+        <div class="user-deparment">Department Name,
         </div>
+      </li>
+      <li class="nav-item user-panel-custom">
+        <div class="info">
+            <a href="#" class="text-name">Username</a>
+          </div>
+      </li>
+      <li class="nav-item user-panel-custom">
+        <div class="tab">
+            <a class="tablink-VN" href="">VN</a>
+            <a class="tablink-EN" href="">EN</a>
+          </div>
       </li>
     </ul>
   </nav>
+  <!-- /.navbar -->
   <!-- /.navbar -->
 
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-primary elevation-4 sidebar-no-expand">
     <!-- Brand Logo -->
-    <a href="/" class="brand-link">
-      <img src="../../dist/img/logo.png" alt="Logo" class="" style="max-width: 100%;">
+    <a href="../../pages/examples/01_dashboard.html" class="brand-link">
+      <img src="../../public/images/logo.png" alt="Logo" class="" style="max-width: 100%;">
     </a>
     <!-- Sidebar -->
     <div class="sidebar">
@@ -64,13 +71,13 @@
           <li class="nav-item">
             <a href="/pages/examples/03-application-list.html" class="nav-link">
               <i class="nav-icon fa fa-home"></i>
-              <p>Application</p>
+              <p>APPLICATION</p>
             </a>
           </li>
           <li class="nav-item">
             <a href="" class="nav-link">
               <i class="nav-icon fas fa-edit"></i>
-              <p>Draft</p>
+              <p>DRAFT</p>
             </a>
           </li>
           <li class="nav-item has-treeview">
@@ -78,8 +85,8 @@
               <!--<i class="nav-icon fas fa-list-alt"></i>-->
               <i class="nav-icon fas fa-file-alt" aria-hidden="true"></i>
               <p>
-                Status
-                <i class="fas fa-angle-left right"></i>
+                STATUS
+                <i class="fas fa-angle-down right"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
@@ -113,12 +120,18 @@
                   <p>Reject</p>
                 </a>
               </li>
+              <li class="nav-item">
+                <a href="/pages/examples/user-status.html" class="nav-link">
+                  <i class="fas fa-angle-right left"></i>
+                  <p>Completed</p>
+                </a>
+              </li>
             </ul>
           </li>
           <li class="nav-item">
             <a href="/pages/examples/08_waiting_approval_list.html" class="nav-link">
               <i class="nav-icon fa fa-check-square"></i>
-              <p>Approval</p>
+              <p>APPROVAL</p>
             </a>
           </li>
           <li class="nav-item has-treeview">
@@ -126,7 +139,7 @@
               <i class="nav-icon fas fa-cog"></i>
               <p>
                 SETTINGS
-                <i class="right fas fa-angle-left"></i>
+                <i class="right fas fa-angle-down"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
@@ -153,15 +166,11 @@
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-    </section>
-
     <!-- Main content -->
     <section class="content leave-application">
       <div class="main-top">
-        <h4 class="main-header-text">Leave Application</h4>
-        <a class="btn btn-outline-dark" role="button" href="#">Export</a>
+        <h4 class="main-header-text">LEAVE APPLICATION</h4>
+        <a class="btn btn-outline-dark" role="button" href="#"><i class="fas fa-external-link-alt" style="margin-right: 5px; color: #fff;"></i>Export</a>
       </div>
       
       <div class="card">
@@ -182,7 +191,7 @@
                 </select>
               </div>
             </div>
-            <hr>
+            <hr class="line-bottom">
             <div class="form-group row">
               <div class="col-sm-3 text-center">
                 <label>Reason for Leave</label>
@@ -191,23 +200,24 @@
                 <textarea class="form-control" name="leave-reason" id="leave-reason" rows="3" placeholder="Some text" style="width: 100%;"></textarea>
               </div>
             </div>
-            <hr >
+            <hr class="line-bottom">
             <div class="form-group row">
               <div class="col-sm-3 text-center">
                 <label>Choose the type of leave switch</label>
               </div>
               <div class="col-sm-9">
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="1">
+                  <input type="radio" checked="checked" class="form-check-input" id="inlineCheckbox1" name="step-1-dest-1" value="1">
                   <label class="form-check-label" for="inlineCheckbox1">Annual Leave</label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="2">
+                  <!-- <input class="form-check-input" type="radio"> -->
+                  <input type="radio" class="form-check-input" id="inlineCheckbox2" name="step-1-dest-1" value="2">
                   <label class="form-check-label" for="inlineCheckbox2">Unpaid Leave</label>
                 </div>
               </div>
             </div>
-            <hr >
+            <hr class="line-bottom">
             <div class="form-group row">
               <div class="col-sm-3 text-center">
                 <label>Date of Leave</label>
@@ -243,7 +253,7 @@
                 </div>
               </div>
             </div>
-            <hr >
+            <hr class="line-bottom">
             <div class="form-group row">
               <div class="col-sm-3 text-center">
                 <label>Time of Leave</label>
@@ -282,7 +292,7 @@
                 </div>
               </div>
             </div>
-            <hr >
+            <hr class="line-bottom">
             <div class="form-group row">
               <div class="col-sm-3 text-center">
                 <label>Maternity of Leave</label>
@@ -318,7 +328,7 @@
                 </div>
               </div>
             </div>
-            <hr >
+            <hr class="line-bottom">
             <div class="form-group row">
               <div class="col-sm-3 text-center">
                 <label>Annual Leave</label>
@@ -371,14 +381,14 @@
                 </div>
               </div>
             </div>
-            <hr >
+            <hr class="line-bottom">
             <div class="form-group row">
               <div class="col-sm-3 text-center">
                 <label style="color: red;">Subsequent</label>
               </div>
               <div class="col-sm-9">
                 <div class="form-check">
-                  <input type="checkbox" class="form-check-input" id="subsequent" checked>
+                  <input type="checkbox" class="form-check-input" id="subsequent">
                   <label class="form-check-label" for="subsequent">ON</label>
                 </div>
               </div>
@@ -399,32 +409,24 @@
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
-
-  <footer class="main-footer">
-    <!-- Footer content -->
-  </footer>
-
 </div>
 <!-- ./wrapper -->
 
 <!-- jQuery -->
-<script src="../../plugins/jquery/jquery.min.js"></script>
+<script src="../../public/js/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
-<script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="../../public/js/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- moment -->
-<script src="../../plugins/moment/moment.min.js"></script>
+<script src="../../public/js/moment/moment.min.js"></script>
 <!-- date-range-picker -->
-<script src="../../plugins/daterangepicker/daterangepicker.js"></script>
+<script src="../../public/js/daterangepicker/daterangepicker.js"></script>
 <!-- Tempusdominus Bootstrap 4 -->
-<script src="../../plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+<script src="../../public/css/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
 <!-- Bootstrap Switch -->
-<script src="../../plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
+<script src="../../public/js/bootstrap-switch/js/bootstrap-switch.min.js"></script>
 <!-- AdminLTE App -->
-<script src="../../dist/js/adminlte.min.js"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="../../dist/js/demo.js"></script>
+<script src="../../public/js/adminlte.min.js"></script>
 <!-- Page script -->
-
 <script>
   $(function() {
     //Date picker
@@ -433,7 +435,7 @@
       defaultDate: moment()
     });
     $('#dateLeaveTo').datetimepicker({
-      format: 'L',
+      format: 'ddd, DD/MM/YYYY',
       useCurrent: false
     });
     // linked pickers
@@ -445,7 +447,7 @@
     });
 
     $('#timeLeaveDate').datetimepicker({
-      format: 'L',
+      format: 'ddd, DD/MM/YYYY',
       defaultDate: moment()
     });
 
@@ -465,11 +467,11 @@
     });
 
     $('#maternityLeaveFrom').datetimepicker({
-      format: 'L',
+      format: 'ddd, DD/MM/YYYY',
       defaultDate: moment()
     });
     $('#maternityLeaveTo').datetimepicker({
-      format: 'L',
+      format: 'ddd, DD/MM/YYYY',
       useCurrent: false
     });
     // linked pickers

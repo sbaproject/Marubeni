@@ -34,7 +34,7 @@
 							<label for="department" class="col-md-4 col-form-label text-md-right">{{ __('validation.attributes.department') }}</label>
 							<div class="col-md-6">
 								<select id="department" name="department" class="form-control @error('department') is-invalid @enderror">
-									<option value='' selected>{{ __('label.select...') }}</option>
+									<option value='' selected>{{ __('label.select') }}</option>
 									@foreach ($departments as $item)
 										<option value="{{ $item->id }}" {{ old('department') == $item->id ? 'selected' : '' }}>{{ $item->name }}</option>
 									@endforeach
@@ -64,7 +64,7 @@
 							<label for="role" class="col-md-4 col-form-label text-md-right">{{ __('validation.attributes.role') }}</label>
 							<div class="col-md-6">
 								<select id="role" name="role" class="form-control @error('role') is-invalid @enderror">
-									<option value='' selected>{{ __('label.select...') }}</option>
+									<option value='' selected>{{ __('label.select') }}</option>
 									@foreach ($roles as $key => $value)
 										<option value="{{ $value }}" {{ old('role') == $value ? 'selected' : '' }}>{{ $key }}</option>
 									@endforeach

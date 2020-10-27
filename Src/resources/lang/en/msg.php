@@ -5,5 +5,6 @@ return [
      * Messages
      */
     'save_success' => 'Save success.',
-    'save_fail' => 'Save fail.'
+    'save_fail' => 'Save fail.',
+    'no_data' => 'No data found.'
 ];

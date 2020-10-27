@@ -6,6 +6,9 @@ return [
      */
     'update' => 'Update',
     'register' => 'Register',
+    'addnew' => 'Add New',
+    'edit' => 'Edit',
+    'search' => 'Search',
     'login' => 'Login',
     'logout' => 'Logout',
     'rememberme' => 'Remember me',
@@ -14,7 +17,13 @@ return [
     'fail' => 'Fail',
     'hn' => 'Ha Noi',
     'hcm' => 'Ho Chi Minh',
-    'select...' => 'Select...',
+    'select' => 'Select',
     'on' => 'ON',
-    'off' => 'OFF'
+    'off' => 'OFF',
+    'paginator' => [
+        'prev' => 'Previous',
+        'next' => 'Next',
+    ],
+    'action' => 'Action',
+    '_no_' => 'NO.'
 ];

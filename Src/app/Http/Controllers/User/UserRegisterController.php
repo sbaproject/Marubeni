@@ -7,7 +7,6 @@ use App\Models\User;
 use App\Models\Department;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -32,8 +31,9 @@ class UserRegisterController extends Controller
             'location' => ['required', Rule::in(config('const.location'))],
             'department' => 'required',
             'name' => 'required',
-            'role' => 'required',
+            'role' => ['required', Rule::in(config('const.role'))],
             'email' => 'required|email|unique:users',
+            'phone' => 'nullable|phone_number',
             'approval' => ['required', Rule::in(config('const.approval'))],
         ]);
 

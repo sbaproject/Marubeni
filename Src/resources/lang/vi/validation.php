@@ -117,6 +117,7 @@ return [
     'uploaded' => 'The :attribute failed to upload.',
     'url' => 'The :attribute format is invalid.',
     'uuid' => 'The :attribute must be a valid UUID.',
+    'phone_number' => ':attribute không hợp lệ.',
 
     /*
     |--------------------------------------------------------------------------
@@ -158,12 +159,13 @@ return [
         'confirm_new_password' => 'Xác nhận mật khẩu mới',
         'email' => 'E-Mail',
         'name' => 'Tên',
-        'location' => 'Chi Nhánh',
+        'location' => 'Chi nhánh',
         'department' => 'Phòng ban',
         'role' => 'Vai trò',
         'phone' => 'Điện thoại',
         'approval' => 'Phê duyệt',
         'memo' => 'Ghi chú',
+        'user_no' => 'Mã số nhân viên',
     ],
 
 ];

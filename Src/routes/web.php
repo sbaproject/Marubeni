@@ -6,6 +6,7 @@ use App\Http\Controllers\User\UserEditController;
 use App\Http\Controllers\User\UserDashboardController;
 use App\Http\Controllers\User\UserChangePassController;
 use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\User\UserListCotroller;
 use App\Http\Controllers\User\UserRegisterController;
 
 /*
@@ -48,6 +49,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/dashboard', [AdminDashboardController::class, 'show'])->name('dashboard');
         });
         Route::prefix('user')->name('user.')->group(function () {
+            // List Users
+            Route::get('/list', [UserListCotroller::class, 'show'])->name('list');
             // Register new user
             Route::get('register', [UserRegisterController::class, 'show'])->name('register.show');
             Route::post('register', [UserRegisterController::class, 'store'])->name('register.store');
@@ -75,5 +78,4 @@ Route::middleware('auth')->group(function () {
         Route::get('changepass', [UserChangePassController::class, 'show'])->name('changepass.show');
         Route::put('changepass', [UserChangePassController::class, 'update'])->name('changepass.update');
     });
-    });
-
+});

@@ -38,12 +38,12 @@ input.form-control.calendar-from {
 }
 
 .sty-search {
-    background-color: #AA0000;
+    background-color: #96000C;
     color: #fff;
 }
 
 .sty-search:hover {
-    background-color: #AA0000;
+    background-color: #96000C;
     color: #fff;
 }
 
@@ -64,7 +64,7 @@ input.form-control.calendar-from {
 }
 
 .card-body.card-wrap-items:hover{
-    background-color: #AA0000;
+    background-color: #96000C;
     color: #fff;
     text-decoration: none;
 }
