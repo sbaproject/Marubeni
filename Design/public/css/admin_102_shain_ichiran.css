@@ -57,6 +57,9 @@
 .bootstrap-datetimepicker-widget table td.old, .bootstrap-datetimepicker-widget table td.new {
     visibility: hidden;
 }
+input[type='radio']{
+    margin-right: 5px;
+}
 input[type='radio']:after {
     width: 17px;
     height: 17px;
