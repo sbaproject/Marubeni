@@ -126,3 +126,11 @@ tr.list-content td
 .bootstrap-datetimepicker-widget table tr{
     border-bottom: 2px solid white;
 }
+
+.bootstrap-datetimepicker-widget table td.old {
+    visibility: hidden;
+}
+
+.bootstrap-datetimepicker-widget table td.new {
+    visibility: hidden;
+}

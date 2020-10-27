@@ -178,6 +178,14 @@ tr.list-content td div.status-reject
     border-bottom: 2px solid white;
 }
 
+.bootstrap-datetimepicker-widget table td.old {
+    visibility: hidden;
+}
+
+.bootstrap-datetimepicker-widget table td.new {
+    visibility: hidden;
+}
+
 
   .col-xs-5ths,
   .col-sm-5ths,

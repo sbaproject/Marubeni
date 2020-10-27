@@ -238,29 +238,15 @@
                   <div class="form-group row">
                     <div class="col-sm-6">
                       <div class="row mb-2">
-                        <span class="col-md-3">From</span>
+                        <span class="col-md-3">Departure</span>
                         <div class="col-md-9">
-                          <div class="form-group">
-                            <div class="input-group date" id="itineraryFrom" data-target-input="nearest">
-                              <input type="text" name="itineraryFrom" class="form-control datetimepicker-input" data-target="#itineraryFrom"/>
-                              <div class="input-group-append" data-target="#itineraryFrom" data-toggle="datetimepicker">
-                                  <div class="input-group-text"><i class="fa fa-calendar-alt"></i></div>
-                              </div>
-                            </div>
-                          </div>
+                          <input type="text" class="form-control" name="departure-no">
                         </div>
                       </div>
                       <div class="row">
-                        <span class="col-md-3">To</span>
+                        <span class="col-md-3">Arrival</span>
                         <div class="col-md-9">
-                          <div class="form-group">
-                            <div class="input-group date" id="itineraryTo" data-target-input="nearest">
-                              <input type="text" name="itineraryTo" class="form-control datetimepicker-input" data-target="#itineraryTo"/>
-                              <div class="input-group-append" data-target="#itineraryTo" data-toggle="datetimepicker">
-                                  <div class="input-group-text"><i class="fa fa-calendar-alt"></i></div>
-                              </div>
-                            </div>
-                          </div>
+                          <input type="text" class="form-control" name="arrival-no">
                         </div>
                       </div>
                     </div>
@@ -378,23 +364,6 @@
     $("#dateTripTo").on("change.datetimepicker", function (e) {
         $('#dateTripFrom').datetimepicker('maxDate', e.date);
     });
-
-    $('#itineraryFrom').datetimepicker({
-      format: 'ddd, DD/MM/YYYY',
-      defaultDate: moment()
-    });
-    $('#itineraryTo').datetimepicker({
-      format: 'ddd, DD/MM/YYYY',
-      useCurrent: false
-    });
-    // linked pickers
-    $("#itineraryFrom").on("change.datetimepicker", function (e) {
-        $('#itineraryTo').datetimepicker('minDate', e.date);
-    });
-    $("#itineraryTo").on("change.datetimepicker", function (e) {
-        $('#itineraryFrom').datetimepicker('maxDate', e.date);
-    });
-
   });
 </script>
 </body>

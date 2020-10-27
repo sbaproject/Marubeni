@@ -101,6 +101,14 @@ hr.line-bottom {
     border-bottom: 2px solid white;
 }
 
+.bootstrap-datetimepicker-widget table td.old {
+    visibility: hidden;
+}
+
+.bootstrap-datetimepicker-widget table td.new {
+    visibility: hidden;
+}
+
 
 input[type='radio']:after {
     width: 17px;
