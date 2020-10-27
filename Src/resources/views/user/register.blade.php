@@ -15,7 +15,7 @@
 							<label for="location" class="col-md-4 col-form-label text-md-right">{{ __('validation.attributes.location') }}</label>
 							<div class="col-md-6">
 								<fieldset id="location" class="@error('location') form-control is-invalid @enderror">
-									@foreach ($locations as $key => $value)
+									@foreach ($data['locations'] as $key => $value)
 									<label class="radio-inline com_title col-form-label">
 										<input type="radio" name="location" value="{{ $value }}" {{ old('location') == $value ? 'checked' : '' }}>
 											{{ __('label.'.$key) }}
@@ -35,7 +35,7 @@
 							<div class="col-md-6">
 								<select id="department" name="department" class="form-control @error('department') is-invalid @enderror">
 									<option value='' selected>{{ __('label.select') }}</option>
-									@foreach ($departments as $item)
+									@foreach ($data['departments'] as $item)
 										<option value="{{ $item->id }}" {{ old('department') == $item->id ? 'selected' : '' }}>{{ $item->name }}</option>
 									@endforeach
 								</select>
@@ -65,7 +65,7 @@
 							<div class="col-md-6">
 								<select id="role" name="role" class="form-control @error('role') is-invalid @enderror">
 									<option value='' selected>{{ __('label.select') }}</option>
-									@foreach ($roles as $key => $value)
+									@foreach ($data['roles'] as $key => $value)
 										<option value="{{ $value }}" {{ old('role') == $value ? 'selected' : '' }}>{{ $key }}</option>
 									@endforeach
 								</select>
@@ -109,7 +109,7 @@
 							<label for="approval" class="col-md-4 col-form-label text-md-right">{{ __('validation.attributes.approval') }}</label>
 							<div class="col-md-6">
 								<fieldset id="approval" class="@error('approval') form-control is-invalid @enderror">
-									@foreach ($approvals as $key => $value)
+									@foreach ($data['approvals'] as $key => $value)
 										<label class="radio-inline com_title col-form-label">
 											<input type="radio" name="approval" value="{{ $value }}" {{ old('approval') == $value ? 'checked' : '' }}>
 												{{ __('label.'.$key) }}
@@ -142,6 +142,10 @@
 								<button type="submit" class="btn btn-primary">
 									{{ __('label.register') }}
 								</button>
+								{{-- Cancel --}}
+								<a href="{{ route('user.list') }}" class="btn btn-outline-dark">
+									{{__('label.cancel')}}
+								</a>
 							</div>
 						</div>
 					</form>

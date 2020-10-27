@@ -5,39 +5,46 @@ namespace App\Http\Controllers\User;
 use App\Libs\Common;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Validator;
 
 class UserEditController extends Controller
 {
     /** Show user info
      *  Method - GET
      */
-    public function show(Request $request, User $user){
-        return view('user.edit',compact('user'));
+    public function show(Request $request, User $user)
+    {
+        // prepare compact data for view
+        $data = User::getCompactData($user);
+
+        return view('user.edit', compact('data'));
     }
 
     /** Update user info
      *  Method - PUT
      */
-    public function update(Request $request, User $user){
+    public function update(Request $request, User $user)
+    {
+        $inputs = $request->input();
 
-        $data = $request->input();
+        // fill inputs into user model
+        $user->fill($inputs);
+        $user->department_id = $inputs['department'];
 
-        $user->fill($data);
+        // prepare compact data for view
+        $data = User::getCompactData($user);
 
-        $validator = Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($user->id, 'id')]
-        ]);
-        
-        if($validator->fails()){
-            return Common::redirectViewWithAlertFail('user.edit', compact('user'))->withErrors($validator);
+        // check validate before update
+        $validator = User::makeValidator($inputs, $user, $data, true);
+
+        // validate fail
+        if ($validator->fails()) {
+            return Common::redirectViewWithAlertFail('user.edit', compact('data'))->withErrors($validator);
         }
 
+        // update
         $user->save();
 
-        return Common::redirectBackWithAlertSuccess();
+        return Common::redirectRouteWithAlertSuccess('user.list');
     }
 }

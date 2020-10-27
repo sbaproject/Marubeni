@@ -16,7 +16,7 @@ class UserListCotroller extends Controller
         $locations = config('const.location');
         $departments = Department::all();
 
-        // search conditions
+        // get parameter query string
         $conditions = $request->all();
 
         // make [where] filter

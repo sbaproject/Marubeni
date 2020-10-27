@@ -38,7 +38,7 @@ return [
 	 * Paginator
 	 */
 	'paginator' => [
-		'items' => 5 // Items per page
+		'items' => 10 // Items per page
 	],
 	/**
 	 * Employee NO : length of fillzero -- ex: 00001

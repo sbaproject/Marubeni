@@ -8,6 +8,7 @@ return [
     'register' => 'Đăng ký',
     'addnew' => 'Thêm mới',
     'edit' => 'Chỉnh sửa',
+    'cancel' => 'Hủy',
     'search' => 'Tìm kiếm',
     'login' => 'Đăng nhập',
     'logout' => 'Đăng xuất',

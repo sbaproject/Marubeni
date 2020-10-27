@@ -7,6 +7,7 @@
 			<div class="card">
 				<div class="card-header">User list</div>
 				<div class="card-body">
+					<x-alert />
 					<form action="{{ route('user.list') }}" method="GET">
 						{{-- Location --}}
 						<div class="form-group row">

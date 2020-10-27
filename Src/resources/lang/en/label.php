@@ -8,6 +8,7 @@ return [
     'register' => 'Register',
     'addnew' => 'Add New',
     'edit' => 'Edit',
+    'cancel' => 'Cancel',
     'search' => 'Search',
     'login' => 'Login',
     'logout' => 'Logout',
