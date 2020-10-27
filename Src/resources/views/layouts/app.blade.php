@@ -79,6 +79,20 @@
                                     @csrf
                                 </form>
                             </div>
+                            <a href="{{ route('locale','vi') }}">
+                                @if (config('app.locale') === 'vi')
+                                <b><u>VI</u></b>
+                                @else
+                                VI
+                                @endif
+                            </a>
+                            <a href="{{ route('locale','en') }}">
+                                @if (config('app.locale') === 'en')
+                                <b><u>EN</u></b>
+                                @else
+                                EN
+                                @endif
+                            </a>
                         </li>
                         @endguest
                     </ul>

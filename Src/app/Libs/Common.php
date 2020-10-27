@@ -2,8 +2,11 @@
 
 namespace App\Libs;
 
-use Illuminate\Support\Facades\Session;
+use App\Models\User;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
 use function PHPUnit\Framework\isEmpty;
+use Illuminate\Support\Facades\Session;
 
 class Common
 {
@@ -89,5 +92,32 @@ class Common
 			$msg = __('msg.save_fail');
 		}
 		Session::flash(config('const.keymsg.error'), $msg);
+	}
+
+	/**
+	 * Set locale by selected locale from user
+	 */
+	public static function setLocale($locale = null)
+	{
+		if (!Auth::check()) {
+			return;
+		}
+
+		if (empty($locale)) {
+			if (Session::has('locale')) {
+				$locale = Session::get('locale');
+			} else {
+				$locale = Auth::user()->locale;
+			}
+		}
+
+		// set new locale for app
+		App::setlocale($locale);
+		// set locale session
+		Session::put('locale', $locale);
+		// save new locale to user
+		$user = User::find(Auth::user()->id);
+		$user->locale = $locale;
+		$user->save();
 	}
 }

@@ -20,21 +20,25 @@ class CreateUsersTableV1 extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('phone')->nullable();
-            $table->unsignedTinyInteger('role');
-            // $table->unsignedBigInteger('role_id');
+            $table->unsignedTinyInteger('role')->comment('99:Admin, 1:Staff , 2:GM, 3:PIC, 4:DGD, 5:GD');
             $table->unsignedTinyInteger('location')->default(0)->comment('0: Ha Noi, 1: Ho Chi minh');
             $table->unsignedBigInteger('department_id');
             $table->unsignedTinyInteger('approval')->comment('0: OFF, 1: ON');
-            $table->unsignedTinyInteger('leave_days')->nullable();
-            $table->unsignedTinyInteger('leave_lemaining_days')->nullable();
-            $table->unsignedTinyInteger('leave_lemaining_time')->nullable();
+            $table->unsignedTinyInteger('leave_days')->nullable()->default(0);
+            $table->unsignedTinyInteger('leave_lemaining_days')->nullable()->default(0);
+            $table->unsignedTinyInteger('leave_lemaining_time')->nullable()->default(0);
             $table->text('memo')->nullable();
+            $table->string('locale')->default('en')->comment('Current selected language of user');
+            $table->unsignedBigInteger('created_by')->nullable();
+            $table->unsignedBigInteger('updated_by')->nullable();
+            $table->string('otp_token')->nullable()->comment('used to verify user when user logged in from external network');
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
 
-            // $table->foreign('role_id')->references('id')->on('roles');
             $table->foreign('department_id')->references('id')->on('departments');
+            $table->foreign('created_by')->references('id')->on('users');
+            $table->foreign('updated_by')->references('id')->on('users');
         });
     }
 

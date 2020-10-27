@@ -1,13 +1,15 @@
 <?php
 
+use App\Libs\Common;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LocalizationController;
+use App\Http\Controllers\User\UserListCotroller;
 use App\Http\Controllers\User\UserEditController;
+use App\Http\Controllers\User\UserRegisterController;
 use App\Http\Controllers\User\UserDashboardController;
 use App\Http\Controllers\User\UserChangePassController;
 use App\Http\Controllers\Admin\AdminDashboardController;
-use App\Http\Controllers\User\UserListCotroller;
-use App\Http\Controllers\User\UserRegisterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -78,4 +80,15 @@ Route::middleware('auth')->group(function () {
         Route::get('changepass', [UserChangePassController::class, 'show'])->name('changepass.show');
         Route::put('changepass', [UserChangePassController::class, 'update'])->name('changepass.update');
     });
+
+    /**----------------------------------------*
+     * Common Routes
+     *-----------------------------------------*/
+    // set locale
+    Route::get('locale/{lang}', function ($lang) {
+        Common::setLocale($lang);
+        return redirect()->back();
+    })
+    ->where('lang', "(vi|en)")
+    ->name('locale');
 });

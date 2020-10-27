@@ -38,6 +38,9 @@ class UserSeeder extends Seeder
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
         ]);
+
+        $firstId = DB::table('users')->first('id')->id;
+
         DB::table('users')->insert([
             'name' => 'user1',
             'email' => 'user1@gmail.com',
@@ -47,7 +50,9 @@ class UserSeeder extends Seeder
             'department_id' => 1, // Sales
             'approval' => 0, // OFF
             'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now()
+            'updated_at' => Carbon::now(),
+            'created_by' => $firstId,
+            'updated_by' => $firstId
         ]);
         DB::table('users')->insert([
             'name' => 'user2',
@@ -58,7 +63,9 @@ class UserSeeder extends Seeder
             'department_id' => 1, // Sales
             'approval' => 1, // ON
             'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now()
+            'updated_at' => Carbon::now(),
+            'created_by' => $firstId,
+            'updated_by' => $firstId
         ]);
 
         for ($i = 5; $i < 100; $i++) {
@@ -73,7 +80,9 @@ class UserSeeder extends Seeder
                 'department_id' => Arr::random($department_ids),
                 'approval' => $approval,
                 'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
+                'updated_at' => Carbon::now(),
+                'created_by' => $firstId,
+                'updated_by' => $firstId
             ]);
         }
     }
