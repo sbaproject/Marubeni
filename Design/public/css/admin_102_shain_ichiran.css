@@ -57,3 +57,35 @@
 .bootstrap-datetimepicker-widget table td.old, .bootstrap-datetimepicker-widget table td.new {
     visibility: hidden;
 }
+input[type='radio']:after {
+    width: 17px;
+    height: 17px;
+    border-radius: 15px;
+    top: -3px;
+    left: -1px;
+    position: relative;
+    background-color: white;
+    content: '';
+    display: inline-block;
+    visibility: visible;
+    border: 1px solid gray;
+}
+input[type='radio']:checked:after {
+    width: 17px;
+    height: 17px;
+    border-radius: 15px;
+    top: -3px;
+    left: -1px;
+    position: relative;
+    background-color: #96000c;
+    color: rebeccapurple;
+    content: '';
+    display: inline-block;
+    visibility: visible;
+    border: 1px solid gray;
+    box-shadow: inset 0 0 0 3px white;
+}
+.btn-danger{
+    background-color:  #96000c;
+    border-color: #96000c;
+}
