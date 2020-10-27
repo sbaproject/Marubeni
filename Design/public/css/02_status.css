@@ -119,3 +119,10 @@ tr.list-content td
     background-color: gray;
     color: #fff;
 }
+
+.bootstrap-datetimepicker-widget table thead tr{
+    border-bottom: 2px solid white;
+}
+.bootstrap-datetimepicker-widget table tr{
+    border-bottom: 2px solid white;
+}

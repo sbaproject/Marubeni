@@ -171,6 +171,13 @@ tr.list-content td div.status-reject
     color: #fff;
 }
 
+.bootstrap-datetimepicker-widget table thead tr{
+    border-bottom: 2px solid white;
+}
+.bootstrap-datetimepicker-widget table tr{
+    border-bottom: 2px solid white;
+}
+
 
   .col-xs-5ths,
   .col-sm-5ths,
