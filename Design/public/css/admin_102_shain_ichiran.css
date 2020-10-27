@@ -53,3 +53,8 @@
     background-color: gray;
     color: #fff;
 }
+
+.bootstrap-datetimepicker-widget table td.old, .bootstrap-datetimepicker-widget table td.new {
+    visibility: hidden;
+}
+
