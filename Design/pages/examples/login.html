@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>AdminLTE 3 | Log in</title>
+  <title>Log in</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -15,69 +15,81 @@
     <link rel="stylesheet" href="../../public/css/icheck-bootstrap/icheck-bootstrap.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="../../public/css/adminlte.min.css">
+  <!-- jquery-ui css -->
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  <!-- custom css -->
+  <link href="../../public/css/login.css" rel="stylesheet">
 </head>
-<body class="hold-transition login-page">
-<div class="login-box" style="width: 400px;">
-  <div class="login-logo">
+<body class="hold-transition" style="background-color: #F3F3F3;">
+  <div class="wrapper">
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light" style="margin-left: 0px;">
+      <!-- Left navbar links -->
+      <ul class="navbar-nav bg-custom">
+        <li class="nav-item">
       <img src="../../public/images/logo.png" alt="Logo" class="" style="max-width: 100%;">
-  </div>
-  <!-- /.login-logo -->
-  <div class="card">
-    <div class="card-body login-card-body">
-      <p class="login-box-msg">Sign in to start your session</p>
-      <form action="../../index3.html" method="post">
-        <div class="input-group mb-3">
-          <input type="email" class="form-control" placeholder="Email">
-          <div class="input-group-append">
-            <div class="input-group-text">
-              <span class="fas fa-envelope"></span>
-            </div>
-          </div>
-        </div>
-        <div class="input-group mb-3">
-          <input type="password" class="form-control" placeholder="Password">
-          <div class="input-group-append">
-            <div class="input-group-text">
-              <span class="fas fa-lock"></span>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-8">
-            <div class="icheck-primary">
-              <input type="checkbox" id="remember">
-              <label for="remember">
-                Remember Me
-              </label>
-            </div>
-          </div>
-          <!-- /.col -->
-          <div class="col-4">
-            <button type="submit" class="btn btn-primary btn-block">Sign In</button>
-          </div>
-          <!-- /.col -->
-        </div>
-      </form>
+        </li>
+      </ul>
 
-      <p class="mb-1">
-        <a href="forgot-password.html">I forgot my password</a>
-      </p>
-      <p class="mb-0">
-        <a href="register.html" class="text-center">Register a new membership</a>
-      </p>
+      <!-- Right navbar links -->
+      <ul class="navbar-nav ml-auto info-user">
+        <li class="nav-item user-panel-custom">
+          <div class="user-deparment">Department Name,
+          </div>
+        </li>
+        <li class="nav-item user-panel-custom">
+          <div class="info">
+              <a href="#" class="text-name">Username</a>
+            </div>
+        </li>
+        <li class="nav-item user-panel-custom">
+          <div class="tab">
+              <a class="tablink-VN" href="">VN</a>
+              <a class="tablink-EN" href="">EN</a>
+            </div>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="login-box">
+      <!-- /.login-logo -->
+      <div class="card">
+        <div class="card-body login-card-body">
+          <form>
+            <div class="form-group">
+              <label>ID</label>
+                <input name="" class="form-control" placeholder="Enter Your ID" type="email">
+            </div> <!-- form-group// -->
+            <div class="form-group">
+              <label>Password</label>
+                <input class="form-control" placeholder="Enter Your Password" type="password">
+            </div> <!-- form-group// --> 
+            <div class="form-group"> 
+            <div class="checkbox">
+              <label style="font-weight: normal;"> <input type="checkbox" > Automatic Log-in </label>
+            </div> <!-- checkbox .// -->
+            </div> <!-- form-group// -->  
+            <div class="form-group btn-login">
+                <button type="submit" class="btn btn-danger btn-block"> Login  </button>
+            </div> <!-- form-group// -->
+            <p class="mb-1" style="text-align: center;">
+              <a href="forgot-password.html" style="border-bottom: 1px solid #010ECC; color: #010ECC;">Forget Password ?</a>
+            </p>
+        </form>
+        </div>
+        <!-- /.login-card-body -->
+      </div>
     </div>
-    <!-- /.login-card-body -->
+    <!-- /.login-box -->
   </div>
-</div>
-<!-- /.login-box -->
 
-<!-- jQuery -->
-<script src="../../public/js/jquery/jquery.min.js"></script>
-<!-- Bootstrap 4 -->
-<script src="../../public/js/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- AdminLTE App -->
-<script src="../../public/js/adminlte.min.js"></script>
+  <!-- jQuery -->
+  <script src="../public/js/jquery/jquery.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <!-- Bootstrap 4 -->
+  <script src="../public/js/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- AdminLTE App -->
+  <script src="../public/js/adminlte.min.js"></script>
 </body>
 </html>

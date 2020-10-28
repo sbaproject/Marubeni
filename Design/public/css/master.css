@@ -27,7 +27,7 @@
 }
 
 .nav-sidebar>.nav-item:hover {
-	background: AA0000;
+	background: #96000C;
 }
 
 .nav-item>.nav-link i .icon-links {
@@ -35,7 +35,7 @@
 }
 
 .main-sidebar{
-    background:#AA0000;
+    background:#96000C;
 }
 
 .main-sidebar>.brand-link {
@@ -61,7 +61,7 @@
 }
 
 .tablink-EN {
-	background-color: #AA0000;
+	background-color: #96000C;
 	border: 0.5px solid #ffffff;
 	color: #ffffff;
 	margin-left: -5px;
