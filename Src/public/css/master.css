@@ -53,19 +53,21 @@
 	margin-right: 10px;
 }
 
-.tablink-VN {
+.tab-locale {
 	background-color: #C0C0C0;
 	border: 1px solid #ffffff;
 	color: #000;
 	padding: 0px 8px 0px 8px;
 }
 
-.tablink-EN {
+a.tab-locale.selected {
 	background-color: #AA0000;
 	border: 0.5px solid #ffffff;
 	color: #ffffff;
+}
+
+a.tab-locale.en{
 	margin-left: -5px;
-	padding: 0px 8px 0px 8px;
 }
 
 @media screen and (max-width: 992px) {

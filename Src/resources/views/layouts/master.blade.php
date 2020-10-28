@@ -1,14 +1,16 @@
 <!DOCTYPE html>
-<html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1"> 
-        <title>@yield('title')</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- CSRF Token -->
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+        <title>{{ config('app.name') }} | @yield('title')</title>
         <base href="{{asset('')}}">
 
-        <!-----------------START LINK CSS ------------------------------>        
-        <!-- Font Awesome -->        
+        <!-----------------START LINK CSS ------------------------------>
+        <!-- Font Awesome -->
         <link rel="stylesheet" href="css/fontawesome-free/css/all.min.css">
         <!-- Ionicons -->
         <link rel="stylesheet" href="css/ionicons.min.css">
@@ -18,8 +20,9 @@
         <link rel="stylesheet" href="css/jquery-ui.css">
         <!-- Google Font: Source Sans Pro -->
         <link rel="stylesheet" href="css/google_font_sans_pro.css">
-        <!-- custom css -->
+        <!-- Custom master css -->
         <link rel="stylesheet" href="css/master.css">
+        {{-- Custom CSS per page here --}}
         @yield('css')
         <!-----------------END LINK CSS ------------------------------->
 
@@ -35,11 +38,12 @@
         <!-- moment -->
         <script src="js/moment/moment.min.js"></script>
         <!-- date-range-picker -->
-        <script src="js/daterangepicker/daterangepicker.js"></script>        
+        <script src="js/daterangepicker/daterangepicker.js"></script>
         <!-- Tempusdominus Bootstrap 4 -->
         <script src="js/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
         <!-- Bootstrap Switch -->
         <script src="js/bootstrap-switch/js/bootstrap-switch.min.js"></script>
+        {{-- Custom JS per page here --}}
         @yield('js')
         <!-----------------END LINK JAVASCRIPT ------------------------>
 
@@ -64,19 +68,23 @@
                 <div class="user-deparment"></div>
               </li>
               <li class="nav-item user-panel-custom">
-                <div class="info">                
-                <a href="#" class="text-name">Admin</a> / 
-                    <a href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();" class="text-name">Logout</a>
+                <div class="info">
+                    <a href="#" class="text-name">{{ Auth::user()->name }}</a>
+                        /
+                    <a href="{{ route('logout') }}" class="text-name"
+                        onclick="event.preventDefault();
+                                document.getElementById('logout-form').submit();">
+                        {{ __('label.logout') }}
+                    </a>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                    @csrf
-                                </form>
-                  </div>
+                        @csrf
+                    </form>
+                </div>
               </li>
               <li class="nav-item user-panel-custom">
                 <div class="tab">
-                    <a class="tablink-VN" href="">VN</a>
-                    <a class="tablink-EN" href="">EN</a>
+                    <a class="tab-locale vi @if (config('app.locale') === 'vi') selected @endif" href="{{ route('locale','vi') }}">VI</a>
+                    <a class="tab-locale en @if (config('app.locale') === 'en') selected @endif" href="{{ route('locale','en') }}">EN</a>
                   </div>
               </li>
             </ul>
@@ -92,8 +100,8 @@
               <!-- Sidebar Menu -->
 
               <!-- SET QUYỀN USER TRUY CẬP ĐỂ HIỆN MENU ADMIN HOẶC USER -->
-              <!-- @include('layouts.menu_user') -->              
-                @include('layouts.menu_admin')        
+              <!-- @include('layouts.menu_user') -->
+                @include('layouts.menu_admin')
               <!-- /.sidebar-menu -->
 
           </div>
