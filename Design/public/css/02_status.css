@@ -134,3 +134,7 @@ tr.list-content td
 .bootstrap-datetimepicker-widget table td.new {
     visibility: hidden;
 }
+
+.bootstrap-datetimepicker-widget table td.today:before {
+    content: none;
+}

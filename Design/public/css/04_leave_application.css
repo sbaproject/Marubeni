@@ -109,6 +109,10 @@ hr.line-bottom {
     visibility: hidden;
 }
 
+.bootstrap-datetimepicker-widget table td.today:before {
+    content: none;
+}
+
 
 input[type='radio']:after {
     width: 17px;
@@ -186,3 +190,49 @@ input[type='checkbox']:checked:after {
     color: #fff;
 }
 
+@media (max-width: 320px) {
+    .btn-apply {
+        display: block;
+        margin: 0 auto;
+        margin-bottom: 15px;
+    }
+    .btn-draft {
+        display: block;
+        margin: 0 auto;
+        margin-bottom: 15px;
+    }
+    .btn-cancel {
+        display: block;
+        margin: 0 auto;
+    }
+}
+
+/* @media (min-width: 992px) {
+    .btn-apply {
+        display: block;
+        margin: 0 auto;
+    }
+    .btn-draft {
+        display: block;
+        margin: 0 auto;
+    }
+    .btn-cancel {
+        display: block;
+        margin: 0 auto;
+    }
+}
+
+@media (min-width: 1200px) {
+    .btn-apply {
+        display: block;
+        margin: 0 auto;
+    }
+    .btn-draft {
+        display: block;
+        margin: 0 auto;
+    }
+    .btn-cancel {
+        display: block;
+        margin: 0 auto;
+    }
+} */

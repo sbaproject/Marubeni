@@ -194,6 +194,10 @@ tr.list-content td div.status-completed
     visibility: hidden;
 }
 
+.bootstrap-datetimepicker-widget table td.today:before {
+    content: none;
+}
+
 
   .col-xs-5ths,
   .col-sm-5ths,
