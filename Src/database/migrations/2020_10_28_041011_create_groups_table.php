@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDepartmentsTableV1 extends Migration
+class CreateGroupsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,17 @@ class CreateDepartmentsTableV1 extends Migration
      */
     public function up()
     {
-        Schema::create('departments', function (Blueprint $table) {
+        Schema::create('groups', function (Blueprint $table) {
             $table->unsignedInteger('id', true);
-            $table->string('name');
-            $table->text('memo')->nullable();
+            $table->unsignedInteger('budget_id');
+            $table->unsignedInteger('applicant_id');
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->timestamps();
             $table->softDeletes();
+
+            $table->foreign('budget_id')->references('id')->on('budgets');
+            $table->foreign('applicant_id')->references('id')->on('applicants');
         });
     }
 
@@ -31,6 +34,6 @@ class CreateDepartmentsTableV1 extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('departments');
+        Schema::dropIfExists('groups');
     }
 }

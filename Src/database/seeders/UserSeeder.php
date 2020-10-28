@@ -22,7 +22,7 @@ class UserSeeder extends Seeder
 
         $department_ids = Arr::pluck(Department::select('id')->get()->toArray(), 'id');
 
-        DB::table('users')->truncate();
+        DB::table('users')->delete();
 
         /**
          * users

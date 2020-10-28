@@ -17,12 +17,12 @@ class CreateUsersTableV1 extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
+            // $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('phone')->nullable();
             $table->unsignedTinyInteger('role')->comment('99:Admin, 1:Staff , 2:GM, 3:PIC, 4:DGD, 5:GD');
             $table->unsignedTinyInteger('location')->default(0)->comment('0: Ha Noi, 1: Ho Chi minh');
-            $table->unsignedBigInteger('department_id');
+            $table->unsignedInteger('department_id');
             $table->unsignedTinyInteger('approval')->comment('0: OFF, 1: ON');
             $table->unsignedTinyInteger('leave_days')->nullable()->default(0);
             $table->unsignedTinyInteger('leave_lemaining_days')->nullable()->default(0);
@@ -37,8 +37,6 @@ class CreateUsersTableV1 extends Migration
             $table->softDeletes();
 
             $table->foreign('department_id')->references('id')->on('departments');
-            $table->foreign('created_by')->references('id')->on('users');
-            $table->foreign('updated_by')->references('id')->on('users');
         });
     }
 
