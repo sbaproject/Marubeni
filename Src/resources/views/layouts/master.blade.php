@@ -19,7 +19,7 @@
         <link href="public/css/google_font_sans_pro.css" rel="stylesheet">
         <!-- custom css -->
         <link rel="stylesheet" href="public/css/master.css">
-        <link rel="stylesheet" href="public/css/admin_102_shain_ichiran.css">
+        <link rel="stylesheet" href="public/css/admin.css">
         <!-----------------END LINK CSS ------------------------------->
 
 
