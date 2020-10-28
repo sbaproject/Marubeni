@@ -73,3 +73,714 @@
         padding: 0!important;
     }
 }
+.bt_new {
+    background: #FB8F15;
+    color: #ffffff;
+    padding: 4px 30px;
+    border: 0px;
+    border-radius: 4px;
+}
+.pager-wrap {
+    display: inline-block;
+}
+.pager_custom {
+    justify-content: center;
+}
+.bt_direct button:hover {
+    border: 1px solid #E3E6E9;
+    border-radius: 20px;
+    color: #0056b3;
+    overflow: hidden;
+}
+.button_wrap {
+    margin-bottom: 5px;
+}
+.bt_direct button:hover {
+    border: 1px solid #E3E6E9;
+    border-radius: 20px;
+    color: #0056b3;
+    overflow: hidden;
+}
+.bt_direct button {
+    border: 1px solid #E3E6E9;
+    border-radius: 20px;
+    background: #ffffff;
+    color: #868484;
+    padding: 3px 20px;
+}
+.content_roll {
+    overflow-x: scroll;
+}
+.justify-between {
+    justify-content: space-between;
+}
+.table th, td {
+    text-align: center;
+}
+input[type='radio']{
+    margin-right: 5px;
+}
+input[type='radio']:after {
+    width: 17px;
+    height: 17px;
+    border-radius: 15px;
+    top: -2px;
+    left: -1px;
+    position: relative;
+    background-color: white;
+    content: '';
+    display: inline-block;
+    visibility: visible;
+    border: 1px solid gray;
+}
+input[type='radio']:checked:after {
+    width: 17px;
+    height: 17px;
+    border-radius: 15px;
+    top: -2px;
+    left: -1px;
+    position: relative;
+    background-color: #96000c;
+    color: rebeccapurple;
+    content: '';
+    display: inline-block;
+    visibility: visible;
+    border: 1px solid gray;
+    box-shadow: inset 0 0 0 3px white;
+}
+.btn-danger{
+    background-color:  #96000c;
+    border-color: #96000c;
+}
+.content-header {
+    background-color: #fff;
+    border: #fff;
+    padding-top: 10px;
+}
+
+.lbl-from {
+    margin-left: 20px;
+}
+
+.lbl-to {
+    margin-left: 20px;
+}
+
+#dateFrom{
+    margin: 0 20px 20px 20px;
+}
+#dateFrom > span:hover{
+    cursor: pointer;
+}
+
+#dateTo {
+    margin: 0 20px 20px 20px;
+}
+#dateTo > span:hover{
+    cursor: pointer;
+}
+
+input.form-control.calendar-from {
+    background-color: #fff;
+    width: 100%;
+}
+
+.btn-search {
+    width: 100%;
+    display: inline-grid;
+    padding: 32px 10px 0px 24px;
+}
+
+.sty-search {
+    background-color: #96000C;
+    color: #fff;
+}
+
+.sty-search:hover {
+    background-color: #96000C;
+    color: #fff;
+}
+
+.content-dashboard {
+    margin-top: 20px;
+    background-color: #fff;
+    border: #fff;
+    padding: 0px 25px 25px 25px;
+}
+
+.content-dashboard .row .col-xs-5ths a{
+    color: #000;
+    font-weight: 600;
+}
+
+.content-dashboard .row .col-xs-5ths a:hover{
+    text-decoration: none;
+}
+
+.card-body.card-wrap-items:hover{
+    background-color: #96000C;
+    color: #fff;
+    text-decoration: none;
+}
+
+.total-links a{
+    text-decoration: none;
+}
+
+.card {
+    margin-top: 20px;
+}
+
+.card-list-items {
+    overflow-x: scroll;
+}
+
+.list-title th{
+    border-right: 1px solid #fff;
+    background: darkgray;
+    text-align: center;
+}
+
+tr.list-content td
+{
+    border-right: 1px solid darkgray;
+    text-align: center;
+}
+
+tr.list-content td div.status-apply
+{
+    font-size: 15px;
+    color: #fff;
+    background: #25992B;
+    border-radius: 2px;
+}
+
+tr.list-content td div.status-approval
+{
+    font-size: 15px;
+    color: #fff;
+    background: #96000C;
+    border-radius: 2px;
+}
+
+tr.list-content td div.status-declined
+{
+    font-size: 16px;
+    color: #fff;
+    background: #B78E00;
+    border-radius: 2px;
+}
+
+tr.list-content td div.status-reject
+{
+    font-size: 15px;
+    color: #fff;
+    background: #656565;
+    border-radius: 2px;
+}
+
+.btn-details {
+    border: 1px solid #000;
+    padding: 5px;
+    border-radius: 5px;
+    color: #000;
+}
+
+.bootstrap-datetimepicker-widget table td.active, .bootstrap-datetimepicker-widget table td.active:hover {
+    background-color: #96000C;
+    color: #ffffff;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+}
+
+.bootstrap-datetimepicker-widget table thead:first-child tr:first-child{
+    background-color: gray;
+    color: #fff;
+    border-radius: 0px;
+}
+
+.bootstrap-datetimepicker-widget table thead:first-child tr:first-child .prev{
+    border-radius: 0px;
+}
+
+.bootstrap-datetimepicker-widget table thead:first-child tr:first-child .prev:hover{
+    background-color: gray;
+    color: #fff;
+}
+
+.bootstrap-datetimepicker-widget table thead:first-child tr:first-child .picker-switch{
+    border-radius: 0px;
+}
+
+.bootstrap-datetimepicker-widget table thead:first-child tr:first-child .picker-switch:hover{
+    background-color: gray;
+    color: #fff;
+}
+
+.bootstrap-datetimepicker-widget table thead:first-child tr:first-child .next{
+    border-radius: 0px;
+}
+
+.bootstrap-datetimepicker-widget table thead:first-child tr:first-child .next:hover{
+    background-color: gray;
+    color: #fff;
+}
+
+.bootstrap-datetimepicker-widget table thead tr{
+    border-bottom: 2px solid white;
+}
+.bootstrap-datetimepicker-widget table tr{
+    border-bottom: 2px solid white;
+}
+
+.bootstrap-datetimepicker-widget table td.old {
+    visibility: hidden;
+}
+
+.bootstrap-datetimepicker-widget table td.new {
+    visibility: hidden;
+}
+
+
+  .col-xs-5ths,
+  .col-sm-5ths,
+  .col-md-5ths,
+  .col-lg-5ths {
+    position: relative;
+    min-height: 1px;
+    padding-right: 10px;
+    padding-left: 10px;
+  }
+  
+  .col-xs-5ths {
+    width: 20%;
+    float: left;
+  }
+  
+  @media (min-width: 768px) {
+    .col-sm-5ths {
+      width: 20%;
+      float: left;
+    }
+  }
+  
+  @media (min-width: 992px) {
+    .col-md-5ths {
+      width: 20%;
+      float: left;
+    }
+  }
+  
+  @media (min-width: 1200px) {
+    .col-lg-5ths {
+      width: 20%;
+      float: left;
+    }
+  }
+  .content-header {
+    background-color: #fff;
+    border: #fff;
+    padding-top: 10px;
+}
+
+.lbl-from {
+    margin-left: 20px;
+}
+
+.lbl-to {
+    margin-left: 20px;
+}
+
+#dateFrom{
+    margin: 0 20px 20px 20px;
+}
+#dateFrom > span:hover{
+    cursor: pointer;
+}
+
+#dateTo {
+    margin: 0 20px 20px 20px;
+}
+#dateTo > span:hover{
+    cursor: pointer;
+}
+
+input.form-control.calendar-from {
+    background-color: #fff;
+    width: 100%;
+}
+
+.btn-search {
+    width: 100%;
+    display: inline-grid;
+    padding: 32px 10px 0px 24px;
+}
+
+.sty-search {
+    background-color: #96000C;
+    color: #fff;
+}
+
+.sty-search:hover {
+    background-color: #96000C;
+    color: #fff;
+}
+
+.content-status {
+    margin-top: 20px;
+    background-color: #fff;
+    border: #fff;
+    padding: 25px;
+}
+
+.card {
+    margin-top: 20px;
+}
+
+.card-list-items {
+    overflow-x: scroll;
+}
+
+.list-title th{
+    border-right: 1px solid #fff;
+    background: darkgray;
+    text-align: center;
+}
+
+tr.list-content td
+{
+    border-right: 1px solid darkgray;
+    text-align: center;
+}
+
+.btn-details {
+    border: 1px solid #000;
+    padding: 5px;
+    border-radius: 5px;
+    color: #000;
+}
+
+.bootstrap-datetimepicker-widget table td.active, .bootstrap-datetimepicker-widget table td.active:hover {
+    background-color: #96000C;
+    color: #ffffff;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+}
+
+.bootstrap-datetimepicker-widget table thead:first-child tr:first-child{
+    background-color: gray;
+    color: #fff;
+    border-radius: 0px;
+}
+
+.bootstrap-datetimepicker-widget table thead:first-child tr:first-child .prev{
+    border-radius: 0px;
+}
+
+.bootstrap-datetimepicker-widget table thead:first-child tr:first-child .prev:hover{
+    background-color: gray;
+    color: #fff;
+}
+
+.bootstrap-datetimepicker-widget table thead:first-child tr:first-child .picker-switch{
+    border-radius: 0px;
+}
+
+.bootstrap-datetimepicker-widget table thead:first-child tr:first-child .picker-switch:hover{
+    background-color: gray;
+    color: #fff;
+}
+
+.bootstrap-datetimepicker-widget table thead:first-child tr:first-child .next{
+    border-radius: 0px;
+}
+
+.bootstrap-datetimepicker-widget table thead:first-child tr:first-child .next:hover{
+    background-color: gray;
+    color: #fff;
+}
+
+.bootstrap-datetimepicker-widget table thead tr{
+    border-bottom: 2px solid white;
+}
+.bootstrap-datetimepicker-widget table tr{
+    border-bottom: 2px solid white;
+}
+
+.bootstrap-datetimepicker-widget table td.old {
+    visibility: hidden;
+}
+
+.bootstrap-datetimepicker-widget table td.new {
+    visibility: hidden;
+}
+.application-item {
+    text-align: center;
+    font-weight: bold;
+    padding: 1rem;
+    border: 1px solid #9d9d9d;
+    border-radius: 4px;
+    background: #d6d6d6;
+    color:#000
+}
+.main-top {
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.main-header-text {
+    font-weight: 600;
+}
+
+.btn-outline-dark {
+    background-color: #96000C;
+    color: #fff;
+    border: none;
+    padding-left: 25px;
+    padding-right: 25px;
+    font-weight: 600;
+}
+
+.form-check-inline {
+    margin-right: 2rem;
+}
+
+.btn-custom {
+    margin-right: 30px;
+    min-width: 130px;
+}
+
+.leave-application .form-group, .business-trip-application .form-group {
+    margin-bottom: 0;
+}
+
+.leave-application .row, .business-trip-application .row {
+    align-items: center;
+}
+
+.input-custom {
+    display: inline;
+    width: 50%;
+}
+
+.input-custom-2 {
+    display: inline;
+    width: 30%;
+}
+
+hr.line-bottom {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border: 0;
+    border-top: 1px dotted rgba(0,0,0,.1);
+}
+
+.bootstrap-datetimepicker-widget table td.active, .bootstrap-datetimepicker-widget table td.active:hover {
+    background-color: #96000C;
+    color: #ffffff;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+}
+
+.bootstrap-datetimepicker-widget table thead:first-child tr:first-child{
+    background-color: gray;
+    color: #fff;
+    border-radius: 0px;
+}
+
+.bootstrap-datetimepicker-widget table thead:first-child tr:first-child .prev{
+    border-radius: 0px;
+}
+
+.bootstrap-datetimepicker-widget table thead:first-child tr:first-child .prev:hover{
+    background-color: gray;
+    color: #fff;
+}
+
+.bootstrap-datetimepicker-widget table thead:first-child tr:first-child .picker-switch{
+    border-radius: 0px;
+}
+
+.bootstrap-datetimepicker-widget table thead:first-child tr:first-child .picker-switch:hover{
+    background-color: gray;
+    color: #fff;
+}
+
+.bootstrap-datetimepicker-widget table thead:first-child tr:first-child .next{
+    border-radius: 0px;
+}
+
+.bootstrap-datetimepicker-widget table thead:first-child tr:first-child .next:hover{
+    background-color: gray;
+    color: #fff;
+}
+
+.bootstrap-datetimepicker-widget {
+    border-bottom: 2px solid white;
+}
+
+.bootstrap-datetimepicker-widget table thead tr{
+    border-bottom: 2px solid white;
+}
+.bootstrap-datetimepicker-widget table tr{
+    border-bottom: 2px solid white;
+}
+
+.bootstrap-datetimepicker-widget table td.old {
+    visibility: hidden;
+}
+
+.bootstrap-datetimepicker-widget table td.new {
+    visibility: hidden;
+}
+
+
+input[type='radio']:after {
+    width: 17px;
+    height: 17px;
+    border-radius: 50%;
+    top: -3px;
+    left: -1px;
+    position: relative;
+    background-color: white;
+    content: '';
+    display: inline-block;
+    visibility: visible;
+    border: 1px solid gray;
+}
+input[type='radio']:checked:after {
+    width: 17px;
+    height: 17px;
+    border-radius: 50%;
+    top: -3px;
+    left: -1px;
+    position: relative;
+    background-color: #96000c;
+    content: '';
+    display: inline-block;
+    visibility: visible;
+    border: 1px solid gray;
+    box-shadow: inset 0 0 0 3px white;
+}
+
+input[type='checkbox']:checked:after {
+    width: 17px;
+    height: 17px;
+    border-radius: 5px;
+    top: -3px;
+    left: -1px;
+    position: relative;
+    background-color: blue;
+    content: '';
+    display: inline-block;
+    visibility: visible;
+    border: 1px solid gray;
+    box-shadow: inset 0 0 0 3px white;
+}
+.search_bt {
+    background-color: #96000C;
+    border: #96000C;
+}
+
+.search_bt:hover {
+    background-color: #96000C;
+}
+
+.card-list-items {
+    overflow-x: scroll;
+}
+
+.list-title th{
+    border-right: 1px solid #fff;
+    background: darkgray;
+    text-align: center;
+}
+
+tr.list-content td
+{
+    border-right: 1px solid darkgray;
+    text-align: center;
+}
+
+.btn-details {
+    border: 1px solid #000;
+    padding: 5px;
+    border-radius: 5px;
+    color: #000;
+}
+.app_title{
+    background: #C9C9C9;
+    color: #000000;
+    padding:5px 0px;
+    text-align: center;
+    border-bottom: 1px solid #D3D3D3;
+}
+.card-app{
+    border-radius: 0px;
+    box-shadow: none;
+
+}
+.app_info{
+    text-align: center;
+    border: 1px solid #CDCDCD;
+    border-bottom: 0px;
+    background:#ffffff;
+    padding:5px 0px;
+}
+.last_item{
+    border: 1px solid #CDCDCD;
+}
+.card_preview{
+    padding:20px 0px;
+}
+.bt_preview{
+    padding:4px 0px;
+    border:1px solid #6C6C6C;
+    border-radius: 5px;
+    background: #EBEBEB;
+
+}
+.bt_preview:hover{
+    background: #C9C9C9;
+}
+.wrap_comment{
+    padding:40px 0px;
+}
+.comment_title{
+    height: 100%;
+    display: flex;
+    align-items: center;
+    font-size: 25px;
+}
+.bt_border{
+    padding:4px 0px;
+    border:1px solid #6C6C6C;
+    border-radius: 5px;
+    margin-right: 35px;
+    margin-bottom: 20px;
+    width: 120px;
+    color: #232323;
+}
+.bt_border:hover{color: #ffffff;}
+.comment_area{
+    border:1px solid #3D3D3D;
+}
+.card-company{
+    border: 1px solid #898989;
+    border-radius: 0px;
+}
+.com_block{
+    height: 100%;
+    display: flex;
+   justify-content: center;
+    align-items: center;
+    background: #F19837;
+    border-bottom:1px solid #DEAD78;
+    min-height: 40px;
+    text-align: center;
+    font-weight: 600;
+}
+.com_title{
+    font-weight: normal!important;
+}
+.info_block{
+    padding:30px 0px;
+}

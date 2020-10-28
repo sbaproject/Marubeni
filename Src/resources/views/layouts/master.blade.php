@@ -17,10 +17,10 @@
         <!-- jquery-ui css -->
         <link rel="stylesheet" href="css/jquery-ui.css">
         <!-- Google Font: Source Sans Pro -->
-        <link href="css/google_font_sans_pro.css" rel="stylesheet">
+        <link rel="stylesheet" href="css/google_font_sans_pro.css">
         <!-- custom css -->
         <link rel="stylesheet" href="css/master.css">
-        <link rel="stylesheet" href="css/admin.css">
+        @yield('css')
         <!-----------------END LINK CSS ------------------------------->
 
 
@@ -40,6 +40,7 @@
         <script src="js/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
         <!-- Bootstrap Switch -->
         <script src="js/bootstrap-switch/js/bootstrap-switch.min.js"></script>
+        @yield('js')
         <!-----------------END LINK JAVASCRIPT ------------------------>
 
     </head>
@@ -63,8 +64,13 @@
                 <div class="user-deparment"></div>
               </li>
               <li class="nav-item user-panel-custom">
-                <div class="info">
-                    <a href="#" class="text-name">Admin</a>
+                <div class="info">                
+                <a href="#" class="text-name">Admin / </a>
+                    <a href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();" class="text-name">Logout</a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    @csrf
+                                </form>
                   </div>
               </li>
               <li class="nav-item user-panel-custom">
