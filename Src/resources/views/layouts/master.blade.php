@@ -5,40 +5,41 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1"> 
         <title>@yield('title')</title>
+        <base href="{{asset('')}}">
 
-        <!-----------------START LINK CSS ------------------------------>
+        <!-----------------START LINK CSS ------------------------------>        
         <!-- Font Awesome -->        
-        <link rel="stylesheet" href="public/css/fontawesome-free/css/all.min.css">
+        <link rel="stylesheet" href="css/fontawesome-free/css/all.min.css">
         <!-- Ionicons -->
-        <link rel="stylesheet" href="public/css/ionicons.min.css">
+        <link rel="stylesheet" href="css/ionicons.min.css">
         <!-- overlayScrollbars -->
-        <link rel="stylesheet" href="public/css/adminlte.min.css">
+        <link rel="stylesheet" href="css/adminlte.min.css">
         <!-- jquery-ui css -->
-        <link rel="stylesheet" href="public/css/jquery-ui.css">
+        <link rel="stylesheet" href="css/jquery-ui.css">
         <!-- Google Font: Source Sans Pro -->
-        <link href="public/css/google_font_sans_pro.css" rel="stylesheet">
+        <link href="css/google_font_sans_pro.css" rel="stylesheet">
         <!-- custom css -->
-        <link rel="stylesheet" href="public/css/master.css">
-        <link rel="stylesheet" href="public/css/admin.css">
+        <link rel="stylesheet" href="css/master.css">
+        <link rel="stylesheet" href="css/admin.css">
         <!-----------------END LINK CSS ------------------------------->
 
 
         <!-----------------START LINK JAVASCRIPT ---------------------->
         <!-- jQuery -->
-        <script src="public/js/jquery/jquery.min.js"></script>
-        <script src="public/js/jquery/jquery-ui.js"></script>
+        <script src="js/jquery/jquery.min.js"></script>
+        <script src="js/jquery/jquery-ui.js"></script>
         <!-- Bootstrap 4 -->
-        <script src="public/js/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="js/bootstrap/js/bootstrap.bundle.min.js"></script>
         <!-- AdminLTE App -->
-        <script src="public/js/adminlte.min.js"></script>
+        <script src="js/adminlte.min.js"></script>
         <!-- moment -->
-        <script src="public/js/moment/moment.min.js"></script>
+        <script src="js/moment/moment.min.js"></script>
         <!-- date-range-picker -->
-        <script src="public/js/daterangepicker/daterangepicker.js"></script>        
+        <script src="js/daterangepicker/daterangepicker.js"></script>        
         <!-- Tempusdominus Bootstrap 4 -->
-        <script src="public/js/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+        <script src="js/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
         <!-- Bootstrap Switch -->
-        <script src="public/js/bootstrap-switch/js/bootstrap-switch.min.js"></script>
+        <script src="js/bootstrap-switch/js/bootstrap-switch.min.js"></script>
         <!-----------------END LINK JAVASCRIPT ------------------------>
 
     </head>
@@ -78,7 +79,7 @@
           <aside class="main-sidebar sidebar-primary elevation-4 sidebar-no-expand">
             <!-- Brand Logo -->
             <a href="/" class="brand-link">
-              <img src="public/images/logo.png" alt="Logo" class="" style="max-width: 100%;">
+              <img src="images/logo.png" alt="Logo" class="" style="max-width: 100%;">
             </a>
             <!-- Sidebar -->
             <div class="sidebar">
