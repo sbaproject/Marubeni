@@ -161,7 +161,7 @@
 									{{ __('label.update') }}
 								</button>
 								{{-- Cancel --}}
-								<a href="{{ route('user.list') }}" class="btn btn-outline-dark">
+								<a href="{{ route('admin.user.list') }}" class="btn btn-outline-dark">
 									{{__('label.cancel')}}
 								</a>
 							</div>

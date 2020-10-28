@@ -35,6 +35,6 @@ class UserRegisterController extends Controller
 
         $user->fill($inputs)->save();
 
-        return Common::redirectRouteWithAlertSuccess('user.list');
+        return Common::redirectRouteWithAlertSuccess('admin.user.list');
     }
 }

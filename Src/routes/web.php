@@ -46,19 +46,20 @@ Route::middleware('auth')->group(function () {
      * Admin routes (for Admin role)
      *-----------------------------------------*/
     Route::middleware('can:admin-gate')->group(function () {
-        // Dashboard
         Route::prefix('admin')->name('admin.')->group(function () {
-            Route::get('/dashboard', [AdminDashboardController::class, 'show'])->name('dashboard');
-        });
-        Route::prefix('user')->name('user.')->group(function () {
-            // List Users
-            Route::get('/list', [UserListCotroller::class, 'show'])->name('list');
-            // Register new user
-            Route::get('register', [UserRegisterController::class, 'show'])->name('register.show');
-            Route::post('register', [UserRegisterController::class, 'store'])->name('register.store');
-            // Edit user
-            Route::get('edit/{user}', [UserEditController::class, 'show'])->name('edit.show');
-            Route::put('edit/{user}', [UserEditController::class, 'update'])->name('edit.update');
+            // Dashboard
+            Route::get('dashboard', [AdminDashboardController::class, 'show'])->name('dashboard');
+            // User managements
+            Route::prefix('user')->name('user.')->group(function () {
+                // List Users
+                Route::get('list', [UserListCotroller::class, 'show'])->name('list');
+                // Register new user
+                Route::get('register', [UserRegisterController::class, 'show'])->name('register.show');
+                Route::post('register', [UserRegisterController::class, 'store'])->name('register.store');
+                // Edit user
+                Route::get('edit/{user}', [UserEditController::class, 'show'])->name('edit.show');
+                Route::put('edit/{user}', [UserEditController::class, 'update'])->name('edit.update');
+            });
         });
     });
 
@@ -73,12 +74,6 @@ Route::middleware('auth')->group(function () {
             // Dashboard
             Route::get('/dashboard', [UserDashboardController::class, 'show'])->name('dashboard');
         });
-        /**----------------------------------------*
-         * Both of Admin & User
-         *-----------------------------------------*/
-        // Change pass
-        Route::get('changepass', [UserChangePassController::class, 'show'])->name('changepass.show');
-        Route::put('changepass', [UserChangePassController::class, 'update'])->name('changepass.update');
     });
 
     /**----------------------------------------*
@@ -91,4 +86,7 @@ Route::middleware('auth')->group(function () {
     })
     ->where('lang', "(vi|en)")
     ->name('locale');
+    // Change pass
+    Route::get('/changepass', [UserChangePassController::class, 'show'])->name('changepass.show');
+    Route::put('/changepass', [UserChangePassController::class, 'update'])->name('changepass.update');
 });

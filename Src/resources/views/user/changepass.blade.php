@@ -11,7 +11,7 @@
 
 					<x-alert />
 
-					<form method="POST" action="{{ route('user.changepass.update') }}">
+					<form method="POST" action="{{ route('changepass.update') }}">
 						@csrf
 						@method('PUT')
 						<div class="form-group row">

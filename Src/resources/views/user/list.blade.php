@@ -8,7 +8,7 @@
 				<div class="card-header">User list</div>
 				<div class="card-body">
 					<x-alert />
-					<form action="{{ route('user.list') }}" method="GET">
+					<form action="{{ route('admin.user.list') }}" method="GET">
 						{{-- Location --}}
 						<div class="form-group row">
 							<label for="location"
@@ -68,7 +68,7 @@
 					</form>
 					{{-- Add new button --}}
 					<div class="container mt-5">
-						<a href="{{ route('user.register.show') }}" class="btn btn-warning">{{ __('label.addnew') }}</a>
+						<a href="{{ route('admin.user.register.show') }}" class="btn btn-warning">{{ __('label.addnew') }}</a>
 					</div>
 					{{-- List Users --}}
 					<div class="container mt-5">
@@ -88,7 +88,7 @@
 									<td>{{ $user->department->name }}</td>
 									<td>{{ $user->name }}</td>
 									<td>
-										<a href="{{ route('user.edit.show', $user->id) }}">{{ __('label.edit') }}</a>
+										<a href="{{ route('admin.user.edit.show', $user->id) }}">{{ __('label.edit') }}</a>
 									</td>
 								</tr>
 								@endforeach

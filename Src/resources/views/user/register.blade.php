@@ -8,7 +8,7 @@
 				<div class="card-header">Register User</div>
 				<div class="card-body">
 					<x-alert />
-					<form action="{{ route('user.register.store') }}" method="POST">
+					<form action="{{ route('admin.user.register.store') }}" method="POST">
 						@csrf
 						{{-- Location --}}
 						<div class="form-group row">
@@ -143,7 +143,7 @@
 									{{ __('label.register') }}
 								</button>
 								{{-- Cancel --}}
-								<a href="{{ route('user.list') }}" class="btn btn-outline-dark">
+								<a href="{{ route('admin.user.list') }}" class="btn btn-outline-dark">
 									{{__('label.cancel')}}
 								</a>
 							</div>
