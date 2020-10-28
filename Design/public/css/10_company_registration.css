@@ -19,3 +19,20 @@
 .info_block{
     padding:30px 0px;
 }
+.btn_button {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.btn_button .btn-register{
+    background:  #96000C;
+    color: #fff;
+    padding: 0px 35px 0px 35px;
+}
+
+.btn_button .btn-cancel {
+    background:  darkgray;
+    color: #fff;
+    padding: 0px 35px 0px 35px;
+    margin-left: 15px;
+}
