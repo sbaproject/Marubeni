@@ -174,11 +174,18 @@
             <div class="card card-company">
               <div class="card-body">
                 <form>
-                    <div class="row ">
-                      <div class="col-sm-2">
+                  
+                  <div class="row ">
+                    <div class="col-sm-2">
                         <div class="com_block">Company Information</div>
+                    </div>
+                    <div class="col-sm-10 info_block">
+                      <div class="form-group row ">
+                        <label for="com_name" class="col-sm-2 col-form-label com_title">Company ID</label>
+                        <div class="col-sm-10">
+                          <input type="text" class="form-control" id="com_name" placeholder="Company ID">
+                        </div>
                       </div>
-                      <div class="col-sm-10 info_block">
                         <div class="form-group row ">
                           <label for="com_name" class="col-sm-2 col-form-label com_title">Company Name</label>
                           <div class="col-sm-10">
@@ -203,8 +210,8 @@
                             <input type="text" class="form-control" id="com_address" placeholder="Address">
                           </div>
                         </div>
-                      </div>
                     </div>
+                  </div>
                   <!-- attendants-->
                   <div class="row ">
                     <div class="col-sm-2">
@@ -243,6 +250,12 @@
                           <textarea id="text_content" class="form-control" rows="4"></textarea>
                         </div>
                       </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-12 btn_button">
+                      <button type="button" class="btn btn-register">Register</button>
+                      <button type="button" class="btn btn-cancel">Cancel</button>
                     </div>
                   </div>
                 </form>

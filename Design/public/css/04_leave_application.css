@@ -152,3 +152,37 @@ input[type='checkbox']:checked:after {
     border: 1px solid gray;
     box-shadow: inset 0 0 0 3px white;
 }
+
+.btn-apply {
+    background: darkgray;
+    color: #000;
+    font-weight: 600;
+}
+
+.btn-apply:hover {
+    background: #96000c;
+    color: #fff;
+}
+
+.btn-draft {
+    background: darkgray;
+    color: #000;
+    font-weight: 600;
+}
+
+.btn-draft:hover {
+    background: #96000c;
+    color: #fff;
+}
+
+.btn-cancel {
+    background: darkgray;
+    color: #000;
+    font-weight: 600;
+}
+
+.btn-cancel:hover {
+    background: #96000c;
+    color: #fff;
+}
+
