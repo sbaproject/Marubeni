@@ -8,9 +8,7 @@
 .pager-wrap {
     display: inline-block;
 }
-.pager_custom {
-    justify-content: center;
-}
+
 .bt_direct button:hover {
     border: 1px solid #E3E6E9;
     border-radius: 20px;

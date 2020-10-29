@@ -22,8 +22,10 @@ return [
     'on' => 'ON',
     'off' => 'OFF',
     'paginator' => [
-        'prev' => 'Previous',
-        'next' => 'Next',
+        'prev' => 'Previous page',
+        'next' => 'Next page',
+        'first' => 'First page',
+        'last' => 'Last page',
     ],
     'action' => 'Action',
     '_no_' => 'NO.'

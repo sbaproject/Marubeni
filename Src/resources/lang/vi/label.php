@@ -24,6 +24,8 @@ return [
     'paginator' => [
         'prev' => 'Trang trước',
         'next' => 'Trang sau',
+        'first' => 'Trang đầu',
+        'last' => 'Trang cuối',
     ],
     'action' => 'Chức năng',
     '_no_' => 'Mã số'

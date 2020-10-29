@@ -187,8 +187,12 @@ input[type='checkbox']:checked:after {
 }
 
 /**
-*   Button paginator
+*   Paginator
 */
+.pager_custom {
+    justify-content: center;
+    margin-top: 1rem;
+}
 .bt_direct button:hover {
     border: 1px solid #E3E6E9;
     border-radius: 20px;

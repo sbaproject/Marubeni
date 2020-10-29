@@ -141,9 +141,7 @@
 					</table>
 				</div>
 				{{-- paginator --}}
-				<div class="d-flex justify-content-center">
-					{{$users->withQueryString()->links('paginator')}}
-				</div>
+				{{$users->withQueryString()->links('paginator')}}
 			</div>
 		</div>
 		<!-- /.card-body -->
