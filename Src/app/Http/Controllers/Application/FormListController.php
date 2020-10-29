@@ -7,7 +7,8 @@ use Illuminate\Http\Request;
 
 class FormListController extends Controller
 {
-    public function show(){
+    public function show()
+    {
         return view('application.formlist');
     }
 }

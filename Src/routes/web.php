@@ -3,7 +3,6 @@
 use App\Libs\Common;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\LocalizationController;
 use App\Http\Controllers\User\UserListCotroller;
 use App\Http\Controllers\User\UserEditController;
 use App\Http\Controllers\User\UserRegisterController;
