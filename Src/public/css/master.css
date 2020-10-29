@@ -139,6 +139,9 @@ a.tab-locale.en{
     content: none;
 }
 
+input[type='radio']{
+    margin-right: 8px;
+}
 
 input[type='radio']:after {
     width: 17px;
