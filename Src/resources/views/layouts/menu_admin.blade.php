@@ -53,7 +53,7 @@
             </a>
             <ul class="nav nav-treeview" style="display: none;">
                 <li class="nav-item">
-                    <a href="/pages/examples/admin_102_shain_ichiran.html" class="nav-link">
+                    <a href="{{ route('admin.user.index') }}" class="nav-link">
                         <i class="fas fa-angle-right left"></i>
                         <p>Employee Setting</p>
                     </a>
@@ -71,7 +71,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="" class="nav-link">
+                    <a href="{{ route('changepass.show') }}" class="nav-link">
                         <i class="fas fa-angle-right left"></i>
                         <p>Change Password</p>
                     </a>

@@ -20,7 +20,7 @@
 				<div class="card-body">
 					<div class="search-content">
 						<x-alert />
-						<form action="{{ route('admin.user.list') }}" method="GET">
+						<form action="{{ route('admin.user.index') }}" method="GET">
 							<div class="row">
 								<div class="col-lg-10 col-xl-9">
 									{{-- Location --}}
@@ -107,7 +107,7 @@
 	{{-- Add new button --}}
 	<div class="button_wrap">
 		<a class="btn btn-danger pt-1 pb-1 pl-5 pr-5"
-			href="{{ route('admin.user.register.show') }}">
+			href="{{ route('admin.user.add.create') }}">
 			<i class="nav-icon fa fa-plus-circle"></i>
 			{{ __('label.addnew') }}
 		</a>

@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Hash;
 
 class UserRegisterController extends Controller
 {
-    public function show()
+    public function create()
     {
         $data = User::getCompactData();
 
@@ -35,6 +35,6 @@ class UserRegisterController extends Controller
 
         $user->fill($inputs)->save();
 
-        return Common::redirectRouteWithAlertSuccess('admin.user.list');
+        return Common::redirectRouteWithAlertSuccess('admin.user.index');
     }
 }

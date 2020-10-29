@@ -10,7 +10,7 @@ use App\Http\Controllers\Controller;
 
 class UserListCotroller extends Controller
 {
-    public function show(Request $request)
+    public function index(Request $request)
     {
         // dropdownlist items
         $locations = config('const.location');

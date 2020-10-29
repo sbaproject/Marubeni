@@ -45,6 +45,6 @@ class UserEditController extends Controller
         // update
         $user->save();
 
-        return Common::redirectRouteWithAlertSuccess('admin.user.list');
+        return Common::redirectRouteWithAlertSuccess('admin.user.index');
     }
 }

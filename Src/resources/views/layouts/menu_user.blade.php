@@ -83,7 +83,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="" class="nav-link">
+                    <a href="{{ route('changepass.show') }}" class="nav-link">
                         <i class="fas fa-angle-right left"></i>
                         <p>Change Password</p>
                     </a>
