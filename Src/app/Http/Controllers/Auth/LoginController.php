@@ -70,6 +70,7 @@ class LoginController extends Controller
     {
         // default redirect to '/'
         // if want to redirect to another routes, change here.
-        return redirect()->intended();
+        // return redirect()->intended();
+        return;
     }
 }

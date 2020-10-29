@@ -10,6 +10,7 @@ use App\Http\Controllers\User\UserRegisterController;
 use App\Http\Controllers\User\UserDashboardController;
 use App\Http\Controllers\User\UserChangePassController;
 use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Application\FormListController;
 
 /*
 |--------------------------------------------------------------------------
@@ -72,7 +73,9 @@ Route::middleware('auth')->group(function () {
          *-----------------------------------------*/
         Route::middleware('can:user-gate')->group(function () {
             // Dashboard
-            Route::get('/dashboard', [UserDashboardController::class, 'show'])->name('dashboard');
+            Route::get('dashboard', [UserDashboardController::class, 'show'])->name('dashboard');
+            // Form list
+            Route::get('form/list', [FormListController::class, 'show'])->name('form.list');
         });
     });
 
