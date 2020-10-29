@@ -1,7 +1,7 @@
 @extends('layouts.master')
 @section('title','ADMIN_DASHBOARD')
 @section('css')
-<!-- <link rel="stylesheet" href="css/thach.css"> -->
+<link rel="stylesheet" href="css/user/01_dashboard.css.css">
 @endsection
 @section('content')
 		<script type="text/javascript">

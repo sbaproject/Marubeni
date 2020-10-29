@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('css')
-<!-- <link rel="stylesheet" href="css/thach.css"> -->
+<link rel="stylesheet" href="css/user/01_dashboard.css">
 @endsection
 @section('content')
 <section class="content-header">

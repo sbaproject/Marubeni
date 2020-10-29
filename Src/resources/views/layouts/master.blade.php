@@ -11,15 +11,19 @@
 
         <!-----------------START LINK CSS ------------------------------>
         <!-- Font Awesome -->
-        <link rel="stylesheet" href="css/fontawesome-free/css/all.min.css">
+        <link rel="stylesheet" href="css/lib/fontawesome-free/css/all.min.css">
         <!-- Ionicons -->
-        <link rel="stylesheet" href="css/ionicons.min.css">
+        <link rel="stylesheet" href="css/lib/ionicons.min.css">
+        <!-- Tempusdominus Bbootstrap 4 -->
+        <link rel="stylesheet" href="css/lib/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
         <!-- overlayScrollbars -->
-        <link rel="stylesheet" href="css/adminlte.min.css">
+        <link rel="stylesheet" href="css/lib/adminlte.min.css">
         <!-- jquery-ui css -->
-        <link rel="stylesheet" href="css/jquery-ui.css">
+        <link rel="stylesheet" href="css/lib/jquery-ui.css">
         <!-- Google Font: Source Sans Pro -->
-        <link rel="stylesheet" href="css/google_font_sans_pro.css">
+        <link rel="stylesheet" href="css/lib/google_font_sans_pro.css">
+        <!-- icheck-bootstrap -->
+        <link rel="stylesheet" href="css/lib/icheck-bootstrap/icheck-bootstrap.min.css">
         <!-- Custom master css -->
         <link rel="stylesheet" href="css/master.css">
         {{-- Custom CSS per page here --}}
