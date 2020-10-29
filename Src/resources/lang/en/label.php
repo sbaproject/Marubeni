@@ -6,7 +6,7 @@ return [
      */
     'update' => 'Update',
     'register' => 'Register',
-    'addnew' => 'Add New',
+    'addnew' => 'Add',
     'edit' => 'Edit',
     'cancel' => 'Cancel',
     'search' => 'Search',

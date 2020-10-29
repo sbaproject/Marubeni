@@ -1,112 +1,154 @@
 @extends('layouts.master')
 
+@section('css')
+<link rel="stylesheet" href="css/admin/admin_102_shain_ichiran.css">
+@endsection
+
 @section('content')
-<div class="container">
-	<div class="row justify-content-center">
-		<div class="col-md-8">
+<!-- Content Header (Page header) -->
+<section class="content-header">
+	<div class="container-fluid">
+		<div class="row mb-2">
+			<div class="col-lg-6">
+				<h1>{{ __('label.search') }}</h1>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xl-8 col-lg-10">
 			<div class="card">
-				<div class="card-header">User list</div>
 				<div class="card-body">
-					<x-alert />
-					<form action="{{ route('admin.user.list') }}" method="GET">
-						{{-- Location --}}
-						<div class="form-group row">
-							<label for="location"
-								class="col-md-4 col-form-label text-md-right">{{ __('validation.attributes.location') }}</label>
-							<div class="col-md-6">
-								<select id="location" name="location" class="form-control">
-									<option value='' selected>{{ __('label.select') }}</option>
-									@foreach ($locations as $key => $value)
-									<option value="{{ $value }}"
-										@isset($conditions['location']) @if ($conditions['location'] == $value) selected @endif @endisset>
-										{{ __('label.'.$key) }}
-									</option>
-									@endforeach
-								</select>
+					<div class="search-content">
+						<x-alert />
+						<form action="{{ route('admin.user.list') }}" method="GET">
+							<div class="row">
+								<div class="col-lg-10 col-xl-9">
+									{{-- Location --}}
+									<div class="form-group row">
+										<label for="location"
+											class="col-lg-3 col-form-label text-center font-weight-normal">{{ __('validation.attributes.location') }}</label>
+										<div class="col-lg-9">
+											<select id="location" name="location" class="form-control">
+												<option value='' selected>{{ __('label.select') }}</option>
+												@foreach ($locations as $key => $value)
+												<option value="{{ $value }}"
+													@isset($conditions['location']) @if ($conditions['location']==$value) selected @endif @endisset>
+													{{ __('label.'.$key) }}
+												</option>
+												@endforeach
+											</select>
+										</div>
+									</div>
+									{{-- Employee No --}}
+									<div class="form-group row">
+										<label for="user_no"
+											class="col-lg-3 col-form-label text-center font-weight-normal">
+											{{ __('validation.attributes.user_no') }}
+										</label>
+										<div class="col-lg-9">
+											<input type="text" id="user_no" name="user_no" class="form-control" placeholder="{{ __('validation.attributes.user_no') }}"
+												value="@isset($conditions['user_no']){{ $conditions['user_no'] }}@endisset">
+										</div>
+									</div>
+									{{-- Department --}}
+									<div class="form-group row">
+										<label for="department"
+											class="col-lg-3 col-form-label text-center font-weight-normal">
+											{{ __('validation.attributes.department') }}
+										</label>
+										<div class="col-lg-9">
+										<select id="department" name="department" class="form-control">
+											<option value='' selected>{{ __('label.select') }}</option>
+											@foreach ($departments as $item)
+											<option value="{{ $item->id }}"
+												@isset($conditions['department']) @if ($conditions['department'] == $item->id) selected @endif @endisset>
+												{{ $item->name }}
+											</option>
+											@endforeach
+										</select>
+										</div>
+									</div>
+								</div>
 							</div>
-						</div>
-						{{-- Employee No --}}
-						<div class="form-group row">
-							<label for="user_no" class="col-md-4 col-form-label text-md-right">{{ __('validation.attributes.user_no') }}</label>
-							<div class="col-md-6">
-								<input id="user_no" type="text" class="form-control" name="user_no"
-									value="@isset($conditions['user_no']){{ $conditions['user_no'] }}@endisset">
+							<div class="row">
+								<div class="col-lg-10 col-xl-9">
+									{{-- Name --}}
+									<div class="form-group row">
+										<label for="name"
+											class="col-lg-3 col-form-label text-center font-weight-normal">
+											{{ __('validation.attributes.name') }}
+										</label>
+										<div class="col-lg-9">
+											<input id="name" name="name" type="text" class="form-control" placeholder="{{ __('validation.attributes.name') }}"
+												value="@isset($conditions['name']){{ $conditions['name'] }}@endisset">
+										</div>
+									</div>
+								</div>
+								<div class="col-lg-2 col-xl-3">
+									{{-- Submit --}}
+									<div class="form-group row">
+										<div class="col-lg-10">
+											<button type="submit" class="btn btn-primary search_bt">
+												<i class="nav-icon fas fa-search"></i>
+											</button>
+										</div>
+									</div>
+								</div>
 							</div>
-						</div>
-						{{-- Department --}}
-						<div class="form-group row">
-							<label for="department"
-								class="col-md-4 col-form-label text-md-right">{{ __('validation.attributes.department') }}</label>
-							<div class="col-md-6">
-								<select id="department" name="department" class="form-control">
-									<option value='' selected>{{ __('label.select') }}</option>
-									@foreach ($departments as $item)
-									<option value="{{ $item->id }}"
-										@isset($conditions['department']) @if ($conditions['department'] == $item->id) selected @endif @endisset>
-										{{ $item->name }}
-									</option>
-									@endforeach
-								</select>
-							</div>
-						</div>
-						{{-- Name --}}
-						<div class="form-group row">
-							<label for="name" class="col-md-4 col-form-label text-md-right">{{ __('validation.attributes.name') }}</label>
-							<div class="col-md-6">
-								<input id="name" type="text" class="form-control" name="name"
-									value="@isset($conditions['name']){{ $conditions['name'] }}@endisset">
-							</div>
-						</div>
-						{{-- Submit --}}
-						<div class="form-group row mb-0">
-							<div class="col-md-6 offset-md-4">
-								<button type="submit" class="btn btn-primary">
-									{{ __('label.search') }}
-								</button>
-							</div>
-						</div>
-					</form>
-					{{-- Add new button --}}
-					<div class="container mt-5">
-						<a href="{{ route('admin.user.register.show') }}" class="btn btn-warning">{{ __('label.addnew') }}</a>
-					</div>
-					{{-- List Users --}}
-					<div class="container mt-5">
-						<table class="table table-bordered mb-5">
-							<thead>
-								<tr class="table-success">
-									<th scope="col">{{ __('label._no_') }}</th>
-									<th scope="col">{{ __('validation.attributes.department') }}</th>
-									<th scope="col">{{ __('validation.attributes.name') }}</th>
-									<th scope="col">{{ __('label.action') }}</th>
-								</tr>
-							</thead>
-							<tbody>
-								@foreach($users as $user)
-								<tr>
-									<th scope="row">{{ str_pad($user->id, config('const.num_fillzero'), "0", STR_PAD_LEFT) }}</th>
-									<td>{{ $user->department->name }}</td>
-									<td>{{ $user->name }}</td>
-									<td>
-										<a href="{{ route('admin.user.edit.show', $user->id) }}">{{ __('label.edit') }}</a>
-									</td>
-								</tr>
-								@endforeach
-							</tbody>
-						</table>
-					</div>
-					@if ($users->total() === 0)
-					<div class="d-flex justify-content-center">
-						{{ __('msg.no_data') }}
-					</div>
-					@endif
-					{{-- paginator --}}
-					<div class="d-flex justify-content-center">
-						{{$users->withQueryString()->links('paginator')}}
+						</form>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-</div>
+</section>
+<!-- Main content -->
+<section class="content">
+	{{-- Add new button --}}
+	<div class="button_wrap">
+		<a class="btn btn-danger pt-1 pb-1 pl-5 pr-5"
+			href="{{ route('admin.user.register.show') }}">
+			<i class="nav-icon fa fa-plus-circle"></i>
+			{{ __('label.addnew') }}
+		</a>
+	</div>
+	<div class="card">
+		<div class="card-body p-0 ">
+			<div class="wrap_tbl_ad">
+				{{-- List Users --}}
+				<div class="content_roll">
+					<table class="table table-bordered " style="min-width: 500px;">
+						<thead>
+							<tr>
+								<th style="width: 100px">{{ __('label._no_') }}</th>
+								<th>{{ __('validation.attributes.department') }}</th>
+								<th>{{ __('validation.attributes.name') }}</th>
+								<th style="width: 150px">{{ __('label.action') }}</th>
+							</tr>
+						</thead>
+						<tbody>
+							@foreach($users as $user)
+							<tr>
+								<td>{{ str_pad($user->id, config('const.num_fillzero'), "0", STR_PAD_LEFT) }}</td>
+								<td>{{ $user->department->name }}</td>
+								<td>{{ $user->name }}</td>
+								<td>
+									<a href="{{ route('admin.user.edit.show', $user->id) }}">{{ __('label.edit') }}</a>
+								</td>
+							</tr>
+							@endforeach
+						</tbody>
+					</table>
+				</div>
+				{{-- paginator --}}
+				<div class="d-flex justify-content-center">
+					{{$users->withQueryString()->links('paginator')}}
+				</div>
+			</div>
+		</div>
+		<!-- /.card-body -->
+	</div>
+	<!-- /.card -->
+</section>
+<!-- /.content -->
 @endsection

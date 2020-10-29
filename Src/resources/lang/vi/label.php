@@ -6,8 +6,8 @@ return [
      */
     'update' => 'Cập nhật',
     'register' => 'Đăng ký',
-    'addnew' => 'Thêm mới',
-    'edit' => 'Chỉnh sửa',
+    'addnew' => 'Thêm',
+    'edit' => 'Sửa',
     'cancel' => 'Hủy',
     'search' => 'Tìm kiếm',
     'login' => 'Đăng nhập',

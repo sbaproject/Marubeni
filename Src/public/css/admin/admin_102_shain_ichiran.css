@@ -20,21 +20,9 @@
 .button_wrap {
     margin-bottom: 5px;
 }
-.bt_direct button:hover {
-    border: 1px solid #E3E6E9;
-    border-radius: 20px;
-    color: #0056b3;
-    overflow: hidden;
-}
-.bt_direct button {
-    border: 1px solid #E3E6E9;
-    border-radius: 20px;
-    background: #ffffff;
-    color: #868484;
-    padding: 3px 20px;
-}
+
 .content_roll {
-    overflow-x: scroll;
+    overflow-x: auto;
 }
 .justify-between {
     justify-content: space-between;

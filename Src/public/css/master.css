@@ -182,3 +182,38 @@ input[type='checkbox']:checked:after {
     border: 1px solid gray;
     box-shadow: inset 0 0 0 3px white;
 }
+
+/**
+*   Button paginator
+*/
+.bt_direct button:hover {
+    border: 1px solid #E3E6E9;
+    border-radius: 20px;
+    color: #0056b3;
+    overflow: hidden;
+}
+.bt_direct button,.bt_direct a {
+    border: 1px solid #E3E6E9;
+    border-radius: 20px;
+    background: #ffffff;
+    color: #868484;
+}
+.bt_direct .nav-icon{
+    top: 7px;
+    position: absolute;
+}
+.bt_direct a{
+    position: relative;
+}
+.bt_direct .bt_left .nav-icon{
+    margin-left: -14px;
+}
+.bt_direct .bt_right .nav-icon{
+    margin-left: 2px;
+}
+.bt_direct .bt_left {
+    padding: 3px 13px 3px 25px;
+}
+.bt_direct .bt_right {
+    padding: 3px 25px 3px 13px;
+}
