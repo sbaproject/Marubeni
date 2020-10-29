@@ -196,6 +196,10 @@ label.radio-inline{
     padding-top: 9px;
 }
 
+select.form-control.is-invalid, .was-validated .form-control:invalid {
+    background-position: right calc(1em + .1875rem) center;
+}
+
 /**
 *   Paginator
 */

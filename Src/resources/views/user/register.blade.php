@@ -57,7 +57,7 @@
 							class="col-lg-3 col-form-label text-center">{{ __('validation.attributes.name') }}</label>
 						<div class="col-lg-9">
 							<input id="name" type="text" class="form-control @error('name') is-invalid @enderror"
-								name="name" value="{{ old('name') }}" autofocus>
+								name="name" value="{{ old('name') }}" placeholder="{{ __('validation.attributes.name') }}" autocomplete="off" autofocus>
 							@error('name')
 							<span class="invalid-feedback" role="alert">
 								<strong>{{ $message }}</strong>
@@ -93,7 +93,7 @@
 						<div class="col-lg-9">
 							<input id="phone" name="phone" type="text"
 								class="form-control @error('phone') is-invalid @enderror" value="{{ old('phone') }}"
-								autofocus>
+								placeholder="{{ __('validation.attributes.phone') }}" autocomplete="off" autofocus>
 							@error('phone')
 							<span class="invalid-feedback" role="alert">
 								<strong>{{ $message }}</strong>
@@ -107,7 +107,8 @@
 							class="col-lg-3 col-form-label text-center">{{ __('validation.attributes.email') }}</label>
 						<div class="col-lg-9">
 							<input id="email" type="text" class="form-control @error('email') is-invalid @enderror"
-								name="email" value="{{ old('email') }}" autocomplete="email">
+								name="email" value="{{ old('email') }}" autofocus
+									placeholder="{{ __('validation.attributes.email') }}" autocomplete="off">
 
 							@error('email')
 							<span class="invalid-feedback" role="alert">
@@ -144,7 +145,10 @@
 							class="col-lg-3 col-form-label text-center d-flex align-items-center justify-content-center">{{ __('validation.attributes.memo') }}</label>
 						<div class="col-lg-9">
 							<textarea id="memo" name="memo" rows="4"
-								class="form-control @error('memo') is-invalid @enderror">{{ old('memo') }}</textarea>
+								class="form-control @error('memo') is-invalid @enderror"
+									placeholder="{{ __('validation.attributes.memo') }}" autocomplete="off" autofocus>
+								{{ old('memo') }}
+							</textarea>
 							@error('memo')
 							<span class="invalid-feedback" role="alert">
 								<strong>{{ $message }}</strong>

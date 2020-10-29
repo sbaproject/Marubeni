@@ -59,7 +59,7 @@ Route::middleware('auth')->group(function () {
                 Route::post('add', [UserRegisterController::class, 'store'])->name('add.store');
                 // Edit user
                 Route::get('edit/{user}', [UserEditController::class, 'show'])->name('edit.show');
-                Route::put('edit/{user}', [UserEditController::class, 'update'])->name('edit.update');
+                Route::post('edit/{user}', [UserEditController::class, 'update'])->name('edit.update');
             });
             //Approval Flow Setting
             Route::get('/flow-setting/list', [AdminFlowSettingController::class, 'index'])->name('flow.index');
@@ -95,5 +95,5 @@ Route::middleware('auth')->group(function () {
     ->name('locale');
     // Change pass
     Route::get('/changepass', [UserChangePassController::class, 'show'])->name('changepass.show');
-    Route::put('/changepass', [UserChangePassController::class, 'update'])->name('changepass.update');
+    Route::post('/changepass', [UserChangePassController::class, 'update'])->name('changepass.update');
 });

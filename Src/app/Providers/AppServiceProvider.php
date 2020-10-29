@@ -42,5 +42,13 @@ class AppServiceProvider extends ServiceProvider
             $pattern = '/^(0|\+84)(\s|\.)?((3[2-9])|(5[689])|(7[06-9])|(8[1-689])|(9[0-46-9]))(\d)(\s|\.)?(\d{3})(\s|\.)?(\d{3})$/';
             return preg_match($pattern, $value);
         });
+
+        // selection required
+        Validator::extend('required_select', function ($attribute, $value, $parameters, $validator) {
+            if($value === null || trim($value) === ''){
+                return false;
+            }
+            return true;
+        });
     }
 }

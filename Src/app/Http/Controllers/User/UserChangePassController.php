@@ -23,7 +23,7 @@ class UserChangePassController extends Controller
     }
 
     /** Update new password
-     *  Method - PUT
+     *  Method - POST
      */
     public function update(Request $request){
 

@@ -118,6 +118,7 @@ return [
     'url' => 'The :attribute format is invalid.',
     'uuid' => 'The :attribute must be a valid UUID.',
     'phone_number' => ':attribute không hợp lệ.',
+    'required_select' => 'Vui lòng chọn :attribute.',
 
     /*
     |--------------------------------------------------------------------------

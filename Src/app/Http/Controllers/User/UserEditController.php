@@ -21,7 +21,7 @@ class UserEditController extends Controller
     }
 
     /** Update user info
-     *  Method - PUT
+     *  Method - POST
      */
     public function update(Request $request, User $user)
     {
