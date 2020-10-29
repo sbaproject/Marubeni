@@ -1,377 +1,437 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Entertainment Fee Application</title>
-  <!-- Tell the browser to be responsive to screen width -->
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="../../public/css/fontawesome-free/css/all.min.css">
-  <!-- Ionicons -->
-  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-  <!-- Tempusdominus Bbootstrap 4 -->
-  <link rel="stylesheet" href="../../public/css/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="../../public/css/adminlte.min.css">
-  <!-- Google Font: Source Sans Pro -->
-  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
-  <link rel="stylesheet" href="../../public/css/font-awesome.min.css">
-  <!-- custom css -->
-  <link href="../../public/css/master.css" rel="stylesheet">
-  <link href="../../public/css/04_leave_application.css" rel="stylesheet">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Entertainment Fee Application</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../../public/css/fontawesome-free/css/all.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- Tempusdominus Bbootstrap 4 -->
+    <link rel="stylesheet" href="../../public/css/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../../public/css/adminlte.min.css">
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <link rel="stylesheet" href="../../public/css/font-awesome.min.css">
+    <!-- custom css -->
+    <link href="../../public/css/master.css" rel="stylesheet">
+    <link href="../../public/css/04_leave_application.css" rel="stylesheet">
 </head>
+
 <body class="hold-transition sidebar-mini">
-<!-- Site wrapper -->
-<div class="wrapper">
-  <!-- Navbar -->
-  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-    <!-- Left navbar links -->
-    <ul class="navbar-nav bg-custom">
-      <li class="nav-item">
-        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars" style="color: darkgray;"></i></a>
-      </li>
-    </ul>
-
-    <!-- Right navbar links -->
-    <ul class="navbar-nav ml-auto info-user">
-      <li class="nav-item user-panel-custom">
-        <div class="user-deparment">Department Name,
-        </div>
-      </li>
-      <li class="nav-item user-panel-custom">
-        <div class="info">
-            <a href="#" class="text-name">Username</a>
-          </div>
-      </li>
-      <li class="nav-item user-panel-custom">
-        <div class="tab">
-            <a class="tablink-VN" href="">VN</a>
-            <a class="tablink-EN" href="">EN</a>
-          </div>
-      </li>
-    </ul>
-  </nav>
-  <!-- /.navbar -->
-
-  <!-- Main Sidebar Container -->
-  <aside class="main-sidebar sidebar-primary elevation-4 sidebar-no-expand">
-    <!-- Brand Logo -->
-    <a href="../../pages/examples/01_dashboard.html" class="brand-link">
-      <img src="../../public/images/logo.png" alt="Logo" class="" style="max-width: 100%;">
-    </a>
-    <!-- Sidebar -->
-    <div class="sidebar">
-      <!-- Sidebar Menu -->
-      <nav class="mt-2">
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-          <!-- Add icons to the links using the .nav-icon class with font-awesome or any other icon font library -->
-          <li class="nav-item">
-            <a href="/pages/examples/03-application-list.html" class="nav-link">
-              <i class="nav-icon fa fa-home"></i>
-              <p>APPLICATION</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="" class="nav-link">
-              <i class="nav-icon fas fa-edit"></i>
-              <p>DRAFT</p>
-            </a>
-          </li>
-          <li class="nav-item has-treeview">
-            <a href="" class="nav-link">
-              <!--<i class="nav-icon fas fa-list-alt"></i>-->
-              <i class="nav-icon fas fa-file-alt" aria-hidden="true"></i>
-              <p>
-                STATUS
-                <i class="fas fa-angle-down right"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="/pages/examples/user-status.html" class="nav-link">
-                  <i class="fas fa-angle-right left"></i>
-                  <p>Applying</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/pages/examples/user-status.html" class="nav-link">
-                  <i class="fas fa-angle-right left"></i>
-                  <p>Approved/Under payment</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/pages/examples/user-status.html" class="nav-link">
-                  <i class="fas fa-angle-right left"></i>
-                  <p>Approved/in-processing <br />of payment</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/pages/examples/user-status.html" class="nav-link">
-                  <i class="fas fa-angle-right left"></i>
-                  <p>Declined</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/pages/examples/user-status.html" class="nav-link">
-                  <i class="fas fa-angle-right left"></i>
-                  <p>Reject</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/pages/examples/user-status.html" class="nav-link">
-                  <i class="fas fa-angle-right left"></i>
-                  <p>Completed</p>
-                </a>
-              </li>
+    <!-- Site wrapper -->
+    <div class="wrapper">
+        <!-- Navbar -->
+        <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+            <!-- Left navbar links -->
+            <ul class="navbar-nav bg-custom">
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"
+                            style="color: darkgray;"></i></a>
+                </li>
             </ul>
-          </li>
-          <li class="nav-item">
-            <a href="/pages/examples/08_waiting_approval_list.html" class="nav-link">
-              <i class="nav-icon fa fa-check-square"></i>
-              <p>APPROVAL</p>
-            </a>
-          </li>
-          <li class="nav-item has-treeview">
-            <a href="" class="nav-link">
-              <i class="nav-icon fas fa-cog"></i>
-              <p>
-                SETTINGS
-                <i class="right fas fa-angle-down"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="/pages/examples/10_company_registration.html" class="nav-link">
-                  <i class="fas fa-angle-right left"></i>
-                  <p>Company Registration</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="" class="nav-link">
-                  <i class="fas fa-angle-right left"></i>
-                  <p>Change Password</p>
-                </a>
-              </li>
+
+            <!-- Right navbar links -->
+            <ul class="navbar-nav ml-auto info-user">
+                <li class="nav-item user-panel-custom">
+                    <div class="user-deparment">Department Name,
+                    </div>
+                </li>
+                <li class="nav-item user-panel-custom">
+                    <div class="info">
+                        <a href="#" class="text-name">Username</a>
+                    </div>
+                </li>
+                <li class="nav-item user-panel-custom">
+                    <div class="tab">
+                        <a class="tablink-VN" href="">VN</a>
+                        <a class="tablink-EN" href="">EN</a>
+                    </div>
+                </li>
             </ul>
-          </li>
-        </ul>
-      </nav>
-      <!-- /.sidebar-menu -->
-    </div>
-    <!-- /.sidebar -->
-  </aside>
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-    <!-- Main content -->
-    <section class="content">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-lg-12">
-            <div class="main-top">
-              <h4 class="main-header-text">ENTERTAINMENT FEE APPLICATION</h4>
-              <a class="btn btn-outline-dark" role="button" href="#"><i class="fas fa-external-link-alt" style="margin-right: 5px; color: #fff;"></i>Export</a>
+        </nav>
+        <!-- /.navbar -->
+
+        <!-- Main Sidebar Container -->
+        <aside class="main-sidebar sidebar-primary elevation-4 sidebar-no-expand">
+            <!-- Brand Logo -->
+            <a href="../../pages/examples/01_dashboard.html" class="brand-link">
+                <img src="../../public/images/logo.png" alt="Logo" class="" style="max-width: 100%;">
+            </a>
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <!-- Sidebar Menu -->
+                <nav class="mt-2">
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                        data-accordion="false">
+                        <!-- Add icons to the links using the .nav-icon class with font-awesome or any other icon font library -->
+                        <li class="nav-item">
+                            <a href="/pages/examples/03-application-list.html" class="nav-link">
+                                <i class="nav-icon fa fa-home"></i>
+                                <p>APPLICATION</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="" class="nav-link">
+                                <i class="nav-icon fas fa-edit"></i>
+                                <p>DRAFT</p>
+                            </a>
+                        </li>
+                        <li class="nav-item has-treeview">
+                            <a href="" class="nav-link">
+                                <!--<i class="nav-icon fas fa-list-alt"></i>-->
+                                <i class="nav-icon fas fa-file-alt" aria-hidden="true"></i>
+                                <p>
+                                    STATUS
+                                    <i class="fas fa-angle-down right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="/pages/examples/user-status.html" class="nav-link">
+                                        <i class="fas fa-angle-right left"></i>
+                                        <p>Applying</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/pages/examples/user-status.html" class="nav-link">
+                                        <i class="fas fa-angle-right left"></i>
+                                        <p>Approved/Under payment</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/pages/examples/user-status.html" class="nav-link">
+                                        <i class="fas fa-angle-right left"></i>
+                                        <p>Approved/in-processing <br />of payment</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/pages/examples/user-status.html" class="nav-link">
+                                        <i class="fas fa-angle-right left"></i>
+                                        <p>Declined</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/pages/examples/user-status.html" class="nav-link">
+                                        <i class="fas fa-angle-right left"></i>
+                                        <p>Reject</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/pages/examples/user-status.html" class="nav-link">
+                                        <i class="fas fa-angle-right left"></i>
+                                        <p>Completed</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/pages/examples/08_waiting_approval_list.html" class="nav-link">
+                                <i class="nav-icon fa fa-check-square"></i>
+                                <p>APPROVAL</p>
+                            </a>
+                        </li>
+                        <li class="nav-item has-treeview">
+                            <a href="" class="nav-link">
+                                <i class="nav-icon fas fa-cog"></i>
+                                <p>
+                                    SETTINGS
+                                    <i class="right fas fa-angle-down"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="/pages/examples/10_company_registration.html" class="nav-link">
+                                        <i class="fas fa-angle-right left"></i>
+                                        <p>Company Registration</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="" class="nav-link">
+                                        <i class="fas fa-angle-right left"></i>
+                                        <p>Change Password</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+                <!-- /.sidebar-menu -->
             </div>
-            <div class="card card-company">
-              <div class="card-body">
-                <form>
-                        <div class="form-group row ">
-                          <label class="col-lg-2 col-form-label text-left">Application No</label>
-                          <div class="col-lg-10">
-                            <input type="text" class="form-control" placeholder="ET-0001">
-                          </div>
+            <!-- /.sidebar -->
+        </aside>
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Main content -->
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="main-top">
+                                <h4 class="main-header-text">ENTERTAINMENT FEE APPLICATION</h4>
+                                <a class="btn btn-outline-dark" role="button" href="#"><i
+                                        class="fas fa-external-link-alt"
+                                        style="margin-right: 5px; color: #fff;"></i>Export</a>
+                            </div>
+                            <div class="card card-company">
+                                <div class="card-body">
+                                    <form>
+                                        <div class="form-group row ">
+                                            <label class="col-lg-2 col-form-label text-left">Application No</label>
+                                            <div class="col-lg-10">
+                                                <input type="text" class="form-control" placeholder="ET-0001">
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="form-group row ">
+                                            <label class="col-lg-2 col-form-label text-left">Date & Time</label>
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+                                                    <div class="input-group date" id="dateTime"
+                                                        data-target-input="nearest">
+                                                        <div class="input-group-append" data-target="#dateTime"
+                                                            data-toggle="datetimepicker">
+                                                            <div class="input-group-text"><i
+                                                                    class="fa fa-calendar-alt"></i></div>
+                                                        </div>
+                                                        <input type="text" name="dateTime"
+                                                            class="form-control datetimepicker-input"
+                                                            data-target="#dateTime" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="form-group row ">
+                                            <label class="col-lg-2 col-form-label text-left">Place</label>
+                                            <div class="col-lg-10">
+                                                <input type="text" class="form-control">
+                                            </div>
+                                        </div>
+                                        <hr>
+
+                                        <div class="form-group row ">
+                                            <label class="col-lg-2 col-form-label text-left">During biz trip</label>
+                                            <div class="col-lg-10 text-lg-left text-left">
+                                                <label class="radio-inline com_title col-form-label"><input type="radio"
+                                                        name="optradio1" checked style="margin-right: 5px;">
+                                                    Yes</label>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                                <label class="radio-inline com_title col-form-label"><input type="radio"
+                                                        name="optradio1" style="margin-right: 5px;"> No</label>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="form-group row ">
+                                            <label
+                                                class="col-lg-2 col-form-label text-left d-flex align-items-left justify-content-left">Entrainment
+                                                Infomation</label>
+                                            <div class="col-lg-10">
+                                                <!-- form chil -->
+                                                <div class="card card-body card-company">
+                                                    <div class="form-group row ">
+                                                        <label
+                                                            class="col-lg-2 col-form-label com_title text-left">Company
+                                                            Name</label>
+                                                        <div class="col-lg-10"><input type="text" class="form-control">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row ">
+                                                        <label
+                                                            class="col-lg-2 col-form-label com_title text-left">Title</label>
+                                                        <div class="col-lg-10"><input type="text" class="form-control">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row ">
+                                                        <label class="col-lg-2 col-form-label com_title text-left">Name
+                                                            of Attendants</label>
+                                                        <div class="col-lg-10"><input type="text" class="form-control">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row ">
+                                                        <label
+                                                            class="col-lg-2 col-form-label com_title text-left">Details
+                                                            of dutles</label>
+                                                        <div class="col-lg-10"><input type="text" class="form-control">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="text-lg-left text-left"><a class="btn btn-outline-dark"
+                                                        role="button" href="#">+
+                                                        Add</a></div>
+                                                <!-- ./form chil -->
+                                            </div>
+                                        </div>
+                                        <hr>
+
+                                        <div class="form-group row ">
+                                            <label class="col-lg-2 col-form-label text-left">Confirmation of Compliance
+                                                with Laws</label>
+                                            <div class="col-lg-10 text-lg-left text-left">
+                                                <label class="radio-inline com_title col-form-label"><input type="radio"
+                                                        name="optradio2" checked style="margin-right: 5px;">
+                                                    Yes</label>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                                <label class="radio-inline com_title col-form-label"><input type="radio"
+                                                        name="optradio2" style="margin-right: 5px;"> No</label>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="form-group row ">
+                                            <label class="col-lg-2 col-form-label text-left">No. of Entertainment for
+                                                past 1 year</label>
+                                            <div class="col-lg-10 text-lg-left text-left">
+                                                <label class="radio-inline com_title col-form-label"><input type="radio"
+                                                        name="optradio3" checked style="margin-right: 5px;">
+                                                    Yes</label>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                                <label class="radio-inline com_title col-form-label"><input type="radio"
+                                                        name="optradio3" style="margin-right: 5px;"> No</label>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="form-group row ">
+                                            <label class="col-lg-2 col-form-label text-left">Existence of
+                                                projects</label>
+                                            <div class="col-lg-10 text-lg-left text-left">
+                                                <label class="radio-inline com_title col-form-label"><input type="radio"
+                                                        name="optradio4" checked style="margin-right: 5px;">
+                                                    Yes</label>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                                <label class="radio-inline com_title col-form-label"><input type="radio"
+                                                        name="optradio4" style="margin-right: 5px;"> No</label>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="form-group row ">
+                                            <label class="col-lg-2 col-form-label text-left">Includes its
+                                                Family/Friend</label>
+                                            <div class="col-lg-10 text-lg-left text-left">
+                                                <label class="radio-inline com_title col-form-label"><input type="radio"
+                                                        name="optradio5" checked style="margin-right: 5px;">
+                                                    Yes</label>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                                <label class="radio-inline com_title col-form-label"><input type="radio"
+                                                        name="optradio5" style="margin-right: 5px;"> No</label>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="form-group row ">
+                                            <label class="col-lg-2 col-form-label text-left">Project Name</br>
+                                                <i class="fa fa-asterisk" aria-hidden="true"
+                                                    style="font-size: small;color: #df2333f1;"></i>
+                                                <label style="color: #df2333f1;">If need</label>
+                                            </label>
+                                            <div class="col-lg-10">
+                                                <textarea id="text_content" class="form-control" rows="2"></textarea>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="form-group row ">
+                                            <label
+                                                class="col-lg-2 col-form-label text-left d-flex align-items-left justify-content-left">Reason
+                                                for the Entertainment</label>
+                                            <div class="col-lg-10">
+                                                <textarea id="text_content" class="form-control" rows="5"></textarea>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="form-group row ">
+                                            <label class="col-lg-2 col-form-label text-left ">Total Number of
+                                                Person</label>
+                                            <div class="col-lg-10">
+                                                <div class="form-group row ">
+                                                    <div class="col-lg-4"><input type="text" class="form-control"></div>
+                                                    <label
+                                                        class="col-lg-8 col-form-label com_title text-lg-left text-left">Persons</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="form-group row ">
+                                            <label class="col-lg-2 col-form-label text-left">Estimated Amount</label>
+                                            <div class="col-lg-10 text-lg-left text-left">
+                                                <div class="form-group row ">
+                                                    <div class="col-lg-4"><input type="text" class="form-control"></div>
+                                                    <label
+                                                        class="col-lg-8 col-form-label com_title text-lg-left text-left">Per
+                                                        Person(Excluding
+                                                        VND)</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="form-group row ">
+                                            <label
+                                                class="col-lg-2 col-form-label text-left text-danger d-flex align-items-left justify-content-left">Describe
+                                                if the amount per person exceeds 4mil VND (PO:2mil VND)</label>
+                                            <div class="col-lg-10">
+                                                <textarea id="text_content" class="form-control" rows="3"></textarea>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="form-group row ">
+                                            <label
+                                                class="col-lg-2 col-form-label text-left text-danger">Subsequent</label>
+                                            <div class="col-lg-10 text-lg-left text-left">
+                                                <label class="radio-inline com_title col-form-label"><input
+                                                        type="checkbox" checked style="margin-right: 5px;"> ON</label>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <!-- /.card-body -->
+                            </div>
+                            <br>
+                            <div>
+                                <button type="button" class="btn btn-apply btn-custom"><i class="far fa-check-circle"
+                                        style="margin-right: 5px;"></i>Apply</button>
+                                <button type="button" class="btn btn-draft btn-custom"><i class="nav-icon fas fa-edit"
+                                        style="margin-right: 5px;"></i>Draft</button>
+                                <button type="button" class="btn btn-cancel btn-custom"><i class="fa fa-ban"
+                                        aria-hidden="true" style="margin-right: 5px;"></i>Cancel</button>
+                            </div>
+                            <br>
                         </div>
-                        <hr>
-                        <div class="form-group row ">
-                            <label class="col-lg-2 col-form-label text-left">Date & Time</label>
-                            <div class="col-lg-4">
-                              <div class="form-group">
-                                <div class="input-group date" id="dateTime" data-target-input="nearest">
-                                  <div class="input-group-append" data-target="#dateTime" data-toggle="datetimepicker">
-                                      <div class="input-group-text"><i class="fa fa-calendar-alt"></i></div>
-                                  </div>
-                                  <input type="text" name="dateTime" class="form-control datetimepicker-input" data-target="#dateTime"/>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <hr>
-                          <div class="form-group row ">
-                            <label class="col-lg-2 col-form-label text-left">Place</label>
-                            <div class="col-lg-10">
-                              <input type="text" class="form-control">
-                            </div>
-                          </div>
-                          <hr>
-
-                          <div class="form-group row ">
-                            <label class="col-lg-2 col-form-label text-left">During biz trip</label>
-                            <div class="col-lg-10 text-lg-left text-left">
-                              <label class="radio-inline com_title col-form-label" ><input type="radio" name="optradio1" checked style="margin-right: 5px;"> Yes</label>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                              <label class="radio-inline com_title col-form-label"><input type="radio" name="optradio1" style="margin-right: 5px;"> No</label>
-                            </div>
-                          </div>
-                          <hr>
-                          <div class="form-group row ">
-                            <label class="col-lg-2 col-form-label text-left d-flex align-items-left justify-content-left">Entrainment Infomation</label>
-                            <div class="col-lg-10">
-                              <!-- form chil -->
-                              <div  class="card card-body card-company">
-                                <div class="form-group row ">
-                                    <label class="col-lg-2 col-form-label com_title text-left">Company Name</label>
-                                    <div class="col-lg-10"><input type="text" class="form-control"></div>
-                                </div>
-                                <div class="form-group row ">
-                                    <label class="col-lg-2 col-form-label com_title text-left">Title</label>
-                                    <div class="col-lg-10"><input type="text" class="form-control"></div>
-                                </div>
-                                <div class="form-group row ">
-                                    <label class="col-lg-2 col-form-label com_title text-left">Name of Attendants</label>
-                                    <div class="col-lg-10"><input type="text" class="form-control"></div>
-                                </div>
-                                <div class="form-group row ">
-                                    <label class="col-lg-2 col-form-label com_title text-left">Details of dutles</label>
-                                    <div class="col-lg-10"><input type="text" class="form-control"></div>
-                                </div>
-                                </div>
-                                <div class="text-lg-left text-left"><a class="btn btn-outline-dark" role="button" href="#">+ Add</a></div>                                
-                              <!-- ./form chil -->
-                            </div>
-                          </div>
-                          <hr> 
-
-                          <div class="form-group row ">
-                            <label class="col-lg-2 col-form-label text-left">Confirmation of Compliance with Laws</label>
-                            <div class="col-lg-10 text-lg-left text-left">
-                              <label class="radio-inline com_title col-form-label" ><input type="radio" name="optradio2" checked style="margin-right: 5px;"> Yes</label>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                              <label class="radio-inline com_title col-form-label"><input type="radio" name="optradio2" style="margin-right: 5px;"> No</label>
-                            </div>
-                          </div>
-                          <hr>
-                          <div class="form-group row ">
-                            <label class="col-lg-2 col-form-label text-left">No. of Entertainment for past 1 year</label>
-                            <div class="col-lg-10 text-lg-left text-left">
-                              <label class="radio-inline com_title col-form-label" ><input type="radio" name="optradio3" checked style="margin-right: 5px;"> Yes</label>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                              <label class="radio-inline com_title col-form-label"><input type="radio" name="optradio3" style="margin-right: 5px;"> No</label>
-                            </div>
-                          </div>
-                          <hr>
-                          <div class="form-group row ">
-                            <label class="col-lg-2 col-form-label text-left">Existence of projects</label>
-                            <div class="col-lg-10 text-lg-left text-left">
-                              <label class="radio-inline com_title col-form-label" ><input type="radio" name="optradio4" checked style="margin-right: 5px;"> Yes</label>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                              <label class="radio-inline com_title col-form-label"><input type="radio" name="optradio4" style="margin-right: 5px;"> No</label>
-                            </div>
-                          </div>
-                          <hr>
-                          <div class="form-group row ">
-                            <label class="col-lg-2 col-form-label text-left">Includes its Family/Friend</label>
-                            <div class="col-lg-10 text-lg-left text-left">
-                              <label class="radio-inline com_title col-form-label" ><input type="radio" name="optradio5" checked style="margin-right: 5px;"> Yes</label>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                              <label class="radio-inline com_title col-form-label"><input type="radio" name="optradio5" style="margin-right: 5px;"> No</label>
-                            </div>
-                          </div>
-                          <hr>
-                          <div class="form-group row ">
-                            <label class="col-lg-2 col-form-label text-left">Project Name</br>
-                              <i class="fa fa-asterisk" aria-hidden="true" style="font-size: small;color: #df2333f1;"></i> <label style="color: #df2333f1;">If need</label>
-                            </label>
-                            <div class="col-lg-10">
-                                <textarea id="text_content" class="form-control" rows="2"></textarea>
-                            </div>
-                          </div>
-                          <hr>
-                          <div class="form-group row ">
-                            <label class="col-lg-2 col-form-label text-left d-flex align-items-left justify-content-left">Reason for the Entertainment</label>
-                            <div class="col-lg-10">
-                                <textarea id="text_content" class="form-control" rows="5"></textarea>
-                            </div>
-                          </div>
-                          <hr>
-                          <div class="form-group row ">
-                            <label class="col-lg-2 col-form-label text-left ">Total Number of Person</label>
-                            <div class="col-lg-10">
-                                <div class="form-group row ">
-                                <div class="col-lg-4"><input type="text" class="form-control"></div>
-                                <label class="col-lg-8 col-form-label com_title text-lg-left text-left">Persons</label>
-                              </div>
-                            </div>
-                          </div>
-                          <hr>
-                          <div class="form-group row ">
-                            <label class="col-lg-2 col-form-label text-left">Estimated Amount</label>
-                            <div class="col-lg-10 text-lg-left text-left">
-                                <div class="form-group row ">
-                                <div class="col-lg-4"><input type="text" class="form-control"></div>
-                                <label class="col-lg-8 col-form-label com_title text-lg-left text-left">Per Person(Excluding VND)</label>
-                              </div>
-                            </div>
-                          </div>
-                          <hr>
-                          <div class="form-group row ">
-                            <label class="col-lg-2 col-form-label text-left text-danger d-flex align-items-left justify-content-left">Describe if the amount per person exceeds 4mil VND (PO:2mil VND)</label>
-                            <div class="col-lg-10">
-                                <textarea id="text_content" class="form-control" rows="3"></textarea>
-                            </div>
-                          </div>
-                          <hr>
-                          <div class="form-group row ">
-                            <label class="col-lg-2 col-form-label text-left text-danger">Subsequent</label>
-                            <div class="col-lg-10 text-lg-left text-left">
-                                <label class="radio-inline com_title col-form-label"><input type="checkbox" checked style="margin-right: 5px;"> ON</label>
-                            </div>
-                          </div>
-                </form>
-              </div>
-              <!-- /.card-body -->
-            </div>
-            <br>
-            <div>
-              <button type="button" class="btn btn-apply btn-custom"><i class="far fa-check-circle" style="margin-right: 5px;"></i>Apply</button>
-              <button type="button" class="btn btn-draft btn-custom"><i class="nav-icon fas fa-edit" style="margin-right: 5px;"></i>Draft</button>
-              <button type="button" class="btn btn-cancel btn-custom"><i class="fa fa-ban" aria-hidden="true" style="margin-right: 5px;"></i>Cancel</button>
-            </div>
-            <br>
-          </div>
+                    </div>
+                </div>
+                <!-- /.card -->
+            </section>
+            <!-- /.content -->
         </div>
-      </div>
-      <!-- /.card -->
-    </section>
-    <!-- /.content -->
-  </div>
-</div>
-<!-- ./wrapper -->
-  <!-- jQuery -->
-  <script src="../../public/js/jquery/jquery.min.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-  <!-- Bootstrap 4 -->
-  <script src="../../public/js/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <!-- AdminLTE App -->
-  <script src="../../public/js/adminlte.min.js"></script>
-  <!-- Datatable JS -->
-  <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>	
-  <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
-  <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+    </div>
+    <!-- ./wrapper -->
+    <!-- jQuery -->
+    <script src="../../public/js/jquery/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="../../public/js/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="../../public/js/adminlte.min.js"></script>
+    <!-- Datatable JS -->
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
 
-<!-- moment -->
-<script src="../../public/js/moment/moment.min.js"></script>
-<!-- date-range-picker -->
-<script src="../../public/js/daterangepicker/daterangepicker.js"></script>
-<!-- Tempusdominus Bootstrap 4 -->
-<script src="../../public/css/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
-<!-- Bootstrap Switch -->
-<script src="../../public/js/bootstrap-switch/js/bootstrap-switch.min.js"></script>
-<!-- AdminLTE App -->
-<script src="../../public/js/adminlte.min.js"></script>
-<!-- Page script -->
-<script type="text/javascript">
-  $(function () {
-    //Date picker
-    $('#dateTime').datetimepicker({
-      format: 'ddd, DD/MM/YYYY',
-      defaultDate: moment()
+    <!-- moment -->
+    <script src="../../public/js/moment/moment.min.js"></script>
+    <!-- date-range-picker -->
+    <script src="../../public/js/daterangepicker/daterangepicker.js"></script>
+    <!-- Tempusdominus Bootstrap 4 -->
+    <script src="../../public/css/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+    <!-- Bootstrap Switch -->
+    <script src="../../public/js/bootstrap-switch/js/bootstrap-switch.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="../../public/js/adminlte.min.js"></script>
+    <!-- Page script -->
+    <script type="text/javascript">
+    $(        on () {
+      //Date picker
+                teTime').datetimepicker({
+             ormat: 'ddd, DD/MM/YYY              defaulatet()
+      });
     });
-  });
-</script>
+    </script>
 </body>
+
 </html>
