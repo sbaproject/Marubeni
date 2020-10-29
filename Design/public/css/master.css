@@ -73,3 +73,105 @@
         padding: 0!important;
     }
 }
+
+.bootstrap-datetimepicker-widget table td.active, .bootstrap-datetimepicker-widget table td.active:hover {
+    background-color: #96000C;
+    color: #ffffff;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+}
+
+.bootstrap-datetimepicker-widget table thead:first-child tr:first-child{
+    background-color: gray;
+    color: #fff;
+    border-radius: 0px;
+}
+
+.bootstrap-datetimepicker-widget table thead:first-child tr:first-child .prev{
+    border-radius: 0px;
+}
+
+.bootstrap-datetimepicker-widget table thead:first-child tr:first-child .prev:hover{
+    background-color: gray;
+    color: #fff;
+}
+
+.bootstrap-datetimepicker-widget table thead:first-child tr:first-child .picker-switch{
+    border-radius: 0px;
+}
+
+.bootstrap-datetimepicker-widget table thead:first-child tr:first-child .picker-switch:hover{
+    background-color: gray;
+    color: #fff;
+}
+
+.bootstrap-datetimepicker-widget table thead:first-child tr:first-child .next{
+    border-radius: 0px;
+}
+
+.bootstrap-datetimepicker-widget table thead:first-child tr:first-child .next:hover{
+    background-color: gray;
+    color: #fff;
+}
+
+.bootstrap-datetimepicker-widget table thead tr{
+    border-bottom: 2px solid white;
+}
+.bootstrap-datetimepicker-widget table tr{
+    border-bottom: 2px solid white;
+}
+
+.bootstrap-datetimepicker-widget table td.old {
+    visibility: hidden;
+}
+
+.bootstrap-datetimepicker-widget table td.new {
+    visibility: hidden;
+}
+
+.bootstrap-datetimepicker-widget table td.today:before {
+    content: none;
+}
+
+
+input[type='radio']:after {
+    width: 17px;
+    height: 17px;
+    border-radius: 50%;
+    top: -3px;
+    left: -1px;
+    position: relative;
+    background-color: white;
+    content: '';
+    display: inline-block;
+    visibility: visible;
+    border: 1px solid gray;
+}
+input[type='radio']:checked:after {
+    width: 17px;
+    height: 17px;
+    border-radius: 50%;
+    top: -3px;
+    left: -1px;
+    position: relative;
+    background-color: #96000c;
+    content: '';
+    display: inline-block;
+    visibility: visible;
+    border: 1px solid gray;
+    box-shadow: inset 0 0 0 3px white;
+}
+
+input[type='checkbox']:checked:after {
+    width: 17px;
+    height: 17px;
+    border-radius: 5px;
+    top: -3px;
+    left: -1px;
+    position: relative;
+    background-color: blue;
+    content: '';
+    display: inline-block;
+    visibility: visible;
+    border: 1px solid gray;
+    box-shadow: inset 0 0 0 3px white;
+}

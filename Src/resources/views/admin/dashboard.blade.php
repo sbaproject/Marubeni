@@ -1,5 +1,8 @@
 @extends('layouts.master')
 @section('title','ADMIN_DASHBOARD')
+@section('css')
+<!-- <link rel="stylesheet" href="css/thach.css"> -->
+@endsection
 @section('content')
 		<script type="text/javascript">
 				$(function () {  
