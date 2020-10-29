@@ -65,7 +65,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="" class="nav-link">
+                    <a href="/admin/flow-setting/list" class="nav-link">
                         <i class="fas fa-angle-right left"></i>
                         <p>Approval Flow Setting</p>
                     </a>

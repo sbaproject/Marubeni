@@ -10,6 +10,7 @@ use App\Http\Controllers\User\UserDashboardController;
 use App\Http\Controllers\User\UserChangePassController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Application\FormListController;
+use App\Http\Controllers\Admin\AdminFlowSettingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -60,6 +61,10 @@ Route::middleware('auth')->group(function () {
                 Route::get('edit/{user}', [UserEditController::class, 'show'])->name('edit.show');
                 Route::put('edit/{user}', [UserEditController::class, 'update'])->name('edit.update');
             });
+            //Approval Flow Setting
+            Route::get('/flow-setting/list', [AdminFlowSettingController::class, 'index'])->name('flow.index');
+            Route::get('/flow-setting/add', [AdminFlowSettingController::class, 'create'])->name('flow.create');
+            Route::get('/flow-setting/edit/{id}', [AdminFlowSettingController::class, 'edit'])->name('flow.edit');
         });
     });
 
