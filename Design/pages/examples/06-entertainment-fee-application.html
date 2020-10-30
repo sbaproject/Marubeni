@@ -425,12 +425,13 @@
     <script src="../../public/js/adminlte.min.js"></script>
     <!-- Page script -->
     <script type="text/javascript">
-    $(        on () {
-      //Date picker
-                teTime').datetimepicker({
-             ormat: 'ddd, DD/MM/YYY              defaulatet()
-      });
-    });
+        $(function () {
+            //Date picker
+            $('#dateTime').datetimepicker({
+                format: 'ddd, DD/MM/YYYY',
+                defaultDate: moment()
+            });
+        });
     </script>
 </body>
 

@@ -1,264 +1,298 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1"> 
-        <title>Admin Dashboard</title>
 
-        <!-- Font Awesome -->        
-        <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
-        <!-- Ionicons -->
-        <link rel="stylesheet" href="../../public/css/ionicons.min.css">
-        <!-- overlayScrollbars -->
-        <link rel="stylesheet" href="../../public/css/adminlte.min.css">
-        <!-- jquery-ui css -->
-        <link rel="stylesheet" href="../../public/css/jquery-ui.css">
-        <!-- Google Font: Source Sans Pro -->
-        <link href="../../public/css/google_font_sans_pro.css" rel="stylesheet">
-        <!-- custom css -->
-        <link rel="stylesheet" href="../../public/css/master.css">
-        <link rel="stylesheet" href="../../public/css/admin_102_shain_ichiran.css">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Admin Dashboard</title>
 
-        <!-- jQuery -->
-        <script src="../../public/js/jquery/jquery.min.js"></script>
-        <script src="../../public/js/jquery/jquery-ui.js"></script>
-        <!-- Bootstrap 4 -->
-        <script src="../../public/js/bootstrap/js/bootstrap.bundle.min.js"></script>
-        <!-- AdminLTE App -->
-        <script src="../../public/js/adminlte.min.js"></script>
-    </head>
-    <body class="hold-transition sidebar-mini">
-        <!-- Site wrapper -->
-        <div class="wrapper">
-          <!-- Navbar -->
-          <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="../../public/css/ionicons.min.css">
+    <!-- overlayScrollbars -->
+    <link rel="stylesheet" href="../../public/css/adminlte.min.css">
+    <!-- jquery-ui css -->
+    <link rel="stylesheet" href="../../public/css/jquery-ui.css">
+    <!-- Google Font: Source Sans Pro -->
+    <link href="../../public/css/google_font_sans_pro.css" rel="stylesheet">
+    <!-- custom css -->
+    <link rel="stylesheet" href="../../public/css/master.css">
+    <link rel="stylesheet" href="../../public/css/admin_102_shain_ichiran.css">
+
+    <!-- jQuery -->
+    <script src="../../public/js/jquery/jquery.min.js"></script>
+    <script src="../../public/js/jquery/jquery-ui.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="../../public/js/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="../../public/js/adminlte.min.js"></script>
+</head>
+
+<body class="hold-transition sidebar-mini">
+    <!-- Site wrapper -->
+    <div class="wrapper">
+        <!-- Navbar -->
+        <nav class="main-header navbar navbar-expand navbar-white navbar-light">
             <!-- Left navbar links -->
             <ul class="navbar-nav bg-custom">
-              <li class="nav-item">
-                <a class="nav-link rg-menu" data-widget="pushmenu" href="#" role="button">
-                    <i class="fas fa-bars" style="color: darkgray;"></i>
-                </a>
-              </li>
+                <li class="nav-item">
+                    <a class="nav-link rg-menu" data-widget="pushmenu" href="#" role="button">
+                        <i class="fas fa-bars" style="color: darkgray;"></i>
+                    </a>
+                </li>
             </ul>
 
             <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto info-user">
-              <li class="nav-item user-panel-custom">
-                <div class="user-deparment"></div>
-              </li>
-              <li class="nav-item user-panel-custom">
-                <div class="info">
-                    <a href="#" class="text-name">Admin</a>
-                  </div>
-              </li>
-              <li class="nav-item user-panel-custom">
-                <div class="tab">
-                    <a class="tablink-VN" href="">VN</a>
-                    <a class="tablink-EN" href="">EN</a>
-                  </div>
-              </li>
+                <li class="nav-item user-panel-custom">
+                    <div class="user-deparment"></div>
+                </li>
+                <li class="nav-item user-panel-custom">
+                    <div class="info">
+                        <a href="#" class="text-name">Admin</a>
+                    </div>
+                </li>
+                <li class="nav-item user-panel-custom">
+                    <div class="tab">
+                        <a class="tablink-VN" href="">VN</a>
+                        <a class="tablink-EN" href="">EN</a>
+                    </div>
+                </li>
             </ul>
-          </nav>
-          <!-- Main Sidebar Container -->
-          <aside class="main-sidebar sidebar-primary elevation-4 sidebar-no-expand">
+        </nav>
+        <!-- Main Sidebar Container -->
+        <aside class="main-sidebar sidebar-primary elevation-4 sidebar-no-expand">
             <!-- Brand Logo -->
             <a href="/" class="brand-link">
-              <img src="../../public/images/logo.png" alt="Logo" class="" style="max-width: 100%;">
+                <img src="../../public/images/logo.png" alt="Logo" class="" style="max-width: 100%;">
             </a>
             <!-- Sidebar -->
             <div class="sidebar">
-              <!-- Sidebar Menu -->
-              <nav class="mt-2">
-                  <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                      <!-- Add icons to the links using the .nav-icon class
+                <!-- Sidebar Menu -->
+                <nav class="mt-2">
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                        data-accordion="false">
+                        <!-- Add icons to the links using the .nav-icon class
                            with font-awesome or any other icon font library -->
-                      <li class="nav-item has-treeview">
-                          <a href="" class="nav-link">
-                              <i class="nav-icon fas fa-list-alt"></i>
-                              <p>
-                                  Application List
-                                  <i class="fas fa-angle-down right"></i>
-                              </p>
-                          </a>
-                          <ul class="nav nav-treeview">
-                              <li class="nav-item">
-                                  <a href="" class="nav-link">
-                                      <i class="fas fa-angle-right left"></i>
-                                      <p>Applying</p>
-                                  </a>
-                              </li>
-                              <li class="nav-item">
-                                  <a href="/pages/examples/user-status.html" class="nav-link">
-                                      <i class="fas fa-angle-right left"></i>
-                                      <p>Approved/Under payment</p>
-                                  </a>
-                              </li>
-                              <li class="nav-item">
-                                  <a href="/pages/examples/user-status.html" class="nav-link">
-                                      <i class="fas fa-angle-right left"></i>
-                                      <p>Approved/in-processing <br>of payment</p>
-                                  </a>
-                              </li>
-                              <li class="nav-item">
-                                  <a href="/pages/examples/user-status.html" class="nav-link">
-                                      <i class="fas fa-angle-right left"></i>
-                                      <p>Declined</p>
-                                  </a>
-                              </li>
-                              <li class="nav-item">
-                                  <a href="/pages/examples/user-status.html" class="nav-link">
-                                      <i class="fas fa-angle-right left"></i>
-                                      <p>Reject</p>
-                                  </a>
-                              </li>
-                          </ul>
-                      </li>
-                      <li class="nav-item has-treeview">
-                          <a href="" class="nav-link">
-                              <i class="nav-icon fas fa-cog"></i>
-                              <p>
-                                  SETTINGS
-                                  <i class="right fas fa-angle-down"></i>
-                              </p>
-                          </a>
-                          <ul class="nav nav-treeview" style="display: none;">
-                              <li class="nav-item">
-                                  <a href="/pages/examples/admin_102_shain_ichiran.html" class="nav-link">
-                                      <i class="fas fa-angle-right left"></i>
-                                      <p>Employee Setting</p>
-                                  </a>
-                              </li>
-                              <li class="nav-item">
-                                  <a href="" class="nav-link">
-                                      <i class="fas fa-angle-right left"></i>
-                                      <p>Budget setting</p>
-                                  </a>
-                              </li>
-                              <li class="nav-item">
-                                  <a href="" class="nav-link">
-                                      <i class="fas fa-angle-right left"></i>
-                                      <p>Approval Flow Setting</p>
-                                  </a>
-                              </li>
-                              <li class="nav-item">
-                                  <a href="" class="nav-link">
-                                      <i class="fas fa-angle-right left"></i>
-                                      <p>Change Password</p>
-                                  </a>
-                              </li>
-                          </ul>
-                      </li>
-                      <li class="nav-item">
-                          <a href="" class="nav-link">
-                              <i class="nav-icon far fa-building"></i>
-                              <p>
-                                  Company Registration
-                              </p>
-                          </a>
-                      </li>
-                  </ul>
-              </nav>
-              <!-- /.sidebar-menu -->
-          </div>
+                        <li class="nav-item has-treeview">
+                            <a href="" class="nav-link">
+                                <i class="nav-icon fas fa-list-alt"></i>
+                                <p>
+                                    Application List
+                                    <i class="fas fa-angle-down right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="" class="nav-link">
+                                        <i class="fas fa-angle-right left"></i>
+                                        <p>Applying</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/pages/examples/user-status.html" class="nav-link">
+                                        <i class="fas fa-angle-right left"></i>
+                                        <p>Approved/Under payment</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/pages/examples/user-status.html" class="nav-link">
+                                        <i class="fas fa-angle-right left"></i>
+                                        <p>Approved/in-processing <br>of payment</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/pages/examples/user-status.html" class="nav-link">
+                                        <i class="fas fa-angle-right left"></i>
+                                        <p>Declined</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/pages/examples/user-status.html" class="nav-link">
+                                        <i class="fas fa-angle-right left"></i>
+                                        <p>Reject</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item has-treeview">
+                            <a href="" class="nav-link">
+                                <i class="nav-icon fas fa-cog"></i>
+                                <p>
+                                    SETTINGS
+                                    <i class="right fas fa-angle-down"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview" style="display: none;">
+                                <li class="nav-item">
+                                    <a href="/pages/examples/admin_102_shain_ichiran.html" class="nav-link">
+                                        <i class="fas fa-angle-right left"></i>
+                                        <p>Employee Setting</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="" class="nav-link">
+                                        <i class="fas fa-angle-right left"></i>
+                                        <p>Budget setting</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="" class="nav-link">
+                                        <i class="fas fa-angle-right left"></i>
+                                        <p>Approval Flow Setting</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="" class="nav-link">
+                                        <i class="fas fa-angle-right left"></i>
+                                        <p>Change Password</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a href="" class="nav-link">
+                                <i class="nav-icon far fa-building"></i>
+                                <p>
+                                    Company Registration
+                                </p>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+                <!-- /.sidebar-menu -->
+            </div>
             <!-- /.sidebar -->
-          </aside>
-          <!-- Content Wrapper. Contains page content -->
-          <div class="content-wrapper">
+        </aside>
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
             <div class="row">
-              <div class="col-lg-9">
-                <div class="card">
-                  <div class="card-body">
-                    <div class="search-content">
-                      <form>
-                           <h4>BUSINESS TRIP</h4>           
-                          <div class="card card-body card-company">
-                              <div class="row">
-                              <label for="" class="col-lg-2 col-form-label text-center d-flex align-items-center justify-content-center">Assignment</label>           
-                              <div class="col-lg-10">
-                              <div class="form-group row" style="margin-bottom: 4px;">
-                                <label for="" class="col-lg-2 col-form-label text-center font-weight-normal">Economy Class</label>
-                                <div class="col-lg-10">
-                                  <input type="text" class="form-control" id="" placeholder="Economy Class">
-                                </div>
-                              </div>
-                              <div class="form-group row">
-                                <label for="" class="col-lg-2 col-form-label text-center font-weight-normal">Business Class</label>
-                                <div class="col-lg-10">
-                                  <input type="text" class="form-control" id="" placeholder="Business Class">
-                                </div>
-                              </div> 
-                              </div>
-                              </div>
-                              <div class="row">
-                                  <label for="" class="col-lg-2 col-form-label text-center d-flex align-items-center justify-content-center">Settlement</label>           
-                                  <div class="col-lg-10">
-                                  <div class="form-group row" style="margin-bottom: 4px;">
-                                    <label for="" class="col-lg-2 col-form-label text-center font-weight-normal">Economy Class</label>
-                                    <div class="col-lg-10">
-                                      <input type="text" class="form-control" id="" placeholder="Economy Class">
+                <div class="col-lg-9">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="search-content">
+                                <form>
+                                    <h4>BUSINESS TRIP</h4>
+                                    <div class="card card-body card-company">
+                                        <div class="row">
+                                            <label for=""
+                                                class="col-lg-2 col-form-label text-center d-flex align-items-center justify-content-center">Assignment</label>
+                                            <div class="col-lg-10">
+                                                <div class="form-group row" style="margin-bottom: 4px;">
+                                                    <label for=""
+                                                        class="col-lg-2 col-form-label text-center font-weight-normal">Economy
+                                                        Class</label>
+                                                    <div class="col-lg-10">
+                                                        <input type="text" class="form-control" id=""
+                                                            placeholder="Economy Class">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for=""
+                                                        class="col-lg-2 col-form-label text-center font-weight-normal">Business
+                                                        Class</label>
+                                                    <div class="col-lg-10">
+                                                        <input type="text" class="form-control" id=""
+                                                            placeholder="Business Class">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <label for=""
+                                                class="col-lg-2 col-form-label text-center d-flex align-items-center justify-content-center">Settlement</label>
+                                            <div class="col-lg-10">
+                                                <div class="form-group row" style="margin-bottom: 4px;">
+                                                    <label for=""
+                                                        class="col-lg-2 col-form-label text-center font-weight-normal">Economy
+                                                        Class</label>
+                                                    <div class="col-lg-10">
+                                                        <input type="text" class="form-control" id=""
+                                                            placeholder="Economy Class">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for=""
+                                                        class="col-lg-2 col-form-label text-center font-weight-normal">Business
+                                                        Class</label>
+                                                    <div class="col-lg-10">
+                                                        <input type="text" class="form-control" id=""
+                                                            placeholder="Business Class">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                  </div>
-                                  <div class="form-group row">
-                                    <label for="" class="col-lg-2 col-form-label text-center font-weight-normal">Business Class</label>
-                                    <div class="col-lg-10">
-                                      <input type="text" class="form-control" id="" placeholder="Business Class">
+
+                                    <h4>PRE-APPROVAL & SETTLEMENT FOR ENTERTAINMENT FEE</h4>
+                                    <div class="card card-body card-company">
+
+                                        <div class="row">
+                                            <label for=""
+                                                class="col-lg-2 col-form-label text-center d-flex align-items-center justify-content-center">Assignment</label>
+                                            <div class="col-lg-10">
+                                                <div class="form-group row" style="margin-bottom: 4px;">
+                                                    <label for=""
+                                                        class="col-lg-2 col-form-label text-center font-weight-normal">Not
+                                                        PO</label>
+                                                    <div class="col-lg-10">
+                                                        <input type="text" class="form-control" id=""
+                                                            placeholder="Economy Class">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for=""
+                                                        class="col-lg-2 col-form-label text-center font-weight-normal">PO</label>
+                                                    <div class="col-lg-10">
+                                                        <input type="text" class="form-control" id=""
+                                                            placeholder="Business Class">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <label for=""
+                                                class="col-lg-2 col-form-label text-center d-flex align-items-center justify-content-center">Settlement</label>
+                                            <div class="col-lg-10">
+                                                <div class="form-group row" style="margin-bottom: 4px;">
+                                                    <label for=""
+                                                        class="col-lg-2 col-form-label text-center font-weight-normal">Not
+                                                        PO</label>
+                                                    <div class="col-lg-10">
+                                                        <input type="text" class="form-control" id=""
+                                                            placeholder="Economy Class">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for=""
+                                                        class="col-lg-2 col-form-label text-center font-weight-normal">PO</label>
+                                                    <div class="col-lg-10">
+                                                        <input type="text" class="form-control" id=""
+                                                            placeholder="Business Class">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                  </div> 
-                                  </div>
-                                  </div>
-                          </div>
-      
-                          <h4>PRE-APPROVAL & SETTLEMENT FOR ENTERTAINMENT FEE</h4>           
-                          <div class="card card-body card-company">
-      
-                              <div class="row">
-                              <label for="" class="col-lg-2 col-form-label text-center d-flex align-items-center justify-content-center">Assignment</label>           
-                              <div class="col-lg-10">
-                              <div class="form-group row" style="margin-bottom: 4px;">
-                                <label for="" class="col-lg-2 col-form-label text-center font-weight-normal">Not PO</label>
-                                <div class="col-lg-10">
-                                  <input type="text" class="form-control" id="" placeholder="Economy Class">
-                                </div>
-                              </div>
-                              <div class="form-group row">
-                                <label for="" class="col-lg-2 col-form-label text-center font-weight-normal">PO</label>
-                                <div class="col-lg-10">
-                                  <input type="text" class="form-control" id="" placeholder="Business Class">
-                                </div>
-                              </div> 
-                              </div>
-                              </div>
-                              <div class="row">
-                                  <label for="" class="col-lg-2 col-form-label text-center d-flex align-items-center justify-content-center">Settlement</label>           
-                                  <div class="col-lg-10">
-                                  <div class="form-group row" style="margin-bottom: 4px;">
-                                    <label for="" class="col-lg-2 col-form-label text-center font-weight-normal">Not PO</label>
-                                    <div class="col-lg-10">
-                                      <input type="text" class="form-control" id="" placeholder="Economy Class">
+                                    <br>
+                                    <div class="mt-5 mb-5 text-center">
+                                        <button
+                                            class="btn btn-danger pt-1 pb-1 mr-4 col-5 col-sm-2 col-md-4 col-lg-2"><i
+                                                class="nav-icon far fa-check-circle"></i> Approval</button>
+                                        <button
+                                            class="btn btn-outline-dark pt-1 pb-1 col-5 col-sm-2 col-md-4 col-lg-2"><i
+                                                class="nav-icon far fa-times-circle"></i> Cancel</button>
                                     </div>
-                                  </div>
-                                  <div class="form-group row">
-                                    <label for="" class="col-lg-2 col-form-label text-center font-weight-normal">PO</label>
-                                    <div class="col-lg-10">
-                                      <input type="text" class="form-control" id="" placeholder="Business Class">
-                                    </div>
-                                  </div> 
-                                  </div>
-                                  </div>
-                              </div>
-                              <br>
-                              <div class="mt-5 mb-5 text-center">
-                                <button class="btn btn-danger pt-1 pb-1 mr-4 col-5 col-sm-2 col-md-4 col-lg-2"><i class="nav-icon far fa-check-circle"></i> Approval</button>
-                                <button class="btn btn-outline-dark pt-1 pb-1 col-5 col-sm-2 col-md-4 col-lg-2"><i class="nav-icon far fa-times-circle"></i> Cancel</button>
-                            </div>                          
-                          </div>                                 
-                      </form>
+                            </div>
+                            </form>
+                        </div>
                     </div>
-                  </div>
                 </div>
-              </div>
-          </div>
+            </div>
         </div>
-    </body>
+    </div>
+</body>
+
 </html>

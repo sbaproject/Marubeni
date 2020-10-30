@@ -1,368 +1,384 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Dashboard</title>
-  <!-- Tell the browser to be responsive to screen width -->
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="../../public/css/fontawesome-free/css/all.min.css">
-  <!-- Ionicons -->
-  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-  <!-- Tempusdominus Bbootstrap 4 -->
-  <link rel="stylesheet" href="../../public/css/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="../../public/css/adminlte.min.css">
-  <!-- Google Font: Source Sans Pro -->
-  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
-  <!-- custom css -->
-  <link href="../../public/css/master.css" rel="stylesheet">
-  <link href="../../public/css/01_dashboard.css" rel="stylesheet">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Dashboard</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../../public/css/fontawesome-free/css/all.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- Tempusdominus Bbootstrap 4 -->
+    <link rel="stylesheet" href="../../public/css/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../../public/css/adminlte.min.css">
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <!-- custom css -->
+    <link href="../../public/css/master.css" rel="stylesheet">
+    <link href="../../public/css/01_dashboard.css" rel="stylesheet">
 </head>
+
 <body class="hold-transition sidebar-mini">
-<!-- Site wrapper -->
-<div class="wrapper">
-  <!-- Navbar -->
-  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-    <!-- Left navbar links -->
-    <ul class="navbar-nav bg-custom">
-      <li class="nav-item">
-        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars" style="color: darkgray;"></i></a>
-      </li>
-    </ul>
+    <!-- Site wrapper -->
+    <div class="wrapper">
+        <!-- Navbar -->
+        <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+            <!-- Left navbar links -->
+            <ul class="navbar-nav bg-custom">
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"
+                            style="color: darkgray;"></i></a>
+                </li>
+            </ul>
 
-    <!-- Right navbar links -->
-    <ul class="navbar-nav ml-auto info-user">
-      <li class="nav-item user-panel-custom">
-        <div class="user-deparment">Department Name,
+            <!-- Right navbar links -->
+            <ul class="navbar-nav ml-auto info-user">
+                <li class="nav-item user-panel-custom">
+                    <div class="user-deparment">Department Name,
+                    </div>
+                </li>
+                <li class="nav-item user-panel-custom">
+                    <div class="info">
+                        <a href="#" class="text-name">Username</a>
+                    </div>
+                </li>
+                <li class="nav-item user-panel-custom">
+                    <div class="tab">
+                        <a class="tablink-VN" href="">VN</a>
+                        <a class="tablink-EN" href="">EN</a>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+        <!-- /.navbar -->
+
+        <!-- Main Sidebar Container -->
+        <aside class="main-sidebar sidebar-primary elevation-4 sidebar-no-expand">
+            <!-- Brand Logo -->
+            <a href="../../pages/examples/01_dashboard.html" class="brand-link">
+                <img src="../../public/images/logo.png" alt="Logo" class="" style="max-width: 100%;">
+            </a>
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <!-- Sidebar Menu -->
+                <nav class="mt-2">
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                        data-accordion="false">
+                        <!-- Add icons to the links using the .nav-icon class with font-awesome or any other icon font library -->
+                        <li class="nav-item">
+                            <a href="/pages/examples/03-application-list.html" class="nav-link">
+                                <i class="nav-icon fa fa-home"></i>
+                                <p>APPLICATION</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="" class="nav-link">
+                                <i class="nav-icon fas fa-edit"></i>
+                                <p>DRAFT</p>
+                            </a>
+                        </li>
+                        <li class="nav-item has-treeview">
+                            <a href="" class="nav-link">
+                                <!--<i class="nav-icon fas fa-list-alt"></i>-->
+                                <i class="nav-icon fas fa-file-alt" aria-hidden="true"></i>
+                                <p>
+                                    STATUS
+                                    <i class="fas fa-angle-down right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="/pages/examples/user-status.html" class="nav-link">
+                                        <i class="fas fa-angle-right left"></i>
+                                        <p>Applying</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/pages/examples/user-status.html" class="nav-link">
+                                        <i class="fas fa-angle-right left"></i>
+                                        <p>Approved/Under payment</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/pages/examples/user-status.html" class="nav-link">
+                                        <i class="fas fa-angle-right left"></i>
+                                        <p>Approved/in-processing <br />of payment</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/pages/examples/user-status.html" class="nav-link">
+                                        <i class="fas fa-angle-right left"></i>
+                                        <p>Declined</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/pages/examples/user-status.html" class="nav-link">
+                                        <i class="fas fa-angle-right left"></i>
+                                        <p>Reject</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/pages/examples/user-status.html" class="nav-link">
+                                        <i class="fas fa-angle-right left"></i>
+                                        <p>Completed</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/pages/examples/08_waiting_approval_list.html" class="nav-link">
+                                <i class="nav-icon fa fa-check-square"></i>
+                                <p>APPROVAL</p>
+                            </a>
+                        </li>
+                        <li class="nav-item has-treeview">
+                            <a href="" class="nav-link">
+                                <i class="nav-icon fas fa-cog"></i>
+                                <p>
+                                    SETTINGS
+                                    <i class="right fas fa-angle-down"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="/pages/examples/10_company_registration.html" class="nav-link">
+                                        <i class="fas fa-angle-right left"></i>
+                                        <p>Company Registration</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="" class="nav-link">
+                                        <i class="fas fa-angle-right left"></i>
+                                        <p>Change Password</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+                <!-- /.sidebar-menu -->
+            </div>
+            <!-- /.sidebar -->
+        </aside>
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <section class="content-header">
+                <div class="row">
+                    <div class="col-md-4 col-sm-4">
+                        <label class="lbl-from">From</label>
+                        <div class="form-group">
+                            <div class="input-group date" id="dateFrom" data-target-input="nearest">
+                                <div class="input-group-append" data-target="#dateFrom" data-toggle="datetimepicker">
+                                    <div class="input-group-text"><i class="fa fa-calendar-alt"></i></div>
+                                </div>
+                                <input type="text" name="dateFrom" class="form-control datetimepicker-input"
+                                    data-target="#dateFrom" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-4">
+                        <label class="lbl-to">To</label>
+                        <div class="form-group">
+                            <div class="input-group date" id="dateTo" data-target-input="nearest">
+                                <div class="input-group-append" data-target="#dateTo" data-toggle="datetimepicker">
+                                    <div class="input-group-text"><i class="fa fa-calendar-alt"></i></div>
+                                </div>
+                                <input type="text" name="dateTo" class="form-control datetimepicker-input"
+                                    data-target="#dateTo" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-4">
+                        <div class="btn-search">
+                            <button class="btn btn-default sty-search" type="submit"><i class="fa fa-search"
+                                    style="margin-right:5px;"></i>Search</button>
+                        </div>
+                    </div>
+            </section>
+
+            <!-- Main content -->
+            <section class="content-dashboard">
+                <div class="row" style="text-align: center;">
+                    <div class="col-xs-5ths">
+                        <a href="/pages/examples/user-status.html">
+                            <div class="card">
+                                <div class="card-body card-wrap-items">
+                                    <span>Applying</span>
+                                    <span class="right-number">(2)</span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-xs-5ths col-set">
+                        <a href="/pages/examples/user-status.html">
+                            <div class="card">
+                                <div class="card-body card-wrap-items">
+                                    <span>Approval</span>
+                                    <span class="right-number">(2)</span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-xs-5ths col-set">
+                        <a href="/pages/examples/user-status.html">
+                            <div class="card">
+                                <div class="card-body card-wrap-items">
+                                    <span>Declined</span>
+                                    <span class="right-number">(2)</span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-xs-5ths col-set">
+                        <a href="/pages/examples/user-status.html">
+                            <div class="card">
+                                <div class="card-body card-wrap-items">
+                                    <span>Reject</span>
+                                    <span class="right-number">(2)</span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-xs-5ths col-set">
+                        <a href="/pages/examples/user-status.html">
+                            <div class="card">
+                                <div class="card-body card-wrap-items">
+                                    <span>Completed</span>
+                                    <span class="right-number">(2)</span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <h4 class="mb-2" style="border-bottom: 1px solid #000;font-weight: bold;margin-top: 25px;"><i
+                        class="nav-icon fas fa-file-alt" aria-hidden="true"
+                        style="margin-right: 5px;margin-bottom: 5px;"></i>List
+                    of Applications</h4>
+                <div class="card">
+                    <div class="card-body p-0 card-list-items">
+                        <table class="table">
+                            <thead>
+                                <tr class="list-title">
+                                    <th>Application No</th>
+                                    <th>Application Name</th>
+                                    <th>Status</th>
+                                    <th>Apply Date</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="list-content">
+                                    <td>NO-TM-0000</td>
+                                    <td>交際費申請書</td>
+                                    <td>
+                                        <div class="status-apply">
+                                            Applying
+                                        </div>
+                                    </td>
+                                    <td>22/10/2020</td>
+                                    <td>
+
+                                        <a class="btn btn-details" href="/pages/examples/09_application_info.html">View
+                                            Details<i class="fas fa-angle-right" style="margin-left: 5px;"></i></a>
+                                    </td>
+                                </tr>
+                                <tr class="list-content">
+                                    <td>NO-TM-0000</td>
+                                    <td>交際費申請書</td>
+                                    <td>
+                                        <div class="status-approval">
+                                            Approval
+                                        </div>
+                                    </td>
+                                    <td>22/10/2020</td>
+                                    <td>
+                                        <a class="btn btn-details" href="/pages/examples/09_application_info.html">View
+                                            Details<i class="fas fa-angle-right" style="margin-left: 5px;"></i></a>
+                                    </td>
+                                </tr>
+                                <tr class="list-content">
+                                    <td>NO-BT-0000</td>
+                                    <td>出張申請書</td>
+                                    <td>
+                                        <div class="status-declined">
+                                            Declined
+                                        </div>
+                                    </td>
+                                    <td>22/10/2020</td>
+                                    <td>
+                                        <a class="btn btn-details" href="/pages/examples/09_application_info.html">View
+                                            Details<i class="fas fa-angle-right" style="margin-left: 5px;"></i></a>
+                                </tr>
+                                <tr class="list-content">
+                                    <td>NO-PH-0000</td>
+                                    <td>有給申請書</td>
+                                    <td>
+                                        <div class="status-reject">
+                                            Reject
+                                        </div>
+                                    </td>
+                                    <td>22/10/2020</td>
+                                    <td>
+                                        <a class="btn btn-details" href="/pages/examples/09_application_info.html">View
+                                            Details<i class="fas fa-angle-right" style="margin-left: 5px;"></i></a>
+                                    </td>
+                                </tr>
+                                <tr class="list-content">
+                                    <td>NO-PH-0000</td>
+                                    <td>有給申請書</td>
+                                    <td>
+                                        <div class="status-completed">
+                                            Completed
+                                        </div>
+                                    </td>
+                                    <td>22/10/2020</td>
+                                    <td>
+                                        <a class="btn btn-details" href="/pages/examples/09_application_info.html">View
+                                            Details<i class="fas fa-angle-right" style="margin-left: 5px;"></i></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
         </div>
-      </li>
-      <li class="nav-item user-panel-custom">
-        <div class="info">
-            <a href="#" class="text-name">Username</a>
-          </div>
-      </li>
-      <li class="nav-item user-panel-custom">
-        <div class="tab">
-            <a class="tablink-VN" href="">VN</a>
-            <a class="tablink-EN" href="">EN</a>
-          </div>
-      </li>
-    </ul>
-  </nav>
-  <!-- /.navbar -->
-
-  <!-- Main Sidebar Container -->
-  <aside class="main-sidebar sidebar-primary elevation-4 sidebar-no-expand">
-    <!-- Brand Logo -->
-    <a href="../../pages/examples/01_dashboard.html" class="brand-link">
-      <img src="../../public/images/logo.png" alt="Logo" class="" style="max-width: 100%;">
-    </a>
-    <!-- Sidebar -->
-    <div class="sidebar">
-      <!-- Sidebar Menu -->
-      <nav class="mt-2">
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-          <!-- Add icons to the links using the .nav-icon class with font-awesome or any other icon font library -->
-          <li class="nav-item">
-            <a href="/pages/examples/03-application-list.html" class="nav-link">
-              <i class="nav-icon fa fa-home"></i>
-              <p>APPLICATION</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="" class="nav-link">
-              <i class="nav-icon fas fa-edit"></i>
-              <p>DRAFT</p>
-            </a>
-          </li>
-          <li class="nav-item has-treeview">
-            <a href="" class="nav-link">
-              <!--<i class="nav-icon fas fa-list-alt"></i>-->
-              <i class="nav-icon fas fa-file-alt" aria-hidden="true"></i>
-              <p>
-                STATUS
-                <i class="fas fa-angle-down right"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="/pages/examples/user-status.html" class="nav-link">
-                  <i class="fas fa-angle-right left"></i>
-                  <p>Applying</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/pages/examples/user-status.html" class="nav-link">
-                  <i class="fas fa-angle-right left"></i>
-                  <p>Approved/Under payment</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/pages/examples/user-status.html" class="nav-link">
-                  <i class="fas fa-angle-right left"></i>
-                  <p>Approved/in-processing <br />of payment</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/pages/examples/user-status.html" class="nav-link">
-                  <i class="fas fa-angle-right left"></i>
-                  <p>Declined</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/pages/examples/user-status.html" class="nav-link">
-                  <i class="fas fa-angle-right left"></i>
-                  <p>Reject</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/pages/examples/user-status.html" class="nav-link">
-                  <i class="fas fa-angle-right left"></i>
-                  <p>Completed</p>
-                </a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-item">
-            <a href="/pages/examples/08_waiting_approval_list.html" class="nav-link">
-              <i class="nav-icon fa fa-check-square"></i>
-              <p>APPROVAL</p>
-            </a>
-          </li>
-          <li class="nav-item has-treeview">
-            <a href="" class="nav-link">
-              <i class="nav-icon fas fa-cog"></i>
-              <p>
-                SETTINGS
-                <i class="right fas fa-angle-down"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="/pages/examples/10_company_registration.html" class="nav-link">
-                  <i class="fas fa-angle-right left"></i>
-                  <p>Company Registration</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="" class="nav-link">
-                  <i class="fas fa-angle-right left"></i>
-                  <p>Change Password</p>
-                </a>
-              </li>
-            </ul>
-          </li>
-        </ul>
-      </nav>
-      <!-- /.sidebar-menu -->
     </div>
-    <!-- /.sidebar -->
-  </aside>
 
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-    <section class="content-header">
-      <div class="row">
-        <div class="col-md-4 col-sm-4">
-          <label class="lbl-from">From</label>
-          <div class="form-group">
-            <div class="input-group date" id="dateFrom" data-target-input="nearest">
-              <div class="input-group-append" data-target="#dateFrom" data-toggle="datetimepicker">
-                  <div class="input-group-text"><i class="fa fa-calendar-alt"></i></div>
-              </div>
-              <input type="text" name="dateFrom" class="form-control datetimepicker-input" data-target="#dateFrom"/>
-            </div>
-          </div>
-      </div>
-      <div class="col-md-4 col-sm-4">
-        <label class="lbl-to">To</label>
-        <div class="form-group">
-          <div class="input-group date" id="dateTo" data-target-input="nearest">
-            <div class="input-group-append" data-target="#dateTo" data-toggle="datetimepicker">
-                <div class="input-group-text"><i class="fa fa-calendar-alt"></i></div>
-            </div>
-            <input type="text" name="dateTo" class="form-control datetimepicker-input" data-target="#dateTo"/>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4 col-sm-4">
-        <div class="btn-search">
-          <button class="btn btn-default sty-search" type="submit"><i class="fa fa-search" style="margin-right:5px;"></i>Search</button>
-        </div>
-      </div>
-    </section>
-
-    <!-- Main content -->
-    <section class="content-dashboard">
-      <div class="row" style="text-align: center;">
-        <div class="col-xs-5ths">
-          <a href="/pages/examples/user-status.html">
-            <div class="card">
-              <div class="card-body card-wrap-items">
-                  <span>Applying</span>
-                  <span class="right-number">(2)</span>
-              </div>
-            </div>
-          </a>
-        </div>
-        <div class="col-xs-5ths col-set">
-          <a href="/pages/examples/user-status.html">
-            <div class="card">
-              <div class="card-body card-wrap-items">
-                  <span>Approval</span>
-                  <span class="right-number">(2)</span>
-              </div>
-            </div>
-          </a>
-        </div>
-        <div class="col-xs-5ths col-set">
-          <a href="/pages/examples/user-status.html">
-            <div class="card">
-              <div class="card-body card-wrap-items">
-                  <span>Declined</span>
-                  <span class="right-number">(2)</span>
-              </div>
-            </div>
-          </a>
-        </div>
-        <div class="col-xs-5ths col-set">
-          <a href="/pages/examples/user-status.html">
-            <div class="card">
-              <div class="card-body card-wrap-items">
-                  <span>Reject</span>
-                  <span class="right-number">(2)</span>
-              </div>
-            </div>
-          </a>
-        </div>
-        <div class="col-xs-5ths col-set">
-          <a href="/pages/examples/user-status.html">
-            <div class="card">
-              <div class="card-body card-wrap-items">
-                  <span>Completed</span>
-                  <span class="right-number">(2)</span>
-              </div>
-            </div>
-          </a>
-        </div>
-      </div>
-      <h4 class="mb-2" style="border-bottom: 1px solid #000;font-weight: bold;margin-top: 25px;"><i class="nav-icon fas fa-file-alt" aria-hidden="true" style="margin-right: 5px;margin-bottom: 5px;"></i>List of Applications</h4>
-      <div class="card">
-        <div class="card-body p-0 card-list-items">
-          <table class="table">
-            <thead>
-              <tr class="list-title">
-                <th>Application No</th>
-                <th>Application Name</th>
-                <th>Status</th>
-                <th>Apply Date</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr class="list-content">
-                <td>NO-TM-0000</td>
-                <td>交際費申請書</td>
-                <td>
-                  <div class="status-apply">
-                    Applying
-                  </div>
-                </td>
-                <td>22/10/2020</td>
-                <td>
-                  
-                  <a class="btn btn-details" href="/pages/examples/09_application_info.html">View Details<i class="fas fa-angle-right" style="margin-left: 5px;"></i></a>
-                </td>
-              </tr>
-              <tr class="list-content">
-                <td>NO-TM-0000</td>
-                <td>交際費申請書</td>
-                <td>
-                  <div class="status-approval">
-                    Approval
-                  </div>
-                </td>
-                <td>22/10/2020</td>
-                <td>
-                  <a class="btn btn-details" href="/pages/examples/09_application_info.html">View Details<i class="fas fa-angle-right" style="margin-left: 5px;"></i></a>
-                </td>
-              </tr>
-              <tr class="list-content">
-                <td>NO-BT-0000</td>
-                <td>出張申請書</td>
-                <td>
-                  <div class="status-declined">
-                    Declined
-                  </div>
-                </td>
-                <td>22/10/2020</td>
-                <td>
-                  <a class="btn btn-details" href="/pages/examples/09_application_info.html">View Details<i class="fas fa-angle-right" style="margin-left: 5px;"></i></a>
-              </tr>
-              <tr class="list-content">
-                <td>NO-PH-0000</td>
-                <td>有給申請書</td>
-                <td>
-                  <div class="status-reject">
-                    Reject
-                  </div>
-                </td>
-                <td>22/10/2020</td>
-                <td>
-                  <a class="btn btn-details" href="/pages/examples/09_application_info.html">View Details<i class="fas fa-angle-right" style="margin-left: 5px;"></i></a>
-                </td>
-              </tr>
-              <tr class="list-content">
-                <td>NO-PH-0000</td>
-                <td>有給申請書</td>
-                <td>
-                  <div class="status-completed">
-                    Completed
-                  </div>
-                </td>
-                <td>22/10/2020</td>
-                <td>
-                  <a class="btn btn-details" href="/pages/examples/09_application_info.html">View Details<i class="fas fa-angle-right" style="margin-left: 5px;"></i></a>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </section>
-  </div>
-</div>
-
-<!-- jQuery -->
-<script src="../../public/js/jquery/jquery.min.js"></script>
-<!-- Bootstrap 4 -->
-<script src="../../public/js/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- moment -->
-<script src="../../public/js/moment/moment.min.js"></script>
-<!-- date-range-picker -->
-<script src="../../public/js/daterangepicker/daterangepicker.js"></script>
-<!-- Tempusdominus Bootstrap 4 -->
-<script src="../../public/css/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
-<!-- Bootstrap Switch -->
-<script src="../../public/js/bootstrap-switch/js/bootstrap-switch.min.js"></script>
-<!-- AdminLTE App -->
-<script src="../../public/js/adminlte.min.js"></script>
-<!-- Page script -->
-<script type="text/javascript">
-  $(function () {
-    //Date picker
-    $('#dateFrom').datetimepicker({
-      format: 'ddd, DD/MM/YYYY',
-      defaultDate: moment()
-    });
-    $('#dateTo').datetimepicker({
-      format: 'ddd, DD/MM/YYYY',
-      defaultDate: moment(),
-      useCurrent: false
-    });
-  });
-</script>
+    <!-- jQuery -->
+    <script src="../../public/js/jquery/jquery.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="../../public/js/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- moment -->
+    <script src="../../public/js/moment/moment.min.js"></script>
+    <!-- date-range-picker -->
+    <script src="../../public/js/daterangepicker/daterangepicker.js"></script>
+    <!-- Tempusdominus Bootstrap 4 -->
+    <script src="../../public/css/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+    <!-- Bootstrap Switch -->
+    <script src="../../public/js/bootstrap-switch/js/bootstrap-switch.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="../../public/js/adminlte.min.js"></script>
+    <!-- Page script -->
+    <script type="text/javascript">
+        $(function () {
+            //Date picker
+            $('#dateFrom').datetimepicker({
+                format: 'ddd, DD/MM/YYYY',
+                defaultDate: moment()
+            });
+            $('#dateTo').datetimepicker({
+                format: 'ddd, DD/MM/YYYY',
+                defaultDate: moment(),
+                useCurrent: false
+            });
+        });
+    </script>
 </body>
+
 </html>
