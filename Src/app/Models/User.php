@@ -54,6 +54,14 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    protected $appends = ['user_no'];
+
+    public function getUserNoAttribute()
+    {
+        $user_no = str_pad($this->id, config('const.num_fillzero'), "0", STR_PAD_LEFT);
+        return $user_no;
+    }
+
     public function department()
     {
         return $this->belongsTo('App\Models\Department');
@@ -103,13 +111,13 @@ class User extends Authenticatable
 
         // make validator
         $validator = Validator::make($inputs, [
-            'location' => ['required', Rule::in($compactData['locations'])],
-            'department' => ['required', Rule::in($departmentIds)],
+            'location' => ['required_select', Rule::in($compactData['locations'])],
+            'department' => ['required_select', Rule::in($departmentIds)],
             'name' => 'required',
-            'role' => ['required', Rule::in($compactData['roles'])],
+            'role' => ['required_select', Rule::in($compactData['roles'])],
             'email' => $ruleMail,
             'phone' => 'nullable|phone_number',
-            'approval' => ['required', Rule::in($compactData['approvals'])],
+            'approval' => ['required_select', Rule::in($compactData['approvals'])],
         ]);
 
         return $validator;

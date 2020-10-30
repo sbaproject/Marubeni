@@ -21,7 +21,7 @@ class UserEditController extends Controller
     }
 
     /** Update user info
-     *  Method - PUT
+     *  Method - POST
      */
     public function update(Request $request, User $user)
     {
@@ -45,6 +45,6 @@ class UserEditController extends Controller
         // update
         $user->save();
 
-        return Common::redirectRouteWithAlertSuccess('admin.user.list');
+        return Common::redirectRouteWithAlertSuccess('admin.user.index');
     }
 }

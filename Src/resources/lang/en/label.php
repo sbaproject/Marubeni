@@ -6,7 +6,7 @@ return [
      */
     'update' => 'Update',
     'register' => 'Register',
-    'addnew' => 'Add New',
+    'addnew' => 'Add',
     'edit' => 'Edit',
     'cancel' => 'Cancel',
     'search' => 'Search',
@@ -22,8 +22,10 @@ return [
     'on' => 'ON',
     'off' => 'OFF',
     'paginator' => [
-        'prev' => 'Previous',
-        'next' => 'Next',
+        'prev' => 'Previous page',
+        'next' => 'Next page',
+        'first' => 'First page',
+        'last' => 'Last page',
     ],
     'action' => 'Action',
     '_no_' => 'NO.'

@@ -10,6 +10,7 @@ use App\Http\Controllers\User\UserDashboardController;
 use App\Http\Controllers\User\UserChangePassController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Application\FormListController;
+use App\Http\Controllers\Admin\AdminFlowSettingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,18 +49,22 @@ Route::middleware('auth')->group(function () {
     Route::middleware('can:admin-gate')->group(function () {
         Route::prefix('admin')->name('admin.')->group(function () {
             // Dashboard
-            Route::get('dashboard', [AdminDashboardController::class, 'show'])->name('dashboard');
+            Route::get('dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
             // User managements
             Route::prefix('user')->name('user.')->group(function () {
                 // List Users
-                Route::get('list', [UserListCotroller::class, 'show'])->name('list');
+                Route::get('/', [UserListCotroller::class, 'index'])->name('index');
                 // Register new user
-                Route::get('register', [UserRegisterController::class, 'show'])->name('register.show');
-                Route::post('register', [UserRegisterController::class, 'store'])->name('register.store');
+                Route::get('add', [UserRegisterController::class, 'create'])->name('add.create');
+                Route::post('add', [UserRegisterController::class, 'store'])->name('add.store');
                 // Edit user
                 Route::get('edit/{user}', [UserEditController::class, 'show'])->name('edit.show');
-                Route::put('edit/{user}', [UserEditController::class, 'update'])->name('edit.update');
+                Route::post('edit/{user}', [UserEditController::class, 'update'])->name('edit.update');
             });
+            //Approval Flow Setting
+            Route::get('/flow-setting/list', [AdminFlowSettingController::class, 'index'])->name('flow.index');
+            Route::get('/flow-setting/add', [AdminFlowSettingController::class, 'create'])->name('flow.create');
+            Route::get('/flow-setting/edit/{id}', [AdminFlowSettingController::class, 'edit'])->name('flow.edit');
         });
     });
 
@@ -72,9 +77,9 @@ Route::middleware('auth')->group(function () {
          *-----------------------------------------*/
         Route::middleware('can:user-gate')->group(function () {
             // Dashboard
-            Route::get('dashboard', [UserDashboardController::class, 'show'])->name('dashboard');
+            Route::get('dashboard', [UserDashboardController::class, 'index'])->name('dashboard');
             // Form list
-            Route::get('form/list', [FormListController::class, 'show'])->name('form.list');
+            Route::get('form', [FormListController::class, 'index'])->name('form.index');
         });
     });
 
@@ -90,5 +95,5 @@ Route::middleware('auth')->group(function () {
     ->name('locale');
     // Change pass
     Route::get('/changepass', [UserChangePassController::class, 'show'])->name('changepass.show');
-    Route::put('/changepass', [UserChangePassController::class, 'update'])->name('changepass.update');
+    Route::post('/changepass', [UserChangePassController::class, 'update'])->name('changepass.update');
 });

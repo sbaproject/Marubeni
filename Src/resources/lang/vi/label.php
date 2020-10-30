@@ -6,8 +6,8 @@ return [
      */
     'update' => 'Cập nhật',
     'register' => 'Đăng ký',
-    'addnew' => 'Thêm mới',
-    'edit' => 'Chỉnh sửa',
+    'addnew' => 'Thêm',
+    'edit' => 'Sửa',
     'cancel' => 'Hủy',
     'search' => 'Tìm kiếm',
     'login' => 'Đăng nhập',
@@ -24,6 +24,8 @@ return [
     'paginator' => [
         'prev' => 'Trang trước',
         'next' => 'Trang sau',
+        'first' => 'Trang đầu',
+        'last' => 'Trang cuối',
     ],
     'action' => 'Chức năng',
     '_no_' => 'Mã số'

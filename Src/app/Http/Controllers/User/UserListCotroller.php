@@ -4,13 +4,12 @@ namespace App\Http\Controllers\User;
 
 use App\Models\User;
 use App\Models\Department;
-use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class UserListCotroller extends Controller
 {
-    public function show(Request $request)
+    public function index(Request $request)
     {
         // dropdownlist items
         $locations = config('const.location');
