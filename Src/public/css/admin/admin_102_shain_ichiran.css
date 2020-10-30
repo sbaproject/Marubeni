@@ -34,7 +34,7 @@
     padding: 3px 20px;
 }
 .content_roll {
-    overflow-x: scroll;
+    overflow-x: auto;
 }
 .justify-between {
     justify-content: space-between;

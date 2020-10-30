@@ -134,13 +134,9 @@
 								<td>{{ $user->department->name }}</td>
 								<td>{{ $user->name }}</td>
 								<td>
-									<a href="{{ route('admin.user.edit.show', $user->id) }}">{{ __('label.edit') }}</a>
-									<form action="{{ route('admin.user.delete', $user->id) }}" method="POST">
-										@csrf
-										<button type="submit">
-											{{ __('label.delete') }}
-										</button>
-									</form>
+									<x-action
+										edit-url="{{ route('admin.user.edit.show', $user->id) }}"
+										delete-url="{{ route('admin.user.delete', $user->id) }}"/>
 								</td>
 							</tr>
 							@endforeach
