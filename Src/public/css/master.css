@@ -219,3 +219,18 @@ select.form-control.is-invalid, .was-validated .form-control:invalid {
 .user-deparment{
     color: gray;
 }
+/**
+*   Button Search
+*/
+.btn-search {
+    width: 100%;
+    display: inline-grid;
+}
+.sty-search {
+    background-color: #96000C;
+    color: #fff;
+}
+.sty-search:hover {
+    background-color: #96000C;
+    color: #fff;
+}
