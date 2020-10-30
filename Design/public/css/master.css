@@ -208,3 +208,7 @@ input[type='checkbox']:checked:after {
     background-color: #96000C;
     color: #fff;
 }
+
+.card-list-items {
+    overflow-x: auto;
+}
