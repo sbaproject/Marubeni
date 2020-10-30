@@ -8,7 +8,9 @@
 .pager-wrap {
     display: inline-block;
 }
-
+.pager_custom {
+    justify-content: center;
+}
 .bt_direct button:hover {
     border: 1px solid #E3E6E9;
     border-radius: 20px;
@@ -18,9 +20,21 @@
 .button_wrap {
     margin-bottom: 5px;
 }
-
+.bt_direct button:hover {
+    border: 1px solid #E3E6E9;
+    border-radius: 20px;
+    color: #0056b3;
+    overflow: hidden;
+}
+.bt_direct button {
+    border: 1px solid #E3E6E9;
+    border-radius: 20px;
+    background: #ffffff;
+    color: #868484;
+    padding: 3px 20px;
+}
 .content_roll {
-    overflow-x: auto;
+    overflow-x: scroll;
 }
 .justify-between {
     justify-content: space-between;
@@ -31,4 +45,19 @@
 .btn-danger{
     background-color:  #96000c;
     border-color: #96000c;
+}
+
+.btn-search {
+    width: 100%;
+    display: inline-grid;
+}
+
+.sty-search {
+    background-color: #96000C;
+    color: #fff;
+}
+
+.sty-search:hover {
+    background-color: #96000C;
+    color: #fff;
 }
