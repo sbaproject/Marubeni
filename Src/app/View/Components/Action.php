@@ -15,23 +15,27 @@ class Action extends Component
      */
     public $editUrl;
     public $editTitle;
+    public $editDisabled;
     /**
      * Delete
      */
     public $deleteUrl;
     public $deleteTitle;
+    public $deleteDisabled;
 
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($editUrl = null, $editTitle = null, $deleteUrl = null, $deleteTitle = null)
+    public function __construct($editUrl = null, $editTitle = null, $editDisabled = null, $deleteUrl = null, $deleteTitle = null, $deleteDisabled= null)
     {
         $this->editUrl = $editUrl;
         $this->editTitle = $editTitle;
+        $this->editDisabled = $editDisabled;
         $this->deleteUrl = $deleteUrl;
         $this->deleteTitle = $deleteTitle;
+        $this->deleteDisabled = $deleteDisabled;
     }
 
     /**

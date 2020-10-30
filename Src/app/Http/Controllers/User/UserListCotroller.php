@@ -50,8 +50,13 @@ class UserListCotroller extends Controller
 
     public function delete(User $user)
     {
+        $loggedUser = Auth::user();
+        // do not delete your self
+        if($user->id === $loggedUser->id) {
+            return Common::redirectBackWithAlertFail(__('msg.delete_fail'));
+        }
         $user = User::find($user->id);
-        $user->updated_by = Auth::user()->id;
+        $user->updated_by = $loggedUser->id;
         $user->deleted_at = Carbon::now();
         $user->save();
 
