@@ -3,6 +3,7 @@
 namespace App\Libs;
 
 use App\Models\User;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use function PHPUnit\Framework\isEmpty;
@@ -99,28 +100,45 @@ class Common
 	 */
 	public static function setLocale($locale = null)
 	{
-		if (!Auth::check()) {
-			return;
-		}
-
 		if (empty($locale)) {
-			// if (Session::has('locale')) {
-			// 	$locale = Session::get('locale');
-			// } else {
-			// 	$locale = Auth::user()->locale;
-			// }
-			$locale = Auth::user()->locale;
+			// default locale
+			$locale = config('app.locale');
+
+			if (Auth::check()) {
+				if (Session::has('set-locale')) {
+					$locale = Session::get('set-locale');
+					Session::forget('set-locale');
+				} else {
+					$locale = Auth::user()->locale;
+				}
+			} else if (Session::has('set-locale')) {
+				$locale = Session::get('set-locale');
+			} else {
+				// get current language of client browser
+				if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
+					$langs = explode(',', $_SERVER['HTTP_ACCEPT_LANGUAGE']);
+					$checklanguages = ['vi', 'en'];
+					foreach ($langs as $value) {
+						$lang = substr($value, 0, 2);
+						if (in_array(Str::lower($lang), $checklanguages)) {
+							$locale = $lang;
+						}
+					}
+				}
+				Session::put('set-locale', $locale);
+			}
 		}
 
 		// set new locale for app
 		App::setlocale($locale);
-		
-		// set locale session
-		/*Session::put('locale', $locale);*/
 
 		// save new locale to user
-		$user = User::find(Auth::user()->id);
-		$user->locale = $locale;
-		$user->save();
+		if (Auth::check()) {
+			$user = User::find(Auth::user()->id);
+			if ($locale !== $user->locale) {
+				$user->locale = $locale;
+				$user->save();
+			}
+		}
 	}
 }

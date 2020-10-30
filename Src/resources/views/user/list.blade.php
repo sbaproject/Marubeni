@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('css')
-<link rel="stylesheet" href="css/admin/admin_102_shain_ichiran.css">
+
 @endsection
 
 @section('content')
@@ -114,51 +114,47 @@
         </a>
     </div>
     <div class="card">
-        <div class="card-body p-0 ">
-            <div class="wrap_tbl_ad">
-                {{-- List Users --}}
-                <div class="content_roll">
-                    <table class="table table-bordered " style="min-width: 500px;">
-                        <thead>
-                            <tr>
-                                <th style="width: 100px">{{ __('label._no_') }}</th>
-                                <th>{{ __('validation.attributes.department') }}</th>
-                                <th>{{ __('validation.attributes.name') }}</th>
-                                <th style="width: 150px">{{ __('label.action') }}</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($users as $user)
-                            <tr>
-                                <td>{{ $user->user_no }}</td>
-                                <td>{{ $user->department->name }}</td>
-                                <td>{{ $user->name }}</td>
-                                <td>
-                                    {{-- using action component with if stament --}}
-                                    <x-action>
-                                        <x-slot name="editUrl">
-                                            {{ route('admin.user.edit.show', $user->id) }}
-                                        </x-slot>
-                                        @if ($user->id !== Auth::user()->id)
-                                        <x-slot name="deleteUrl">
-                                            {{ route('admin.user.delete', $user->id) }}
-                                        </x-slot>
-                                        @endif
-                                    </x-action>
-                                    {{-- using action component with sort tag --}}
-                                    {{-- <x-action
-                                        edit-url="{{ route('admin.user.edit.show', $user->id) }}"
-                                        delete-url="{{ route('admin.user.delete', $user->id) }}" /> --}}
-                                </td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-                {{-- paginator --}}
-                {{$users->withQueryString()->links('paginator')}}
-            </div>
+        <div class="card-body p-0 card-list-items">
+            {{-- List Users --}}
+            <table class="table table-bordered " style="min-width: 500px;">
+                <thead>
+                    <tr>
+                        <th style="width: 100px">{{ __('label._no_') }}</th>
+                        <th>{{ __('validation.attributes.department') }}</th>
+                        <th>{{ __('validation.attributes.name') }}</th>
+                        <th style="width: 150px">{{ __('label.action') }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($users as $user)
+                    <tr>
+                        <td>{{ $user->user_no }}</td>
+                        <td>{{ $user->department->name }}</td>
+                        <td>{{ $user->name }}</td>
+                        <td>
+                            {{-- using action component with if stament --}}
+                            <x-action>
+                                <x-slot name="editUrl">
+                                    {{ route('admin.user.edit.show', $user->id) }}
+                                </x-slot>
+                                @if ($user->id !== Auth::user()->id)
+                                <x-slot name="deleteUrl">
+                                    {{ route('admin.user.delete', $user->id) }}
+                                </x-slot>
+                                @endif
+                            </x-action>
+                            {{-- using action component with sort tag --}}
+                            {{-- <x-action
+                                    edit-url="{{ route('admin.user.edit.show', $user->id) }}"
+                                    delete-url="{{ route('admin.user.delete', $user->id) }}" /> --}}
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
         </div>
+        {{-- paginator --}}
+        {{$users->withQueryString()->links('paginator')}}
         <!-- /.card-body -->
     </div>
     <!-- /.card -->

@@ -1,8 +1,9 @@
 @extends('layouts.master')
 
 @section('css')
-<link rel="stylesheet" href="css/admin/admin_102_shain_ichiran.css">
+
 @endsection
+
 @section('content')
 <div class="col-lg-9">
 	<div class="card">

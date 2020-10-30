@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('css')
-<link rel="stylesheet" href="css/admin/admin_102_shain_ichiran.css">
+
 @endsection
 
 @section('content')
