@@ -146,9 +146,7 @@
 						<div class="col-lg-9">
 							<textarea id="memo" name="memo" rows="4"
 								class="form-control @error('memo') is-invalid @enderror"
-									placeholder="{{ __('validation.attributes.memo') }}" autocomplete="off" autofocus>
-								{{ old('memo') }}
-							</textarea>
+									placeholder="{{ __('validation.attributes.memo') }}" autocomplete="off" autofocus>{{ old('memo') }}</textarea>
 							@error('memo')
 							<span class="invalid-feedback" role="alert">
 								<strong>{{ $message }}</strong>

@@ -77,7 +77,7 @@ class Common
 	 */
 	public static function setAlertSuccess($msg = null)
 	{
-		if (isEmpty($msg)) {
+		if (empty($msg)) {
 			$msg = __('msg.save_success');
 		}
 		Session::flash(config('const.keymsg.success'), $msg);
@@ -88,7 +88,7 @@ class Common
 	 */
 	public static function setAlertFail($msg = null)
 	{
-		if (isEmpty($msg)) {
+		if (empty($msg)) {
 			$msg = __('msg.save_fail');
 		}
 		Session::flash(config('const.keymsg.error'), $msg);

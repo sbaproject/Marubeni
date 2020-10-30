@@ -6,6 +6,7 @@ use App\Libs\Common;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class UserEditController extends Controller
 {
@@ -30,6 +31,7 @@ class UserEditController extends Controller
         // fill inputs into user model
         $user->fill($inputs);
         $user->department_id = $inputs['department'];
+        $user->updated_by = Auth::user()->id;
 
         // prepare compact data for view
         $data = User::getCompactData($user);

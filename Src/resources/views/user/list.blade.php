@@ -90,6 +90,7 @@
 										<div class="col-lg-10">
 											<button type="submit" class="btn btn-primary search_bt">
 												<i class="nav-icon fas fa-search"></i>
+												{{ __('label.search') }}
 											</button>
 										</div>
 									</div>
@@ -134,6 +135,12 @@
 								<td>{{ $user->name }}</td>
 								<td>
 									<a href="{{ route('admin.user.edit.show', $user->id) }}">{{ __('label.edit') }}</a>
+									<form action="{{ route('admin.user.delete', $user->id) }}" method="POST">
+										@csrf
+										<button type="submit">
+											{{ __('label.delete') }}
+										</button>
+									</form>
 								</td>
 							</tr>
 							@endforeach

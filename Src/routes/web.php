@@ -60,6 +60,8 @@ Route::middleware('auth')->group(function () {
                 // Edit user
                 Route::get('edit/{user}', [UserEditController::class, 'show'])->name('edit.show');
                 Route::post('edit/{user}', [UserEditController::class, 'update'])->name('edit.update');
+                // Delete user
+                Route::post('delete/{user}',[UserListCotroller::class, 'delete'])->name('delete');
             });
             //Approval Flow Setting
             Route::get('/flow-setting/list', [AdminFlowSettingController::class, 'index'])->name('flow.index');

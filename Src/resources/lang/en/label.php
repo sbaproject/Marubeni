@@ -5,9 +5,11 @@ return [
      * Label
      */
     'update' => 'Update',
+    'change' => 'Change',
     'register' => 'Register',
     'addnew' => 'Add',
     'edit' => 'Edit',
+    'delete' => 'Delete',
     'cancel' => 'Cancel',
     'search' => 'Search',
     'login' => 'Login',
@@ -28,5 +30,8 @@ return [
         'last' => 'Last page',
     ],
     'action' => 'Action',
-    '_no_' => 'NO.'
+    '_no_' => 'NO.',
+    'email_address' => 'E-Mail address',
+    'change_pass' => 'Change Password',
 ];
+
