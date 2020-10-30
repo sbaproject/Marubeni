@@ -225,7 +225,6 @@ select.form-control.is-invalid, .was-validated .form-control:invalid {
 .btn-search {
     width: 100%;
     display: inline-grid;
-    padding: 30px 10px 0px 24px;
 }
 .sty-search {
     background-color: #96000C;
