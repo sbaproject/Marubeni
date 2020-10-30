@@ -1,486 +1,536 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Leave Application</title>
-  <!-- Tell the browser to be responsive to screen width -->
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="../../public/css/fontawesome-free/css/all.min.css">
-  <!-- Ionicons -->
-  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-  <!-- Tempusdominus Bbootstrap 4 -->
-  <link rel="stylesheet" href="../../public/css/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="../../public/css/adminlte.min.css">
-  <!-- Google Font: Source Sans Pro -->
-  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
-  <!-- custom css -->
-  <link href="../../public/css/master.css" rel="stylesheet">
-  <link href="../../public/css/04_leave_application.css" rel="stylesheet">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Leave Application</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../../public/css/fontawesome-free/css/all.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- Tempusdominus Bbootstrap 4 -->
+    <link rel="stylesheet" href="../../public/css/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../../public/css/adminlte.min.css">
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <!-- custom css -->
+    <link href="../../public/css/master.css" rel="stylesheet">
+    <link href="../../public/css/04_leave_application.css" rel="stylesheet">
 
 </head>
+
 <body class="hold-transition sidebar-mini">
-<!-- Site wrapper -->
-<div class="wrapper">
-  <!-- Navbar -->
-  <!-- Navbar -->
-  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-    <!-- Left navbar links -->
-    <ul class="navbar-nav bg-custom">
-      <li class="nav-item">
-        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars" style="color: darkgray;"></i></a>
-      </li>
-    </ul>
-
-    <!-- Right navbar links -->
-    <ul class="navbar-nav ml-auto info-user">
-      <li class="nav-item user-panel-custom">
-        <div class="user-deparment">Department Name,
-        </div>
-      </li>
-      <li class="nav-item user-panel-custom">
-        <div class="info">
-            <a href="#" class="text-name">Username</a>
-          </div>
-      </li>
-      <li class="nav-item user-panel-custom">
-        <div class="tab">
-            <a class="tablink-VN" href="">VN</a>
-            <a class="tablink-EN" href="">EN</a>
-          </div>
-      </li>
-    </ul>
-  </nav>
-  <!-- /.navbar -->
-  <!-- /.navbar -->
-
-  <!-- Main Sidebar Container -->
-  <aside class="main-sidebar sidebar-primary elevation-4 sidebar-no-expand">
-    <!-- Brand Logo -->
-    <a href="../../pages/examples/01_dashboard.html" class="brand-link">
-      <img src="../../public/images/logo.png" alt="Logo" class="" style="max-width: 100%;">
-    </a>
-    <!-- Sidebar -->
-    <div class="sidebar">
-      <!-- Sidebar Menu -->
-      <nav class="mt-2">
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-          <!-- Add icons to the links using the .nav-icon class with font-awesome or any other icon font library -->
-          <li class="nav-item">
-            <a href="/pages/examples/03-application-list.html" class="nav-link">
-              <i class="nav-icon fa fa-home"></i>
-              <p>APPLICATION</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="" class="nav-link">
-              <i class="nav-icon fas fa-edit"></i>
-              <p>DRAFT</p>
-            </a>
-          </li>
-          <li class="nav-item has-treeview">
-            <a href="" class="nav-link">
-              <!--<i class="nav-icon fas fa-list-alt"></i>-->
-              <i class="nav-icon fas fa-file-alt" aria-hidden="true"></i>
-              <p>
-                STATUS
-                <i class="fas fa-angle-down right"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="/pages/examples/user-status.html" class="nav-link">
-                  <i class="fas fa-angle-right left"></i>
-                  <p>Applying</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/pages/examples/user-status.html" class="nav-link">
-                  <i class="fas fa-angle-right left"></i>
-                  <p>Approved/Under payment</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/pages/examples/user-status.html" class="nav-link">
-                  <i class="fas fa-angle-right left"></i>
-                  <p>Approved/in-processing <br />of payment</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/pages/examples/user-status.html" class="nav-link">
-                  <i class="fas fa-angle-right left"></i>
-                  <p>Declined</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/pages/examples/user-status.html" class="nav-link">
-                  <i class="fas fa-angle-right left"></i>
-                  <p>Reject</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/pages/examples/user-status.html" class="nav-link">
-                  <i class="fas fa-angle-right left"></i>
-                  <p>Completed</p>
-                </a>
-              </li>
+    <!-- Site wrapper -->
+    <div class="wrapper">
+        <!-- Navbar -->
+        <!-- Navbar -->
+        <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+            <!-- Left navbar links -->
+            <ul class="navbar-nav bg-custom">
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"
+                            style="color: darkgray;"></i></a>
+                </li>
             </ul>
-          </li>
-          <li class="nav-item">
-            <a href="/pages/examples/08_waiting_approval_list.html" class="nav-link">
-              <i class="nav-icon fa fa-check-square"></i>
-              <p>APPROVAL</p>
-            </a>
-          </li>
-          <li class="nav-item has-treeview">
-            <a href="" class="nav-link">
-              <i class="nav-icon fas fa-cog"></i>
-              <p>
-                SETTINGS
-                <i class="right fas fa-angle-down"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="/pages/examples/10_company_registration.html" class="nav-link">
-                  <i class="fas fa-angle-right left"></i>
-                  <p>Company Registration</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="" class="nav-link">
-                  <i class="fas fa-angle-right left"></i>
-                  <p>Change Password</p>
-                </a>
-              </li>
-            </ul>
-          </li>
-        </ul>
-      </nav>
-      <!-- /.sidebar-menu -->
-    </div>
-    <!-- /.sidebar -->
-  </aside>
 
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-    <!-- Main content -->
-    <section class="content leave-application">
-      <div class="main-top">
-        <h4 class="main-header-text">LEAVE APPLICATION</h4>
-        <a class="btn btn-outline-dark" role="button" href="#"><i class="fas fa-external-link-alt" style="margin-right: 5px; color: #fff;"></i>Export</a>
-      </div>
-      
-      <div class="card">
-        <div class="card-body"> 
-          <form>
-            <div class="form-group row">
-              <div class="col-sm-2 text-left">
-                <label>Code of Leave</label>
-              </div>
-              <div class="col-sm-10">
-                <select name="leave-code" id="leave-code" class="form-control" style="width: auto;">
-                  <option value="1">ANNUAL LEAVE</option>
-                  <option value="2">UNPAID LEAVE</option>
-                  <option value="3">COMPASSIONATE LEAVE</option>
-                  <option value="4">WEDDING LEAVE</option>
-                  <option value="5">PERIODIC LEAVE</option>
-                  <option value="6">MATERINITY LEAVE</option>
-                </select>
-              </div>
-            </div>
-            <hr class="line-bottom">
-            <div class="form-group row">
-              <div class="col-sm-2 text-left">
-                <label>Reason for Leave</label>
-              </div>
-              <div class="col-sm-10">
-                <textarea class="form-control" name="leave-reason" id="leave-reason" rows="3" placeholder="Some text" style="width: 100%;"></textarea>
-              </div>
-            </div>
-            <hr class="line-bottom">
-            <div class="form-group row">
-              <div class="col-sm-2 text-left">
-                <label>Choose the type of leave switch</label>
-              </div>
-              <div class="col-sm-10">
-                <div class="form-check form-check-inline">
-                  <input type="radio" checked="checked" class="form-check-input" id="inlineCheckbox1" name="step-1-dest-1" value="1">
-                  <label class="form-check-label" for="inlineCheckbox1" style="margin-left: 5px;">Annual Leave</label>
-                </div>
-                <div class="form-check form-check-inline">
-                  <!-- <input class="form-check-input" type="radio"> -->
-                  <input type="radio" class="form-check-input" id="inlineCheckbox2" name="step-1-dest-1" value="2">
-                  <label class="form-check-label" for="inlineCheckbox2" style="margin-left: 5px;">Unpaid Leave</label>
-                </div>
-              </div>
-            </div>
-            <hr class="line-bottom">
-            <div class="form-group row">
-              <div class="col-sm-2 text-left">
-                <label>Date of Leave</label>
-              </div>
-              <div class="col-sm-10">
-                  <div class="row mb-2">
-                    <span class="col-md-2">From</span>
-                    <div class="col-md-4">
-                      <div class="form-group">
-                        <div class="input-group date" id="dateLeaveFrom" data-target-input="nearest">
-                          <input type="text" name="dateLeaveFrom" class="form-control datetimepicker-input" data-target="#dateLeaveFrom"/>
-                          <div class="input-group-append" data-target="#dateLeaveFrom" data-toggle="datetimepicker">
-                              <div class="input-group-text"><i class="fa fa-calendar-alt"></i></div>
-                          </div>
-                        </div>
-                      </div>
+            <!-- Right navbar links -->
+            <ul class="navbar-nav ml-auto info-user">
+                <li class="nav-item user-panel-custom">
+                    <div class="user-deparment">Department Name,
                     </div>
-                  </div>
-                  <div class="row">
-                    <span class="col-md-2">To</span>
-                    <div class="col-md-4">
-                      <div class="form-group">
-                        <div class="input-group date" id="dateLeaveTo" data-target-input="nearest">
-                          <input type="text" name="dateLeaveTo" class="form-control datetimepicker-input" data-target="#dateLeaveTo"/>
-                          <div class="input-group-append" data-target="#dateLeaveTo" data-toggle="datetimepicker">
-                              <div class="input-group-text"><i class="fa fa-calendar-alt"></i></div>
-                          </div>
-                        </div>
-                      </div>
+                </li>
+                <li class="nav-item user-panel-custom">
+                    <div class="info">
+                        <a href="#" class="text-name">Username</a>
                     </div>
-                  </div>
-              </div>
+                </li>
+                <li class="nav-item user-panel-custom">
+                    <div class="tab">
+                        <a class="tablink-VN" href="">VN</a>
+                        <a class="tablink-EN" href="">EN</a>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+        <!-- /.navbar -->
+        <!-- /.navbar -->
+
+        <!-- Main Sidebar Container -->
+        <aside class="main-sidebar sidebar-primary elevation-4 sidebar-no-expand">
+            <!-- Brand Logo -->
+            <a href="../../pages/examples/01_dashboard.html" class="brand-link">
+                <img src="../../public/images/logo.png" alt="Logo" class="" style="max-width: 100%;">
+            </a>
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <!-- Sidebar Menu -->
+                <nav class="mt-2">
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                        data-accordion="false">
+                        <!-- Add icons to the links using the .nav-icon class with font-awesome or any other icon font library -->
+                        <li class="nav-item">
+                            <a href="/pages/examples/03-application-list.html" class="nav-link">
+                                <i class="nav-icon fa fa-home"></i>
+                                <p>APPLICATION</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="" class="nav-link">
+                                <i class="nav-icon fas fa-edit"></i>
+                                <p>DRAFT</p>
+                            </a>
+                        </li>
+                        <li class="nav-item has-treeview">
+                            <a href="" class="nav-link">
+                                <!--<i class="nav-icon fas fa-list-alt"></i>-->
+                                <i class="nav-icon fas fa-file-alt" aria-hidden="true"></i>
+                                <p>
+                                    STATUS
+                                    <i class="fas fa-angle-down right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="/pages/examples/user-status.html" class="nav-link">
+                                        <i class="fas fa-angle-right left"></i>
+                                        <p>Applying</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/pages/examples/user-status.html" class="nav-link">
+                                        <i class="fas fa-angle-right left"></i>
+                                        <p>Approved/Under payment</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/pages/examples/user-status.html" class="nav-link">
+                                        <i class="fas fa-angle-right left"></i>
+                                        <p>Approved/in-processing <br />of payment</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/pages/examples/user-status.html" class="nav-link">
+                                        <i class="fas fa-angle-right left"></i>
+                                        <p>Declined</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/pages/examples/user-status.html" class="nav-link">
+                                        <i class="fas fa-angle-right left"></i>
+                                        <p>Reject</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/pages/examples/user-status.html" class="nav-link">
+                                        <i class="fas fa-angle-right left"></i>
+                                        <p>Completed</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/pages/examples/08_waiting_approval_list.html" class="nav-link">
+                                <i class="nav-icon fa fa-check-square"></i>
+                                <p>APPROVAL</p>
+                            </a>
+                        </li>
+                        <li class="nav-item has-treeview">
+                            <a href="" class="nav-link">
+                                <i class="nav-icon fas fa-cog"></i>
+                                <p>
+                                    SETTINGS
+                                    <i class="right fas fa-angle-down"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="/pages/examples/10_company_registration.html" class="nav-link">
+                                        <i class="fas fa-angle-right left"></i>
+                                        <p>Company Registration</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="" class="nav-link">
+                                        <i class="fas fa-angle-right left"></i>
+                                        <p>Change Password</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+                <!-- /.sidebar-menu -->
             </div>
-            <hr class="line-bottom">
-            <div class="form-group row">
-              <div class="col-sm-2 text-left">
-                <label>Time of Leave</label>
-              </div>
-              <div class="col-sm-10">
-                <div class="row">
-                  <div class="col-sm-6">
-                    <div class="row">
-                      <span class="col-md-4">Date</span>
-                      <div class="col-md-8">
-                        <div class="form-group">
-                          <div class="input-group date" id="timeLeaveDate" data-target-input="nearest">
-                            <input type="text" name="timeLeaveDate" class="form-control datetimepicker-input" data-target="#timeLeaveDate"/>
-                            <div class="input-group-append" data-target="#timeLeaveDate" data-toggle="datetimepicker">
-                                <div class="input-group-text"><i class="fa fa-calendar-alt"></i></div>
+            <!-- /.sidebar -->
+        </aside>
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Main content -->
+            <section class="content leave-application">
+                <div class="main-top">
+                    <h4 class="main-header-text">LEAVE APPLICATION</h4>
+                    <a class="btn btn-outline-dark" role="button" href="#"><i class="fas fa-external-link-alt"
+                            style="margin-right: 5px; color: #fff;"></i>Export</a>
+                </div>
+
+                <div class="card">
+                    <div class="card-body">
+                        <form>
+                            <div class="form-group row">
+                                <div class="col-sm-2 text-left">
+                                    <label>Code of Leave</label>
+                                </div>
+                                <div class="col-sm-10">
+                                    <select name="leave-code" id="leave-code" class="form-control" style="width: auto;">
+                                        <option value="1">ANNUAL LEAVE</option>
+                                        <option value="2">UNPAID LEAVE</option>
+                                        <option value="3">COMPASSIONATE LEAVE</option>
+                                        <option value="4">WEDDING LEAVE</option>
+                                        <option value="5">PERIODIC LEAVE</option>
+                                        <option value="6">MATERINITY LEAVE</option>
+                                    </select>
+                                </div>
                             </div>
-                          </div>
-                        </div>
-                      </div>
+                            <hr class="line-bottom">
+                            <div class="form-group row">
+                                <div class="col-sm-2 text-left">
+                                    <label>Reason for Leave</label>
+                                </div>
+                                <div class="col-sm-10">
+                                    <textarea class="form-control" name="leave-reason" id="leave-reason" rows="3"
+                                        placeholder="Some text" style="width: 100%;"></textarea>
+                                </div>
+                            </div>
+                            <hr class="line-bottom">
+                            <div class="form-group row">
+                                <div class="col-sm-2 text-left">
+                                    <label>Choose the type of leave switch</label>
+                                </div>
+                                <div class="col-sm-10">
+                                    <div class="form-check form-check-inline">
+                                        <input type="radio" checked="checked" class="form-check-input"
+                                            id="inlineCheckbox1" name="step-1-dest-1" value="1">
+                                        <label class="form-check-label" for="inlineCheckbox1"
+                                            style="margin-left: 5px;">Annual Leave</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <!-- <input class="form-check-input" type="radio"> -->
+                                        <input type="radio" class="form-check-input" id="inlineCheckbox2"
+                                            name="step-1-dest-1" value="2">
+                                        <label class="form-check-label" for="inlineCheckbox2"
+                                            style="margin-left: 5px;">Unpaid Leave</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="line-bottom">
+                            <div class="form-group row">
+                                <div class="col-sm-2 text-left">
+                                    <label>Date of Leave</label>
+                                </div>
+                                <div class="col-sm-10">
+                                    <div class="row mb-2">
+                                        <span class="col-md-2">From</span>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <div class="input-group date" id="dateLeaveFrom"
+                                                    data-target-input="nearest">
+                                                    <input type="text" name="dateLeaveFrom"
+                                                        class="form-control datetimepicker-input"
+                                                        data-target="#dateLeaveFrom" />
+                                                    <div class="input-group-append" data-target="#dateLeaveFrom"
+                                                        data-toggle="datetimepicker">
+                                                        <div class="input-group-text"><i class="fa fa-calendar-alt"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <span class="col-md-2">To</span>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <div class="input-group date" id="dateLeaveTo"
+                                                    data-target-input="nearest">
+                                                    <input type="text" name="dateLeaveTo"
+                                                        class="form-control datetimepicker-input"
+                                                        data-target="#dateLeaveTo" />
+                                                    <div class="input-group-append" data-target="#dateLeaveTo"
+                                                        data-toggle="datetimepicker">
+                                                        <div class="input-group-text"><i class="fa fa-calendar-alt"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="line-bottom">
+                            <div class="form-group row">
+                                <div class="col-sm-2 text-left">
+                                    <label>Time of Leave</label>
+                                </div>
+                                <div class="col-sm-10">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="row">
+                                                <span class="col-md-4">Date</span>
+                                                <div class="col-md-8">
+                                                    <div class="form-group">
+                                                        <div class="input-group date" id="timeLeaveDate"
+                                                            data-target-input="nearest">
+                                                            <input type="text" name="timeLeaveDate"
+                                                                class="form-control datetimepicker-input"
+                                                                data-target="#timeLeaveDate" />
+                                                            <div class="input-group-append" data-target="#timeLeaveDate"
+                                                                data-toggle="datetimepicker">
+                                                                <div class="input-group-text"><i
+                                                                        class="fa fa-calendar-alt"></i></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6 col-lg-4">
+                                            <div class="row mb-2">
+                                                <span class="col-md-2">From</span>
+                                                <div class="col-md-10">
+                                                    <input type="text" name="timeLeaveFrom"
+                                                        class="form-control datetimepicker-input" id="timeLeaveFrom"
+                                                        data-toggle="datetimepicker" data-target="#timeLeaveFrom" />
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <span class="col-md-2">To</span>
+                                                <div class="col-md-10">
+                                                    <input type="text" name="timeLeaveTo"
+                                                        class="form-control datetimepicker-input" id="timeLeaveTo"
+                                                        data-toggle="datetimepicker" data-target="#timeLeaveTo" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="line-bottom">
+                            <div class="form-group row">
+                                <div class="col-sm-2 text-left">
+                                    <label>Maternity of Leave</label>
+                                </div>
+                                <div class="col-sm-10">
+
+                                    <div class="row mb-2">
+                                        <span class="col-md-2">From</span>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <div class="input-group date" id="maternityLeaveFrom"
+                                                    data-target-input="nearest">
+                                                    <input type="text" name="maternityLeaveFrom"
+                                                        class="form-control datetimepicker-input"
+                                                        data-target="#maternityLeaveFrom" />
+                                                    <div class="input-group-append" data-target="#maternityLeaveFrom"
+                                                        data-toggle="datetimepicker">
+                                                        <div class="input-group-text"><i class="fa fa-calendar-alt"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-2">
+                                        <span class="col-md-2">To</span>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <div class="input-group date" id="maternityLeaveTo"
+                                                    data-target-input="nearest">
+                                                    <input type="text" name="maternityLeaveTo"
+                                                        class="form-control datetimepicker-input"
+                                                        data-target="#maternityLeaveTo" />
+                                                    <div class="input-group-append" data-target="#maternityLeaveTo"
+                                                        data-toggle="datetimepicker">
+                                                        <div class="input-group-text"><i class="fa fa-calendar-alt"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <hr class="line-bottom">
+                            <div class="form-group row">
+                                <div class="col-sm-2 text-left">
+                                    <label>Annual Leave</label>
+                                </div>
+                                <div class="col-sm-10">
+                                    <div class="row mb-2">
+                                        <span class="col-sm-2">Entitled this year</span>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control input-custom" id="entitled"
+                                                name="entitled" value="30">
+                                            &nbsp;&nbsp;
+                                            <span>Days</span>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-2">
+                                        <span class="col-sm-2">Used this year</span>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control input-custom-2" id="usedDays"
+                                                name="usedDays" value="30">
+                                            &nbsp;&nbsp;
+                                            <span>Days</span>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;
+                                            <input type="text" class="form-control input-custom-2" id="usedHours"
+                                                name="usedHours" value="30">
+                                            &nbsp;&nbsp;
+                                            <span>Hours</span>
+
+                                        </div>
+                                    </div>
+                                    <div class="row mb-2">
+                                        <span class="col-sm-2">Take this year</span>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control input-custom-2" id="takeDays"
+                                                name="takeDays" value="30">
+                                            &nbsp;&nbsp;
+                                            <span>Days</span>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;
+                                            <input type="text" class="form-control input-custom-2" id="takeHours"
+                                                name="takeHours" value="30">
+                                            &nbsp;&nbsp;
+                                            <span>Hours</span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <span class="col-sm-2">Remaining</span>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control input-custom-2" id="remainingDays"
+                                                name="remainingDays" value="30">
+                                            &nbsp;&nbsp;
+                                            <span>Days</span>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;
+                                            <input type="text" class="form-control input-custom-2" id="remainingHours"
+                                                name="remainingHours" value="30">
+                                            &nbsp;&nbsp;
+                                            <span>Hours</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="line-bottom">
+                            <div class="form-group row">
+                                <div class="col-sm-2 text-left">
+                                    <label style="color: red;">Subsequent</label>
+                                </div>
+                                <div class="col-sm-10">
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" id="subsequent">
+                                        <label class="form-check-label" for="subsequent">ON</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
                     </div>
-                  </div>
-                  <div class="col-sm-6 col-lg-4">
-                    <div class="row mb-2">
-                      <span class="col-md-2">From</span>
-                      <div class="col-md-10">
-                        <input type="text" name="timeLeaveFrom" class="form-control datetimepicker-input" id="timeLeaveFrom" data-toggle="datetimepicker" data-target="#timeLeaveFrom"/>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <span class="col-md-2">To</span>
-                      <div class="col-md-10">
-                        <input type="text" name="timeLeaveTo" class="form-control datetimepicker-input" id="timeLeaveTo" data-toggle="datetimepicker" data-target="#timeLeaveTo"/>
-                      </div>
-                    </div>
-                  </div>
+                    <!-- /.card-body -->
                 </div>
-              </div>
-            </div>
-            <hr class="line-bottom">
-            <div class="form-group row">
-              <div class="col-sm-2 text-left">
-                <label>Maternity of Leave</label>
-              </div>
-              <div class="col-sm-10">
-                
-                  <div class="row mb-2">
-                    <span class="col-md-2">From</span>
-                    <div class="col-md-4">
-                      <div class="form-group">
-                        <div class="input-group date" id="maternityLeaveFrom" data-target-input="nearest">
-                          <input type="text" name="maternityLeaveFrom" class="form-control datetimepicker-input" data-target="#maternityLeaveFrom"/>
-                          <div class="input-group-append" data-target="#maternityLeaveFrom" data-toggle="datetimepicker">
-                              <div class="input-group-text"><i class="fa fa-calendar-alt"></i></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row mb-2">
-                    <span class="col-md-2">To</span>
-                    <div class="col-md-4">
-                      <div class="form-group">
-                        <div class="input-group date" id="maternityLeaveTo" data-target-input="nearest">
-                          <input type="text" name="maternityLeaveTo" class="form-control datetimepicker-input" data-target="#maternityLeaveTo"/>
-                          <div class="input-group-append" data-target="#maternityLeaveTo" data-toggle="datetimepicker">
-                              <div class="input-group-text"><i class="fa fa-calendar-alt"></i></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                
-              </div>
-            </div>
-            <hr class="line-bottom">
-            <div class="form-group row">
-              <div class="col-sm-2 text-left">
-                <label>Annual Leave</label>
-              </div>
-              <div class="col-sm-10">
-                <div class="row mb-2">
-                  <span class="col-sm-2">Entitled this year</span>
-                  <div class="col-sm-10">
-                    <input type="text" class="form-control input-custom" id="entitled" name="entitled" value="30">
-                    &nbsp;&nbsp;
-                    <span>Days</span>
-                  </div>
+                <!-- /.card -->
+                <div>
+                    <button type="button" class="btn btn-apply btn-custom"><i class="far fa-check-circle"
+                            style="margin-right: 5px;"></i>Apply</button>
+                    <button type="button" class="btn btn-draft btn-custom"><i class="nav-icon fas fa-edit"
+                            style="margin-right: 5px;"></i>Draft</button>
+                    <button type="button" class="btn btn-cancel btn-custom"><i class="fa fa-ban" aria-hidden="true"
+                            style="margin-right: 5px;"></i>Cancel</button>
                 </div>
-                <div class="row mb-2">
-                  <span class="col-sm-2">Used this year</span>
-                  <div class="col-sm-10">
-                    <input type="text" class="form-control input-custom-2" id="usedDays" name="usedDays" value="30">
-                    &nbsp;&nbsp;
-                    <span>Days</span>
-                    &nbsp;&nbsp;&nbsp;&nbsp;
-                    <input type="text" class="form-control input-custom-2" id="usedHours" name="usedHours" value="30">
-                    &nbsp;&nbsp;
-                    <span>Hours</span>
-                    
-                  </div>
-                </div>
-                <div class="row mb-2">
-                  <span class="col-sm-2">Take this year</span>
-                  <div class="col-sm-10">
-                    <input type="text" class="form-control input-custom-2" id="takeDays" name="takeDays" value="30">
-                    &nbsp;&nbsp;
-                    <span>Days</span>
-                    &nbsp;&nbsp;&nbsp;&nbsp;
-                    <input type="text" class="form-control input-custom-2" id="takeHours" name="takeHours" value="30">
-                    &nbsp;&nbsp;
-                    <span>Hours</span>
-                  </div>
-                </div>
-                <div class="row">
-                  <span class="col-sm-2">Remaining</span>
-                  <div class="col-sm-10">
-                    <input type="text" class="form-control input-custom-2" id="remainingDays" name="remainingDays" value="30">
-                    &nbsp;&nbsp;
-                    <span>Days</span>
-                    &nbsp;&nbsp;&nbsp;&nbsp;
-                    <input type="text" class="form-control input-custom-2" id="remainingHours" name="remainingHours" value="30">
-                    &nbsp;&nbsp;
-                    <span>Hours</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <hr class="line-bottom">
-            <div class="form-group row">
-              <div class="col-sm-2 text-left">
-                <label style="color: red;">Subsequent</label>
-              </div>
-              <div class="col-sm-10">
-                <div class="form-check">
-                  <input type="checkbox" class="form-check-input" id="subsequent">
-                  <label class="form-check-label" for="subsequent">ON</label>
-                </div>
-              </div>
-            </div>
-          </form>
+                <br>
+                <br>
+            </section>
+            <!-- /.content -->
         </div>
-        <!-- /.card-body -->
-      </div>
-      <!-- /.card -->
-      <div>
-        <button type="button" class="btn btn-apply btn-custom"><i class="far fa-check-circle" style="margin-right: 5px;"></i>Apply</button>
-        <button type="button" class="btn btn-draft btn-custom"><i class="nav-icon fas fa-edit" style="margin-right: 5px;"></i>Draft</button>
-        <button type="button" class="btn btn-cancel btn-custom"><i class="fa fa-ban" aria-hidden="true" style="margin-right: 5px;"></i>Cancel</button>
-      </div>
-      <br>
-      <br>
-    </section>
-    <!-- /.content -->
-  </div>
-  <!-- /.content-wrapper -->
-</div>
-<!-- ./wrapper -->
+        <!-- /.content-wrapper -->
+    </div>
+    <!-- ./wrapper -->
 
-<!-- jQuery -->
-<script src="../../public/js/jquery/jquery.min.js"></script>
-<!-- Bootstrap 4 -->
-<script src="../../public/js/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- moment -->
-<script src="../../public/js/moment/moment.min.js"></script>
-<!-- date-range-picker -->
-<script src="../../public/js/daterangepicker/daterangepicker.js"></script>
-<!-- Tempusdominus Bootstrap 4 -->
-<script src="../../public/css/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
-<!-- Bootstrap Switch -->
-<script src="../../public/js/bootstrap-switch/js/bootstrap-switch.min.js"></script>
-<!-- AdminLTE App -->
-<script src="../../public/js/adminlte.min.js"></script>
-<!-- Page script -->
-<script>
-  $(function() {
-    //Date picker
-    $('#dateLeaveFrom').datetimepicker({
-      format: 'ddd, DD/MM/YYYY',
-      defaultDate: moment()
-    });
-    $('#dateLeaveTo').datetimepicker({
-      format: 'ddd, DD/MM/YYYY',
-      useCurrent: false
-    });
-    // linked pickers
-    $("#dateLeaveFrom").on("change.datetimepicker", function (e) {
-        $('#dateLeaveTo').datetimepicker('minDate', e.date);
-    });
-    $("#dateLeaveTo").on("change.datetimepicker", function (e) {
-        $('#dateLeaveFrom').datetimepicker('maxDate', e.date);
-    });
+    <!-- jQuery -->
+    <script src="../../public/js/jquery/jquery.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="../../public/js/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- moment -->
+    <script src="../../public/js/moment/moment.min.js"></script>
+    <!-- date-range-picker -->
+    <script src="../../public/js/daterangepicker/daterangepicker.js"></script>
+    <!-- Tempusdominus Bootstrap 4 -->
+    <script src="../../public/css/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+    <!-- Bootstrap Switch -->
+    <script src="../../public/js/bootstrap-switch/js/bootstrap-switch.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="../../public/js/adminlte.min.js"></script>
+    <!-- Page script -->
+    <script>
+        $(function () {
+            //Date picker
+            $('#dateLeaveFrom').datetimepicker({
+                format: 'ddd, DD/MM/YYYY',
+                defaultDate: moment()
+            });
+            $('#dateLeaveTo').datetimepicker({
+                format: 'ddd, DD/MM/YYYY',
+                useCurrent: false
+            });
+            // linked pickers
+            $("#dateLeaveFrom").on("change.datetimepicker", function (e) {
+                $('#dateLeaveTo').datetimepicker('minDate', e.date);
+            });
+            $("#dateLeaveTo").on("change.datetimepicker", function (e) {
+                $('#dateLeaveFrom').datetimepicker('maxDate', e.date);
+            });
 
-    $('#timeLeaveDate').datetimepicker({
-      format: 'ddd, DD/MM/YYYY',
-      defaultDate: moment()
-    });
+            $('#timeLeaveDate').datetimepicker({
+                format: 'ddd, DD/MM/YYYY',
+                defaultDate: moment()
+            });
 
-    $('#timeLeaveFrom').datetimepicker({
-      format: 'HH:mm',
-    });
-    $('#timeLeaveTo').datetimepicker({
-      format: 'HH:mm',
-      useCurrent: false
-    });
-    // linked pickers
-    $("#timeLeaveFrom").on("change.datetimepicker", function (e) {
-        $('#timeLeaveTo').datetimepicker('minDate', e.date);
-    });
-    $("#timeLeaveTo").on("change.datetimepicker", function (e) {
-        $('#timeLeaveFrom').datetimepicker('maxDate', e.date);
-    });
+            $('#timeLeaveFrom').datetimepicker({
+                format: 'HH:mm',
+            });
+            $('#timeLeaveTo').datetimepicker({
+                format: 'HH:mm',
+                useCurrent: false
+            });
+            // linked pickers
+            $("#timeLeaveFrom").on("change.datetimepicker", function (e) {
+                $('#timeLeaveTo').datetimepicker('minDate', e.date);
+            });
+            $("#timeLeaveTo").on("change.datetimepicker", function (e) {
+                $('#timeLeaveFrom').datetimepicker('maxDate', e.date);
+            });
 
-    $('#maternityLeaveFrom').datetimepicker({
-      format: 'ddd, DD/MM/YYYY',
-      defaultDate: moment()
-    });
-    $('#maternityLeaveTo').datetimepicker({
-      format: 'ddd, DD/MM/YYYY',
-      useCurrent: false
-    });
-    // linked pickers
-    $("#maternityLeaveFrom").on("change.datetimepicker", function (e) {
-        $('#maternityLeaveTo').datetimepicker('minDate', e.date);
-    });
-    $("#maternityLeaveTo").on("change.datetimepicker", function (e) {
-        $('#maternityLeaveFrom').datetimepicker('maxDate', e.date);
-    });
+            $('#maternityLeaveFrom').datetimepicker({
+                format: 'ddd, DD/MM/YYYY',
+                defaultDate: moment()
+            });
+            $('#maternityLeaveTo').datetimepicker({
+                format: 'ddd, DD/MM/YYYY',
+                useCurrent: false
+            });
+            // linked pickers
+            $("#maternityLeaveFrom").on("change.datetimepicker", function (e) {
+                $('#maternityLeaveTo').datetimepicker('minDate', e.date);
+            });
+            $("#maternityLeaveTo").on("change.datetimepicker", function (e) {
+                $('#maternityLeaveFrom').datetimepicker('maxDate', e.date);
+            });
 
-  });
-</script>
+        });
+    </script>
 </body>
+
 </html>

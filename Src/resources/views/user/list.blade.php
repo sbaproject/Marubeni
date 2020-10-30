@@ -129,7 +129,7 @@
 						<tbody>
 							@foreach($users as $user)
 							<tr>
-								<td>{{ str_pad($user->id, config('const.num_fillzero'), "0", STR_PAD_LEFT) }}</td>
+								<td>{{ $user->user_no }}</td>
 								<td>{{ $user->department->name }}</td>
 								<td>{{ $user->name }}</td>
 								<td>

@@ -1,288 +1,310 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Company Registration</title>
-  <!-- Tell the browser to be responsive to screen width -->
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Company Registration</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="../../public/css/fontawesome-free/css/all.min.css">
-  <!-- Ionicons -->
-  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="../../public/css/adminlte.min.css">
-  <!-- jquery-ui css -->
-  <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  <!-- Google Font: Source Sans Pro -->
-  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
-  <!-- custom css -->
-  <link href="../../public/css/master.css" rel="stylesheet">
-  <link href="../../public/css/10_company_registration.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../../public/css/fontawesome-free/css/all.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../../public/css/adminlte.min.css">
+    <!-- jquery-ui css -->
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <!-- custom css -->
+    <link href="../../public/css/master.css" rel="stylesheet">
+    <link href="../../public/css/10_company_registration.css" rel="stylesheet">
 </head>
+
 <body class="hold-transition sidebar-mini">
-<!-- Site wrapper -->
-<div class="wrapper">
-  <!-- Navbar -->
-  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-    <!-- Left navbar links -->
-    <ul class="navbar-nav bg-custom">
-      <li class="nav-item">
-        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars" style="color: darkgray;"></i></a>
-      </li>
-    </ul>
-
-    <!-- Right navbar links -->
-    <ul class="navbar-nav ml-auto info-user">
-      <li class="nav-item user-panel-custom">
-        <div class="user-deparment">Department Name,
-        </div>
-      </li>
-      <li class="nav-item user-panel-custom">
-        <div class="info">
-            <a href="#" class="text-name">Username</a>
-          </div>
-      </li>
-      <li class="nav-item user-panel-custom">
-        <div class="tab">
-            <a class="tablink-VN" href="">VN</a>
-            <a class="tablink-EN" href="">EN</a>
-          </div>
-      </li>
-    </ul>
-  </nav>
-  <!-- /.navbar -->
-
-  <!-- Main Sidebar Container -->
-  <aside class="main-sidebar sidebar-primary elevation-4 sidebar-no-expand">
-    <!-- Brand Logo -->
-    <a href="../../pages/examples/01_dashboard.html" class="brand-link">
-      <img src="../../public/images/logo.png" alt="Logo" class="" style="max-width: 100%;">
-    </a>
-    <!-- Sidebar -->
-    <div class="sidebar">
-      <!-- Sidebar Menu -->
-      <nav class="mt-2">
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-          <!-- Add icons to the links using the .nav-icon class with font-awesome or any other icon font library -->
-          <li class="nav-item">
-            <a href="/pages/examples/03-application-list.html" class="nav-link">
-              <i class="nav-icon fa fa-home"></i>
-              <p>APPLICATION</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="" class="nav-link">
-              <i class="nav-icon fas fa-edit"></i>
-              <p>DRAFT</p>
-            </a>
-          </li>
-          <li class="nav-item has-treeview">
-            <a href="" class="nav-link">
-              <!--<i class="nav-icon fas fa-list-alt"></i>-->
-              <i class="nav-icon fas fa-file-alt" aria-hidden="true"></i>
-              <p>
-                STATUS
-                <i class="fas fa-angle-down right"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="/pages/examples/user-status.html" class="nav-link">
-                  <i class="fas fa-angle-right left"></i>
-                  <p>Applying</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/pages/examples/user-status.html" class="nav-link">
-                  <i class="fas fa-angle-right left"></i>
-                  <p>Approved/Under payment</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/pages/examples/user-status.html" class="nav-link">
-                  <i class="fas fa-angle-right left"></i>
-                  <p>Approved/in-processing <br />of payment</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/pages/examples/user-status.html" class="nav-link">
-                  <i class="fas fa-angle-right left"></i>
-                  <p>Declined</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/pages/examples/user-status.html" class="nav-link">
-                  <i class="fas fa-angle-right left"></i>
-                  <p>Reject</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/pages/examples/user-status.html" class="nav-link">
-                  <i class="fas fa-angle-right left"></i>
-                  <p>Completed</p>
-                </a>
-              </li>
+    <!-- Site wrapper -->
+    <div class="wrapper">
+        <!-- Navbar -->
+        <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+            <!-- Left navbar links -->
+            <ul class="navbar-nav bg-custom">
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"
+                            style="color: darkgray;"></i></a>
+                </li>
             </ul>
-          </li>
-          <li class="nav-item">
-            <a href="/pages/examples/08_waiting_approval_list.html" class="nav-link">
-              <i class="nav-icon fa fa-check-square"></i>
-              <p>APPROVAL</p>
-            </a>
-          </li>
-          <li class="nav-item has-treeview">
-            <a href="" class="nav-link">
-              <i class="nav-icon fas fa-cog"></i>
-              <p>
-                SETTINGS
-                <i class="right fas fa-angle-down"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="/pages/examples/10_company_registration.html" class="nav-link">
-                  <i class="fas fa-angle-right left"></i>
-                  <p>Company Registration</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="" class="nav-link">
-                  <i class="fas fa-angle-right left"></i>
-                  <p>Change Password</p>
-                </a>
-              </li>
+
+            <!-- Right navbar links -->
+            <ul class="navbar-nav ml-auto info-user">
+                <li class="nav-item user-panel-custom">
+                    <div class="user-deparment">Department Name,
+                    </div>
+                </li>
+                <li class="nav-item user-panel-custom">
+                    <div class="info">
+                        <a href="#" class="text-name">Username</a>
+                    </div>
+                </li>
+                <li class="nav-item user-panel-custom">
+                    <div class="tab">
+                        <a class="tablink-VN" href="">VN</a>
+                        <a class="tablink-EN" href="">EN</a>
+                    </div>
+                </li>
             </ul>
-          </li>
-        </ul>
-      </nav>
-      <!-- /.sidebar-menu -->
-    </div>
-    <!-- /.sidebar -->
-  </aside>
+        </nav>
+        <!-- /.navbar -->
 
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-
-    <!-- Main content -->
-    <section class="content">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-sm-12">
-            <h4 class="mb-2" style="font-weight: 600;">Company Registration</h4>
-            <div class="card card-company">
-              <div class="card-body">
-                <form>
-                  
-                  <div class="row ">
-                    <div class="col-sm-2">
-                        <div class="com_block">Company Information</div>
-                    </div>
-                    <div class="col-sm-10 info_block">
-                      <div class="form-group row ">
-                        <label for="com_name" class="col-sm-2 col-form-label com_title">Company ID</label>
-                        <div class="col-sm-10">
-                          <input type="text" class="form-control" id="com_name" placeholder="Company ID">
-                        </div>
-                      </div>
-                        <div class="form-group row ">
-                          <label for="com_name" class="col-sm-2 col-form-label com_title">Company Name</label>
-                          <div class="col-sm-10">
-                            <input type="text" class="form-control" id="com_name" placeholder="Company Name">
-                          </div>
-                        </div>
-                        <div class="form-group row ">
-                          <label for="com_country" class="col-sm-2 col-form-label com_title">Country</label>
-                          <div class="col-sm-10">
-                            <input type="text" class="form-control" id="com_country" placeholder="Country">
-                          </div>
-                        </div>
-                        <div class="form-group row ">
-                          <label for="com_tel" class="col-sm-2 col-form-label com_title">Tell</label>
-                          <div class="col-sm-10">
-                            <input type="text" class="form-control" id="com_tel" placeholder="Tell">
-                          </div>
-                        </div>
-                        <div class="form-group row ">
-                          <label for="com_address" class="col-sm-2 col-form-label com_title">Address</label>
-                          <div class="col-sm-10">
-                            <input type="text" class="form-control" id="com_address" placeholder="Address">
-                          </div>
-                        </div>
-                    </div>
-                  </div>
-                  <!-- attendants-->
-                  <div class="row ">
-                    <div class="col-sm-2">
-                      <div class="com_block">Attendants Information</div>
-                    </div>
-                    <div class="col-sm-10 info_block">
-                      <div class="form-group row ">
-                        <label for="att_name" class="col-sm-2 col-form-label com_title">Name</label>
-                        <div class="col-sm-10">
-                          <input type="text" class="form-control" id="att_name" placeholder="Name">
-                        </div>
-                      </div>
-                      <div class="form-group row ">
-                        <label for="att_department" class="col-sm-2 col-form-label com_title">Department</label>
-                        <div class="col-sm-10">
-                          <input type="text" class="form-control" id="att_department" placeholder="Department">
-                        </div>
-                      </div>
-                      <div class="form-group row ">
-                        <label for="att_mail" class="col-sm-2 col-form-label com_title">E-mail</label>
-                        <div class="col-sm-10">
-                          <input type="text" class="form-control" id="att_mail" placeholder="E-mail">
-                        </div>
-                      </div>
-
-                    </div>
-                  </div>
-                  <!-- text -->
-                  <div class="row ">
-                    <div class="col-sm-2">
-                      <div class="com_block">Text</div>
-                    </div>
-                    <div class="col-sm-10 info_block">
-                      <div class="form-group row ">
-                        <div class="col-sm-12">
-                          <textarea id="text_content" class="form-control" rows="4"></textarea>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-12 btn_button">
-                      <button type="button" class="btn btn-register">Register</button>
-                      <button type="button" class="btn btn-cancel">Cancel</button>
-                    </div>
-                  </div>
-                </form>
-
-              </div>
-              <!-- /.card-body -->
+        <!-- Main Sidebar Container -->
+        <aside class="main-sidebar sidebar-primary elevation-4 sidebar-no-expand">
+            <!-- Brand Logo -->
+            <a href="../../pages/examples/01_dashboard.html" class="brand-link">
+                <img src="../../public/images/logo.png" alt="Logo" class="" style="max-width: 100%;">
+            </a>
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <!-- Sidebar Menu -->
+                <nav class="mt-2">
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                        data-accordion="false">
+                        <!-- Add icons to the links using the .nav-icon class with font-awesome or any other icon font library -->
+                        <li class="nav-item">
+                            <a href="/pages/examples/03-application-list.html" class="nav-link">
+                                <i class="nav-icon fa fa-home"></i>
+                                <p>APPLICATION</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="" class="nav-link">
+                                <i class="nav-icon fas fa-edit"></i>
+                                <p>DRAFT</p>
+                            </a>
+                        </li>
+                        <li class="nav-item has-treeview">
+                            <a href="" class="nav-link">
+                                <!--<i class="nav-icon fas fa-list-alt"></i>-->
+                                <i class="nav-icon fas fa-file-alt" aria-hidden="true"></i>
+                                <p>
+                                    STATUS
+                                    <i class="fas fa-angle-down right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="/pages/examples/user-status.html" class="nav-link">
+                                        <i class="fas fa-angle-right left"></i>
+                                        <p>Applying</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/pages/examples/user-status.html" class="nav-link">
+                                        <i class="fas fa-angle-right left"></i>
+                                        <p>Approved/Under payment</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/pages/examples/user-status.html" class="nav-link">
+                                        <i class="fas fa-angle-right left"></i>
+                                        <p>Approved/in-processing <br />of payment</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/pages/examples/user-status.html" class="nav-link">
+                                        <i class="fas fa-angle-right left"></i>
+                                        <p>Declined</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/pages/examples/user-status.html" class="nav-link">
+                                        <i class="fas fa-angle-right left"></i>
+                                        <p>Reject</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/pages/examples/user-status.html" class="nav-link">
+                                        <i class="fas fa-angle-right left"></i>
+                                        <p>Completed</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/pages/examples/08_waiting_approval_list.html" class="nav-link">
+                                <i class="nav-icon fa fa-check-square"></i>
+                                <p>APPROVAL</p>
+                            </a>
+                        </li>
+                        <li class="nav-item has-treeview">
+                            <a href="" class="nav-link">
+                                <i class="nav-icon fas fa-cog"></i>
+                                <p>
+                                    SETTINGS
+                                    <i class="right fas fa-angle-down"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="/pages/examples/10_company_registration.html" class="nav-link">
+                                        <i class="fas fa-angle-right left"></i>
+                                        <p>Company Registration</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="" class="nav-link">
+                                        <i class="fas fa-angle-right left"></i>
+                                        <p>Change Password</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+                <!-- /.sidebar-menu -->
             </div>
+            <!-- /.sidebar -->
+        </aside>
 
-          </div>
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+
+            <!-- Main content -->
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h4 class="mb-2" style="font-weight: 600;">Company Registration</h4>
+                            <div class="card card-company">
+                                <div class="card-body">
+                                    <form>
+
+                                        <div class="row ">
+                                            <div class="col-sm-2">
+                                                <div class="com_block">Company Information</div>
+                                            </div>
+                                            <div class="col-sm-10 info_block">
+                                                <div class="form-group row ">
+                                                    <label for="com_name"
+                                                        class="col-sm-2 col-form-label com_title">Company ID</label>
+                                                    <div class="col-sm-10">
+                                                        <input type="text" class="form-control" id="com_name"
+                                                            placeholder="Company ID">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row ">
+                                                    <label for="com_name"
+                                                        class="col-sm-2 col-form-label com_title">Company Name</label>
+                                                    <div class="col-sm-10">
+                                                        <input type="text" class="form-control" id="com_name"
+                                                            placeholder="Company Name">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row ">
+                                                    <label for="com_country"
+                                                        class="col-sm-2 col-form-label com_title">Country</label>
+                                                    <div class="col-sm-10">
+                                                        <input type="text" class="form-control" id="com_country"
+                                                            placeholder="Country">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row ">
+                                                    <label for="com_tel"
+                                                        class="col-sm-2 col-form-label com_title">Tell</label>
+                                                    <div class="col-sm-10">
+                                                        <input type="text" class="form-control" id="com_tel"
+                                                            placeholder="Tell">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row ">
+                                                    <label for="com_address"
+                                                        class="col-sm-2 col-form-label com_title">Address</label>
+                                                    <div class="col-sm-10">
+                                                        <input type="text" class="form-control" id="com_address"
+                                                            placeholder="Address">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- attendants-->
+                                        <div class="row ">
+                                            <div class="col-sm-2">
+                                                <div class="com_block">Attendants Information</div>
+                                            </div>
+                                            <div class="col-sm-10 info_block">
+                                                <div class="form-group row ">
+                                                    <label for="att_name"
+                                                        class="col-sm-2 col-form-label com_title">Name</label>
+                                                    <div class="col-sm-10">
+                                                        <input type="text" class="form-control" id="att_name"
+                                                            placeholder="Name">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row ">
+                                                    <label for="att_department"
+                                                        class="col-sm-2 col-form-label com_title">Department</label>
+                                                    <div class="col-sm-10">
+                                                        <input type="text" class="form-control" id="att_department"
+                                                            placeholder="Department">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row ">
+                                                    <label for="att_mail"
+                                                        class="col-sm-2 col-form-label com_title">E-mail</label>
+                                                    <div class="col-sm-10">
+                                                        <input type="text" class="form-control" id="att_mail"
+                                                            placeholder="E-mail">
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <!-- text -->
+                                        <div class="row ">
+                                            <div class="col-sm-2">
+                                                <div class="com_block">Text</div>
+                                            </div>
+                                            <div class="col-sm-10 info_block">
+                                                <div class="form-group row ">
+                                                    <div class="col-sm-12">
+                                                        <textarea id="text_content" class="form-control"
+                                                            rows="4"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-12 btn_button">
+                                                <button type="button" class="btn btn-register">Register</button>
+                                                <button type="button" class="btn btn-cancel">Cancel</button>
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                </div>
+                                <!-- /.card-body -->
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- /.card -->
+            </section>
+            <!-- /.content -->
         </div>
+        <!-- /.content-wrapper -->
+    </div>
+    <!-- ./wrapper -->
 
-      </div>
-
-      <!-- /.card -->
-    </section>
-    <!-- /.content -->
-  </div>
-  <!-- /.content-wrapper -->
-</div>
-<!-- ./wrapper -->
-
-<!-- jQuery -->
-<script src="../../public/js/jquery/jquery.min.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<!-- Bootstrap 4 -->
-<script src="../../public/js/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- AdminLTE App -->
-<script src="../../public/js/adminlte.min.js"></script>
+    <!-- jQuery -->
+    <script src="../../public/js/jquery/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="../../public/js/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="../../public/js/adminlte.min.js"></script>
 </body>
+
 </html>

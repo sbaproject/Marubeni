@@ -41,6 +41,12 @@
                         <p>Reject</p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="/pages/examples/user-status.html" class="nav-link">
+                        <i class="fas fa-angle-right left"></i>
+                        <p>Completed</p>
+                    </a>
+                </li>
             </ul>
         </li>
         <li class="nav-item has-treeview">

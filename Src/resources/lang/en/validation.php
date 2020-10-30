@@ -118,6 +118,7 @@ return [
     'url' => 'The :attribute format is invalid.',
     'uuid' => 'The :attribute must be a valid UUID.',
     'phone_number' => 'The :attribute is invalid.',
+    'required_select' => 'The :attribute is required to choose the item.',
 
     /*
     |--------------------------------------------------------------------------

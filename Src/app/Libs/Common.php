@@ -104,17 +104,20 @@ class Common
 		}
 
 		if (empty($locale)) {
-			if (Session::has('locale')) {
-				$locale = Session::get('locale');
-			} else {
-				$locale = Auth::user()->locale;
-			}
+			// if (Session::has('locale')) {
+			// 	$locale = Session::get('locale');
+			// } else {
+			// 	$locale = Auth::user()->locale;
+			// }
+			$locale = Auth::user()->locale;
 		}
 
 		// set new locale for app
 		App::setlocale($locale);
+		
 		// set locale session
-		Session::put('locale', $locale);
+		/*Session::put('locale', $locale);*/
+
 		// save new locale to user
 		$user = User::find(Auth::user()->id);
 		$user->locale = $locale;
