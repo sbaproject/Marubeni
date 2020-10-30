@@ -10,6 +10,8 @@
         <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
         <!-- Ionicons -->
         <link rel="stylesheet" href="../../public/css/ionicons.min.css">
+		<link rel="stylesheet" href="../../plugins/select2/css/select2.min.css">
+        <link rel="stylesheet" href="../../plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
         <!-- overlayScrollbars -->
         <link rel="stylesheet" href="../../public/css/adminlte.min.css">
         <!-- jquery-ui css -->
@@ -25,6 +27,8 @@
         <script src="../../public/js/jquery/jquery-ui.js"></script>
         <!-- Bootstrap 4 -->
         <script src="../../public/js/bootstrap/js/bootstrap.bundle.min.js"></script>
+		<!-- Select2 -->
+        <script src="../../plugins/select2/js/select2.full.min.js"></script>
         <!-- AdminLTE App -->
         <script src="../../public/js/adminlte.min.js"></script>
     </head>
@@ -206,7 +210,7 @@
         <div class="form-group row">
           <label class="col-lg-3 col-form-label text-center">Applicant role</label>
           <div class="col-lg-9">
-          <select id="place" class="form-control">
+          <select id="place" class="form-control select2">
             <option selected="">Select...</option>
             <option value="1">option 1</option>
             <option value="2">option 2</option>
@@ -312,5 +316,11 @@
   <!-- /.content -->
           </div>
         </div>
+		<script>
+  $(function () {
+    //Initialize Select2 Elements
+    $('.select2').select2()
+	});
+	</script>
     </body>
 </html>

@@ -17,6 +17,9 @@
     <link rel="stylesheet" href="css/lib/ionicons.min.css">
     <!-- Tempusdominus Bbootstrap 4 -->
     <link rel="stylesheet" href="css/lib/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+    <!-- Select2 -->
+    <link rel="stylesheet" href="css/lib/select2/css/select2.min.css">
+    <link rel="stylesheet" href="css/lib/select2-bootstrap4-theme/select2-bootstrap4.min.css">
     <!-- overlayScrollbars -->
     <link rel="stylesheet" href="css/lib/adminlte.min.css">
     <!-- jquery-ui css -->
@@ -38,6 +41,8 @@
     <script src="js/jquery/jquery-ui.js"></script>
     <!-- Bootstrap 4 -->
     <script src="js/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- Select2 -->
+    <script src="css/lib/select2/js/select2.full.min.js"></script>
     <!-- AdminLTE App -->
     <script src="js/adminlte.min.js"></script>
     <!-- moment -->

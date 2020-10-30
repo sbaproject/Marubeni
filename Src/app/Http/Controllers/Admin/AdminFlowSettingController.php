@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Form;
+use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
 class AdminFlowSettingController extends Controller
 {
@@ -25,8 +27,25 @@ class AdminFlowSettingController extends Controller
      */
     public function create()
     {
-        $forms =  Form::all();       
-        return view('admin.flow.create', compact('forms'));
+        $forms =  Form::all();
+        $users =  User::all();
+        $applicants = DB::table('applicants')
+            ->join('departments', 'applicants.department_id', '=', 'departments.id')         
+            ->select('applicants.id' ,'applicants.location', 'applicants.role', 'departments.name')
+            ->orderBy('applicants.id', 'asc')
+            ->get();
+
+        $locations = config('const.location');
+        $roles = config('const.role');
+
+        $applicantRoles = array();
+        foreach ($applicants as $applicant) {
+            $data = array();
+            $data['id'] = $applicant->id;
+            $data['name'] = strtoupper(array_search($applicant->location, $locations)) . ' - ' . $applicant->name . ' - ' . array_search($applicant->role, $roles);
+            $applicantRoles[] = $data;
+        }
+        return view('admin.flow.create', compact('forms', 'users', 'applicantRoles'));
     }
 
     /**

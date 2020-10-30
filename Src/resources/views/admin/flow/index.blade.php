@@ -14,7 +14,7 @@
     <!-- Main content -->
     <section class="content">
       <div class="button_wrap">
-        <a href="admin/flow-setting/add" class="btn btn-danger pt-1 pb-1 pl-5 pr-5 mb-2"><i class="nav-icon fa fa-plus-circle"></i> Add</a>
+        <a href="{{ route('admin.flow.create') }}" class="btn btn-danger pt-1 pb-1 pl-5 pr-5 mb-2"><i class="nav-icon fa fa-plus-circle"></i> Add</a>
       </div>
       <div class="card">
         <div class="card-body p-0 ">
