@@ -272,9 +272,6 @@ select.form-control.is-invalid, .was-validated .form-control:invalid {
     color: #868484;
     padding: 3px 20px;
 }
-.content_roll {
-    overflow-x: auto;
-}
 .justify-between {
     justify-content: space-between;
 }
