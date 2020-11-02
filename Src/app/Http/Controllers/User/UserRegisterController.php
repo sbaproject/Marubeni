@@ -6,6 +6,7 @@ use App\Libs\Common;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UserRegisterController extends Controller
@@ -32,6 +33,7 @@ class UserRegisterController extends Controller
         $user = new User();
         $user->department_id = $inputs['department'];
         $user->password = Hash::make('123'); // temp data
+        $user->created_by = Auth::user()->id;
 
         $user->fill($inputs)->save();
 

@@ -185,3 +185,30 @@ input[type='checkbox']:checked:after {
     border: 1px solid gray;
     box-shadow: inset 0 0 0 3px white;
 }
+
+.text-name{
+    color: black;
+}
+
+.user-deparment{
+    color: gray;
+}
+
+.btn-search {
+    width: 100%;
+    display: inline-grid;
+}
+
+.sty-search {
+    background-color: #96000C;
+    color: #fff;
+}
+
+.sty-search:hover {
+    background-color: #96000C;
+    color: #fff;
+}
+
+.card-list-items {
+    overflow-x: auto;
+}

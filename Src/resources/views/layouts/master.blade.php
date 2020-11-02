@@ -82,6 +82,7 @@
                 </li>
                 @endif
                 {{-- Logged user name / Logout --}}
+                @if (Auth::check())
                 <li class="nav-item user-panel-custom">
                     <div class="info">
                         <a href="#" class="text-name">{{ Auth::user()->name }}</a>
@@ -95,6 +96,7 @@
                         </form>
                     </div>
                 </li>
+                @endif
                 {{-- Locale selection --}}
                 <li class="nav-item user-panel-custom">
                     <div class="tab">

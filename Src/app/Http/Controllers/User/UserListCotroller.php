@@ -6,6 +6,9 @@ use App\Models\User;
 use App\Models\Department;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Libs\Common;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class UserListCotroller extends Controller
 {
@@ -43,5 +46,20 @@ class UserListCotroller extends Controller
             ->paginate(config('const.paginator.items'));
 
         return view('user.list', compact('conditions', 'locations', 'departments', 'users'));
+    }
+
+    public function delete(User $user)
+    {
+        $loggedUser = Auth::user();
+        // do not delete your self
+        if($user->id === $loggedUser->id) {
+            return Common::redirectBackWithAlertFail(__('msg.delete_fail'));
+        }
+        $user = User::find($user->id);
+        $user->updated_by = $loggedUser->id;
+        $user->deleted_at = Carbon::now();
+        $user->save();
+
+        return Common::redirectBackWithAlertSuccess(__('msg.delete_success'));
     }
 }

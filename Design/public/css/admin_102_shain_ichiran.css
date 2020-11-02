@@ -33,9 +33,6 @@
     color: #868484;
     padding: 3px 20px;
 }
-.content_roll {
-    overflow-x: scroll;
-}
 .justify-between {
     justify-content: space-between;
 }
@@ -45,19 +42,4 @@
 .btn-danger{
     background-color:  #96000c;
     border-color: #96000c;
-}
-
-.btn-search {
-    width: 100%;
-    display: inline-grid;
-}
-
-.sty-search {
-    background-color: #96000C;
-    color: #fff;
-}
-
-.sty-search:hover {
-    background-color: #96000C;
-    color: #fff;
 }

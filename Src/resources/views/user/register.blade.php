@@ -1,8 +1,9 @@
 @extends('layouts.master')
 
 @section('css')
-<link rel="stylesheet" href="css/admin/admin_102_shain_ichiran.css">
+
 @endsection
+
 @section('content')
 <div class="col-lg-9">
 	<div class="card">
@@ -146,9 +147,7 @@
 						<div class="col-lg-9">
 							<textarea id="memo" name="memo" rows="4"
 								class="form-control @error('memo') is-invalid @enderror"
-									placeholder="{{ __('validation.attributes.memo') }}" autocomplete="off" autofocus>
-								{{ old('memo') }}
-							</textarea>
+									placeholder="{{ __('validation.attributes.memo') }}" autocomplete="off" autofocus>{{ old('memo') }}</textarea>
 							@error('memo')
 							<span class="invalid-feedback" role="alert">
 								<strong>{{ $message }}</strong>
