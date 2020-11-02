@@ -10,14 +10,27 @@ $( document ).ready(function() {
 	   	 	$(".form-trip").fadeIn();
 	   	 	$(".form-entertaiment").fadeOut();
 
-	   	}else if (form  === 3){
+	   	}else if (form  === 3){	   		
 	   	 	$(".form-entertaiment").fadeIn();
-	   	 	$(".form-trip").fadeOut();
+	   	 	$(".form-not-po").fadeOut();
+	   	 	$(".form-trip").fadeOut();	   	 	
 
 	   	}else{
 	        $(".form-entertaiment").fadeOut();
 	        $(".form-trip").fadeOut();
+	        $(".form-not-po").fadeOut();
 	   	}
+   });
+
+
+   $(".typePosition").change(function(){
+   	  if($('#positionPO').is(':checked')) { 
+   	      $(".form-not-po").fadeOut();
+   	  	  $(".form-po").fadeIn();
+   	  }else{
+          $(".form-not-po").fadeIn();
+   	  	  $(".form-po").fadeOut();
+   	  }
    });
 
    $( document ).on( "click", ".btn-add-step", function() {	

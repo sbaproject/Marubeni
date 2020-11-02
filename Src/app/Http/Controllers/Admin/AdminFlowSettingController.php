@@ -45,6 +45,8 @@ class AdminFlowSettingController extends Controller
             ->get();
 
         $budgets = DB::table('budgets')->get();
+        $budgetPO = DB::table('budgets')->where('position', 'PO')->first()->amount;
+        $budgetNotPO = DB::table('budgets')->where('position', 'Not PO')->first()->amount;
 
         $locations = config('const.location');
         $roles = config('const.role');
@@ -56,7 +58,7 @@ class AdminFlowSettingController extends Controller
             $data['name'] = strtoupper(array_search($applicant->location, $locations)) . ' - ' . $applicant->name . ' - ' . array_search($applicant->role, $roles);
             $applicantRoles[] = $data;
         }
-        return view('admin.flow.create', compact('flowNo' ,'forms', 'users', 'applicantRoles', 'budgets'));
+        return view('admin.flow.create', compact('flowNo' ,'forms', 'users', 'applicantRoles', 'budgets', 'budgetPO', 'budgetNotPO'));
     }
 
     /**
@@ -74,6 +76,8 @@ class AdminFlowSettingController extends Controller
             $flowName = $data['approval-flow-name'];
             $formId = (int)$data['application-form'];
             $applicantId = $data['applicant'];
+            $budgetTypePo = $data['budget_type_po'];
+            $budgetTypeNotPo = $data['budget_type_not_po'];
             $groupId = 0;
             $budgetId =0;
             // Form Leave
@@ -84,27 +88,34 @@ class AdminFlowSettingController extends Controller
                 }else{
                    $groupId = $group->id;
                 }            
-            // Form Trip 
+            // Form Trip
             }else if ($formId === 2){
-                $trip = $data['trip'];
-                $budgetId = $data['budget-form-'.$trip.'-step-1'];
+                $item = $data['trip'];                             
+                $budgetId = $data['budget-form-'.$item.'-step-1'];
                 $group = DB::table('groups')->where([['applicant_id', '=' , $applicantId], ['budget_id', '=' , $budgetId]])->first();
                 if (empty($group)){
                    $groupId = DB::table('groups')->insertGetId(['applicant_id' => $applicantId, 'budget_id' => $budgetId, 'created_by' => $user->id, 'created_at' => Carbon::now()]);
                 }else{
                    $groupId = $group->id;
-                }                
+                }
             // Form Business
             }else if ($formId === 3){
-                $PO = $data['PO'];
-                $budgetId = $data['budget-form-'.$PO.'-step-2'];
-                $group = DB::table('groups')->where([['applicant_id', '=' , $applicantId], ['budget_id', '=' , $budgetId]])->first();
+                $item = $data['PO'];   
+                $budgetTypeCompare = 0;            
+                if ($item === 'PO'){
+                    $budgetTypeCompare = $budgetTypePo;
+                }else{
+                    $budgetTypeCompare = $budgetTypeNotPo;
+                }             
+                $budgetId = $data['budget-form-'.$item.'-step-1'];
+                $group = DB::table('groups')->where([['applicant_id', '=' , $applicantId], ['budget_id', '=' , $budgetId], ['budget_type_compare', '=' , $budgetTypeCompare]])->first();
                 if (empty($group)){
-                   $groupId = DB::table('groups')->insertGetId(['applicant_id' => $applicantId, 'budget_id' => $budgetId, 'created_by' => $user->id, 'created_at' => Carbon::now()]);
+                   $groupId = DB::table('groups')->insertGetId(['applicant_id' => $applicantId, 'budget_id' => $budgetId, 'budget_type_compare' => $budgetTypeCompare, 'created_by' => $user->id, 'created_at' => Carbon::now()]);
                 }else{
                    $groupId = $group->id;
-                }    
+                }
             }
+
             $dataFlow = array();
             $dataFlow['flow_name']  = $flowName;
             $dataFlow['form_id']    = $formId;

@@ -44,17 +44,35 @@
             <div class="form-group row form-trip" style="display: none"> 
               <label class="col-lg-3 col-form-label text-center">Type</label>
               <div class="col-lg-9">
-                <div class="form-check-inline"><label class="form-check-label"><input type="radio" checked="checked" value="Economy" name="trip">Economy Class</label></div>            
+                <div class="form-check-inline"><label class="form-check-label"><input type="radio" checked="checked" value="Economy" name="trip">Economy Class</label></div>
                 <div class="form-check-inline"><label class="form-check-label"><input type="radio" value="Business"  name="trip">Business Class</label></div>
               </div>
             </div>
             <div class="form-group row form-entertaiment" style="display: none">
               <label class="col-lg-3 col-form-label text-center">Type</label>
               <div class="col-lg-9">
-                <div class="form-check-inline"><label class="form-check-label"><input type="radio" value="PO" checked="checked"  name="PO">PO</label></div>            
-                <div class="form-check-inline"><label class="form-check-label"><input type="radio" value="Not_PO" name="PO">Not PO</label></div>
+                <div class="form-check-inline"><label class="form-check-label"><input class="typePosition" id="positionPO" type="radio" value="PO" checked="checked" name="PO">PO</label></div>
+                <div class="form-check-inline"><label class="form-check-label"><input class="typePosition" id="positionNotPO" type="radio" value="Not_PO" name="PO">Not PO</label></div>
               </div>
-            </div>            
+            </div> 
+            <div class="form-group row form-entertaiment form-po" style="display: none">
+              <label class="col-lg-3 col-form-label text-center">Budget for per person</label>
+              <div class="col-lg-9">
+              <select id="cbxBudgetTypePO" name="budget_type_po" class="form-control select2">
+                 <option value="0">Less Or Equal than {{ $budgetPO }}</option>
+                 <option value="1">Greater than {{ $budgetPO }}</option>
+              </select>
+              </div>
+            </div> 
+            <div class="form-group row form-entertaiment form-not-po" style="display: none">
+              <label class="col-lg-3 col-form-label text-center">Budget for per person</label>
+              <div class="col-lg-9">
+              <select id="cbxBudgetTypeNotPO" name="budget_type_not_po" class="form-control select2">
+                 <option value="0">Less Or Equal than {{ $budgetNotPO }}</option>
+                 <option value="1">Greater than {{ $budgetNotPO }}</option>
+              </select>
+              </div>
+            </div>                      
             <div class="form-group row">
               <label class="col-lg-3 col-form-label text-center">Applicant Role</label>
               <div class="col-lg-9">
