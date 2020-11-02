@@ -61,3 +61,8 @@
     background-color: #96000C;
     color: #fff;
 }
+
+.select2-container--default .select2-results__option--highlighted[aria-selected], .select2-container--default .select2-results__option--highlighted[aria-selected]:hover{
+    background-color: #96000C;
+    color: #fff;
+}
