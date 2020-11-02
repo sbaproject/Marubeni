@@ -14,7 +14,7 @@
 
   <!-- Main content -->
   <section class="content">
-  <form method="POST" action="{{ route('admin.flow.create') }}"> 
+  <form id="frmFlowSetting" name="frmFlowSetting" method="POST" action="{{ route('admin.flow.create') }}"> 
     @csrf 
     <div class="row">
         <div class="col-12 col-lg-10">
@@ -26,15 +26,15 @@
             </div>
             <div class="form-group row">
                 <label class="col-lg-3 col-form-label text-center">Approval Flow Name</label>
-                <div class="col-lg-9">
-                <input type="text" class="form-control" name="approval-flow-name" placeholder="Approval Flow Name">
+                <div class="col-lg-9 block-item">
+                <input type="text" class="form-control" name="approval_flow_name" placeholder="Approval Flow Name">
                 </div>
             </div>
             <div class="form-group row">
               <label class="col-lg-3 col-form-label text-center">Application Form</label>
-              <div class="col-lg-9">
-              <select id="cbxForm" class="form-control select2" name="application-form">
-                <option value='0' selected>{{ __('label.select') }}</option>
+              <div class="col-lg-9 block-item">
+              <select id="cbxForm" class="form-control select2" name="application_form">
+                <option value='' selected>{{ __('label.select') }}</option>
                 @foreach ($forms as $item)
                 <option value=" {{ $item->id }}"> {{ $item->name }}</option>
                 @endforeach
@@ -75,9 +75,9 @@
             </div>                      
             <div class="form-group row">
               <label class="col-lg-3 col-form-label text-center">Applicant Role</label>
-              <div class="col-lg-9">
+              <div class="col-lg-9 block-item">
               <select id="cbxApplicantRole" name="applicant" class="form-control select2">
-                <option value='0' selected>{{ __('label.select') }}</option>
+                <option value='' selected>{{ __('label.select') }}</option>
                  @foreach ($applicantRoles as $item)  
                  <option value=" {{ $item['id'] }}"> {{ $item['name'] }}</option>
                  @endforeach
@@ -106,9 +106,9 @@
                     </tr>
                     <tr>
                         <td class="align-middle">Approver</td>
-                        <td class="p-0 text-left">
+                        <td class="p-0 text-left block-item">
                           <select id="cbxApprover-0" name="approver[1][0]" class="form-control select2 cbx-approver">
-                            <option value='0' selected>{{ __('label.select') }}</option>
+                            <option value='' selected>{{ __('label.select') }}</option>
                              @foreach ($users as $item)  
                              <option value=" {{ $item->id }}"> {{ $item->name }} ({{ $item->email }})</option>
                              @endforeach
@@ -132,7 +132,7 @@
     </div>
     <input type="hidden" name="index-idx" id="index-idx" value="1">
     @foreach ($budgets as $item)
-    <input type="hidden" name="budget-form-{{ $item->position }}-step-{{ $item->step_type }}" id="budget-form-{{ $item->position }}-step-{{ $item->step_type }}" data-amount="{{ $item->amount }}" value="{{ $item->id }}">
+    <input type="hidden" name="budget_form_{{ $item->position }}_step_{{ $item->step_type }}" id="budget-form-{{ $item->position }}-step-{{ $item->step_type }}" data-amount="{{ $item->amount }}" value="{{ $item->id }}">
     @endforeach
   </form>
   </section>

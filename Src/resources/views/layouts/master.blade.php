@@ -43,6 +43,9 @@
     <script src="js/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- Select2 -->
     <script src="css/lib/select2/js/select2.full.min.js"></script>
+    <!-- jquery-validation -->
+    <script src="js/jquery-validation/jquery.validate.min.js"></script>
+    <script src="js/jquery-validation/additional-methods.min.js"></script>
     <!-- AdminLTE App -->
     <script src="js/adminlte.min.js"></script>
     <!-- moment -->

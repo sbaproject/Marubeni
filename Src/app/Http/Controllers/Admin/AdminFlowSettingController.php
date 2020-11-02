@@ -71,10 +71,10 @@ class AdminFlowSettingController extends Controller
     {          
         // get data inputs
         $data = $request->input();
-        DB::transaction(function() use ($data) {          
+        DB::transaction(function() use ($data) {
             $user = Auth::user();
-            $flowName = $data['approval-flow-name'];
-            $formId = (int)$data['application-form'];
+            $flowName = $data['approval_flow_name'];
+            $formId = (int)$data['application_form'];
             $applicantId = $data['applicant'];
             $budgetTypePo = $data['budget_type_po'];
             $budgetTypeNotPo = $data['budget_type_not_po'];
@@ -90,8 +90,8 @@ class AdminFlowSettingController extends Controller
                 }            
             // Form Trip
             }else if ($formId === 2){
-                $item = $data['trip'];                             
-                $budgetId = $data['budget-form-'.$item.'-step-1'];
+                $item = $data['trip'];
+                $budgetId = $data['budget_form_'.$item.'_step_1'];
                 $group = DB::table('groups')->where([['applicant_id', '=' , $applicantId], ['budget_id', '=' , $budgetId]])->first();
                 if (empty($group)){
                    $groupId = DB::table('groups')->insertGetId(['applicant_id' => $applicantId, 'budget_id' => $budgetId, 'created_by' => $user->id, 'created_at' => Carbon::now()]);
@@ -107,7 +107,7 @@ class AdminFlowSettingController extends Controller
                 }else{
                     $budgetTypeCompare = $budgetTypeNotPo;
                 }             
-                $budgetId = $data['budget-form-'.$item.'-step-1'];
+                $budgetId = $data['budget_form_'.$item.'_step_1'];
                 $group = DB::table('groups')->where([['applicant_id', '=' , $applicantId], ['budget_id', '=' , $budgetId], ['budget_type_compare', '=' , $budgetTypeCompare]])->first();
                 if (empty($group)){
                    $groupId = DB::table('groups')->insertGetId(['applicant_id' => $applicantId, 'budget_id' => $budgetId, 'budget_type_compare' => $budgetTypeCompare, 'created_by' => $user->id, 'created_at' => Carbon::now()]);

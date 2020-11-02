@@ -1,4 +1,43 @@
 $( document ).ready(function() {
+  
+   $('#frmFlowSetting').validate({
+    rules: {
+      approval_flow_name: {
+        required: true,
+      },
+      application_form: {
+        required: true,
+      },
+      applicant: {
+        required: true,
+      },      
+    },
+    messages: {
+      approval_flow_name: {
+        required: "Please enter a approval flow name"
+      },
+      application_form: {
+        required: "Please select a application form",
+      },
+      applicant: {
+        required: "Please select a applicant role",
+      },      
+      
+      
+    },
+    errorElement: 'span',
+    errorPlacement: function (error, element) {
+      error.addClass('invalid-feedback');
+      element.closest('.block-item').append(error);
+    },
+    highlight: function (element, errorClass, validClass) {
+      $(element).addClass('is-invalid');
+    },
+    unhighlight: function (element, errorClass, validClass) {
+      $(element).removeClass('is-invalid');
+    }
+  });
+
 
    $('.select2').select2();
  
