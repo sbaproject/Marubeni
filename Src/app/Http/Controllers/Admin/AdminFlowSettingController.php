@@ -30,7 +30,7 @@ class AdminFlowSettingController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {      
+    {
         $flow = DB::table('flows')->orderBy('id', 'desc')->first();
         $flowNo = 1;
         if (!empty($flow)){
@@ -39,7 +39,7 @@ class AdminFlowSettingController extends Controller
         $forms =  Form::all();
         $users =  User::all();
         $applicants = DB::table('applicants')
-            ->join('departments', 'applicants.department_id', '=', 'departments.id')         
+            ->join('departments', 'applicants.department_id', '=', 'departments.id')
             ->select('applicants.id' ,'applicants.location', 'applicants.role', 'departments.name')
             ->orderBy('applicants.id', 'asc')
             ->get();
@@ -68,7 +68,7 @@ class AdminFlowSettingController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {          
+    {
         // get data inputs
         $data = $request->input();
         DB::transaction(function() use ($data) {
@@ -87,7 +87,7 @@ class AdminFlowSettingController extends Controller
                    $groupId = DB::table('groups')->insertGetId(['applicant_id' => $applicantId, 'created_by' => $user->id, 'created_at' => Carbon::now()]);
                 }else{
                    $groupId = $group->id;
-                }            
+                }
             // Form Trip
             }else if ($formId === 2){
                 $item = $data['trip'];
@@ -100,13 +100,13 @@ class AdminFlowSettingController extends Controller
                 }
             // Form Business
             }else if ($formId === 3){
-                $item = $data['PO'];   
-                $budgetTypeCompare = 0;            
+                $item = $data['PO'];
+                $budgetTypeCompare = 0;
                 if ($item === 'PO'){
                     $budgetTypeCompare = $budgetTypePo;
                 }else{
                     $budgetTypeCompare = $budgetTypeNotPo;
-                }             
+                }
                 $budgetId = $data['budget_form_'.$item.'_step_1'];
                 $group = DB::table('groups')->where([['applicant_id', '=' , $applicantId], ['budget_id', '=' , $budgetId], ['budget_type_compare', '=' , $budgetTypeCompare]])->first();
                 if (empty($group)){
@@ -153,7 +153,7 @@ class AdminFlowSettingController extends Controller
                     $dataStep['created_by']     = $user->id;
                     $dataStep['created_at']     = Carbon::now();
                     $dataStepList[] = $dataStep;
-                }            
+                }
             }
             DB::table('steps')->insert($dataStepList);
         });

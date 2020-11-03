@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title','User-Dashboard')
+@section('title', 'User-Dashboard')
 @section('css')
     <link rel="stylesheet" href="css/user/01_dashboard.css">
 @endsection
@@ -15,24 +15,26 @@
                     <label class="lbl-from">From</label>
                     <div class="form-group">
                         <div class="input-group date" id="dateFrom" data-target-input="nearest">
-                            <div class="input-group-addon input-group-append" data-target="#dateFrom" data-toggle="datetimepicker">
+                            <div class="input-group-addon input-group-append" data-target="#dateFrom"
+                                data-toggle="datetimepicker">
                                 <div class="input-group-text"><i class="fa fa-calendar-alt"></i></div>
                             </div>
-                            <input type="text" name="dateFrom" class="form-control datetimepicker-input"
-                                data-target="#dateFrom" />
+                            <input type="text" class="form-control datetimepicker-input" data-target="#dateFrom" />
                         </div>
+                        <input type="hidden" id="dataDateFrom" name="dataDateFrom">
                     </div>
                 </div>
                 <div class="col-md-4 col-sm-4">
                     <label class="lbl-to">To</label>
                     <div class="form-group">
                         <div class="input-group date" id="dateTo" data-target-input="nearest">
-                            <div class="input-group-addon input-group-append" data-target="#dateTo" data-toggle="datetimepicker">
+                            <div class="input-group-addon input-group-append" data-target="#dateTo"
+                                data-toggle="datetimepicker">
                                 <div class="input-group-text"><i class="fa fa-calendar-alt"></i></div>
                             </div>
-                            <input type="text" name="dateTo" class="form-control datetimepicker-input"
-                                data-target="#dateTo" />
+                            <input type="text" class="form-control datetimepicker-input" data-target="#dateTo" />
                         </div>
+                        <input type="hidden" id="dataDateTo" name="dataDateTo">
                     </div>
                 </div>
                 <div class="col-xl-2 col-lg-3 col-md-3 col-sm-3">
@@ -114,76 +116,83 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="list-content">
-                            <td>NO-TM-0000</td>
-                            <td>交際費申請書</td>
-                            <td>
-                                <div class="status-apply">
-                                    Applying
-                                </div>
-                            </td>
-                            <td>22/10/2020</td>
-                            <td>
+                        @if (isset($list_application))
+                            @foreach ($list_application as $application)
+                                <tr class="list-content">
+                                    <td>NO-TM-0000</td>
+                                    <td>交際費申請書</td>
+                                    <td>
+                                        <div class="status-apply">
+                                            Applying
+                                        </div>
+                                    </td>
+                                    <td>22/10/2020</td>
+                                    <td>
 
-                                <a class="btn btn-details" href="/pages/examples/09_application_info.html">View
-                                    Details<i class="fas fa-angle-right" style="margin-left: 5px;"></i></a>
-                            </td>
-                        </tr>
-                        <tr class="list-content">
-                            <td>NO-TM-0000</td>
-                            <td>交際費申請書</td>
-                            <td>
-                                <div class="status-approval">
-                                    Approval
-                                </div>
-                            </td>
-                            <td>22/10/2020</td>
-                            <td>
-                                <a class="btn btn-details" href="/pages/examples/09_application_info.html">View
-                                    Details<i class="fas fa-angle-right" style="margin-left: 5px;"></i></a>
-                            </td>
-                        </tr>
-                        <tr class="list-content">
-                            <td>NO-BT-0000</td>
-                            <td>出張申請書</td>
-                            <td>
-                                <div class="status-declined">
-                                    Declined
-                                </div>
-                            </td>
-                            <td>22/10/2020</td>
-                            <td>
-                                <a class="btn btn-details" href="/pages/examples/09_application_info.html">View
-                                    Details<i class="fas fa-angle-right" style="margin-left: 5px;"></i></a>
-                        </tr>
-                        <tr class="list-content">
-                            <td>NO-PH-0000</td>
-                            <td>有給申請書</td>
-                            <td>
-                                <div class="status-reject">
-                                    Reject
-                                </div>
-                            </td>
-                            <td>22/10/2020</td>
-                            <td>
-                                <a class="btn btn-details" href="/pages/examples/09_application_info.html">View
-                                    Details<i class="fas fa-angle-right" style="margin-left: 5px;"></i></a>
-                            </td>
-                        </tr>
-                        <tr class="list-content">
-                            <td>NO-PH-0000</td>
-                            <td>有給申請書</td>
-                            <td>
-                                <div class="status-completed">
-                                    Completed
-                                </div>
-                            </td>
-                            <td>22/10/2020</td>
-                            <td>
-                                <a class="btn btn-details" href="/pages/examples/09_application_info.html">View
-                                    Details<i class="fas fa-angle-right" style="margin-left: 5px;"></i></a>
-                            </td>
-                        </tr>
+                                        <a class="btn btn-details" href="/pages/examples/09_application_info.html">View
+                                            Details<i class="fas fa-angle-right" style="margin-left: 5px;"></i></a>
+                                    </td>
+                                </tr>
+                                <tr class="list-content">
+                                    <td>NO-TM-0000</td>
+                                    <td>交際費申請書</td>
+                                    <td>
+                                        <div class="status-approval">
+                                            Approval
+                                        </div>
+                                    </td>
+                                    <td>22/10/2020</td>
+                                    <td>
+                                        <a class="btn btn-details" href="/pages/examples/09_application_info.html">View
+                                            Details<i class="fas fa-angle-right" style="margin-left: 5px;"></i></a>
+                                    </td>
+                                </tr>
+                                <tr class="list-content">
+                                    <td>NO-BT-0000</td>
+                                    <td>出張申請書</td>
+                                    <td>
+                                        <div class="status-declined">
+                                            Declined
+                                        </div>
+                                    </td>
+                                    <td>22/10/2020</td>
+                                    <td>
+                                        <a class="btn btn-details" href="/pages/examples/09_application_info.html">View
+                                            Details<i class="fas fa-angle-right" style="margin-left: 5px;"></i></a>
+                                </tr>
+                                <tr class="list-content">
+                                    <td>NO-PH-0000</td>
+                                    <td>有給申請書</td>
+                                    <td>
+                                        <div class="status-reject">
+                                            Reject
+                                        </div>
+                                    </td>
+                                    <td>22/10/2020</td>
+                                    <td>
+                                        <a class="btn btn-details" href="/pages/examples/09_application_info.html">View
+                                            Details<i class="fas fa-angle-right" style="margin-left: 5px;"></i></a>
+                                    </td>
+                                </tr>
+                                <tr class="list-content">
+                                    <td>NO-PH-0000</td>
+                                    <td>有給申請書</td>
+                                    <td>
+                                        <div class="status-completed">
+                                            Completed
+                                        </div>
+                                    </td>
+                                    <td>22/10/2020</td>
+                                    <td>
+                                        <a class="btn btn-details" href="/pages/examples/09_application_info.html">View
+                                            Details<i class="fas fa-angle-right" style="margin-left: 5px;"></i></a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @else
+
+                        @endif
+
                     </tbody>
                 </table>
             </div>
