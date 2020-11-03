@@ -1,41 +1,82 @@
 $( document ).ready(function() {
+
+	$.validator.addMethod( "checkGroupRoleExist", function( value ) {	   
+	    var rs = false;
+	    var str = $( "#frmFlowSetting" ).serialize();
+	    $.ajax({
+                type:'GET',
+                url:"/admin/flow-setting/check",
+                dataType: "JSON",
+                async: false,
+                data:str,
+                success:function(data) {
+                    if (data.status == 1){
+                  	    rs  = true;               	     
+                    }	  
+               }
+        });		
+		return rs;
+	}, "The applicant role of application form has existed." );
   
-   $('#frmFlowSetting').validate({
-    rules: {
-      approval_flow_name: {
-        required: true,
-      },
-      application_form: {
-        required: true,
-      },
-      applicant: {
-        required: true,
-      },      
-    },
-    messages: {
-      approval_flow_name: {
-        required: "Please enter a approval flow name"
-      },
-      application_form: {
-        required: "Please select a application form",
-      },
-      applicant: {
-        required: "Please select a applicant role",
-      },      
-      
-      
-    },
-    errorElement: 'span',
-    errorPlacement: function (error, element) {
-      error.addClass('invalid-feedback');
-      element.closest('.block-item').append(error);
-    },
-    highlight: function (element, errorClass, validClass) {
-      $(element).addClass('is-invalid');
-    },
-    unhighlight: function (element, errorClass, validClass) {
-      $(element).removeClass('is-invalid');
-    }
+    $('#frmFlowSetting').validate({
+	    rules: {
+	        approval_flow_name: {
+	            required: true,
+	        },
+	        application_form: {
+	            required: true,
+	        },
+	        applicant: {
+	            required: true,
+	            checkGroupRoleExist: true,
+	        },      
+	    },
+	    messages: {
+		    approval_flow_name: {
+		        required: "Please enter a approval flow name"
+		    },
+		    application_form: {
+		        required: "Please select a application form",
+		    },
+		    applicant: {
+		        required: "Please select a applicant role",
+		    },      	      
+	    },
+	    errorElement: 'span',
+	    errorPlacement: function (error, element) {
+	        error.addClass('invalid-feedback');
+	        element.closest('.block-item').append(error);
+	    },
+	    highlight: function (element, errorClass, validClass) {
+	        $(element).addClass('is-invalid');
+	    },
+	    unhighlight: function (element, errorClass, validClass) {
+	        $(element).removeClass('is-invalid');
+	    }
+  });
+
+
+  $( document ).on( "click", ".btn-submit-flow", function() {
+  	$(this).attr("disabled", "disabled");
+  	var validFrm = $("#frmFlowSetting").valid();
+  	var chApprover = true; 
+  	$('.cbx-approver  > option:selected').each(function() {
+  		if ($(this).val() == ""){
+  			chApprover = false;
+  			if (!$(this).parent().hasClass("is-invalid")){
+  			   $(this).parent().addClass("is-invalid");
+  			}
+  					
+  		}
+  		else{
+  			$(this).parent().removeClass("is-invalid");
+  		}
+	 });
+  	 if (validFrm && chApprover){
+  	 	$("#frmFlowSetting").submit();
+  	 }else{
+  	 	$(this).removeAttr("disabled", "disabled");  	
+  	 }  	 
   });
 
 
@@ -81,6 +122,7 @@ $( document ).ready(function() {
 	   	var clonedCbx = $('.cbx-approver').first().clone(true);	   
 	   	clonedCbx.attr('id', 'cbxApprover-' + index_idx);
 	   	clonedCbx.attr('name', 'approver['+step+']['+index_idx+']');
+	   	clonedCbx.removeClass('is-invalid');
    	    var html = '<div class="section-step section-step-'+step+'">';
             html+=  '<div class="d-flex justify-between mt-5">';
             html+=  '<h5>STEP <span class="title-step">'+step+'</span></h5>';
@@ -122,6 +164,8 @@ $( document ).ready(function() {
 	    $( ".block-add-step" ).before( html );
 	    $(this).data("step", step);
 	    $( ".append-approver-" +index_idx).append(clonedCbx);
+	    $( ".append-approver-" +index_idx).append('<span id="cbxApprover-'+index_idx+'-error" class="invalid-feedback">Please select a approver</span>');
+	    
 	    $('.cbx-approver').select2();
 
 	    index_idx++;
@@ -138,6 +182,7 @@ $( document ).ready(function() {
 	   	var clonedCbx = $('.cbx-approver').first().clone(true);
 	   	clonedCbx.attr('id', 'cbxApprover-' + index_idx);
 	    clonedCbx.attr('name', 'approver['+step+']['+index_idx+']');
+	    clonedCbx.removeClass('is-invalid');
 	   	var noOfDivs = $('.section-step-'+ step +' .section-approver').length;	   	  
 	   	index =  noOfDivs > 0 ? (noOfDivs + 1) : index;
 	    index++;	   	   
@@ -170,6 +215,7 @@ $( document ).ready(function() {
 	        html += '</div>';
 	    $( ".block-add-approver-" +step).before( html );	   
 	    $( ".append-approver-" +index_idx).append(clonedCbx);
+	    $( ".append-approver-" +index_idx).append('<span id="cbxApprover-'+index_idx+'-error" class="invalid-feedback">Please select a approver</span>');
 	    $('.cbx-approver').select2();
 	    index_idx++;
 	    $("#index-idx").val(index_idx);

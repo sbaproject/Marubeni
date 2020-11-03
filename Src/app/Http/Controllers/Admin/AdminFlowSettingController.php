@@ -206,4 +206,61 @@ class AdminFlowSettingController extends Controller
     {
         //
     }
+
+    /**
+     * Check exists the applicant role of application form
+     *
+     * @param \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function check(Request $request)
+    {
+        $data = $request->all();
+
+        $formId = (int)$data['application_form'];
+        $applicantId = $data['applicant'];
+        $budgetTypePo = $data['budget_type_po'];
+        $budgetTypeNotPo = $data['budget_type_not_po'];
+        $groupId = 0;
+        $budgetId =0;
+
+        // Form Leave
+        if ($formId === 1){
+            $group = DB::table('groups')->where('applicant_id', $applicantId)->first();
+            if (!empty($group)){
+              $groupId = $group->id;
+            }          
+        // Form Trip
+        }else if ($formId === 2){
+            $item = $data['trip'];
+            $budgetId = $data['budget_form_'.$item.'_step_1'];
+            $group = DB::table('groups')->where([['applicant_id', '=' , $applicantId], ['budget_id', '=' , $budgetId]])->first();
+            if (!empty($group)){
+               $groupId = $group->id;
+            }
+        // Form Business
+        }else if ($formId === 3){
+            $item = $data['PO'];   
+            $budgetTypeCompare = 0;            
+            if ($item === 'PO'){
+                $budgetTypeCompare = $budgetTypePo;
+            }else{
+                $budgetTypeCompare = $budgetTypeNotPo;
+            }             
+            $budgetId = $data['budget_form_'.$item.'_step_1'];
+            $group = DB::table('groups')->where([['applicant_id', '=' , $applicantId], ['budget_id', '=' , $budgetId], ['budget_type_compare', '=' , $budgetTypeCompare]])->first();
+            if (!empty($group)){
+               $groupId = $group->id;
+            }
+        }
+
+        $status = 1;
+        if ($groupId  > 0){
+            $flow = DB::table('flows')->where([['form_id', '=' , $formId], ['group_id', '=' , $groupId]])->first();
+            if (!empty($group)){
+                $status = 0; // form and group is existed.
+            }  
+        }        
+        return response()->json(['status'=>$status]);     
+    }
 }

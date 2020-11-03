@@ -67,6 +67,7 @@ Route::middleware('auth')->group(function () {
             Route::get('/flow-setting', [AdminFlowSettingController::class, 'index'])->name('flow.list');
             Route::get('/flow-setting/add', [AdminFlowSettingController::class, 'create'])->name('flow.create');
             Route::post('/flow-setting/add', [AdminFlowSettingController::class, 'store'])->name('flow.store');
+            Route::get('/flow-setting/check', [AdminFlowSettingController::class, 'check'])->name('flow.check');
             Route::get('/flow-setting/edit/{id}', [AdminFlowSettingController::class, 'edit'])->name('flow.edit');
         });
     });
