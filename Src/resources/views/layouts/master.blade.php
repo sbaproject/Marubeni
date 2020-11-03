@@ -11,12 +11,12 @@
     <base href="{{asset('')}}">
 
     <!-----------------START LINK CSS ------------------------------>
-    <!-- Font Awesome -->
+    <!-- All Min Css -->
     <link rel="stylesheet" href="css/lib/fontawesome-free/css/all.min.css">
     <!-- Ionicons -->
     <link rel="stylesheet" href="css/lib/ionicons.min.css">
-    <!-- Tempusdominus Bbootstrap 4 -->
-    <link rel="stylesheet" href="css/lib/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+    <!-- DatetimePicker Bootstrap 4 -->
+    <link rel="stylesheet" href="css/lib/bootstrap-datetimepicker.min.css">
     <!-- Select2 -->
     <link rel="stylesheet" href="css/lib/select2/css/select2.min.css">
     <link rel="stylesheet" href="css/lib/select2-bootstrap4-theme/select2-bootstrap4.min.css">
@@ -49,11 +49,10 @@
     <!-- AdminLTE App -->
     <script src="js/adminlte.min.js"></script>
     <!-- moment -->
+    <script src="js/bootstrap/js/bootstrap.js"></script>
     <script src="js/moment/moment.min.js"></script>
-    <!-- date-range-picker -->
-    <script src="js/daterangepicker/daterangepicker.js"></script>
     <!-- Tempusdominus Bootstrap 4 -->
-    <script src="js/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+    <script src="js/bootstrap-datetimepicker.js"></script>
     <!-- Bootstrap Switch -->
     <script src="js/bootstrap-switch/js/bootstrap-switch.min.js"></script>
     {{-- Custom JS per page here --}}
