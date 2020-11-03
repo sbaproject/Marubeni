@@ -1,39 +1,47 @@
 @extends('layouts.master')
+@section('title','User-Dashboard')
 @section('css')
     <link rel="stylesheet" href="css/user/01_dashboard.css">
 @endsection
+@section('js')
+    <script src="js/user/dashboard.js"></script>
+@endsection
 @section('content')
     <section class="content-header">
-        <div class="row">
-            <div class="col-md-4 col-sm-4">
-                <label class="lbl-from">From</label>
-                <div class="form-group">
-                    <div class="input-group date" id="dateFrom" data-target-input="nearest">
-                        <div class="input-group-append" data-target="#dateFrom" data-toggle="datetimepicker">
-                            <div class="input-group-text"><i class="fa fa-calendar-alt"></i></div>
+        <form method="get" id="formSearch" action="">
+            @csrf
+            <div class="row">
+                <div class="col-md-4 col-sm-4">
+                    <label class="lbl-from">From</label>
+                    <div class="form-group">
+                        <div class="input-group date" id="dateFrom" data-target-input="nearest">
+                            <div class="input-group-addon input-group-append" data-target="#dateFrom" data-toggle="datetimepicker">
+                                <div class="input-group-text"><i class="fa fa-calendar-alt"></i></div>
+                            </div>
+                            <input type="text" name="dateFrom" class="form-control datetimepicker-input"
+                                data-target="#dateFrom" />
                         </div>
-                        <input type="text" name="dateFrom" class="form-control datetimepicker-input"
-                            data-target="#dateFrom" />
                     </div>
                 </div>
-            </div>
-            <div class="col-md-4 col-sm-4">
-                <label class="lbl-to">To</label>
-                <div class="form-group">
-                    <div class="input-group date" id="dateTo" data-target-input="nearest">
-                        <div class="input-group-append" data-target="#dateTo" data-toggle="datetimepicker">
-                            <div class="input-group-text"><i class="fa fa-calendar-alt"></i></div>
+                <div class="col-md-4 col-sm-4">
+                    <label class="lbl-to">To</label>
+                    <div class="form-group">
+                        <div class="input-group date" id="dateTo" data-target-input="nearest">
+                            <div class="input-group-addon input-group-append" data-target="#dateTo" data-toggle="datetimepicker">
+                                <div class="input-group-text"><i class="fa fa-calendar-alt"></i></div>
+                            </div>
+                            <input type="text" name="dateTo" class="form-control datetimepicker-input"
+                                data-target="#dateTo" />
                         </div>
-                        <input type="text" name="dateTo" class="form-control datetimepicker-input" data-target="#dateTo" />
                     </div>
                 </div>
-            </div>
-            <div class="col-xl-2 col-lg-3 col-md-3 col-sm-3">
-                <div class="btn-search">
-                    <button class="btn btn-default sty-search" type="submit"><i class="fa fa-search"
-                            style="margin-right:5px;"></i>Search</button>
+                <div class="col-xl-2 col-lg-3 col-md-3 col-sm-3">
+                    <div class="btn-search">
+                        <button class="btn btn-default sty-search" type="submit"><i class="fa fa-search"
+                                style="margin-right:5px;"></i>Search</button>
+                    </div>
                 </div>
-            </div>
+        </form>
     </section>
 
     <!-- Main content -->
@@ -181,20 +189,4 @@
             </div>
         </div>
     </section>
-    <!-- Page script -->
-    <script type="text/javascript">
-        $(function() {
-            //Date picker
-            $('#dateFrom').datetimepicker({
-                format: 'ddd, DD/MM/YYYY',
-                defaultDate: moment()
-            });
-            $('#dateTo').datetimepicker({
-                format: 'ddd, DD/MM/YYYY',
-                defaultDate: moment(),
-                useCurrent: false
-            });
-        });
-
-    </script>
 @endsection

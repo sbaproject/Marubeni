@@ -114,6 +114,20 @@ a.tab-locale.en{
 .bootstrap-datetimepicker-widget table td.today:before {
     content: none;
 }
+.bootstrap-datetimepicker-widget table td.today {
+    position: relative;
+}
+.bootstrap-datetimepicker-widget.dropdown-menu{
+    width: 14em;
+    border-bottom: 2px;
+}
+.bootstrap-datetimepicker-widget table th{
+    height:  30px;
+    border-bottom: 2px solid #dee2e6;
+}
+.bootstrap-datetimepicker-widget table td.day {
+    padding: 5px;
+}
 /**
 *   Radio
 */
