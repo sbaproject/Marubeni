@@ -49,11 +49,17 @@
 								</div>
 							</div>
 							<div class="form-group row ">
-								<label for="new_password_confirmation"
+								<label for="confirm_new_password"
 									class="col-lg-2 col-form-label text-left">{{ __('validation.attributes.confirm_new_password') }}</label>
 								<div class="col-lg-4">
-									<input id="new_password_confirmation" type="password" class="form-control" placeholder="{{ __('validation.attributes.confirm_new_password') }}"
-										name="new_password_confirmation" autofocus autocomplete="off">
+									<input id="confirm_new_password" type="password" class="form-control @error('confirm_new_password') is-invalid @enderror"
+										name="confirm_new_password" autofocus autocomplete="off" placeholder="{{ __('validation.attributes.confirm_new_password') }}">
+
+										@error('confirm_new_password')
+										<span class="invalid-feedback" role="alert">
+											<strong>{{ $message }}</strong>
+										</span>
+										@enderror
 								</div>
 							</div>
 

@@ -34,7 +34,7 @@
                 <div class="checkbox">
                     <label style="font-weight: normal;">
                         <input type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-                        {{ __('Remember Me') }}
+                        {{ __('label.rememberme') }}
                     </label>
                 </div> <!-- checkbox .// -->
             </div> <!-- form-group// -->

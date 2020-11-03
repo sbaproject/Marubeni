@@ -77,7 +77,7 @@ return [
         'array' => 'The :attribute must not have more than :value items.',
     ],
     'max' => [
-        'numeric' => 'The :attribute may not be greater than :max.',
+        'numeric' => ':attribute chỉ được nhập tối đa :max ký tự.',
         'file' => 'The :attribute may not be greater than :max kilobytes.',
         'string' => ':attribute chỉ được nhập tối đa :max ký tự.',
         'array' => 'The :attribute may not have more than :max items.',
@@ -85,7 +85,7 @@ return [
     'mimes' => 'The :attribute must be a file of type: :values.',
     'mimetypes' => 'The :attribute must be a file of type: :values.',
     'min' => [
-        'numeric' => 'The :attribute must be at least :min.',
+        'numeric' => ':attribute phải nhập ít nhất :min ký tự.',
         'file' => 'The :attribute must be at least :min kilobytes.',
         'string' => ':attribute phải nhập ít nhất :min ký tự.',
         'array' => 'The :attribute must have at least :min items.',
@@ -132,8 +132,11 @@ return [
     */
 
     'custom' => [
+        'confirm_new_password' => [
+            'same' => ':attribute chưa khớp.',
+        ],
         'new_password' => [
-            'check_pwd' => ':attribute không đúng.',
+            'regex' => ':attribute chỉ được chứa ký tự số 0 -> 9, chữ cái a -> z và các ký tự đặc biệt sau : _@.#&+%!-'
         ],
     ],
 

@@ -11,6 +11,7 @@ use App\Http\Controllers\User\UserChangePassController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Application\FormListController;
 use App\Http\Controllers\Admin\AdminFlowSettingController;
+use App\Http\Controllers\LocaleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,6 +38,9 @@ Auth::routes([
 ]);
 
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+// set locale
+Route::get('locale/{locale}', LocaleController::class)->where('locale', "(vi|en)")->name('locale');
 
 /**
  * Authenticated user
@@ -90,13 +94,6 @@ Route::middleware('auth')->group(function () {
     /**----------------------------------------*
      * Common Routes
      *-----------------------------------------*/
-    // set locale
-    Route::get('locale/{lang}', function ($lang) {
-        Common::setLocale($lang);
-        return redirect()->back();
-    })
-    ->where('lang', "(vi|en)")
-    ->name('locale');
     // Change pass
     Route::get('/changepass', [UserChangePassController::class, 'show'])->name('changepass.show');
     Route::post('/changepass', [UserChangePassController::class, 'update'])->name('changepass.update');
