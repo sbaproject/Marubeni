@@ -113,6 +113,7 @@
                              <option value=" {{ $item->id }}"> {{ $item->name }} ({{ $item->email }})</option>
                              @endforeach
                           </select>
+                          <span id="cbxApprover-0-error" class="invalid-feedback">Please select a approver</span>
                         </td>
                     </tr>
                 </table>
@@ -125,7 +126,7 @@
             <div class="mt-3 block-add-step"><button type="button" data-step="1" data-index="0" class="btn-add-step btn btn-outline-dark pt-1 pb-1 pl-3 pr-3">+ Step</button></div>      
 
             <div class="mt-5 mb-5 text-center">
-                <button type="submit" class="btn btn-danger pt-1 pb-1 mr-4 col-5 col-sm-2 col-md-4 col-lg-2"><i class="nav-icon far fa-check-circle"></i> Submit</button>
+                <button type="button" class="btn-submit-flow btn btn-danger pt-1 pb-1 mr-4 col-5 col-sm-2 col-md-4 col-lg-2"><i class="nav-icon far fa-check-circle"></i> Submit</button>
                 <a href="{{ route('admin.flow.list') }}" class="btn btn-outline-dark pt-1 pb-1 col-5 col-sm-2 col-md-4 col-lg-2"><i class="nav-icon far fa-times-circle"></i> Cancel</a>
             </div>
         </div>
@@ -138,3 +139,4 @@
   </section>
   <!-- /.content -->
 @endsection
+
