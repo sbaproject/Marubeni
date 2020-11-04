@@ -35,7 +35,6 @@ class LeaveSeeder extends Seeder
             'maternity_to' => Carbon::now()->toDateString(),
             'days_use' => 12,
             'times_use' => 6,
-            'subsequent' => 0,
             'created_by' => 1,
             'updated_by' => 1,
             'created_at' => Carbon::now(),
