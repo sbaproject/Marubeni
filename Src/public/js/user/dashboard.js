@@ -27,4 +27,29 @@ $(document).ready(function() {
         $('#dateTo').val(e.date.format('YYYYMMDD'));
     });
 
+    //Edit Form Status
+    $('#status').each(function() {
+        switch( $(this).attr("value")) {
+            case '0':
+                $(this).attr('class', 'status-apply');
+                $(this).text('Applying');
+              break;
+            case '-1':
+                $(this).attr('class', 'status-declined');
+                $(this).text('Declined');
+              break;
+            case '-2':
+                $(this).attr('class', 'status-reject');
+                $(this).text('Reject');
+              break;
+            case '99':
+                $(this).attr('class', 'status-completed');
+                $(this).text('Completed');
+              break;
+            default:
+
+          }
+    });
+
+
 });

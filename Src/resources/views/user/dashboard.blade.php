@@ -119,70 +119,15 @@
                         @if (isset($list_application))
                             @foreach ($list_application as $application)
                                 <tr class="list-content">
-                                    <td>NO-TM-0000</td>
-                                    <td>交際費申請書</td>
+                                    <td>{{ !empty($application->id) ? $application->id : '' }}</td>
+                                    <td>{{ !empty($application->id) ? $application->id : '' }}</td>
                                     <td>
-                                        <div class="status-apply">
-                                            Applying
+                                        <div id="status" class="status-apply"
+                                            value="{{$application->status}}">
                                         </div>
                                     </td>
-                                    <td>22/10/2020</td>
-                                    <td>
-
-                                        <a class="btn btn-details" href="/pages/examples/09_application_info.html">View
-                                            Details<i class="fas fa-angle-right" style="margin-left: 5px;"></i></a>
+                                    <td>{{ !empty($application->created_at) ? $application->created_at->format('d/m/Y') : '' }}
                                     </td>
-                                </tr>
-                                <tr class="list-content">
-                                    <td>NO-TM-0000</td>
-                                    <td>交際費申請書</td>
-                                    <td>
-                                        <div class="status-approval">
-                                            Approval
-                                        </div>
-                                    </td>
-                                    <td>22/10/2020</td>
-                                    <td>
-                                        <a class="btn btn-details" href="/pages/examples/09_application_info.html">View
-                                            Details<i class="fas fa-angle-right" style="margin-left: 5px;"></i></a>
-                                    </td>
-                                </tr>
-                                <tr class="list-content">
-                                    <td>NO-BT-0000</td>
-                                    <td>出張申請書</td>
-                                    <td>
-                                        <div class="status-declined">
-                                            Declined
-                                        </div>
-                                    </td>
-                                    <td>22/10/2020</td>
-                                    <td>
-                                        <a class="btn btn-details" href="/pages/examples/09_application_info.html">View
-                                            Details<i class="fas fa-angle-right" style="margin-left: 5px;"></i></a>
-                                </tr>
-                                <tr class="list-content">
-                                    <td>NO-PH-0000</td>
-                                    <td>有給申請書</td>
-                                    <td>
-                                        <div class="status-reject">
-                                            Reject
-                                        </div>
-                                    </td>
-                                    <td>22/10/2020</td>
-                                    <td>
-                                        <a class="btn btn-details" href="/pages/examples/09_application_info.html">View
-                                            Details<i class="fas fa-angle-right" style="margin-left: 5px;"></i></a>
-                                    </td>
-                                </tr>
-                                <tr class="list-content">
-                                    <td>NO-PH-0000</td>
-                                    <td>有給申請書</td>
-                                    <td>
-                                        <div class="status-completed">
-                                            Completed
-                                        </div>
-                                    </td>
-                                    <td>22/10/2020</td>
                                     <td>
                                         <a class="btn btn-details" href="/pages/examples/09_application_info.html">View
                                             Details<i class="fas fa-angle-right" style="margin-left: 5px;"></i></a>

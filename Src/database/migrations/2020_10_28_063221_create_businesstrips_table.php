@@ -23,7 +23,7 @@ class CreateBusinesstripsTable extends Migration
             $table->string('accompany')->nullable();
             $table->text('borne_by')->nullable();
             $table->text('comment')->nullable();
-            $table->unsignedTinyInteger('subsequent')->nullable()->comment('1:YES -- 0:NO');
+            $table->text('file_path')->nullable();
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->timestamps();
