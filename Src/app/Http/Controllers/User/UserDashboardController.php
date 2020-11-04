@@ -31,6 +31,9 @@ class UserDashboardController extends Controller
 
         }else{
 
+            session()->forget('str_date');
+            session()->forget('end_date');
+
             $list_application =  Application::where('created_by', $userId)->orderBy('created_at', 'DESC')->get();
             $count_applying =  Application::where('status', 0)->count();
             $count_approval =  Application::whereBetween('status', [1,98])->count();

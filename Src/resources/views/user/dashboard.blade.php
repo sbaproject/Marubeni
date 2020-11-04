@@ -1,10 +1,14 @@
 @extends('layouts.master')
 @section('title', 'User-Dashboard')
 @section('css')
-    <link rel="stylesheet" href="css/user/01_dashboard.css">
+<link rel="stylesheet" href="css/user/01_dashboard.css">
 @endsection
 @section('js')
-    <script src="js/user/dashboard.js"></script>
+<!-- moment -->
+<script src="js/moment/moment.min.js"></script>
+<!-- DateTime Bootstrap 4 -->
+<script src="js/bootstrap-datetimepicker.js"></script>
+<script src="js/user/dashboard.js"></script>
 @endsection
 @section('content')
     <section class="content-header">
