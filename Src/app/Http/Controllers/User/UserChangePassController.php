@@ -5,12 +5,9 @@ namespace App\Http\Controllers\User;
 use App\Libs\Common;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 
 class UserChangePassController extends Controller
@@ -58,7 +55,14 @@ class UserChangePassController extends Controller
                         }
                     }
                 },
-                'confirmed'
+                'min:8',
+                'max:21',
+                'regex:/^[a-zA-Z0-9_@.#&+%!-]+$/',
+                // 'confirmed'
+            ],
+            'confirm_new_password' => [
+                'required',
+                'same:new_password',
             ]
         ];
 
@@ -69,6 +73,7 @@ class UserChangePassController extends Controller
         // update new password
         $user = User::find(Auth::user()->id);
         $user->password = Hash::make($newPassword);
+        $user->updated_by = Auth::user()->id;
         
         $user->save();
 

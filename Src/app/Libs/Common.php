@@ -101,18 +101,19 @@ class Common
 	public static function setLocale($locale = null)
 	{
 		if (empty($locale)) {
+
 			// default locale
 			$locale = config('app.locale');
 
 			if (Auth::check()) {
-				if (Session::has('set-locale')) {
-					$locale = Session::get('set-locale');
-					Session::forget('set-locale');
+				if (Session::has('set_locale')) {
+					$locale = Session::get('set_locale');
+					Session::forget('set_locale');
 				} else {
 					$locale = Auth::user()->locale;
 				}
-			} else if (Session::has('set-locale')) {
-				$locale = Session::get('set-locale');
+			} else if (Session::has('set_locale')) {
+				$locale = Session::get('set_locale');
 			} else {
 				// get current language of client browser
 				if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
@@ -122,10 +123,11 @@ class Common
 						$lang = substr($value, 0, 2);
 						if (in_array(Str::lower($lang), $checklanguages)) {
 							$locale = $lang;
+							break;
 						}
 					}
 				}
-				Session::put('set-locale', $locale);
+				Session::put('set_locale', $locale);
 			}
 		}
 
@@ -139,6 +141,8 @@ class Common
 				$user->locale = $locale;
 				$user->save();
 			}
+		} else {
+			Session::put('set_locale', $locale);
 		}
 	}
 }

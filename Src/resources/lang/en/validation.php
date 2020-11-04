@@ -132,9 +132,12 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
-        ]
+        'confirm_new_password' => [
+            'same' => ':attribute do not match.',
+        ],
+        'new_password' => [
+            'regex' => ':attribute allows contain numbers(0 -> 9), letters(a -> z), symbols(_@.#&+%!-).'
+        ],
     ],
 
     'change_pass' => [
