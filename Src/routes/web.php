@@ -11,6 +11,7 @@ use App\Http\Controllers\User\UserChangePassController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Application\FormListController;
 use App\Http\Controllers\Admin\AdminFlowSettingController;
+use App\Http\Controllers\Application\Leave\LeaveApplicationController;
 use App\Http\Controllers\LocaleController;
 
 /*
@@ -88,6 +89,9 @@ Route::middleware('auth')->group(function () {
             Route::get('dashboard', [UserDashboardController::class, 'index'])->name('dashboard');
             // Form list
             Route::get('form', [FormListController::class, 'index'])->name('form.index');
+            // Leave Application
+            Route::get('leave/add',[LeaveApplicationController::class,'create'])->name('leave.create');
+            Route::post('leave/add', [LeaveApplicationController::class, 'store'])->name('leave.store');
         });
     });
 

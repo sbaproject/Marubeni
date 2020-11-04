@@ -33,5 +33,24 @@ return [
     '_no_' => 'NO.',
     'email_address' => 'E-Mail address',
     'change_pass' => 'Change Password',
+    /**
+     * Code of Leave
+     */
+    'code_leave' => [
+        'AL' => 'ANNUAL LEAVE',
+        'UL' => 'UNPAID LEAVE',
+        'CL' => 'COMPASSIONATE LEAVE',
+        'WL' => 'WEDDING LEAVE',
+        'PL' => 'PERIODIC LEAVE',
+        'ML' => 'MATERNITY LEAVE',
+        'SL' => 'SICK LEAVE',
+    ],
+    /**
+	 * Type leave of SICK LEAVE code
+	 */
+	'paid_type' => [
+		'AL' => 'Annual Leave',
+		'UL' => 'Unpaid Leave'
+	],
 ];
 

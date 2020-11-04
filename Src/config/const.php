@@ -43,5 +43,44 @@ return [
 	/**
 	 * Employee NO : length of fillzero -- ex: 00001
 	 */
-	'num_fillzero' => 5
+	'num_fillzero' => 5,
+	/**
+	 * Code of Leave
+	 */
+	'code_leave' => [
+		'AL' => 0, // ANNUAL LEAVE
+		'UL' => 1, // UNPAID LEAVE
+		'CL' => 2, // COMPASSIONATE LEAVE
+		'WL' => 3, // WEDDING LEAVE
+		'PL' => 4, // PERIODIC LEAVE
+		'ML' => 5, // MATERNITY LEAVE
+		'SL' => 6, // SICK LEAVE
+	],
+	/**
+	 * Type leave of SICK LEAVE code
+	 */
+	'paid_type' => [
+		'AL' => 1, // Annual Leave
+		'UL' => 0  // Unpaid Leave
+    ],
+    /**
+     * Forms
+     */
+    'form' => [
+        'leave' => 1,           // Leave Application
+        'biz_trip' => 2,        // Business Trip Application
+        'entertaiment' => 3,    // Entertaiment Application
+    ],
+    /**
+     * applications
+     */
+    'application' => [
+        'status' => [
+            'draft' => -3,
+            'declined' => -1,
+            'reject' => -2,
+            'applying' => 0,
+            'completed' => 99,
+        ],
+    ],
 ];
