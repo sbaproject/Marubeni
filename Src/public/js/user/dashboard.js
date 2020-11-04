@@ -1,55 +1,52 @@
-$(document).ready(function() {
+$(document).ready(function () {
     //Setup Init
     $('#dateFrom').datetimepicker({
         format: 'ddd, DD/MM/YYYY',
-        maxDate: moment(),
-        defaultDate: moment()
+        maxDate: $('#end_date').attr("value"),
+        defaultDate: $('#str_date').attr("value")
     });
     $('#dateTo').datetimepicker({
         format: 'ddd, DD/MM/YYYY',
-        defaultDate: moment(),
-        minDate: moment(),
+        minDate: $('#str_date').attr("value"),
+        defaultDate: $('#end_date').attr("value"),
         useCurrent: false
     });
 
     //Get time startup
-    var date = $("#dateFrom").data('DateTimePicker').date().format('YYYYMMDD');
+    var date = $("#dateFrom").data('DateTimePicker').date().format('YYYY-MM-DD');
     $('#dataDateFrom').val(date);
     $('#dataDateTo').val(date);
 
     //Get time when change
     $("#dateFrom").on("dp.change", function (e) {
         $('#dateTo').data("DateTimePicker").minDate(e.date);
-        $('#dataDateFrom').val(e.date.format('YYYYMMDD'));
+        $('#dataDateFrom').val(e.date.format('YYYY-MM-DD'));
     });
     $("#dateTo").on("dp.change", function (e) {
         $('#dateFrom').data("DateTimePicker").maxDate(e.date);
-        $('#dateTo').val(e.date.format('YYYYMMDD'));
+        $('#dataDateTo').val(e.date.format('YYYY-MM-DD'));
     });
 
-    //Edit Form Status
-    $('#status').each(function() {
-        switch( $(this).attr("value")) {
-            case '0':
+    // //Edit Form Status
+    $('#table_list_status tbody tr td').each(function () {
+        $(this).find("#status").each(function () {
+
+            if ($(this).attr("value") == '0') {
                 $(this).attr('class', 'status-apply');
                 $(this).text('Applying');
-              break;
-            case '-1':
+            } else if ($(this).attr("value") == '-1') {
                 $(this).attr('class', 'status-declined');
                 $(this).text('Declined');
-              break;
-            case '-2':
+            } else if ($(this).attr("value") == '-2') {
                 $(this).attr('class', 'status-reject');
                 $(this).text('Reject');
-              break;
-            case '99':
+            } else if ($(this).attr("value") == '99') {
                 $(this).attr('class', 'status-completed');
                 $(this).text('Completed');
-              break;
-            default:
-
-          }
+            } else {
+                $(this).attr('class', 'status-approval');
+                $(this).text('Approval');
+            }
+        });
     });
-
-
 });

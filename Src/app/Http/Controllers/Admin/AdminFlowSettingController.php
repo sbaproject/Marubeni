@@ -39,7 +39,7 @@ class AdminFlowSettingController extends Controller
         $forms =  Form::all();
         $users =  DB::table('users')->where('approval', 1)->whereNull('deleted_at')->get();
         $applicants = DB::table('applicants')
-            ->join('departments', 'applicants.department_id', '=', 'departments.id')         
+            ->join('departments', 'applicants.department_id', '=', 'departments.id')
             ->select('applicants.id' ,'applicants.location', 'applicants.role', 'departments.name')
             ->orderBy('applicants.id', 'asc')
             ->whereNull('applicants.deleted_at')
@@ -250,7 +250,7 @@ class AdminFlowSettingController extends Controller
                 $budgetTypeCompare = $budgetTypePo;
             }else{
                 $budgetTypeCompare = $budgetTypeNotPo;
-            }             
+            }
             $budgetId = $data['budget_form_'.$item.'_step_1'];
             $group = DB::table('groups')->where([['applicant_id', '=' , $applicantId], ['budget_id', '=' , $budgetId], ['budget_type_compare', '=' , $budgetTypeCompare]])->first();
             if (!empty($group)){
@@ -266,4 +266,5 @@ class AdminFlowSettingController extends Controller
             }
         }
         return response()->json(['status'=>$status]);
+}
 }

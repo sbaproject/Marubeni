@@ -54,7 +54,7 @@
                     <div class="card">
                         <div class="card-body card-wrap-items">
                             <span>Applying</span>
-                            <span class="right-number">(2)</span>
+                            <span class="right-number">({{ $count_applying }})</span>
                         </div>
                     </div>
                 </a>
@@ -64,7 +64,7 @@
                     <div class="card">
                         <div class="card-body card-wrap-items">
                             <span>Approval</span>
-                            <span class="right-number">(2)</span>
+                            <span class="right-number">({{ $count_approval }})</span>
                         </div>
                     </div>
                 </a>
@@ -74,7 +74,7 @@
                     <div class="card">
                         <div class="card-body card-wrap-items">
                             <span>Declined</span>
-                            <span class="right-number">(2)</span>
+                            <span class="right-number">({{ $count_declined }})</span>
                         </div>
                     </div>
                 </a>
@@ -84,7 +84,7 @@
                     <div class="card">
                         <div class="card-body card-wrap-items">
                             <span>Reject</span>
-                            <span class="right-number">(2)</span>
+                            <span class="right-number">({{ $count_reject }})</span>
                         </div>
                     </div>
                 </a>
@@ -94,7 +94,7 @@
                     <div class="card">
                         <div class="card-body card-wrap-items">
                             <span>Completed</span>
-                            <span class="right-number">(2)</span>
+                            <span class="right-number">({{ $count_completed }})</span>
                         </div>
                     </div>
                 </a>
@@ -105,7 +105,7 @@
             of Applications</h4>
         <div class="card">
             <div class="card-body p-0 card-list-items">
-                <table class="table">
+                <table class="table" id="table_list_status">
                     <thead>
                         <tr class="list-title">
                             <th>Application No</th>
@@ -122,8 +122,7 @@
                                     <td>{{ !empty($application->id) ? $application->id : '' }}</td>
                                     <td>{{ !empty($application->id) ? $application->id : '' }}</td>
                                     <td>
-                                        <div id="status" class="status-apply"
-                                            value="{{$application->status}}">
+                                        <div id="status" class="" value="{{ $application->status }}">
                                         </div>
                                     </td>
                                     <td>{{ !empty($application->created_at) ? $application->created_at->format('d/m/Y') : '' }}
@@ -142,5 +141,7 @@
                 </table>
             </div>
         </div>
+        <div id='str_date' value='@if (\Session::has('str_date')){{ \Session::get('str_date') }}@else{{ Carbon\Carbon::now() }}@endif'></div>
+        <div id='end_date' value='@if (\Session::has('end_date')){{ \Session::get('end_date') }}@else{{ Carbon\Carbon::now() }}@endif'></div>
     </section>
 @endsection

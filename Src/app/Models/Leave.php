@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Application extends Model
+class Leave extends Model
 {
     use HasFactory, Notifiable, SoftDeletes;
 
@@ -17,16 +17,6 @@ class Application extends Model
      * @var array
      */
     protected $fillable = [
-        'id',
-        'form_id',
-        'group_id',
-        'current_step',
-        'status',
-        'created_by',
-        'updated_by'
+        'id'
     ];
-
-    public function Leave(){
-        return $this->hasMany('App\Models\Leave','application_id','id');
-    }
 }
