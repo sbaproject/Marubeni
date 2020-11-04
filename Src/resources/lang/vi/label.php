@@ -52,4 +52,7 @@ return [
         'AL' => 'Nghỉ phép theo chế độ',
         'UL' => 'Nghỉ phép không hưởng lương'
     ],
+    'date_from' => 'Từ ngày',
+    'date_to' => 'Đến ngày',
+    'list_application' => 'Danh sách Đơn',
 ];

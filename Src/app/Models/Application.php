@@ -26,7 +26,11 @@ class Application extends Model
         'updated_by'
     ];
 
-    public function Leave(){
-        return $this->hasMany('App\Models\Leave','application_id','id');
+    public function Form(){
+        return $this->belongsTo('App\Models\Form');
     }
+
+    // public function Leave(){
+    //     return $this->hasMany('App\Models\Leave','application_id','id');
+    // }
 }

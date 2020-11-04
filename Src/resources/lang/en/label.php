@@ -51,6 +51,9 @@ return [
 	'paid_type' => [
 		'AL' => 'Annual Leave',
 		'UL' => 'Unpaid Leave'
-	],
+    ],
+    'date_from' => 'From',
+    'date_to' => 'To',
+    'list_application' => 'List of Applications',
 ];
 
