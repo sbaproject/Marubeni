@@ -26,7 +26,7 @@
 						</a>
 					</div>
 					<div class="col-sm-4">
-						<a href="/pages/examples/04-leave-application.html">
+						<a href="{{ route('user.leave.create') }}">
 							<div class="application-item">
 								Leave
 							</div>

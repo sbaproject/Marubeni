@@ -26,7 +26,9 @@ class AlterGroupsTable extends Migration
      */
     public function down()
     {
-        $table->dropColumn('budget_id');
-        $table->dropColumn('budget_type_compare');
+        Schema::table('groups', function (Blueprint $table) {
+            $table->dropColumn('budget_id');
+            $table->dropColumn('budget_type_compare');
+        });
     }
 }
