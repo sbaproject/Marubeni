@@ -8,7 +8,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a href="" class="nav-link">
+            <a href="{{ route('user.draft')}}" class="nav-link">
                 <i class="nav-icon fas fa-edit"></i>
                 <p>DRAFT</p>
             </a>

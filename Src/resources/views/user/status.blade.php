@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title', 'User-Dashboard')
+@section('title', 'User-Status')
 @section('css')
     <link rel="stylesheet" href="css/user/02_status.css">
 @endsection
@@ -71,7 +71,7 @@
                             @php
                             $page = request()->get("page");
                             if ($page)
-                            $index = $page * 10 - 9;
+                            $index = $page * 5 - 9;
                             else
                             $index = 1;
                             @endphp

@@ -124,7 +124,7 @@
                             @php
                             $page = request()->get("page");
                             if ($page)
-                            $index = $page * 10 - 9;
+                            $index = $page * 5 - 9;
                             else
                             $index = 1;
                             @endphp
@@ -132,7 +132,7 @@
                                 @php
                                 if ($index < 10) $index='0' . $index @endphp <tr class="list-content">
                                     <td>{{ $index }}</td>
-                                    <td>{{ !empty($application->id) ? $application->Form->name : '' }}</td>
+                                    <td>{{ !empty($application->form_id) ? $application->Form->name : '' }}</td>
                                     <td>
                                         <div id="status" class="" value="{{ $application->status }}">
                                         </div>

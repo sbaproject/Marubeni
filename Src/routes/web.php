@@ -9,6 +9,7 @@ use App\Http\Controllers\User\UserRegisterController;
 use App\Http\Controllers\User\UserDashboardController;
 use App\Http\Controllers\User\UserChangePassController;
 use App\Http\Controllers\User\UserStatusController;
+use App\Http\Controllers\User\UserDraftController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Application\FormListController;
 use App\Http\Controllers\Admin\AdminFlowSettingController;
@@ -88,6 +89,9 @@ Route::middleware('auth')->group(function () {
         Route::middleware('can:user-gate')->group(function () {
             // Dashboard
             Route::get('dashboard', [UserDashboardController::class, 'index'])->name('dashboard');
+            // DRAFT
+            Route::get('draft', [UserDraftController::class, 'index'])->name('draft');
+            Route::post('draft/{id}', [UserDraftController::class, 'delete'])->name('draft.delete');
             // Status
             Route::get('status/{status}', [UserStatusController::class, 'index'])->name('status');
             // Form list
