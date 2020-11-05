@@ -1,15 +1,21 @@
 @extends('layouts.master')
 
 @section('css')
+{{-- for this view --}}
 <link rel="stylesheet" href="css/user/04_leave_application.css">
 @endsection
 
 @section('js')
+{{-- datetimepicker --}}
+<script src="js/moment/moment.min.js"></script>
+<script src="js/bootstrap-datetimepicker.js"></script>
+{{-- for this view --}}
 <script src="js/user/application/leave/create.js"></script>
 @endsection
 
 @section('content')
 <section class="content leave-application">
+    <x-alert />
     <form method="POST" action="{{ route('user.leave.store') }}">
         @csrf
         <div class="main-top">
@@ -51,7 +57,7 @@
                         <label>Choose the type of leave switch</label>
                     </div>
                     <div class="col-sm-10">
-                        <fieldset class="@error('paid_type') form-control is-invalid @enderror">
+                        {{-- <fieldset class="form-control"> --}}
                             @foreach ($paidTypes as $key => $value)
                             <div class="form-check form-check-inline">
                                 <input type="radio" id="paid_type_{{$key}}" name="paid_type" class="form-check-input"
@@ -61,7 +67,7 @@
                                 </label>
                             </div>
                             @endforeach
-                        </fieldset>
+                        {{-- </fieldset> --}}
                     </div>
                 </div>
                 <hr class="line-bottom">
@@ -77,13 +83,13 @@
                                     <div class="input-group date" id="dateLeaveFrom" data-target-input="nearest">
                                         <input type="text" class="form-control datetimepicker-input"
                                             data-target="#dateLeaveFrom" />
-                                        <input type="hidden" id="date_from" name="date_from">
                                         <div class="input-group-addon input-group-append" data-target="#dateLeaveFrom"
                                             data-toggle="datetimepicker">
                                             <div class="input-group-text"><i class="fa fa-calendar-alt"></i>
                                             </div>
                                         </div>
                                     </div>
+                                    <input type="hidden" id="date_from" name="date_from">
                                 </div>
                             </div>
                         </div>
@@ -94,13 +100,13 @@
                                     <div class="input-group date" id="dateLeaveTo" data-target-input="nearest">
                                         <input type="text" class="form-control datetimepicker-input"
                                             data-target="#dateLeaveTo" />
-                                        <input type="hidden" id="date_to" name="date_to">
                                         <div class="input-group-addon input-group-append" data-target="#dateLeaveTo"
                                             data-toggle="datetimepicker">
                                             <div class="input-group-text"><i class="fa fa-calendar-alt"></i>
                                             </div>
                                         </div>
                                     </div>
+                                    <input type="hidden" id="date_to" name="date_to">
                                 </div>
                             </div>
                         </div>
@@ -122,13 +128,13 @@
                                                 data-target-input="nearest">
                                                 <input type="text" class="form-control datetimepicker-input"
                                                     data-target="#timeLeaveDate" />
-                                                <input type="hidden" id="time_day" name="time_day">
                                                 <div class="input-group-addon input-group-append"
                                                     data-target="#timeLeaveDate" data-toggle="datetimepicker">
                                                     <div class="input-group-text"><i class="fa fa-calendar-alt"></i>
                                                     </div>
                                                 </div>
                                             </div>
+                                            <input type="hidden" id="time_day" name="time_day">
                                         </div>
                                     </div>
                                 </div>
@@ -168,13 +174,13 @@
                                     <div class="input-group date" id="maternityLeaveFrom" data-target-input="nearest">
                                         <input type="text" class="form-control datetimepicker-input"
                                             data-target="#maternityLeaveFrom" />
-                                        <input type="hidden" id="maternity_from" name="maternity_from">
                                         <div class="input-group-addon input-group-append"
                                             data-target="#maternityLeaveFrom" data-toggle="datetimepicker">
                                             <div class="input-group-text"><i class="fa fa-calendar-alt"></i>
                                             </div>
                                         </div>
                                     </div>
+                                    <input type="hidden" id="maternity_from" name="maternity_from">
                                 </div>
                             </div>
                         </div>
@@ -185,13 +191,13 @@
                                     <div class="input-group date" id="maternityLeaveTo" data-target-input="nearest">
                                         <input type="text" class="form-control datetimepicker-input"
                                             data-target="#maternityLeaveTo" />
-                                        <input type="hidden" id="maternity_to" name="maternity_to">
                                         <div class="input-group-addon input-group-append"
                                             data-target="#maternityLeaveTo" data-toggle="datetimepicker">
                                             <div class="input-group-text"><i class="fa fa-calendar-alt"></i>
                                             </div>
                                         </div>
                                     </div>
+                                    <input type="hidden" id="maternity_to" name="maternity_to">
                                 </div>
                             </div>
                         </div>
@@ -270,7 +276,7 @@
                     </div>
                     <div class="col-sm-10">
                         <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="subsequent">
+                            <input type="checkbox" id="subsequent" name="subsequent" class="form-check-input">
                             <label class="form-check-label" for="subsequent">ON</label>
                         </div>
                     </div>
@@ -280,12 +286,18 @@
         </div>
         <!-- /.card -->
         <div>
-            <button type="submit" name="apply" value="apply" class="btn btn-apply btn-custom"><i
-                    class="far fa-check-circle" style="margin-right: 5px;"></i>Apply</button>
-            <button type="submit" name="draft" value="draft" class="btn btn-draft btn-custom"><i
-                    class="nav-icon fas fa-edit" style="margin-right: 5px;"></i>Draft</button>
-            <button type="button" class="btn btn-cancel btn-custom"><i class="fa fa-ban" aria-hidden="true"
-                    style="margin-right: 5px;"></i>Cancel</button>
+            <button type="submit" name="apply" value="apply" class="btn btn-apply btn-custom">
+                <i class="far fa-check-circle" style="margin-right: 5px;"></i>
+                Apply
+            </button>
+            <button type="submit" name="draft" value="draft" class="btn btn-draft btn-custom">
+                <i class="nav-icon fas fa-edit" style="margin-right: 5px;"></i>
+                Draft
+            </button>
+            <button type="button" class="btn btn-cancel btn-custom">
+                <i class="fa fa-ban" aria-hidden="true" style="margin-right: 5px;"></i>
+                Cancel
+            </button>
         </div>
         <br>
         <br>

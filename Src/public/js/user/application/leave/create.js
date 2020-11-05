@@ -13,7 +13,7 @@ $(document).ready(function () {
     });
     // show
     var dateFrom = $('#dateLeaveFrom').data("DateTimePicker").date();
-    var dateTo = $('#dateLeaveFrom').data("DateTimePicker").date();
+    var dateTo = $('#dateLeaveTo').data("DateTimePicker").date();
     $('#dateLeaveTo').data("DateTimePicker").minDate(dateFrom);
     $('#dateLeaveFrom').data("DateTimePicker").maxDate(dateTo);
     $('#date_from').val(dateFrom.format('YYYYMMDD'));

@@ -4,6 +4,11 @@
 <link rel="stylesheet" href="css/admin/admin_102_shain_ichiran.css">
 @endsection
 @section('js')
+<!-- Select2 -->
+<script src="css/lib/select2/js/select2.full.min.js"></script>
+<!-- jquery-validation -->
+<script src="js/jquery-validation/jquery.validate.min.js"></script>
+<script src="js/jquery-validation/additional-methods.min.js"></script>
 <script src="js/admin/flow-setting.js"></script>
 @endsection
 @section('content')

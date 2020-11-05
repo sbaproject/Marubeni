@@ -10,6 +10,7 @@
 	<div class="card">
 		<div class="card-body p-4">
 			<div class="container">
+				<x-alert />
 				<div class="row">
 					<div class="col-sm-4">
 						<a href="">

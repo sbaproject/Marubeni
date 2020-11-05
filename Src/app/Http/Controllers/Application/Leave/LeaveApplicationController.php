@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Application\Leave;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Libs\Common;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
@@ -26,7 +27,13 @@ class LeaveApplicationController extends Controller
         // get inputs
         $inputs = $request->input();
 
-        // dd($inputs);
+        // dd(isset($inputs['subsequent']));
+
+        // if (isset($inputs['apply'])) {
+        //     $status = config('const.application.status.applying');
+        // } else if (isset($inputs['draft'])) {
+        //     $status = config('const.application.status.draft');
+        // }
 
         DB::transaction(function () use ($inputs) {
             // get user
@@ -35,22 +42,18 @@ class LeaveApplicationController extends Controller
             // get [leave form] id
             $formId = config('const.form.leave');
 
-            // get applicant
-            $applicant = DB::table('applicants')
-                ->select('id')
-                ->where([
-                    ['role', $user->role],
-                    ['location', $user->location],
-                    ['department_id', $user->department_id],
-                ])
-                ->whereNull('deleted_at')
-                ->first();
-
             // get group
             $group = DB::table('groups')
-                ->select('id')
-                ->where('applicant_id', $applicant->id)
-                ->whereNull(['budget_id', 'deleted_at'])
+                ->select('groups.*')
+                ->join('applicants', function ($join) use ($user) {
+                    $join->on('groups.applicant_id', '=', 'applicants.id')
+                        ->where('applicants.role', '=', $user->role)
+                        ->where('applicants.location', '=', $user->location)
+                        ->where('applicants.department_id', '=', $user->department_id)
+                        ->where('applicants.deleted_at', '=', null);
+                })
+                ->where('groups.budget_id', '=', null)
+                ->where('groups.deleted_at', '=', null)
                 ->first();
 
             /**-------------------------
@@ -67,7 +70,7 @@ class LeaveApplicationController extends Controller
             // get current step
             $currentStep = 2; // [leave form] default = 2
 
-            // application data
+            // create [Application]
             $application = [
                 'form_id' => $formId,
                 'group_id' => $group->id,
@@ -80,9 +83,9 @@ class LeaveApplicationController extends Controller
             ];
             $applicationId = DB::table('applications')->insertGetId($application);
 
-            /**
+            /**-------------------------
              * create [Leave Application] detail
-             */
+             *-------------------------*/
             $leaveData = [
                 'application_id' => $applicationId,
                 'code_leave' => $inputs['code_leave'],
@@ -104,6 +107,10 @@ class LeaveApplicationController extends Controller
             DB::table('leaves')->insert($leaveData);
         });
 
-        return 'OK';
+        if(isset($inputs['subsequent'])){
+            return Common::redirectRouteWithAlertSuccess('user.leave.create');
+        }
+
+        return Common::redirectRouteWithAlertSuccess('user.form.index');
     }
 }

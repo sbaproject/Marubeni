@@ -14,7 +14,7 @@
     <!-- fontawesome-->
     <link rel="stylesheet" href="css/lib/fontawesome-free/css/all.min.css">
     <!-- Ionicons -->
-    <link rel="stylesheet" href="css/lib/ionicons.min.css">
+    {{-- <link rel="stylesheet" href="css/lib/ionicons.min.css"> --}}
     <!-- Select2 -->
     <link rel="stylesheet" href="css/lib/select2/css/select2.min.css">
     <link rel="stylesheet" href="css/lib/select2-bootstrap4-theme/select2-bootstrap4.min.css">
@@ -23,7 +23,7 @@
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="css/lib/google_font_sans_pro.css">
     <!-- icheck-bootstrap -->
-    <link rel="stylesheet" href="css/lib/icheck-bootstrap/icheck-bootstrap.min.css">
+    {{-- <link rel="stylesheet" href="css/lib/icheck-bootstrap/icheck-bootstrap.min.css"> --}}
     <!-- DatetimePicker Bootstrap 4 -->
     <link rel="stylesheet" href="css/lib/bootstrap-datetimepicker.min.css">
     <!-- Custom master css -->
@@ -36,15 +36,11 @@
     <!-----------------START LINK JAVASCRIPT ---------------------->
     <!-- jQuery -->
     <script src="js/jquery/jquery.min.js"></script>
-    <!-- Select2 -->
-    <script src="css/lib/select2/js/select2.full.min.js"></script>
-    <!-- jquery-validation -->
-    <script src="js/jquery-validation/jquery.validate.min.js"></script>
-    <script src="js/jquery-validation/additional-methods.min.js"></script>
+    <script src="js/bootstrap/js/bootstrap.min.js"></script>
     <!-- AdminLTE App -->
     <script src="js/adminlte.min.js"></script>
     <!-- Bootstrap Switch -->
-    <script src="js/bootstrap-switch/js/bootstrap-switch.min.js"></script>
+    {{-- <script src="js/bootstrap-switch/js/bootstrap-switch.min.js"></script> --}}
     {{-- Custom JS per page here --}}
     @yield('js')
     <!-----------------END LINK JAVASCRIPT ------------------------>
