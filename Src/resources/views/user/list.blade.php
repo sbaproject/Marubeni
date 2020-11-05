@@ -10,7 +10,7 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-lg-6">
-                <h1>{{ __('label.search') }}</h1>
+                <h1>{{ __('label.button.search') }}</h1>
             </div>
         </div>
     </div>
@@ -90,7 +90,7 @@
                                         <div class="col-lg-10">
                                             <button type="submit" class="btn btn-primary search_bt">
                                                 <i class="nav-icon fas fa-search"></i>
-                                                {{ __('label.search') }}
+                                                {{ __('label.button.search') }}
                                             </button>
                                         </div>
                                     </div>
@@ -110,7 +110,7 @@
         <a class="btn btn-danger pt-1 pb-1 pl-5 pr-5"
             href="{{ route('admin.user.add.create') }}">
             <i class="nav-icon fa fa-plus-circle"></i>
-            {{ __('label.addnew') }}
+            {{ __('label.button.addnew') }}
         </a>
     </div>
     <div class="card">

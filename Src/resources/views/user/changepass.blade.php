@@ -72,7 +72,7 @@
 							<button type="submit"
 								class="btn btn-danger pt-1 pb-1 mr-4 col-5 col-sm-2 col-md-4 col-lg-2">
 								<i class="nav-icon far fa-check-circle"></i>
-								{{ __('label.change') }}
+								{{ __('label.button.change') }}
 							</button>
 						</div>
 					</div>

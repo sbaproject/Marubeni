@@ -170,6 +170,7 @@ return [
         'approval' => 'Phê duyệt',
         'memo' => 'Ghi chú',
         'user_no' => 'Mã số nhân viên',
+        'paid_type' => 'Hình thức xin nghỉ phép',
     ],
 
 ];

@@ -77,7 +77,7 @@
                         /
                         <a href="{{ route('logout') }}" class="text-name" onclick="event.preventDefault();
                                 document.getElementById('logout-form').submit();">
-                            {{ __('label.logout') }}
+                            {{ __('label.button.logout') }}
                         </a>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                             @csrf

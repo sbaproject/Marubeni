@@ -167,13 +167,13 @@
                         {{-- Submit --}}
                         <button type="submit" class="btn btn-danger pt-1 pb-1 mr-4 col-5 col-sm-2 col-md-4 col-lg-2">
                             <i class="nav-icon far fa-check-circle"></i>
-                            {{ __('label.update') }}
+                            {{ __('label.button.update') }}
                         </button>
                         {{-- Cancel --}}
                         <a href="{{ route('admin.user.index') }}"
                             class="btn btn-outline-dark pt-1 pb-1 col-5 col-sm-2 col-md-4 col-lg-2">
                             <i class="nav-icon far fa-times-circle"></i>
-                            {{__('label.cancel')}}
+                            {{__('label.button.cancel')}}
                         </a>
                     </div>
                 </form>

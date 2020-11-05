@@ -170,6 +170,7 @@ return [
         'approval' => 'Approval',
         'memo' => 'Memo',
         'user_no' => 'Employee No',
+        'paid_type' => 'Type of leave',
     ],
 
 ];

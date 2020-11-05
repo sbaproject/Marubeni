@@ -5,19 +5,23 @@ $(document).ready(function () {
     // init
     $('#dateLeaveFrom').datetimepicker({
         format: 'ddd, DD/MM/YYYY',
-        defaultDate: moment()
+        useCurrent: false
     });
     $('#dateLeaveTo').datetimepicker({
         format: 'ddd, DD/MM/YYYY',
-        useCurrent: true
+        useCurrent: false
     });
     // show
     var dateFrom = $('#dateLeaveFrom').data("DateTimePicker").date();
     var dateTo = $('#dateLeaveTo').data("DateTimePicker").date();
-    $('#dateLeaveTo').data("DateTimePicker").minDate(dateFrom);
-    $('#dateLeaveFrom').data("DateTimePicker").maxDate(dateTo);
-    $('#date_from').val(dateFrom.format('YYYYMMDD'));
-    $('#date_to').val(dateTo.format('YYYYMMDD'));
+    if (dateFrom != null) {
+        $('#dateLeaveTo').data("DateTimePicker").minDate(dateFrom);
+        $('#date_from').val(dateFrom.format('YYYYMMDD'));
+    }
+    if (dateTo != null) {
+        $('#dateLeaveFrom').data("DateTimePicker").maxDate(dateTo);
+        $('#date_to').val(dateTo.format('YYYYMMDD'));
+    }
     // change
     $("#dateLeaveFrom").on("dp.change", function (e) {
         $('#dateLeaveTo').data("DateTimePicker").minDate(e.date);
@@ -34,10 +38,11 @@ $(document).ready(function () {
     // init
     $('#timeLeaveDate').datetimepicker({
         format: 'ddd, DD/MM/YYYY',
-        defaultDate: moment()
+        useCurrent: false
     });
     $('#timeLeaveFrom').datetimepicker({
         format: 'HH:mm',
+        useCurrent: false
     });
     $('#timeLeaveTo').datetimepicker({
         format: 'HH:mm',
@@ -47,9 +52,15 @@ $(document).ready(function () {
     var timeDay = $('#timeLeaveDate').data("DateTimePicker").date();
     var timeLeaveFrom = $('#timeLeaveFrom').data("DateTimePicker").date();
     var timeLeaveTo = $('#timeLeaveTo').data("DateTimePicker").date();
-    $('#time_day').val(timeDay.format('YYYYMMDD'));
-    $('#timeLeaveTo').data("DateTimePicker").minDate(timeLeaveFrom);
-    $('#timeLeaveFrom').data("DateTimePicker").maxDate(timeLeaveTo);
+    if (timeDay != null) {
+        $('#time_day').val(timeDay.format('YYYYMMDD'));
+    }
+    if (timeLeaveFrom != null) {
+        $('#timeLeaveTo').data("DateTimePicker").minDate(timeLeaveFrom);
+    }
+    if (timeLeaveTo != null) {
+        $('#timeLeaveFrom').data("DateTimePicker").maxDate(timeLeaveTo);
+    }
     // change
     $("#timeLeaveDate").on("dp.change", function (e) {
         $('#time_day').val(e.date.format('YYYYMMDD'));
@@ -68,7 +79,7 @@ $(document).ready(function () {
     //init
     $('#maternityLeaveFrom').datetimepicker({
         format: 'ddd, DD/MM/YYYY',
-        defaultDate: moment()
+        useCurrent: false
     });
     $('#maternityLeaveTo').datetimepicker({
         format: 'ddd, DD/MM/YYYY',
@@ -77,10 +88,14 @@ $(document).ready(function () {
     // show
     var maternityLeaveFrom = $('#maternityLeaveFrom').data("DateTimePicker").date();
     var maternityLeaveTo = $('#maternityLeaveTo').data("DateTimePicker").date();
-    $('#maternityLeaveTo').data("DateTimePicker").minDate(maternityLeaveFrom);
-    $('#maternityLeaveFrom').data("DateTimePicker").maxDate(maternityLeaveTo);
-    $('#maternity_from').val(maternityLeaveFrom.format('YYYYMMDD'));
-    $('#maternity_to').val(maternityLeaveTo.format('YYYYMMDD'));
+    if (maternityLeaveFrom != null) {
+        $('#maternityLeaveTo').data("DateTimePicker").minDate(maternityLeaveFrom);    
+        $('#maternity_from').val(maternityLeaveFrom.format('YYYYMMDD'));
+    }
+    if (maternityLeaveTo != null) {
+        $('#maternityLeaveFrom').data("DateTimePicker").maxDate(maternityLeaveTo);
+        $('#maternity_to').val(maternityLeaveTo.format('YYYYMMDD'));
+    }
     // change
     $("#maternityLeaveFrom").on("dp.change", function (e) {
         $('#maternityLeaveTo').data("DateTimePicker").minDate(e.date);
@@ -90,5 +105,17 @@ $(document).ready(function () {
         $('#maternityLeaveFrom').data("DateTimePicker").maxDate(e.date);
         $('#maternity_to').val(e.date.format('YYYYMMDD'));
     });
+
+    /**----------------------------------------------------------------------
+     * Brows file
+     ----------------------------------------------------------------------*/
+    $('#file_path').on('change', function () {
+        //get the file name
+        var fileName = $(this).val();
+        //replace the "Choose a file" label
+        if (fileName != '') {
+            $(this).next('.custom-file-label').html(fileName);
+        }
+    })
 
 });

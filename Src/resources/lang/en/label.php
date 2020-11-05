@@ -1,19 +1,27 @@
 <?php
 
+/**
+ * Label
+ */
+
 return [
     /**
-     * Label
+     * Button
      */
-    'update' => 'Update',
-    'change' => 'Change',
-    'register' => 'Register',
-    'addnew' => 'Add',
-    'edit' => 'Edit',
-    'delete' => 'Delete',
-    'cancel' => 'Cancel',
-    'search' => 'Search',
-    'login' => 'Login',
-    'logout' => 'Logout',
+    'button' => [
+        'update' => 'Update',
+        'change' => 'Change',
+        'register' => 'Register',
+        'addnew' => 'Add',
+        'edit' => 'Edit',
+        'delete' => 'Delete',
+        'cancel' => 'Cancel',
+        'search' => 'Search',
+        'login' => 'Login',
+        'logout' => 'Logout',
+        'apply' => 'Apply',
+        'draft' => 'Draft',
+    ],
     'rememberme' => 'Remember me',
     'forgotpassword' => 'Forgot your password ?',
     'success' => 'Success',
@@ -34,26 +42,52 @@ return [
     'email_address' => 'E-Mail address',
     'change_pass' => 'Change Password',
     /**
-     * Code of Leave
+     * Form
      */
-    'code_leave' => [
-        'AL' => 'ANNUAL LEAVE',
-        'UL' => 'UNPAID LEAVE',
-        'CL' => 'COMPASSIONATE LEAVE',
-        'WL' => 'WEDDING LEAVE',
-        'PL' => 'PERIODIC LEAVE',
-        'ML' => 'MATERNITY LEAVE',
-        'SL' => 'SICK LEAVE',
+    'form' => [
+        'leave' => 'Leave',
+        'biz_trip' => 'Business Trip',
+        'entertaiment' => 'Entertaiment',
     ],
     /**
-	 * Type leave of SICK LEAVE code
-	 */
-	'paid_type' => [
-		'AL' => 'Annual Leave',
-		'UL' => 'Unpaid Leave'
+     * Leave Application
+     */
+    'leave' => [
+        // Code of Leave
+        'code_leave' => [
+            'AL' => 'ANNUAL LEAVE',
+            'UL' => 'UNPAID LEAVE',
+            'CL' => 'COMPASSIONATE LEAVE',
+            'WL' => 'WEDDING LEAVE',
+            'PL' => 'PERIODIC LEAVE',
+            'ML' => 'MATERNITY LEAVE',
+            'SL' => 'SICK LEAVE',
+        ],
+        // Type leave of SICK LEAVE code
+        'paid_type' => [
+            'AL' => 'Annual Leave',
+            'UL' => 'Unpaid Leave'
+        ],
+        'caption' => [
+            'code_leave' => 'Code of Leave',
+            'reason_leave' => 'Reason for leave',
+            'paid_type' => 'Type of leave to switch to',
+            'date_leave' => 'Date of leave',
+            'time_leave' => 'Time of leave',
+            'maternity_leave' => 'Maternity leave',
+            'annual_leave' => 'Annual leave',
+            'subsequent' => 'Subsequent',
+            'file_path' => 'Attached Files',
+        ],
     ],
+    'from' => 'From',
+    'to' => 'To',
+    'date' => 'Date',
     'date_from' => 'From',
     'date_to' => 'To',
     'list_application' => 'List of Applications',
+    'application_list' => 'Application List',
+    'leave_application' => 'Leave application',
+    'biz_application' => 'Business Trip Application',
+    'entertaiment_application' => 'Entertaiment Application',
 ];
-

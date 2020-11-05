@@ -159,11 +159,11 @@
 					<div class="mt-5 mb-5 text-center">
 						{{-- Submit --}}
 						<button type="submit" class="btn btn-danger pt-1 pb-1 mr-4 col-5 col-sm-2 col-md-4 col-lg-2">
-							<i class="nav-icon far fa-check-circle"></i> {{ __('label.register') }}</button>
+							<i class="nav-icon far fa-check-circle"></i> {{ __('label.button.register') }}</button>
 						{{-- Cancel --}}
 						<a class="btn btn-outline-dark pt-1 pb-1 col-5 col-sm-2 col-md-4 col-lg-2"
 							href="{{ route('admin.user.index') }}">
-							<i class="nav-icon far fa-times-circle"></i> {{__('label.cancel')}}</a>
+							<i class="nav-icon far fa-times-circle"></i> {{__('label.button.cancel')}}</a>
 					</div>
 			</div>
 

@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Libs\Common;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class LeaveApplicationController extends Controller
 {
@@ -25,16 +26,43 @@ class LeaveApplicationController extends Controller
     public function store(Request $request)
     {
         // get inputs
-        $inputs = $request->input();
+        $inputs = $request->all();
+        if (!isset($inputs['paid_type'])) {
+            $inputs['paid_type'] = null;
+        }
 
-        // dd(isset($inputs['subsequent']));
+        // dd($request->all());
 
-        // if (isset($inputs['apply'])) {
-        //     $status = config('const.application.status.applying');
-        // } else if (isset($inputs['draft'])) {
-        //     $status = config('const.application.status.draft');
-        // }
+        // validate
+        $this->doValidate($inputs);
 
+        // save
+        return $this->doSaveData($inputs);
+    }
+
+    public function doValidate($inputs)
+    {
+        if (isset($inputs['apply'])) {
+            // rules for validation
+            $rules = [
+                'code_leave' => 'required_select'
+            ];
+            // only for SICKLEAVE
+            if ($inputs['code_leave'] == config('const.code_leave.SL')) {
+                $rules['paid_type'] = 'required_select';
+            }
+            // attached file
+            if(isset($inputs['file_path'])){
+                $rules['file_path'] = 'mimes:jpg|max:10240';
+            }
+
+            $validator = Validator::make($inputs, $rules);
+            $validator->validate();
+        }
+    }
+
+    public function doSaveData($inputs)
+    {
         DB::transaction(function () use ($inputs) {
             // get user
             $user = Auth::user();
@@ -70,7 +98,7 @@ class LeaveApplicationController extends Controller
             // get current step
             $currentStep = 2; // [leave form] default = 2
 
-            // create [Application]
+            // prepare data
             $application = [
                 'form_id' => $formId,
                 'group_id' => $group->id,
@@ -81,6 +109,7 @@ class LeaveApplicationController extends Controller
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ];
+
             $applicationId = DB::table('applications')->insertGetId($application);
 
             /**-------------------------
@@ -107,7 +136,7 @@ class LeaveApplicationController extends Controller
             DB::table('leaves')->insert($leaveData);
         });
 
-        if(isset($inputs['subsequent'])){
+        if (isset($inputs['subsequent'])) {
             return Common::redirectRouteWithAlertSuccess('user.leave.create');
         }
 
