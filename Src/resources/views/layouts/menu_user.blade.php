@@ -8,7 +8,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a href="" class="nav-link">
+            <a href="{{ route('user.draft')}}" class="nav-link">
                 <i class="nav-icon fas fa-edit"></i>
                 <p>DRAFT</p>
             </a>
@@ -24,37 +24,37 @@
             </a>
             <ul class="nav nav-treeview">
                 <li class="nav-item">
-                    <a href="/pages/examples/user-status.html" class="nav-link">
+                    <a href="{{ route('user.status',config('const.application.status.applying'))}}" class="nav-link">
                         <i class="fas fa-angle-right left"></i>
                         <p>Applying</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="/pages/examples/user-status.html" class="nav-link">
+                    <a href="{{ route('user.status',config('const.application.status.approvel_un'))}}" class="nav-link">
                         <i class="fas fa-angle-right left"></i>
                         <p>Approved/Under payment</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="/pages/examples/user-status.html" class="nav-link">
+                    <a href="{{ route('user.status',config('const.application.status.approvel_in'))}}" class="nav-link">
                         <i class="fas fa-angle-right left"></i>
                         <p>Approved/in-processing <br />of payment</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="/pages/examples/user-status.html" class="nav-link">
+                    <a href="{{ route('user.status',config('const.application.status.declined'))}}" class="nav-link">
                         <i class="fas fa-angle-right left"></i>
                         <p>Declined</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="/pages/examples/user-status.html" class="nav-link">
+                    <a href="{{ route('user.status',config('const.application.status.reject'))}}" class="nav-link">
                         <i class="fas fa-angle-right left"></i>
                         <p>Reject</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="/pages/examples/user-status.html" class="nav-link">
+                    <a href="{{ route('user.status',config('const.application.status.completed'))}}" class="nav-link">
                         <i class="fas fa-angle-right left"></i>
                         <p>Completed</p>
                     </a>

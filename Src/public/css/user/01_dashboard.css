@@ -172,7 +172,3 @@ tr.list-content td div.status-completed
       float: left;
     }
   }
-  .pagination-container {
-	display: flex;
-	justify-content: center;
-}
