@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Application\Leave;
 
+use Carbon\Carbon;
+use App\Libs\Common;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Libs\Common;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class LeaveApplicationController extends Controller
@@ -34,13 +35,13 @@ class LeaveApplicationController extends Controller
         // dd($request->all());
 
         // validate
-        $this->doValidate($inputs);
+        $this->doValidate($request, $inputs);
 
         // save
-        return $this->doSaveData($inputs);
+        return $this->doSaveData($request, $inputs);
     }
 
-    public function doValidate($inputs)
+    public function doValidate($request, $inputs)
     {
         if (isset($inputs['apply'])) {
             // rules for validation
@@ -52,8 +53,8 @@ class LeaveApplicationController extends Controller
                 $rules['paid_type'] = 'required_select';
             }
             // attached file
-            if(isset($inputs['file_path'])){
-                $rules['file_path'] = 'mimes:jpg|max:10240';
+            if ($request->file('file_path')) {
+                $rules['file_path'] = 'mimes:jpg,jpeg,png|max:10240';
             }
 
             $validator = Validator::make($inputs, $rules);
@@ -61,9 +62,9 @@ class LeaveApplicationController extends Controller
         }
     }
 
-    public function doSaveData($inputs)
+    public function doSaveData($request, $inputs)
     {
-        DB::transaction(function () use ($inputs) {
+        DB::transaction(function () use ($request, $inputs) {
             // get user
             $user = Auth::user();
 
@@ -115,6 +116,14 @@ class LeaveApplicationController extends Controller
             /**-------------------------
              * create [Leave Application] detail
              *-------------------------*/
+            // upload attached file
+            if ($request->file('file_path')) {
+                $extension = '.' . $request->file('file_path')->extension();
+                $fileName = time() . $user->id . $extension;
+                $filePath = $request->file('file_path')->storeAs('uploads/application/', $fileName);
+            }
+
+            // data
             $leaveData = [
                 'application_id' => $applicationId,
                 'code_leave' => $inputs['code_leave'],
@@ -127,6 +136,7 @@ class LeaveApplicationController extends Controller
                 'time_to' => $inputs['time_to'],
                 'maternity_from' => $inputs['maternity_from'],
                 'maternity_to' => $inputs['maternity_to'],
+                'file_path' => isset($filePath) ? $filePath : null,
                 'created_by' => $user->id,
                 'updated_by' => $user->id,
                 'created_at' => Carbon::now(),
@@ -136,10 +146,11 @@ class LeaveApplicationController extends Controller
             DB::table('leaves')->insert($leaveData);
         });
 
+        // continue create new application after save success
         if (isset($inputs['subsequent'])) {
             return Common::redirectRouteWithAlertSuccess('user.leave.create');
         }
-
+        // back to list application
         return Common::redirectRouteWithAlertSuccess('user.form.index');
     }
 }

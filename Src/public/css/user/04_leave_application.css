@@ -153,3 +153,6 @@ input[type="file"] {
 label.radio-inline {
     font-weight: normal !important;
 }
+.custom-file~.invalid-feedback {
+    display: block;
+}

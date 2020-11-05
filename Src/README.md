@@ -44,3 +44,10 @@
 	+ trang delete(POST) -> "user.delete"
 	
 **Ở trên là quy định chung cơ bản, nếu route,controller,action phức tạp hơn thì sẽ tùy biến.
+
+-------------------------------------------------------------------------------------------------
+--------------------------Đọc file đã upload lên storage----------------------------
+-------------------------------------------------------------------------------------------------
+1. trong file .env thay [APP_URL] = tên domain của mình (kèm port nếu có)
+2. link folder storage tượng trưng vào public để có thể xem được file upload
+	-> php artisan storage:link

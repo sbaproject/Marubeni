@@ -289,11 +289,11 @@
                     <div class="col-sm-2 text-left">
                         <label for="myfile">{{ __('label.leave.caption.file_path') }}</label>
                     </div>
-                    <div class="col-sm-6">
+                    <div class="col-sm-5">
                         <div class="custom-file">
                             <input type="file" id="file_path" name="file_path"
                                 class="custom-file-input form-control @error('file_path') is-invalid @enderror">
-                            <label class="custom-file-label" for="file_path">Select file</label>
+                            <label class="custom-file-label" for="file_path"></label>
                         </div>
                         @error('file_path')
                         <span class="invalid-feedback" role="alert">
