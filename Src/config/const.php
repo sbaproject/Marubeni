@@ -76,10 +76,12 @@ return [
      */
     'application' => [
         'status' => [
+            'applying' => 0,
+            'approvel_un' => 1,
+            'approvel_in' => 2,
             'draft' => -3,
             'declined' => -1,
             'reject' => -2,
-            'applying' => 0,
             'completed' => 99,
         ],
     ],
