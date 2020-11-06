@@ -27,11 +27,19 @@ $(document).ready(function () {
     // change
     $("#dateLeaveFrom").on("dp.change", function (e) {
         $('#dateLeaveTo').data("DateTimePicker").minDate(e.date);
-        $('#date_from').val(e.date.format('YYYYMMDD'));
+        if (e.date) {
+            $('#date_from').val(e.date.format('YYYYMMDD'));
+        } else {
+            $('#date_from').val(null);
+        }
     });
     $("#dateLeaveTo").on("dp.change", function (e) {
         $('#dateLeaveFrom').data("DateTimePicker").maxDate(e.date);
-        $('#date_to').val(e.date.format('YYYYMMDD'));
+        if (e.date) {
+            $('#date_to').val(e.date.format('YYYYMMDD'));
+        } else {
+            $('#date_to').val(null);
+        }
     });
 
     /**
@@ -68,7 +76,11 @@ $(document).ready(function () {
     }
     // change
     $("#timeLeaveDate").on("dp.change", function (e) {
-        $('#time_day').val(e.date.format('YYYYMMDD'));
+        if (e.date) {
+            $('#time_day').val(e.date.format('YYYYMMDD'));
+        } else {
+            $('#time_day').val(null);
+        }
     });
     $("#timeLeaveFrom").on("dp.change", function (e) {
         $('#timeLeaveTo').data("DateTimePicker").minDate(e.date);
@@ -106,23 +118,41 @@ $(document).ready(function () {
     // change
     $("#maternityLeaveFrom").on("dp.change", function (e) {
         $('#maternityLeaveTo').data("DateTimePicker").minDate(e.date);
-        $('#maternity_from').val(e.date.format('YYYYMMDD'));
+        if (e.date) {
+            $('#maternity_from').val(e.date.format('YYYYMMDD'));
+        } else {
+            $('#maternity_from').val(null);
+        }
     });
     $("#maternityLeaveTo").on("dp.change", function (e) {
         $('#maternityLeaveFrom').data("DateTimePicker").maxDate(e.date);
-        $('#maternity_to').val(e.date.format('YYYYMMDD'));
+        if (e.date) {
+            $('#maternity_to').val(e.date.format('YYYYMMDD'));
+        } else {
+            $('#maternity_to').val(null);
+        }
     });
 
     /**----------------------------------------------------------------------
-     * Brows file
+     * Browse file
      ----------------------------------------------------------------------*/
-    $('#file_path').on('change', function () {
+    $('#input_file').on('change', function (e) {
         //get the file name
-        var fileName = $(this).val();
-        //replace the "Choose a file" label
+        var fileName = e.target.files[0].name;
         if (fileName != '') {
             $(this).next('.custom-file-label').html(fileName);
+            $('#file_browse').addClass('d-none');
+            $('#file_link').attr('href', 'javascript:void(0)').html(fileName);
+            $('#file_show').removeClass('d-none');
         }
-    })
+    });
+    // remove file
+    $('#remove_file').on('click', function () {
+        $('#input_file').val(null);
+        $('#input_file').next('.custom-file-label').html('');
+        $('#file_browse').removeClass('d-none');
+        $('#file_link').attr('href', 'javascript:void(0)').html('');
+        $('#file_show').addClass('d-none');
+    });
 
 });

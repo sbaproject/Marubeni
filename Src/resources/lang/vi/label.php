@@ -94,4 +94,5 @@ return [
     'leave_application' => 'Đơn xin nghỉ phép',
     'biz_application' => 'Đơn công tác',
     'entertaiment_application' => 'Đơn tiếp khách',
+    'file' => 'Tập tin',
 ];

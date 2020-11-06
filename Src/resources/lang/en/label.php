@@ -90,4 +90,5 @@ return [
     'leave_application' => 'Leave application',
     'biz_application' => 'Business Trip Application',
     'entertaiment_application' => 'Entertaiment Application',
+    'file' => 'File',
 ];

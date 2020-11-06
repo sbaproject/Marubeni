@@ -18,6 +18,19 @@
 @endsection
 
 @section('content')
+@php
+    $code_leave = old('code_leave') ?? ($model->code_leave ?? null);
+    $paid_type = old('paid_type') ?? ($model->paid_type ?? null);
+    $reason_leave = old('reason_leave') ?? ($model->reason_leave ?? null);
+    $date_from = old('date_from') ?? ($model->date_from ?? null);
+    $date_to = old('date_to') ?? ($model->date_to ?? null);
+    $time_day = old('time_day') ?? ($model->time_day ?? null);
+    $time_from = old('time_from') ?? ($model->time_from ?? null);
+    $time_to = old('time_to') ?? ($model->time_to ?? null);
+    $maternity_from = old('maternity_from') ?? ($model->maternity_from ?? null);
+    $maternity_to = old('maternity_to') ?? ($model->maternity_to ?? null);
+    $file_path = old('file_path') ?? ($model->file_path ?? null);
+@endphp
 <section class="content leave-application">
     <x-alert />
     <form method="POST" action="@if (isset($id)) {{ route('user.leave.update', $id) }} @else {{ route('user.leave.store') }} @endif"
@@ -40,10 +53,11 @@
                     <div class="col-sm-10">
                         <select name="code_leave" id="code_leave" style="width: auto;"
                             class="form-control @error('code_leave') is-invalid @enderror">
-                            <option value='' selected>{{ __('label.select') }}</option>
+                            <option value='' @if($code_leave == null) selected @endif>
+                                {{ __('label.select') }}
+                            </option>
                             @foreach ($codeLeaves as $key => $value)
-                            <option value="{{ $value }}" @if (old('code_leave') !==null && old('code_leave')==$value)
-                                selected @endif>
+                            <option value="{{ $value }}" @if ($code_leave != null && $code_leave == $value) selected @endif>
                                 {{ $key }} : {{ __('label.leave.code_leave.'.$key) }}
                             </option>
                             @endforeach
@@ -63,7 +77,7 @@
                     <div class="col-sm-10">
                         <textarea class="form-control" name="reason_leave" id="reason_leave" rows="3"
                             style="width: 100%;"
-                            placeholder="{{ __('label.leave.caption.reason_leave') }}">{{ old('reason_leave') }}</textarea>
+                            placeholder="{{ __('label.leave.caption.reason_leave') }}">{{ $reason_leave }}</textarea>
                     </div>
                 </div>
                 <hr class="line-bottom">
@@ -75,8 +89,8 @@
                         <fieldset class="@error('paid_type') form-control is-invalid @enderror">
                             @foreach ($paidTypes as $key => $value)
                             <label class="radio-inline">
-                                <input type="radio" name="paid_type" value="{{ $value }}" @if (old('paid_type') !==null
-                                    && old('paid_type')==$value) checked @endif>
+                                <input type="radio" name="paid_type" value="{{ $value }}"
+                                    @if ($paid_type !==null && $paid_type == $value) checked @endif>
                                 {{ __('label.leave.paid_type.'.$key) }}
                             </label>
                             @endforeach
@@ -107,7 +121,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <input type="hidden" id="date_from" name="date_from" value="{{ old('date_from') }}">
+                                    <input type="hidden" id="date_from" name="date_from" value="{{ $date_from }}">
                                 </div>
                             </div>
                         </div>
@@ -124,7 +138,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <input type="hidden" id="date_to" name="date_to" value="{{ old('date_to') }}">
+                                    <input type="hidden" id="date_to" name="date_to" value="{{ $date_to }}">
                                 </div>
                             </div>
                         </div>
@@ -153,7 +167,7 @@
                                                 </div>
                                             </div>
                                             <input type="hidden" id="time_day" name="time_day"
-                                                value="{{ old('time_day') }}">
+                                                value="{{ $time_day }}">
                                         </div>
                                     </div>
                                 </div>
@@ -165,7 +179,7 @@
                                         <input type="text" id="timeLeaveFrom" name="time_from"
                                             class="form-control datetimepicker-input" data-toggle="datetimepicker"
                                             data-target="#timeLeaveFrom" autocomplete="off"
-                                            value="{{ old('time_from') }}"/>
+                                            value="{{ $time_from }}"/>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -174,7 +188,7 @@
                                         <input type="text" id="timeLeaveTo" name="time_to"
                                             class="form-control datetimepicker-input" data-toggle="datetimepicker"
                                             data-target="#timeLeaveTo" autocomplete="off"
-                                            value="{{ old('time_to') }}"/>
+                                            value="{{ $time_to }}"/>
                                     </div>
                                 </div>
                             </div>
@@ -202,7 +216,7 @@
                                         </div>
                                     </div>
                                     <input type="hidden" id="maternity_from" name="maternity_from"
-                                        value="{{ old('maternity_from') }}">
+                                        value="{{ $maternity_from }}">
                                 </div>
                             </div>
                         </div>
@@ -220,7 +234,7 @@
                                         </div>
                                     </div>
                                     <input type="hidden" id="maternity_to" name="maternity_to"
-                                        value="{{ old('maternity_to') }}">
+                                        value="{{ $maternity_to }}">
                                 </div>
                             </div>
                         </div>
@@ -262,7 +276,7 @@
                             </div>
                         </div>
                         <div class="row mb-2">
-                            <span class="col-sm-2">Take this year</span>
+                            <span class="col-sm-2">Take this time</span>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control input-custom-2" id="takeDays" name="takeDays"
                                     value="30">
@@ -297,16 +311,23 @@
                         <label for="myfile">{{ __('label.leave.caption.file_path') }}</label>
                     </div>
                     <div class="col-sm-5">
-                        <div class="custom-file">
-                            <input type="file" id="file_path" name="file_path"
-                                class="custom-file-input form-control @error('file_path') is-invalid @enderror">
-                            <label class="custom-file-label" for="file_path"></label>
+                        <div id="file_show" class="form-control @if(empty($file_path)) d-none @endif">
+                            <a id="file_link" href="{{ Storage::url($file_path) }}">{{ __('label.leave.caption.file_path') }}</a>
+                            <i id="remove_file" class="fa fa-minus-circle"></i>
                         </div>
-                        @error('file_path')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
+                        <div id="file_browse" class="@if(!empty($file_path) && old('file_path') == null) d-none @endif">
+                            <div class="custom-file">
+                                <input type="file" id="input_file" name="input_file"
+                                    class="custom-file-input form-control @error('input_file') is-invalid @enderror">
+                                <label class="custom-file-label" for="input_file"></label>
+                            </div>
+                            @error('input_file')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>
+                        <input type="hidden" id="file_path" name="file_path" value="{{ $file_path }}">
                     </div>
                 </div>
                 <hr class="line-bottom">
