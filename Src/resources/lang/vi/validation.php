@@ -173,6 +173,13 @@ return [
         'paid_type' => 'Hình thức xin nghỉ phép',
         'code_leave' => 'Mã nghỉ phép',
         'file_path' => 'Tập tin đính kèm',
+        'com_name' => 'Tên Công Ty',
+        'com_country'   => 'Tên Nước',
+        'com_tel'   => 'Số Điện Thoại',
+        'com_address'   => 'Địa Chỉ',
+        'att_name'   => 'Tên',
+        'att_department'   => 'Phòng',
+        'att_mail' => 'E-mail',
     ],
 
 ];

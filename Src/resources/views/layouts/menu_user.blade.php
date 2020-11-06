@@ -77,7 +77,7 @@
             </a>
             <ul class="nav nav-treeview">
                 <li class="nav-item">
-                    <a href="/pages/examples/10_company_registration.html" class="nav-link">
+                    <a href="{{ route('user.company.create') }}" class="nav-link">
                         <i class="fas fa-angle-right left"></i>
                         <p>Company Registration</p>
                     </a>

@@ -11,6 +11,7 @@
                             <tr>
                                 <th style="width: 10px">No</th>
                                 <th>Application Name</th>
+                                <th>Date Created</th>
                                 <th style="width: 150px">Actions</th>
                             </tr>
                         </thead>
@@ -29,6 +30,9 @@
                                         <td>{{ $index }}</td>
                                         <td>
                                             {{ !empty($application_draft->form_id) ? $application_draft->Form->name : '' }}
+                                        </td>
+                                        <td>
+                                            {{ !empty($application_draft->created_at) ? \Carbon\Carbon::parse($application_draft->created_at)->format('d/m/Y') : '' }}
                                         </td>
                                         <td>
                                             {{-- using action component with if stament

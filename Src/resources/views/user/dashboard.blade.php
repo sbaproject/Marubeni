@@ -44,7 +44,7 @@
                 <div class="col-xl-2 col-lg-3 col-md-3 col-sm-3">
                     <div class="btn-search">
                         <button class="btn btn-default sty-search" type="submit"><i class="fa fa-search"
-                                style="margin-right:5px;"></i>{{ __('label.search') }}</button>
+                                style="margin-right:5px;"></i>{{ __('label.button.search') }}</button>
                     </div>
                 </div>
         </form>

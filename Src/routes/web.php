@@ -10,6 +10,7 @@ use App\Http\Controllers\User\UserDashboardController;
 use App\Http\Controllers\User\UserChangePassController;
 use App\Http\Controllers\User\UserStatusController;
 use App\Http\Controllers\User\UserDraftController;
+use App\Http\Controllers\User\UserCompanyController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Application\FormListController;
 use App\Http\Controllers\Admin\AdminFlowSettingController;
@@ -94,6 +95,9 @@ Route::middleware('auth')->group(function () {
             Route::post('draft/{id}', [UserDraftController::class, 'delete'])->name('draft.delete');
             // Status
             Route::get('status/{status}', [UserStatusController::class, 'index'])->name('status');
+            // Create Company
+            Route::get('company/add', [UserCompanyController::class, 'create'])->name('company.create');
+            Route::post('company/add', [UserCompanyController::class, 'store'])->name('company.store');
             // Form list
             Route::get('form', [FormListController::class, 'index'])->name('form.index');
             // Leave Application
