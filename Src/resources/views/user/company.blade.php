@@ -157,7 +157,7 @@
                                 <div class="row">
                                     <div class="col-12 btn_button">
                                         <button type="submit" class="btn btn-register">Register</button>
-                                        <button type="button" class="btn btn-cancel">Cancel</button>
+                                        <a role="button" href="{{route('user.company.create')}}"  class="btn btn-cancel">Cancel</a>
                                     </div>
                                 </div>
                             </form>

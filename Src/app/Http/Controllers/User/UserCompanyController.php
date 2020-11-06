@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
-use App\Models\Application;
 use App\Models\Company;
 use Illuminate\Support\Facades\Auth;
 use App\Libs\Common;
@@ -50,6 +49,7 @@ class UserCompanyController extends Controller
         ]);
 
         $dataCompany->save();
+
         return Common::redirectBackWithAlertSuccess(__('msg.save_success'));
     }
 }
