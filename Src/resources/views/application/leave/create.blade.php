@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-    {{ __('label.leave_application') }}
+{{ __('label.leave_application') }}
 @endsection
 
 @section('css')
@@ -20,7 +20,8 @@
 @section('content')
 <section class="content leave-application">
     <x-alert />
-    <form method="POST" action="{{ route('user.leave.store') }}" enctype="multipart/form-data">
+    <form method="POST" action="@if (isset($id)) {{ route('user.leave.update', $id) }} @else {{ route('user.leave.store') }} @endif"
+        enctype="multipart/form-data">
         @csrf
         <div class="main-top">
             <h4 class="main-header-text">{{ Str::upper(__('label.leave_application')) }}</h4>
@@ -41,8 +42,8 @@
                             class="form-control @error('code_leave') is-invalid @enderror">
                             <option value='' selected>{{ __('label.select') }}</option>
                             @foreach ($codeLeaves as $key => $value)
-                            <option value="{{ $value }}"
-                                @if (old('code_leave') !== null && old('code_leave') == $value) selected @endif>
+                            <option value="{{ $value }}" @if (old('code_leave') !==null && old('code_leave')==$value)
+                                selected @endif>
                                 {{ $key }} : {{ __('label.leave.code_leave.'.$key) }}
                             </option>
                             @endforeach
@@ -60,8 +61,9 @@
                         <label>{{ __('label.leave.caption.reason_leave') }}</label>
                     </div>
                     <div class="col-sm-10">
-                        <textarea class="form-control" name="reason_leave" id="reason_leave" rows="3" style="width: 100%;"
-                            placeholder="{{ __('label.leave.caption.reason_leave') }}"></textarea>
+                        <textarea class="form-control" name="reason_leave" id="reason_leave" rows="3"
+                            style="width: 100%;"
+                            placeholder="{{ __('label.leave.caption.reason_leave') }}">{{ old('reason_leave') }}</textarea>
                     </div>
                 </div>
                 <hr class="line-bottom">
@@ -73,8 +75,8 @@
                         <fieldset class="@error('paid_type') form-control is-invalid @enderror">
                             @foreach ($paidTypes as $key => $value)
                             <label class="radio-inline">
-                                <input type="radio" name="paid_type" value="{{ $value }}"
-                                    @if (old('paid_type') !== null && old('paid_type') == $value) checked @endif>
+                                <input type="radio" name="paid_type" value="{{ $value }}" @if (old('paid_type') !==null
+                                    && old('paid_type')==$value) checked @endif>
                                 {{ __('label.leave.paid_type.'.$key) }}
                             </label>
                             @endforeach
@@ -105,7 +107,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <input type="hidden" id="date_from" name="date_from">
+                                    <input type="hidden" id="date_from" name="date_from" value="{{ old('date_from') }}">
                                 </div>
                             </div>
                         </div>
@@ -122,7 +124,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <input type="hidden" id="date_to" name="date_to">
+                                    <input type="hidden" id="date_to" name="date_to" value="{{ old('date_to') }}">
                                 </div>
                             </div>
                         </div>
@@ -150,7 +152,8 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <input type="hidden" id="time_day" name="time_day">
+                                            <input type="hidden" id="time_day" name="time_day"
+                                                value="{{ old('time_day') }}">
                                         </div>
                                     </div>
                                 </div>
@@ -159,17 +162,19 @@
                                 <div class="row mb-2">
                                     <span class="col-md-2">{{ __('label.from') }}</span>
                                     <div class="col-md-10">
-                                        <input type="text" name="time_from" class="form-control datetimepicker-input"
-                                            id="timeLeaveFrom" data-toggle="datetimepicker" data-target="#timeLeaveFrom"
-                                            autocomplete="off" />
+                                        <input type="text" id="timeLeaveFrom" name="time_from"
+                                            class="form-control datetimepicker-input" data-toggle="datetimepicker"
+                                            data-target="#timeLeaveFrom" autocomplete="off"
+                                            value="{{ old('time_from') }}"/>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <span class="col-md-2">{{ __('label.to') }}</span>
                                     <div class="col-md-10">
-                                        <input type="text" name="time_to" class="form-control datetimepicker-input"
-                                            id="timeLeaveTo" data-toggle="datetimepicker" data-target="#timeLeaveTo"
-                                            autocomplete="off" />
+                                        <input type="text" id="timeLeaveTo" name="time_to"
+                                            class="form-control datetimepicker-input" data-toggle="datetimepicker"
+                                            data-target="#timeLeaveTo" autocomplete="off"
+                                            value="{{ old('time_to') }}"/>
                                     </div>
                                 </div>
                             </div>
@@ -196,7 +201,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <input type="hidden" id="maternity_from" name="maternity_from">
+                                    <input type="hidden" id="maternity_from" name="maternity_from"
+                                        value="{{ old('maternity_from') }}">
                                 </div>
                             </div>
                         </div>
@@ -213,7 +219,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <input type="hidden" id="maternity_to" name="maternity_to">
+                                    <input type="hidden" id="maternity_to" name="maternity_to"
+                                        value="{{ old('maternity_to') }}">
                                 </div>
                             </div>
                         </div>
@@ -309,8 +316,8 @@
                     </div>
                     <div class="col-sm-10">
                         <div class="form-check">
-                            <input type="checkbox" id="subsequent" name="subsequent" class="form-check-input"
-                                @if (old('subsequent') != null) checked @endif>
+                            <input type="checkbox" id="subsequent" name="subsequent" class="form-check-input" 
+                            @if (old('subsequent') !=null) checked @endif>
                             <label class="form-check-label" for="subsequent">{{ __('label.on') }}</label>
                         </div>
                     </div>

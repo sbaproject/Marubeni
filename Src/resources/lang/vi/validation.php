@@ -78,11 +78,11 @@ return [
     ],
     'max' => [
         'numeric' => ':attribute chỉ được nhập tối đa :max ký tự.',
-        'file' => 'The :attribute may not be greater than :max kilobytes.',
+        'file' => ':attribute có kích cỡ không được quá :max kilobytes.',
         'string' => ':attribute chỉ được nhập tối đa :max ký tự.',
         'array' => 'The :attribute may not have more than :max items.',
     ],
-    'mimes' => 'The :attribute must be a file of type: :values.',
+    'mimes' => ':attribute chỉ chấp nhận kiểu tập tin sau: :values.',
     'mimetypes' => 'The :attribute must be a file of type: :values.',
     'min' => [
         'numeric' => ':attribute phải nhập ít nhất :min ký tự.',
@@ -171,6 +171,8 @@ return [
         'memo' => 'Ghi chú',
         'user_no' => 'Mã số nhân viên',
         'paid_type' => 'Hình thức xin nghỉ phép',
+        'code_leave' => 'Mã nghỉ phép',
+        'file_path' => 'Tập tin đính kèm',
     ],
 
 ];

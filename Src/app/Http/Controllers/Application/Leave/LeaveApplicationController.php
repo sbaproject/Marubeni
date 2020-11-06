@@ -7,6 +7,8 @@ use App\Libs\Common;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\Application;
+use App\Models\Leave;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -21,6 +23,9 @@ class LeaveApplicationController extends Controller
         // paid types
         $paidTypes = config('const.paid_type');
 
+        // clear flash input
+        session()->flashInput([]);
+
         return view('application.leave.create', compact('codeLeaves', 'paidTypes'));
     }
 
@@ -32,13 +37,46 @@ class LeaveApplicationController extends Controller
             $inputs['paid_type'] = null;
         }
 
-        // dd($request->all());
-
         // validate
         $this->doValidate($request, $inputs);
 
         // save
-        return $this->doSaveData($request, $inputs);
+        $this->doSaveData($request, $inputs);
+
+        // continue create new application after save success
+        if (isset($inputs['subsequent'])) {
+            return Common::redirectRouteWithAlertSuccess('user.leave.create');
+        }
+        // back to list application
+        return Common::redirectRouteWithAlertSuccess('user.form.index');
+    }
+
+    public function show(Request $request, $id)
+    {
+        $application = Application::find($id);
+        // not found
+        if (empty($application)) {
+            abort('404');
+        }
+
+        // get leave application
+        $leave = Leave::where('application_id', $id)->first();
+
+        // code leaves
+        $codeLeaves = config('const.code_leave');
+
+        // paid types
+        $paidTypes = config('const.paid_type');
+
+        // pass data to view
+        session()->flashInput($leave->toArray());
+
+        return view('application.leave.create', compact('codeLeaves', 'paidTypes', 'id'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        dd($request->input());
     }
 
     public function doValidate($request, $inputs)
@@ -54,7 +92,7 @@ class LeaveApplicationController extends Controller
             }
             // attached file
             if ($request->file('file_path')) {
-                $rules['file_path'] = 'mimes:jpg,jpeg,png|max:10240';
+                $rules['file_path'] = 'mimes:jpg,jpeg,png|max:100';
             }
 
             $validator = Validator::make($inputs, $rules);
@@ -145,12 +183,5 @@ class LeaveApplicationController extends Controller
 
             DB::table('leaves')->insert($leaveData);
         });
-
-        // continue create new application after save success
-        if (isset($inputs['subsequent'])) {
-            return Common::redirectRouteWithAlertSuccess('user.leave.create');
-        }
-        // back to list application
-        return Common::redirectRouteWithAlertSuccess('user.form.index');
     }
 }

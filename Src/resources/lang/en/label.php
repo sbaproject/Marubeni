@@ -77,7 +77,7 @@ return [
             'maternity_leave' => 'Maternity leave',
             'annual_leave' => 'Annual leave',
             'subsequent' => 'Subsequent',
-            'file_path' => 'Attached Files',
+            'file_path' => 'Attached file',
         ],
     ],
     'from' => 'From',

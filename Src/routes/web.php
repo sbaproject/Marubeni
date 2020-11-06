@@ -99,6 +99,8 @@ Route::middleware('auth')->group(function () {
             // Leave Application
             Route::get('leave/add',[LeaveApplicationController::class,'create'])->name('leave.create');
             Route::post('leave/add', [LeaveApplicationController::class, 'store'])->name('leave.store');
+            Route::get('leave/edit/{id}', [LeaveApplicationController::class, 'show'])->name('leave.show');
+            Route::post('leave/edit/{id}', [LeaveApplicationController::class, 'update'])->name('leave.update');
         });
     });
 

@@ -171,6 +171,8 @@ return [
         'memo' => 'Memo',
         'user_no' => 'Employee No',
         'paid_type' => 'Type of leave',
+        'code_leave' => 'Code of leave',
+        'file_path' => 'Attached file',
     ],
 
 ];

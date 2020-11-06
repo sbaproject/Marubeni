@@ -23,7 +23,9 @@ class Application extends Model
         'current_step',
         'status',
         'created_by',
-        'updated_by'
+        'updated_by',
+        'created_at',
+        'updated_at',
     ];
 
     public function Form(){

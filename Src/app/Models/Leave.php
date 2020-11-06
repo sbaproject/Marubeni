@@ -17,6 +17,21 @@ class Leave extends Model
      * @var array
      */
     protected $fillable = [
-        'id'
+        'application_id',
+        'code_leave',
+        'paid_type',
+        'reason_leave',
+        'date_from',
+        'date_to',
+        'time_day',
+        'time_from',
+        'time_to',
+        'maternity_from',
+        'maternity_to',
+        'file_path',
+        'created_by',
+        'updated_by',
+        'created_at',
+        'updated_at',
     ];
 }

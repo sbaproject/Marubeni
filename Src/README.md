@@ -49,5 +49,14 @@
 --------------------------Đọc file đã upload lên storage----------------------------
 -------------------------------------------------------------------------------------------------
 1. trong file .env thay [APP_URL] = tên domain của mình (kèm port nếu có)
-2. link folder storage tượng trưng vào public để có thể xem được file upload
-	-> php artisan storage:link
+2. link folder upload từ /storage vào /public để có thể xem được file upload
+	Trong đó:
+		+ /storage/[your_folder_upload] : Là nơi chứa thực tế file được upload
+		+ /public/storage/[your_folder_upload] : Là một link folder (không mất thêm không gian ổ cứng) giúp user có thể truy cập file, giống như các file static khác muốn truy cập từ bên ngoài phải đặt trong /public vậy.
+	-> chạy lệnh: php artisan storage:link
+
+-------------------------------------------------------------------------------------------------
+--------------------------Set TimeZone----------------------------
+-------------------------------------------------------------------------------------------------
+Để set TimZone vào /config/app.php tìm đến 'timezone' và set tại đây.
+Tham khảo list timezone: https://www.php.net/manual/en/timezones.php

@@ -5,10 +5,12 @@ $(document).ready(function () {
     // init
     $('#dateLeaveFrom').datetimepicker({
         format: 'ddd, DD/MM/YYYY',
+        defaultDate: $('#date_from').val(),
         useCurrent: false
     });
     $('#dateLeaveTo').datetimepicker({
         format: 'ddd, DD/MM/YYYY',
+        defaultDate: $('#date_to').val(),
         useCurrent: false
     });
     // show
@@ -38,14 +40,17 @@ $(document).ready(function () {
     // init
     $('#timeLeaveDate').datetimepicker({
         format: 'ddd, DD/MM/YYYY',
+        defaultDate: $('#time_day').val(),
         useCurrent: false
     });
     $('#timeLeaveFrom').datetimepicker({
         format: 'HH:mm',
+        defaultDate: $('#time_from').val(),
         useCurrent: false
     });
     $('#timeLeaveTo').datetimepicker({
         format: 'HH:mm',
+        defaultDate: $('#time_to').val(),
         useCurrent: false
     });
     // show
@@ -79,10 +84,12 @@ $(document).ready(function () {
     //init
     $('#maternityLeaveFrom').datetimepicker({
         format: 'ddd, DD/MM/YYYY',
+        defaultDate: $('#maternity_from').val(),
         useCurrent: false
     });
     $('#maternityLeaveTo').datetimepicker({
         format: 'ddd, DD/MM/YYYY',
+        defaultDate: $('#maternity_to').val(),
         useCurrent: false
     });
     // show
