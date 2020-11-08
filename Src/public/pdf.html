@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<title>Document</title>
+	<style type="text/css">
+		body {
+			/* font-family: "notosans-regular, notosans-bold, notosans-bolditalic,notosans-italic"; */
+			font-size: 12px;
+		}
+
+		body{
+		font-family: "notosans-regular, notosans-bold, notosans-bolditalic,notosans-italic";
+		font-size: 10px;
+		}
+		table {
+		width: 100%;
+		border-collapse: collapse;
+		/* border-spacing: 0; */
+		}
+		table td {
+		border: 1px solid #000;
+		}
+#tb-top td {
+border: none;
+}
+
+#tb-top td.logo .main {
+font-weight: bold;
+font-size: 28px;
+}
+
+#tb-top td.logo .sub {
+margin-top: -10px;
+font-weight: bold;
+}
+
+#title-header div {
+font-size: 20px;
+text-align: center;
+font-weight: bold;
+}
+
+#title-header .en {
+text-decoration: underline;
+}
+
+#title-header .vi {
+margin-top: -13px;
+}
+
+#info-header {
+/* float: right; */
+text-align: right;
+}
+#info-header table {
+width: 350px;
+}
+#info-header table td{
+}
+#info-header table td:nth-child(1) {
+width: 45%;
+border: none;
+}
+#info-header table tr td:nth-child(2) {
+border-top: 0px;
+border-left: 0px;
+border-right: 0px
+}
+
+table tr td.f {
+width: 33%;
+}
+</style>
+</head>
+
+<body>
+	<!-- TOP HEADER -->
+	<table id="tb-top">
+		<tr>
+			<td class="logo">
+				<div class="main">Marubeni</div>
+				<div class="sub">Marubeni Vietname Company Limited</div>
+			</td>
+			<td style="text-align: right;text-decoration: underline;">
+				Ver. MVN-160
+			</td>
+		</tr>
+	</table>
+
+	<!-- TITLE HEADER -->
+	<div id="title-header">
+		<div class="en">Application for leave</div>
+		<div class="vi">Đơn xin nghỉ phép</div>
+	</div>
+
+	<!-- INFO HEADER -->
+	<div id="info-header">
+		<table>
+			<tr>
+				<td>Applied Date/ Ngày:</td>
+				<td>wd</td>
+			</tr>
+			<tr>
+				<td>Full Name/ Họ tên:</td>
+				<td>wdw</td>
+			</tr>
+			<tr>
+				<td>Sec Code/ Mã bộ phận:</td>
+				<td>wdwd</td>
+			</tr>
+		</table>
+	</div>
+
+	<table style="clear: both">
+		<tbody>
+			<tr>
+				<td class="f" style="font-weight: bold">
+					<div>Code of Leave (*)</div>
+					<div>Mã xin nghỉ phép (*)</div>
+				</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td class="f" style="font-weight: bold">
+					<div>Reason for leave</div>
+					<div>Lý do xin nghỉ phép</div>
+				</td>
+				<td>adqwd</td>
+			</tr>
+			<tr>
+				<td class="f">
+					<div>&#60;In case of code SL&#62;</div>
+					<div style="font-weight: bold">Choose the type of leave to switch to</div>
+					<div>&#60;Trường hợp sử dụng mã SL&#62;</div>
+					<div style="font-weight: bold">Chọn hình thức xin nghỉ phép</div>
+				</td>
+				<td>
+					<div style="font-weight: bold;text-decoration: underline">
+						For code "SL" only/ Dùng cho mã "SL"
+					</div>
+					<div style="margin-left: 50px">
+						<input type="checkbox" style="display: inline;">
+						<div style="margin-top:-20px;margin-left:20px">
+							<div>Annual leave</div>
+							<div>Nghỉ phép theo chế độ</div>
+						</div>
+					</div>
+					<div style="float: right; margin-top:-35px; margin-right:80px">
+						<input type="checkbox" style="display: inline;" checked>
+						<div style="margin-top:-20px;margin-left:20px">
+							<div>Unpaid leave</div>
+							<div>Nghỉ phép không hưởng lương</div>
+						</div>
+					</div>
+					<div style="clear: both"></div>
+				</td>
+			</tr>
+			<tr>
+				<td class="f">
+					<div>&#60;In case of day-leave&#62;</div>
+					<div style="font-weight: bold">Date of Leave</div>
+					<div>&#60;Trường hợp nghỉ theo ngày&#62;</div>
+					<div style="font-weight: bold">Ngày nghỉ</div>
+				</td>
+				<td>
+					<div>
+						<div>from to</div>
+						<div>from to</div>
+					</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</body>
+
+</html>

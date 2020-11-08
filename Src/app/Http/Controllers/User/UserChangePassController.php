@@ -56,7 +56,7 @@ class UserChangePassController extends Controller
                     }
                 },
                 'min:8',
-                'max:21',
+                'max:20',
                 'regex:/^[a-zA-Z0-9_@.#&+%!-]+$/',
                 // 'confirmed'
             ],

@@ -45,7 +45,7 @@ class AppServiceProvider extends ServiceProvider
 
         // selection required
         Validator::extend('required_select', function ($attribute, $value, $parameters, $validator) {
-            if($value === null || trim($value) === ''){
+            if($value === null || trim($value) === '' || $value === 'empty'){
                 return false;
             }
             return true;

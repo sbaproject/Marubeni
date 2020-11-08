@@ -95,4 +95,5 @@ return [
     'biz_application' => 'Đơn công tác',
     'entertaiment_application' => 'Đơn tiếp khách',
     'file' => 'Tập tin',
+    'choose_file' => 'Chọn tập tin',
 ];

@@ -12,6 +12,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use PDF;
 
 class LeaveApplicationController extends Controller
 {
@@ -23,10 +24,18 @@ class LeaveApplicationController extends Controller
         // paid types
         $paidTypes = config('const.paid_type');
 
+        // logged user
+        $user = Auth::user();
+
         // clear flash input
         // session()->flashInput([]);
 
-        return view('application.leave.input', compact('codeLeaves', 'paidTypes'));
+        // return view('application.leave.input', compact('codeLeaves', 'paidTypes', 'user'));
+
+        // PDF::setOptions(['defaultFont' => 'Roboto-Black']);
+        $pdf = PDF::loadView('pdf', compact('codeLeaves', 'paidTypes'));
+
+        return $pdf->stream('disney.pdf');
     }
 
     public function store(Request $request)
@@ -36,6 +45,7 @@ class LeaveApplicationController extends Controller
         if (!isset($inputs['paid_type'])) {
             $inputs['paid_type'] = null;
         }
+        // dd($inputs['input_file']->getClientOriginalName());
 
         // validate
         $this->doValidate($request, $inputs);
@@ -53,7 +63,11 @@ class LeaveApplicationController extends Controller
 
     public function show(Request $request, $id)
     {
+        // check owner
         $application = Application::findOrFail($id);
+        if (Auth::user()->id !== $application->created_by) {
+            abort('403');
+        }
 
         // get leave application
         $model = Leave::where('application_id', $id)->first();
@@ -64,12 +78,19 @@ class LeaveApplicationController extends Controller
         // paid types
         $paidTypes = config('const.paid_type');
 
-        return view('application.leave.input', compact('codeLeaves', 'paidTypes', 'model', 'id'));
+        // logged user
+        $user = Auth::user();
+
+        return view('application.leave.input', compact('codeLeaves', 'paidTypes', 'model', 'id', 'user'));
     }
 
     public function update(Request $request, $id)
     {
-        $application = Application::findOrFail($id);
+        // check owner
+        $mApplication = Application::findOrFail($id);
+        if (Auth::user()->id !== $mApplication->created_by) {
+            abort('403');
+        }
 
         // get inputs
         $inputs = $request->all();
@@ -81,7 +102,7 @@ class LeaveApplicationController extends Controller
         $this->doValidate($request, $inputs);
 
         // save
-        $this->doSaveData($request, $inputs);
+        $this->doSaveData($request, $inputs, $mApplication);
 
         // continue create new application after save success
         if (isset($inputs['subsequent'])) {
@@ -93,28 +114,29 @@ class LeaveApplicationController extends Controller
 
     public function doValidate($request, $inputs)
     {
-        if (isset($inputs['apply'])) {
-            // rules for validation
-            $rules = [
-                'code_leave' => 'required_select'
-            ];
-            // only for SICKLEAVE
-            if ($inputs['code_leave'] == config('const.code_leave.SL')) {
-                $rules['paid_type'] = 'required_select';
-            }
+        if (isset($inputs['apply']) || isset($inputs['draft'])) {
+            $rules = [];
             // attached file
             if ($request->file('input_file')) {
-                $rules['input_file'] = 'mimes:txt,pdf,jpg,jpeg,png|max:100';
+                $rules['input_file'] = 'mimes:txt,pdf,jpg,jpeg,png|max:200';
             }
-
+            if (isset($inputs['apply'])) {
+                // rules for validation
+                $rules['code_leave'] = 'required_select';
+                // only for SICKLEAVE
+                if ($inputs['code_leave'] == config('const.code_leave.SL')) {
+                    $rules['paid_type'] = 'required_select';
+                }
+            }
+            // dd($inputs);
             $validator = Validator::make($inputs, $rules);
             $validator->validate();
         }
     }
 
-    public function doSaveData($request, $inputs)
+    public function doSaveData($request, $inputs, $mApplication = null)
     {
-        DB::transaction(function () use ($request, $inputs) {
+        DB::transaction(function () use ($request, $inputs, $mApplication) {
             // get user
             $user = Auth::user();
 
@@ -180,9 +202,10 @@ class LeaveApplicationController extends Controller
              *-------------------------*/
             // delete old file
             if ($request->id) {
-                $leave = Leave::find($request->id);
+                $leave = Leave::where('application_id', $mApplication->id)->first();
+                $filePath = $leave->file_path;
                 // attchached file was changed
-                if($inputs['file_path'] != $leave->file_path){
+                if ($inputs['file_path'] != $filePath) {
                     if (!empty($leave->file_path)) {
                         if (Storage::exists($leave->file_path)) {
                             Storage::delete($leave->file_path);
@@ -190,12 +213,11 @@ class LeaveApplicationController extends Controller
                     }
                     $filePath = null;
                 }
-                
             }
-            // upload attached file
+            // upload new attached file
             if ($request->file('input_file')) {
-                $extension = '.' . $request->file('input_file')->extension();
-                $fileName = time() . $user->id . $extension;
+                // $extension = '.' . $request->file('input_file')->extension();
+                $fileName = time() . $user->id . '_' . $request->file('input_file')->getClientOriginalName();
                 $filePath = $request->file('input_file')->storeAs('uploads/application/', $fileName);
             }
 
@@ -212,6 +234,8 @@ class LeaveApplicationController extends Controller
                 'maternity_from' => $inputs['maternity_from'],
                 'maternity_to' => $inputs['maternity_to'],
                 'file_path' => isset($filePath) ? $filePath : null,
+                'days_use' => $inputs['days_use'],
+                'times_use' => $inputs['times_use'],
                 'updated_by' => $user->id,
                 'updated_at' => Carbon::now(),
             ];
@@ -224,5 +248,9 @@ class LeaveApplicationController extends Controller
 
             DB::table('leaves')->updateOrInsert(['application_id' => $request->id], $leaveData);
         });
+    }
+
+    public function pdf()
+    {
     }
 }

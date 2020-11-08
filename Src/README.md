@@ -60,3 +60,20 @@
 -------------------------------------------------------------------------------------------------
 Để set TimZone vào /config/app.php tìm đến 'timezone' và set tại đây.
 Tham khảo list timezone: https://www.php.net/manual/en/timezones.php
+
+-------------------------------------------------------------------------------------------------
+--------------------------Load Font cho PDF----------------------------
+-------------------------------------------------------------------------------------------------
+php load_font.php 'notosans-bold' storage/fonts/NotoSans-Bold.ttf
+php load_font.php 'notosans-bolditalic' storage/fonts/NotoSans-BoldItalic.ttf
+php load_font.php 'notosans-italic' storage/fonts/NotoSans-Italic.ttf
+php load_font.php 'notosans-regular' storage/fonts/NotoSans-Regular.ttf
+-------------------------------------------------------------------------------------------------
+--------------------------Chú ý khi code----------------------------
+-------------------------------------------------------------------------------------------------
+
+1. So sánh
+	+ "some_text" == 0
+		=> TRUE
+	+ null == 0
+		=> TRUE

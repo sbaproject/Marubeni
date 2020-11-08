@@ -173,6 +173,7 @@ return [
         'paid_type' => 'Type of leave',
         'code_leave' => 'Code of leave',
         'file_path' => 'Attached file',
+        'input_file' => 'Attached file',
         'com_name' => 'Company Name',
         'com_country'   => 'Country',
         'com_tel'   => 'Tell',

@@ -30,6 +30,8 @@
     $maternity_from = old('maternity_from') ?? ($model->maternity_from ?? null);
     $maternity_to = old('maternity_to') ?? ($model->maternity_to ?? null);
     $file_path = old('file_path') ?? ($model->file_path ?? null);
+    $days_use = old('days_user') ?? ($model->days_use ?? null);
+    $times_use = old('times_use') ?? ($model->times_use ?? null);
 @endphp
 <section class="content leave-application">
     <x-alert />
@@ -53,11 +55,11 @@
                     <div class="col-sm-10">
                         <select name="code_leave" id="code_leave" style="width: auto;"
                             class="form-control @error('code_leave') is-invalid @enderror">
-                            <option value='' @if($code_leave == null) selected @endif>
+                            <option value="empty" @if($code_leave == 'empty') selected @endif>
                                 {{ __('label.select') }}
                             </option>
                             @foreach ($codeLeaves as $key => $value)
-                            <option value="{{ $value }}" @if ($code_leave != null && $code_leave == $value) selected @endif>
+                            <option value="{{ $value }}" @if($code_leave !== null && strval($code_leave) === strval($value)) selected @endif>
                                 {{ $key }} : {{ __('label.leave.code_leave.'.$key) }}
                             </option>
                             @endforeach
@@ -249,27 +251,27 @@
                         <div class="row mb-2">
                             <span class="col-sm-2">Entitled this year</span>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control input-custom-2" id="entitled" name="entitled"
-                                    value="30">
+                                <input type="text" id="entitled" name="entitled" class="form-control input-custom-2"
+                                    value="{{ $user->leave_days }}" readonly>
                                 &nbsp;&nbsp;
                                 <span>Days</span>
-                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                {{-- &nbsp;&nbsp;&nbsp;&nbsp;
                                 <input type="text" style="display: none;" class="form-control input-custom-2"
-                                    id="usedHours" name="usedHours" value="30">
+                                    id="usedHours" name="usedHours" value="30" readonly>
                                 &nbsp;&nbsp;
-                                <span></span>
+                                <span></span> --}}
                             </div>
                         </div>
                         <div class="row mb-2">
                             <span class="col-sm-2">Used this year</span>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control input-custom-2" id="usedDays" name="usedDays"
-                                    value="30">
+                                <input type="text" class="form-control input-custom-2" id="usedDays" name="usedDays" 
+                                    value="{{ $user->leave_days - $user->leave_remaining_days }}" readonly>
                                 &nbsp;&nbsp;
                                 <span>Days</span>
                                 &nbsp;&nbsp;&nbsp;&nbsp;
-                                <input type="text" class="form-control input-custom-2" id="usedHours" name="usedHours"
-                                    value="30">
+                                <input type="text" class="form-control input-custom-2" id="usedHours" name="usedHours" 
+                                    value="" readonly>
                                 &nbsp;&nbsp;
                                 <span>Hours</span>
 
@@ -278,13 +280,13 @@
                         <div class="row mb-2">
                             <span class="col-sm-2">Take this time</span>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control input-custom-2" id="takeDays" name="takeDays"
-                                    value="30">
+                                <input type="number" id="days_use" name="days_use" class="form-control input-custom-2" 
+                                    value="{{ $days_use }}" autocomplete="off">
                                 &nbsp;&nbsp;
                                 <span>Days</span>
                                 &nbsp;&nbsp;&nbsp;&nbsp;
-                                <input type="text" class="form-control input-custom-2" id="takeHours" name="takeHours"
-                                    value="30">
+                                <input type="number" id="times_use" name="times_use" class="form-control input-custom-2"
+                                    value="{{ $times_use }}" autocomplete="off">
                                 &nbsp;&nbsp;
                                 <span>Hours</span>
                             </div>
@@ -293,12 +295,12 @@
                             <span class="col-sm-2">Remaining</span>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control input-custom-2" id="remainingDays"
-                                    name="remainingDays" value="30">
+                                    name="remainingDays" value="{{ $user->leave_remaining_days }}" readonly>
                                 &nbsp;&nbsp;
                                 <span>Days</span>
                                 &nbsp;&nbsp;&nbsp;&nbsp;
                                 <input type="text" class="form-control input-custom-2" id="remainingHours"
-                                    name="remainingHours" value="30">
+                                    name="remainingHours" value="{{ $user->leave_remaining_time }}" readonly>
                                 &nbsp;&nbsp;
                                 <span>Hours</span>
                             </div>
@@ -310,23 +312,51 @@
                     <div class="col-sm-2 text-left">
                         <label for="myfile">{{ __('label.leave.caption.file_path') }}</label>
                     </div>
-                    <div class="col-sm-5">
-                        <div id="file_show" class="form-control @if(empty($file_path)) d-none @endif">
-                            <a id="file_link" href="{{ Storage::url($file_path) }}">{{ __('label.leave.caption.file_path') }}</a>
-                            <i id="remove_file" class="fa fa-minus-circle"></i>
+                    <div class="col-sm-3">
+                        {{-- for edit --}}
+                        @if(isset($id) && !empty($file_path))
+                            @if ($model->file_path === $file_path)
+                                <div class="file-show input-group mb-3">
+                                    <label class="form-control file-link">
+                                        <a id="file_link" href="{{ Storage::url($file_path) }}" target="_blank">
+                                            {{ basename($file_path) }}
+                                        </a>
+                                    </label>
+                                    <label class="custom-file-upload file-remove">
+                                        <i class="fas fa-trash"></i>
+                                    </label>
+                                </div>
+                            @endif
+                        @endif
+                        <div class="file-block input-group mb-3
+                                        @php
+                                            if((isset($id) && !empty($file_path))){
+                                                if($model->file_path === $file_path){
+                                                    echo 'd-none';
+                                                }
+                                            }
+                                        @endphp">
+                            <label for="input_file" class="form-control file-name @error('input_file') is-invalid @enderror"
+                                place-holder="{{ __('label.choose_file') }}">
+                                @if (old('input_file') != null)
+                                    {{ old('input_file') }}
+                                @else
+                                    {{ __('label.choose_file') }}
+                                @endif
+                            </label>
+                            <label for="input_file" class="custom-file-upload">
+                                <i class="fas fa-paperclip"></i>
+                            </label>
+                            <input type="file" id="input_file" name="input_file"/>
+                            <label class="custom-file-upload file-remove">
+                                <i class="fas fa-trash"></i>
+                            </label>
                         </div>
-                        <div id="file_browse" class="@if(!empty($file_path) && old('file_path') == null) d-none @endif">
-                            <div class="custom-file">
-                                <input type="file" id="input_file" name="input_file"
-                                    class="custom-file-input form-control @error('input_file') is-invalid @enderror">
-                                <label class="custom-file-label" for="input_file"></label>
-                            </div>
-                            @error('input_file')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
-                        </div>
+                        @error('input_file')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
                         <input type="hidden" id="file_path" name="file_path" value="{{ $file_path }}">
                     </div>
                 </div>

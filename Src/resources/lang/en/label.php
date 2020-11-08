@@ -91,4 +91,5 @@ return [
     'biz_application' => 'Business Trip Application',
     'entertaiment_application' => 'Entertaiment Application',
     'file' => 'File',
+    'choose_file' => 'Choose file',
 ];

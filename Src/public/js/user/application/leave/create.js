@@ -108,7 +108,7 @@ $(document).ready(function () {
     var maternityLeaveFrom = $('#maternityLeaveFrom').data("DateTimePicker").date();
     var maternityLeaveTo = $('#maternityLeaveTo').data("DateTimePicker").date();
     if (maternityLeaveFrom != null) {
-        $('#maternityLeaveTo').data("DateTimePicker").minDate(maternityLeaveFrom);    
+        $('#maternityLeaveTo').data("DateTimePicker").minDate(maternityLeaveFrom);
         $('#maternity_from').val(maternityLeaveFrom.format('YYYYMMDD'));
     }
     if (maternityLeaveTo != null) {
@@ -136,23 +136,26 @@ $(document).ready(function () {
     /**----------------------------------------------------------------------
      * Browse file
      ----------------------------------------------------------------------*/
+    $('#input_file').val(null);
     $('#input_file').on('change', function (e) {
         //get the file name
         var fileName = e.target.files[0].name;
         if (fileName != '') {
-            $(this).next('.custom-file-label').html(fileName);
-            $('#file_browse').addClass('d-none');
-            $('#file_link').attr('href', 'javascript:void(0)').html(fileName);
-            $('#file_show').removeClass('d-none');
+            $('.file-name').html(fileName);
+            $('#file_path').val(fileName);
         }
     });
     // remove file
-    $('#remove_file').on('click', function () {
+    $('.file-remove').on('click', function () {
         $('#input_file').val(null);
-        $('#input_file').next('.custom-file-label').html('');
-        $('#file_browse').removeClass('d-none');
-        $('#file_link').attr('href', 'javascript:void(0)').html('');
-        $('#file_show').addClass('d-none');
+        $('#file_path').val(null);
+        $('.file-name').html($('.file-name').attr('place-holder'));
+        $('.file-show').remove();
+        $('.file-block').removeClass('d-none');
+    });
+    // open link attached file
+    $('.file-link').on('click', function () {
+        $(this).find('a')[0].click();
     });
 
 });
