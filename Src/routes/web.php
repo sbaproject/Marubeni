@@ -77,6 +77,8 @@ Route::middleware('auth')->group(function () {
             Route::post('/flow-setting/add', [AdminFlowSettingController::class, 'store'])->name('flow.store');
             Route::get('/flow-setting/check', [AdminFlowSettingController::class, 'check'])->name('flow.check');
             Route::get('/flow-setting/edit/{id}', [AdminFlowSettingController::class, 'edit'])->name('flow.edit');
+
+            //Approval Flow
         });
     });
 
