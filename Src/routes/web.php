@@ -14,6 +14,7 @@ use App\Http\Controllers\User\UserCompanyController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Application\FormListController;
 use App\Http\Controllers\Admin\AdminFlowSettingController;
+use App\Http\Controllers\Admin\AdminCompanyController;
 use App\Http\Controllers\Application\Leave\LeaveApplicationController;
 use App\Http\Controllers\LocaleController;
 
@@ -69,16 +70,24 @@ Route::middleware('auth')->group(function () {
                 Route::get('edit/{user}', [UserEditController::class, 'show'])->name('edit.show');
                 Route::post('edit/{user}', [UserEditController::class, 'update'])->name('edit.update');
                 // Delete user
-                Route::post('delete/{user}',[UserListCotroller::class, 'delete'])->name('delete');
+                Route::post('delete/{user}', [UserListCotroller::class, 'delete'])->name('delete');
             });
             //Approval Flow Setting
-            Route::get('/flow-setting', [AdminFlowSettingController::class, 'index'])->name('flow.list');
-            Route::get('/flow-setting/add', [AdminFlowSettingController::class, 'create'])->name('flow.create');
-            Route::post('/flow-setting/add', [AdminFlowSettingController::class, 'store'])->name('flow.store');
-            Route::get('/flow-setting/check', [AdminFlowSettingController::class, 'check'])->name('flow.check');
-            Route::get('/flow-setting/edit/{id}', [AdminFlowSettingController::class, 'edit'])->name('flow.edit');
+            Route::prefix('flow-setting')->name('flow.')->group(function () {
+                Route::get('/', [AdminFlowSettingController::class, 'index'])->name('index');
+                Route::get('add', [AdminFlowSettingController::class, 'create'])->name('create');
+                Route::post('add', [AdminFlowSettingController::class, 'store'])->name('store');
+                Route::get('check', [AdminFlowSettingController::class, 'check'])->name('check');
+                Route::get('edit/{id}', [AdminFlowSettingController::class, 'edit'])->name('edit');
+            });
 
-            //Approval Flow
+            // Company
+            Route::prefix('company')->name('company.')->group(function () {
+                Route::get('/', [AdminCompanyController::class, 'index'])->name('index');
+                Route::get('add', [AdminCompanyController::class, 'create'])->name('create');
+                Route::post('add', [AdminCompanyController::class, 'store'])->name('store');
+            });
+            
         });
     });
 
@@ -103,7 +112,7 @@ Route::middleware('auth')->group(function () {
             // Form list
             Route::get('form', [FormListController::class, 'index'])->name('form.index');
             // Leave Application
-            Route::get('leave/add',[LeaveApplicationController::class,'create'])->name('leave.create');
+            Route::get('leave/add', [LeaveApplicationController::class, 'create'])->name('leave.create');
             Route::post('leave/add', [LeaveApplicationController::class, 'store'])->name('leave.store');
             Route::get('leave/edit/{id}', [LeaveApplicationController::class, 'show'])->name('leave.show');
             Route::post('leave/edit/{id}', [LeaveApplicationController::class, 'update'])->name('leave.update');

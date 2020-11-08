@@ -71,7 +71,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('admin.flow.list') }}" class="nav-link">
+                    <a href="{{ route('admin.flow.index') }}" class="nav-link">
                         <i class="fas fa-angle-right left"></i>
                         <p>Approval Flow Setting</p>
                     </a>
@@ -85,7 +85,7 @@
             </ul>
         </li>
         <li class="nav-item">
-            <a href="" class="nav-link">
+            <a href="{{ route('admin.company.index') }}" class="nav-link">
                 <i class="nav-icon far fa-building"></i>
                 <p>
                     Company Registration

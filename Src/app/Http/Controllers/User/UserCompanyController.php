@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Auth;
 use App\Libs\Common;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
-use Lang;
 
 class UserCompanyController extends Controller
 {

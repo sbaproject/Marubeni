@@ -132,7 +132,7 @@
 
             <div class="mt-5 mb-5 text-center">
                 <button type="button" class="btn-submit-flow btn btn-danger pt-1 pb-1 mr-4 col-5 col-sm-2 col-md-4 col-lg-2"><i class="nav-icon far fa-check-circle"></i> Submit</button>
-                <a href="{{ route('admin.flow.list') }}" class="btn btn-outline-dark pt-1 pb-1 col-5 col-sm-2 col-md-4 col-lg-2"><i class="nav-icon far fa-times-circle"></i> Cancel</a>
+                <a href="{{ route('admin.flow.index') }}" class="btn btn-outline-dark pt-1 pb-1 col-5 col-sm-2 col-md-4 col-lg-2"><i class="nav-icon far fa-times-circle"></i> Cancel</a>
             </div>
         </div>
     </div>
