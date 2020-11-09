@@ -6,6 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Models\Application;
 use Illuminate\Support\Facades\Auth;
 use App\Libs\Common;
+use App\Models\Leave;
+use App\Models\Entertaiment;
+use App\Models\Businesstrip;
+
+use function PHPUnit\Framework\isNull;
 
 class UserDraftController extends Controller
 {
@@ -23,8 +28,26 @@ class UserDraftController extends Controller
 
     public function delete($id)
     {
-        $user = Application::find($id);
-        $user->delete();
+        $app_draft = Application::find($id);
+        if (!empty($app_draft)) {
+            $app_draft->delete();
+        }
+
+        $leave = Leave::find($id);
+        if (!empty($leave)) {
+            $leave->delete();
+        }
+
+        $enter = Entertaiment::find($id);
+        if (!empty($enter)) {
+            $enter->delete();
+        }
+
+        $busi = Businesstrip::find($id);
+        if (!empty($busi)) {
+            $busi->delete();
+        }
+
         return Common::redirectBackWithAlertSuccess(__('msg.delete_success'));
     }
 }

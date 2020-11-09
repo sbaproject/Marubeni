@@ -158,11 +158,9 @@
         @if (isset($list_application))
             {{ $list_application->withQueryString()->links('paginator') }}
         @endif
-        <div id='str_date' value='@if (\Session::has(' str_date'))
-        {{ \Session::get('str_date') }}@else{{ Carbon\Carbon::now() }}@endif'>
+        <div id='str_date' value='{{ $str_date }}'>
         </div>
-        <div id='end_date' value='@if (\Session::has(' end_date'))
-        {{ \Session::get('end_date') }}@else{{ Carbon\Carbon::now() }}@endif'>
+        <div id='end_date' value='{{ $end_date }}'>
         </div>
     </section>
 @endsection

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Application;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class UserDashboardController extends Controller
@@ -13,13 +14,14 @@ class UserDashboardController extends Controller
 
         $userId = Auth::user()->id;
         $data = $request->input();
+
+        $str_date = null;
+        $end_date = null;
+
         if(!empty($data['dataDateFrom']) && !empty($data['dataDateTo'])){
 
             $str_date = $data['dataDateFrom']. ' 00:00:00';
             $end_date = $data['dataDateTo']. ' 23:59:59';
-
-            session(['str_date' => $str_date]);
-            session(['end_date' => $end_date]);
 
             $list_application =  Application::where('created_by', $userId)->whereNull('deleted_at')->where('created_at','>=',$str_date)->where('created_at','<=',$end_date)->orderBy('id', 'DESC')->paginate(5);
             $count_applying =  Application::where('created_by', $userId)->whereNull('deleted_at')->where('status', config('const.application.status.applying'))->where('created_at','>=',$str_date)->where('created_at','<=',$end_date)->count();
@@ -30,8 +32,8 @@ class UserDashboardController extends Controller
 
         }else{
 
-            session()->forget('str_date');
-            session()->forget('end_date');
+            $str_date = Carbon::now();
+            $end_date = Carbon::now();
 
             $list_application =  Application::where('created_by', $userId)->whereNull('deleted_at')->orderBy('created_at', 'DESC')->paginate(5);
             $count_applying =  Application::where('created_by', $userId)->whereNull('deleted_at')->where('status', config('const.application.status.applying'))->count();
@@ -42,6 +44,6 @@ class UserDashboardController extends Controller
 
         }
 
-        return view('user.dashboard', compact('list_application','count_applying','count_approval','count_declined','count_reject','count_completed'));
+        return view('user.dashboard', compact('list_application','count_applying','count_approval','count_declined','count_reject','count_completed','str_date','end_date'));
     }
 }
