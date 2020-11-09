@@ -108,7 +108,7 @@
     {{-- Add new button --}}
     <div class="button_wrap">
         <a class="btn btn-danger pt-1 pb-1 pl-5 pr-5"
-            href="{{ route('admin.user.add.create') }}">
+            href="{{ route('admin.user.create') }}">
             <i class="nav-icon fa fa-plus-circle"></i>
             {{ __('label.button.addnew') }}
         </a>
@@ -135,7 +135,7 @@
                             {{-- using action component with if stament --}}
                             <x-action>
                                 <x-slot name="editUrl">
-                                    {{ route('admin.user.edit.show', $user->id) }}
+                                    {{ route('admin.user.show', $user->id) }}
                                 </x-slot>
                                 @if ($user->id !== Auth::user()->id)
                                 <x-slot name="deleteUrl">
@@ -145,7 +145,7 @@
                             </x-action>
                             {{-- using action component with sort tag --}}
                             {{-- <x-action
-                                    edit-url="{{ route('admin.user.edit.show', $user->id) }}"
+                                    edit-url="{{ route('admin.user.show', $user->id) }}"
                                     delete-url="{{ route('admin.user.delete', $user->id) }}" /> --}}
                         </td>
                     </tr>
