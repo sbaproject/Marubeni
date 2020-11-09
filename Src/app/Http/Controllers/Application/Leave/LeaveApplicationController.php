@@ -258,7 +258,7 @@ class LeaveApplicationController extends Controller
         $user = Auth::user();
 
         // PDF::setOptions(['defaultFont' => 'Roboto-Black']);
-        $pdf = PDF::loadView('pdf', compact('user', 'inputs'));
+        $pdf = PDF::loadView('application.leave.pdf', compact('user', 'inputs'));
 
         // preview pdf
         return $pdf->stream('Leave_Application.pdf');

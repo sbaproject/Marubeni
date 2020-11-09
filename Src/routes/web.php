@@ -16,6 +16,7 @@ use App\Http\Controllers\Application\FormListController;
 use App\Http\Controllers\Admin\AdminFlowSettingController;
 use App\Http\Controllers\Admin\AdminCompanyController;
 use App\Http\Controllers\Admin\AdminBudgetController;
+use App\Http\Controllers\Application\Business\BusinessTripController;
 use App\Http\Controllers\Application\Leave\LeaveApplicationController;
 use App\Http\Controllers\LocaleController;
 
@@ -127,6 +128,13 @@ Route::middleware('auth')->group(function () {
                 Route::post('add', [LeaveApplicationController::class, 'store'])->name('store');
                 Route::get('edit/{id}', [LeaveApplicationController::class, 'show'])->name('show');
                 Route::post('edit/{id}', [LeaveApplicationController::class, 'update'])->name('update');
+            });
+            // Business Trip Application
+            Route::prefix('business')->name('business.')->group(function () {
+                Route::get('add', [BusinessTripController::class, 'create'])->name('create');
+                Route::post('add', [BusinessTripController::class, 'store'])->name('store');
+                Route::get('edit/{id}',[BusinessTripController::class, 'show'])->name('show');
+                Route::post('edit/{id}', [BusinessTripController::class, 'update'])->name('update');
             });
         });
     });
