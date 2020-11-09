@@ -64,10 +64,13 @@ Tham khảo list timezone: https://www.php.net/manual/en/timezones.php
 -------------------------------------------------------------------------------------------------
 --------------------------Load Font cho PDF----------------------------
 -------------------------------------------------------------------------------------------------
-php load_font.php 'notosans-bold' storage/fonts/NotoSans-Bold.ttf
+
+1. Copy tất cả fonts từ /fonts past vào /storage/fonts/
+
+<!-- php load_font.php 'notosans-bold' storage/fonts/NotoSans-Bold.ttf
 php load_font.php 'notosans-bolditalic' storage/fonts/NotoSans-BoldItalic.ttf
 php load_font.php 'notosans-italic' storage/fonts/NotoSans-Italic.ttf
-php load_font.php 'notosans-regular' storage/fonts/NotoSans-Regular.ttf
+php load_font.php 'notosans-regular' storage/fonts/NotoSans-Regular.ttf -->
 -------------------------------------------------------------------------------------------------
 --------------------------Chú ý khi code----------------------------
 -------------------------------------------------------------------------------------------------
