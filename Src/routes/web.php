@@ -64,11 +64,11 @@ Route::middleware('auth')->group(function () {
                 // List Users
                 Route::get('/', [UserListCotroller::class, 'index'])->name('index');
                 // Register new user
-                Route::get('add', [UserRegisterController::class, 'create'])->name('add.create');
-                Route::post('add', [UserRegisterController::class, 'store'])->name('add.store');
+                Route::get('add', [UserRegisterController::class, 'create'])->name('create');
+                Route::post('add', [UserRegisterController::class, 'store'])->name('store');
                 // Edit user
-                Route::get('edit/{user}', [UserEditController::class, 'show'])->name('edit.show');
-                Route::post('edit/{user}', [UserEditController::class, 'update'])->name('edit.update');
+                Route::get('edit/{user}', [UserEditController::class, 'show'])->name('show');
+                Route::post('edit/{user}', [UserEditController::class, 'update'])->name('update');
                 // Delete user
                 Route::post('delete/{user}', [UserListCotroller::class, 'delete'])->name('delete');
             });
@@ -112,10 +112,12 @@ Route::middleware('auth')->group(function () {
             // Form list
             Route::get('form', [FormListController::class, 'index'])->name('form.index');
             // Leave Application
-            Route::get('leave/add', [LeaveApplicationController::class, 'create'])->name('leave.create');
-            Route::post('leave/add', [LeaveApplicationController::class, 'store'])->name('leave.store');
-            Route::get('leave/edit/{id}', [LeaveApplicationController::class, 'show'])->name('leave.show');
-            Route::post('leave/edit/{id}', [LeaveApplicationController::class, 'update'])->name('leave.update');
+            Route::prefix('leave')->name('leave.')->group(function(){
+                Route::get('add', [LeaveApplicationController::class, 'create'])->name('create');
+                Route::post('add', [LeaveApplicationController::class, 'store'])->name('store');
+                Route::get('edit/{id}', [LeaveApplicationController::class, 'show'])->name('show');
+                Route::post('edit/{id}', [LeaveApplicationController::class, 'update'])->name('update');
+            });
         });
     });
 

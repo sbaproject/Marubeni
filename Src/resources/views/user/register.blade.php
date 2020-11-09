@@ -9,7 +9,7 @@
 	<div class="card">
 		<div class="card-body">
 			<div class="search-content">
-				<form action="{{ route('admin.user.add.store') }}" method="POST">
+				<form action="{{ route('admin.user.store') }}" method="POST">
 					@csrf
 					{{-- Location --}}
 					<div class="form-group row">
