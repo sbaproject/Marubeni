@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Application\FormListController;
 use App\Http\Controllers\Admin\AdminFlowSettingController;
 use App\Http\Controllers\Admin\AdminCompanyController;
+use App\Http\Controllers\Admin\AdminBudgetController;
 use App\Http\Controllers\Application\Leave\LeaveApplicationController;
 use App\Http\Controllers\LocaleController;
 
@@ -64,11 +65,11 @@ Route::middleware('auth')->group(function () {
                 // List Users
                 Route::get('/', [UserListCotroller::class, 'index'])->name('index');
                 // Register new user
-                Route::get('add', [UserRegisterController::class, 'create'])->name('add.create');
-                Route::post('add', [UserRegisterController::class, 'store'])->name('add.store');
+                Route::get('add', [UserRegisterController::class, 'create'])->name('create');
+                Route::post('add', [UserRegisterController::class, 'store'])->name('store');
                 // Edit user
-                Route::get('edit/{user}', [UserEditController::class, 'show'])->name('edit.show');
-                Route::post('edit/{user}', [UserEditController::class, 'update'])->name('edit.update');
+                Route::get('edit/{user}', [UserEditController::class, 'show'])->name('show');
+                Route::post('edit/{user}', [UserEditController::class, 'update'])->name('update');
                 // Delete user
                 Route::post('delete/{user}', [UserListCotroller::class, 'delete'])->name('delete');
             });
@@ -87,7 +88,13 @@ Route::middleware('auth')->group(function () {
                 Route::get('add', [AdminCompanyController::class, 'create'])->name('create');
                 Route::post('add', [AdminCompanyController::class, 'store'])->name('store');
             });
-            
+
+            // Budget
+            Route::prefix('budget')->name('budget.')->group(function () {
+                Route::get('edit', [AdminBudgetController::class, 'show'])->name('show');
+                Route::post('edit', [AdminBudgetController::class, 'update'])->name('update');
+            });
+
         });
     });
 
@@ -112,10 +119,12 @@ Route::middleware('auth')->group(function () {
             // Form list
             Route::get('form', [FormListController::class, 'index'])->name('form.index');
             // Leave Application
-            Route::get('leave/add', [LeaveApplicationController::class, 'create'])->name('leave.create');
-            Route::post('leave/add', [LeaveApplicationController::class, 'store'])->name('leave.store');
-            Route::get('leave/edit/{id}', [LeaveApplicationController::class, 'show'])->name('leave.show');
-            Route::post('leave/edit/{id}', [LeaveApplicationController::class, 'update'])->name('leave.update');
+            Route::prefix('leave')->name('leave.')->group(function(){
+                Route::get('add', [LeaveApplicationController::class, 'create'])->name('create');
+                Route::post('add', [LeaveApplicationController::class, 'store'])->name('store');
+                Route::get('edit/{id}', [LeaveApplicationController::class, 'show'])->name('show');
+                Route::post('edit/{id}', [LeaveApplicationController::class, 'update'])->name('update');
+            });
         });
     });
 

@@ -71,7 +71,7 @@
                             @php
                             $page = request()->get("page");
                             if ($page)
-                            $index = $page * 5 - 9;
+                            $index = $page * 5 - 4;
                             else
                             $index = 1;
                             @endphp
@@ -103,10 +103,10 @@
         @if (isset($list_applications_status))
             {{ $list_applications_status->withQueryString()->links('paginator') }}
         @endif
-        <div id='str_date' value='@if (\Session::has('str_date'))
+        <div id='str_date' value='@if (\Session::has(' str_date'))
         {{ \Session::get('str_date') }}@else{{ Carbon\Carbon::now() }}@endif'>
         </div>
-        <div id='end_date' value='@if (\Session::has('end_date'))
+        <div id='end_date' value='@if (\Session::has(' end_date'))
         {{ \Session::get('end_date') }}@else{{ Carbon\Carbon::now() }}@endif'>
         </div>
     </section>

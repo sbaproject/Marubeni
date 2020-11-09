@@ -65,7 +65,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="" class="nav-link">
+                    <a href="{{ route('admin.budget.show') }}" class="nav-link">
                         <i class="fas fa-angle-right left"></i>
                         <p>Budget setting</p>
                     </a>

@@ -40,6 +40,8 @@ class LeaveApplicationController extends Controller
         if (!isset($inputs['paid_type'])) {
             $inputs['paid_type'] = null;
         }
+
+        // export pdf
         if (isset($inputs['pdf'])) {
             return $this->pdf($request, $inputs);
         }
@@ -95,6 +97,7 @@ class LeaveApplicationController extends Controller
             $inputs['paid_type'] = null;
         }
 
+        // export pdf
         if (isset($inputs['pdf'])) {
             return $this->pdf($request, $inputs, $mApplication);
         }
@@ -222,7 +225,7 @@ class LeaveApplicationController extends Controller
 
             // prepare leave data
             $leaveData = [
-                'code_leave' => $inputs['code_leave'],
+                'code_leave' => $inputs['code_leave'] !== 'empty' ? $inputs['code_leave'] : null,
                 'paid_type' => $inputs['paid_type'],
                 'reason_leave' => $inputs['reason_leave'],
                 'date_from' => $inputs['date_from'],
