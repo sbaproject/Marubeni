@@ -40,12 +40,11 @@
         @csrf
         <div class="main-top">
             <h4 class="main-header-text">{{ Str::upper(__('label.leave_application')) }}</h4>
-            <a class="btn btn-outline-dark" role="button" href="#">
+            <button type="submit" name="pdf" value="pdf" class="btn btn-outline-dark" href="#">
                 <i class="fas fa-external-link-alt" style="margin-right: 5px; color: #fff;"></i>
-                Export
-            </a>
+                {{ __('label.button.export') }}
+            </button>
         </div>
-
         <div class="card">
             <div class="card-body">
                 <div class="form-group row">
@@ -203,7 +202,6 @@
                         <label>{{ __('label.leave.caption.maternity_leave') }}</label>
                     </div>
                     <div class="col-sm-10">
-
                         <div class="row mb-2">
                             <span class="col-md-2">{{ __('label.from') }}</span>
                             <div class="col-md-4">
@@ -249,60 +247,55 @@
                     </div>
                     <div class="col-sm-10">
                         <div class="row mb-2">
-                            <span class="col-sm-2">Entitled this year</span>
+                            <span class="col-sm-2">{{ __('label.leave.caption.entitled_year') }}</span>
                             <div class="col-sm-10">
-                                <input type="text" id="entitled" name="entitled" class="form-control input-custom-2"
+                                <input type="text" id="entitled" name="entitled_days" class="form-control input-custom-2"
                                     value="{{ $user->leave_days }}" readonly>
                                 &nbsp;&nbsp;
-                                <span>Days</span>
-                                {{-- &nbsp;&nbsp;&nbsp;&nbsp;
-                                <input type="text" style="display: none;" class="form-control input-custom-2"
-                                    id="usedHours" name="usedHours" value="30" readonly>
-                                &nbsp;&nbsp;
-                                <span></span> --}}
+                                <span>{{ __('label.leave.caption.days') }}</span>
                             </div>
                         </div>
                         <div class="row mb-2">
-                            <span class="col-sm-2">Used this year</span>
+                            <span class="col-sm-2">{{ __('label.leave.caption.used_this_year') }}</span>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control input-custom-2" id="usedDays" name="usedDays" 
+                                <input type="text" class="form-control input-custom-2" id="used_days" name="used_days" 
                                     value="{{ $user->leave_days - $user->leave_remaining_days }}" readonly>
                                 &nbsp;&nbsp;
-                                <span>Days</span>
+                                <span>{{ __('label.leave.caption.days') }}</span>
                                 &nbsp;&nbsp;&nbsp;&nbsp;
-                                <input type="text" class="form-control input-custom-2" id="usedHours" name="usedHours" 
+                                <input type="text" class="form-control input-custom-2" id="used_time" name="used_hours" 
                                     value="" readonly>
                                 &nbsp;&nbsp;
-                                <span>Hours</span>
+                                <span>{{ __('label.leave.caption.hours') }}</span>
 
                             </div>
                         </div>
                         <div class="row mb-2">
-                            <span class="col-sm-2">Take this time</span>
+                            <span class="col-sm-2">{{ __('label.leave.caption.take_this_time') }}</span>
                             <div class="col-sm-10">
                                 <input type="number" id="days_use" name="days_use" class="form-control input-custom-2" 
                                     value="{{ $days_use }}" autocomplete="off">
                                 &nbsp;&nbsp;
-                                <span>Days</span>
+                                <span>{{ __('label.leave.caption.days') }}</span>
                                 &nbsp;&nbsp;&nbsp;&nbsp;
                                 <input type="number" id="times_use" name="times_use" class="form-control input-custom-2"
                                     value="{{ $times_use }}" autocomplete="off">
                                 &nbsp;&nbsp;
-                                <span>Hours</span>
+                                <span>{{ __('label.leave.caption.hours') }}</span>
                             </div>
                         </div>
                         <div class="row">
-                            <span class="col-sm-2">Remaining</span>
+                            <span class="col-sm-2">{{ __('label.leave.caption.remaining') }}</span>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control input-custom-2" id="remainingDays"
-                                    name="remainingDays" value="{{ $user->leave_remaining_days }}" readonly>
+                                <input type="text" class="form-control input-custom-2" id="remaining_days"
+                                    name="remaining_days" value="{{ $user->leave_remaining_days }}" readonly>
                                 &nbsp;&nbsp;
-                                <span>Days</span>
+                                <span>{{ __('label.leave.caption.days') }}</span>
                                 &nbsp;&nbsp;&nbsp;&nbsp;
-                                <input type="text" class="form-control input-custom-2" id="remainingHours"
-                                    name="remainingHours" value="{{ $user->leave_remaining_time }}" readonly>
+                                <input type="text" class="form-control input-custom-2" id="remaining_hours"
+                                    name="remaining_hours" value="{{ $user->leave_remaining_time }}" readonly>
                                 &nbsp;&nbsp;
-                                <span>Hours</span>
+                                <span>{{ __('label.leave.caption.hours') }}</span>
                             </div>
                         </div>
                     </div>
@@ -312,7 +305,7 @@
                     <div class="col-sm-2 text-left">
                         <label for="myfile">{{ __('label.leave.caption.file_path') }}</label>
                     </div>
-                    <div class="col-sm-3">
+                    <div class="col-sm-5">
                         {{-- for edit --}}
                         @if(isset($id) && !empty($file_path))
                             @if ($model->file_path === $file_path)

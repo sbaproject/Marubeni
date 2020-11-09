@@ -30,12 +30,7 @@ class LeaveApplicationController extends Controller
         // clear flash input
         // session()->flashInput([]);
 
-        // return view('application.leave.input', compact('codeLeaves', 'paidTypes', 'user'));
-
-        // PDF::setOptions(['defaultFont' => 'Roboto-Black']);
-        $pdf = PDF::loadView('pdf', compact('codeLeaves', 'paidTypes'));
-
-        return $pdf->stream('disney.pdf');
+        return view('application.leave.input', compact('codeLeaves', 'paidTypes', 'user'));
     }
 
     public function store(Request $request)
@@ -45,7 +40,9 @@ class LeaveApplicationController extends Controller
         if (!isset($inputs['paid_type'])) {
             $inputs['paid_type'] = null;
         }
-        // dd($inputs['input_file']->getClientOriginalName());
+        if (isset($inputs['pdf'])) {
+            return $this->pdf($request, $inputs);
+        }
 
         // validate
         $this->doValidate($request, $inputs);
@@ -98,6 +95,10 @@ class LeaveApplicationController extends Controller
             $inputs['paid_type'] = null;
         }
 
+        if (isset($inputs['pdf'])) {
+            return $this->pdf($request, $inputs, $mApplication);
+        }
+
         // validate
         $this->doValidate($request, $inputs);
 
@@ -121,14 +122,12 @@ class LeaveApplicationController extends Controller
                 $rules['input_file'] = 'mimes:txt,pdf,jpg,jpeg,png|max:200';
             }
             if (isset($inputs['apply'])) {
-                // rules for validation
                 $rules['code_leave'] = 'required_select';
                 // only for SICKLEAVE
                 if ($inputs['code_leave'] == config('const.code_leave.SL')) {
                     $rules['paid_type'] = 'required_select';
                 }
             }
-            // dd($inputs);
             $validator = Validator::make($inputs, $rules);
             $validator->validate();
         }
@@ -250,7 +249,17 @@ class LeaveApplicationController extends Controller
         });
     }
 
-    public function pdf()
+    public function pdf($request, $inputs, $mApplication = null)
     {
+        // get logged user
+        $user = Auth::user();
+
+        // PDF::setOptions(['defaultFont' => 'Roboto-Black']);
+        $pdf = PDF::loadView('pdf', compact('user', 'inputs'));
+
+        // preview pdf
+        return $pdf->stream('Leave_Application.pdf');
+        // download
+        // return $pdf->download('Leave_Application.pdf');
     }
 }
