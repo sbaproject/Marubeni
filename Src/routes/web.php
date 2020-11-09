@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Application\FormListController;
 use App\Http\Controllers\Admin\AdminFlowSettingController;
 use App\Http\Controllers\Admin\AdminCompanyController;
+use App\Http\Controllers\Admin\AdminBudgetController;
 use App\Http\Controllers\Application\Leave\LeaveApplicationController;
 use App\Http\Controllers\LocaleController;
 
@@ -87,7 +88,13 @@ Route::middleware('auth')->group(function () {
                 Route::get('add', [AdminCompanyController::class, 'create'])->name('create');
                 Route::post('add', [AdminCompanyController::class, 'store'])->name('store');
             });
-            
+
+            // Budget
+            Route::prefix('budget')->name('budget.')->group(function () {
+                Route::get('edit', [AdminBudgetController::class, 'show'])->name('show');
+                Route::post('edit', [AdminBudgetController::class, 'update'])->name('update');
+            });
+
         });
     });
 

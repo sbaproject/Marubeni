@@ -78,15 +78,15 @@
     'normal' => $rootDir . '/lib/fonts/DejaVuSerif',
   ),
   'notosans-bold' => array(
-    'bold' => $fontDir . '/notosans-bold-bold_6b4a85605f9e741389c14001dea85f42',
+    'bold' => $fontDir . '/notosans-bold-bold_84bdebe9e2749d4c93be21a8206694b4',
   ),
   'notosans-bolditalic' => array(
-    'bold_italic' => $fontDir . '/notosans-bolditalic-bold-italic_450f40eaf66aecb8d673664f448b9fcc',
+    'bold_italic' => $fontDir . '/notosans-bolditalic-bold-italic_08bd246bc46b1862857e4e23b15ef518',
   ),
   'notosans-italic' => array(
-    'italic' => $fontDir . '/notosans-italic-italic_41ccca3536d39df9b7960d8cc0d81004',
+    'italic' => $fontDir . '/notosans-italic-italic_38dac241cb890b5d35d7a3ea6ae29ed2',
   ),
   'notosans-regular' => array(
-    'normal' => $fontDir . '/notosans-regular-normal_3335aa63506fe09738231d89791acadf',
+    'normal' => $fontDir . '/notosans-regular-normal_4762d91e406463df107043a76b2f8daa',
   ),
 ) ?>

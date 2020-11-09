@@ -108,7 +108,7 @@
           @php
           $page = request()->get("page");
           if ($page)
-          $index = $page * 5 - 9;
+          $index = $page * 5 - 4;
           else
           $index = 1;
           @endphp

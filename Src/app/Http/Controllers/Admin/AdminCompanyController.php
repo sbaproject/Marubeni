@@ -4,43 +4,82 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Application;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Company;
+use App\Libs\Common;
+use Carbon\Carbon;
 
 class AdminCompanyController extends Controller
 {
-    public function index(Request $request){
-
+    public function index(Request $request)
+    {
         $userId = Auth::user()->id;
         $data = $request->input();
-        if(!empty($data['dataDateFrom'])){
+        $req_arr = $request->all();
 
-            $str_date = $data['dataDateFrom']. ' 00:00:00';
+        if (!empty($data['company_name']) or !empty($data['company_att_name']) or !empty($data['company_keyword'])) {
+            $list_company = Company::query();
 
-            session(['str_date' => $str_date]);
+            if (!empty($data['company_name'])) {
+                $list_company = $list_company->where('name', 'like', '%' . $data['company_name'] . '%');
+            }
+            if (!empty($data['company_att_name'])) {
+                $list_company = $list_company->where('attendants_name', 'like', '%' . $data['company_att_name'] . '%');
+            }
 
-            $list_application =  Application::whereNull('applications.deleted_at')->where('created_at','>=',$str_date)->where('status', '!=' , config('const.application.status.draft'))->orderBy('id', 'DESC')->paginate(5);
-            $count_applying =  Application::whereNull('applications.deleted_at')->where('status', config('const.application.status.applying'))->where('created_at','>=',$str_date)->count();
-            $count_approval =  Application::whereNull('applications.deleted_at')->whereBetween('status', [1,98])->where('created_at','>=',$str_date)->count();
-            $count_declined =  Application::whereNull('applications.deleted_at')->where('status', config('const.application.status.declined'))->where('created_at','>=',$str_date)->count();
-            $count_reject =  Application::whereNull('applications.deleted_at')->where('status', config('const.application.status.reject'))->where('created_at','>=',$str_date)->count();
-            $count_completed =  Application::whereNull('applications.deleted_at')->where('status', config('const.application.status.completed'))->where('created_at','>=',$str_date)->count();
+            if (!empty($data['company_keyword'])) {
+                $list_company = $list_company->where(function ($query) use ($data) {
+                    $query->orwhere('name', 'like', '%' . $data['company_keyword'] . '%')
+                        ->orwhere('address', 'like', '%' . $data['company_keyword'] . '%')
+                        ->orwhere('phone', 'like', '%' . $data['company_keyword'] . '%')
+                        ->orwhere('attendants_name', 'like', '%' . $data['company_keyword'] . '%')
+                        ->orwhere('attendants_department', 'like', '%' . $data['company_keyword'] . '%');
+                });
+            }
 
-        }else{
+            $list_company = $list_company->whereNull('deleted_at')->orderBy('id', 'DESC')->paginate(5);
+        } else {
 
-            session()->forget('str_date');
-
-            $list_application =  Application::whereNull('applications.deleted_at')->where('status', '!=' , config('const.application.status.draft'))->orderBy('created_at', 'DESC')->paginate(5);
-            $count_applying =  Application::whereNull('applications.deleted_at')->where('status', config('const.application.status.applying'))->count();
-            $count_approval =  Application::whereNull('applications.deleted_at')->whereBetween('status', [1,98])->count();
-            $count_declined =  Application::whereNull('applications.deleted_at')->where('status', config('const.application.status.declined'))->count();
-            $count_reject =  Application::whereNull('applications.deleted_at')->where('status', config('const.application.status.reject'))->count();
-            $count_completed =  Application::whereNull('applications.deleted_at')->where('status', config('const.application.status.completed'))->count();
-
+            $list_company = Company::whereNull('deleted_at')->orderBy('id', 'DESC')->paginate(5);
         }
-        $list_company = Company::whereNull('deleted_at')->orderBy('created_at', 'DESC')->paginate(5);
 
-        return view('admin.company',compact('list_company'));
+        return view('admin.company', compact('list_company', 'req_arr'));
+    }
+
+    public function create()
+    {
+        return view('admin.company_new');
+    }
+
+    public function store(Request $request)
+    {
+        $validator = $request->validate([
+            'com_name'   => 'required',
+            'com_country'   => 'required',
+            'com_tel'   => 'required',
+            'com_address'   => 'required',
+            'att_name'   => 'required',
+            'att_department'   => 'required',
+            'att_mail' => 'required|email:rfc,dns',
+        ],);
+        // get data inputs
+        $data = $request->input();
+
+        $dataCompany = new Company([
+            'name'                      => $data['com_name'],
+            'country'                   => $data['com_country'],
+            'phone'                     => $data['com_tel'],
+            'address'                   => $data['com_address'],
+            'attendants_name'           => $data['att_name'],
+            'attendants_department'     => $data['att_department'],
+            'email'                     => $data['att_mail'],
+            'memo'                      => $data['text_content'],
+            'created_by'                => Auth::user()->id,
+            'created_at'                => Carbon::now()
+        ]);
+
+        $dataCompany->save();
+
+        return Common::redirectRouteWithAlertSuccess('admin.company.index');
     }
 }
