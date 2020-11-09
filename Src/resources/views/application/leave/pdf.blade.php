@@ -190,8 +190,10 @@
 				</td>
 				<td colspan="6" class="data">
 					@php
-						$codeLeave = array_search($inputs['code_leave'], config('const.code_leave'));
-						echo $codeLeave .': '.__('label.leave.code_leave.'.$codeLeave);
+						if($inputs['code_leave'] !== 'empty'){
+							$codeLeave = array_search($inputs['code_leave'], config('const.code_leave'));
+							echo $codeLeave .': '.__('label.leave.code_leave.'.$codeLeave);
+						}
 					@endphp
 				</td>
 			</tr>
