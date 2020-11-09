@@ -7,8 +7,8 @@
     <div class="row">
         <div class="col-lg-9">
             <div class="card">
-                <x-alert />
                 <div class="card-body">
+                    <x-alert />
                     <div class="search-content">
                         <form method="post" id="formBudget" action="">
                             @csrf
