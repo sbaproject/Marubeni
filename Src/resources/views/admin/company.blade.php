@@ -120,12 +120,10 @@
                                         <td>
                                             <x-action>
                                                 <x-slot name="editUrl">
-                                                    {{--
-                                                    {{ route('user.draft.edit.show', $application_draft->id) }}
-                                                    --}}
+                                                    {{ route('admin.company.show', $company->id) }}
                                                 </x-slot>
                                                 <x-slot name="deleteUrl">
-                                                    {{ route('admin.company.index') }}
+                                                    {{ route('admin.company.delete', $company->id) }}
                                                 </x-slot>
                                             </x-action>
                                         </td>

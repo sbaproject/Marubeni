@@ -13,6 +13,7 @@
                         <div class="card-body">
                             <form id="frmCompany" name="frmCompany" method="POST">
                                 @csrf
+                                <input type="hidden" class="form-control" name="id" value="{{ $company->id }}">
                                 <div class="row ">
                                     <div class="col-sm-2">
                                         <div class="com_block">Company Information</div>
@@ -24,7 +25,8 @@
                                             <div class="col-sm-10">
                                                 <input maxlength="255" type="text"
                                                     class="form-control {{ $errors->first('com_name') ? 'is-invalid' : '' }}"
-                                                    name="com_name" id="com_name" value="{{ old('com_name') }}"
+                                                    name="com_name" id="com_name"
+                                                    value="{{ old('com_name', $company->name) }}"
                                                     placeholder="Company Name">
                                                 @error('com_name')
                                                     <div class="invalid-feedback">
@@ -40,7 +42,7 @@
                                                 <input maxlength="255" type="text"
                                                     class="form-control {{ $errors->first('com_country') ? 'is-invalid' : '' }}"
                                                     name="com_country" id="com_country" placeholder="Country"
-                                                    value="{{ old('com_country') }}">
+                                                    value="{{ old('com_country', $company->country) }}">
                                                 @error('com_country')
                                                     <div class="invalid-feedback">
                                                         {{ $message }}
@@ -53,8 +55,8 @@
                                             <div class="col-sm-10">
                                                 <input maxlength="255" type="text"
                                                     class="form-control {{ $errors->first('com_tel') ? 'is-invalid' : '' }}"
-                                                    value="{{ old('com_tel') }}" name="com_tel" id="com_tel"
-                                                    placeholder="Tell">
+                                                    value="{{ old('com_tel', $company->phone) }}" name="com_tel"
+                                                    id="com_tel" placeholder="Tell">
                                                 @error('com_tel')
                                                     <div class="invalid-feedback">
                                                         {{ $message }}
@@ -68,8 +70,8 @@
                                             <div class="col-sm-10">
                                                 <input maxlength="255" type="text"
                                                     class="form-control {{ $errors->first('com_address') ? 'is-invalid' : '' }}"
-                                                    value="{{ old('com_address') }}" name="com_address" id="com_address"
-                                                    placeholder="Address">
+                                                    value="{{ old('com_address', $company->address) }}" name="com_address"
+                                                    id="com_address" placeholder="Address">
                                                 @error('com_address')
                                                     <div class="invalid-feedback">
                                                         {{ $message }}
@@ -90,8 +92,8 @@
                                             <div class="col-sm-10">
                                                 <input maxlength="255" type="text"
                                                     class="form-control {{ $errors->first('att_name') ? 'is-invalid' : '' }}"
-                                                    value="{{ old('att_name') }}" name="att_name" id="att_name"
-                                                    placeholder="Name">
+                                                    value="{{ old('att_name', $company->attendants_name) }}" name="att_name"
+                                                    id="att_name" placeholder="Name">
                                                 @error('att_name')
                                                     <div class="invalid-feedback">
                                                         {{ $message }}
@@ -105,8 +107,8 @@
                                             <div class="col-sm-10">
                                                 <input maxlength="255" type="text"
                                                     class="form-control {{ $errors->first('att_department') ? 'is-invalid' : '' }}"
-                                                    value="{{ old('att_department') }}" name="att_department"
-                                                    id="att_department" placeholder="Department">
+                                                    value="{{ old('att_department', $company->attendants_department) }}"
+                                                    name="att_department" id="att_department" placeholder="Department">
                                                 @error('att_department')
                                                     <div class="invalid-feedback">
                                                         {{ $message }}
@@ -119,8 +121,8 @@
                                             <div class="col-sm-10">
                                                 <input maxlength="255" type="text"
                                                     class="form-control {{ $errors->first('att_mail') ? 'is-invalid' : '' }}"
-                                                    value="{{ old('att_mail') }}" name="att_mail" id="att_mail"
-                                                    placeholder="E-mail">
+                                                    value="{{ old('att_mail', $company->email) }}" name="att_mail"
+                                                    id="att_mail" placeholder="E-mail">
                                                 @error('att_mail')
                                                     <div class="invalid-feedback">
                                                         {{ $message }}
@@ -140,7 +142,7 @@
                                         <div class="form-group row ">
                                             <div class="col-sm-12">
                                                 <textarea maxlength="1000" id="text_content" name="text_content"
-                                                    class="form-control" rows="4">{{ old('text_content') }}</textarea>
+                                                    class="form-control" rows="4">{{ old('text_content', $company->memo) }}</textarea>
                                             </div>
                                         </div>
                                     </div>

@@ -134,7 +134,9 @@
                                     <td>{{ $index }}</td>
                                     <td>{{ !empty($application->form_id) ? $application->Form->name : '' }}</td>
                                     <td>
-                                        <div id="status" class="" value="{{ $application->status }}">
+                                        <div
+                                            class=" {{ $application->status == config('const.application.status.applying') ? 'status-apply' : ($application->status == config('const.application.status.declined') ? 'status-declined' : ($application->status == config('const.application.status.reject') ? 'status-reject' : ($application->status == config('const.application.status.completed') ? 'status-completed' : 'status-approval'))) }}">
+                                            {{ $application->status == config('const.application.status.applying') ? 'Applying' : ($application->status == config('const.application.status.declined') ? 'Declined' : ($application->status == config('const.application.status.reject') ? 'Reject' : ($application->status == config('const.application.status.completed') ? 'Completed' : 'Approval'))) }}
                                         </div>
                                     </td>
                                     <td>{{ !empty($application->created_at) ? \Carbon\Carbon::parse($application->created_at)->format('d/m/Y') : '' }}
@@ -156,9 +158,11 @@
         @if (isset($list_application))
             {{ $list_application->withQueryString()->links('paginator') }}
         @endif
-        <div id='str_date' value='@if (\Session::has('str_date'))
-        {{ \Session::get('str_date') }}@else{{ Carbon\Carbon::now() }}@endif'></div>
-        <div id='end_date' value='@if (\Session::has('end_date'))
-        {{ \Session::get('end_date') }}@else{{ Carbon\Carbon::now() }}@endif'></div>
+        <div id='str_date' value='@if (\Session::has(' str_date'))
+        {{ \Session::get('str_date') }}@else{{ Carbon\Carbon::now() }}@endif'>
+        </div>
+        <div id='end_date' value='@if (\Session::has(' end_date'))
+        {{ \Session::get('end_date') }}@else{{ Carbon\Carbon::now() }}@endif'>
+        </div>
     </section>
 @endsection

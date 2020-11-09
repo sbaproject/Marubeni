@@ -82,4 +82,48 @@ class AdminCompanyController extends Controller
 
         return Common::redirectRouteWithAlertSuccess('admin.company.index');
     }
+
+    public function show($id)
+    {
+        $company = Company::where('id', $id)->first();
+        return view('admin.company_edit',compact('company'));
+    }
+
+    public function update(Request $request)
+    {
+        $validator = $request->validate([
+            'com_name'   => 'required',
+            'com_country'   => 'required',
+            'com_tel'   => 'required',
+            'com_address'   => 'required',
+            'att_name'   => 'required',
+            'att_department'   => 'required',
+            'att_mail' => 'required|email:rfc,dns',
+        ],);
+        // get data inputs
+        $data = $request->input();
+
+        $company = Company::find($data['id']);
+
+        $company->name                      = $data['com_name'];
+        $company->country                   = $data['com_country'];
+        $company->phone                     = $data['com_tel'];
+        $company->address                   = $data['com_address'];
+        $company->attendants_name           = $data['att_name'];
+        $company->attendants_department     = $data['att_department'];
+        $company->email                     = $data['att_mail'];
+        $company->memo                      = $data['text_content'];
+        $company->updated_by                = Auth::user()->id;
+        $company->updated_at                = Carbon::now();
+        $company->save();
+
+        return Common::redirectRouteWithAlertSuccess('admin.company.index');
+    }
+
+    public function delete($id)
+    {
+        $company = Company::find($id);
+        $company->delete();
+        return Common::redirectBackWithAlertSuccess(__('msg.delete_success'));
+    }
 }
