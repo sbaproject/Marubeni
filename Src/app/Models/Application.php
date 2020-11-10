@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Application extends Model
 {
@@ -27,6 +27,15 @@ class Application extends Model
         'created_at',
         'updated_at',
     ];
+
+    protected $appends = ['application_no'];
+
+    public function getApplicationNoAttribute()
+    {
+        $prefix = config('const.form.prefix.'.$this->form_id);
+        $application_no = $prefix.'-'.str_pad($this->id, config('const.num_fillzero'), "0", STR_PAD_LEFT);
+        return $application_no;
+    }
 
     public function Form(){
         return $this->belongsTo('App\Models\Form');

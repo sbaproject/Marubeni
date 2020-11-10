@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Application\Business;
 
 use Carbon\Carbon;
 use App\Libs\Common;
+use App\Models\Application;
 use App\Models\BusinessTrip;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\Businesstrip as ModelsBusinesstrip;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -47,12 +49,24 @@ class BusinessTripController extends Controller
         return Common::redirectRouteWithAlertSuccess('user.form.index');
     }
 
-    public function show()
+    public function show($id)
     {
+        // check owner
+        $application = Application::findOrFail($id);
+
+        if (Auth::user()->id !== $application->created_by) {
+            abort('403');
+        }
+
+        // get leave application
+        $model = ModelsBusinesstrip::where('application_id', $id)->first();
+
+        return view('application.business.input', compact('application', 'model', 'id'));
     }
 
     public function update()
     {
+
     }
 
     public function doValidate($request, $inputs)
@@ -115,7 +129,13 @@ class BusinessTripController extends Controller
                             ->where('applicants.department_id', '=', $user->department_id)
                             ->where('applicants.deleted_at', '=', null);
                     })
-                    ->where('groups.budget_id', '<>', null)
+                    ->join('budgets', function ($join) use ($currentStep) {
+                        $join->on('groups.budget_id', '=', 'budgets.id')
+                            ->where('budgets.budget_type', '=', config('const.budget.budget_type.business'))
+                            ->where('budgets.step_type', '=', $currentStep)
+                            ->where('budgets.position', '=', config('const.budget.position.business')) // set temp, change here
+                            ->where('budgets.deleted_at', '=', null);
+                    })
                     ->where('groups.deleted_at', '=', null)
                     ->first();
 

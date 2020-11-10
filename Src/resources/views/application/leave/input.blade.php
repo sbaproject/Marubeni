@@ -39,7 +39,7 @@
         enctype="multipart/form-data">
         @csrf
         <div class="main-top">
-            <h4 class="main-header-text">{{ Str::upper(__('label.leave_application')) }}</h4>
+            <h4 class="main-header-text">{{ Str::upper(__('label.form.leave')) }}</h4>
             <button type="submit" name="pdf" value="pdf" class="btn btn-outline-dark" href="#">
                 <i class="fas fa-external-link-alt" style="margin-right: 5px; color: #fff;"></i>
                 {{ __('label.button.export') }}

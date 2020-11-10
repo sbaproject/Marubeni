@@ -10,7 +10,7 @@
 
 @section('content')
 <section class="content">
-	<h4 class="mb-2">{{ __('label.application_list') }}</h4>
+	<h4 class="mb-2">{{ __('label.dashboard.application_list') }}</h4>
 	<div class="card">
 		<div class="card-body p-4">
 			<div class="container">

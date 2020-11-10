@@ -42,7 +42,7 @@ $file_path = old('file_path') ?? ($model->file_path ?? null);
         enctype="multipart/form-data">
         @csrf
         <div class="main-top">
-            <h4 class="main-header-text">{{ Str::upper(__('label.biz_application')) }}</h4>
+            <h4 class="main-header-text">{{ Str::upper(__('label.form.biz_trip')) }}</h4>
             <button type="submit" name="pdf" value="pdf" class="btn btn-outline-dark" href="#">
                 <i class="fas fa-external-link-alt" style="margin-right: 5px; color: #fff;"></i>
                 {{ __('label.button.export') }}
@@ -56,7 +56,8 @@ $file_path = old('file_path') ?? ($model->file_path ?? null);
                             <label>Application No</label>
                         </div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" value="BT-0001" readonly>
+                            <input type="text" class="form-control" readonly
+                                value="{{ $application->application_no }}">
                         </div>
                     </div>
                     <hr>

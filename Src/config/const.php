@@ -69,7 +69,13 @@ return [
     'form' => [
         'leave' => 1,           // Leave Application
         'biz_trip' => 2,        // Business Trip Application
-        'entertaiment' => 3,    // Entertaiment Application
+		'entertaiment' => 3,    // Entertaiment Application
+		// prefix of form
+		'prefix' => [
+			1 => 'LA',
+			2 => 'BT',
+			3 => 'EA',
+		]
     ],
     /**
      * applications
@@ -94,6 +100,10 @@ return [
 			'not_po' => 2,
 			'economy' => 3,
 			'business' => 4,
-		]
+		],
+		'budget_type' => [
+			'business' => 2,
+			'entertaiment' => 3,
+		],
 	]
 ];
