@@ -9,10 +9,10 @@
                 <table class="table table-bordered" style="min-width: 500px;">
                     <thead>
                         <tr>
-                            <th style="width: 10px">No</th>
-                            <th>Application Name</th>
-                            <th>Date Created</th>
-                            <th style="width: 150px">Actions</th>
+                            <th style="width: 10px">{{ __('label.draft.no') }}</th>
+                            <th>{{ __('label.draft.application_name') }}</th>
+                            <th>{{ __('label.draft.date_create') }}</th>
+                            <th style="width: 150px">{{ __('label.draft.action') }}</th>
                         </tr>
                     </thead>
                     <tbody>

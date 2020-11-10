@@ -1,8 +1,8 @@
 <?php
 
 /**
-     * Label here
-     */
+ * Label here
+ */
 
 
 return [
@@ -20,6 +20,7 @@ return [
         'apply' => 'Nộp đơn',
         'draft' => 'Nháp',
         'export' => 'Xuất PDF',
+        'approval' => 'Phê Duyệt',
     ],
     'rememberme' => 'Nhớ đăng nhập',
     'forgotpassword' => 'Quên mật khẩu ?',
@@ -93,32 +94,100 @@ return [
     ],
     'file' => 'Tập tin',
     'choose_file' => 'Chọn tập tin',
+    //Type Application
+    'application_list' => 'Danh sách đơn',
+    'leave_application' => 'Đơn xin nghỉ phép',
+    'biz_application' => 'Đơn công tác',
+    'entertaiment_application' => 'Đơn tiếp khách',
+    /**
+     * Date From - Date To (Search)
+     */
+    'from' => 'Từ',
+    'to' => 'Đến',
+    'date' => 'Ngày',
+    'date_from' => 'Từ ngày',
+    'date_to' => 'Đến ngày',
     /**
      * Dashboard
      */
-    'dashboard' => [    
-        //date
-        'from' => 'Từ',
-        'to' => 'Đến',
-        'date' => 'Ngày',
-        'date_from' => 'Từ ngày',
-        'date_to' => 'Đến ngày',
+    'dashboard' => [
         //form
-        'application_to' => 'Application No',
-        'application_name' => 'Application Name',
-        'status' => 'Status',
-        'apply_date' => 'Apply Date',
-        'view_details' => 'View Details',
-        'applying' => 'Applying',
-        'approval' => 'Approval',
-        'declined' => 'Declined',
-        'reject' => 'Reject',
-        'completed' => 'Completed',
-        //check validation (create/edit)
         'list_application' => 'Danh sách Đơn',
-        'application_list' => 'Danh sách đơn',
-        'leave_application' => 'Đơn xin nghỉ phép',
-        'biz_application' => 'Đơn công tác',
-        'entertaiment_application' => 'Đơn tiếp khách',
+        'application_to' => 'Số',
+        'application_name' => 'Tên Đơn',
+        'status' => 'Trạng Thái',
+        'apply_date' => 'Ngày Nộp Đơn',
+        'view_details' => 'Chi tiết',
+        'applying' => 'Đơn Chuẩn Bị Duyệt',
+        'approval' => 'Đơn Đang Phê Duyệt',
+        'declined' => 'Đơn Không Duyệt',
+        'reject' => 'Đơn Trả Lại',
+        'completed' => 'Đơn Hoàn Thành',
+    ],
+    /**
+     * Draft
+     */
+    'draft' => [
+        //forms
+        'no' => 'Số',
+        'application_name' => 'Tên Đơn',
+        'date_create' => 'Ngày Tạo',
+        'action' => 'Chức Năng',
+    ],
+    /**
+     * Status
+     */
+    'status' => [
+        //forms
+        'list_of_applying_documents' => 'Danh Sách Đơn Đang Duyệt',
+        'no' => 'Số',
+        'application_type' => 'Tên Đơn',
+        'apply_date' => 'Ngày Nộp Đơn',
+        'next_approver' => 'Người Duyệt Tiếp Theo',
+        'view_details' => 'Chi tiết',
+    ],
+    /**
+     * Company
+     */
+    'company' => [
+        'keyword' => 'Từ Khóa',
+        'company_registration' => 'Thêm Thông Tin Công Ty',
+        //forms
+        'no' => 'Số',
+        'company_information' => 'Thông Tin Công Ty',
+        'company_name' => 'Tên Công Ty',
+        'company_country' => 'Đất Nước',
+        'company_tell' => 'Số Điện Thoại',
+        'company_address' => 'Địa Chỉ',
+        'att_information' => 'Thông Tin Người Nhận',
+        'att_name' => 'Tên Người Nhận',
+        'att_department' => 'Bộ Phận',
+        'att_email' => 'E-mail',
+        'text' => 'Ghi Chú',
+        'action' => 'Chức Năng',
+    ],
+    /**
+     * Budget
+     */
+    'budget' => [
+        'business_trip' => 'Phí Công Tác',
+        'assignment' => 'Trước Duyệt',
+        'settlement' => 'Sau Duyệt',
+        'economy_class' => 'Hạng Phổ Thông',
+        'business_class' => 'Hạng Thương Gia',
+        'pre_approvel_settlement_for_entertainment_free' => 'Phí Giải Trí (Trước và Sau Duyệt)',
+        'not_po' => 'Not PO',
+        'po' => 'PO',
+    ],
+    /**
+     * Flow
+     */
+    'flow' => [
+        'approval_flow_list' => 'Danh Sách Luồng Phê Duyệt',
+        'no' => 'Số',
+        'flow_name' => 'Tên Luồng',
+        'step' => 'Bước',
+        'final_approver' => 'Người Duyệt Sau Cùng',
+        'Actions' => 'Chức Năng',
     ],
 ];

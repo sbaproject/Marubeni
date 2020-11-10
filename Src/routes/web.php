@@ -88,7 +88,7 @@ Route::middleware('auth')->group(function () {
                 Route::get('/', [AdminCompanyController::class, 'index'])->name('index');
                 Route::get('add', [AdminCompanyController::class, 'create'])->name('create');
                 Route::post('add', [AdminCompanyController::class, 'store'])->name('store');
-                Route::get('edit/{id}', [AdminCompanyController::class, 'show'])->name('show');
+                Route::get('edit/{company}', [AdminCompanyController::class, 'show'])->name('show');
                 Route::post('edit/{id}', [AdminCompanyController::class, 'update'])->name('update');
                 Route::post('delete/{id}', [AdminCompanyController::class, 'delete'])->name('delete');
             });
