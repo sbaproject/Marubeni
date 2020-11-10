@@ -16,5 +16,20 @@ class Businesstrip extends Model
      *
      * @var array
      */
+    protected $fillable = [
+        'application_id',
+        'destinations',
+        'trip_dt_from',
+        'trip_dt_to',
+        'accommodation',
+        'accompany',
+        'borne_by',
+        'comment',
+        'file_path',
+        'created_by',
+        'updated_by',
+        'created_at',
+        'updated_at',
+    ];
 
 }
