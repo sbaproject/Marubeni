@@ -83,6 +83,9 @@ class UserStatusController extends Controller
                 ->paginate(5);
         }
 
-        return view('user.status', compact('list_applications_status'));
+        // Type Application
+        $intstatus = (int)$status;
+
+        return view('user.status', compact('list_applications_status','intstatus'));
     }
 }

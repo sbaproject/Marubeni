@@ -140,6 +140,11 @@ return [
     'status' => [
         //forms
         'list_of_applying_documents' => 'Danh Sách Đơn Đang Duyệt',
+        'list_of_approval_un_documents' => 'List of Approved/Under payment Documents',
+        'list_of_approval_in_documents' => 'List of Approved/in-processing of payment Documents',
+        'list_of_declined_documents' => 'Danh Sách Đơn Không Duyệt',
+        'list_of_reject_documents' => 'Danh Sách Đơn Trả Lại',
+        'list_of_completed_documents' => 'Danh Sách Đơn Hoàn Thành',
         'no' => 'Số',
         'application_type' => 'Tên Đơn',
         'apply_date' => 'Ngày Nộp Đơn',

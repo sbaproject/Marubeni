@@ -136,7 +136,12 @@ return [
      */
     'status' => [
         //forms
-        'list_of_applying_documents' => 'List of applying documents',
+        'list_of_applying_documents' => 'List of Applying Documents',
+        'list_of_approval_un_documents' => 'List of Approved/Under payment Documents',
+        'list_of_approval_in_documents' => 'List of Approved/in-processing of payment Documents',
+        'list_of_declined_documents' => 'List of Declined Documents',
+        'list_of_reject_documents' => 'List of Reject Documents',
+        'list_of_completed_documents' => 'List of Completed Documents',
         'no' => 'No',
         'application_type' => 'Application Type',
         'apply_date' => 'Apply Date',
