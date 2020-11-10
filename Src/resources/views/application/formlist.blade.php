@@ -24,7 +24,7 @@
 						</a>
 					</div>
 					<div class="col-sm-4">
-						<a href="/pages/examples/05-business-trip-application.html">
+						<a href="{{ route('user.business.create') }}">
 							<div class="application-item">
 								{{ __('label.form.biz_trip') }}
 							</div>

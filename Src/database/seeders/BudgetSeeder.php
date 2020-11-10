@@ -17,41 +17,43 @@ class BudgetSeeder extends Seeder
      * @return void
      */
     public function run()
-    {    
+    {
         /**
          * budgets
          */
 
+         DB::table('budgets')->truncate();
+
         // Biz Trip
 
-        DB::table('budgets')->insert([           
-            'budget_type' => 2,  
+        DB::table('budgets')->insert([
+            'budget_type' => 2,
             'step_type' => 1,
-            'position' => 'Economy',
+            'position' => 3,
             'amount' => 0,
             'created_at' => Carbon::now(),
         ]);
 
-        DB::table('budgets')->insert([            
-            'budget_type' => 2,  
+        DB::table('budgets')->insert([
+            'budget_type' => 2,
             'step_type' => 2,
-            'position' => 'Economy',
+            'position' => 3,
             'amount' => 0,
             'created_at' => Carbon::now(),
         ]);
 
-        DB::table('budgets')->insert([            
-            'budget_type' => 2,  
+        DB::table('budgets')->insert([
+            'budget_type' => 2,
             'step_type' => 1,
-            'position' => 'Business',
+            'position' => 4,
             'amount' => 0,
             'created_at' => Carbon::now(),
         ]);
 
-        DB::table('budgets')->insert([           
-            'budget_type' => 2,  
+        DB::table('budgets')->insert([
+            'budget_type' => 2,
             'step_type' => 2,
-            'position' => 'Business',
+            'position' => 4,
             'amount' => 0,
             'created_at' => Carbon::now(),
         ]);
@@ -59,36 +61,36 @@ class BudgetSeeder extends Seeder
 
         // Entertaiment
 
-        DB::table('budgets')->insert([           
-            'budget_type' => 3,  
+        DB::table('budgets')->insert([
+            'budget_type' => 3,
             'step_type' => 1,
-            'position' => 'PO',
+            'position' => 1,
             'amount' => 2000000,
             'created_at' => Carbon::now(),
         ]);
 
-        DB::table('budgets')->insert([            
-            'budget_type' => 3,  
+        DB::table('budgets')->insert([
+            'budget_type' => 3,
             'step_type' => 2,
-            'position' => 'PO',
+            'position' => 1,
             'amount' => 2000000,
             'created_at' => Carbon::now(),
         ]);
 
-        DB::table('budgets')->insert([            
-            'budget_type' => 3,  
+        DB::table('budgets')->insert([
+            'budget_type' => 3,
             'step_type' => 1,
-            'position' => 'Not PO',
+            'position' => 2,
             'amount' => 4000000,
             'created_at' => Carbon::now(),
         ]);
 
-        DB::table('budgets')->insert([           
-            'budget_type' => 3,  
+        DB::table('budgets')->insert([
+            'budget_type' => 3,
             'step_type' => 2,
-            'position' => 'Not PO',
+            'position' => 2,
             'amount' => 4000000,
             'created_at' => Carbon::now(),
-        ]);        
+        ]);
     }
 }

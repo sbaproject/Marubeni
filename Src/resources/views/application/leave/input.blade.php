@@ -30,7 +30,7 @@
     $maternity_from = old('maternity_from') ?? ($model->maternity_from ?? null);
     $maternity_to = old('maternity_to') ?? ($model->maternity_to ?? null);
     $file_path = old('file_path') ?? ($model->file_path ?? null);
-    $days_use = old('days_user') ?? ($model->days_use ?? null);
+    $days_use = old('days_use') ?? ($model->days_use ?? null);
     $times_use = old('times_use') ?? ($model->times_use ?? null);
 @endphp
 <section class="content leave-application">

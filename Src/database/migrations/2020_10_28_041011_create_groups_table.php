@@ -15,14 +15,14 @@ class CreateGroupsTable extends Migration
     {
         Schema::create('groups', function (Blueprint $table) {
             $table->unsignedInteger('id', true);
-            $table->unsignedInteger('budget_id');
+            $table->unsignedInteger('budget_id')->nullable();
             $table->unsignedInteger('applicant_id');
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('budget_id')->references('id')->on('budgets');
+            // $table->foreign('budget_id')->references('id')->on('budgets');
             $table->foreign('applicant_id')->references('id')->on('applicants');
         });
     }

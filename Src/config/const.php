@@ -84,5 +84,16 @@ return [
             'reject' => -2,
             'completed' => 99,
         ],
-    ],
+	],
+	/**
+	 * Budgets
+	 */
+	'budget' => [
+		'position' => [
+			'po' => 1,
+			'not_po' => 2,
+			'economy' => 3,
+			'business' => 4,
+		]
+	]
 ];

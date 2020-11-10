@@ -7,6 +7,11 @@
 @section('css')
 {{-- for this view --}}
 <link rel="stylesheet" href="css/user/04_leave_application.css">
+<style type="text/css">
+    .invalid-feedback{
+        display: block;
+    }
+</style>
 @endsection
 
 @section('js')
@@ -19,7 +24,16 @@
 
 @section('content')
 @php
+
+$destinations = old('destinations') ?? $model->destinations ?? null;
+$trip_dt_from = old('trip_dt_from') ?? $model->trip_dt_from ?? null;
+$trip_dt_to = old('trip_dt_to') ?? $model->trip_dt_to ?? null;
+$accommodation = old('accommodation') ?? $model->accommodation ?? null;
+$accompany = old('accompany') ?? $model->accompany ?? null;
+$borne_by = old('borne_by') ?? $model->borne_by ?? null;
+$comment = old('comment') ?? $model->comment ?? null;
 $file_path = old('file_path') ?? ($model->file_path ?? null);
+
 @endphp
 <section class="content leave-application">
     <x-alert />
@@ -53,7 +67,7 @@ $file_path = old('file_path') ?? ($model->file_path ?? null);
                     </div>
                     <div class="col-sm-10">
                         <input type="text" id="destinations" name="destinations" class="form-control"
-                            autocomplete="off">
+                            autocomplete="off" value="{{ $destinations }}">
                     </div>
                 </div>
                 <hr>
@@ -67,8 +81,8 @@ $file_path = old('file_path') ?? ($model->file_path ?? null);
                                 <span class="col-md-3">From</span>
                                 <div class="col-md-9">
                                     <div class="form-group">
-                                        <div class="input-group date" id="trip_from" data-target-input="nearest">
-                                            <input type="text" class="form-control datetimepicker-input"
+                                        <div id="trip_from" data-target-input="nearest" class="input-group date">
+                                            <input type="text" class="form-control datetimepicker-input @error('trip_dt_from') is-invalid @enderror"
                                                 data-target="#trip_from" />
                                             <div class="input-group-addon input-group-append"
                                                 data-target="#dateLeaveFrom" data-toggle="datetimepicker">
@@ -76,7 +90,12 @@ $file_path = old('file_path') ?? ($model->file_path ?? null);
                                                 </div>
                                             </div>
                                         </div>
-                                        <input type="hidden" id="trip_dt_from" name="trip_dt_from" value="">
+                                        @error('trip_from')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                        <input type="hidden" id="trip_dt_from" name="trip_dt_from" value="{{ $trip_dt_from }}">
                                     </div>
                                 </div>
                             </div>
@@ -85,15 +104,20 @@ $file_path = old('file_path') ?? ($model->file_path ?? null);
                                 <div class="col-md-9">
                                     <div class="form-group">
                                         <div class="input-group date" id="trip_to" data-target-input="nearest">
-                                            <input type="text" class="form-control datetimepicker-input"
-                                                data-target="#trip_to" />
+                                            <input type="text" class="form-control datetimepicker-input @error('trip_dt_to') is-invalid @enderror"
+                                                data-target="#trip_to"/>
                                             <div class="input-group-addon input-group-append"
                                                 data-target="#dateLeaveFrom" data-toggle="datetimepicker">
                                                 <div class="input-group-text"><i class="fa fa-calendar-alt"></i>
                                                 </div>
                                             </div>
                                         </div>
-                                        <input type="hidden" id="trip_dt_to" name="trip_dt_to" value="">
+                                        @error('trip_dt_to')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                        <input type="hidden" id="trip_dt_to" name="trip_dt_to" value="{{ $trip_dt_to }}">
                                     </div>
                                 </div>
                             </div>
@@ -112,13 +136,13 @@ $file_path = old('file_path') ?? ($model->file_path ?? null);
                                     <div class="row mb-2">
                                         <span class="col-md-3">Departure</span>
                                         <div class="col-md-9">
-                                            <input type="text" class="form-control" name="departure-no">
+                                            <input type="text" class="form-control" name="departure[]">
                                         </div>
                                     </div>
                                     <div class="row">
                                         <span class="col-md-3">Arrival</span>
                                         <div class="col-md-9">
-                                            <input type="text" class="form-control" name="arrival-no">
+                                            <input type="text" class="form-control" name="arrival[]">
                                         </div>
                                     </div>
                                 </div>
@@ -126,7 +150,33 @@ $file_path = old('file_path') ?? ($model->file_path ?? null);
                                     <div class="row">
                                         <span class="col-md-3">Flight No</span>
                                         <div class="col-md-9">
-                                            <input type="text" class="form-control" name="flight-no">
+                                            <input type="text" class="form-control" name="method[]">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card card-body card-itinerary-transport">
+                            <div class="form-group row">
+                                <div class="col-sm-6">
+                                    <div class="row mb-2">
+                                        <span class="col-md-3">Departure</span>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="departure[]">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <span class="col-md-3">Arrival</span>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="arrival[]">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="row">
+                                        <span class="col-md-3">Flight No</span>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="method[]">
                                         </div>
                                     </div>
                                 </div>
@@ -142,7 +192,7 @@ $file_path = old('file_path') ?? ($model->file_path ?? null);
                     </div>
                     <div class="col-sm-10">
                         <input type="text" id="accommodation" name="accommodation" class="form-control"
-                            autocomplete="off">
+                            autocomplete="off" value="{{ $accommodation }}">
                     </div>
                 </div>
                 <hr>
@@ -152,7 +202,7 @@ $file_path = old('file_path') ?? ($model->file_path ?? null);
                     </div>
                     <div class="col-sm-10">
                         <input type="text" class="form-control" id="accompany" name="accompany"
-                            autocomplete="off">
+                            autocomplete="off" value="{{ $accompany }}">
                     </div>
                 </div>
                 <hr>
@@ -161,7 +211,8 @@ $file_path = old('file_path') ?? ($model->file_path ?? null);
                         <label>Expenses to BE Borne by</label>
                     </div>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="borne_by" name="borne_by" autocomplete="off">
+                        <input type="text" class="form-control" id="borne_by" name="borne_by"
+                             autocomplete="off" value="{{ $borne_by }}">
                     </div>
                 </div>
                 <hr>
@@ -170,7 +221,7 @@ $file_path = old('file_path') ?? ($model->file_path ?? null);
                         <label>Comment</label>
                     </div>
                     <div class="col-sm-10">
-                        <textarea class="form-control" id="comment" name="comment" rows="2" style="width: 100%;"></textarea>
+                        <textarea class="form-control" id="comment" name="comment" rows="2" style="width: 100%;">{{ $comment }}</textarea>
                     </div>
                 </div>
                 <hr>
