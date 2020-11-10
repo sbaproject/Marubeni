@@ -91,16 +91,34 @@ return [
             'hours' => 'Giờ',
         ],
     ],
-    'from' => 'Từ',
-    'to' => 'Đến',
-    'date' => 'Ngày',
-    'date_from' => 'Từ ngày',
-    'date_to' => 'Đến ngày',
-    'list_application' => 'Danh sách Đơn',
-    'application_list' => 'Danh sách đơn',
-    'leave_application' => 'Đơn xin nghỉ phép',
-    'biz_application' => 'Đơn công tác',
-    'entertaiment_application' => 'Đơn tiếp khách',
     'file' => 'Tập tin',
     'choose_file' => 'Chọn tập tin',
+    /**
+     * Dashboard
+     */
+    'dashboard' => [    
+        //date
+        'from' => 'Từ',
+        'to' => 'Đến',
+        'date' => 'Ngày',
+        'date_from' => 'Từ ngày',
+        'date_to' => 'Đến ngày',
+        //form
+        'application_to' => 'Application No',
+        'application_name' => 'Application Name',
+        'status' => 'Status',
+        'apply_date' => 'Apply Date',
+        'view_details' => 'View Details',
+        'applying' => 'Applying',
+        'approval' => 'Approval',
+        'declined' => 'Declined',
+        'reject' => 'Reject',
+        'completed' => 'Completed',
+        //check validation (create/edit)
+        'list_application' => 'Danh sách Đơn',
+        'application_list' => 'Danh sách đơn',
+        'leave_application' => 'Đơn xin nghỉ phép',
+        'biz_application' => 'Đơn công tác',
+        'entertaiment_application' => 'Đơn tiếp khách',
+    ],
 ];

@@ -1,10 +1,11 @@
 <?php
 
 /**
- * Label
- */
+                 * Label
+                 */
 
 return [
+
     /**
      * Button
      */
@@ -87,16 +88,34 @@ return [
             'hours' => 'Hours',
         ],
     ],
-    'from' => 'From',
-    'to' => 'To',
-    'date' => 'Date',
-    'date_from' => 'From',
-    'date_to' => 'To',
-    'list_application' => 'List of Applications',
-    'application_list' => 'Application List',
-    'leave_application' => 'Leave application',
-    'biz_application' => 'Business Trip Application',
-    'entertaiment_application' => 'Entertaiment Application',
     'file' => 'File',
     'choose_file' => 'Choose file',
+    /**
+     * Leave Application
+     */
+    'dashboard' => [
+        //date
+        'from' => 'From',
+        'to' => 'To',
+        'date' => 'Date',
+        'date_from' => 'From',
+        'date_to' => 'To',
+        //form
+        'application_to' => 'Application No',
+        'application_name' => 'Application Name',
+        'status' => 'Status',
+        'apply_date' => 'Apply Date',
+        'view_details' => 'View Details',
+        'applying' => 'Applying',
+        'approval' => 'Approval',
+        'declined' => 'Declined',
+        'reject' => 'Reject',
+        'completed' => 'Completed',
+        //check validation (create/edit)
+        'list_application' => 'List of Applications',
+        'application_list' => 'Application List',
+        'leave_application' => 'Leave application',
+        'biz_application' => 'Business Trip Application',
+        'entertaiment_application' => 'Entertaiment Application',
+    ],
 ];
