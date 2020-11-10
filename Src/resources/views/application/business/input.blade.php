@@ -25,14 +25,14 @@
 @section('content')
 @php
 
-$destinations = old('destinations') ?? $model->destinations ?? null;
-$trip_dt_from = old('trip_dt_from') ?? $model->trip_dt_from ?? null;
-$trip_dt_to = old('trip_dt_to') ?? $model->trip_dt_to ?? null;
-$accommodation = old('accommodation') ?? $model->accommodation ?? null;
-$accompany = old('accompany') ?? $model->accompany ?? null;
-$borne_by = old('borne_by') ?? $model->borne_by ?? null;
-$comment = old('comment') ?? $model->comment ?? null;
-$file_path = old('file_path') ?? ($model->file_path ?? null);
+$destinations   = Session::has('inputs') ? Session::get('inputs')['destinations']  : ( isset($model) ? $model->destinations : null);
+$trip_dt_from   = Session::has('inputs') ? Session::get('inputs')['trip_dt_from']  : ( isset($model) ? $model->trip_dt_from : null);
+$trip_dt_to     = Session::has('inputs') ? Session::get('inputs')['trip_dt_to']    : ( isset($model) ? $model->trip_dt_to : null);
+$accommodation  = Session::has('inputs') ? Session::get('inputs')['accommodation'] : ( isset($model) ? $model->accommodation : null);
+$accompany      = Session::has('inputs') ? Session::get('inputs')['accompany']     : ( isset($model) ? $model->accompany : null);
+$borne_by       = Session::has('inputs') ? Session::get('inputs')['borne_by']      : ( isset($model) ? $model->borne_by : null);
+$comment        = Session::has('inputs') ? Session::get('inputs')['comment']       : ( isset($model) ? $model->comment : null);
+$file_path      = Session::has('inputs') ? Session::get('inputs')['file_path']     : ( isset($model) ? $model->file_path : null);
 
 @endphp
 <section class="content leave-application">

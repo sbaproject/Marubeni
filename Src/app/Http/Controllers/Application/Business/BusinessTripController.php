@@ -22,8 +22,7 @@ class BusinessTripController extends Controller
 
     public function create()
     {
-        $method = [1, 2];
-        return view('application.business.input', compact('method'));
+        return view('application.business.input');
     }
 
     public function store(Request $request)
@@ -36,24 +35,19 @@ class BusinessTripController extends Controller
             // return $this->pdf($request, $inputs);
         }
         // validate
-        $this->doValidate($request, $inputs);
+        return $this->doValidate($request, $inputs);
 
         // save
         $this->doSaveData($request, $inputs);
 
-        // continue create new application after save success
-        if (isset($inputs['subsequent'])) {
-            return Common::redirectRouteWithAlertSuccess('user.business.create');
-        }
-        // back to list application
-        return Common::redirectRouteWithAlertSuccess('user.form.index');
+        // redirect atfer save
+        return $this->doRedirect($inputs);
     }
 
     public function show($id)
     {
         // check owner
         $application = Application::findOrFail($id);
-
         if (Auth::user()->id !== $application->created_by) {
             abort('403');
         }
@@ -64,9 +58,29 @@ class BusinessTripController extends Controller
         return view('application.business.input', compact('application', 'model', 'id'));
     }
 
-    public function update()
+    public function update(Request $request, $id)
     {
+        // check owner
+        $mApplication = Application::findOrFail($id);
+        if (Auth::user()->id !== $mApplication->created_by) {
+            abort('403');
+        }
 
+        // get inputs
+        $inputs = $request->all();
+
+        // export pdf
+        if (isset($inputs['pdf'])) {
+            // return $this->pdf($request, $inputs);
+        }
+        // validate
+        return $this->doValidate($request, $inputs);
+
+        // save
+        $this->doSaveData($request, $inputs, $mApplication);
+
+        // redirect atfer save
+        return $this->doRedirect($inputs);
     }
 
     public function doValidate($request, $inputs)
@@ -82,7 +96,10 @@ class BusinessTripController extends Controller
                 $rules['trip_dt_to'] = 'required';
             }
             $validator = Validator::make($inputs, $rules);
-            $validator->validate();
+            if($validator->fails()){
+                return redirect()->back()->with('inputs', $inputs)->withErrors($validator);
+            }
+            // $validator->validate();
         }
     }
 
@@ -160,13 +177,13 @@ class BusinessTripController extends Controller
              *-------------------------*/
             // delete old file
             if ($request->id) {
-                $leave = BusinessTrip::where('application_id', $mApplication->id)->first();
-                $filePath = $leave->file_path;
+                $biz = BusinessTrip::where('application_id', $mApplication->id)->first();
+                $filePath = $biz->file_path;
                 // attchached file was changed
                 if ($inputs['file_path'] != $filePath) {
-                    if (!empty($leave->file_path)) {
-                        if (Storage::exists($leave->file_path)) {
-                            Storage::delete($leave->file_path);
+                    if (!empty($biz->file_path)) {
+                        if (Storage::exists($biz->file_path)) {
+                            Storage::delete($biz->file_path);
                         }
                     }
                     $filePath = null;
@@ -201,5 +218,15 @@ class BusinessTripController extends Controller
 
             DB::table('businesstrips')->updateOrInsert(['application_id' => $request->id], $bizData);
         });
+    }
+
+    public function doRedirect($inputs)
+    {
+        // continue create new application after save success
+        if (isset($inputs['subsequent'])) {
+            return Common::redirectRouteWithAlertSuccess('user.business.create');
+        }
+        // back to list application
+        return Common::redirectRouteWithAlertSuccess('user.form.index');
     }
 }
