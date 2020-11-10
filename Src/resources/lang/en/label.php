@@ -90,17 +90,25 @@ return [
     ],
     'file' => 'File',
     'choose_file' => 'Choose file',
+    //Type Application
+    'application_list' => 'Application List',
+    'leave_application' => 'Leave application',
+    'biz_application' => 'Business Trip Application',
+    'entertaiment_application' => 'Entertaiment Application',
+    /**
+     * Date From - Date To (Search)
+     */
+    'from' => 'From',
+    'to' => 'To',
+    'date' => 'Date',
+    'date_from' => 'From',
+    'date_to' => 'To',
     /**
      * Leave Application
      */
     'dashboard' => [
-        //date
-        'from' => 'From',
-        'to' => 'To',
-        'date' => 'Date',
-        'date_from' => 'From',
-        'date_to' => 'To',
         //form
+        'list_application' => 'List of Applications',
         'application_to' => 'Application No',
         'application_name' => 'Application Name',
         'status' => 'Status',
@@ -111,11 +119,71 @@ return [
         'declined' => 'Declined',
         'reject' => 'Reject',
         'completed' => 'Completed',
-        //check validation (create/edit)
-        'list_application' => 'List of Applications',
-        'application_list' => 'Application List',
-        'leave_application' => 'Leave application',
-        'biz_application' => 'Business Trip Application',
-        'entertaiment_application' => 'Entertaiment Application',
+
+    ],
+    /**
+     * Draft
+     */
+    'draft' => [
+        //Draft
+        'no' => 'No',
+        'application_name' => 'Application Name',
+        'date_create' => 'Date Created',
+        'action' => 'Actions',
+    ],
+    /**
+     * Status
+     */
+    'status' => [
+        //forms
+        'list_of_applying_documents' => 'List of applying documents',
+        'no' => 'No',
+        'application_type' => 'Application Type',
+        'apply_date' => 'Apply Date',
+        'next_approver' => 'Next Approver',
+        'view_details' => 'View Details',
+    ],
+    /**
+     * Company
+     */
+    'company' => [
+        'keyword' => 'Keyword',
+        'company_registration' => 'Company Registration',
+        //forms
+        'no' => 'No',
+        'company_information' => 'Company Information',
+        'company_name' => 'Company Name',
+        'company_country' => 'Country',
+        'company_tell' => 'Tell',
+        'company_address' => 'Address',
+        'att_information' => 'Attendants Information',
+        'att_name' => 'Name',
+        'att_department' => 'Department',
+        'att_email' => 'E-mail',
+        'text' => 'Text',
+    ],
+    /**
+     * Budget
+     */
+    'budget' => [
+        'business_trip' => 'BUSINESS TRIP',
+        'assignment' => 'Assignment',
+        'settlement' => 'Settlement',
+        'economy_class' => 'Economy Class',
+        'business_class' => 'Business Class',
+        'pre_approvel_settlement_for_entertainment_free' => 'PRE-APPROVAL & SETTLEMENT FOR ENTERTAINMENT FEE',
+        'not_po' => 'Not PO',
+        'po' => 'PO',
+    ],
+    /**
+     * Flow
+     */
+    'flow' => [
+        'approval_flow_list' => 'Approval Flow List',
+        'no' => 'No',
+        'flow_name' => 'Flow Name',
+        'step' => 'Step',
+        'final_approver' => 'Final Approver',
+        'Actions' => 'Actions',
     ],
 ];

@@ -9,7 +9,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-lg-6">
-                    <h1>SEARCH</h1>
+                    <h1>{{ __('label.button.search') }}</h1>
                 </div>
             </div>
         </div>
@@ -25,23 +25,21 @@
                                     <div class="col-xl-8 col-lg-9">
                                         <div class="form-group row">
                                             <label for="inputCompanyName"
-                                                class="col-lg-3 col-form-label text-center font-weight-normal">Company
-                                                name</label>
+                                                class="col-lg-3 col-form-label text-center font-weight-normal">{{ __('label.company.company_name') }}</label>
                                             <div class="col-lg-9">
                                                 <input type="text" name="company_name"
                                                     value="{{ !empty($req_arr['company_name']) ? $req_arr['company_name'] : '' }}"
-                                                    class="form-control" id="inputCompanyName" placeholder="Company name">
+                                                    class="form-control" id="inputCompanyName" placeholder="{{ __('label.company.company_name') }}">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label for="inputAttendantsName"
-                                                class="col-lg-3 col-form-label text-center font-weight-normal">Attendants
-                                                Name</label>
+                                                class="col-lg-3 col-form-label text-center font-weight-normal">{{ __('label.company.att_name') }}</label>
                                             <div class="col-lg-9">
                                                 <input type="text" name="company_att_name"
                                                     value="{{ !empty($req_arr['company_att_name']) ? $req_arr['company_att_name'] : '' }}"
                                                     class="form-control" id="inputAttendantsName"
-                                                    placeholder="Attendants name">
+                                                    placeholder="{{ __('label.company.att_name') }}">
                                             </div>
                                         </div>
                                     </div>
@@ -50,18 +48,18 @@
                                     <div class="col-xl-8 col-lg-9">
                                         <div class="form-group row">
                                             <label for="inputKeyword"
-                                                class="col-lg-3 col-form-label text-center font-weight-normal">Keyword</label>
+                                                class="col-lg-3 col-form-label text-center font-weight-normal">{{ __('label.company.keyword') }}</label>
                                             <div class="col-lg-9">
                                                 <input type="text" class="form-control"
                                                     value="{{ !empty($req_arr['company_keyword']) ? $req_arr['company_keyword'] : '' }}"
-                                                    name="company_keyword" id="inputKeyword" placeholder="Keyword">
+                                                    name="company_keyword" id="inputKeyword" placeholder="{{ __('label.company.keyword') }}">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-xl-3 col-lg-3">
                                         <div class="btn-search">
                                             <button class="btn btn-default sty-search" type="submit"><i class="fa fa-search"
-                                                    style="margin-right:5px;"></i>Search</button>
+                                                    style="margin-right:5px;"></i>{{ __('label.button.search') }}</button>
                                         </div>
                                     </div>
                                 </div>
@@ -76,7 +74,7 @@
     <section class="content">
         <div class="button_wrap">
             <a href="{{ route('admin.company.create') }}" class="btn btn-danger  pt-1 pb-1 pl-5 pr-5"><i
-                    class="nav-icon fa fa-plus-circle"></i> Add</a>
+                    class="nav-icon fa fa-plus-circle" style="margin-right:5px;"></i>{{ __('label.button.addnew') }}</a>
         </div>
         <x-alert />
         <div class="card">
@@ -85,17 +83,17 @@
                     <table class="table table-bordered " style="min-width: 500px;">
                         <thead>
                             <tr>
-                                <th rowspan="2" class="align-middle" style="width: 10px;">No</th>
-                                <th colspan="3" class="miss-border">Company Information</th>
-                                <th colspan="2" class="miss-border">Attendants Information</th>
-                                <th rowspan="2" class="align-middle" style="width: 150px;">Actions</th>
+                                <th rowspan="2" class="align-middle" style="width: 10px;">{{ __('label.company.no') }}</th>
+                                <th colspan="3" class="miss-border">{{ __('label.company.company_information') }}</th>
+                                <th colspan="2" class="miss-border">{{ __('label.company.att_information') }}</th>
+                                <th rowspan="2" class="align-middle" style="width: 150px;">{{ __('label.company.action') }}</th>
                             </tr>
                             <tr>
-                                <th>Name</th>
-                                <th>Address</th>
-                                <th>Tell</th>
-                                <th>Name</th>
-                                <th>Department</th>
+                                <th>{{ __('label.company.company_name') }}</th>
+                                <th>{{ __('label.company.company_address') }}</th>
+                                <th>{{ __('label.company.company_tell') }}</th>
+                                <th>{{ __('label.company.att_name') }}</th>
+                                <th>{{ __('label.company.att_department') }}</th>
                             </tr>
                         </thead>
                         <tbody>

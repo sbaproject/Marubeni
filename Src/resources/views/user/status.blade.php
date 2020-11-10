@@ -16,7 +16,7 @@
             @csrf
             <div class="row">
                 <div class="col-md-4 col-sm-4">
-                    <label class="lbl-from">From</label>
+                    <label class="lbl-from">{{ __('label.date_from') }}</label>
                     <div class="form-group">
                         <div class="input-group date" id="dateFrom" data-target-input="nearest">
                             <div class="input-group-addon input-group-append" data-target="#dateFrom"
@@ -29,7 +29,7 @@
                     </div>
                 </div>
                 <div class="col-md-4 col-sm-4">
-                    <label class="lbl-to">To</label>
+                    <label class="lbl-to">{{ __('label.date_to') }}</label>
                     <div class="form-group">
                         <div class="input-group date" id="dateTo" data-target-input="nearest">
                             <div class="input-group-addon input-group-append" data-target="#dateTo"
@@ -44,7 +44,7 @@
                 <div class="col-xl-2 col-lg-3 col-md-3 col-sm-3">
                     <div class="btn-search">
                         <button class="btn btn-default sty-search" type="submit"><i class="fa fa-search"
-                                style="margin-right:5px;"></i>Search</button>
+                                style="margin-right:5px;"></i>{{ __('label.button.search') }}</button>
                     </div>
                 </div>
         </form>
@@ -53,16 +53,17 @@
     <!-- Main content -->
     <section class="content-status">
         <h4 class="mb-2" style="border-bottom: 1px solid #000;font-weight: bold;"><i class="nav-icon fas fa-file-alt"
-                aria-hidden="true" style="margin-right: 5px;margin-bottom: 5px;"></i>List of applying documents</h4>
+                aria-hidden="true"
+                style="margin-right: 5px;margin-bottom: 5px;"></i>{{ __('label.status.list_of_applying_documents') }}</h4>
         <div class="card">
             <div class="card-body p-0 card-list-items">
                 <table class="table">
                     <thead>
                         <tr class="list-title">
-                            <th>Application No</th>
-                            <th>Application type</th>
-                            <th>Apply Date</th>
-                            <th>Next Approver</th>
+                            <th>{{ __('label.status.no') }}</th>
+                            <th>{{ __('label.status.application_type') }}</th>
+                            <th>{{ __('label.status.apply_date') }}</th>
+                            <th>{{ __('label.status.next_approver') }}</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -85,8 +86,9 @@
                                     <td>{{ !empty($application_status->nameuser) ? $application_status->nameuser : '' }}
                                     </td>
                                     <td>
-                                        <a class="btn btn-details" href="/pages/examples/09_application_info.html">View
-                                            Details<i class="fas fa-angle-right" style="margin-left: 5px;"></i></a>
+                                        <a class="btn btn-details"
+                                            href="/pages/examples/09_application_info.html">{{ __('label.status.view_details') }}<i
+                                                class="fas fa-angle-right" style="margin-left: 5px;"></i></a>
                                     </td>
                                     </tr>
                                     @php
