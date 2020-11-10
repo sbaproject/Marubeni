@@ -110,7 +110,7 @@ return [
     'dashboard' => [
         //form
         'list_application' => 'List of Applications',
-        'application_to' => 'Application No',
+        'application_no' => 'Application No',
         'application_name' => 'Application Name',
         'status' => 'Status',
         'apply_date' => 'Apply Date',

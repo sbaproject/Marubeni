@@ -113,8 +113,8 @@ return [
     'dashboard' => [
         //form
         'list_application' => 'Danh sách Đơn',
-        'application_to' => 'Số',
-        'application_name' => 'Tên Đơn',
+        'application_no' => 'Mã Đơn',
+        'application_name' => 'Loại Đơn',
         'status' => 'Trạng Thái',
         'apply_date' => 'Ngày Nộp Đơn',
         'view_details' => 'Chi tiết',
@@ -129,8 +129,8 @@ return [
      */
     'draft' => [
         //forms
-        'no' => 'Số',
-        'application_name' => 'Tên Đơn',
+        'no' => 'Mã Đơn',
+        'application_name' => 'Loại Đơn',
         'date_create' => 'Ngày Tạo',
         'action' => 'Chức Năng',
     ],

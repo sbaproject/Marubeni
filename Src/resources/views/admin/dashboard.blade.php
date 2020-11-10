@@ -100,7 +100,7 @@
                 <table class="table" id="table_list_status">
                     <thead>
                         <tr class="list-title">
-                            <th>{{ __('label.dashboard.application_to') }}</th>
+                            <th>{{ __('label.dashboard.application_no') }}</th>
                             <th>{{ __('label.dashboard.application_name') }}</th>
                             <th>{{ __('label.dashboard.status') }}</th>
                             <th>{{ __('label.dashboard.apply_date') }}</th>
@@ -109,17 +109,9 @@
                     </thead>
                     <tbody>
                         @if (isset($list_application))
-                            @php
-                            $page = request()->get("page");
-                            if ($page)
-                            $index = $page * 5 - 4;
-                            else
-                            $index = 1;
-                            @endphp
                             @foreach ($list_application as $application)
-                                @php
-                                if ($index < 10) $index='0' . $index @endphp <tr class="list-content">
-                                    <td>{{ $index }}</td>
+                                 <tr class="list-content">
+                                    <td>{{ !empty($application->application_no) ? $application->application_no : '' }}</td>
                                     <td>{{ !empty($application->form_id) ? $application->Form->name : '' }}</td>
                                     <td>
                                         <div
@@ -133,9 +125,6 @@
                                         <a class="btn btn-details" href="/pages/examples/09_application_info.html">{{ __('label.dashboard.view_details') }}<i class="fas fa-angle-right" style="margin-left: 5px;"></i></a>
                                     </td>
                                     </tr>
-                                    @php
-                                    $index++;
-                                    @endphp
                             @endforeach
                         @endif
                     </tbody>
