@@ -45,7 +45,7 @@ return [
     'file' => 'The :attribute must be a file.',
     'filled' => 'The :attribute field must have a value.',
     'gt' => [
-        'numeric' => 'The :attribute must be greater than :value.',
+        'numeric' => ':attribute phải lớn hơn :value.',
         'file' => 'The :attribute must be greater than :value kilobytes.',
         'string' => 'The :attribute must be greater than :value characters.',
         'array' => 'The :attribute must have more than :value items.',
@@ -181,6 +181,14 @@ return [
         'att_name'   => 'Tên',
         'att_department'   => 'Phòng',
         'att_mail' => 'E-mail',
+        //Budget
+        'amount1' => 'Hạng Thường',
+        'amount2' => 'Hạng Thương Gia',
+        'amount3' => 'Hạng Thường',
+        'amount4' => 'Hạng Thương Gia',
+        'amount5' => 'Not PO',
+        'amount6' => 'PO',
+        'amount7' => 'Not PO',
+        'amount8' => 'PO',
     ],
-
 ];

@@ -181,6 +181,15 @@ return [
         'att_name'   => 'Name',
         'att_department'   => 'Department',
         'att_mail' => 'E-mail',
+        //Budget
+        'amount1' => 'Economy Class',
+        'amount2' => 'Business Class',
+        'amount3' => 'Economy Class',
+        'amount4' => 'Business Class',
+        'amount5' => 'Not PO',
+        'amount6' => 'PO',
+        'amount7' => 'Not PO',
+        'amount8' => 'PO',
     ],
 
 ];

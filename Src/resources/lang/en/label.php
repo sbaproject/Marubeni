@@ -23,6 +23,7 @@ return [
         'apply' => 'Apply',
         'draft' => 'Draft',
         'export' => 'Export PDF',
+        'approval' => 'Approval',
     ],
     'rememberme' => 'Remember me',
     'forgotpassword' => 'Forgot your password ?',
@@ -119,7 +120,6 @@ return [
         'declined' => 'Declined',
         'reject' => 'Reject',
         'completed' => 'Completed',
-
     ],
     /**
      * Draft

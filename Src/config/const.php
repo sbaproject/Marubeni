@@ -94,6 +94,15 @@ return [
 			'not_po' => 2,
 			'economy' => 3,
 			'business' => 4,
-		]
+        ],
+        'budget_type' => [
+			'business' => 2,
+			'entertainment' => 3,
+        ],
+        'step_type' => [
+			'application' => 1,
+			'settlement' => 2,
+        ],
+
 	]
 ];

@@ -83,9 +83,8 @@ class AdminCompanyController extends Controller
         return Common::redirectRouteWithAlertSuccess('admin.company.index');
     }
 
-    public function show($id)
+    public function show(Company $company)
     {
-        $company = Company::where('id', $id)->first();
         return view('admin.company_edit',compact('company'));
     }
 
