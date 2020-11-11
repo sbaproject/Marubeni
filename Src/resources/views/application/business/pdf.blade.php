@@ -189,6 +189,7 @@
 					<div>Nơi công tác</div>
 				</td>
 				<td colspan="4" class="data">
+					Nơi công tácNơi công tácNơi công tácNơi công tácNơi công tácNơi công tácNơi công tácNơi công tácNơi công tácNơi công tácNơi công tácNơi công tácNơi công tácNơi công tácNơi công tácNơi công tácNơi công tác
 				</td>
 			</tr>
 			<tr>
@@ -204,19 +205,19 @@
 					<div>Period</div>
 					<div>Thời gian</div>
 				</td>
-				<td class="data" style="width: 7%;">
+				<td class="data" style="width: 8%;">
 					<div>From:</div>
 					<div>Từ</div>
 				</td>
 				<td style="width: 32%;"></td>
-				<td class="data"style="width: 7%;">
+				<td class="data"style="width: 8%;">
 					<div>To:</div>
 					<div>Đến</div>
 				</td>
 				<td style="width: 32%;"></td>
 			</tr>
 			<tr>
-				<td class="f" rowspan="2" style="vertical-align: middle">
+				<td class="f" rowspan="3" style="vertical-align: middle">
 					<div>Itinerary &#38; Transportation</div>
 					<div>Hành trình &#38; phương tiện</div>
 				</td>
@@ -231,21 +232,25 @@
 			</tr>
 			<tr>
 				<td colspan="2" >
-					<div>Departure - ArrivalDeparture - ArrivalDeparture - ArrivalDeparture - Arrival</div>
+					<div>Departure - ArrivalDeparture - ArrivalDeparture - ArrivalDeparture - ArrivalDeparture - ArrivalDeparture - ArrivalDeparture - ArrivalDeparture - Arrival</div>
 					<div>Hành trình</div>
 				</td>
 				<td colspan="2" >
 					<div>Flight No. &#38; Schedule</div>
-					<div>Chuyến bay & Lịch trình</div>
+					<div>Chuyến bay & Lịch trìnhChuyến bay & Lịch trìnhChuyến bay & Lịch trìnhChuyến bay & Lịch trìnhChuyến bay & Lịch trìnhChuyến bay & Lịch trình</div>
 				</td>
 			</tr>
+			<tr>
+				<td colspan="2">a</td>
+				<td colspan="2">a</td>
+			</tr>
+			{{-- <tr></tr> --}}
 			<tr>
 				<td class="f">
 					<div>Subject</div>
 					<div>Nội dung công tác</div>
 				</td>
-				<td colspan="4" class="data">
-				</td>
+				<td colspan="4"></td>
 			</tr>
 			{{-- <tr>
 				<td colspan="2" ></td>
@@ -277,19 +282,19 @@
 				<div>President or Executive VP</div>
 				<div>TGD hay PTGD</div>
 			</td>
-			<td style="text-align: center; vertical-align: middle;width:7% ;">BA</td>
-			<td style="text-align: center;width:24.3% ;">GM/ Giám đốc</td>
-			<td style="text-align: center;width:24.3% ;">Manager/ Trưởng phòng</td>
-			<td style="text-align: center;width:24.3% ;">HR. IC/ NV Nhân sự</td>
+			<td style="text-align: center; vertical-align: middle;width:8% ;">BA</td>
+			<td style="text-align: center;width:24% ;">GM/ Giám đốc</td>
+			<td style="text-align: center;width:24% ;">Manager/ Trưởng phòng</td>
+			<td style="text-align: center;width:24% ;">HR. IC/ NV Nhân sự</td>
 		</tr>
 		<tr>
-			<td style="text-align: center;height: 80px;">
+			<td class="f" style="text-align: center;height: 80px;">
 				<div>(HR) Internally Record by</div>
 			</td>
-			<td style="text-align: center; vertical-align: middle;width:7%;">Dept.</td>
-			<td style="text-align: center;width:24.3% ;">GM/ Giám đốc</td>
-			<td style="text-align: center;width:24.3% ;">Manager/ Trưởng phòng</td>
-			<td style="text-align: center;width:24.3% ;">Applicant/ Người đề nghị</td>
+			<td style="text-align: center; vertical-align: middle;width:8%;">Dept.</td>
+			<td style="text-align: center;width:24% ;">GM/ Giám đốc</td>
+			<td style="text-align: center;width:24% ;">Manager/ Trưởng phòng</td>
+			<td style="text-align: center;width:24% ;">Applicant/ Người đề nghị</td>
 		</tr>
 	</table>
 </body>
