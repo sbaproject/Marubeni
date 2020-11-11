@@ -37,10 +37,10 @@ class AdminCompanyController extends Controller
                 });
             }
 
-            $list_company = $list_company->whereNull('deleted_at')->orderBy('id', 'DESC')->paginate(5);
+            $list_company = $list_company->orderBy('id', 'DESC')->paginate(5);
         } else {
 
-            $list_company = Company::whereNull('deleted_at')->orderBy('id', 'DESC')->paginate(5);
+            $list_company = Company::orderBy('id', 'DESC')->paginate(5);
         }
 
         return view('admin.company', compact('list_company', 'req_arr'));

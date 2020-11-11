@@ -83,12 +83,14 @@ return [
     'application' => [
         'status' => [
             'applying' => 0,
-            'approvel_un' => 1,
-            'approvel_in' => 2,
+            'approvel' => 1,
+            'approvel_un' => 2,
+            'approvel_in' => 3,
             'draft' => -3,
             'declined' => -1,
             'reject' => -2,
             'completed' => 99,
+            'all' => 999,
         ],
 	],
 	/**
@@ -103,7 +105,7 @@ return [
         ],
         'budget_type' => [
 			'business' => 2,
-			'entertaiment' => 3,
+			'entertainment' => 3,
         ],
         'step_type' => [
 			'application' => 1,

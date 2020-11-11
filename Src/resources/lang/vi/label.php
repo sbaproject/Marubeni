@@ -58,6 +58,30 @@ return [
         '3' => 'Đơn tiếp khách',
     ],
     /**
+     * Menu
+     */
+    'menu' => [
+        'application' => 'ĐƠN',
+        'application_list' => 'Danh Sách Đơn',
+        'draft' => 'ĐƠN NHÁP',
+        'status' => 'TRANG THÁI',
+        'applying' => 'Đơn Chuẩn Bị Duyệt',
+        'approved_un' => 'Đơn Đang Phê Duyệt / ',
+        'approved_un2' => 'Chưa Thanh Toán',
+        'approved_in' => 'Đơn Đang Phê Duyệt / ',
+        'approved_in2' => 'Đang Thanh Toán',
+        'declined' => 'Đơn Không Duyệt',
+        'reject' => 'Đơn Trả Lại',
+        'completed' => 'Đơn Hoàn Thành',
+        'approval' => 'PHÊ DUYỆT',
+        'settings' => 'CÀI ĐẶT',
+        'company_registration' => 'Đăng Ký Công Ty',
+        'change_password' => 'Thay Đổi Mật Khẩu',
+        'employee_setting' => 'Cài Đặt Nhân Viên',
+        'budget_setting' => 'Cài Đặt Budget',
+        'approval_flow_setting' => 'Cài Đặt Luồng Phê Duyệt',
+    ],
+    /**
      * Leave application
      */
     'leave' => [
@@ -121,7 +145,7 @@ return [
      */
     'dashboard' => [
         //form
-        'list_application' => 'Danh sách Đơn',
+        'list_application' => 'Danh sách Tất Cả Đơn',
         'application_no' => 'Mã Đơn',
         'application_name' => 'Loại Đơn',
         'status' => 'Trạng Thái',
@@ -148,7 +172,8 @@ return [
      */
     'status' => [
         //forms
-        'list_of_applying_documents' => 'Danh Sách Đơn Đang Duyệt',
+        'list_of_applying_documents' => 'Danh Sách Đơn Chuẩn Bị Duyệt',
+        'list_of_approval_documents' => 'Danh Sách Đơn Đang Phê Duyệt',
         'list_of_approval_un_documents' => 'List of Approved/Under payment Documents',
         'list_of_approval_in_documents' => 'List of Approved/in-processing of payment Documents',
         'list_of_declined_documents' => 'Danh Sách Đơn Không Duyệt',
@@ -173,9 +198,9 @@ return [
         'company_country' => 'Đất Nước',
         'company_tell' => 'Số Điện Thoại',
         'company_address' => 'Địa Chỉ',
-        'att_information' => 'Thông Tin Người Nhận',
-        'att_name' => 'Tên Người Nhận',
-        'att_department' => 'Bộ Phận',
+        'att_information' => 'Thông Tin Người Đề Nghị',
+        'att_name' => 'Tên',
+        'att_department' => 'Phòng Ban',
         'att_email' => 'E-mail',
         'text' => 'Ghi Chú',
         'action' => 'Chức Năng',
@@ -203,5 +228,23 @@ return [
         'step' => 'Bước',
         'final_approver' => 'Người Duyệt Sau Cùng',
         'Actions' => 'Chức Năng',
+        'approval_flow_setting' => 'Thiết lập quy trình phê duyệt',
+        'approval_no' => 'Số phê duyệt',
+        'approval_flow_name' => 'Tên quy trình phê duyệt',
+        'application_form' => 'Loại đơn xin',
+        'type' => 'Loại',
+        'applicant_role' => 'Vai trò người đề nghị',
+        'budget_for_per_person' => 'Ngân sách cho mỗi người',
+        'less_or_equal_than' => 'Nhỏ hơn hoặc bằng',
+        'greater_than' => 'Lớn hơn',
+        'approver' => 'Người phê duyệt',
+        'step' => 'Bước',
+        'destination' => 'Nơi đơn chuyển tới',
+        'add' => 'Thêm',
+        'submit' => 'Lưu',
+        'delete' => 'Xóa',
+        'update' => 'Cập nhật',
+        'cancel' => 'Hủy',
+        'approver_required' => 'Vui lòng chọn người phê duyệt',
     ],
 ];

@@ -60,7 +60,7 @@ Route::middleware('auth')->group(function () {
     Route::middleware('can:admin-gate')->group(function () {
         Route::prefix('admin')->name('admin.')->group(function () {
             // Dashboard
-            Route::get('dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
+            Route::get('dashboard/{id}', [AdminDashboardController::class, 'index'])->name('dashboard');
             // User managements
             Route::prefix('user')->name('user.')->group(function () {
                 // List Users
@@ -81,6 +81,7 @@ Route::middleware('auth')->group(function () {
                 Route::post('add', [AdminFlowSettingController::class, 'store'])->name('store');
                 Route::get('check', [AdminFlowSettingController::class, 'check'])->name('check');
                 Route::get('edit/{id}', [AdminFlowSettingController::class, 'edit'])->name('edit');
+                Route::post('update/{id}', [AdminFlowSettingController::class, 'update'])->name('update');
             });
 
             // Company
@@ -111,7 +112,7 @@ Route::middleware('auth')->group(function () {
          *-----------------------------------------*/
         Route::middleware('can:user-gate')->group(function () {
             // Dashboard
-            Route::get('dashboard', [UserDashboardController::class, 'index'])->name('dashboard');
+            Route::get('dashboard/{id}', [UserDashboardController::class, 'index'])->name('dashboard');
             // DRAFT
             Route::get('draft', [UserDraftController::class, 'index'])->name('draft');
             Route::post('draft/{id}', [UserDraftController::class, 'delete'])->name('draft.delete');

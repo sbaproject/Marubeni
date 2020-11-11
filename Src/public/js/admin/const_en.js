@@ -1,0 +1,10 @@
+var APPROVAL_FLOW_NAME_REQUIRED = "Please enter a approval flow name";
+var APPLICATION_FORM_REQUIRED = "Please select a application form";
+var APPLICANT_ROLE_REQUIRED = "Please select a applicant role";
+var APPROVER_REQUIRED = "Please select a approver";
+var APPLICANT_ROLE_FORM_EXIST = "The applicant role of application form has existed.";
+var FLOW_APPROVER = "Approver";
+var FLOW_STEP = "Step";
+var FLOW_DESTINATION = "Destination";
+var FLOW_ADD = "Add";
+var FLOW_DELETE = "Delete";

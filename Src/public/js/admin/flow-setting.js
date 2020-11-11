@@ -1,6 +1,6 @@
 $( document ).ready(function() {
 
-	$.validator.addMethod( "checkGroupRoleExist", function( value ) {	   
+	$.validator.addMethod( "checkGroupRoleExist", function( value ) {
 	    var rs = false;
 	    var str = $( "#frmFlowSetting" ).serialize();
 	    $.ajax({
@@ -11,12 +11,12 @@ $( document ).ready(function() {
                 data:str,
                 success:function(data) {
                     if (data.status == 1){
-                  	    rs  = true;               	     
-                    }	  
+                  	    rs  = true;
+                    } 
                }
         });		
 		return rs;
-	}, "The applicant role of application form has existed." );
+	}, APPLICANT_ROLE_FORM_EXIST );
   
     $('#frmFlowSetting').validate({
 	    rules: {
@@ -33,13 +33,13 @@ $( document ).ready(function() {
 	    },
 	    messages: {
 		    approval_flow_name: {
-		        required: "Please enter a approval flow name"
+		        required: APPROVAL_FLOW_NAME_REQUIRED,
 		    },
 		    application_form: {
-		        required: "Please select a application form",
+		        required: APPLICATION_FORM_REQUIRED,
 		    },
 		    applicant: {
-		        required: "Please select a applicant role",
+		        required: APPLICANT_ROLE_REQUIRED,
 		    },      	      
 	    },
 	    errorElement: 'span',
@@ -125,17 +125,17 @@ $( document ).ready(function() {
 	   	clonedCbx.removeClass('is-invalid');
    	    var html = '<div class="section-step section-step-'+step+'">';
             html+=  '<div class="d-flex justify-between mt-5">';
-            html+=  '<h5>STEP <span class="title-step">'+step+'</span></h5>';
-            html+=  '<div><button type="button" data-step="'+step+'" class="btn-del-step btn btn-danger pt-1 pb-1 pl-3 pr-3 mb-1">Delete</button></div>';
+            html+=  '<h5>'+FLOW_STEP+' <span class="title-step">'+step+'</span></h5>';
+            html+=  '<div><button type="button" data-step="'+step+'" class="btn-del-step btn btn-danger pt-1 pb-1 pl-3 pr-3 mb-1">'+FLOW_DELETE+'</button></div>';
             html+=  '</div>';
    		    html+=  '<div class="approver-'+step+'-'+index+'">';
    		    html+=  '<div class="border border-secondary p-3 wrap-step-1">';
 	        html += '<div class="d-flex justify-between">';
-	        html += '<div class="text-muted">Approver 1</div>';	       
+	        html += '<div class="text-muted">'+FLOW_APPROVER+' 1</div>';
 	        html += '</div>';
 	        html += '<table class="table table-bordered table-sm">';
 	        html += '<tr>';
-	        html += '<td style="width: 20%;">Destination</td>';
+	        html += '<td style="width: 20%;">'+FLOW_DESTINATION+'</td>';
 	        html += '<td class="text-left">';
 	        html += '<div class="form-check-inline">';
 	        html += '<label class="form-check-label">';
@@ -150,12 +150,12 @@ $( document ).ready(function() {
 	        html += '</td>';
 	        html += '</tr>';
 	        html += '<tr>';
-	        html += '<td class="align-middle">Approver</td>';
+	        html += '<td class="align-middle">'+FLOW_APPROVER+'</td>';
 	        html += '<td class="p-0 append-approver-'+index_idx+' text-left"></td>';
 	        html += '</tr>';
 	        html += '</table>';
 	        html += '<div class="block-add-approver-'+step+'">';
-            html += '<button type="button" data-step="'+step+'" data-index="1" class="btn-add-approver btn btn-outline-dark pt-0 pb-0 pl-3 pr-3">+ Add</button>';
+            html += '<button type="button" data-step="'+step+'" data-index="1" class="btn-add-approver btn btn-outline-dark pt-0 pb-0 pl-3 pr-3">+ '+FLOW_ADD+'</button>';
             html += '</div>';
 	        html += '</div>';
 	        html += '</div>';
@@ -164,7 +164,7 @@ $( document ).ready(function() {
 	    $( ".block-add-step" ).before( html );
 	    $(this).data("step", step);
 	    $( ".append-approver-" +index_idx).append(clonedCbx);
-	    $( ".append-approver-" +index_idx).append('<span id="cbxApprover-'+index_idx+'-error" class="invalid-feedback">Please select a approver</span>');
+	    $( ".append-approver-" +index_idx).append('<span id="cbxApprover-'+index_idx+'-error" class="invalid-feedback">'+APPROVER_REQUIRED+'</span>');
 	    
 	    $('.cbx-approver').select2();
 
@@ -178,22 +178,22 @@ $( document ).ready(function() {
    	    var index_idx = parseInt($("#index-idx").val());
    	    var step = $(this).data("step")	;
         var index = $(this).data("index");        
-        $('#cbxApprover-0').select2("destroy");
+        $('#cbxApprover-0').select2("destroy");        
 	   	var clonedCbx = $('.cbx-approver').first().clone(true);
 	   	clonedCbx.attr('id', 'cbxApprover-' + index_idx);
 	    clonedCbx.attr('name', 'approver['+step+']['+index_idx+']');
 	    clonedCbx.removeClass('is-invalid');
-	   	var noOfDivs = $('.section-step-'+ step +' .section-approver').length;	   	  
+	   	var noOfDivs = $('.section-step-'+ step +' .section-approver').length; 	  
 	   	index =  noOfDivs > 0 ? (noOfDivs + 1) : index;
 	    index++;	   	   
 	   	var html =  '<div class="section-approver approver-'+step+'-'+index+'">';
 	        html += '<div class="d-flex justify-between">';
-	        html += '<div class="text-muted">Approver <span class="title-approver">'+index+'</span></div>';
-	        html += '<div><button type="button" data-step="'+step+'" data-index="'+index+'" class="btn-del-approver btn btn-danger btn-sm pt-0 pb-0 pl-3 pr-3 mb-1">Delete</button></div>';
+	        html += '<div class="text-muted">'+FLOW_APPROVER+' <span class="title-approver">'+index+'</span></div>';
+	        html += '<div><button type="button" data-step="'+step+'" data-index="'+index+'" class="btn-del-approver btn btn-danger btn-sm pt-0 pb-0 pl-3 pr-3 mb-1">'+FLOW_DELETE+'</button></div>';
 	        html += '</div>';
 	        html += '<table class="table table-bordered table-sm">';
 	        html += '<tr>';
-	        html += '<td style="width: 20%;">Destination</td>';
+	        html += '<td style="width: 20%;">'+FLOW_DESTINATION+'</td>';
 	        html += '<td class="text-left">';
 	        html += '<div class="form-check-inline">';
 	        html += '<label class="form-check-label">';
@@ -208,27 +208,28 @@ $( document ).ready(function() {
 	        html += '</td>';
 	        html += '</tr>';
 	        html += '<tr>';
-	        html += '<td class="align-middle">Approver</td>';
+	        html += '<td class="align-middle">'+FLOW_APPROVER+'</td>';
 	        html += '<td class="p-0 append-approver-'+index_idx+' text-left"></td>';
 	        html += '</tr>';
 	        html += '</table>';
 	        html += '</div>';
 	    $( ".block-add-approver-" +step).before( html );	   
 	    $( ".append-approver-" +index_idx).append(clonedCbx);
-	    $( ".append-approver-" +index_idx).append('<span id="cbxApprover-'+index_idx+'-error" class="invalid-feedback">Please select a approver</span>');
-	    $('.cbx-approver').select2();
+	    $( ".append-approver-" +index_idx).append('<span id="cbxApprover-'+index_idx+'-error" class="invalid-feedback">'+APPROVER_REQUIRED+'</span>');
+	    $('#cbxApprover-' + index_idx).val("");  
+	    $('.cbx-approver').select2();	    
 	    index_idx++;
 	    $("#index-idx").val(index_idx);
    });
 
    
 
-   $( document ).on( "click", ".btn-del-step", function() {    
-        $( this ).parent().parent().parent().remove();  	    
-	    var step = 1;    
+   $( document ).on( "click", ".btn-del-step", function() {
+        $( this ).parent().parent().parent().remove();
+	    var step = 1;
 	    $( ".section-step" ).each(function( index ) {
 	        step = index+2;
-		    $(this).find(".title-step").html(step);		   
+		    $(this).find(".title-step").html(step);
 		});
 		$(".btn-add-step").fadeIn();
 		$(".btn-add-step").data("step", step);
@@ -240,9 +241,9 @@ $( document ).ready(function() {
    	    var step = $(this).data("step")	;
    	    $( this ).parent().parent().parent().remove();
    	    var pos = 1;
-        $( ".section-step-"+step+" .section-approver" ).each(function( index ) {        	
+        $( ".section-step-"+step+" .section-approver" ).each(function( index ) {
 	        pos = index+2;	      
-		    $(this).find(".title-approver").html(pos);		   
-		});          	    
+		    $(this).find(".title-approver").html(pos);
+		});
    });
 });

@@ -39,55 +39,27 @@ class ApplicantSeeder extends Seeder
 
         DB::table('applicants')->insert([
             'location' => '0',
-            'department_id' => 2,
+            'department_id' => 4,
             'role' => 1,
             'created_at' => Carbon::now(),
         ]);
 
         DB::table('applicants')->insert([
             'location' => '0',
-            'department_id' => 2,
-            'role' => 2,
-            'created_at' => Carbon::now(),
-        ]);
-        
-        DB::table('applicants')->insert([
-            'location' => '0',
-            'department_id' => 3,
-            'role' => 1,
-            'created_at' => Carbon::now(),
-        ]);
-        
-        DB::table('applicants')->insert([
-            'location' => '0',
-            'department_id' => 3,
-            'role' => 2,
-            'created_at' => Carbon::now(),
-        ]);
-        
-        DB::table('applicants')->insert([
-            'location' => '0',
-            'department_id' => 4,
-            'role' => 1,
-            'created_at' => Carbon::now(),
-        ]);
-        
-        DB::table('applicants')->insert([
-            'location' => '0',
             'department_id' => 4,
             'role' => 2,
             'created_at' => Carbon::now(),
-        ]);  
-
+        ]);
+        
         DB::table('applicants')->insert([
             'location' => '0',
-            'department_id' => 3,
+            'department_id' => 5,
             'role' => 5,
             'created_at' => Carbon::now(),
-        ]); 
+        ]);
+        
 
-        // TP Ho CHi Minh   
-
+        // TP Ho CHi Minh
 
         DB::table('applicants')->insert([
             'location' => '1',
@@ -134,7 +106,7 @@ class ApplicantSeeder extends Seeder
 
         DB::table('applicants')->insert([
             'location' => '1',
-            'department_id' => 3,
+            'department_id' => 5,
             'role' => 4,
             'created_at' => Carbon::now(),
         ]);       
