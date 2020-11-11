@@ -20,23 +20,23 @@ class AdminDashboardController extends Controller
 
             $str_date = $data['dataDateFrom']. ' 00:00:00';
 
-            $list_application =  Application::whereNull('applications.deleted_at')->where('created_at','>=',$str_date)->where('status', '!=' , config('const.application.status.draft'))->orderBy('id', 'DESC')->paginate(5);
-            $count_applying =  Application::whereNull('applications.deleted_at')->where('status', config('const.application.status.applying'))->where('created_at','>=',$str_date)->count();
-            $count_approval =  Application::whereNull('applications.deleted_at')->whereBetween('status', [1,98])->where('created_at','>=',$str_date)->count();
-            $count_declined =  Application::whereNull('applications.deleted_at')->where('status', config('const.application.status.declined'))->where('created_at','>=',$str_date)->count();
-            $count_reject =  Application::whereNull('applications.deleted_at')->where('status', config('const.application.status.reject'))->where('created_at','>=',$str_date)->count();
-            $count_completed =  Application::whereNull('applications.deleted_at')->where('status', config('const.application.status.completed'))->where('created_at','>=',$str_date)->count();
+            $list_application =  Application::where('created_at','>=',$str_date)->where('status', '!=' , config('const.application.status.draft'))->orderBy('id', 'DESC')->paginate(5);
+            $count_applying =  Application::where('status', config('const.application.status.applying'))->where('created_at','>=',$str_date)->count();
+            $count_approval =  Application::whereBetween('status', [1,98])->where('created_at','>=',$str_date)->count();
+            $count_declined =  Application::where('status', config('const.application.status.declined'))->where('created_at','>=',$str_date)->count();
+            $count_reject =  Application::where('status', config('const.application.status.reject'))->where('created_at','>=',$str_date)->count();
+            $count_completed =  Application::where('status', config('const.application.status.completed'))->where('created_at','>=',$str_date)->count();
 
         }else{
 
             $str_date = Carbon::now();
 
-            $list_application =  Application::whereNull('applications.deleted_at')->where('status', '!=' , config('const.application.status.draft'))->orderBy('created_at', 'DESC')->paginate(5);
-            $count_applying =  Application::whereNull('applications.deleted_at')->where('status', config('const.application.status.applying'))->count();
-            $count_approval =  Application::whereNull('applications.deleted_at')->whereBetween('status', [1,98])->count();
-            $count_declined =  Application::whereNull('applications.deleted_at')->where('status', config('const.application.status.declined'))->count();
-            $count_reject =  Application::whereNull('applications.deleted_at')->where('status', config('const.application.status.reject'))->count();
-            $count_completed =  Application::whereNull('applications.deleted_at')->where('status', config('const.application.status.completed'))->count();
+            $list_application =  Application::where('status', '!=' , config('const.application.status.draft'))->orderBy('created_at', 'DESC')->paginate(5);
+            $count_applying =  Application::where('status', config('const.application.status.applying'))->count();
+            $count_approval =  Application::whereBetween('status', [1,98])->count();
+            $count_declined =  Application::where('status', config('const.application.status.declined'))->count();
+            $count_reject =  Application::where('status', config('const.application.status.reject'))->count();
+            $count_completed =  Application::where('status', config('const.application.status.completed'))->count();
 
         }
 
