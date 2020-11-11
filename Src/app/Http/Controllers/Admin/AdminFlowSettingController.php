@@ -193,8 +193,35 @@ class AdminFlowSettingController extends Controller
      */
     public function edit($id)
     {
-        //
-        return view('admin.flow.create');
+        $flow = DB::table('flows')->orderBy('id', 'desc')->whereNull('deleted_at')->first();
+        $flowNo = 1;
+        if (!empty($flow)) {
+            $flowNo = $flow->id;
+        }
+        $forms =  Form::all();
+        $users =  DB::table('users')->where('approval', 1)->whereNull('deleted_at')->get();
+        $applicants = DB::table('applicants')
+            ->join('departments', 'applicants.department_id', '=', 'departments.id')
+            ->select('applicants.id', 'applicants.location', 'applicants.role', 'departments.name')
+            ->orderBy('applicants.id', 'asc')
+            ->whereNull('applicants.deleted_at')
+            ->get();
+
+        $budgets = DB::table('budgets')->whereNull('deleted_at')->get();
+        $budgetPO = DB::table('budgets')->where('position', 'PO')->whereNull('deleted_at')->first()->amount;
+        $budgetNotPO = DB::table('budgets')->where('position', 'Not PO')->whereNull('deleted_at')->first()->amount;
+
+        $locations = config('const.location');
+        $roles = config('const.role');
+
+        $applicantRoles = array();
+        foreach ($applicants as $applicant) {
+            $data = array();
+            $data['id'] = $applicant->id;
+            $data['name'] = strtoupper(array_search($applicant->location, $locations)) . ' - ' . $applicant->name . ' - ' . array_search($applicant->role, $roles);
+            $applicantRoles[] = $data;
+        }
+        return view('admin.flow.create', compact('flowNo', 'forms', 'users', 'applicantRoles', 'budgets', 'budgetPO', 'budgetNotPO'));
     }
 
     /**
