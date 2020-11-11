@@ -19,19 +19,19 @@
 
 @section('content')
 @php
-    $code_leave = old('code_leave') ?? ($model->code_leave ?? null);
-    $paid_type = old('paid_type') ?? ($model->paid_type ?? null);
-    $reason_leave = old('reason_leave') ?? ($model->reason_leave ?? null);
-    $date_from = old('date_from') ?? ($model->date_from ?? null);
-    $date_to = old('date_to') ?? ($model->date_to ?? null);
-    $time_day = old('time_day') ?? ($model->time_day ?? null);
-    $time_from = old('time_from') ?? ($model->time_from ?? null);
-    $time_to = old('time_to') ?? ($model->time_to ?? null);
-    $maternity_from = old('maternity_from') ?? ($model->maternity_from ?? null);
-    $maternity_to = old('maternity_to') ?? ($model->maternity_to ?? null);
-    $file_path = old('file_path') ?? ($model->file_path ?? null);
-    $days_use = old('days_use') ?? ($model->days_use ?? null);
-    $times_use = old('times_use') ?? ($model->times_use ?? null);
+    $code_leave     = Session::has('inputs') ? Session::get('inputs')['code_leave']     :  (isset($model) ? $model->code_leave : null);
+    $paid_type      = Session::has('inputs') ? Session::get('inputs')['paid_type']      :  (isset($model) ? $model->paid_type : null);
+    $reason_leave   = Session::has('inputs') ? Session::get('inputs')['reason_leave']   :  (isset($model) ? $model->reason_leave : null);
+    $date_from      = Session::has('inputs') ? Session::get('inputs')['date_from']      :  (isset($model) ? $model->date_from : null);
+    $date_to        = Session::has('inputs') ? Session::get('inputs')['date_to']        :  (isset($model) ? $model->date_to : null);
+    $time_day       = Session::has('inputs') ? Session::get('inputs')['time_day']       :  (isset($model) ? $model->time_day : null);
+    $time_from      = Session::has('inputs') ? Session::get('inputs')['time_from']      :  (isset($model) ? $model->time_from : null);
+    $time_to        = Session::has('inputs') ? Session::get('inputs')['time_to']        :  (isset($model) ? $model->time_to : null);
+    $maternity_from = Session::has('inputs') ? Session::get('inputs')['maternity_from'] :  (isset($model) ? $model->maternity_from : null);
+    $maternity_to   = Session::has('inputs') ? Session::get('inputs')['maternity_to']   :  (isset($model) ? $model->maternity_to : null);
+    $file_path      = Session::has('inputs') ? Session::get('inputs')['file_path']      :  (isset($model) ? $model->file_path : null);
+    $days_use       = Session::has('inputs') ? Session::get('inputs')['days_use']       :  (isset($model) ? $model->days_use : null);
+    $times_use      = Session::has('inputs') ? Session::get('inputs')['times_use']      :  (isset($model) ? $model->times_use : null);
 @endphp
 <section class="content leave-application">
     <x-alert />

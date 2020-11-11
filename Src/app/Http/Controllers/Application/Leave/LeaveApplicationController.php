@@ -47,7 +47,7 @@ class LeaveApplicationController extends Controller
         }
 
         // validate
-        $this->doValidate($request, $inputs);
+        return $this->doValidate($request, $inputs);
 
         // save
         $this->doSaveData($request, $inputs);
@@ -132,7 +132,10 @@ class LeaveApplicationController extends Controller
                 }
             }
             $validator = Validator::make($inputs, $rules);
-            $validator->validate();
+            if($validator->fails()){
+                return redirect()->back()->with('inputs', $inputs)->withErrors($validator);
+            }
+            
         }
     }
 
