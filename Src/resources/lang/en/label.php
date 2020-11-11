@@ -163,8 +163,8 @@ return [
     'draft' => [
         //Draft
         'no' => 'No',
-        'application_name' => 'Application Name',
-        'date_create' => 'Date Created',
+        'application_name' => 'Application Type',
+        'date_create' => 'Apply Date',
         'action' => 'Actions',
     ],
     /**
@@ -194,6 +194,7 @@ return [
         //forms
         'no' => 'No',
         'company_information' => 'Company Information',
+        'company_id' => 'Company ID',
         'company_name' => 'Company Name',
         'company_country' => 'Country',
         'company_tell' => 'Tell',

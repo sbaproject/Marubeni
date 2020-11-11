@@ -16,6 +16,7 @@ use App\Http\Controllers\Application\FormListController;
 use App\Http\Controllers\Admin\AdminFlowSettingController;
 use App\Http\Controllers\Admin\AdminCompanyController;
 use App\Http\Controllers\Admin\AdminBudgetController;
+use App\Http\Controllers\Admin\AdminStatusController;
 use App\Http\Controllers\Application\Business\BusinessTripController;
 use App\Http\Controllers\Application\Leave\LeaveApplicationController;
 use App\Http\Controllers\LocaleController;
@@ -99,6 +100,9 @@ Route::middleware('auth')->group(function () {
                 Route::get('edit', [AdminBudgetController::class, 'show'])->name('show');
                 Route::post('edit', [AdminBudgetController::class, 'update'])->name('update');
             });
+
+            // Status
+            Route::get('status/{status}', [AdminStatusController::class, 'index'])->name('status');
 
         });
     });

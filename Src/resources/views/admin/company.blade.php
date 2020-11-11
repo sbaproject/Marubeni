@@ -89,10 +89,10 @@
                                 <th rowspan="2" class="align-middle" style="width: 150px;">{{ __('label.company.action') }}</th>
                             </tr>
                             <tr>
-                                <th>{{ __('label.company.company_name') }}</th>
+                                <th>{{ __('label.company.name') }}</th>
                                 <th>{{ __('label.company.company_address') }}</th>
                                 <th>{{ __('label.company.company_tell') }}</th>
-                                <th>{{ __('label.company.att_name') }}</th>
+                                <th>{{ __('label.company.name') }}</th>
                                 <th>{{ __('label.company.att_department') }}</th>
                             </tr>
                         </thead>

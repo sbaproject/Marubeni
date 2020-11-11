@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Company;
 use App\Libs\Common;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class AdminCompanyController extends Controller
 {
@@ -48,20 +50,42 @@ class AdminCompanyController extends Controller
 
     public function create()
     {
-        return view('admin.company_new');
+        $idcompany = DB::table('INFORMATION_SCHEMA.TABLES')->select('AUTO_INCREMENT')->where('TABLE_NAME', 'companies')->get()[0]->AUTO_INCREMENT;
+
+        return view('admin.company_new', compact('idcompany'));
     }
 
     public function store(Request $request)
     {
-        $validator = $request->validate([
+        $validator = Validator::make($request->all(), [
             'com_name'   => 'required',
             'com_country'   => 'required',
-            'com_tel'   => 'required',
+            'com_tel'   => 'required|numeric',
             'com_address'   => 'required',
             'att_name'   => 'required',
             'att_department'   => 'required',
             'att_mail' => 'required|email:rfc,dns',
         ],);
+
+        $validator->after(function ($validator) {
+            if (0 == 0) {
+                $validator->errors()->add('com_name', 'Something is wrong with this field!');
+            }
+        });
+
+        if ($validator->fails()) {
+            return redirect('admin/company/add')
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+
+        // $validator->after(function ($validator) {
+        //     if ($this->somethingElseIsInvalid()) {
+        //         $validator->errors()->add('field', 'Something is wrong with this field!');
+        //     }
+        // });
+
+        
         // get data inputs
         $data = $request->input();
 
@@ -84,8 +108,10 @@ class AdminCompanyController extends Controller
     }
 
     public function show(Company $company)
-    {
-        return view('admin.company_edit',compact('company'));
+    {        
+        $idcompany = $company->id;
+
+        return view('admin.company_edit',compact('company','idcompany'));
     }
 
     public function update(Request $request)
@@ -93,7 +119,7 @@ class AdminCompanyController extends Controller
         $validator = $request->validate([
             'com_name'   => 'required',
             'com_country'   => 'required',
-            'com_tel'   => 'required',
+            'com_tel'   => 'required|numeric',
             'com_address'   => 'required',
             'att_name'   => 'required',
             'att_department'   => 'required',

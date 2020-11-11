@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Libs\Common;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class UserCompanyController extends Controller
 {
@@ -17,7 +18,9 @@ class UserCompanyController extends Controller
 
     public function create()
     {
-        return view('user.company');
+        $idcompany = DB::table('INFORMATION_SCHEMA.TABLES')->select('AUTO_INCREMENT')->where('TABLE_NAME', 'companies')->get()[0]->AUTO_INCREMENT;
+        
+        return view('user.company', compact('idcompany'));
     }
 
     public function store(Request $request)
@@ -25,7 +28,7 @@ class UserCompanyController extends Controller
         $validator = $request->validate([
             'com_name'   => 'required',
             'com_country'   => 'required',
-            'com_tel'   => 'required',
+            'com_tel'   => 'required|numeric',
             'com_address'   => 'required',
             'att_name'   => 'required',
             'att_department'   => 'required',
@@ -34,7 +37,7 @@ class UserCompanyController extends Controller
         // get data inputs
         $data = $request->input();
 
-        $dataCompany = new Company ([
+        $dataCompany = new Company([
             'name'                      => $data['com_name'],
             'country'                   => $data['com_country'],
             'phone'                     => $data['com_tel'],
