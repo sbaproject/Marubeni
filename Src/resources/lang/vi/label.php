@@ -208,6 +208,8 @@ return [
         'destination' => 'Nơi đơn chuyển tới',
         'add' => 'Thêm',
         'submit' => 'Lưu',
+        'delete' => 'Xóa',
+        'update' => 'Cập nhật',
         'cancel' => 'Hủy',
         'approver_required' => 'Vui lòng chọn người phê duyệt',
     ],

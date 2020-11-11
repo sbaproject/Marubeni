@@ -20,6 +20,7 @@ class DepartmentSeeder extends Seeder
         DB::table('departments')->insert(['name' => 'Sales']);  // 1
         DB::table('departments')->insert(['name' => 'ACCG']);   // 2
         DB::table('departments')->insert(['name' => 'ADMI']);   // 3
-        DB::table('departments')->insert(['name' => 'HR']);   // 4
+        DB::table('departments')->insert(['name' => 'HR/ADMI/ACCG']);   // 4
+        DB::table('departments')->insert(['name' => 'DIRECTOR']);
     }
 }

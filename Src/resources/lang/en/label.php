@@ -51,6 +51,10 @@ return [
         'leave' => 'Leave',
         'biz_trip' => 'Business Trip',
         'entertaiment' => 'Entertaiment',
+        // get by id
+        '1' => 'Leave',
+        '2' => 'Business Trip',
+        '3' => 'Entertaiment',
     ],
     /**
      * Leave Application
@@ -204,6 +208,8 @@ return [
         'destination' => 'Destination',
         'add' => 'Add',
         'submit' => 'Submit',
+        'delete' => 'Delete',
+        'update' => 'Update',
         'cancel' => 'cancel',
         'approver_required' => 'Please select a approver',
     ],

@@ -42,7 +42,7 @@
               <select id="cbxForm" class="form-control select2" name="application_form">
                 <option value='' selected>{{ __('label.select') }}</option>
                 @foreach ($forms as $item)
-                <option value=" {{ $item->id }}"> {{ $item->name }}</option>
+                <option value=" {{ $item->id }}"> {{ __('label.form.'.$item->id) }}</option>
                 @endforeach
               </select>
               </div>
@@ -50,15 +50,15 @@
             <div class="form-group row form-trip" style="display: none"> 
               <label class="col-lg-3 col-form-label text-center">{{ __('label.flow.type') }}</label>
               <div class="col-lg-9">
-                <div class="form-check-inline"><label class="form-check-label"><input type="radio" checked="checked" value="Economy" name="trip">{{ __('label.budget.economy_class') }}</label></div>
-                <div class="form-check-inline"><label class="form-check-label"><input type="radio" value="Business"  name="trip">{{ __('label.budget.business_class') }}</label></div>
+                <div class="form-check-inline"><label class="form-check-label"><input type="radio" checked="checked" value="3" name="trip">{{ __('label.budget.economy_class') }}</label></div>
+                <div class="form-check-inline"><label class="form-check-label"><input type="radio" value="4"  name="trip">{{ __('label.budget.business_class') }}</label></div>
               </div>
             </div>
             <div class="form-group row form-entertaiment" style="display: none">
               <label class="col-lg-3 col-form-label text-center">{{ __('label.flow.type') }}</label>
               <div class="col-lg-9">
-                <div class="form-check-inline"><label class="form-check-label"><input class="typePosition" id="positionPO" type="radio" value="PO" checked="checked" name="PO">{{ __('label.budget.po') }}</label></div>
-                <div class="form-check-inline"><label class="form-check-label"><input class="typePosition" id="positionNotPO" type="radio" value="Not_PO" name="PO">{{ __('label.budget.not_po') }}</label></div>
+                <div class="form-check-inline"><label class="form-check-label"><input class="typePosition" id="positionPO" type="radio" value="1" checked="checked" name="PO">{{ __('label.budget.po') }}</label></div>
+                <div class="form-check-inline"><label class="form-check-label"><input class="typePosition" id="positionNotPO" type="radio" value="2" name="PO">{{ __('label.budget.not_po') }}</label></div>
               </div>
             </div> 
             <div class="form-group row form-entertaiment form-po" style="display: none">
@@ -129,7 +129,10 @@
                 </div>
             </div>
 
-            <div class="mt-3 block-add-step"><button type="button" data-step="1" data-index="0" class="btn-add-step btn btn-outline-dark pt-1 pb-1 pl-3 pr-3">+ {{ __('label.flow.step') }}</button></div>      
+            <div class="mt-3 block-add-step">
+              <button type="button" data-step="1" data-index="0" class="btn-add-step btn btn-outline-dark pt-1 pb-1 pl-3 pr-3">
+              + {{ __('label.flow.step') }}</button>
+            </div>      
 
             <div class="mt-5 mb-5 text-center">
                 <button type="button" class="btn-submit-flow btn btn-danger pt-1 pb-1 mr-4 col-5 col-sm-2 col-md-4 col-lg-2"><i class="nav-icon far fa-check-circle"></i> {{ __('label.flow.submit') }}</button>
@@ -138,6 +141,7 @@
         </div>
     </div>
     <input type="hidden" name="index-idx" id="index-idx" value="1">
+    <input type="hidden" name="flow-id" id="flow-id" value="0">
     @foreach ($budgets as $item)
     <input type="hidden" name="budget_form_{{ $item->position }}_step_{{ $item->step_type }}" id="budget-form-{{ $item->position }}-step-{{ $item->step_type }}" data-amount="{{ $item->amount }}" value="{{ $item->id }}">
     @endforeach

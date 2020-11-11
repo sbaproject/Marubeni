@@ -178,12 +178,12 @@ $( document ).ready(function() {
    	    var index_idx = parseInt($("#index-idx").val());
    	    var step = $(this).data("step")	;
         var index = $(this).data("index");        
-        $('#cbxApprover-0').select2("destroy");
+        $('#cbxApprover-0').select2("destroy");        
 	   	var clonedCbx = $('.cbx-approver').first().clone(true);
 	   	clonedCbx.attr('id', 'cbxApprover-' + index_idx);
 	    clonedCbx.attr('name', 'approver['+step+']['+index_idx+']');
 	    clonedCbx.removeClass('is-invalid');
-	   	var noOfDivs = $('.section-step-'+ step +' .section-approver').length;	   	  
+	   	var noOfDivs = $('.section-step-'+ step +' .section-approver').length; 	  
 	   	index =  noOfDivs > 0 ? (noOfDivs + 1) : index;
 	    index++;	   	   
 	   	var html =  '<div class="section-approver approver-'+step+'-'+index+'">';
@@ -216,7 +216,8 @@ $( document ).ready(function() {
 	    $( ".block-add-approver-" +step).before( html );	   
 	    $( ".append-approver-" +index_idx).append(clonedCbx);
 	    $( ".append-approver-" +index_idx).append('<span id="cbxApprover-'+index_idx+'-error" class="invalid-feedback">'+APPROVER_REQUIRED+'</span>');
-	    $('.cbx-approver').select2();
+	    $('#cbxApprover-' + index_idx).val("");  
+	    $('.cbx-approver').select2();	    
 	    index_idx++;
 	    $("#index-idx").val(index_idx);
    });

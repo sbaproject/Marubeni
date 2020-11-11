@@ -81,6 +81,7 @@ Route::middleware('auth')->group(function () {
                 Route::post('add', [AdminFlowSettingController::class, 'store'])->name('store');
                 Route::get('check', [AdminFlowSettingController::class, 'check'])->name('check');
                 Route::get('edit/{id}', [AdminFlowSettingController::class, 'edit'])->name('edit');
+                Route::post('update/{id}', [AdminFlowSettingController::class, 'update'])->name('update');
             });
 
             // Company
