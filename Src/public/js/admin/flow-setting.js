@@ -125,7 +125,7 @@ $( document ).ready(function() {
 	   	clonedCbx.removeClass('is-invalid');
    	    var html = '<div class="section-step section-step-'+step+'">';
             html+=  '<div class="d-flex justify-between mt-5">';
-            html+=  '<h5>STEP <span class="title-step">'+step+'</span></h5>';
+            html+=  '<h5>'+FLOW_STEP+' <span class="title-step">'+step+'</span></h5>';
             html+=  '<div><button type="button" data-step="'+step+'" class="btn-del-step btn btn-danger pt-1 pb-1 pl-3 pr-3 mb-1">'+FLOW_DELETE+'</button></div>';
             html+=  '</div>';
    		    html+=  '<div class="approver-'+step+'-'+index+'">';

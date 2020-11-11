@@ -20,7 +20,7 @@
 
   <!-- Main content -->
   <section class="content">
-  <form id="frmFlowSetting" name="frmFlowSetting" method="POST" action="{{ route('admin.flow.create') }}"> 
+  <form id="frmFlowSetting" class="frm-flow-setting" name="frmFlowSetting" method="POST" action="{{ route('admin.flow.create') }}"> 
     @csrf 
     <div class="row">
         <div class="col-12 col-lg-10">
