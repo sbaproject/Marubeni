@@ -9,10 +9,10 @@ use App\Models\BusinessTrip;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Models\Businesstrip as ModelsBusinesstrip;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use PDF;
 
 class BusinessTripController extends Controller
 {
@@ -27,14 +27,19 @@ class BusinessTripController extends Controller
 
     public function store(Request $request)
     {
-
         // get input data
         $inputs = $request->all();
 
-        // export pdf
-        if (isset($inputs['pdf'])) {
-            // return $this->pdf($request, $inputs);
+        // check post method
+        if (isset($inputs['apply']) || isset($inputs['draft']) || isset($inputs['pdf'])) {
+            // export pdf
+            if (isset($inputs['pdf'])) {
+                return $this->pdf($request, $inputs);
+            }
+        } else {
+            abort(404);
         }
+
         // validate
         $validator = $this->doValidate($request, $inputs);
         if (!empty($validator)) {
@@ -73,14 +78,19 @@ class BusinessTripController extends Controller
         // get inputs
         $inputs = $request->all();
 
-        // export pdf
-        if (isset($inputs['pdf'])) {
-            // return $this->pdf($request, $inputs);
+        // check post method
+        if (isset($inputs['apply']) || isset($inputs['draft']) || isset($inputs['pdf'])) {
+            // export pdf
+            if (isset($inputs['pdf'])) {
+                return $this->pdf($request, $inputs);
+            }
+        } else {
+            abort(404);
         }
+
         // validate
         $validator = $this->doValidate($request, $inputs);
         if (!empty($validator)) {
-            // dd($inputs);
             return redirect()->back()->with('inputs', $inputs)->withErrors($validator);
         }
 
@@ -207,7 +217,6 @@ class BusinessTripController extends Controller
             }
             // upload new attached file
             if ($request->file('input_file')) {
-                // $extension = '.' . $request->file('input_file')->extension();
                 $fileName = time() . $user->id . '_' . $request->file('input_file')->getClientOriginalName();
                 $filePath = $request->file('input_file')->storeAs('uploads/application/', $fileName);
             }
@@ -267,5 +276,19 @@ class BusinessTripController extends Controller
         }
         // back to list application
         return Common::redirectRouteWithAlertSuccess('user.form.index');
+    }
+
+    public function pdf($request, $inputs, $mApplication = null)
+    {
+        // get logged user
+        $user = Auth::user();
+
+        // PDF::setOptions(['defaultFont' => 'Roboto-Black']);
+        $pdf = PDF::loadView('application.business.pdf', compact('user', 'inputs'));
+
+        // preview pdf
+        return $pdf->stream('Business_Application.pdf');
+        // download
+        // return $pdf->download('Leave_Application.pdf');
     }
 }

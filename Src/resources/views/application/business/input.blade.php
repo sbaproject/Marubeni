@@ -149,7 +149,7 @@ $file_path      = Session::has('inputs') ? Session::get('inputs')['file_path']  
                                             <div class="row mb-2">
                                                 <span class="col-md-3">Departure</span>
                                                 <div class="col-md-9">
-                                                    <input type="text" class="form-control @error('trans.'.$key.'.departure') is-invalid @enderror"
+                                                    <input type="text" class="form-control departure @error('trans.'.$key.'.departure') is-invalid @enderror"
                                                         name="trans[{{ $key }}][departure]" value="{{ $trans[$key]['departure'] }}" autocomplete="off">
                                                     @error('trans.'.$key.'.departure')
                                                     <span class="invalid-feedback" role="alert">
@@ -161,7 +161,7 @@ $file_path      = Session::has('inputs') ? Session::get('inputs')['file_path']  
                                             <div class="row">
                                                 <span class="col-md-3">Arrival</span>
                                                 <div class="col-md-9">
-                                                    <input type="text" class="form-control @error('trans.'.$key.'.arrive') is-invalid @enderror"
+                                                    <input type="text" class="form-control arrive @error('trans.'.$key.'.arrive') is-invalid @enderror"
                                                         name="trans[{{ $key }}][arrive]" value="{{ $trans[$key]['arrive'] }}" autocomplete="off">
                                                     @error('trans.'.$key.'.arrive')
                                                     <span class="invalid-feedback" role="alert">
@@ -175,7 +175,7 @@ $file_path      = Session::has('inputs') ? Session::get('inputs')['file_path']  
                                             <div class="row">
                                                 <span class="col-md-3">Flight No</span>
                                                 <div class="col-md-9">
-                                                    <input type="text" class="form-control @error('trans.'.$key.'.method') is-invalid @enderror"
+                                                    <input type="text" class="form-control method @error('trans.'.$key.'.method') is-invalid @enderror"
                                                         name="trans[{{ $key }}][method]" value="{{ $trans[$key]['method'] }}" autocomplete="off">
                                                     @error('trans.'.$key.'.method')
                                                     <span class="invalid-feedback" role="alert">
@@ -200,13 +200,13 @@ $file_path      = Session::has('inputs') ? Session::get('inputs')['file_path']  
                                             <div class="row mb-2">
                                                 <span class="col-md-3">Departure</span>
                                                 <div class="col-md-9">
-                                                    <input type="text" class="form-control" name="trans[0][departure]" autocomplete="off">
+                                                    <input type="text" class="form-control departure" name="trans[0][departure]" autocomplete="off">
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <span class="col-md-3">Arrival</span>
                                                 <div class="col-md-9">
-                                                    <input type="text" class="form-control" name="trans[0][arrive]" autocomplete="off">
+                                                    <input type="text" class="form-control arrive" name="trans[0][arrive]" autocomplete="off">
                                                 </div>
                                             </div>
                                         </div>
@@ -214,7 +214,7 @@ $file_path      = Session::has('inputs') ? Session::get('inputs')['file_path']  
                                             <div class="row">
                                                 <span class="col-md-3">Flight No</span>
                                                 <div class="col-md-9">
-                                                    <input type="text" class="form-control" name="trans[0][method]" autocomplete="off">
+                                                    <input type="text" class="form-control method" name="trans[0][method]" autocomplete="off">
                                                 </div>
                                             </div>
                                         </div>
@@ -232,13 +232,13 @@ $file_path      = Session::has('inputs') ? Session::get('inputs')['file_path']  
                                         <div class="row mb-2">
                                             <span class="col-md-3">Departure</span>
                                             <div class="col-md-9">
-                                                <input type="text" class="form-control departures" autocomplete="off">
+                                                <input type="text" class="form-control departure" autocomplete="off">
                                             </div>
                                         </div>
                                         <div class="row">
                                             <span class="col-md-3">Arrival</span>
                                             <div class="col-md-9">
-                                                <input type="text" class="form-control arrivals" autocomplete="off">
+                                                <input type="text" class="form-control arrive" autocomplete="off">
                                             </div>
                                         </div>
                                     </div>
@@ -246,7 +246,7 @@ $file_path      = Session::has('inputs') ? Session::get('inputs')['file_path']  
                                         <div class="row">
                                             <span class="col-md-3">Flight No</span>
                                             <div class="col-md-9">
-                                                <input type="text" class="form-control methods" autocomplete="off">
+                                                <input type="text" class="form-control method" autocomplete="off">
                                             </div>
                                         </div>
                                     </div>

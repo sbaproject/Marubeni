@@ -72,39 +72,38 @@ $(document).ready(function () {
     // Itinerary & Transportation Block
     //=======================================
 
-    // add new transportation
+    // add new transportation element
     $('#btnAdd').on('click', function (e) {
 
         e.preventDefault();
 
         var mainBlock = $('#transport_block');
-        var copyModel = $('.copy').clone();
-        
-        copyModel.removeClass('copy');
-        copyModel.removeClass('d-none');
+        var copyElement = $('.copy').clone();
 
-        mainBlock.append(copyModel);
+        copyElement.removeClass('copy');
+        copyElement.removeClass('d-none');
 
-        displayDelBtn();
+        mainBlock.append(copyElement);
+
+        doSettingElement();
 
     });
-    // remove transportation
+    // remove transportation element
     $(document).on("click", ".btnDelete", function (e) {
         e.preventDefault();
         $(this).parent().parent().remove();
-        displayDelBtn();
+        doSettingElement();
     });
 
-    
-    function displayDelBtn() {
-        var transportBlock = $('.card-itinerary-transport:not(.copy)');
-        transportBlock.each(function (index) {
+    function doSettingElement() {
+        var transportElements = $('.card-itinerary-transport:not(.copy)');
+        transportElements.each(function (index) {
             // re-order index
-            $(this).find('.departures').attr('name', 'trans[' + index + '][departure]');
-            $(this).find('.arrivals').attr('name', 'trans[' + index + '][arrive]');
-            $(this).find('.methods').attr('name', 'trans[' + index + '][method]');
-            // show or hide delete button
-            if (transportBlock.length === 1 && index === 0) {
+            $(this).find('.departure').attr('name', 'trans[' + index + '][departure]');
+            $(this).find('.arrive').attr('name', 'trans[' + index + '][arrive]');
+            $(this).find('.method').attr('name', 'trans[' + index + '][method]');
+            // always keep at least one element
+            if (transportElements.length === 1 && index === 0) {
                 $(this).find('.d-delete').addClass('d-none');
             } else {
                 $(this).find('.d-delete').removeClass('d-none');

@@ -41,9 +41,14 @@ class LeaveApplicationController extends Controller
             $inputs['paid_type'] = null;
         }
 
-        // export pdf
-        if (isset($inputs['pdf'])) {
-            return $this->pdf($request, $inputs);
+        // check post method
+        if (isset($inputs['apply']) || isset($inputs['draft']) || isset($inputs['pdf'])) {
+            // export pdf
+            if (isset($inputs['pdf'])) {
+                return $this->pdf($request, $inputs);
+            }
+        } else {
+            abort(404);
         }
 
         // validate
@@ -96,9 +101,14 @@ class LeaveApplicationController extends Controller
             $inputs['paid_type'] = null;
         }
 
-        // export pdf
-        if (isset($inputs['pdf'])) {
-            return $this->pdf($request, $inputs, $mApplication);
+        // check post method
+        if (isset($inputs['apply']) || isset($inputs['draft']) || isset($inputs['pdf'])) {
+            // export pdf
+            if (isset($inputs['pdf'])) {
+                return $this->pdf($request, $inputs, $mApplication);
+            }
+        } else {
+            abort(404);
         }
 
         // validate
@@ -118,7 +128,7 @@ class LeaveApplicationController extends Controller
         return Common::redirectRouteWithAlertSuccess('user.form.index');
     }
 
-    public function doValidate($request, $inputs)
+    public function doValidate($request, &$inputs)
     {
         if (isset($inputs['apply']) || isset($inputs['draft'])) {
             $rules = [];
@@ -134,10 +144,10 @@ class LeaveApplicationController extends Controller
                 }
             }
             $validator = Validator::make($inputs, $rules);
-            if($validator->fails()){
+            if ($validator->fails()) {
+                unset($inputs['input_file']);
                 return $validator;
             }
-            
         }
     }
 
