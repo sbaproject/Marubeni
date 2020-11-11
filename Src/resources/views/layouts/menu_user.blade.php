@@ -32,13 +32,13 @@
                 <li class="nav-item">
                     <a href="{{ route('user.status',config('const.application.status.approvel_un'))}}" class="nav-link">
                         <i class="fas fa-angle-right left"></i>
-                        <p>{{ __('label.menu.approved_un') }}</p>
+                        <p>{{ __('label.menu.approved_un') }}<br>{{ __('label.menu.approved_un2') }}</p>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="{{ route('user.status',config('const.application.status.approvel_in'))}}" class="nav-link">
                         <i class="fas fa-angle-right left"></i>
-                        <p>{{ __('label.menu.approved_in') }}</p>
+                        <p>{{ __('label.menu.approved_in') }}<br>{{ __('label.menu.approved_in2') }}</p>
                     </a>
                 </li>
                 <li class="nav-item">
