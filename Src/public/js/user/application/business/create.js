@@ -1,7 +1,7 @@
 $(document).ready(function () {
-    /**
-     * Date of trip
-     */
+    //=======================================
+    // Datetimepicker
+    //=======================================
     // init
     $('#trip_from').datetimepicker({
         format: 'ddd, DD/MM/YYYY',
@@ -42,9 +42,10 @@ $(document).ready(function () {
         }
     });
 
-    /**----------------------------------------------------------------------
-     * Browse file
-     ----------------------------------------------------------------------*/
+    //=======================================
+    // Browser file
+    //=======================================
+
     $('#input_file').val(null);
     $('#input_file').on('change', function (e) {
         //get the file name
@@ -67,4 +68,47 @@ $(document).ready(function () {
         $(this).find('a')[0].click();
     });
 
+    //=======================================
+    // Itinerary & Transportation Block
+    //=======================================
+
+    // add new transportation
+    $('#btnAdd').on('click', function (e) {
+
+        e.preventDefault();
+
+        var mainBlock = $('#transport_block');
+        var copyModel = $('.copy').clone();
+        
+        copyModel.removeClass('copy');
+        copyModel.removeClass('d-none');
+
+        mainBlock.append(copyModel);
+
+        displayDelBtn();
+
+    });
+    // remove transportation
+    $(document).on("click", ".btnDelete", function (e) {
+        e.preventDefault();
+        $(this).parent().parent().remove();
+        displayDelBtn();
+    });
+
+    
+    function displayDelBtn() {
+        var transportBlock = $('.card-itinerary-transport:not(.copy)');
+        transportBlock.each(function (index) {
+            // re-order index
+            $(this).find('.departures').attr('name', 'trans[' + index + '][departure]');
+            $(this).find('.arrivals').attr('name', 'trans[' + index + '][arrive]');
+            $(this).find('.methods').attr('name', 'trans[' + index + '][method]');
+            // show or hide delete button
+            if (transportBlock.length === 1 && index === 0) {
+                $(this).find('.d-delete').addClass('d-none');
+            } else {
+                $(this).find('.d-delete').removeClass('d-none');
+            }
+        });
+    }
 });

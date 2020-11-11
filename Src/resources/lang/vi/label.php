@@ -1,11 +1,12 @@
 <?php
 
 /**
- * Label here
- */
+     * Label here
+     */
 
 
 return [
+
     'button' => [
         'update' => 'Cập nhật',
         'change' => 'Thay đổi',
@@ -91,6 +92,14 @@ return [
             'days' => 'Ngày',
             'hours' => 'Giờ',
         ],
+    ],
+    /**
+     * Business Application
+     */
+    'business' => [
+        'departure' => 'Điểm xuất phát',
+        'arrival' => 'Điểm đến',
+        'method' => 'Số chuyến',
     ],
     'file' => 'Tập tin',
     'choose_file' => 'Chọn tập tin',

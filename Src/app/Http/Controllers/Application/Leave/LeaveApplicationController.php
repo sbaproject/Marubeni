@@ -47,17 +47,16 @@ class LeaveApplicationController extends Controller
         }
 
         // validate
-        return $this->doValidate($request, $inputs);
+        $validator = $this->doValidate($request, $inputs);
+        if (!empty($validator)) {
+            return redirect()->back()->with('inputs', $inputs)->withErrors($validator);
+        }
 
         // save
         $this->doSaveData($request, $inputs);
 
         // continue create new application after save success
-        if (isset($inputs['subsequent'])) {
-            return Common::redirectRouteWithAlertSuccess('user.leave.create');
-        }
-        // back to list application
-        return Common::redirectRouteWithAlertSuccess('user.form.index');
+        return $this->doRedirect($inputs);
     }
 
     public function show(Request $request, $id)
@@ -103,7 +102,10 @@ class LeaveApplicationController extends Controller
         }
 
         // validate
-        $this->doValidate($request, $inputs);
+        $validator = $this->doValidate($request, $inputs);
+        if (!empty($validator)) {
+            return redirect()->back()->with('inputs', $inputs)->withErrors($validator);
+        }
 
         // save
         $this->doSaveData($request, $inputs, $mApplication);
@@ -133,7 +135,7 @@ class LeaveApplicationController extends Controller
             }
             $validator = Validator::make($inputs, $rules);
             if($validator->fails()){
-                return redirect()->back()->with('inputs', $inputs)->withErrors($validator);
+                return $validator;
             }
             
         }
@@ -253,6 +255,16 @@ class LeaveApplicationController extends Controller
 
             DB::table('leaves')->updateOrInsert(['application_id' => $request->id], $leaveData);
         });
+    }
+
+    public function doRedirect($inputs)
+    {
+        // continue create new application after save success
+        if (isset($inputs['subsequent'])) {
+            return Common::redirectRouteWithAlertSuccess('user.leave.create');
+        }
+        // back to list application
+        return Common::redirectRouteWithAlertSuccess('user.form.index');
     }
 
     public function pdf($request, $inputs, $mApplication = null)

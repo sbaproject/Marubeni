@@ -190,5 +190,8 @@ return [
         'amount6' => 'PO',
         'amount7' => 'Not PO',
         'amount8' => 'PO',
+        // Business
+        'trip_dt_from' => 'Ngày đi',
+        'trip_dt_to' => 'Ngày đến',
     ],
 ];

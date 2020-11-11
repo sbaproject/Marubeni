@@ -138,6 +138,7 @@ return [
         'new_password' => [
             'regex' => ':attribute allows contain numbers(0 -> 9), letters(a -> z), symbols(_@.#&+%!-).'
         ],
+        
     ],
 
     'change_pass' => [
@@ -190,6 +191,9 @@ return [
         'amount6' => 'PO',
         'amount7' => 'Not PO',
         'amount8' => 'PO',
+        // Business
+        'trip_dt_from' => 'Trip from',
+        'trip_dt_to' => 'Trip to',
     ],
 
 ];

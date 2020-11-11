@@ -32,4 +32,11 @@ class Businesstrip extends Model
         'updated_at',
     ];
 
+    protected $appends = ['transportations'];
+
+    public function getTransportationsAttribute()
+    {
+        $trans = Transportation::where('businesstrip_id', $this->id)->get();
+        return $trans->toArray();
+    }
 }

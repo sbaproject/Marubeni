@@ -11,6 +11,9 @@
     .invalid-feedback{
         display: block;
     }
+    .d-none{
+        display: none !important;
+    }
 </style>
 @endsection
 
@@ -25,14 +28,15 @@
 @section('content')
 @php
 
-$destinations   = Session::has('inputs') ? Session::get('inputs')['destinations']  : ( isset($model) ? $model->destinations : null);
-$trip_dt_from   = Session::has('inputs') ? Session::get('inputs')['trip_dt_from']  : ( isset($model) ? $model->trip_dt_from : null);
-$trip_dt_to     = Session::has('inputs') ? Session::get('inputs')['trip_dt_to']    : ( isset($model) ? $model->trip_dt_to : null);
-$accommodation  = Session::has('inputs') ? Session::get('inputs')['accommodation'] : ( isset($model) ? $model->accommodation : null);
-$accompany      = Session::has('inputs') ? Session::get('inputs')['accompany']     : ( isset($model) ? $model->accompany : null);
-$borne_by       = Session::has('inputs') ? Session::get('inputs')['borne_by']      : ( isset($model) ? $model->borne_by : null);
-$comment        = Session::has('inputs') ? Session::get('inputs')['comment']       : ( isset($model) ? $model->comment : null);
-$file_path      = Session::has('inputs') ? Session::get('inputs')['file_path']     : ( isset($model) ? $model->file_path : null);
+$trans          = Session::has('inputs') ? Session::get('inputs')['trans'] : (isset($model) ? $model->transportations : null);
+$destinations   = Session::has('inputs') ? Session::get('inputs')['destinations']  : (isset($model) ? $model->destinations : null);
+$trip_dt_from   = Session::has('inputs') ? Session::get('inputs')['trip_dt_from']  : (isset($model) ? $model->trip_dt_from : null);
+$trip_dt_to     = Session::has('inputs') ? Session::get('inputs')['trip_dt_to']    : (isset($model) ? $model->trip_dt_to : null);
+$accommodation  = Session::has('inputs') ? Session::get('inputs')['accommodation'] : (isset($model) ? $model->accommodation : null);
+$accompany      = Session::has('inputs') ? Session::get('inputs')['accompany']     : (isset($model) ? $model->accompany : null);
+$borne_by       = Session::has('inputs') ? Session::get('inputs')['borne_by']      : (isset($model) ? $model->borne_by : null);
+$comment        = Session::has('inputs') ? Session::get('inputs')['comment']       : (isset($model) ? $model->comment : null);
+$file_path      = Session::has('inputs') ? Session::get('inputs')['file_path']     : (isset($model) ? $model->file_path : null);
 
 @endphp
 <section class="content leave-application">
@@ -91,7 +95,7 @@ $file_path      = Session::has('inputs') ? Session::get('inputs')['file_path']  
                                                 </div>
                                             </div>
                                         </div>
-                                        @error('trip_from')
+                                        @error('trip_dt_from')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
@@ -131,59 +135,125 @@ $file_path      = Session::has('inputs') ? Session::get('inputs')['file_path']  
                         <label>Itinerary & Transportation</label>
                     </div>
                     <div class="col-sm-10">
-                        <div class="card card-body card-itinerary-transport">
-                            <div class="form-group row">
-                                <div class="col-sm-6">
-                                    <div class="row mb-2">
-                                        <span class="col-md-3">Departure</span>
-                                        <div class="col-md-9">
-                                            <input type="text" class="form-control" name="departure[]">
-                                        </div>
+                        <div id="transport_block">
+                            @if (!empty($trans))
+                                @foreach ($trans as $key => $value)
+                                <div class="card card-body card-itinerary-transport">
+                                    <div class="d-delete d-flex justify-content-end @if(count($trans) === 1 && $key === 0) d-none @endif">
+                                        <button class="btnDelete btn btn-danger btn-sm pt-0 pb-0 pl-3 pr-3 mb-1">
+                                            Delete
+                                        </button>
                                     </div>
-                                    <div class="row">
-                                        <span class="col-md-3">Arrival</span>
-                                        <div class="col-md-9">
-                                            <input type="text" class="form-control" name="arrival[]">
+                                    <div class="form-group row">
+                                        <div class="col-sm-6">
+                                            <div class="row mb-2">
+                                                <span class="col-md-3">Departure</span>
+                                                <div class="col-md-9">
+                                                    <input type="text" class="form-control @error('trans.'.$key.'.departure') is-invalid @enderror"
+                                                        name="trans[{{ $key }}][departure]" value="{{ $trans[$key]['departure'] }}" autocomplete="off">
+                                                    @error('trans.'.$key.'.departure')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <span class="col-md-3">Arrival</span>
+                                                <div class="col-md-9">
+                                                    <input type="text" class="form-control @error('trans.'.$key.'.arrive') is-invalid @enderror"
+                                                        name="trans[{{ $key }}][arrive]" value="{{ $trans[$key]['arrive'] }}" autocomplete="off">
+                                                    @error('trans.'.$key.'.arrive')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="row">
+                                                <span class="col-md-3">Flight No</span>
+                                                <div class="col-md-9">
+                                                    <input type="text" class="form-control @error('trans.'.$key.'.method') is-invalid @enderror"
+                                                        name="trans[{{ $key }}][method]" value="{{ $trans[$key]['method'] }}" autocomplete="off">
+                                                    @error('trans.'.$key.'.method')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                    @enderror
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-6">
-                                    <div class="row">
-                                        <span class="col-md-3">Flight No</span>
-                                        <div class="col-md-9">
-                                            <input type="text" class="form-control" name="method[]">
+                                @endforeach
+                            @else
+                                <div class="card card-body card-itinerary-transport">
+                                    <div class="d-delete d-flex justify-content-end d-none">
+                                        <button class="btnDelete btn btn-danger btn-sm pt-0 pb-0 pl-3 pr-3 mb-1">
+                                            Delete
+                                        </button>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-6">
+                                            <div class="row mb-2">
+                                                <span class="col-md-3">Departure</span>
+                                                <div class="col-md-9">
+                                                    <input type="text" class="form-control" name="trans[0][departure]" autocomplete="off">
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <span class="col-md-3">Arrival</span>
+                                                <div class="col-md-9">
+                                                    <input type="text" class="form-control" name="trans[0][arrive]" autocomplete="off">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="row">
+                                                <span class="col-md-3">Flight No</span>
+                                                <div class="col-md-9">
+                                                    <input type="text" class="form-control" name="trans[0][method]" autocomplete="off">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+                            <div class="card card-body card-itinerary-transport copy d-none">
+                                <div class="d-delete d-flex justify-content-end">
+                                    <button class="btnDelete btn btn-danger btn-sm pt-0 pb-0 pl-3 pr-3 mb-1">
+                                        Delete
+                                    </button>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-sm-6">
+                                        <div class="row mb-2">
+                                            <span class="col-md-3">Departure</span>
+                                            <div class="col-md-9">
+                                                <input type="text" class="form-control departures" autocomplete="off">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <span class="col-md-3">Arrival</span>
+                                            <div class="col-md-9">
+                                                <input type="text" class="form-control arrivals" autocomplete="off">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="row">
+                                            <span class="col-md-3">Flight No</span>
+                                            <div class="col-md-9">
+                                                <input type="text" class="form-control methods" autocomplete="off">
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="card card-body card-itinerary-transport">
-                            <div class="form-group row">
-                                <div class="col-sm-6">
-                                    <div class="row mb-2">
-                                        <span class="col-md-3">Departure</span>
-                                        <div class="col-md-9">
-                                            <input type="text" class="form-control" name="departure[]">
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <span class="col-md-3">Arrival</span>
-                                        <div class="col-md-9">
-                                            <input type="text" class="form-control" name="arrival[]">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="row">
-                                        <span class="col-md-3">Flight No</span>
-                                        <div class="col-md-9">
-                                            <input type="text" class="form-control" name="method[]">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <button class="btn btn-outline-dark">+ Add</button>
+                        <button id="btnAdd" class="btn btn-outline-dark">+ Add</button>
                     </div>
                 </div>
                 <hr>

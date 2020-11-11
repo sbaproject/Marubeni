@@ -1,8 +1,8 @@
 <?php
 
 /**
-                 * Label
-                 */
+     * Label
+     */
 
 return [
 
@@ -44,6 +44,8 @@ return [
     '_no_' => 'NO.',
     'email_address' => 'E-Mail address',
     'change_pass' => 'Change Password',
+    'file' => 'File',
+    'choose_file' => 'Choose file',
     /**
      * Form
      */
@@ -89,8 +91,14 @@ return [
             'hours' => 'Hours',
         ],
     ],
-    'file' => 'File',
-    'choose_file' => 'Choose file',
+    /**
+     * Business Application
+     */
+    'business' => [
+        'departure' => 'Departure',
+        'arrival' => 'Arrival',
+        'method' => 'Flight No',
+    ],
     //Type Application
     'application_list' => 'Application List',
     'leave_application' => 'Leave application',
@@ -105,7 +113,7 @@ return [
     'date_from' => 'From',
     'date_to' => 'To',
     /**
-     * Leave Application
+     * Dashboard
      */
     'dashboard' => [
         //form

@@ -27,6 +27,7 @@ class BusinessTripController extends Controller
 
     public function store(Request $request)
     {
+
         // get input data
         $inputs = $request->all();
 
@@ -35,7 +36,10 @@ class BusinessTripController extends Controller
             // return $this->pdf($request, $inputs);
         }
         // validate
-        return $this->doValidate($request, $inputs);
+        $validator = $this->doValidate($request, $inputs);
+        if (!empty($validator)) {
+            return redirect()->back()->with('inputs', $inputs)->withErrors($validator);
+        }
 
         // save
         $this->doSaveData($request, $inputs);
@@ -52,8 +56,8 @@ class BusinessTripController extends Controller
             abort('403');
         }
 
-        // get leave application
-        $model = ModelsBusinesstrip::where('application_id', $id)->first();
+        // get business application
+        $model = BusinessTrip::where('application_id', $id)->first();
 
         return view('application.business.input', compact('application', 'model', 'id'));
     }
@@ -74,7 +78,11 @@ class BusinessTripController extends Controller
             // return $this->pdf($request, $inputs);
         }
         // validate
-        return $this->doValidate($request, $inputs);
+        $validator = $this->doValidate($request, $inputs);
+        if (!empty($validator)) {
+            // dd($inputs);
+            return redirect()->back()->with('inputs', $inputs)->withErrors($validator);
+        }
 
         // save
         $this->doSaveData($request, $inputs, $mApplication);
@@ -83,7 +91,7 @@ class BusinessTripController extends Controller
         return $this->doRedirect($inputs);
     }
 
-    public function doValidate($request, $inputs)
+    public function doValidate($request, &$inputs)
     {
         if (isset($inputs['apply']) || isset($inputs['draft'])) {
             $rules = [];
@@ -94,12 +102,20 @@ class BusinessTripController extends Controller
             if (isset($inputs['apply'])) {
                 $rules['trip_dt_from'] = 'required';
                 $rules['trip_dt_to'] = 'required';
+                $rules['trans.*.departure'] = 'required';
+                $rules['trans.*.arrive'] = 'required';
+                $rules['trans.*.method'] = 'required';
             }
-            $validator = Validator::make($inputs, $rules);
-            if($validator->fails()){
-                return redirect()->back()->with('inputs', $inputs)->withErrors($validator);
+            $customAttributes = [
+                'trans.*.departure' => __('label.business.departure'),
+                'trans.*.arrive' => __('label.business.arrival'),
+                'trans.*.method' => __('label.business.method'),
+            ];
+            $validator = Validator::make($inputs, $rules, [], $customAttributes);
+            if ($validator->fails()) {
+                unset($inputs['input_file']);
+                return $validator;
             }
-            // $validator->validate();
         }
     }
 
@@ -163,21 +179,21 @@ class BusinessTripController extends Controller
                 $application['created_at'] = Carbon::now();
             }
 
-            // add
+            // save applications
             if (!$request->id) {
                 $applicationId = DB::table('applications')->insertGetId($application);
-            }
-            // update
-            else {
+            } else {
                 DB::table('applications')->where('id', $request->id)->update($application);
             }
 
             /**-------------------------
              * create [Business Application] detail
              *-------------------------*/
-            // delete old file
             if ($request->id) {
-                $biz = BusinessTrip::where('application_id', $mApplication->id)->first();
+                $biz = BusinessTrip::where('application_id', $request->id)->first();
+            }
+            // delete old file
+            if (isset($biz)) {
                 $filePath = $biz->file_path;
                 // attchached file was changed
                 if ($inputs['file_path'] != $filePath) {
@@ -216,7 +232,30 @@ class BusinessTripController extends Controller
                 $bizData['created_at'] = Carbon::now();
             }
 
-            DB::table('businesstrips')->updateOrInsert(['application_id' => $request->id], $bizData);
+            // DB::table('businesstrips')->updateOrInsert(['application_id' => $request->id], $bizData);
+            // save business application
+            if (!$request->id) {
+                $bizId = DB::table('businesstrips')->insertGetId($bizData);
+            } else {
+                DB::table('businesstrips')->where('id', $biz->id)->update($bizData);
+                DB::table('transportations')->where('businesstrip_id', $biz->id)->delete();
+            }
+            // save transportations
+            if (!isset($bizId)) {
+                $bizId = $biz->id;
+            }
+            $transportations = [];
+            foreach ($inputs['trans'] as $value) {
+                $item['businesstrip_id'] = $bizId;
+                $item['departure'] = $value['departure'];
+                $item['arrive'] = $value['arrive'];
+                $item['method'] = $value['method'];
+                $item['created_at'] = Carbon::now();
+                $item['updated_at'] = Carbon::now();
+
+                $transportations[] = $item;
+            }
+            DB::table('transportations')->insert($transportations);
         });
     }
 
