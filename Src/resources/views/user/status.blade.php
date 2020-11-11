@@ -6,6 +6,8 @@
 @section('js')
     <!-- moment -->
     <script src="js/moment/moment.min.js"></script>
+    <!-- moment locale-->
+    <script src="js/moment/locale/{{ config('app.locale') }}.js"></script>
     <!-- DateTime Bootstrap 4 -->
     <script src="js/bootstrap-datetimepicker.js"></script>
     <script src="js/user/status.js"></script>
