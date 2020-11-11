@@ -54,7 +54,7 @@
     <section class="content-status">
         <h4 class="mb-2" style="border-bottom: 1px solid #000;font-weight: bold;"><i class="nav-icon fas fa-file-alt"
                 aria-hidden="true"
-                style="margin-right: 5px;margin-bottom: 5px;"></i>{{ $intstatus == config('const.application.status.applying') ? __('label.status.list_of_applying_documents') : ($intstatus == config('const.application.status.approvel_un') ? __('label.status.list_of_approval_un_documents') : ($intstatus == config('const.application.status.declined') ? __('label.status.list_of_declined_documents') : ($intstatus == config('const.application.status.reject') ? __('label.status.list_of_reject_documents') : ($intstatus == config('const.application.status.completed') ? __('label.status.list_of_completed_documents') : '')))) }}
+                style="margin-right: 5px;margin-bottom: 5px;"></i>{{ $intstatus == config('const.application.status.applying') ? __('label.status.list_of_applying_documents') : ($intstatus == config('const.application.status.approvel_un') ? __('label.status.list_of_approval_un_documents') : ($intstatus == config('const.application.status.approvel_in') ? __('label.status.list_of_approval_in_documents') : ($intstatus == config('const.application.status.declined') ? __('label.status.list_of_declined_documents') : ($intstatus == config('const.application.status.reject') ? __('label.status.list_of_reject_documents') : ($intstatus == config('const.application.status.completed') ? __('label.status.list_of_completed_documents') : ''))))) }}
         </h4>
         <div class="card">
             <div class="card-body p-0 card-list-items">
@@ -106,11 +106,9 @@
         @if (isset($list_applications_status))
             {{ $list_applications_status->withQueryString()->links('paginator') }}
         @endif
-        <div id='str_date' value='@if (\Session::has(' str_date'))
-        {{ \Session::get('str_date') }}@else{{ Carbon\Carbon::now() }}@endif'>
+        <div id='str_date' value='{{ $str_date }}'>
         </div>
-        <div id='end_date' value='@if (\Session::has(' end_date'))
-        {{ \Session::get('end_date') }}@else{{ Carbon\Carbon::now() }}@endif'>
+        <div id='end_date' value='{{ $end_date }}'>
         </div>
     </section>
 @endsection
