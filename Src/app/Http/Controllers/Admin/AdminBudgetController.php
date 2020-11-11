@@ -69,7 +69,6 @@ class AdminBudgetController extends Controller
         $amount1->save();
 
         // Bushiness Trip - Assignment - Business Class
-
         $amount2 = Budget::where('budget_type', config('const.budget.budget_type.business'))->where('step_type', config('const.budget.step_type.application'))->where('position',  config('const.budget.position.business'))->get()->first();
         $amount2->amount = $data['amount2'];
         $amount2->updated_by = Auth::user()->id;

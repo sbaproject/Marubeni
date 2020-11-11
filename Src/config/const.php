@@ -105,7 +105,7 @@ return [
         ],
         'budget_type' => [
 			'business' => 2,
-			'entertaiment' => 3,
+			'entertainment' => 3,
         ],
         'step_type' => [
 			'application' => 1,
