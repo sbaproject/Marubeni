@@ -57,6 +57,28 @@ return [
         '3' => 'Đơn tiếp khách',
     ],
     /**
+     * Menu
+     */
+    'menu' => [
+        'application' => 'ĐƠN',
+        'application_list' => 'Danh Sách Đơn',
+        'draft' => 'ĐƠN NHÁP',
+        'status' => 'TRANG THÁI',
+        'applying' => 'Đơn Chuẩn Bị Duyệt',
+        'approved_un' => 'Đơn Đang Phê Duyệt / Chưa Thanh Toán',
+        'approved_in' => 'Đơn Đang Phê Duyệt / Trong Quá Trình Thanh Toán',
+        'declined' => 'Đơn Không Duyệt',
+        'reject' => 'Đơn Trả Lại',
+        'completed' => 'Đơn Hoàn Thành',
+        'approval' => 'PHÊ DUYỆT',
+        'settings' => 'CÀI ĐẶT',
+        'company_registration' => 'Đăng Ký Công Ty',
+        'change_password' => 'Thay Đổi Mật Khẩu',
+        'employee_setting' => 'Cài Đặt Nhân Viên',
+        'budget_setting' => 'Cài Đặt Budget',
+        'approval_flow_setting' => 'Cài Đặt Luồng Phê Duyệt',
+    ],
+    /**
      * Leave application
      */
     'leave' => [

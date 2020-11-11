@@ -53,6 +53,28 @@ return [
         'entertaiment' => 'Entertaiment',
     ],
     /**
+     * Menu
+     */
+    'menu' => [
+        'application' => 'APPLICATION',
+        'application_list' => 'Application List',
+        'draft' => 'DRAFT',
+        'status' => 'STATUS',
+        'applying' => 'Applying',
+        'approved_un' => 'Approved/Under payment',
+        'approved_in' => 'Approved/in-processing of payment',
+        'declined' => 'Declined',
+        'reject' => 'Reject',
+        'completed' => 'Completed',
+        'approval' => 'APPROVAL',
+        'settings' => 'SETTINGS',
+        'company_registration' => 'Company Registration',
+        'change_password' => 'Change Password',
+        'employee_setting' => 'Employee Setting',
+        'budget_setting' => 'Budget Setting',
+        'approval_flow_setting' => 'Approval Flow Setting',
+    ],
+    /**
      * Leave Application
      */
     'leave' => [
