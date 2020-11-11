@@ -1,0 +1,10 @@
+var APPROVAL_FLOW_NAME_REQUIRED = "Vui lòng nhập tên quy trình phê duyệt";
+var APPLICATION_FORM_REQUIRED = "Vui lòng chọn loại đơn xin";
+var APPLICANT_ROLE_REQUIRED = "Vui lòng chọn vai trò người đề nghị";
+var APPROVER_REQUIRED = "Vui lòng chọn người phê duyệt";
+var APPLICANT_ROLE_FORM_EXIST = "Vai trò người đề nghị của loại đơn xin đã tồn tại.";
+var FLOW_APPROVER = "Người phê duyệt";
+var FLOW_STEP = "Bước";
+var FLOW_DESTINATION = "Nơi đơn chuyển tới";
+var FLOW_ADD = "Thêm";
+var FLOW_DELETE = "Xóa";
