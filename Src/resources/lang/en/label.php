@@ -57,6 +57,30 @@ return [
         '3' => 'Entertaiment',
     ],
     /**
+     * Menu
+     */
+    'menu' => [
+        'application' => 'APPLICATION',
+        'application_list' => 'Application List',
+        'draft' => 'DRAFT',
+        'status' => 'STATUS',
+        'applying' => 'Applying',
+        'approved_un' => 'Approved / Under',
+        'approved_un2' => ' Payment',
+        'approved_in' => 'Approved / In-Processing',
+        'approved_in2' => 'Of Payment',
+        'declined' => 'Declined',
+        'reject' => 'Reject',
+        'completed' => 'Completed',
+        'approval' => 'APPROVAL',
+        'settings' => 'SETTINGS',
+        'company_registration' => 'Company Registration',
+        'change_password' => 'Change Password',
+        'employee_setting' => 'Employee Setting',
+        'budget_setting' => 'Budget Setting',
+        'approval_flow_setting' => 'Approval Flow Setting',
+    ],
+    /**
      * Leave Application
      */
     'leave' => [
@@ -113,7 +137,7 @@ return [
      */
     'dashboard' => [
         //form
-        'list_application' => 'List of Applications',
+        'list_application' => 'List of All Applications',
         'application_no' => 'Application No',
         'application_name' => 'Application Name',
         'status' => 'Status',
@@ -141,6 +165,7 @@ return [
     'status' => [
         //forms
         'list_of_applying_documents' => 'List of Applying Documents',
+        'list_of_approval_documents' => 'List of Approved Documents',
         'list_of_approval_un_documents' => 'List of Approved/Under payment Documents',
         'list_of_approval_in_documents' => 'List of Approved/in-processing of payment Documents',
         'list_of_declined_documents' => 'List of Declined Documents',
@@ -170,6 +195,7 @@ return [
         'att_department' => 'Department',
         'att_email' => 'E-mail',
         'text' => 'Text',
+        'action' => 'Actions',
     ],
     /**
      * Budget

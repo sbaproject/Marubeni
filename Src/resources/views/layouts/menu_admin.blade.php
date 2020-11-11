@@ -6,7 +6,7 @@
             <a href="" class="nav-link">
                 <i class="nav-icon fas fa-list-alt"></i>
                 <p>
-                    Application List
+                    {{ __('label.menu.application_list') }}
                     <i class="fas fa-angle-down right"></i>
                 </p>
             </a>
@@ -14,37 +14,37 @@
                 <li class="nav-item">
                     <a href="" class="nav-link">
                         <i class="fas fa-angle-right left"></i>
-                        <p>Applying</p>
+                        <p>{{ __('label.menu.applying') }}</p>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="/pages/examples/user-status.html" class="nav-link">
                         <i class="fas fa-angle-right left"></i>
-                        <p>Approved/Under payment</p>
+                        <p>{{ __('label.menu.approved_un') }}</p>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="/pages/examples/user-status.html" class="nav-link">
                         <i class="fas fa-angle-right left"></i>
-                        <p>Approved/in-processing <br>of payment</p>
+                        <p>{{ __('label.menu.approved_in') }}</p>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="/pages/examples/user-status.html" class="nav-link">
                         <i class="fas fa-angle-right left"></i>
-                        <p>Declined</p>
+                        <p>{{ __('label.menu.declined') }}</p>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="/pages/examples/user-status.html" class="nav-link">
                         <i class="fas fa-angle-right left"></i>
-                        <p>Reject</p>
+                        <p>{{ __('label.menu.reject') }}</p>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="/pages/examples/user-status.html" class="nav-link">
                         <i class="fas fa-angle-right left"></i>
-                        <p>Completed</p>
+                        <p>{{ __('label.menu.completed') }}</p>
                     </a>
                 </li>
             </ul>
@@ -53,7 +53,7 @@
             <a href="" class="nav-link">
                 <i class="nav-icon fas fa-cog"></i>
                 <p>
-                    SETTINGS
+                    {{ __('label.menu.settings') }}
                     <i class="right fas fa-angle-down"></i>
                 </p>
             </a>
@@ -61,25 +61,25 @@
                 <li class="nav-item">
                     <a href="{{ route('admin.user.index') }}" class="nav-link">
                         <i class="fas fa-angle-right left"></i>
-                        <p>Employee Setting</p>
+                        <p>{{ __('label.menu.employee_setting') }}</p>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="{{ route('admin.budget.show') }}" class="nav-link">
                         <i class="fas fa-angle-right left"></i>
-                        <p>Budget setting</p>
+                        <p>{{ __('label.menu.budget_setting') }}</p>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="{{ route('admin.flow.index') }}" class="nav-link">
                         <i class="fas fa-angle-right left"></i>
-                        <p>Approval Flow Setting</p>
+                        <p>{{ __('label.menu.approval_flow_setting') }}</p>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="{{ route('changepass.show') }}" class="nav-link">
                         <i class="fas fa-angle-right left"></i>
-                        <p>Change Password</p>
+                        <p>{{ __('label.menu.change_password') }}</p>
                     </a>
                 </li>
             </ul>
@@ -88,7 +88,7 @@
             <a href="{{ route('admin.company.index') }}" class="nav-link">
                 <i class="nav-icon far fa-building"></i>
                 <p>
-                    Company Registration
+                    {{ __('label.menu.company_registration') }}
                 </p>
             </a>
         </li>

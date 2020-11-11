@@ -24,10 +24,10 @@ class RedirectIfAuthenticated
         if (Auth::check()) {
             // for admin
             if(Gate::allows('admin-gate')){
-                return redirect()->route('admin.dashboard');
+                return redirect()->route('admin.dashboard',config('const.application.status.all'));
             }
             // for user
-            return redirect()->route('user.dashboard');
+            return redirect()->route('user.dashboard',config('const.application.status.all'));
         }
 
         return $next($request);
