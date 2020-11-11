@@ -191,6 +191,7 @@ return [
         'att_department' => 'Department',
         'att_email' => 'E-mail',
         'text' => 'Text',
+        'action' => 'Actions',
     ],
     /**
      * Budget
