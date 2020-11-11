@@ -17,11 +17,16 @@ class UserStatusController extends Controller
         $data = $request->input();
 
         //Set case in Status is Approvel
-        if (intval($status) == 1 or intval($status) == 2) {
+        if (intval($status) == config('const.application.status.approvel_un') or intval($status) == config('const.application.status.approvel_in')) {
             $sta = 1;
             $end = 98;
-            $stepStr = intval($status);
-            $stepEnd = intval($status);
+            if (intval($status) == config('const.application.status.approvel_un')) {
+                $stepStr = 1;
+                $stepEnd = 1;
+            } else if (intval($status) == config('const.application.status.approvel_in')) {
+                $stepStr = 2;
+                $stepEnd = 2;
+            }
         } else {
             $sta = intval($status);
             $end = intval($status);

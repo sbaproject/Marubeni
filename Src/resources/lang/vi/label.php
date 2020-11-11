@@ -112,7 +112,7 @@ return [
      */
     'dashboard' => [
         //form
-        'list_application' => 'Danh sách Đơn',
+        'list_application' => 'Danh sách Tất Cả Đơn',
         'application_no' => 'Mã Đơn',
         'application_name' => 'Loại Đơn',
         'status' => 'Trạng Thái',
@@ -139,7 +139,8 @@ return [
      */
     'status' => [
         //forms
-        'list_of_applying_documents' => 'Danh Sách Đơn Đang Duyệt',
+        'list_of_applying_documents' => 'Danh Sách Đơn Chuẩn Bị Duyệt',
+        'list_of_approval_documents' => 'Danh Sách Đơn Đang Phê Duyệt',
         'list_of_approval_un_documents' => 'List of Approved/Under payment Documents',
         'list_of_approval_in_documents' => 'List of Approved/in-processing of payment Documents',
         'list_of_declined_documents' => 'Danh Sách Đơn Không Duyệt',

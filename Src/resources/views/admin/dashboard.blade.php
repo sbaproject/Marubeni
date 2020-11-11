@@ -42,7 +42,7 @@
     <section class="content-dashboard">
         <div class="row" style="text-align: center;">
             <div class="col-xs-5ths">
-                <a href="/pages/examples/user-status.html">
+                <a href="{{ route('admin.dashboard',config('const.application.status.applying'))}}">
                     <div class="card">
                         <div class="card-body card-wrap-items">
                             <span>{{ __('label.dashboard.applying') }}</span>
@@ -52,7 +52,7 @@
                 </a>
             </div>
             <div class="col-xs-5ths col-set">
-                <a href="/pages/examples/user-status.html">
+                <a href="{{ route('admin.dashboard',config('const.application.status.approvel'))}}">
                     <div class="card">
                         <div class="card-body card-wrap-items">
                             <span>{{ __('label.dashboard.approval') }}</span>
@@ -62,7 +62,7 @@
                 </a>
             </div>
             <div class="col-xs-5ths col-set">
-                <a href="/pages/examples/user-status.html">
+                <a href="{{ route('admin.dashboard',config('const.application.status.declined'))}}">
                     <div class="card">
                         <div class="card-body card-wrap-items">
                             <span>{{ __('label.dashboard.declined') }}</span>
@@ -72,7 +72,7 @@
                 </a>
             </div>
             <div class="col-xs-5ths col-set">
-                <a href="/pages/examples/user-status.html">
+                <a href="{{ route('admin.dashboard',config('const.application.status.reject'))}}">
                     <div class="card">
                         <div class="card-body card-wrap-items">
                             <span>{{ __('label.dashboard.reject') }}</span>
@@ -82,7 +82,7 @@
                 </a>
             </div>
             <div class="col-xs-5ths col-set">
-                <a href="/pages/examples/user-status.html">
+                <a href="{{ route('admin.dashboard',config('const.application.status.completed'))}}">
                     <div class="card">
                         <div class="card-body card-wrap-items">
                             <span>{{ __('label.dashboard.completed') }}</span>
@@ -94,7 +94,7 @@
         </div>
         <h4 class="mb-2" style="border-bottom: 1px solid #000;font-weight: bold;margin-top: 25px;"><i
                 class="nav-icon fas fa-file-alt" aria-hidden="true"
-                style="margin-right: 5px;margin-bottom: 5px;"></i>{{ __('label.dashboard.list_application') }}</h4>
+                style="margin-right: 5px;margin-bottom: 5px;"></i>{{ $intstatus == config('const.application.status.applying') ? __('label.status.list_of_applying_documents') : ($intstatus == config('const.application.status.approvel') ? __('label.status.list_of_approval_documents') : ($intstatus == config('const.application.status.declined') ? __('label.status.list_of_declined_documents') : ($intstatus == config('const.application.status.reject') ? __('label.status.list_of_reject_documents') : ($intstatus == config('const.application.status.completed') ? __('label.status.list_of_completed_documents') : __('label.dashboard.list_application'))))) }}</h4>
         <div class="card">
             <div class="card-body p-0 card-list-items">
                 <table class="table" id="table_list_status">
