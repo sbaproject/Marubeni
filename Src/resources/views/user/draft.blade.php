@@ -29,7 +29,7 @@
                                         <td>
                                             <x-action>
                                                 <x-slot name="editUrl">
-                                                    {{ $application_draft->form_id == 1 ? route('user.leave.show', $application_draft->id) : ($application_draft->form_id == 2 ? '' : ($application_draft->form_id == 1 ? '' : '')) }}
+                                                    {{ $application_draft->form_id == 1 ? route('user.leave.show', $application_draft->id) : ($application_draft->form_id == 2 ? route('user.business.show', $application_draft->id) : ($application_draft->form_id == 1 ? '' : '')) }}
                                                 </x-slot>
                                                 <x-slot name="deleteUrl">
                                                     {{ route('user.draft.delete', $application_draft->id) }}

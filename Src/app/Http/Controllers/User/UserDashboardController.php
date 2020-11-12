@@ -25,7 +25,7 @@ class UserDashboardController extends Controller
             $end_date = $data['dataDateTo'] . ' 23:59:59';
 
             if ($id == config('const.application.status.all')) {
-                $list_application =  Application::where('created_by', $userId)->where('created_at', '>=', $str_date)->where('created_at', '<=', $end_date)->orderBy('id', 'DESC')->paginate(5);
+                $list_application =  Application::where('created_by', $userId)->where('status', '!=' , config('const.application.status.draft'))->where('created_at', '>=', $str_date)->where('created_at', '<=', $end_date)->orderBy('id', 'DESC')->paginate(5);
             } else if ($id == config('const.application.status.applying')) {
                 $list_application =  Application::where('created_by', $userId)->where('status', config('const.application.status.applying'))->where('created_at', '>=', $str_date)->where('created_at', '<=', $end_date)->orderBy('id', 'DESC')->paginate(5);
             } else if ($id == config('const.application.status.approvel')) {
@@ -49,7 +49,7 @@ class UserDashboardController extends Controller
             $end_date = Carbon::now();
 
             if ($id == config('const.application.status.all')) {
-                $list_application =  Application::where('created_by', $userId)->orderBy('created_at', 'DESC')->paginate(5);
+                $list_application =  Application::where('created_by', $userId)->where('status', '!=' , config('const.application.status.draft'))->orderBy('created_at', 'DESC')->paginate(5);
             } else if ($id == config('const.application.status.applying')) {
                 $list_application =  Application::where('created_by', $userId)->where('status', config('const.application.status.applying'))->orderBy('created_at', 'DESC')->paginate(5);
             } else if ($id == config('const.application.status.approvel')) {
