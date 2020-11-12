@@ -138,7 +138,7 @@ return [
         'new_password' => [
             'regex' => ':attribute allows contain numbers(0 -> 9), letters(a -> z), symbols(_@.#&+%!-).'
         ],
-        
+
     ],
 
     'change_pass' => [
@@ -175,13 +175,13 @@ return [
         'code_leave' => 'Code of leave',
         'file_path' => 'Attached file',
         'input_file' => 'Attached file',
-        'com_name' => 'Company Name',
-        'com_country'   => 'Country',
-        'com_tel'   => 'Tell',
-        'com_address'   => 'Address',
-        'att_name'   => 'Name',
-        'att_department'   => 'Department',
-        'att_mail' => 'E-mail',
+        'name' => 'Company Name',
+        'country'   => 'Country',
+        'phone'   => 'Tell',
+        'address'   => 'Address',
+        'attendants_name'   => 'Name',
+        'attendants_department'   => 'Department',
+        'email' => 'E-mail',
         //Budget
         'amount1' => 'Economy Class',
         'amount2' => 'Business Class',
