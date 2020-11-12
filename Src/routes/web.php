@@ -18,6 +18,7 @@ use App\Http\Controllers\Admin\AdminCompanyController;
 use App\Http\Controllers\Admin\AdminBudgetController;
 use App\Http\Controllers\Admin\AdminStatusController;
 use App\Http\Controllers\Application\Business\BusinessTripController;
+use App\Http\Controllers\Application\Entertainment\EntertainmentController;
 use App\Http\Controllers\Application\Leave\LeaveApplicationController;
 use App\Http\Controllers\LocaleController;
 
@@ -140,6 +141,13 @@ Route::middleware('auth')->group(function () {
                 Route::post('add', [BusinessTripController::class, 'store'])->name('store');
                 Route::get('edit/{id}',[BusinessTripController::class, 'show'])->name('show');
                 Route::post('edit/{id}', [BusinessTripController::class, 'update'])->name('update');
+            });
+            // Entertainment Application
+            Route::prefix('entertainment')->name('entertainment.')->group(function () {
+                Route::get('add', [EntertainmentController::class, 'create'])->name('create');
+                Route::post('add', [EntertainmentController::class, 'store'])->name('store');
+                Route::get('edit/{id}', [EntertainmentController::class, 'show'])->name('show');
+                Route::post('edit/{id}', [EntertainmentController::class, 'update'])->name('update');
             });
         });
     });

@@ -17,7 +17,7 @@
 				<x-alert />
 				<div class="row">
 					<div class="col-sm-4">
-						<a href="">
+						<a href="{{ route('user.entertainment.create') }}">
 							<div class="application-item">
 								{{ __('label.form.entertaiment') }}
 							</div>

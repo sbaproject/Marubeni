@@ -135,6 +135,12 @@ return [
         'borne_by' => 'Expenses to BE Borne by',
         'comment' => 'Comment',
     ],
+    /**
+     * Entertainment Application
+     */
+    'entertainment' => [
+        'application_no' => 'Application No',
+    ],
     //Type Application
     'application_list' => 'Application List',
     'leave_application' => 'Leave application',

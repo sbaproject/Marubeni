@@ -133,6 +133,12 @@ return [
         'borne_by' => 'Chi phí chịu bởi',
         'comment' => 'Nội dung công tác',
     ],
+    /**
+     * Entertainment Application
+     */
+    'entertainment' => [
+        'application_no' => 'Mã đơn',
+    ],
     'file' => 'Tập tin',
     'choose_file' => 'Chọn tập tin',
     //Type Application

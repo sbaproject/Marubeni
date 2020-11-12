@@ -29,7 +29,7 @@
 @section('content')
 @php
 
-$trans          = Session::has('inputs') ? Session::get('inputs')['trans'] : (isset($model) ? $model->transportations : null);
+$trans          = Session::has('inputs') ? Session::get('inputs')['trans']         : (isset($model) ? $model->transportations : null);
 $destinations   = Session::has('inputs') ? Session::get('inputs')['destinations']  : (isset($model) ? $model->destinations : null);
 $trip_dt_from   = Session::has('inputs') ? Session::get('inputs')['trip_dt_from']  : (isset($model) ? $model->trip_dt_from : null);
 $trip_dt_to     = Session::has('inputs') ? Session::get('inputs')['trip_dt_to']    : (isset($model) ? $model->trip_dt_to : null);
@@ -91,7 +91,7 @@ $file_path      = Session::has('inputs') ? Session::get('inputs')['file_path']  
                                             <input type="text" class="form-control datetimepicker-input @error('trip_dt_from') is-invalid @enderror"
                                                 data-target="#trip_from" />
                                             <div class="input-group-addon input-group-append"
-                                                data-target="#dateLeaveFrom" data-toggle="datetimepicker">
+                                                data-target="#trip_from" data-toggle="datetimepicker">
                                                 <div class="input-group-text"><i class="fa fa-calendar-alt"></i>
                                                 </div>
                                             </div>
@@ -113,7 +113,7 @@ $file_path      = Session::has('inputs') ? Session::get('inputs')['file_path']  
                                             <input type="text" class="form-control datetimepicker-input @error('trip_dt_to') is-invalid @enderror"
                                                 data-target="#trip_to"/>
                                             <div class="input-group-addon input-group-append"
-                                                data-target="#dateLeaveFrom" data-toggle="datetimepicker">
+                                                data-target="#trip_to" data-toggle="datetimepicker">
                                                 <div class="input-group-text"><i class="fa fa-calendar-alt"></i>
                                                 </div>
                                             </div>
@@ -357,8 +357,7 @@ $file_path      = Session::has('inputs') ? Session::get('inputs')['file_path']  
                     </div>
                     <div class="col-sm-10">
                         <div class="form-check">
-                            <input type="checkbox" id="subsequent" name="subsequent" class="form-check-input" @if (old('subsequent')
-                                !=null) checked @endif>
+                            <input type="checkbox" id="subsequent" name="subsequent" class="form-check-input" @if (old('subsequent') !=null) checked @endif>
                             <label class="form-check-label" for="subsequent">{{ __('label.on') }}</label>
                         </div>
                     </div>

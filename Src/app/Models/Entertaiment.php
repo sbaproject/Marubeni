@@ -17,4 +17,6 @@ class Entertaiment extends Model
      * @var array
      */
 
+    //  protected $table = 'entertaiments';
+
 }
