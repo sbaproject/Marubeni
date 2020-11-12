@@ -26,47 +26,25 @@ class UserCompanyController extends Controller
 
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'com_name'   => 'required',
-            'com_country'   => 'required',
-            'com_tel'   => 'required|numeric',
-            'com_address'   => 'required',
-            'att_name'   => 'required',
-            'att_department'   => 'required',
-            'att_mail' => 'required|email:rfc,dns',
-        ],);
         // get data inputs
         $data = $request->input();
 
-        // Check Company'sName exists !
-        $checkexist_com_name = Company::where('name', $data['com_name'])->count();
+        $validator = Validator::make($data, [
+            'name'   => 'required|unique:companies',
+            'country'   => 'required',
+            'phone'   => 'required|numeric',
+            'address'   => 'required',
+            'attendants_name'   => 'required',
+            'attendants_department'   => 'required',
+            'email' => 'required|email:rfc,dns',
+        ],);
 
-        $validator->after(function ($validator) use ($checkexist_com_name) {
-            if ($checkexist_com_name > 0) {
-                $validator->errors()->add('com_name', __('label.company.check_exist_com_name'));
-            }
-        });
+        $validator->validate();
 
-        if ($validator->fails()) {
-            return redirect('user/company/add')
-                ->withErrors($validator)
-                ->withInput();
-        }
-
-        $dataCompany = new Company([
-            'name'                      => $data['com_name'],
-            'country'                   => $data['com_country'],
-            'phone'                     => $data['com_tel'],
-            'address'                   => $data['com_address'],
-            'attendants_name'           => $data['att_name'],
-            'attendants_department'     => $data['att_department'],
-            'email'                     => $data['att_mail'],
-            'memo'                      => $data['text_content'],
-            'created_by'                => Auth::user()->id,
-            'created_at'                => Carbon::now()
-        ]);
-
-        $dataCompany->save();
+        //save
+        $company = new Company();
+        $company->created_by = Auth::user()->id;
+        $company->fill($data)->save();
 
         return Common::redirectBackWithAlertSuccess(__('msg.save_success'));
     }

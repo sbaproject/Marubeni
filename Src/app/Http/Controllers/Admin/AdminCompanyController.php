@@ -10,6 +10,7 @@ use App\Libs\Common;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class AdminCompanyController extends Controller
 {
@@ -57,48 +58,25 @@ class AdminCompanyController extends Controller
 
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'com_name'   => 'required',
-            'com_country'   => 'required',
-            'com_tel'   => 'required|numeric',
-            'com_address'   => 'required',
-            'att_name'   => 'required',
-            'att_department'   => 'required',
-            'att_mail' => 'required|email:rfc,dns',
-        ],);
-
         // get data inputs
         $data = $request->input();
 
-        // Check Company'sName exists !
-        $checkexist_com_name = Company::where('name', $data['com_name'])->count();
+        $validator = Validator::make($data, [
+            'name'   => 'required|unique:companies',
+            'country'   => 'required',
+            'phone'   => 'required|numeric',
+            'address'   => 'required',
+            'attendants_name'   => 'required',
+            'attendants_department'   => 'required',
+            'email' => 'required|email:rfc,dns',
+        ],);
 
-        $validator->after(function ($validator) use ($checkexist_com_name) {
-            if ($checkexist_com_name > 0) {
-                $validator->errors()->add('com_name', __('label.company.check_exist_com_name'));
-            }
-        });
+        $validator->validate();
 
-        if ($validator->fails()) {
-            return redirect('admin/company/add')
-                ->withErrors($validator)
-                ->withInput();
-        }
-
-        $dataCompany = new Company([
-            'name'                      => $data['com_name'],
-            'country'                   => $data['com_country'],
-            'phone'                     => $data['com_tel'],
-            'address'                   => $data['com_address'],
-            'attendants_name'           => $data['att_name'],
-            'attendants_department'     => $data['att_department'],
-            'email'                     => $data['att_mail'],
-            'memo'                      => $data['text_content'],
-            'created_by'                => Auth::user()->id,
-            'created_at'                => Carbon::now()
-        ]);
-
-        $dataCompany->save();
+        //save
+        $company = new Company();
+        $company->created_by = Auth::user()->id;
+        $company->fill($data)->save();
 
         return Common::redirectRouteWithAlertSuccess('admin.company.index');
     }
@@ -110,49 +88,32 @@ class AdminCompanyController extends Controller
         return view('admin.company_edit', compact('company', 'idcompany'));
     }
 
-    public function update(Request $request)
+    public function update($id, Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'com_name'   => 'required',
-            'com_country'   => 'required',
-            'com_tel'   => 'required|numeric',
-            'com_address'   => 'required',
-            'att_name'   => 'required',
-            'att_department'   => 'required',
-            'att_mail' => 'required|email:rfc,dns',
-        ],);
         // get data inputs
         $data = $request->input();
 
-        $company = Company::find($data['id']);
+        $company = Company::find($id);
 
-        // Check Company'sName exists !
-        if ((string)$data['com_name'] != (string)$company->name) {
-            $checkexist_com_name = Company::where('name', $data['com_name'])->count();
+        // Check Companay'sName exists!
+        $ruleName = ['required'];
+        $ruleName[] = Rule::unique('companies')->ignore($company->name, 'name');
 
-            $validator->after(function ($validator) use ($checkexist_com_name) {
-                if ($checkexist_com_name > 0) {
-                    $validator->errors()->add('com_name', __('label.company.check_exist_com_name'));
-                }
-            });
-        }
+        $validator = Validator::make($data, [
+            'name'   => $ruleName,
+            'country'   => 'required',
+            'phone'   => 'required|numeric',
+            'address'   => 'required',
+            'attendants_name'   => 'required',
+            'attendants_department'   => 'required',
+            'email' => 'required|email:rfc,dns',
+        ],);
 
-        if ($validator->fails()) {
-            return redirect('admin/company/edit/'.$company->id.'')
-                ->withErrors($validator)
-                ->withInput();
-        }
+        $validator->validate();
 
-        $company->name                      = $data['com_name'];
-        $company->country                   = $data['com_country'];
-        $company->phone                     = $data['com_tel'];
-        $company->address                   = $data['com_address'];
-        $company->attendants_name           = $data['att_name'];
-        $company->attendants_department     = $data['att_department'];
-        $company->email                     = $data['att_mail'];
-        $company->memo                      = $data['text_content'];
-        $company->updated_by                = Auth::user()->id;
-        $company->updated_at                = Carbon::now();
+        //save
+        $company->fill($data);
+        $company->updated_by = Auth::user()->id;
         $company->save();
 
         return Common::redirectRouteWithAlertSuccess('admin.company.index');
