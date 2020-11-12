@@ -206,6 +206,7 @@ return [
         'text' => 'Ghi Chú',
         'action' => 'Chức Năng',
         'name' => 'Tên',
+        'check_exist_com_name' => 'Tên Công ty đã tồn tại',
     ],
     /**
      * Budget

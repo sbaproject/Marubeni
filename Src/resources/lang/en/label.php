@@ -200,11 +200,13 @@ return [
         'company_tell' => 'Tell',
         'company_address' => 'Address',
         'att_information' => 'Attendants Information',
-        'att_name' => 'Name',
+        'att_name' => 'Attendants Name',
         'att_department' => 'Department',
         'att_email' => 'E-mail',
         'text' => 'Text',
         'action' => 'Actions',
+        'name' => 'Name',
+        'check_exist_com_name' => "This Company's Name has existed !",
     ],
     /**
      * Budget
