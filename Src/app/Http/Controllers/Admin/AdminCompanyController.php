@@ -67,11 +67,11 @@ class AdminCompanyController extends Controller
             'att_mail' => 'required|email:rfc,dns',
         ],);
 
-        $validator->after(function ($validator) {
-            if (0 == 0) {
-                $validator->errors()->add('com_name', 'Something is wrong with this field!');
-            }
-        });
+        // $validator->after(function ($validator) {
+        //     if (0 == 0) {
+        //         $validator->errors()->add('com_name', 'Something is wrong with this field!');
+        //     }
+        // });
 
         if ($validator->fails()) {
             return redirect('admin/company/add')
@@ -85,7 +85,7 @@ class AdminCompanyController extends Controller
         //     }
         // });
 
-        
+
         // get data inputs
         $data = $request->input();
 
@@ -108,7 +108,7 @@ class AdminCompanyController extends Controller
     }
 
     public function show(Company $company)
-    {        
+    {
         $idcompany = $company->id;
 
         return view('admin.company_edit',compact('company','idcompany'));
