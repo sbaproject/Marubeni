@@ -9,6 +9,7 @@ use App\Libs\Common;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class UserCompanyController extends Controller
 {
@@ -25,7 +26,7 @@ class UserCompanyController extends Controller
 
     public function store(Request $request)
     {
-        $validator = $request->validate([
+        $validator = Validator::make($request->all(), [
             'com_name'   => 'required',
             'com_country'   => 'required',
             'com_tel'   => 'required|numeric',
@@ -36,6 +37,21 @@ class UserCompanyController extends Controller
         ],);
         // get data inputs
         $data = $request->input();
+
+        // Check Company'sName exists !
+        $checkexist_com_name = Company::where('name', $data['com_name'])->count();
+
+        $validator->after(function ($validator) use ($checkexist_com_name) {
+            if ($checkexist_com_name > 0) {
+                $validator->errors()->add('com_name', __('label.company.check_exist_com_name'));
+            }
+        });
+
+        if ($validator->fails()) {
+            return redirect('user/company/add')
+                ->withErrors($validator)
+                ->withInput();
+        }
 
         $dataCompany = new Company([
             'name'                      => $data['com_name'],
