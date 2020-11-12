@@ -30,7 +30,19 @@
                         <input type="hidden" id="dataDateFrom" name="dataDateFrom">
                     </div>
                 </div>
-
+                <div class="col-md-4 col-sm-4">
+                    <label class="lbl-to">{{ __('label.date_to') }}</label>
+                    <div class="form-group">
+                        <div class="input-group date" id="dateTo" data-target-input="nearest">
+                            <div class="input-group-addon input-group-append" data-target="#dateTo"
+                                data-toggle="datetimepicker">
+                                <div class="input-group-text"><i class="fa fa-calendar-alt"></i></div>
+                            </div>
+                            <input type="text" class="form-control datetimepicker-input" data-target="#dateTo" />
+                        </div>
+                        <input type="hidden" id="dataDateTo" name="dataDateTo">
+                    </div>
+                </div>
                 <div class="col-md-2 col-sm-2">
                     <div class="btn-search">
                         <button class="btn btn-default sty-search" type="submit"><i class="fa fa-search"
@@ -44,7 +56,7 @@
     <section class="content-dashboard">
         <div class="row" style="text-align: center;">
             <div class="col-xs-5ths">
-                <a href="{{ route('admin.dashboard',config('const.application.status.applying'))}}">
+                <a href="{{ route('admin.dashboard', config('const.application.status.applying')) }}">
                     <div class="card">
                         <div class="card-body card-wrap-items">
                             <span>{{ __('label.dashboard.applying') }}</span>
@@ -54,7 +66,7 @@
                 </a>
             </div>
             <div class="col-xs-5ths col-set">
-                <a href="{{ route('admin.dashboard',config('const.application.status.approvel'))}}">
+                <a href="{{ route('admin.dashboard', config('const.application.status.approvel')) }}">
                     <div class="card">
                         <div class="card-body card-wrap-items">
                             <span>{{ __('label.dashboard.approval') }}</span>
@@ -64,7 +76,7 @@
                 </a>
             </div>
             <div class="col-xs-5ths col-set">
-                <a href="{{ route('admin.dashboard',config('const.application.status.declined'))}}">
+                <a href="{{ route('admin.dashboard', config('const.application.status.declined')) }}">
                     <div class="card">
                         <div class="card-body card-wrap-items">
                             <span>{{ __('label.dashboard.declined') }}</span>
@@ -74,7 +86,7 @@
                 </a>
             </div>
             <div class="col-xs-5ths col-set">
-                <a href="{{ route('admin.dashboard',config('const.application.status.reject'))}}">
+                <a href="{{ route('admin.dashboard', config('const.application.status.reject')) }}">
                     <div class="card">
                         <div class="card-body card-wrap-items">
                             <span>{{ __('label.dashboard.reject') }}</span>
@@ -84,7 +96,7 @@
                 </a>
             </div>
             <div class="col-xs-5ths col-set">
-                <a href="{{ route('admin.dashboard',config('const.application.status.completed'))}}">
+                <a href="{{ route('admin.dashboard', config('const.application.status.completed')) }}">
                     <div class="card">
                         <div class="card-body card-wrap-items">
                             <span>{{ __('label.dashboard.completed') }}</span>
@@ -96,7 +108,8 @@
         </div>
         <h4 class="mb-2" style="border-bottom: 1px solid #000;font-weight: bold;margin-top: 25px;"><i
                 class="nav-icon fas fa-file-alt" aria-hidden="true"
-                style="margin-right: 5px;margin-bottom: 5px;"></i>{{ $intstatus == config('const.application.status.applying') ? __('label.status.list_of_applying_documents') : ($intstatus == config('const.application.status.approvel') ? __('label.status.list_of_approval_documents') : ($intstatus == config('const.application.status.declined') ? __('label.status.list_of_declined_documents') : ($intstatus == config('const.application.status.reject') ? __('label.status.list_of_reject_documents') : ($intstatus == config('const.application.status.completed') ? __('label.status.list_of_completed_documents') : __('label.dashboard.list_application'))))) }}</h4>
+                style="margin-right: 5px;margin-bottom: 5px;"></i>{{ $intstatus == config('const.application.status.applying') ? __('label.status.list_of_applying_documents') : ($intstatus == config('const.application.status.approvel') ? __('label.status.list_of_approval_documents') : ($intstatus == config('const.application.status.declined') ? __('label.status.list_of_declined_documents') : ($intstatus == config('const.application.status.reject') ? __('label.status.list_of_reject_documents') : ($intstatus == config('const.application.status.completed') ? __('label.status.list_of_completed_documents') : __('label.dashboard.list_application'))))) }}
+        </h4>
         <div class="card">
             <div class="card-body p-0 card-list-items">
                 <table class="table" id="table_list_status">
@@ -112,7 +125,7 @@
                     <tbody>
                         @if (isset($list_application))
                             @foreach ($list_application as $application)
-                                 <tr class="list-content">
+                                <tr class="list-content">
                                     <td>{{ !empty($application->application_no) ? $application->application_no : '' }}</td>
                                     <td>{{ !empty($application->form_id) ? $application->Form->name : '' }}</td>
                                     <td>
@@ -124,9 +137,11 @@
                                     <td>{{ !empty($application->created_at) ? \Carbon\Carbon::parse($application->created_at)->format('d/m/Y') : '' }}
                                     </td>
                                     <td>
-                                        <a class="btn btn-details" href="{{ $application->form_id == 1 ? route('user.leave.show', $application->id) : ($application->form_id == 2 ? route('user.business.show', $application->id) : ($application->form_id == 1 ? '' : '')) }}">{{ __('label.dashboard.view_details') }}<i class="fas fa-angle-right" style="margin-left: 5px;"></i></a>
+                                        <a class="btn btn-details"
+                                            href="{{ $application->form_id == 1 ? route('user.leave.show', $application->id) : ($application->form_id == 2 ? route('user.business.show', $application->id) : ($application->form_id == 1 ? '' : '')) }}">{{ __('label.dashboard.view_details') }}<i
+                                                class="fas fa-angle-right" style="margin-left: 5px;"></i></a>
                                     </td>
-                                    </tr>
+                                </tr>
                             @endforeach
                         @endif
                     </tbody>
@@ -137,6 +152,8 @@
             {{ $list_application->withQueryString()->links('paginator') }}
         @endif
         <div id='str_date' value='{{ $str_date }}'>
+        </div>
+        <div id='end_date' value='{{ $end_date }}'>
         </div>
     </section>
 @endsection

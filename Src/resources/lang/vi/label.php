@@ -62,9 +62,9 @@ return [
      */
     'menu' => [
         'application' => 'LOẠI ĐƠN XIN',
-        'application_list' => 'Trạng Thái',
+        'application_list' => 'TRẠNG THÁI',
         'draft' => 'LƯU NHÁP',
-        'status' => 'TRANG THÁI',
+        'status' => 'TRẠNG THÁI',
         'applying' => 'Đơn Đang Xin',
         'approved_un' => 'Đơn Đã Duyệt / ',
         'approved_un2' => 'Chưa Thanh Toán',
