@@ -67,27 +67,23 @@ class AdminCompanyController extends Controller
             'att_mail' => 'required|email:rfc,dns',
         ],);
 
-        // $validator->after(function ($validator) {
-        //     if (0 == 0) {
-        //         $validator->errors()->add('com_name', 'Something is wrong with this field!');
-        //     }
-        // });
+        // get data inputs
+        $data = $request->input();
+
+        // Check Company'sName exists !
+        $checkexist_com_name = Company::where('name', $data['com_name'])->count();
+
+        $validator->after(function ($validator) use ($checkexist_com_name) {
+            if ($checkexist_com_name > 0) {
+                $validator->errors()->add('com_name', __('label.company.check_exist_com_name'));
+            }
+        });
 
         if ($validator->fails()) {
             return redirect('admin/company/add')
-                        ->withErrors($validator)
-                        ->withInput();
+                ->withErrors($validator)
+                ->withInput();
         }
-
-        // $validator->after(function ($validator) {
-        //     if ($this->somethingElseIsInvalid()) {
-        //         $validator->errors()->add('field', 'Something is wrong with this field!');
-        //     }
-        // });
-
-
-        // get data inputs
-        $data = $request->input();
 
         $dataCompany = new Company([
             'name'                      => $data['com_name'],
@@ -111,12 +107,12 @@ class AdminCompanyController extends Controller
     {
         $idcompany = $company->id;
 
-        return view('admin.company_edit',compact('company','idcompany'));
+        return view('admin.company_edit', compact('company', 'idcompany'));
     }
 
     public function update(Request $request)
     {
-        $validator = $request->validate([
+        $validator = Validator::make($request->all(), [
             'com_name'   => 'required',
             'com_country'   => 'required',
             'com_tel'   => 'required|numeric',
@@ -129,6 +125,23 @@ class AdminCompanyController extends Controller
         $data = $request->input();
 
         $company = Company::find($data['id']);
+
+        // Check Company'sName exists !
+        if ((string)$data['com_name'] != (string)$company->name) {
+            $checkexist_com_name = Company::where('name', $data['com_name'])->count();
+
+            $validator->after(function ($validator) use ($checkexist_com_name) {
+                if ($checkexist_com_name > 0) {
+                    $validator->errors()->add('com_name', __('label.company.check_exist_com_name'));
+                }
+            });
+        }
+
+        if ($validator->fails()) {
+            return redirect('admin/company/edit/'.$company->id.'')
+                ->withErrors($validator)
+                ->withInput();
+        }
 
         $company->name                      = $data['com_name'];
         $company->country                   = $data['com_country'];
