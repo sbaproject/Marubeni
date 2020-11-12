@@ -20,6 +20,7 @@
 @section('js')
 {{-- datetimepicker --}}
 <script src="js/moment/moment.min.js"></script>
+<script src="js/moment/locale/{{ config('app.locale') }}.js"></script>
 <script src="js/bootstrap-datetimepicker.js"></script>
 {{-- for this view --}}
 <script src="js/user/application/business/create.js"></script>
@@ -57,7 +58,7 @@ $file_path      = Session::has('inputs') ? Session::get('inputs')['file_path']  
                 @if (isset($id))
                     <div class="form-group row">
                         <div class="col-sm-2 text-left">
-                            <label>Application No</label>
+                            <label>{{ __('label.business.application_no') }}</label>
                         </div>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" readonly
@@ -68,7 +69,7 @@ $file_path      = Session::has('inputs') ? Session::get('inputs')['file_path']  
                 @endif
                 <div class="form-group row">
                     <div class="col-sm-2 text-left">
-                        <label>Trip Destinations</label>
+                        <label>{{ __('label.business.trip_destination') }}</label>
                     </div>
                     <div class="col-sm-10">
                         <input type="text" id="destinations" name="destinations" class="form-control"
@@ -78,12 +79,12 @@ $file_path      = Session::has('inputs') ? Session::get('inputs')['file_path']  
                 <hr>
                 <div class="form-group row">
                     <div class="col-sm-2 text-left">
-                        <label>Date of Trip</label>
+                        <label>{{ __('label.business.date_trip') }}</label>
                     </div>
                     <div class="col-sm-10">
                         <div class="col-sm-6 pl-0 pr-0">
                             <div class="row mb-2">
-                                <span class="col-md-3">From</span>
+                                <span class="col-md-3">{{ __('label.from') }}</span>
                                 <div class="col-md-9">
                                     <div class="form-group">
                                         <div id="trip_from" data-target-input="nearest" class="input-group date">
@@ -105,7 +106,7 @@ $file_path      = Session::has('inputs') ? Session::get('inputs')['file_path']  
                                 </div>
                             </div>
                             <div class="row">
-                                <span class="col-md-3">To</span>
+                                <span class="col-md-3">{{ __('label.to') }}</span>
                                 <div class="col-md-9">
                                     <div class="form-group">
                                         <div class="input-group date" id="trip_to" data-target-input="nearest">
@@ -132,7 +133,7 @@ $file_path      = Session::has('inputs') ? Session::get('inputs')['file_path']  
                 <hr>
                 <div class="form-group row">
                     <div class="col-sm-2 text-left">
-                        <label>Itinerary & Transportation</label>
+                        <label>{{ __('label.business.transportation') }}</label>
                     </div>
                     <div class="col-sm-10">
                         <div id="transport_block">
@@ -141,13 +142,13 @@ $file_path      = Session::has('inputs') ? Session::get('inputs')['file_path']  
                                 <div class="card card-body card-itinerary-transport">
                                     <div class="d-delete d-flex justify-content-end @if(count($trans) === 1 && $key === 0) d-none @endif">
                                         <button class="btnDelete btn btn-danger btn-sm pt-0 pb-0 pl-3 pr-3 mb-1">
-                                            Delete
+                                            {{ __('label.button.delete') }}
                                         </button>
                                     </div>
                                     <div class="form-group row">
                                         <div class="col-sm-6">
                                             <div class="row mb-2">
-                                                <span class="col-md-3">Departure</span>
+                                                <span class="col-md-3">{{ __('label.business.departure') }}</span>
                                                 <div class="col-md-9">
                                                     <input type="text" class="form-control departure @error('trans.'.$key.'.departure') is-invalid @enderror"
                                                         name="trans[{{ $key }}][departure]" value="{{ $trans[$key]['departure'] }}" autocomplete="off">
@@ -159,7 +160,7 @@ $file_path      = Session::has('inputs') ? Session::get('inputs')['file_path']  
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <span class="col-md-3">Arrival</span>
+                                                <span class="col-md-3">{{ __('label.business.arrival') }}</span>
                                                 <div class="col-md-9">
                                                     <input type="text" class="form-control arrive @error('trans.'.$key.'.arrive') is-invalid @enderror"
                                                         name="trans[{{ $key }}][arrive]" value="{{ $trans[$key]['arrive'] }}" autocomplete="off">
@@ -173,7 +174,7 @@ $file_path      = Session::has('inputs') ? Session::get('inputs')['file_path']  
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="row">
-                                                <span class="col-md-3">Flight No</span>
+                                                <span class="col-md-3">{{ __('label.business.method') }}</span>
                                                 <div class="col-md-9">
                                                     <input type="text" class="form-control method @error('trans.'.$key.'.method') is-invalid @enderror"
                                                         name="trans[{{ $key }}][method]" value="{{ $trans[$key]['method'] }}" autocomplete="off">
@@ -192,19 +193,19 @@ $file_path      = Session::has('inputs') ? Session::get('inputs')['file_path']  
                                 <div class="card card-body card-itinerary-transport">
                                     <div class="d-delete d-flex justify-content-end d-none">
                                         <button class="btnDelete btn btn-danger btn-sm pt-0 pb-0 pl-3 pr-3 mb-1">
-                                            Delete
+                                            {{ __('label.button.delete') }}
                                         </button>
                                     </div>
                                     <div class="form-group row">
                                         <div class="col-sm-6">
                                             <div class="row mb-2">
-                                                <span class="col-md-3">Departure</span>
+                                                <span class="col-md-3">{{ __('label.business.departure') }}</span>
                                                 <div class="col-md-9">
                                                     <input type="text" class="form-control departure" name="trans[0][departure]" autocomplete="off">
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <span class="col-md-3">Arrival</span>
+                                                <span class="col-md-3">{{ __('label.business.arrival') }}</span>
                                                 <div class="col-md-9">
                                                     <input type="text" class="form-control arrive" name="trans[0][arrive]" autocomplete="off">
                                                 </div>
@@ -212,7 +213,7 @@ $file_path      = Session::has('inputs') ? Session::get('inputs')['file_path']  
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="row">
-                                                <span class="col-md-3">Flight No</span>
+                                                <span class="col-md-3">{{ __('label.business.method') }}</span>
                                                 <div class="col-md-9">
                                                     <input type="text" class="form-control method" name="trans[0][method]" autocomplete="off">
                                                 </div>
@@ -224,19 +225,19 @@ $file_path      = Session::has('inputs') ? Session::get('inputs')['file_path']  
                             <div class="card card-body card-itinerary-transport copy d-none">
                                 <div class="d-delete d-flex justify-content-end">
                                     <button class="btnDelete btn btn-danger btn-sm pt-0 pb-0 pl-3 pr-3 mb-1">
-                                        Delete
+                                        {{ __('label.button.delete') }}
                                     </button>
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-sm-6">
                                         <div class="row mb-2">
-                                            <span class="col-md-3">Departure</span>
+                                            <span class="col-md-3">{{ __('label.business.departure') }}</span>
                                             <div class="col-md-9">
                                                 <input type="text" class="form-control departure" autocomplete="off">
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <span class="col-md-3">Arrival</span>
+                                            <span class="col-md-3">{{ __('label.business.arrival') }}</span>
                                             <div class="col-md-9">
                                                 <input type="text" class="form-control arrive" autocomplete="off">
                                             </div>
@@ -244,7 +245,7 @@ $file_path      = Session::has('inputs') ? Session::get('inputs')['file_path']  
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="row">
-                                            <span class="col-md-3">Flight No</span>
+                                            <span class="col-md-3">{{ __('label.business.method') }}</span>
                                             <div class="col-md-9">
                                                 <input type="text" class="form-control method" autocomplete="off">
                                             </div>
@@ -253,13 +254,13 @@ $file_path      = Session::has('inputs') ? Session::get('inputs')['file_path']  
                                 </div>
                             </div>
                         </div>
-                        <button id="btnAdd" class="btn btn-outline-dark">+ Add</button>
+                        <button id="btnAdd" class="btn btn-outline-dark">+ {{ __('label.button.addnew') }}</button>
                     </div>
                 </div>
                 <hr>
                 <div class="form-group row">
                     <div class="col-sm-2 text-left">
-                        <label>Accommodation</label>
+                        <label>{{ __('label.business.accommodation') }}</label>
                     </div>
                     <div class="col-sm-10">
                         <input type="text" id="accommodation" name="accommodation" class="form-control"
@@ -269,7 +270,7 @@ $file_path      = Session::has('inputs') ? Session::get('inputs')['file_path']  
                 <hr>
                 <div class="form-group row">
                     <div class="col-sm-2 text-left">
-                        <label>Accompany</label>
+                        <label>{{ __('label.business.accompany') }}</label>
                     </div>
                     <div class="col-sm-10">
                         <input type="text" class="form-control" id="accompany" name="accompany"
@@ -279,7 +280,7 @@ $file_path      = Session::has('inputs') ? Session::get('inputs')['file_path']  
                 <hr>
                 <div class="form-group row">
                     <div class="col-sm-2 text-left">
-                        <label>Expenses to BE Borne by</label>
+                        <label>{{ __('label.business.borne_by') }}</label>
                     </div>
                     <div class="col-sm-10">
                         <input type="text" class="form-control" id="borne_by" name="borne_by"
@@ -289,7 +290,7 @@ $file_path      = Session::has('inputs') ? Session::get('inputs')['file_path']  
                 <hr>
                 <div class="form-group row">
                     <div class="col-sm-2 text-left">
-                        <label>Comment</label>
+                        <label>{{ __('label.business.comment') }}</label>
                     </div>
                     <div class="col-sm-10">
                         <textarea class="form-control" id="comment" name="comment" rows="2" style="width: 100%;">{{ $comment }}</textarea>

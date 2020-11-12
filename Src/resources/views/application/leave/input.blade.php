@@ -12,6 +12,7 @@
 @section('js')
 {{-- datetimepicker --}}
 <script src="js/moment/moment.min.js"></script>
+<script src="js/moment/locale/{{ config('app.locale') }}.js"></script>
 <script src="js/bootstrap-datetimepicker.js"></script>
 {{-- for this view --}}
 <script src="js/user/application/leave/create.js"></script>

@@ -76,7 +76,7 @@
 		}
 
 		#title-header .vi {
-			margin-top: -13px;
+			margin-top: -8px;
 		}
 
 		#info-header {
@@ -189,7 +189,7 @@
 					<div>Nơi công tác</div>
 				</td>
 				<td colspan="4" class="data">
-					Nơi công tácNơi công tácNơi công tácNơi công tácNơi công tácNơi công tácNơi công tácNơi công tácNơi công tácNơi công tácNơi công tácNơi công tácNơi công tácNơi công tácNơi công tácNơi công tácNơi công tác
+					{{ $inputs['destinations'] }}
 				</td>
 			</tr>
 			<tr>
@@ -198,6 +198,7 @@
 					<div>Nội dung công tác</div>
 				</td>
 				<td colspan="4" class="data">
+					{{ $inputs['comment'] }}
 				</td>
 			</tr>
 			<tr>
@@ -209,15 +210,24 @@
 					<div>From:</div>
 					<div>Từ</div>
 				</td>
-				<td style="width: 32%;"></td>
+				<td style="width: 32%;" class="data">
+					@if ($inputs['trip_dt_from'] !== null)
+						{{ date('d/m/Y', strtotime($inputs['trip_dt_from'])) }}
+					@endif
+				</td>
 				<td class="data"style="width: 8%;">
 					<div>To:</div>
 					<div>Đến</div>
 				</td>
-				<td style="width: 32%;"></td>
+				<td style="width: 32%;" class="data">
+					@if ($inputs['trip_dt_to'] !== null)
+						{{ date('d/m/Y', strtotime($inputs['trip_dt_to'])) }}
+					@endif
+				</td>
 			</tr>
+			{{-- {{ dd(count($inputs['trans'])) }} --}}
 			<tr>
-				<td class="f" rowspan="3" style="vertical-align: middle">
+				<td class="f" rowspan="{{ count($inputs['trans']) + 1 }}" style="vertical-align: middle">
 					<div>Itinerary &#38; Transportation</div>
 					<div>Hành trình &#38; phương tiện</div>
 				</td>
@@ -230,67 +240,63 @@
 					<div>Chuyến bay & Lịch trình</div>
 				</td>
 			</tr>
+			@foreach ($inputs['trans'] as $item)
 			<tr>
-				<td colspan="2" >
-					<div>Departure - ArrivalDeparture - ArrivalDeparture - ArrivalDeparture - ArrivalDeparture - ArrivalDeparture - ArrivalDeparture - ArrivalDeparture - Arrival</div>
-					<div>Hành trình</div>
+				<td colspan="2" class="data" style="height: 40px">
+					{{-- at least one empty row --}}
+					@if (empty($item['departure']) && empty($item['arrive']) && empty($item['method']))
+					<div style="height: 20px"></div>
+					@else
+					{{ $item['departure'] }} - {{ $item['arrive'] }}
+					@endif
 				</td>
-				<td colspan="2" >
-					<div>Flight No. &#38; Schedule</div>
-					<div>Chuyến bay & Lịch trìnhChuyến bay & Lịch trìnhChuyến bay & Lịch trìnhChuyến bay & Lịch trìnhChuyến bay & Lịch trìnhChuyến bay & Lịch trình</div>
+				<td colspan="2" class="data">
+					{{ $item['method'] }}
 				</td>
 			</tr>
-			<tr>
-				<td colspan="2">a</td>
-				<td colspan="2">a</td>
-			</tr>
-			{{-- <tr></tr> --}}
+			@endforeach
 			<tr>
 				<td class="f">
-					<div>Subject</div>
-					<div>Nội dung công tác</div>
+					<div>Accommodation</div>
+					<div>Chỗ ở</div>
 				</td>
-				<td colspan="4"></td>
-			</tr>
-			{{-- <tr>
-				<td colspan="2" ></td>
-				<td colspan="2" ></td>
+				<td colspan="4" class="data">
+					{{ $inputs['accommodation'] }}
+				</td>
 			</tr>
 			<tr>
-				<td colspan="2"></td>
-				<td colspan="2"></td>
-			</tr> --}}
-			{{-- <tr>
-				<td colspan="2"></td>
-				<td colspan="2"></td>
-			</tr> --}}
-			{{-- <tr></tr> --}}
-			{{-- <tr>
-				<td colspan="2"></td>
-				<td colspan="2"></td>
+				<td class="f">
+					<div>Accompany</div>
+					<div>Người đi cùng</div>
+				</td>
+				<td colspan="4" class="data">
+					{{ $inputs['accompany'] }}
+				</td>
 			</tr>
 			<tr>
-				<td colspan="2"></td>
-				<td colspan="2"></td>
-			</tr> --}}
+				<td class="f">
+					<div>Expenses to be borne by</div>
+					<div>Chi phí chịu bởi</div>
+				</td>
+				<td colspan="4" class="data">
+					{{ $inputs['borne_by'] }}
+				</td>
+			</tr>
 		</tbody>
 	</table>
 	<p></p>
 	<table>
 		<tr>
-			<td class="f" style="text-align: center;height: 80px;">
+			<td class="f" rowspan="2" style="text-align: center;height: 160px;">
 				<div>President or Executive VP</div>
 				<div>TGD hay PTGD</div>
 			</td>
 			<td style="text-align: center; vertical-align: middle;width:8% ;">BA</td>
 			<td style="text-align: center;width:24% ;">GM/ Giám đốc</td>
 			<td style="text-align: center;width:24% ;">Manager/ Trưởng phòng</td>
-			<td style="text-align: center;width:24% ;">HR. IC/ NV Nhân sự</td>
+			<td style="text-align: center;width:24% ;">ADMI. IC/ NV Hành chính</td>
 		</tr>
 		<tr>
-			<td class="f" style="text-align: center;height: 80px;">
-				<div>(HR) Internally Record by</div>
-			</td>
 			<td style="text-align: center; vertical-align: middle;width:8%;">Dept.</td>
 			<td style="text-align: center;width:24% ;">GM/ Giám đốc</td>
 			<td style="text-align: center;width:24% ;">Manager/ Trưởng phòng</td>

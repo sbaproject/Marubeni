@@ -121,9 +121,17 @@ return [
      * Business Application
      */
     'business' => [
-        'departure' => 'Điểm xuất phát',
+        'departure' => 'Điểm đi',
         'arrival' => 'Điểm đến',
         'method' => 'Số chuyến',
+        'application_no' => 'Mã đơn',
+        'trip_destination' => 'Nơi công tác',
+        'date_trip' => 'Thời gian',
+        'transportation' => 'Hành trình & Phương tiện',
+        'accommodation' => 'Nơi ở',
+        'accompany' => 'Người đi cùng',
+        'borne_by' => 'Chi phí chịu bởi',
+        'comment' => 'Nội dung công tác',
     ],
     'file' => 'Tập tin',
     'choose_file' => 'Chọn tập tin',

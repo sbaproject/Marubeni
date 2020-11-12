@@ -70,8 +70,8 @@ class BusinessTripController extends Controller
     public function update(Request $request, $id)
     {
         // check owner
-        $mApplication = Application::findOrFail($id);
-        if (Auth::user()->id !== $mApplication->created_by) {
+        $application = Application::findOrFail($id);
+        if (Auth::user()->id !== $application->created_by) {
             abort('403');
         }
 
@@ -95,7 +95,7 @@ class BusinessTripController extends Controller
         }
 
         // save
-        $this->doSaveData($request, $inputs, $mApplication);
+        $this->doSaveData($request, $inputs);
 
         // redirect atfer save
         return $this->doRedirect($inputs);
@@ -129,9 +129,9 @@ class BusinessTripController extends Controller
         }
     }
 
-    public function doSaveData($request, $inputs, $mApplication = null)
+    public function doSaveData($request, $inputs)
     {
-        DB::transaction(function () use ($request, $inputs, $mApplication) {
+        DB::transaction(function () use ($request, $inputs) {
             // get user
             $user = Auth::user();
 
