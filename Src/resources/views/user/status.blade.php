@@ -90,7 +90,7 @@
                                     </td>
                                     <td>
                                         <a class="btn btn-details"
-                                            href="/pages/examples/09_application_info.html">{{ __('label.status.view_details') }}<i
+                                            href="{{ $application_status->form_id == 1 ? route('user.leave.show', $application_status->id) : ($application_status->form_id == 2 ? route('user.business.show', $application_status->id) : ($application_status->form_id == 1 ? '' : '')) }}">{{ __('label.status.view_details') }}<i
                                                 class="fas fa-angle-right" style="margin-left: 5px;"></i></a>
                                     </td>
                                     </tr>

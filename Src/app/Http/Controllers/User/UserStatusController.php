@@ -41,7 +41,7 @@ class UserStatusController extends Controller
             $end_date = $data['dataDateTo'] . ' 23:59:59';
 
             $list_applications_status = DB::table('applications')
-                ->select('forms.name as nameapp', 'applications.created_at as datecreate', 'users.name as nameuser')
+                ->select('forms.name as nameapp', 'applications.created_at as datecreate', 'users.name as nameuser','applications.form_id','applications.id')
 
                 //Join
                 ->join('forms', 'applications.form_id', '=', 'forms.id')
@@ -74,7 +74,7 @@ class UserStatusController extends Controller
 
             //Load Page
             $list_applications_status = DB::table('applications')
-                ->select('forms.name As nameapp', 'applications.created_at As datecreate', 'users.name As nameuser')
+                ->select('forms.name As nameapp', 'applications.created_at As datecreate', 'users.name As nameuser','applications.form_id','applications.id')
 
                 //Join
                 ->join('forms', 'applications.form_id', '=', 'forms.id')

@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Application;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class AdminStatusController extends Controller
@@ -40,7 +39,7 @@ class AdminStatusController extends Controller
             $end_date = $data['dataDateTo'] . ' 23:59:59';
 
             $list_applications_status = DB::table('applications')
-                ->select('forms.name as nameapp', 'applications.created_at as datecreate', 'users.name as nameuser')
+                ->select('forms.name as nameapp', 'applications.created_at as datecreate', 'users.name as nameuser','applications.form_id','applications.id')
 
                 //Join
                 ->join('forms', 'applications.form_id', '=', 'forms.id')
@@ -72,7 +71,7 @@ class AdminStatusController extends Controller
 
             //Load Page
             $list_applications_status = DB::table('applications')
-                ->select('forms.name As nameapp', 'applications.created_at As datecreate', 'users.name As nameuser')
+                ->select('forms.name As nameapp', 'applications.created_at As datecreate', 'users.name As nameuser','applications.form_id','applications.id')
 
                 //Join
                 ->join('forms', 'applications.form_id', '=', 'forms.id')
