@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title', 'Application Draft')
+@section('title', 'User - Application Draft')
 @section('content')
     <section class="content">
         <div class="card">

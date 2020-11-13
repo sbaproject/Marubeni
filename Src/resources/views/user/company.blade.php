@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title', 'Application Create Company')
+@section('title', 'User - Application Create Company')
 @section('css')
 <link rel="stylesheet" href="css/user/10_company_registration.css">
 @endsection
