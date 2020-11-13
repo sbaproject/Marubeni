@@ -76,7 +76,7 @@
 		}
 
 		#title-header .vi {
-			margin-top: -13px;
+			margin-top: -10px;
 		}
 
 		#info-header {
@@ -216,7 +216,7 @@
 						For code "SL" only/ Dùng cho mã "SL"
 					</div>
 					<div style="margin-left: 50px; margin-top: 10px">
-						<input type="checkbox" style="display: inline;"
+						<input type="checkbox" style=""
 							@if($inputs['paid_type'] !== null && $inputs['paid_type'] == config('const.paid_type.AL')) checked @endif>
 						<div style="margin-top:-20px;margin-left:20px">
 							<div>Annual leave</div>
