@@ -266,4 +266,23 @@ return [
         'cancel' => 'cancel',
         'approver_required' => 'Please select a approver',
     ],
+    /**
+     * Login
+     */
+    'login' => [
+        //form login
+        'title_login_pass' => 'LOGIN MARUBENI',
+        'email_address' => 'E-Mail',
+        'password' => 'Password',
+        'remember' => 'Remember',
+        'btn_login' => 'Login',
+        'link_forgot_pass' => 'Forgot Password?',
+        //form fogot password
+        'title_reset_pass' => 'RESET PASSWORD',
+        'btn_send_pass' => 'Confirm',
+        //form create new password
+        'title_create_pass' => 'CREATE NEW PASSWORD',
+        'confirm_password' => 'Confirm Password',
+        'btn_create_pass' => 'Confirm',
+    ],
 ];

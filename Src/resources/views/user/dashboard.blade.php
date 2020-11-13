@@ -1,5 +1,7 @@
 @extends('layouts.master')
-@section('title', 'User-Dashboard')
+@section('title')
+{{ $intstatus == config('const.application.status.applying') ? __('label.status.list_of_applying_documents') : ($intstatus == config('const.application.status.approvel') ? __('label.status.list_of_approval_documents') : ($intstatus == config('const.application.status.declined') ? __('label.status.list_of_declined_documents') : ($intstatus == config('const.application.status.reject') ? __('label.status.list_of_reject_documents') : ($intstatus == config('const.application.status.completed') ? __('label.status.list_of_completed_documents') : __('label.dashboard.list_application'))))) }}
+@endsection
 @section('css')
     <link rel="stylesheet" href="css/user/01_dashboard.css">
 @endsection
@@ -136,7 +138,7 @@
                                     <td>{{ !empty($application->created_at) ? \Carbon\Carbon::parse($application->created_at)->format('d/m/Y') : '' }}
                                     </td>
                                     <td>
-                                        <a class="btn btn-details" href="{{ $application->form_id == 1 ? route('user.leave.show', $application->id) : ($application->form_id == 2 ? route('user.business.show', $application->id) : ($application->form_id == 1 ? '' : '')) }}">{{ __('label.dashboard.view_details') }}<i class="fas fa-angle-right" style="margin-left: 5px;"></i></a>
+                                        <a class="btn btn-details" href="{{ $application->form_id == config('const.form.leave') ? route('user.leave.show', $application->id) : ($application->form_id == config('const.form.biz_trip') ? route('user.business.show', $application->id) : ($application->form_id == config('const.form.entertaiment') ? route('user.entertainment.show', $application->id) : '')) }}">{{ __('label.dashboard.view_details') }}<i class="fas fa-angle-right" style="margin-left: 5px;"></i></a>
                                     </td>
                                     </tr>
                             @endforeach

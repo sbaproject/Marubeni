@@ -1,7 +1,6 @@
 @extends('layouts.master')
-@section('title', 'ADMIN_BUDGET')
-@section('js')
-
+@section('title')
+{{ __('label.menu.budget_setting') }}
 @endsection
 @section('content')
     <div class="row">

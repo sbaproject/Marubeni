@@ -206,7 +206,7 @@ return [
      */
     'company' => [
         'keyword' => 'Từ Khóa',
-        'company_registration' => 'Thêm Thông Tin Công Ty',
+        'company_registration' => 'Thông Tin Công Ty',
         //forms
         'no' => 'Số',
         'company_information' => 'Thông Tin Công Ty',
@@ -265,5 +265,24 @@ return [
         'update' => 'Cập nhật',
         'cancel' => 'Hủy',
         'approver_required' => 'Vui lòng chọn người phê duyệt',
+    ],
+    /**
+     * Login
+     */
+    'login' => [
+        //form login
+        'title_login_pass' => 'ĐĂNG NHẬP MARUBENI',
+        'email_address' => 'E-Mail',
+        'password' => 'Mật khẩu',
+        'remember' => 'Nhớ mật khẩu',
+        'btn_login' => 'Đăng nhập',
+        'link_forgot_pass' => 'Quên mật khẩu?',
+        //form fogot password
+        'title_reset_pass' => 'ĐẶT LẠI MẬT KHẨU',
+        'btn_send_pass' => 'Xác nhận',
+        //form create new password
+        'title_create_pass' => 'TẠO MỚI MẬT KHẨU',
+        'confirm_password' => 'Xác nhận mật khẩu',
+        'btn_create_pass' => 'Xác nhận',
     ],
 ];

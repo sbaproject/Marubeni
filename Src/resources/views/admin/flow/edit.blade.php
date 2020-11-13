@@ -173,7 +173,7 @@
             </div>
             </div>
             </div>
-            @if(count($steps) < 2) 
+            @if($start_step < 2) 
             <div class="mt-3 block-add-step"><button type="button" data-step="1" data-index="0" class="btn-add-step btn btn-outline-dark pt-1 pb-1 pl-3 pr-3">+ {{ __('label.flow.step') }}</button></div>
             @endif
 
