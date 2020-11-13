@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Application\Business;
 use Carbon\Carbon;
 use App\Libs\Common;
 use App\Models\Application;
-use App\Models\BusinessTrip;
+use App\Models\Businesstrip;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use PDF;
 
-class BusinessTripController extends Controller
+class BusinesstripController extends Controller
 {
     public function index()
     {
@@ -62,7 +62,7 @@ class BusinessTripController extends Controller
         }
 
         // get business application
-        $model = BusinessTrip::where('application_id', $id)->first();
+        $model = Businesstrip::where('application_id', $id)->first();
 
         return view('application.business.input', compact('application', 'model', 'id'));
     }
@@ -200,7 +200,7 @@ class BusinessTripController extends Controller
              * create [Business Application] detail
              *-------------------------*/
             if ($request->id) {
-                $biz = BusinessTrip::where('application_id', $request->id)->first();
+                $biz = Businesstrip::where('application_id', $request->id)->first();
             }
             // delete old file
             if (isset($biz)) {
