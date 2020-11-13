@@ -142,7 +142,7 @@ class EntertainmentController extends Controller
         }
     }
 
-    public function doSaveData($request, $inputs)
+    public function doSaveData($request, &$inputs)
     {
         $msgErr = '';
 
@@ -318,6 +318,7 @@ class EntertainmentController extends Controller
             DB::commit();
         } catch (Exception $ex) {
             DB::rollBack();
+            unset($inputs['input_file']);
             if ($ex instanceof NotFoundFlowSettingException) {
                 $msgErr = $ex->getMessage();
             } else {

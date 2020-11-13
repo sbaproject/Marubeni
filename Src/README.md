@@ -80,3 +80,11 @@ php load_font.php 'notosans-regular' storage/fonts/NotoSans-Regular.ttf -->
 		=> TRUE
 	+ null == 0
 		=> TRUE
+
+-------------------------------------------------------------------------------------------------
+--------------------------Chú ý khi migrate db----------------------------
+-------------------------------------------------------------------------------------------------
+Nếu migrate db gặp lỗi này:
+' 1071 Specified key was too long; max key length is 1000 bytes '
+thì vào config/database.php -> tìm đến 'engine' => null  và chuyển thành 'engine' => 'InnoDB'
+Link tham khảo: https://stackoverflow.com/questions/42244541/laravel-migration-error-syntax-error-or-access-violation-1071-specified-key-wa
