@@ -1,5 +1,7 @@
 @extends('layouts.master')
-@section('title', 'Admin - Edit Company')
+@section('title')
+{{ __('label.menu.company_registration') }}
+@endsection
 @section('css')
     <link rel="stylesheet" href="css/user/10_company_registration.css">
 @endsection

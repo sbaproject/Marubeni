@@ -1,6 +1,6 @@
 @extends('layouts.unauth_master')
 @section('title')
-    Create New Password
+{{ __('label.login.title_create_pass') }}
 @endsection
 @section('content')
     <!-- /.login-logo -->

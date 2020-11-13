@@ -1,6 +1,6 @@
 @extends('layouts.unauth_master')
 @section('title')
-    Reset Password
+{{ __('label.login.title_reset_pass') }}
 @endsection
 @section('content')
     <!-- /.login-logo -->

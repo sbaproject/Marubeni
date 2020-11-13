@@ -1,7 +1,6 @@
 @extends('layouts.master')
-@section('title', 'Admin - Application Company')
-@section('js')
-
+@section('title')
+{{ __('label.menu.company_registration') }}
 @endsection
 @section('content')
     <!-- Content Header (Page header) -->

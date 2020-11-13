@@ -1,5 +1,7 @@
 @extends('layouts.master')
-@section('title', 'User - Application Draft')
+@section('title')
+{{ __('label.menu.draft') }}
+@endsection
 @section('content')
     <section class="content">
         <div class="card">

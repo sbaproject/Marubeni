@@ -1,5 +1,7 @@
 @extends('layouts.master')
-@section('title', 'Admin - Application Dashboard')
+@section('title')
+{{ $intstatus == config('const.application.status.applying') ? __('label.status.list_of_applying_documents') : ($intstatus == config('const.application.status.approvel') ? __('label.status.list_of_approval_documents') : ($intstatus == config('const.application.status.declined') ? __('label.status.list_of_declined_documents') : ($intstatus == config('const.application.status.reject') ? __('label.status.list_of_reject_documents') : ($intstatus == config('const.application.status.completed') ? __('label.status.list_of_completed_documents') : __('label.dashboard.list_application'))))) }}
+@endsection
 @section('css')
     <link rel="stylesheet" href="css/user/01_dashboard.css">
 @endsection

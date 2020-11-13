@@ -204,7 +204,7 @@ return [
      */
     'company' => [
         'keyword' => 'Từ Khóa',
-        'company_registration' => 'Thêm Thông Tin Công Ty',
+        'company_registration' => 'Thông Tin Công Ty',
         //forms
         'no' => 'Số',
         'company_information' => 'Thông Tin Công Ty',
