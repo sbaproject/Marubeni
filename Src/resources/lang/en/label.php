@@ -46,6 +46,8 @@ return [
     'change_pass' => 'Change Password',
     'file' => 'File',
     'choose_file' => 'Choose file',
+    'yes' => 'Yes',
+    'no' => 'No',
     /**
      * Form
      */

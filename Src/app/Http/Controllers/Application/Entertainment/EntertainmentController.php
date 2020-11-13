@@ -2,17 +2,20 @@
 
 namespace App\Http\Controllers\Application\Entertainment;
 
+use App\Exceptions\Entertainment\NotFoundFlowSettingException;
+use PDF;
+use Exception;
 use Carbon\Carbon;
 use App\Libs\Common;
+use App\Models\Budget;
 use App\Models\Application;
+use App\Models\Entertaiment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Models\Entertaiment;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
-use PDF;
 
 class EntertainmentController extends Controller
 {
@@ -28,7 +31,7 @@ class EntertainmentController extends Controller
     public function store(Request $request)
     {
         // get input data
-        $inputs = $request->all();
+        $inputs = $this->getInputs($request);
 
         // check post method
         if (isset($inputs['apply']) || isset($inputs['draft']) || isset($inputs['pdf'])) {
@@ -47,7 +50,10 @@ class EntertainmentController extends Controller
         }
 
         // save
-        $this->doSaveData($request, $inputs);
+        $msgErr = $this->doSaveData($request, $inputs);
+        if (!empty($msgErr)) {
+            return Common::redirectBackWithAlertFail($msgErr)->with('inputs', $inputs);
+        }
 
         // redirect atfer save
         return $this->doRedirect($inputs);
@@ -76,7 +82,7 @@ class EntertainmentController extends Controller
         }
 
         // get inputs
-        $inputs = $request->all();
+        $inputs = $this->getInputs($request);
 
         // check post method
         if (isset($inputs['apply']) || isset($inputs['draft']) || isset($inputs['pdf'])) {
@@ -95,7 +101,10 @@ class EntertainmentController extends Controller
         }
 
         // save
-        $this->doSaveData($request, $inputs);
+        $msgErr = $this->doSaveData($request, $inputs);
+        if (!empty($msgErr)) {
+            return Common::redirectBackWithAlertFail($msgErr)->with('inputs', $inputs);
+        }
 
         // redirect atfer save
         return $this->doRedirect($inputs);
@@ -110,11 +119,15 @@ class EntertainmentController extends Controller
                 $rules['input_file'] = 'mimes:txt,pdf,jpg,jpeg,png|max:200';
             }
             if (isset($inputs['apply'])) {
-                $rules['trip_dt_from'] = 'required';
-                $rules['trip_dt_to'] = 'required';
-                $rules['trans.*.departure'] = 'required';
-                $rules['trans.*.arrive'] = 'required';
-                $rules['trans.*.method'] = 'required';
+                $rules['entertainment_dt'] = 'required';
+                $rules['place'] = 'required';
+                $rules['during_trip'] = 'required';
+                $rules['check_row'] = 'required';
+                $rules['entertainment_times'] = 'required';
+                $rules['existence_projects'] = 'required';
+                $rules['includes_family'] = 'required';
+                $rules['entertainment_person'] = 'required|numeric';
+                $rules['est_amount'] = 'required|numeric';
             }
             $customAttributes = [
                 'trans.*.departure' => __('label.business.departure'),
@@ -131,7 +144,11 @@ class EntertainmentController extends Controller
 
     public function doSaveData($request, $inputs)
     {
-        DB::transaction(function () use ($request, $inputs) {
+        $msgErr = '';
+
+        DB::beginTransaction();
+
+        try {
             // get user
             $user = Auth::user();
 
@@ -153,63 +170,91 @@ class EntertainmentController extends Controller
                 'updated_at' => Carbon::now(),
             ];
 
-            // for new
-            if (!$request->id) {
+            // get current step
+            $currentStep = config('const.budget.step_type.application'); // [entertainment form] default = 1
+            // get budget type
+            $budgetType = config('const.budget.budget_type.entertainment');
+            // get position
+            $position = config('const.budget.position.po'); // set temp -> change here
+            // get budget comparation type
+            $budget = Budget::where([
+                'budget_type' => $budgetType,
+                'step_type' => $currentStep,
+                'position' => $position,
+            ])->first();
 
-                // get current step
-                $currentStep = 1; // [business form] default = 1
-
-                // get [business form] id
-                $formId = config('const.form.biz_trip');
-
-                // get group
-                $group = DB::table('groups')
-                    ->select('groups.*')
-                    ->join('applicants', function ($join) use ($user) {
-                        $join->on('groups.applicant_id', '=', 'applicants.id')
-                            ->where('applicants.role', '=', $user->role)
-                            ->where('applicants.location', '=', $user->location)
-                            ->where('applicants.department_id', '=', $user->department_id)
-                            ->where('applicants.deleted_at', '=', null);
-                    })
-                    ->join('budgets', function ($join) use ($currentStep) {
-                        $join->on('groups.budget_id', '=', 'budgets.id')
-                            ->where('budgets.budget_type', '=', config('const.budget.budget_type.business'))
-                            ->where('budgets.step_type', '=', $currentStep)
-                            ->where('budgets.position', '=', config('const.budget.position.business')) // set temp, change here
-                            ->where('budgets.deleted_at', '=', null);
-                    })
-                    ->where('groups.deleted_at', '=', null)
-                    ->first();
-
-                $application['form_id'] = $formId;
-                $application['group_id'] = $group->id;
-                $application['current_step'] = $currentStep;
-                $application['created_by'] = $user->id;
-                $application['created_at'] = Carbon::now();
+            if (empty($budget)) {
+                throw new NotFoundFlowSettingException();
             }
+
+            if ($inputs['est_amount'] <= $budget->amount) {
+                $budgetTypeCompare = config('const.budget.budeget_type_compare.less_equal');
+            } else {
+                $budgetTypeCompare = config('const.budget.budeget_type_compare.greater_than');
+            }
+
+            // get [entertainment form] id
+            $formId = config('const.form.entertainment');
+
+            // get group
+            $group = DB::table('groups')
+                ->select('groups.*')
+                ->join('applicants', function ($join) use ($user) {
+                    $join->on('groups.applicant_id', '=', 'applicants.id')
+                        ->where('applicants.role', '=', $user->role)
+                        ->where('applicants.location', '=', $user->location)
+                        ->where('applicants.department_id', '=', $user->department_id)
+                        ->where('applicants.deleted_at', '=', null);
+                })
+                ->join(
+                    'budgets',
+                    function ($join) use ($currentStep, $budgetType, $position) {
+                        $join->on('groups.budget_id', '=', 'budgets.id')
+                            ->where('budgets.budget_type', '=', $budgetType)
+                            ->where('budgets.step_type', '=', $currentStep)
+                            ->where('budgets.position', '=', $position) // set temp, change here
+                            ->where('budgets.deleted_at', '=', null);
+                    }
+                )
+                ->where([
+                    'groups.budget_type_compare' => $budgetTypeCompare,
+                    'groups.deleted_at' => null,
+
+                ])
+                ->first();
+
+            if (empty($group)) {
+                throw new NotFoundFlowSettingException();
+            }
+
+            $application['form_id']         = $formId;
+            $application['group_id']        = $group->id;
+            $application['current_step']    = $currentStep;
 
             // save applications
             if (!$request->id) {
+                $application['created_by']      = $user->id;
+                $application['created_at']      = Carbon::now();
+
                 $applicationId = DB::table('applications')->insertGetId($application);
             } else {
                 DB::table('applications')->where('id', $request->id)->update($application);
             }
 
             /**-------------------------
-             * create [Business Application] detail
+             * create [Entertainment Application] detail
              *-------------------------*/
             if ($request->id) {
-                $biz = Entertaiment::where('application_id', $request->id)->first();
+                $entertainment = Entertaiment::where('application_id', $request->id)->first();
             }
             // delete old file
-            if (isset($biz)) {
-                $filePath = $biz->file_path;
+            if (isset($entertainment)) {
+                $filePath = $entertainment->file_path;
                 // attchached file was changed
                 if ($inputs['file_path'] != $filePath) {
-                    if (!empty($biz->file_path)) {
-                        if (Storage::exists($biz->file_path)) {
-                            Storage::delete($biz->file_path);
+                    if (!empty($entertainment->file_path)) {
+                        if (Storage::exists($entertainment->file_path)) {
+                            Storage::delete($entertainment->file_path);
                         }
                     }
                     $filePath = null;
@@ -221,51 +266,89 @@ class EntertainmentController extends Controller
                 $filePath = $request->file('input_file')->storeAs('uploads/application/', $fileName);
             }
 
-            // prepare leave data
-            $bizData = [
-                'destinations' => $inputs['destinations'],
-                'trip_dt_from' => $inputs['trip_dt_from'],
-                'trip_dt_to' => $inputs['trip_dt_to'],
-                'accommodation' => $inputs['accommodation'],
-                'accompany' => $inputs['accompany'],
-                'borne_by' => $inputs['borne_by'],
-                'comment' => $inputs['comment'],
-                'file_path' => isset($filePath) ? $filePath : null,
-                'updated_by' => $user->id,
-                'updated_at' => Carbon::now(),
+            // prepare entertainment data
+            $etData = [
+                'entertainment_dt'      => $inputs['entertainment_dt'],
+                'place'                 => $inputs['place'],
+                'during_trip'           => $inputs['during_trip'],
+                'check_row'             => $inputs['check_row'],
+                'entertainment_times'   => $inputs['entertainment_times'],
+                'existence_projects'    => $inputs['existence_projects'],
+                'includes_family'       => $inputs['includes_family'],
+                'project_name'          => $inputs['project_name'],
+                'entertainment_reason'  => $inputs['entertainment_reason'],
+                'entertainment_person'  => $inputs['entertainment_person'],
+                'est_amount'            => $inputs['est_amount'],
+                'reason_budget_over'    => $inputs['reason_budget_over'],
+                'file_path'             => isset($filePath) ? $filePath : null,
+                'updated_by'            => $user->id,
+                'updated_at'            => Carbon::now(),
             ];
             // for new
             if (!$request->id) {
-                $bizData['application_id'] = $applicationId;
-                $bizData['created_by'] = $user->id;
-                $bizData['created_at'] = Carbon::now();
+                $etData['application_id'] = $applicationId;
+                $etData['created_by'] = $user->id;
+                $etData['created_at'] = Carbon::now();
             }
 
-            // DB::table('businesstrips')->updateOrInsert(['application_id' => $request->id], $bizData);
-            // save business application
+            // save entertainment application
             if (!$request->id) {
-                $bizId = DB::table('businesstrips')->insertGetId($bizData);
+                $etId = DB::table('entertaiments')->insertGetId($etData);
             } else {
-                DB::table('businesstrips')->where('id', $biz->id)->update($bizData);
-                DB::table('transportations')->where('businesstrip_id', $biz->id)->delete();
+                DB::table('entertaiments')->where('id', $entertainment->id)->update($etData);
+                // DB::table('transportations')->where('businesstrip_id', $entertainment->id)->delete();
             }
             // save transportations
-            if (!isset($bizId)) {
-                $bizId = $biz->id;
+            if (!isset($etId)) {
+                $etId = $entertainment->id;
             }
-            $transportations = [];
-            foreach ($inputs['trans'] as $value) {
-                $item['businesstrip_id'] = $bizId;
-                $item['departure'] = $value['departure'];
-                $item['arrive'] = $value['arrive'];
-                $item['method'] = $value['method'];
-                $item['created_at'] = Carbon::now();
-                $item['updated_at'] = Carbon::now();
+            // $transportations = [];
+            // foreach ($inputs['trans'] as $value) {
+            //     $item['businesstrip_id'] = $etId;
+            //     $item['departure'] = $value['departure'];
+            //     $item['arrive'] = $value['arrive'];
+            //     $item['method'] = $value['method'];
+            //     $item['created_at'] = Carbon::now();
+            //     $item['updated_at'] = Carbon::now();
 
-                $transportations[] = $item;
+            //     $transportations[] = $item;
+            // }
+            // DB::table('transportations')->insert($transportations);
+
+            DB::commit();
+        } catch (Exception $ex) {
+            DB::rollBack();
+            if ($ex instanceof NotFoundFlowSettingException) {
+                $msgErr = $ex->getMessage();
+            } else {
+                $msgErr = __('msg.save_fail');
             }
-            DB::table('transportations')->insert($transportations);
-        });
+        }
+
+        return $msgErr;
+    }
+
+    public function getInputs($request)
+    {
+        $inputs = $request->all();
+
+        if (!isset($inputs['during_trip'])) {
+            $inputs['during_trip'] = null;
+        }
+        if (!isset($inputs['check_row'])) {
+            $inputs['check_row'] = null;
+        }
+        if (!isset($inputs['entertainment_times'])) {
+            $inputs['entertainment_times'] = null;
+        }
+        if (!isset($inputs['existence_projects'])) {
+            $inputs['existence_projects'] = null;
+        }
+        if (!isset($inputs['includes_family'])) {
+            $inputs['includes_family'] = null;
+        }
+
+        return $inputs;
     }
 
     public function doRedirect($inputs)

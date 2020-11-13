@@ -5,6 +5,7 @@ return [
 	/**
 	 * Roles
 	 */
+
 	'role' => [
 		'Admin' => 99,
 		'Staff' => 1,
@@ -69,7 +70,7 @@ return [
     'form' => [
         'leave' => 1,           // Leave Application
         'biz_trip' => 2,        // Business Trip Application
-		'entertaiment' => 3,    // Entertaiment Application
+		'entertainment' => 3,    // Entertainment Application
 		// prefix of form
 		'prefix' => [
 			1 => 'LA',
@@ -110,6 +111,36 @@ return [
         'step_type' => [
 			'application' => 1,
 			'settlement' => 2,
-        ],
+		],
+		'budeget_type_compare' => [
+			'less_equal' => 0,
+			'greater_than' => 1,
+		],
+	],
+	/**
+	 * Entertainment Application
+	 */
+	'business' => [
+		'during_trip' => [
+			'yes' => 1,
+			'no' => 0,
+		],
+		'check_row' => [
+			'yes' => 1,
+			'no' => 0,
+		],
+		'entertainment_times' => [
+			'yes' => 1,
+			'no' => 0,
+		],
+		'existence_projects' => [
+			'yes' => 1,
+			'no' => 0,
+		],
+		'includes_family' => [
+			'yes' => 1,
+			'no' => 0,
+		],
 	]
+
 ];

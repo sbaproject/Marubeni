@@ -32,19 +32,19 @@
 @section('content')
 @php
 
-$trans = Session::has('inputs') ? Session::get('inputs')['trans'] : (isset($model) ? $model->transportations : null);
-$destinations = Session::has('inputs') ? Session::get('inputs')['destinations'] : (isset($model) ? $model->destinations
-: null);
-$trip_dt_from = Session::has('inputs') ? Session::get('inputs')['trip_dt_from'] : (isset($model) ? $model->trip_dt_from
-: null);
-$trip_dt_to = Session::has('inputs') ? Session::get('inputs')['trip_dt_to'] : (isset($model) ? $model->trip_dt_to :
-null);
-$accommodation = Session::has('inputs') ? Session::get('inputs')['accommodation'] : (isset($model) ?
-$model->accommodation : null);
-$accompany = Session::has('inputs') ? Session::get('inputs')['accompany'] : (isset($model) ? $model->accompany : null);
-$borne_by = Session::has('inputs') ? Session::get('inputs')['borne_by'] : (isset($model) ? $model->borne_by : null);
-$comment = Session::has('inputs') ? Session::get('inputs')['comment'] : (isset($model) ? $model->comment : null);
-$file_path = Session::has('inputs') ? Session::get('inputs')['file_path'] : (isset($model) ? $model->file_path : null);
+$entertainment_dt       = Session::has('inputs') ? Session::get('inputs')['entertainment_dt']       : (isset($model) ? $model->entertainment_dt : null);
+$place                  = Session::has('inputs') ? Session::get('inputs')['place']                  : (isset($model) ? $model->place : null);
+$during_trip            = Session::has('inputs') ? Session::get('inputs')['during_trip']            : (isset($model) ? $model->during_trip : null);
+$check_row              = Session::has('inputs') ? Session::get('inputs')['check_row']              : (isset($model) ? $model->check_row : null);
+$entertainment_times    = Session::has('inputs') ? Session::get('inputs')['entertainment_times']    : (isset($model) ? $model->entertainment_times : null);
+$existence_projects     = Session::has('inputs') ? Session::get('inputs')['existence_projects']     : (isset($model) ? $model->existence_projects : null);
+$includes_family        = Session::has('inputs') ? Session::get('inputs')['includes_family']        : (isset($model) ? $model->includes_family : null);
+$project_name           = Session::has('inputs') ? Session::get('inputs')['project_name']           : (isset($model) ? $model->project_name : null);
+$entertainment_reason   = Session::has('inputs') ? Session::get('inputs')['entertainment_reason']   : (isset($model) ? $model->entertainment_reason : null);
+$entertainment_person   = Session::has('inputs') ? Session::get('inputs')['entertainment_person']   : (isset($model) ? $model->entertainment_person : null);
+$est_amount             = Session::has('inputs') ? Session::get('inputs')['est_amount']             : (isset($model) ? $model->est_amount : null);
+$reason_budget_over     = Session::has('inputs') ? Session::get('inputs')['reason_budget_over']     : (isset($model) ? $model->reason_budget_over : null);
+$file_path              = Session::has('inputs') ? Session::get('inputs')['file_path']              : (isset($model) ? $model->file_path : null);
 
 @endphp
 <section class="content">
@@ -92,7 +92,7 @@ $file_path = Session::has('inputs') ? Session::get('inputs')['file_path'] : (iss
                                 <strong>{{ $message }}</strong>
                             </span>
                             @enderror
-                            <input type="hidden" id="entertainment_dt" name="entertainment_dt">
+                            <input type="hidden" id="entertainment_dt" name="entertainment_dt" value="{{ $entertainment_dt }}">
                         </div>
                     </div>
                 </div>
@@ -100,21 +100,31 @@ $file_path = Session::has('inputs') ? Session::get('inputs')['file_path'] : (iss
                 <div class="form-group row ">
                     <label class="col-lg-2 col-form-label text-left">Place</label>
                     <div class="col-lg-10">
-                        <input type="text" class="form-control" name="place">
+                        <input type="text" name="place" class="form-control @error('place') is-invalid @enderror" value="{{ $place }}">
+                        @error('place')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
                     </div>
                 </div>
                 <hr>
                 <div class="form-group row ">
                     <label class="col-lg-2 col-form-label text-left">During biz trip</label>
                     <div class="col-lg-10 text-lg-left text-left">
-                        <label class="radio-inline com_title col-form-label">
-                            <input type="radio" name="during_trip" checked>
-                            Yes
-                        </label>
-                        <label class="radio-inline com_title col-form-label">
-                            <input type="radio" name="during_trip">
-                            No
-                        </label>
+                        <fieldset class="@error('during_trip') form-control is-invalid @enderror">
+                            @foreach (config('const.business.during_trip') as $key => $value)
+                                <label class="radio-inline com_title col-form-label">
+                                    <input type="radio" name="during_trip" value="{{ $value }}" @if($during_trip !== null && $during_trip == $value) checked @endif>
+                                    {{ __('label.'. $key) }}
+                                </label>
+                            @endforeach
+                        </fieldset>
+                        @error('during_trip')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
                     </div>
                 </div>
                 <hr>
@@ -159,14 +169,19 @@ $file_path = Session::has('inputs') ? Session::get('inputs')['file_path'] : (iss
                     <label class="col-lg-2 col-form-label text-left">
                         Confirmation of Compliance with Laws</label>
                     <div class="col-lg-10 text-lg-left text-left">
-                        <label class="radio-inline com_title col-form-label">
-                            <input type="radio" name="check_row" checked>
-                            Yes
-                        </label>
-                        <label class="radio-inline com_title col-form-label">
-                            <input type="radio" name="check_row">
-                            No
-                        </label>
+                        <fieldset class="@error('check_row') form-control is-invalid @enderror">
+                            @foreach (config('const.business.check_row') as $key => $value)
+                            <label class="radio-inline com_title col-form-label">
+                                <input type="radio" name="check_row" value="{{ $value }}" @if($check_row !== null && $check_row == $value) checked @endif>
+                                {{ __('label.'. $key) }}
+                            </label>
+                            @endforeach
+                        </fieldset>
+                        @error('check_row')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
                     </div>
                 </div>
                 <hr>
@@ -175,14 +190,19 @@ $file_path = Session::has('inputs') ? Session::get('inputs')['file_path'] : (iss
                         No. of Entertainment for past 1 year
                     </label>
                     <div class="col-lg-10 text-lg-left text-left">
-                        <label class="radio-inline com_title col-form-label">
-                            <input type="radio" name="optradio3" checked>
-                            Yes
-                        </label>
-                        <label class="radio-inline com_title col-form-label">
-                            <input type="radio" name="optradio3">
-                            No
-                        </label>
+                        <fieldset class="@error('entertainment_times') form-control is-invalid @enderror">
+                            @foreach (config('const.business.entertainment_times') as $key => $value)
+                            <label class="radio-inline com_title col-form-label">
+                                <input type="radio" name="entertainment_times" value="{{ $value }}" @if($entertainment_times !== null && $entertainment_times == $value) checked @endif>
+                                {{ __('label.'. $key) }}
+                            </label>
+                            @endforeach
+                        </fieldset>
+                        @error('entertainment_times')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
                     </div>
                 </div>
                 <hr>
@@ -191,14 +211,20 @@ $file_path = Session::has('inputs') ? Session::get('inputs')['file_path'] : (iss
                         Existence of projects
                     </label>
                     <div class="col-lg-10 text-lg-left text-left">
-                        <label class="radio-inline com_title col-form-label">
-                            <input type="radio" name="existence_projects" checked>
-                            Yes
-                        </label>
-                        <label class="radio-inline com_title col-form-label">
-                            <input type="radio" name="existence_projects">
-                            No
-                        </label>
+                        <fieldset class="@error('existence_projects') form-control is-invalid @enderror">
+                            @foreach (config('const.business.existence_projects') as $key => $value)
+                            <label class="radio-inline com_title col-form-label">
+                                <input type="radio" name="existence_projects" value="{{ $value }}" @if($existence_projects !==null &&
+                                    $existence_projects==$value) checked @endif>
+                                {{ __('label.'. $key) }}
+                            </label>
+                            @endforeach
+                        </fieldset>
+                        @error('existence_projects')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
                     </div>
                 </div>
                 <hr>
@@ -206,14 +232,20 @@ $file_path = Session::has('inputs') ? Session::get('inputs')['file_path'] : (iss
                     <label class="col-lg-2 col-form-label text-left">
                         Includes its Family/Friend</label>
                     <div class="col-lg-10 text-lg-left text-left">
-                        <label class="radio-inline com_title col-form-label">
-                            <input type="radio" name="includes_family" checked>
-                            Yes
-                        </label>
-                        <label class="radio-inline com_title col-form-label">
-                            <input type="radio" name="includes_family">
-                            No
-                        </label>
+                        <fieldset class="@error('includes_family') form-control is-invalid @enderror">
+                            @foreach (config('const.business.includes_family') as $key => $value)
+                            <label class="radio-inline com_title col-form-label">
+                                <input type="radio" name="includes_family" value="{{ $value }}" @if($includes_family !==null &&
+                                    $includes_family==$value) checked @endif>
+                                {{ __('label.'. $key) }}
+                            </label>
+                            @endforeach
+                        </fieldset>
+                        @error('includes_family')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
                     </div>
                 </div>
                 <hr>
@@ -224,7 +256,7 @@ $file_path = Session::has('inputs') ? Session::get('inputs')['file_path'] : (iss
                         <label style="color: #df2333f1;">If need</label>
                     </label>
                     <div class="col-lg-10">
-                        <textarea id="text_content" class="form-control" rows="2"></textarea>
+                        <textarea id="project_name" name="project_name" class="form-control" rows="2">{{ $project_name }}</textarea>
                     </div>
                 </div>
                 <hr>
@@ -233,19 +265,27 @@ $file_path = Session::has('inputs') ? Session::get('inputs')['file_path'] : (iss
                         Reason for the Entertainment
                     </label>
                     <div class="col-lg-10">
-                        <textarea id="text_content" class="form-control" rows="5"></textarea>
+                        <textarea id="entertainment_reason" name="entertainment_reason" class="form-control" rows="5">{{ $entertainment_reason }}</textarea>
                     </div>
                 </div>
                 <hr>
                 <div class="form-group row ">
-                    <label class="col-lg-2 col-form-label text-left ">
+                    <label class="col-lg-2 col-form-label text-left">
                         Total Number of Person
                     </label>
                     <div class="col-lg-10">
                         <div class="form-group row ">
-                            <div class="col-lg-4"><input type="text" class="form-control"></div>
+                            <div class="col-lg-4">
+                                <input type="number" name="entertainment_person" class="form-control @error('entertainment_person') is-invalid @enderror"
+                                    value="{{ $entertainment_person }}">
+                            </div>
                             <label class="col-lg-8 col-form-label com_title text-lg-left text-left">Persons</label>
                         </div>
+                        @error('entertainment_person')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
                     </div>
                 </div>
                 <hr>
@@ -253,11 +293,19 @@ $file_path = Session::has('inputs') ? Session::get('inputs')['file_path'] : (iss
                     <label class="col-lg-2 col-form-label text-left">Estimated Amount</label>
                     <div class="col-lg-10 text-lg-left text-left">
                         <div class="form-group row ">
-                            <div class="col-lg-4"><input type="text" class="form-control"></div>
+                            <div class="col-lg-4">
+                                <input type="number" name="est_amount" class="form-control @error('est_amount') is-invalid @enderror"
+                                    value="{{ $est_amount }}">
+                            </div>
                             <label class="col-lg-8 col-form-label com_title text-lg-left text-left">
                                 Per Person(Excluding VND)
                             </label>
                         </div>
+                        @error('est_amount')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
                     </div>
                 </div>
                 <hr>
@@ -267,7 +315,7 @@ $file_path = Session::has('inputs') ? Session::get('inputs')['file_path'] : (iss
                         Describe if the amount per person exceeds 4mil VND (PO:2mil VND)
                     </label>
                     <div class="col-lg-10">
-                        <textarea id="text_content" class="form-control" rows="3"></textarea>
+                        <textarea id="reason_budget_over" name="reason_budget_over" class="form-control" rows="3">{{ $reason_budget_over }}</textarea>
                     </div>
                 </div>
                 <hr>

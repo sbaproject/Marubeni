@@ -5,7 +5,7 @@ $(document).ready(function () {
     // init
     $('#datetime').datetimepicker({
         format: 'ddd, DD/MM/YYYY HH:mm',
-        defaultDate: $('#entertainment_dt').val(),
+        defaultDate: $('#entertainment_dt').val() != '' ? moment($('#entertainment_dt').val()) : false,
         toolbarPlacement: 'bottom',
         sideBySide: true,
         showTodayButton: true,
@@ -16,15 +16,10 @@ $(document).ready(function () {
             today: 'fa fa-clock',
         }
     });
-    // show
-    var datetime = $('#datetime').data("DateTimePicker").date();
-    if (datetime != null) {
-        $('#entertainment_dt').val(datetime.format('YYYYMMDD HH:mm'));
-    }
     // change
     $("#datetime").on("dp.change", function (e) {
         if (e.date) {
-            $('#entertainment_dt').val(e.date.format('YYYYMMDD HH:mm'));
+            $('#entertainment_dt').val(e.date.format('YYYY/MM/DD HH:mm'));
         } else {
             $('#entertainment_dt').val(null);
         }

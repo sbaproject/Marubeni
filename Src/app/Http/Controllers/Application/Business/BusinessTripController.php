@@ -157,7 +157,7 @@ class BusinessTripController extends Controller
             if (!$request->id) {
 
                 // get current step
-                $currentStep = 1; // [business form] default = 1
+                $currentStep = config('const.budget.step_type.application'); // [business form] default = 1
 
                 // get [business form] id
                 $formId = config('const.form.biz_trip');

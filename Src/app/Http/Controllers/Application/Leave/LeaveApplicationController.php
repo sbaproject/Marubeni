@@ -179,7 +179,7 @@ class LeaveApplicationController extends Controller
             if (!$request->id) {
 
                 // get current step
-                $currentStep = 2; // [leave form] default = 2
+                $currentStep = config('const.budget.step_type.settlement'); // [leave form] default = 2
 
                 // get [leave form] id
                 $formId = config('const.form.leave');
