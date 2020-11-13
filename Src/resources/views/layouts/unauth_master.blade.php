@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,7 +10,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-----------------START LINK CSS ------------------------------>
-    <base href="{{asset('')}}">
+    <base href="{{ asset('') }}">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="css/lib/fontawesome-free/css/all.min.css">
     <!-- Ionicons -->
@@ -35,17 +36,21 @@
     <script src="js/jquery/jquery.min.js"></script>
     <script src="js/jquery/jquery-ui.js"></script>
     <!-- Bootstrap 4 -->
-    {{-- <script src="js/bootstrap/js/bootstrap.bundle.min.js"></script> --}}
+    {{-- <script src="js/bootstrap/js/bootstrap.bundle.min.js"></script>
+    --}}
     <!-- AdminLTE App -->
     {{-- <script src="js/adminlte.min.js"></script> --}}
     <!-- moment -->
     {{-- <script src="js/moment/moment.min.js"></script> --}}
     <!-- date-range-picker -->
-    {{-- <script src="js/daterangepicker/daterangepicker.js"></script> --}}
+    {{-- <script src="js/daterangepicker/daterangepicker.js"></script>
+    --}}
     <!-- Tempusdominus Bootstrap 4 -->
-    {{-- <script src="js/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script> --}}
+    {{-- <script src="js/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js">
+    </script> --}}
     <!-- Bootstrap Switch -->
-    {{-- <script src="js/bootstrap-switch/js/bootstrap-switch.min.js"></script> --}}
+    {{-- <script src="js/bootstrap-switch/js/bootstrap-switch.min.js"></script>
+    --}}
     <!-----------------END LINK JAVASCRIPT ------------------------>
 </head>
 
@@ -55,16 +60,16 @@
             <!-- Left navbar links -->
             <ul class="navbar-nav bg-custom">
                 <li class="nav-item">
-                    <img src="images/logo.png" alt="Logo" class="" style="max-width: 100%;">
+                    <a href="/">
+                        <img src="images/logo.png" alt="Logo" class="" style="max-width: 100%;">
+                    </a>
                 </li>
             </ul>
-
             <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto info-user">
-                <x-locale/>
+                <x-locale />
             </ul>
         </nav>
-
         <div class="login-box">
             @yield('content')
         </div>
