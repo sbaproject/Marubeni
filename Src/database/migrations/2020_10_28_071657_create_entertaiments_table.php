@@ -20,13 +20,14 @@ class CreateEntertaimentsTable extends Migration
             $table->string('place')->nullable();
             $table->unsignedTinyInteger('during_trip')->nullable()->comment('1:YES -- 0:NO');
             $table->unsignedTinyInteger('check_row')->nullable()->comment('1:YES -- 0:NO');
-            $table->integer('entertainment_times')->nullable();
+            // $table->integer('entertainment_times')->nullable();
+            $table->unsignedTinyInteger('entertainment_times')->nullable()->comment('1:YES -- 0:NO');
             $table->unsignedTinyInteger('existence_projects')->nullable()->comment('1:YES -- 0:NO');
             $table->unsignedTinyInteger('includes_family')->nullable()->comment('1:YES -- 0:NO');
             $table->string('project_name', 50)->nullable();
             $table->text('entertainment_reason')->nullable();
-            $table->text('entertainment_person')->nullable();
-            $table->decimal('est_amount', 11, 0)->nullable();
+            $table->unsignedInteger('entertainment_person')->default(0);
+            $table->decimal('est_amount', 11, 0)->nullable()->default(0);
             $table->text('reason_budget_over')->nullable();
             $table->text('file_path')->nullable();
             $table->unsignedBigInteger('created_by')->nullable();

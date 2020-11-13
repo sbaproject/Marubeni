@@ -8,5 +8,11 @@ return [
     'delete_success' => 'Xóa thành công.',
     'save_fail' => 'Lưu thất bại.',
     'delete_fail' => 'Xóa thất bại.',
-    'no_data' => 'Không tìm thấy dữ liệu.'
+    'no_data' => 'Không tìm thấy dữ liệu.',
+    /**
+     * Entertainment Application
+     */
+    'entertainment' => [
+        '01' => 'Không tìm thấy quy trình duyệt đơn phù hợp.',
+    ],
 ];

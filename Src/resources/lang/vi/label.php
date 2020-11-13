@@ -36,6 +36,8 @@ return [
     '_no_' => 'Mã số',
     'email_address' => 'E-Mail',
     'change_pass' => 'Đổi Mật Khẩu',
+    'yes' => 'Có',
+    'no' => 'Không',
     /**
      * Paginator
      */
