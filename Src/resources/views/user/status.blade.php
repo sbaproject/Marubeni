@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title', 'User-Status')
+@section('title', 'Application Status')
 @section('css')
     <link rel="stylesheet" href="css/user/02_status.css">
 @endsection

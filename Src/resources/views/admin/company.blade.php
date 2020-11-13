@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title', 'ADMIN_COMPANY')
+@section('title', 'Admin - Application Company')
 @section('js')
 
 @endsection

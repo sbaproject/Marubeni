@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title', 'ADMIN_DASHBOARD')
+@section('title', 'Admin - Application Dashboard')
 @section('css')
     <link rel="stylesheet" href="css/user/01_dashboard.css">
 @endsection

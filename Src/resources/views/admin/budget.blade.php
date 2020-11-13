@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title', 'ADMIN_BUDGET')
+@section('title', 'Admin - Application Budget')
 @section('js')
 
 @endsection
