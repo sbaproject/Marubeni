@@ -138,7 +138,7 @@
                                     <td>{{ !empty($application->created_at) ? \Carbon\Carbon::parse($application->created_at)->format('d/m/Y') : '' }}
                                     </td>
                                     <td>
-                                        <a class="btn btn-details" href="{{ $application->form_id == 1 ? route('user.leave.show', $application->id) : ($application->form_id == 2 ? route('user.business.show', $application->id) : ($application->form_id == 1 ? '' : '')) }}">{{ __('label.dashboard.view_details') }}<i class="fas fa-angle-right" style="margin-left: 5px;"></i></a>
+                                        <a class="btn btn-details" href="{{ $application->form_id == config('const.form.leave') ? route('user.leave.show', $application->id) : ($application->form_id == config('const.form.biz_trip') ? route('user.business.show', $application->id) : ($application->form_id == config('const.form.entertaiment') ? route('user.entertainment.show', $application->id) : '')) }}">{{ __('label.dashboard.view_details') }}<i class="fas fa-angle-right" style="margin-left: 5px;"></i></a>
                                     </td>
                                     </tr>
                             @endforeach

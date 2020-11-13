@@ -92,7 +92,7 @@
                                     </td>
                                     <td>
                                         <a class="btn btn-details"
-                                            href="{{ $application_status->form_id == 1 ? route('user.leave.show', $application_status->id) : ($application_status->form_id == 2 ? route('user.business.show', $application_status->id) : ($application_status->form_id == 1 ? '' : '')) }}">{{ __('label.status.view_details') }}<i
+                                            href="{{ $application_status->form_id == config('const.form.leave') ? route('user.leave.show', $application_status->id) : ($application_status->form_id == config('const.form.biz_trip') ? route('user.business.show', $application_status->id) : ($application_status->form_id == config('const.form.entertaiment') ? route('user.entertainment.show', $application_status->id) : '')) }}">{{ __('label.status.view_details') }}<i
                                                 class="fas fa-angle-right" style="margin-left: 5px;"></i></a>
                                     </td>
                                     </tr>

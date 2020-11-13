@@ -31,7 +31,7 @@
                                         <td>
                                             <x-action>
                                                 <x-slot name="editUrl">
-                                                    {{ $application_draft->form_id == 1 ? route('user.leave.show', $application_draft->id) : ($application_draft->form_id == 2 ? route('user.business.show', $application_draft->id) : ($application_draft->form_id == 1 ? '' : '')) }}
+                                                    {{ $application_draft->form_id == config('const.form.leave') ? route('user.leave.show', $application_draft->id) : ($application_draft->form_id == config('const.form.biz_trip') ? route('user.business.show', $application_draft->id) : ($application_draft->form_id == config('const.form.entertaiment') ? route('user.entertainment.show', $application_draft->id) : '')) }}
                                                 </x-slot>
                                                 <x-slot name="deleteUrl">
                                                     {{ route('user.draft.delete', $application_draft->id) }}
