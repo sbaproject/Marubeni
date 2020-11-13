@@ -277,10 +277,10 @@ return [
         'link_forgot_pass' => 'Forgot Password?',
         //form fogot password
         'title_reset_pass' => 'RESET PASSWORD',
-        'btn_send_pass' => 'Send',
+        'btn_send_pass' => 'Confirm',
         //form create new password
         'title_create_pass' => 'CREATE NEW PASSWORD',
         'confirm_password' => 'Confirm Password',
-        'btn_create_pass' => 'Create',
+        'btn_create_pass' => 'Confirm',
     ],
 ];
