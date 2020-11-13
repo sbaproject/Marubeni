@@ -18,9 +18,7 @@ class UserDraftController extends Controller
     {
         $userId = Auth::user()->id;
 
-        $list_application_draft =  Application::where('created_by', $userId)
-            ->where('applications.status', config('const.application.status.draft'))
-            ->orderBy('created_at', 'DESC')->paginate(10);
+        $list_application_draft =  Application::where('created_by', $userId)->where('applications.status', config('const.application.status.draft'))->orderBy('updated_at', 'DESC')->paginate(10);
 
         return view('user.draft', compact('list_application_draft'));
     }

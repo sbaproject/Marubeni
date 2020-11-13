@@ -9,7 +9,7 @@
                     <table class="table table-bordered" style="min-width: 500px;">
                         <thead>
                             <tr>
-                                <th style="width: 10px">{{ __('label.draft.no') }}</th>
+                                <th style="width: 170px">{{ __('label.draft.no') }}</th>
                                 <th>{{ __('label.draft.application_name') }}</th>
                                 <th>{{ __('label.draft.date_create') }}</th>
                                 <th style="width: 150px">{{ __('label.draft.action') }}</th>
@@ -19,7 +19,7 @@
                             @if (isset($list_application_draft))
                                 @foreach ($list_application_draft as $application_draft)
                                     <tr>
-                                        <td>{{ !empty($application->application_no) ? $application->application_no : '' }}</td>
+                                        <td>{{ !empty($application_draft->application_no) ? $application_draft->application_no : '' }}</td>
                                         <td>
                                             {{ !empty($application_draft->form_id) ? $application_draft->Form->name : '' }}
                                         </td>

@@ -9,6 +9,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-----------------START LINK CSS ------------------------------>
+    <base href="{{asset('')}}">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="css/lib/fontawesome-free/css/all.min.css">
     <!-- Ionicons -->
