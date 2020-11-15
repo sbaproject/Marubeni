@@ -1,9 +1,7 @@
 @extends('layouts.unauth_master')
-
 @section('title')
-    Login
+{{ __('label.login.title_login_pass') }}
 @endsection
-
 @section('content')
     <!-- /.login-logo -->
     <div class="card">

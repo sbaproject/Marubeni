@@ -18,7 +18,7 @@ class CheckIp
      */
     public function handle(Request $request, Closure $next)
     {
-        return $next($request);
+        //return $next($request);
 
         if ($request->ip() == env('IP_CHECK_EXTERNAL')) {
 
@@ -30,20 +30,12 @@ class CheckIp
             //Get cookie
             $confirm = $request->cookie('confirm');
 
+            //Check
             if (Hash::check(Auth::user()->otp_token, $confirm)) {
                 return $next($request);
             } else {
                 return redirect()->route('checkip');
-            }
-            
-
-            // if (empty($confirm)) {
-
-            //     return redirect()->route('checkip');
-            // } else if (Hash::check(Auth::user()->otp_token, $confirm)) {
-
-            //     return $next($request);
-            // }
+            }            
         }
     }
 }

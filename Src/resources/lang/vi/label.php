@@ -271,7 +271,7 @@ return [
      */
     'login' => [
         //form login
-        'title_login_pass' => 'ĐĂNG NHẬP MARUBENI',
+        'title_login_pass' => 'ĐĂNG NHẬP',
         'email_address' => 'E-Mail',
         'password' => 'Mật khẩu',
         'remember' => 'Nhớ mật khẩu',
@@ -284,5 +284,23 @@ return [
         'title_create_pass' => 'TẠO MỚI MẬT KHẨU',
         'confirm_password' => 'Xác nhận mật khẩu',
         'btn_create_pass' => 'Xác nhận',
+    ],
+    /**
+     * checkip
+     */
+    'checkip' => [
+        //form
+        'title' => 'XÁC NHẬN TRUY CẬP MẠNG NGOÀI',
+        'content' => 'Mã xác nhận đã gửi đến: ',
+        'enter_code' => 'Nhập mã',
+        //btn
+        'btn_confirm' => 'Xác nhận',
+        'btn_back' => 'Trở về',
+        //Validation
+        'valid_not_compare' => 'Mã không Chính Xác, Vui lòng thử lại !',
+        //Mail content
+        'mail_subject' => 'Xác Nhận Truy Cập Mạng Ngoài',
+        'mail_content' => 'Mã Xác Nhận Truy Cập Mạng Ngoài',
+        'mail_the_code_is' => 'Mã xác nhận: ',
     ],
 ];

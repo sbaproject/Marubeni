@@ -271,7 +271,7 @@ return [
      */
     'login' => [
         //form login
-        'title_login_pass' => 'LOGIN MARUBENI',
+        'title_login_pass' => 'LOGIN',
         'email_address' => 'E-Mail',
         'password' => 'Password',
         'remember' => 'Remember',
@@ -284,5 +284,23 @@ return [
         'title_create_pass' => 'CREATE NEW PASSWORD',
         'confirm_password' => 'Confirm Password',
         'btn_create_pass' => 'Confirm',
+    ],
+    /**
+     * checkip
+     */
+    'checkip' => [
+        //form
+        'title' => 'CONFIRM ACCESS EXTERNAL NETWORK',
+        'content' => 'The Code has sent to : ',
+        'enter_code' => 'Enter Code',
+        //btn
+        'btn_confirm' => 'Confirm',
+        'btn_back' => 'Back',
+        //Validation
+        'valid_not_compare' => 'The Code is not Correct, Please try again !',
+        //Mail content
+        'mail_subject' => 'Confirm Access External Network',
+        'mail_content' => 'The Code Confirm Access External Network',
+        'mail_the_code_is' => 'The Code is: ',
     ],
 ];

@@ -31,6 +31,6 @@ class MailNotify extends Mailable
    public function build()
    {
        return $this->view('mails.mail-notify')
-           ->subject('Confirm User Network External');
+           ->subject(config('app.name').' | '. __('label.checkip.mail_subject'));
    }
 }

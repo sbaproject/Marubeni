@@ -25,7 +25,7 @@
                                                     class="form-control {{ $errors->first('amount1') ? 'is-invalid' : '' }}"
                                                     value="{{ old('amount1', !empty($amount1->amount) ? $amount1->amount : ($amount1->amount == 0 ? 0 : '')) }}"
                                                     name='amount1' id=""
-                                                    placeholder="{{ __('label.budget.economy_class') }}">
+                                                    placeholder="{{ __('label.budget.economy_class') }}" maxlength="20">
                                                 @error('amount1')
                                                     <div class="invalid-feedback">
                                                         {{ $message }}
@@ -41,7 +41,7 @@
                                                     class="form-control {{ $errors->first('amount2') ? 'is-invalid' : '' }}"
                                                     value="{{ old('amount2', !empty($amount2->amount) ? $amount2->amount : ($amount2->amount == 0 ? 0 : '')) }}"
                                                     name='amount2' id=""
-                                                    placeholder="{{ __('label.budget.business_class') }}">
+                                                    placeholder="{{ __('label.budget.business_class') }}" maxlength="20">
                                                 @error('amount2')
                                                     <div class="invalid-feedback">
                                                         {{ $message }}
@@ -63,7 +63,7 @@
                                                     class="form-control {{ $errors->first('amount3') ? 'is-invalid' : '' }}"
                                                     value="{{ old('amount3', !empty($amount3->amount) ? $amount3->amount : ($amount3->amount == 0 ? 0 : '')) }}"
                                                     name='amount3' id=""
-                                                    placeholder="{{ __('label.budget.economy_class') }}">
+                                                    placeholder="{{ __('label.budget.economy_class') }}" maxlength="20">
                                                 @error('amount3')
                                                     <div class="invalid-feedback">
                                                         {{ $message }}
@@ -79,7 +79,7 @@
                                                     class="form-control {{ $errors->first('amount4') ? 'is-invalid' : '' }}"
                                                     value="{{ old('amount4', !empty($amount4->amount) ? $amount4->amount : ($amount4->amount == 0 ? 0 : '')) }}"
                                                     name='amount4' id=""
-                                                    placeholder="{{ __('label.budget.business_class') }}">
+                                                    placeholder="{{ __('label.budget.business_class') }}" maxlength="20">
                                                 @error('amount4')
                                                     <div class="invalid-feedback">
                                                         {{ $message }}
@@ -105,7 +105,7 @@
                                                 <input type="text"
                                                     class="form-control {{ $errors->first('amount5') ? 'is-invalid' : '' }}"
                                                     value="{{ old('amount5', !empty($amount5->amount) ? $amount5->amount : ($amount5->amount == 0 ? 0 : '')) }}"
-                                                    name='amount5' id="" placeholder="{{ __('label.budget.not_po') }}">
+                                                    name='amount5' id="" placeholder="{{ __('label.budget.not_po') }}" maxlength="20">
                                                 @error('amount5')
                                                     <div class="invalid-feedback">
                                                         {{ $message }}
@@ -120,7 +120,7 @@
                                                 <input type="text"
                                                     class="form-control {{ $errors->first('amount6') ? 'is-invalid' : '' }}"
                                                     value="{{ old('amount6', !empty($amount6->amount) ? $amount6->amount : ($amount6->amount == 0 ? 0 : '')) }}"
-                                                    name='amount6' id="" placeholder="{{ __('label.budget.po') }}">
+                                                    name='amount6' id="" placeholder="{{ __('label.budget.po') }}" maxlength="20">
                                                 @error('amount6')
                                                     <div class="invalid-feedback">
                                                         {{ $message }}
@@ -141,7 +141,7 @@
                                                 <input type="text"
                                                     class="form-control {{ $errors->first('amount7') ? 'is-invalid' : '' }}"
                                                     value="{{ old('amount7', !empty($amount7->amount) ? $amount7->amount : ($amount7->amount == 0 ? 0 : '')) }}"
-                                                    name='amount7' id="" placeholder="{{ __('label.budget.not_po') }}">
+                                                    name='amount7' id="" placeholder="{{ __('label.budget.not_po') }}" maxlength="20">
                                                 @error('amount7')
                                                     <div class="invalid-feedback">
                                                         {{ $message }}
@@ -156,7 +156,7 @@
                                                 <input type="text"
                                                     class="form-control {{ $errors->first('amount8') ? 'is-invalid' : '' }}"
                                                     value="{{ old('amount8', !empty($amount8->amount) ? $amount8->amount : ($amount8->amount == 0 ? 0 : '')) }}"
-                                                    name='amount8' id="" placeholder="{{ __('label.budget.po') }}">
+                                                    name='amount8' id="" placeholder="{{ __('label.budget.po') }}" maxlength="20">
                                                 @error('amount8')
                                                     <div class="invalid-feedback">
                                                         {{ $message }}
