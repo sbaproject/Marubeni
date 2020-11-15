@@ -50,19 +50,18 @@ class CheckipController extends Controller
 
         $cooCode = $request->cookie('code');
 
-        if (!empty($cooCode)) {
+        if (Hash::check($data['code'], $cooCode)) {
 
-            if (Hash::check($data['code'], $cooCode)) {
+            $confirm = cookie('confirm', $cooCode, 180);
 
-                $confirm = cookie('confirm', $cooCode, 180);
-
-                if (Gate::allows('admin-gate')) {
-                    return redirect()->route('admin.dashboard', config('const.application.status.all'))->withCookie($confirm);
-                }
-                // for user
-                return redirect()->route('user.dashboard', config('const.application.status.all'))->withCookie($confirm);
+            if (Gate::allows('admin-gate')) {
+                return redirect()->route('admin.dashboard', config('const.application.status.all'))->withCookie($confirm);
             }
+            // for user
+            return redirect()->route('user.dashboard', config('const.application.status.all'))->withCookie($confirm);
+        } else {
+
+            return redirect()->route('checkip');
         }
-        return redirect()->route('checkip');
     }
 }

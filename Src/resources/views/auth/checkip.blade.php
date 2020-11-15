@@ -24,18 +24,16 @@
                 <div class="form-group btn-login">
                     <button type="submit" class="btn btn-danger btn-block pt-1 pb-1 mr-4 col-5 col-sm-2 col-md-4 col-lg-2">{{ __('Xác nhận') }}</button>
                     
-
-
-                                       
+                    <a  role="button" href="{{ route('logout') }}" class="btn btn-outline-dark pt-1 pb-1 col-5 col-sm-2 col-md-4 col-lg-2" onclick="event.preventDefault();
+                    document.getElementById('logout-form').submit();"><i
+                            class="nav-icon far fa-times-circle"
+                            style="margin-right: 5px"></i>
+                {{ __('label.button.cancel') }}
+                    </a>                         
                 </div> <!-- form-group// -->
                 
             </form>
-            <a  role="button" href="{{ route('logout') }}" class="btn btn-outline-dark pt-1 pb-1 col-5 col-sm-2 col-md-4 col-lg-2" onclick="event.preventDefault();
-            document.getElementById('logout-form').submit();"><i
-                    class="nav-icon far fa-times-circle"
-                    style="margin-right: 5px"></i>
-        {{ __('label.button.cancel') }}
-    </a>
+           
     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
         @csrf
     </form>
