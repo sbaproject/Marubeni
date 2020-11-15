@@ -24,7 +24,7 @@ class CheckipController extends Controller
             $hashnum = Hash::make($num);
 
             //Create Cookie
-            $code = cookie('code', $hashnum, 1);
+            $code = cookie('code', $hashnum, 10);
 
             //Save token to DB
             $users = Auth::user();

@@ -88,3 +88,20 @@ Nếu migrate db gặp lỗi này:
 ' 1071 Specified key was too long; max key length is 1000 bytes '
 thì vào config/database.php -> tìm đến 'engine' => null  và chuyển thành 'engine' => 'InnoDB'
 Link tham khảo: https://stackoverflow.com/questions/42244541/laravel-migration-error-syntax-error-or-access-violation-1071-specified-key-wa
+
+
+
+-------------------------------------------------------------------------------------------------
+--------------------------Chức năng Check IP khi Đăng nhập mạng ngoài----------------------------
+-------------------------------------------------------------------------------------------------
+1/Xem IP mạng nội bộ của mình truy cập: https://www.whatismyip.com/
+2/Cách cấu hình IP mạng nội bộ:
+Lấy IP ở Bước 1 gán vào file .evn như bên dưới! 
+## IP CHECK NETWORK EXTERNAL
+IP_INTERNAL = "171.252.155.152"
+
+CHỨC NĂNG CHI TIẾT:
+1/Khi truy cập từ mạng ngoài (IP khác với IP đã cấu hình ở trên) thì sẽ gửi mã xác nhận vào mail đăng nhập của User!
+2/User mở mail của mình và lấy mã xác nhận!
+3/Nhập mã xác nhận vào Form xác nhận sẽ có thể truy cập !
+Lưu ý: Mã xác nhận có hiệu lực 10 phút, phiên làm việc có hiệu lực 3h, sau đó muốn truy cập tiếp phải xác nhận lại !

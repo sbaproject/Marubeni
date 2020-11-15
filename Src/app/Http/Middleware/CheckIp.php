@@ -18,9 +18,7 @@ class CheckIp
      */
     public function handle(Request $request, Closure $next)
     {
-        //return $next($request);
-
-        if ($request->ip() == env('IP_CHECK_EXTERNAL')) {
+        if ($request->ip() == env('IP_INTERNAL')) {
 
             //Network -> INTERNAL
             return $next($request);
