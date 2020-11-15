@@ -65,10 +65,10 @@
                     {{-- Name --}}
                     <div class="form-group row">
                         <label for="name"
-                            class="col-lg-3 col-form-label text-center">{{ __('validation.attributes.name') }}</label>
+                            class="col-lg-3 col-form-label text-center">{{ __('validation.attributes.user.name') }}</label>
                         <div class="col-lg-9">
                             <input id="name" type="text" class="form-control @error('name') is-invalid @enderror"
-                                name="name" value="{{ $data['user']->name }}" placeholder="{{ __('validation.attributes.name') }}" autofocus autocomplete="off" >
+                                name="name" value="{{ $data['user']->name }}" placeholder="{{ __('validation.attributes.user.name') }}" autofocus autocomplete="off" >
                             @error('name')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>

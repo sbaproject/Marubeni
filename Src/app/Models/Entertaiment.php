@@ -19,4 +19,11 @@ class Entertaiment extends Model
 
     //  protected $table = 'entertaiments';
 
+    protected $appends = ['entertainment_infos'];
+
+    public function getEntertainmentInfosAttribute()
+    {
+        $infos = EntertainmentInfos::where('entertaiment_id', $this->id)->get();
+        return $infos->toArray();
+    }
 }

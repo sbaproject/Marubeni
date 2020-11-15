@@ -55,10 +55,10 @@
 					{{-- Name --}}
 					<div class="form-group row">
 						<label for="name"
-							class="col-lg-3 col-form-label text-center">{{ __('validation.attributes.name') }}</label>
+							class="col-lg-3 col-form-label text-center">{{ __('validation.attributes.user.name') }}</label>
 						<div class="col-lg-9">
 							<input id="name" type="text" class="form-control @error('name') is-invalid @enderror"
-								name="name" value="{{ old('name') }}" placeholder="{{ __('validation.attributes.name') }}" autocomplete="off" autofocus>
+								name="name" value="{{ old('name') }}" placeholder="{{ __('validation.attributes.user.name') }}" autocomplete="off" autofocus>
 							@error('name')
 							<span class="invalid-feedback" role="alert">
 								<strong>{{ $message }}</strong>

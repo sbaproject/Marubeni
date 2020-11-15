@@ -76,10 +76,10 @@
                                     <div class="form-group row">
                                         <label for="name"
                                             class="col-lg-3 col-form-label text-center font-weight-normal">
-                                            {{ __('validation.attributes.name') }}
+                                            {{ __('validation.attributes.user.name') }}
                                         </label>
                                         <div class="col-lg-9">
-                                            <input id="name" name="name" type="text" class="form-control" placeholder="{{ __('validation.attributes.name') }}"
+                                            <input id="name" name="name" type="text" class="form-control" placeholder="{{ __('validation.attributes.user.name') }}"
                                                 value="@isset($conditions['name']){{ $conditions['name'] }}@endisset">
                                         </div>
                                     </div>
@@ -121,7 +121,7 @@
                     <tr>
                         <th style="width: 100px">{{ __('label._no_') }}</th>
                         <th>{{ __('validation.attributes.department') }}</th>
-                        <th>{{ __('validation.attributes.name') }}</th>
+                        <th>{{ __('validation.attributes.user.name') }}</th>
                         <th style="width: 150px">{{ __('label.action') }}</th>
                     </tr>
                 </thead>

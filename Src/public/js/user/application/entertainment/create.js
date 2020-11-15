@@ -60,7 +60,7 @@ $(document).ready(function () {
 
         e.preventDefault();
 
-        var mainBlock = $('#transport_block');
+        var mainBlock = $('#infos_block');
         var copyElement = $('.copy').clone();
 
         copyElement.removeClass('copy');
@@ -79,14 +79,15 @@ $(document).ready(function () {
     });
 
     function doSettingElement() {
-        var transportElements = $('.card-itinerary-transport:not(.copy)');
-        transportElements.each(function (index) {
+        var infosElements = $('.card-company:not(.copy)');
+        infosElements.each(function (index) {
             // re-order index
-            $(this).find('.departure').attr('name', 'trans[' + index + '][departure]');
-            $(this).find('.arrive').attr('name', 'trans[' + index + '][arrive]');
-            $(this).find('.method').attr('name', 'trans[' + index + '][method]');
+            $(this).find('.cp_name').attr('name', 'infos[' + index + '][cp_name]');
+            $(this).find('.title').attr('name', 'infos[' + index + '][title]');
+            $(this).find('.name_attendants').attr('name', 'infos[' + index + '][name_attendants]');
+            $(this).find('.details_dutles').attr('name', 'infos[' + index + '][details_dutles]');
             // always keep at least one element
-            if (transportElements.length === 1 && index === 0) {
+            if (infosElements.length === 1 && index === 0) {
                 $(this).find('.d-delete').addClass('d-none');
             } else {
                 $(this).find('.d-delete').removeClass('d-none');

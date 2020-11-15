@@ -121,18 +121,32 @@ class EntertainmentController extends Controller
             if (isset($inputs['apply'])) {
                 $rules['entertainment_dt'] = 'required';
                 $rules['place'] = 'required';
-                $rules['during_trip'] = 'required';
-                $rules['check_row'] = 'required';
-                $rules['entertainment_times'] = 'required';
-                $rules['existence_projects'] = 'required';
-                $rules['includes_family'] = 'required';
+                $rules['during_trip'] = 'required_select';
+                $rules['check_row'] = 'required_select';
+                $rules['entertainment_times'] = 'required_select';
+                $rules['existence_projects'] = 'required_select';
+                $rules['includes_family'] = 'required_select';
                 $rules['entertainment_person'] = 'required|numeric';
                 $rules['est_amount'] = 'required|numeric';
+                $rules['infos.*.cp_name'] = 'required';
+                $rules['infos.*.title'] = 'required';
+                $rules['infos.*.name_attendants'] = 'required';
+                $rules['infos.*.details_dutles'] = 'required';
             }
             $customAttributes = [
-                'trans.*.departure' => __('label.business.departure'),
-                'trans.*.arrive' => __('label.business.arrival'),
-                'trans.*.method' => __('label.business.method'),
+                'entertainment_dt' => __('label.entertainment.entertainment_dt'),
+                'place' => __('label.entertainment.place'),
+                'during_trip' => __('label.entertainment.during_trip'),
+                'check_row' => __('label.entertainment.check_row'),
+                'entertainment_times' => __('label.entertainment.entertainment_times'),
+                'existence_projects' => __('label.entertainment.existence_projects'),
+                'includes_family' => __('label.entertainment.includes_family'),
+                'entertainment_person' => __('label.entertainment.entertainment_person'),
+                'est_amount' => __('label.entertainment.est_amount'),
+                'infos.*.cp_name' => __('label.entertainment.cp_name'),
+                'infos.*.title' => __('label.entertainment.title'),
+                'infos.*.name_attendants' => __('label.entertainment.name_attendants'),
+                'infos.*.details_dutles' => __('label.entertainment.details_dutles'),
             ];
             $validator = Validator::make($inputs, $rules, [], $customAttributes);
             if ($validator->fails()) {
@@ -183,10 +197,12 @@ class EntertainmentController extends Controller
                 'position' => $position,
             ])->first();
 
+            // not found available flow setting
             if (empty($budget)) {
                 throw new NotFoundFlowSettingException();
             }
 
+            // get budget comparation type
             if ($inputs['est_amount'] <= $budget->amount) {
                 $budgetTypeCompare = config('const.budget.budeget_type_compare.less_equal');
             } else {
@@ -223,6 +239,7 @@ class EntertainmentController extends Controller
                 ])
                 ->first();
 
+            // not found available flow setting
             if (empty($group)) {
                 throw new NotFoundFlowSettingException();
             }
@@ -296,24 +313,25 @@ class EntertainmentController extends Controller
                 $etId = DB::table('entertaiments')->insertGetId($etData);
             } else {
                 DB::table('entertaiments')->where('id', $entertainment->id)->update($etData);
-                // DB::table('transportations')->where('businesstrip_id', $entertainment->id)->delete();
+                DB::table('entertaiment_infos')->where('entertaiment_id', $entertainment->id)->delete();
             }
             // save transportations
             if (!isset($etId)) {
                 $etId = $entertainment->id;
             }
-            // $transportations = [];
-            // foreach ($inputs['trans'] as $value) {
-            //     $item['businesstrip_id'] = $etId;
-            //     $item['departure'] = $value['departure'];
-            //     $item['arrive'] = $value['arrive'];
-            //     $item['method'] = $value['method'];
-            //     $item['created_at'] = Carbon::now();
-            //     $item['updated_at'] = Carbon::now();
+            $entertaimentInfos = [];
+            foreach ($inputs['infos'] as $value) {
+                $item['entertaiment_id'] = $etId;
+                $item['cp_name'] = $value['cp_name'];
+                $item['title'] = $value['title'];
+                $item['name_attendants'] = $value['name_attendants'];
+                $item['details_dutles'] = $value['details_dutles'];
+                $item['created_at'] = Carbon::now();
+                $item['updated_at'] = Carbon::now();
 
-            //     $transportations[] = $item;
-            // }
-            // DB::table('transportations')->insert($transportations);
+                $entertaimentInfos[] = $item;
+            }
+            DB::table('entertaiment_infos')->insert($entertaimentInfos);
 
             DB::commit();
         } catch (Exception $ex) {

@@ -32,6 +32,7 @@
 @section('content')
 @php
 
+$infos                  = Session::has('inputs') ? Session::get('inputs')['infos']                  : (isset($model) ? $model->entertainmentinfos : null);
 $entertainment_dt       = Session::has('inputs') ? Session::get('inputs')['entertainment_dt']       : (isset($model) ? $model->entertainment_dt : null);
 $place                  = Session::has('inputs') ? Session::get('inputs')['place']                  : (isset($model) ? $model->place : null);
 $during_trip            = Session::has('inputs') ? Session::get('inputs')['during_trip']            : (isset($model) ? $model->during_trip : null);
@@ -74,7 +75,7 @@ $file_path              = Session::has('inputs') ? Session::get('inputs')['file_
                 <hr>
                 @endif
                 <div class="form-group row ">
-                    <label class="col-lg-2 col-form-label text-left">Date & Time</label>
+                    <label class="col-lg-2 col-form-label text-left">{{ __('label.entertainment.entertainment_dt') }}</label>
                     <div class="col-lg-4">
                         <div class="form-group">
                             <div id="datetime" data-target-input="nearest" class="input-group date">
@@ -98,7 +99,7 @@ $file_path              = Session::has('inputs') ? Session::get('inputs')['file_
                 </div>
                 <hr>
                 <div class="form-group row ">
-                    <label class="col-lg-2 col-form-label text-left">Place</label>
+                    <label class="col-lg-2 col-form-label text-left">{{ __('label.entertainment.place') }}</label>
                     <div class="col-lg-10">
                         <input type="text" name="place" class="form-control @error('place') is-invalid @enderror" value="{{ $place }}">
                         @error('place')
@@ -110,7 +111,7 @@ $file_path              = Session::has('inputs') ? Session::get('inputs')['file_
                 </div>
                 <hr>
                 <div class="form-group row ">
-                    <label class="col-lg-2 col-form-label text-left">During biz trip</label>
+                    <label class="col-lg-2 col-form-label text-left">{{ __('label.entertainment.during_trip') }}</label>
                     <div class="col-lg-10 text-lg-left text-left">
                         <fieldset class="@error('during_trip') form-control is-invalid @enderror">
                             @foreach (config('const.business.during_trip') as $key => $value)
@@ -130,44 +131,147 @@ $file_path              = Session::has('inputs') ? Session::get('inputs')['file_
                 <hr>
                 <div class="form-group row">
                     <label class="col-lg-2 col-form-label text-left d-flex align-items-left justify-content-left">
-                        Entrainment Infomation
+                        {{ __('label.entertainment.entrainment_infomation') }}
                     </label>
                     <div class="col-lg-10">
+                        <div id="infos_block">
+                            @if (!empty($infos))
+                            @foreach ($infos as $key => $value)
+                            <div class="card card-body card-company">
+                                <div class="d-delete d-flex justify-content-end @if(count($infos) === 1 && $key === 0) d-none @endif">
+                                    <button class="btnDelete btn btn-danger btn-sm pt-0 pb-0 pl-3 pr-3 mb-1">
+                                        {{ __('label.button.delete') }}
+                                    </button>
+                                </div>
+                                <div class="form-group row ">
+                                    <label class="col-lg-2 col-form-label com_title text-left">{{ __('label.entertainment.cp_name') }}</label>
+                                    <div class="col-lg-10">
+                                        <input type="text" class="form-control cp_name @error('infos.'.$key.'.cp_name') is-invalid @enderror"
+                                            name="infos[{{ $key }}][cp_name]" autocomplete="off"
+                                            value="{{ $infos[$key]['cp_name'] }}">
+                                        @error('infos.'.$key.'.cp_name')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="form-group row ">
+                                    <label class="col-lg-2 col-form-label com_title text-left">{{ __('label.entertainment.title') }}</label>
+                                    <div class="col-lg-10">
+                                        <input type="text" class="form-control title @error('infos.'.$key.'.title') is-invalid @enderror"
+                                            name="infos[{{ $key }}][title]" autocomplete="off"
+                                            value="{{ $infos[$key]['title'] }}">
+                                        @error('infos.'.$key.'.title')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="form-group row ">
+                                    <label class="col-lg-2 col-form-label com_title text-left">{{ __('label.entertainment.name_attendants') }}</label>
+                                    <div class="col-lg-10">
+                                        <input type="text" class="form-control name_attendants @error('infos.'.$key.'.name_attendants') is-invalid @enderror"
+                                            name="infos[{{ $key }}][name_attendants]" autocomplete="off"
+                                            value="{{ $infos[$key]['name_attendants'] }}">
+                                        @error('infos.'.$key.'.name_attendants')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="form-group row ">
+                                    <label class="col-lg-2 col-form-label com_title text-left">{{ __('label.entertainment.details_dutles') }}</label>
+                                    <div class="col-lg-10">
+                                        <input type="text" class="form-control details_dutles @error('infos.'.$key.'.details_dutles') is-invalid @enderror"
+                                            name="infos[{{ $key }}][details_dutles]" autocomplete="off"
+                                            value="{{ $infos[$key]['details_dutles'] }}">
+                                        @error('infos.'.$key.'.details_dutles')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                            @endforeach
+                            @else
+                            <div class="card card-body card-company">
+                                <div class="d-delete d-flex justify-content-end d-none">
+                                    <button class="btnDelete btn btn-danger btn-sm pt-0 pb-0 pl-3 pr-3 mb-1">
+                                        {{ __('label.button.delete') }}
+                                    </button>
+                                </div>
+                                <div class="form-group row ">
+                                    <label class="col-lg-2 col-form-label com_title text-left">{{ __('label.entertainment.cp_name') }}</label>
+                                    <div class="col-lg-10">
+                                        <input type="text" class="form-control cp_name" name="infos[0][cp_name]" autocomplete="off">
+                                    </div>
+                                </div>
+                                <div class="form-group row ">
+                                    <label class="col-lg-2 col-form-label com_title text-left">{{ __('label.entertainment.title') }}</label>
+                                    <div class="col-lg-10">
+                                        <input type="text" class="form-control title" name="infos[0][title]" autocomplete="off">
+                                    </div>
+                                </div>
+                                <div class="form-group row ">
+                                    <label class="col-lg-2 col-form-label com_title text-left">{{ __('label.entertainment.name_attendants') }}</label>
+                                    <div class="col-lg-10">
+                                        <input type="text" class="form-control name_attendants" name="infos[0][name_attendants]" autocomplete="off">
+                                    </div>
+                                </div>
+                                <div class="form-group row ">
+                                    <label class="col-lg-2 col-form-label com_title text-left">{{ __('label.entertainment.details_dutles') }}</label>
+                                    <div class="col-lg-10">
+                                        <input type="text" class="form-control details_dutles" name="infos[0][details_dutles]" autocomplete="off">
+                                    </div>
+                                </div>
+                            </div>
+                            @endif
+                        </div>
                         <!-- form chil -->
-                        <div class="card card-body card-company">
+                        <div class="card card-body card-company copy d-none">
+                            <div class="d-delete d-flex justify-content-end">
+                                <button class="btnDelete btn btn-danger btn-sm pt-0 pb-0 pl-3 pr-3 mb-1">
+                                    {{ __('label.button.delete') }}
+                                </button>
+                            </div>
                             <div class="form-group row ">
-                                <label class="col-lg-2 col-form-label com_title text-left">Company Name</label>
-                                <div class="col-lg-10"><input type="text" class="form-control">
+                                <label class="col-lg-2 col-form-label com_title text-left">{{ __('label.entertainment.cp_name') }}</label>
+                                <div class="col-lg-10">
+                                    <input type="text" class="form-control cp_name" autocomplete="off">
                                 </div>
                             </div>
                             <div class="form-group row ">
-                                <label class="col-lg-2 col-form-label com_title text-left">Title</label>
-                                <div class="col-lg-10"><input type="text" class="form-control">
+                                <label class="col-lg-2 col-form-label com_title text-left">{{ __('label.entertainment.title') }}</label>
+                                <div class="col-lg-10">
+                                    <input type="text" class="form-control title" autocomplete="off">
                                 </div>
                             </div>
                             <div class="form-group row ">
-                                <label class="col-lg-2 col-form-label com_title text-left">Name of Attendants</label>
-                                <div class="col-lg-10"><input type="text" class="form-control">
+                                <label class="col-lg-2 col-form-label com_title text-left">{{ __('label.entertainment.name_attendants') }}</label>
+                                <div class="col-lg-10">
+                                    <input type="text" class="form-control name_attendants" autocomplete="off">
                                 </div>
                             </div>
                             <div class="form-group row ">
-                                <label class="col-lg-2 col-form-label com_title text-left">Details of dutles</label>
-                                <div class="col-lg-10"><input type="text" class="form-control">
+                                <label class="col-lg-2 col-form-label com_title text-left">{{ __('label.entertainment.details_dutles') }}</label>
+                                <div class="col-lg-10">
+                                    <input type="text" class="form-control details_dutles" autocomplete="off">
                                 </div>
                             </div>
                         </div>
-                        <div class="text-lg-left text-left">
-                            <a class="btn btn-outline-dark" role="button" href="#">
-                                + Add
-                            </a>
-                        </div>
+                        <button id="btnAdd" class="btn btn-outline-dark">+ {{ __('label.button.addnew') }}</button>
                         <!-- ./form chil -->
                     </div>
                 </div>
                 <hr>
                 <div class="form-group row ">
                     <label class="col-lg-2 col-form-label text-left">
-                        Confirmation of Compliance with Laws</label>
+                        {{ __('label.entertainment.check_row') }}
+                    </label>
                     <div class="col-lg-10 text-lg-left text-left">
                         <fieldset class="@error('check_row') form-control is-invalid @enderror">
                             @foreach (config('const.business.check_row') as $key => $value)
@@ -187,7 +291,7 @@ $file_path              = Session::has('inputs') ? Session::get('inputs')['file_
                 <hr>
                 <div class="form-group row">
                     <label class="col-lg-2 col-form-label text-left">
-                        No. of Entertainment for past 1 year
+                        {{ __('label.entertainment.entertainment_times') }}
                     </label>
                     <div class="col-lg-10 text-lg-left text-left">
                         <fieldset class="@error('entertainment_times') form-control is-invalid @enderror">
@@ -208,7 +312,7 @@ $file_path              = Session::has('inputs') ? Session::get('inputs')['file_
                 <hr>
                 <div class="form-group row ">
                     <label class="col-lg-2 col-form-label text-left">
-                        Existence of projects
+                        {{ __('label.entertainment.existence_projects') }}
                     </label>
                     <div class="col-lg-10 text-lg-left text-left">
                         <fieldset class="@error('existence_projects') form-control is-invalid @enderror">
@@ -230,7 +334,8 @@ $file_path              = Session::has('inputs') ? Session::get('inputs')['file_
                 <hr>
                 <div class="form-group row ">
                     <label class="col-lg-2 col-form-label text-left">
-                        Includes its Family/Friend</label>
+                        {{ __('label.entertainment.includes_family') }}
+                    </label>
                     <div class="col-lg-10 text-lg-left text-left">
                         <fieldset class="@error('includes_family') form-control is-invalid @enderror">
                             @foreach (config('const.business.includes_family') as $key => $value)
@@ -251,9 +356,9 @@ $file_path              = Session::has('inputs') ? Session::get('inputs')['file_
                 <hr>
                 <div class="form-group row">
                     <label class="col-lg-2 col-form-label text-left">
-                        Project Name</br>
+                        {{ __('label.entertainment.project_name') }}</br>
                         <i class="fa fa-asterisk" aria-hidden="true" style="font-size: small;color: #df2333f1;"></i>
-                        <label style="color: #df2333f1;">If need</label>
+                        <label style="color: #df2333f1;">{{ __('label.entertainment.if_need') }}</label>
                     </label>
                     <div class="col-lg-10">
                         <textarea id="project_name" name="project_name" class="form-control" rows="2">{{ $project_name }}</textarea>
@@ -262,7 +367,7 @@ $file_path              = Session::has('inputs') ? Session::get('inputs')['file_
                 <hr>
                 <div class="form-group row ">
                     <label class="col-lg-2 col-form-label text-left d-flex align-items-left justify-content-left">
-                        Reason for the Entertainment
+                        {{ __('label.entertainment.entertainment_reason') }}
                     </label>
                     <div class="col-lg-10">
                         <textarea id="entertainment_reason" name="entertainment_reason" class="form-control" rows="5">{{ $entertainment_reason }}</textarea>
@@ -271,7 +376,7 @@ $file_path              = Session::has('inputs') ? Session::get('inputs')['file_
                 <hr>
                 <div class="form-group row ">
                     <label class="col-lg-2 col-form-label text-left">
-                        Total Number of Person
+                        {{ __('label.entertainment.entertainment_person') }}
                     </label>
                     <div class="col-lg-10">
                         <div class="form-group row ">
@@ -279,7 +384,7 @@ $file_path              = Session::has('inputs') ? Session::get('inputs')['file_
                                 <input type="number" name="entertainment_person" class="form-control @error('entertainment_person') is-invalid @enderror"
                                     value="{{ $entertainment_person }}">
                             </div>
-                            <label class="col-lg-8 col-form-label com_title text-lg-left text-left">Persons</label>
+                            <label class="col-lg-8 col-form-label com_title text-lg-left text-left">{{ __('label.entertainment.persons') }}</label>
                         </div>
                         @error('entertainment_person')
                         <span class="invalid-feedback" role="alert">
@@ -290,7 +395,7 @@ $file_path              = Session::has('inputs') ? Session::get('inputs')['file_
                 </div>
                 <hr>
                 <div class="form-group row ">
-                    <label class="col-lg-2 col-form-label text-left">Estimated Amount</label>
+                    <label class="col-lg-2 col-form-label text-left">{{ __('label.entertainment.est_amount') }}</label>
                     <div class="col-lg-10 text-lg-left text-left">
                         <div class="form-group row ">
                             <div class="col-lg-4">
@@ -298,7 +403,7 @@ $file_path              = Session::has('inputs') ? Session::get('inputs')['file_
                                     value="{{ $est_amount }}">
                             </div>
                             <label class="col-lg-8 col-form-label com_title text-lg-left text-left">
-                                Per Person(Excluding VND)
+                                {{ __('label.entertainment.per_person_excluding_vnd') }}
                             </label>
                         </div>
                         @error('est_amount')
@@ -312,7 +417,7 @@ $file_path              = Session::has('inputs') ? Session::get('inputs')['file_
                 <div class="form-group row ">
                     <label
                         class="col-lg-2 col-form-label text-left text-danger d-flex align-items-left justify-content-left">
-                        Describe if the amount per person exceeds 4mil VND (PO:2mil VND)
+                        {{ __('label.entertainment.reason_budget_over') }}
                     </label>
                     <div class="col-lg-10">
                         <textarea id="reason_budget_over" name="reason_budget_over" class="form-control" rows="3">{{ $reason_budget_over }}</textarea>

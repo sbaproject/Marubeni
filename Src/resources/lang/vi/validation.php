@@ -162,7 +162,9 @@ return [
         'new_password' => 'Mật khẩu mới',
         'confirm_new_password' => 'Xác nhận mật khẩu mới',
         'email' => 'E-Mail',
-        'name' => 'Tên',
+        'user' => [
+            'name' => 'Tên',
+        ],
         'location' => 'Chi nhánh',
         'department' => 'Phòng ban',
         'role' => 'Vai trò',

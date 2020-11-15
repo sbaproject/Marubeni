@@ -142,6 +142,27 @@ return [
      */
     'entertainment' => [
         'application_no' => 'Application No',
+
+        'entertainment_dt' => 'Date & Time',
+        'place' => 'Place',
+        'during_trip' => 'During biz trip',
+        'check_row' => 'Confirmation of Compliance with Laws',
+        'entertainment_times' => 'No. of Entertainment for past 1 year',
+        'existence_projects' => 'Existence of projects',
+        'includes_family' => 'Includes its Family/Friend',
+        'project_name' => 'Project Name',
+        'entertainment_reason' => 'Reason for the Entertainment',
+        'entertainment_person' => 'Total Number of Person',
+        'est_amount' => 'Estimated Amount',
+        'reason_budget_over' => 'Describe if the amount per person exceeds 4mil VND (PO:2mil VND)',
+        'cp_name' => 'Company Name',
+        'title' => 'Title',
+        'name_attendants' => 'Name of Attendants',
+        'details_dutles' => 'Details of dutles',
+        'if_need' => 'If need',
+        'persons' => 'Persons',
+        'per_person_excluding_vnd' => 'Per Person(Excluding VND)',
+        'entrainment_infomation' => 'Entrainment Infomation',
     ],
     //Type Application
     'application_list' => 'Application List',

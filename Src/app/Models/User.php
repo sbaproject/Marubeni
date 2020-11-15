@@ -94,7 +94,7 @@ class User extends Authenticatable
      */
     public static function makeValidator($inputs, $user = null, $compactData = null, $isIgnoreUniqueEmail = false)
     {
-        if($compactData === null){
+        if ($compactData === null) {
             $compactData = static::getCompactData($user);
         }
 
@@ -109,6 +109,10 @@ class User extends Authenticatable
             $ruleMail[] = 'unique:users';
         }
 
+        $customAttributes = [
+            'name' => __('validation.attributes.user.name')
+        ];
+
         // make validator
         $validator = Validator::make($inputs, [
             'location' => ['required_select', Rule::in($compactData['locations'])],
@@ -118,7 +122,7 @@ class User extends Authenticatable
             'email' => $ruleMail,
             'phone' => 'nullable|phone_number',
             'approval' => ['required_select', Rule::in($compactData['approvals'])],
-        ]);
+        ], [], $customAttributes);
 
         return $validator;
     }
