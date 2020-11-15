@@ -44,7 +44,7 @@ body{
 	font-weight: 600;
 	color:#000;
 	margin-left: 5px;
-	margin-right: 10px;
+	margin-right: 20px;
 }
 .tab-locale {
 	background-color: #C0C0C0;
@@ -298,4 +298,13 @@ select.form-control.is-invalid, .was-validated .form-control:invalid {
 }
 .card-list-items {
     overflow-x: auto;
+}
+
+@media screen and (max-width: 575px) {
+    .col-xs-5ths {
+        width: 100% !important;
+    }
+    .input-group {
+        width: auto !important;
+    }
 }
