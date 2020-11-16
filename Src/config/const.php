@@ -129,7 +129,7 @@ return [
 			'yes' => 1,
 			'no' => 0,
 		],
-		'entertainment_times' => [
+		'has_et_times' => [
 			'yes' => 1,
 			'no' => 0,
 		],

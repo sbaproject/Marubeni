@@ -27,6 +27,7 @@ class DatabaseSeeder extends Seeder
             LeaveSeeder::class,
             FlowSeeder::class,
             StepSeeder::class,
+            CompanySeeder::class,
         ]);
     }
 }

@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Application\Entertainment;
 
-use App\Exceptions\Entertainment\NotFoundFlowSettingException;
 use PDF;
 use Exception;
 use Carbon\Carbon;
 use App\Libs\Common;
 use App\Models\Budget;
+use App\Models\Company;
 use App\Models\Application;
+use Illuminate\Support\Arr;
 use App\Models\Entertaiment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -16,6 +17,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use App\Exceptions\Entertainment\NotFoundFlowSettingException;
 
 class EntertainmentController extends Controller
 {
@@ -25,7 +27,11 @@ class EntertainmentController extends Controller
 
     public function create()
     {
-        return view('application.entertainment.input');
+        // get companies
+        $companies = Company::all('name');
+        $companies = Arr::pluck($companies->toArray(),'name');
+
+        return view('application.entertainment.input', compact('companies'));
     }
 
     public function store(Request $request)
@@ -70,7 +76,11 @@ class EntertainmentController extends Controller
         // get business application
         $model = Entertaiment::where('application_id', $id)->first();
 
-        return view('application.entertainment.input', compact('application', 'model', 'id'));
+        // get companies
+        $companies = Company::all('name');
+        $companies = Arr::pluck($companies->toArray(), 'name');
+
+        return view('application.entertainment.input', compact('application', 'model', 'id', 'companies'));
     }
 
     public function update(Request $request, $id)
@@ -119,34 +129,39 @@ class EntertainmentController extends Controller
                 $rules['input_file'] = 'mimes:txt,pdf,jpg,jpeg,png|max:200';
             }
             if (isset($inputs['apply'])) {
-                $rules['entertainment_dt'] = 'required';
-                $rules['place'] = 'required';
-                $rules['during_trip'] = 'required_select';
-                $rules['check_row'] = 'required_select';
-                $rules['entertainment_times'] = 'required_select';
-                $rules['existence_projects'] = 'required_select';
-                $rules['includes_family'] = 'required_select';
-                $rules['entertainment_person'] = 'required|numeric';
-                $rules['est_amount'] = 'required|numeric';
-                $rules['infos.*.cp_name'] = 'required';
-                $rules['infos.*.title'] = 'required';
-                $rules['infos.*.name_attendants'] = 'required';
-                $rules['infos.*.details_dutles'] = 'required';
+                $rules['entertainment_dt']          = 'required';
+                $rules['place']                     = 'required';
+                $rules['during_trip']               = 'required_select';
+                $rules['check_row']                 = 'required_select';
+                $rules['has_entertainment_times']   = 'required_select';
+                $rules['existence_projects']        = 'required_select';
+                $rules['includes_family']           = 'required_select';
+                $rules['entertainment_person']      = 'required|numeric';
+                $rules['est_amount']                = 'required|numeric';
+                $rules['infos.*.cp_name']           = 'required';
+                $rules['infos.*.title']             = 'required';
+                $rules['infos.*.name_attendants']   = 'required';
+                $rules['infos.*.details_dutles']    = 'required';
+
+                if($inputs['has_entertainment_times'] == true){
+                    $rules['entertainment_times'] = 'required|numeric';
+                }
             }
             $customAttributes = [
-                'entertainment_dt' => __('label.entertainment.entertainment_dt'),
-                'place' => __('label.entertainment.place'),
-                'during_trip' => __('label.entertainment.during_trip'),
-                'check_row' => __('label.entertainment.check_row'),
-                'entertainment_times' => __('label.entertainment.entertainment_times'),
-                'existence_projects' => __('label.entertainment.existence_projects'),
-                'includes_family' => __('label.entertainment.includes_family'),
-                'entertainment_person' => __('label.entertainment.entertainment_person'),
-                'est_amount' => __('label.entertainment.est_amount'),
-                'infos.*.cp_name' => __('label.entertainment.cp_name'),
-                'infos.*.title' => __('label.entertainment.title'),
-                'infos.*.name_attendants' => __('label.entertainment.name_attendants'),
-                'infos.*.details_dutles' => __('label.entertainment.details_dutles'),
+                'entertainment_dt'          => __('label.entertainment.entertainment_dt'),
+                'place'                     => __('label.entertainment.place'),
+                'during_trip'               => __('label.entertainment.during_trip'),
+                'check_row'                 => __('label.entertainment.check_row'),
+                'has_entertainment_times'   => __('label.entertainment.entertainment_times'),
+                'entertainment_times'       => __('label.entertainment.entertainment_times'),
+                'existence_projects'        => __('label.entertainment.existence_projects'),
+                'includes_family'           => __('label.entertainment.includes_family'),
+                'entertainment_person'      => __('label.entertainment.entertainment_person'),
+                'est_amount'                => __('label.entertainment.est_amount'),
+                'infos.*.cp_name'           => __('label.entertainment.cp_name'),
+                'infos.*.title'             => __('label.entertainment.title'),
+                'infos.*.name_attendants'   => __('label.entertainment.name_attendants'),
+                'infos.*.details_dutles'    => __('label.entertainment.details_dutles'),
             ];
             $validator = Validator::make($inputs, $rules, [], $customAttributes);
             if ($validator->fails()) {
@@ -285,21 +300,22 @@ class EntertainmentController extends Controller
 
             // prepare entertainment data
             $etData = [
-                'entertainment_dt'      => $inputs['entertainment_dt'],
-                'place'                 => $inputs['place'],
-                'during_trip'           => $inputs['during_trip'],
-                'check_row'             => $inputs['check_row'],
-                'entertainment_times'   => $inputs['entertainment_times'],
-                'existence_projects'    => $inputs['existence_projects'],
-                'includes_family'       => $inputs['includes_family'],
-                'project_name'          => $inputs['project_name'],
-                'entertainment_reason'  => $inputs['entertainment_reason'],
-                'entertainment_person'  => $inputs['entertainment_person'],
-                'est_amount'            => $inputs['est_amount'],
-                'reason_budget_over'    => $inputs['reason_budget_over'],
-                'file_path'             => isset($filePath) ? $filePath : null,
-                'updated_by'            => $user->id,
-                'updated_at'            => Carbon::now(),
+                'entertainment_dt'          => $inputs['entertainment_dt'],
+                'place'                     => $inputs['place'],
+                'during_trip'               => $inputs['during_trip'],
+                'check_row'                 => $inputs['check_row'],
+                'has_entertainment_times'   => $inputs['has_entertainment_times'],
+                'entertainment_times'       => $inputs['entertainment_times'],
+                'existence_projects'        => $inputs['existence_projects'],
+                'includes_family'           => $inputs['includes_family'],
+                'project_name'              => $inputs['project_name'],
+                'entertainment_reason'      => $inputs['entertainment_reason'],
+                'entertainment_person'      => $inputs['entertainment_person'],
+                'est_amount'                => $inputs['est_amount'],
+                'reason_budget_over'        => $inputs['reason_budget_over'],
+                'file_path'                 => isset($filePath) ? $filePath : null,
+                'updated_by'                => $user->id,
+                'updated_at'                => Carbon::now(),
             ];
             // for new
             if (!$request->id) {
@@ -321,13 +337,13 @@ class EntertainmentController extends Controller
             }
             $entertaimentInfos = [];
             foreach ($inputs['infos'] as $value) {
-                $item['entertaiment_id'] = $etId;
-                $item['cp_name'] = $value['cp_name'];
-                $item['title'] = $value['title'];
-                $item['name_attendants'] = $value['name_attendants'];
-                $item['details_dutles'] = $value['details_dutles'];
-                $item['created_at'] = Carbon::now();
-                $item['updated_at'] = Carbon::now();
+                $item['entertaiment_id']    = $etId;
+                $item['cp_name']            = $value['cp_name'];
+                $item['title']              = $value['title'];
+                $item['name_attendants']    = $value['name_attendants'];
+                $item['details_dutles']     = $value['details_dutles'];
+                $item['created_at']         = Carbon::now();
+                $item['updated_at']         = Carbon::now();
 
                 $entertaimentInfos[] = $item;
             }
@@ -340,7 +356,7 @@ class EntertainmentController extends Controller
             if ($ex instanceof NotFoundFlowSettingException) {
                 $msgErr = $ex->getMessage();
             } else {
-                $msgErr = __('msg.save_fail');
+                $msgErr = $ex->getMessage();
             }
         }
 
@@ -357,8 +373,8 @@ class EntertainmentController extends Controller
         if (!isset($inputs['check_row'])) {
             $inputs['check_row'] = null;
         }
-        if (!isset($inputs['entertainment_times'])) {
-            $inputs['entertainment_times'] = null;
+        if (!isset($inputs['has_entertainment_times'])) {
+            $inputs['has_entertainment_times'] = null;
         }
         if (!isset($inputs['existence_projects'])) {
             $inputs['existence_projects'] = null;
@@ -383,13 +399,13 @@ class EntertainmentController extends Controller
     public function pdf($request, $inputs, $mApplication = null)
     {
         // get logged user
-        // $user = Auth::user();
+        $user = Auth::user();
 
         // PDF::setOptions(['defaultFont' => 'Roboto-Black']);
-        // $pdf = PDF::loadView('application.business.pdf', compact('user', 'inputs'));
+        $pdf = PDF::loadView('application.entertainment.pdf', compact('user', 'inputs'));
 
         // preview pdf
-        // return $pdf->stream('Business_Application.pdf');
+        return $pdf->stream('Business_Application.pdf');
         // download
         // return $pdf->download('Leave_Application.pdf');
     }

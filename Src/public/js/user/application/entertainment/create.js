@@ -52,10 +52,64 @@ $(document).ready(function () {
     });
 
     //=======================================
-    // Itinerary & Transportation Block
+    // Entertainment Times
     //=======================================
+    $('input[type=radio][name="has_entertainment_times"]').on('change', function () {
+        if ($(this).val() == true) {
+            $('#entertainment_times').removeClass('d-none');
+        } else {
+            $('#entertainment_times').addClass('d-none');
+            $('input[type=number][name="entertainment_times"]').val('');
+        }
+    });
+    console.log(companies);
+    //=======================================
+    // Auto complete (typehead.js)
+    //=======================================
+    var substringMatcher = function (strs) {
+        return function findMatches(q, cb) {
+            var matches, substringRegex;
 
-    // add new transportation element
+            // an array that will be populated with substring matches
+            matches = [];
+
+            // regex used to determine if a string contains the substring `q`
+            substrRegex = new RegExp(q, 'i');
+
+            // iterate through the pool of strings and for any string that
+            // contains the substring `q`, add it to the `matches` array
+            $.each(strs, function (i, str) {
+                if (substrRegex.test(str)) {
+                    matches.push(str);
+                }
+            });
+
+            cb(matches);
+        };
+    };
+    function applyAutoComplete(selector) {
+        selector.typeahead(
+            {
+                hint: false,
+                highlight: true,
+                minLength: 1,
+            },
+            {
+                limit: 999,
+                source: substringMatcher(companies)
+            },
+        );
+    }
+
+    //=======================================
+    // Form load
+    //=======================================
+    applyAutoComplete($('.cp_name'));
+
+    //=======================================
+    // Entertainment Infos Block
+    //=======================================
+    // add new entertainment info element
     $('#btnAdd').on('click', function (e) {
 
         e.preventDefault();
@@ -65,6 +119,8 @@ $(document).ready(function () {
 
         copyElement.removeClass('copy');
         copyElement.removeClass('d-none');
+
+        applyAutoComplete(copyElement.find('.cp_name'));
 
         mainBlock.append(copyElement);
 

@@ -18,6 +18,8 @@
         margin-right: 20px;
     }
 </style>
+{{-- typehead css --}}
+<link rel="stylesheet" href="css/typehead/typehead.css">
 @endsection
 
 @section('js')
@@ -25,27 +27,35 @@
 <script src="js/moment/moment.min.js"></script>
 <script src="js/moment/locale/{{ config('app.locale') }}.js"></script>
 <script src="js/bootstrap-datetimepicker.js"></script>
+{{-- typehead js --}}
+<script src="js/typehead/typeahead.bundle.min.js"></script>
 {{-- for this view --}}
 <script src="js/user/application/entertainment/create.js"></script>
+
+<script>
+    // list of name companies
+    var companies = @json($companies);
+</script>
 @endsection
 
 @section('content')
 @php
 
-$infos                  = Session::has('inputs') ? Session::get('inputs')['infos']                  : (isset($model) ? $model->entertainmentinfos : null);
-$entertainment_dt       = Session::has('inputs') ? Session::get('inputs')['entertainment_dt']       : (isset($model) ? $model->entertainment_dt : null);
-$place                  = Session::has('inputs') ? Session::get('inputs')['place']                  : (isset($model) ? $model->place : null);
-$during_trip            = Session::has('inputs') ? Session::get('inputs')['during_trip']            : (isset($model) ? $model->during_trip : null);
-$check_row              = Session::has('inputs') ? Session::get('inputs')['check_row']              : (isset($model) ? $model->check_row : null);
-$entertainment_times    = Session::has('inputs') ? Session::get('inputs')['entertainment_times']    : (isset($model) ? $model->entertainment_times : null);
-$existence_projects     = Session::has('inputs') ? Session::get('inputs')['existence_projects']     : (isset($model) ? $model->existence_projects : null);
-$includes_family        = Session::has('inputs') ? Session::get('inputs')['includes_family']        : (isset($model) ? $model->includes_family : null);
-$project_name           = Session::has('inputs') ? Session::get('inputs')['project_name']           : (isset($model) ? $model->project_name : null);
-$entertainment_reason   = Session::has('inputs') ? Session::get('inputs')['entertainment_reason']   : (isset($model) ? $model->entertainment_reason : null);
-$entertainment_person   = Session::has('inputs') ? Session::get('inputs')['entertainment_person']   : (isset($model) ? $model->entertainment_person : null);
-$est_amount             = Session::has('inputs') ? Session::get('inputs')['est_amount']             : (isset($model) ? $model->est_amount : null);
-$reason_budget_over     = Session::has('inputs') ? Session::get('inputs')['reason_budget_over']     : (isset($model) ? $model->reason_budget_over : null);
-$file_path              = Session::has('inputs') ? Session::get('inputs')['file_path']              : (isset($model) ? $model->file_path : null);
+$infos                  = Session::has('inputs') ? Session::get('inputs')['infos']                      : (isset($model) ? $model->entertainmentinfos : null);
+$entertainment_dt       = Session::has('inputs') ? Session::get('inputs')['entertainment_dt']           : (isset($model) ? $model->entertainment_dt : null);
+$place                  = Session::has('inputs') ? Session::get('inputs')['place']                      : (isset($model) ? $model->place : null);
+$during_trip            = Session::has('inputs') ? Session::get('inputs')['during_trip']                : (isset($model) ? $model->during_trip : null);
+$check_row              = Session::has('inputs') ? Session::get('inputs')['check_row']                  : (isset($model) ? $model->check_row : null);
+$has_et_times           = Session::has('inputs') ? Session::get('inputs')['has_entertainment_times']    : (isset($model) ? $model->has_entertainment_times : null);
+$et_times               = Session::has('inputs') ? Session::get('inputs')['entertainment_times']        : (isset($model) ? $model->entertainment_times : null);
+$existence_projects     = Session::has('inputs') ? Session::get('inputs')['existence_projects']         : (isset($model) ? $model->existence_projects : null);
+$includes_family        = Session::has('inputs') ? Session::get('inputs')['includes_family']            : (isset($model) ? $model->includes_family : null);
+$project_name           = Session::has('inputs') ? Session::get('inputs')['project_name']               : (isset($model) ? $model->project_name : null);
+$entertainment_reason   = Session::has('inputs') ? Session::get('inputs')['entertainment_reason']       : (isset($model) ? $model->entertainment_reason : null);
+$entertainment_person   = Session::has('inputs') ? Session::get('inputs')['entertainment_person']       : (isset($model) ? $model->entertainment_person : null);
+$est_amount             = Session::has('inputs') ? Session::get('inputs')['est_amount']                 : (isset($model) ? $model->est_amount : null);
+$reason_budget_over     = Session::has('inputs') ? Session::get('inputs')['reason_budget_over']         : (isset($model) ? $model->reason_budget_over : null);
+$file_path              = Session::has('inputs') ? Session::get('inputs')['file_path']                  : (isset($model) ? $model->file_path : null);
 
 @endphp
 <section class="content">
@@ -146,9 +156,10 @@ $file_path              = Session::has('inputs') ? Session::get('inputs')['file_
                                 <div class="form-group row ">
                                     <label class="col-lg-2 col-form-label com_title text-left">{{ __('label.entertainment.cp_name') }}</label>
                                     <div class="col-lg-10">
-                                        <input type="text" class="form-control cp_name @error('infos.'.$key.'.cp_name') is-invalid @enderror"
-                                            name="infos[{{ $key }}][cp_name]" autocomplete="off"
-                                            value="{{ $infos[$key]['cp_name'] }}">
+                                        <div id="scrollable-dropdown-menu">
+                                            <input type="text" class="form-control cp_name @error('infos.'.$key.'.cp_name') is-invalid @enderror"
+                                                name="infos[{{ $key }}][cp_name]" autocomplete="off" value="{{ $infos[$key]['cp_name'] }}">
+                                        </div>
                                         @error('infos.'.$key.'.cp_name')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -207,7 +218,9 @@ $file_path              = Session::has('inputs') ? Session::get('inputs')['file_
                                 <div class="form-group row ">
                                     <label class="col-lg-2 col-form-label com_title text-left">{{ __('label.entertainment.cp_name') }}</label>
                                     <div class="col-lg-10">
-                                        <input type="text" class="form-control cp_name" name="infos[0][cp_name]" autocomplete="off">
+                                        <div id="scrollable-dropdown-menu">
+                                            <input type="text" class="form-control cp_name" name="infos[0][cp_name]" autocomplete="off">
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group row ">
@@ -241,7 +254,9 @@ $file_path              = Session::has('inputs') ? Session::get('inputs')['file_
                             <div class="form-group row ">
                                 <label class="col-lg-2 col-form-label com_title text-left">{{ __('label.entertainment.cp_name') }}</label>
                                 <div class="col-lg-10">
-                                    <input type="text" class="form-control cp_name" autocomplete="off">
+                                    <div id="scrollable-dropdown-menu">
+                                        <input type="text" class="form-control cp_name" autocomplete="off">
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group row ">
@@ -294,23 +309,33 @@ $file_path              = Session::has('inputs') ? Session::get('inputs')['file_
                         {{ __('label.entertainment.entertainment_times') }}
                     </label>
                     <div class="col-lg-10 text-lg-left text-left">
-                        <fieldset class="@error('entertainment_times') form-control is-invalid @enderror">
-                            @foreach (config('const.business.entertainment_times') as $key => $value)
+                        <fieldset class="@error('has_entertainment_times') form-control is-invalid @enderror">
+                            @foreach (config('const.business.has_et_times') as $key => $value)
                             <label class="radio-inline com_title col-form-label">
-                                <input type="radio" name="entertainment_times" value="{{ $value }}" @if($entertainment_times !== null && $entertainment_times == $value) checked @endif>
+                                <input type="radio" name="has_entertainment_times" value="{{ $value }}" @if($has_et_times !== null && $has_et_times == $value) checked @endif>
                                 {{ __('label.'. $key) }}
                             </label>
                             @endforeach
                         </fieldset>
-                        @error('entertainment_times')
+                        @error('has_entertainment_times')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
                         @enderror
+                        <div id="entertainment_times" style="padding-left: 0px"
+                            class="col-lg-10 @if(empty($has_et_times) || ($has_et_times !== null && $has_et_times == config('const.business.has_et_times.no'))) d-none @endif">
+                            <input type="number" name="entertainment_times" class="form-control @error('entertainment_times') is-invalid @enderror"
+                                value="{{ $et_times }}" placeholder="{{ __('label.entertainment.entertainment_times') }}">
+                            @error('entertainment_times')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>
                     </div>
                 </div>
                 <hr>
-                <div class="form-group row ">
+                <div class="form-group row">
                     <label class="col-lg-2 col-form-label text-left">
                         {{ __('label.entertainment.existence_projects') }}
                     </label>

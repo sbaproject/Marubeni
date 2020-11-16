@@ -105,7 +105,7 @@
 		}
 
 		table tr td.f {
-			width: 35%;
+			width: 24%;
 		}
 
 		td.days {
@@ -202,7 +202,7 @@
 					<div>Reason for leave</div>
 					<div>Lý do xin nghỉ phép</div>
 				</td>
-				<td colspan="6" class="data">{{ $inputs['reason_leave'] }}</td>
+				<td colspan="6" class="data" style="word-wrap: break-word;">{{ $inputs['reason_leave'] }}</td>
 			</tr>
 			<tr>
 				<td class="f">
@@ -241,7 +241,7 @@
 					<div>&#60;Trường hợp nghỉ theo ngày&#62;</div>
 					<div style="font-weight: bold">Ngày nghỉ</div>
 				</td>
-				<td rowspan="2" style="width:50px;text-align: center;vertical-align: middle">
+				<td rowspan="2" style="text-align: center;vertical-align: middle">
 					<div>From-To</div>
 					<div>Từ-Đến</div>
 				</td>
@@ -270,20 +270,20 @@
 					<div>&#60;Trường hợp nghỉ theo giờ&#62;</div>
 					<div style="font-weight: bold">Thời gian nghỉ</div>
 				</td>
-				<td rowspan="2" style=" text-align: center;vertical-align: middle">
+				<td rowspan="2" style="width:8%; text-align: center;vertical-align: middle">
 					<div>Date</div>
 					<div>Ngày</div>
 				</td>
-				<td rowspan="2" style="" class="data">
+				<td rowspan="2" style="width:18%" class="data">
 					@if ($inputs['time_day'] !== null)
 						{{ date('d/m/Y', strtotime($inputs['time_day'])) }}
 					@endif
 				</td>
-				<td rowspan="2" style="width: 50px;text-align: center;vertical-align: middle">
+				<td rowspan="2" style="width: 8%;text-align: center;vertical-align: middle">
 					<div>From-To</div>
 					<div>Từ-Đến</div>
 				</td>
-				<td rowspan="2" style="" class="data">
+				<td rowspan="2" style="width:18%" class="data">
 					@if ($inputs['time_from'] !== null && $inputs['time_to'] !== null)
 						{{ date('H:i', strtotime($inputs['time_from'])) }}
 						-
@@ -300,11 +300,11 @@
 						{{ date('H:i', strtotime($inputs['time_to'])) }}
 					@endif
 				</td>
-				<td rowspan="2" style="text-align: center;vertical-align: middle">
+				<td rowspan="2" style="width:12%;text-align: center;vertical-align: middle">
 					<div>No. of Hours</div>
 					<div>Số giờ nghỉ</div>
 				</td>
-				<td rowspan="2" style=""></td>
+				<td rowspan="2" style="width:12%"></td>
 			</tr>
 			<tr></tr>
 			<tr>
@@ -424,18 +424,18 @@
 	<p></p>
 	<table>
 		<tr>
-			<td style="text-align: center;width: 130px;;height: 80px;">
+			<td style="text-align: center;width: 20%;height: 80px;border-bottom:0px;">
 				<div>President or Executive VP</div>
-				<div>TGD hay PTGD</div>
+				<div style="border-bottom:1px dotted ">TGD hay PTGD</div>
 			</td>
-			<td style="text-align: center; vertical-align: middle;width: 40px;">BA</td>
+			<td style="text-align: center; vertical-align: middle;width: 4%;">BA</td>
 			<td style="text-align: center">GM/ Giám đốc</td>
 			<td style="text-align: center">Manager/ Trưởng phòng</td>
 			<td style="text-align: center">HR. IC/ NV Nhân sự</td>
 		</tr>
 		<tr>
-			<td style="text-align: center;height: 80px;">
-				<div>(HR) Internally Record by</div>
+			<td style="text-align: center;height: 80px;vertical-align: middle;border-top:0px;">
+				<div style="border-bottom:1px dotted">(HR) Internally Recorded by</div>
 			</td>
 			<td style="text-align: center; vertical-align: middle">Dept.</td>
 			<td style="text-align: center">GM/ Giám đốc</td>
