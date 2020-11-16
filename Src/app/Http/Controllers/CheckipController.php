@@ -14,21 +14,18 @@ class CheckipController extends Controller
 {
     public function index(Request $request)
     {
-        //Get cookie
-        $cooCode = $request->cookie('code');
-
-        if (!$this->CheckCode(Auth::user()->otp_token, $cooCode)) {
+        if (!Hash::check($request->cookie('code'), Auth::user()->otp_token)) {
 
             //Get number random
             $num = rand(1, 10000000);
             $hashnum = Hash::make($num);
 
             //Create Cookie
-            $code = cookie('code', $hashnum, 10);
+            $code = cookie('code', $num, 10);
 
             //Save token to DB
             $users = Auth::user();
-            $users->otp_token = $num;
+            $users->otp_token = $hashnum;
             $users->save();
 
             //Send Code Mail
@@ -42,15 +39,13 @@ class CheckipController extends Controller
             return response()->view('auth.checkip')->withCookie($code);
         } else {
 
-            return response()->view('auth.checkip')->withCookie($cooCode);
+            return response()->view('auth.checkip')->withCookie($request->cookie('code'));
         }
     }
 
     public function confirm(Request $request)
     {
         $data = $request->input();
-        //Get cookie
-        $cooCode = $request->cookie('code');
 
         //Check Validation
         $validator = Validator::make($data, [
@@ -58,30 +53,20 @@ class CheckipController extends Controller
         ],);
 
         //Check Code
-        $validator->after(function ($validator) use ($data, $cooCode) {
-            if (!$this->CheckCode(trim($data['code']), $cooCode)) {
+        $validator->after(function ($validator) use ($data) {
+            if (!Hash::check(trim($data['code']), Auth::user()->otp_token)) {
                 $validator->errors()->add('code', __('label.checkip.valid_not_compare'));
             }
         });
         $validator->validate();
 
         //Create Cookie -> Confirm Success
-        $confirm = cookie('confirm', $cooCode, 180);
+        $confirm = cookie('confirm', $request->cookie('code'), 180);
 
         if (Gate::allows('admin-gate')) {
             return redirect()->route('admin.dashboard', config('const.application.status.all'))->withCookie($confirm);
         }
         // for user
         return redirect()->route('user.dashboard', config('const.application.status.all'))->withCookie($confirm);
-    }
-
-    private function CheckCode($code, $hashcode)
-    {
-        //Hash Check
-        if (Hash::check($code, $hashcode)) {
-            return true;
-        } else {
-            return false;
-        }
     }
 }

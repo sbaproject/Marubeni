@@ -25,15 +25,12 @@ class CheckIp
         } else {
 
             //Network -> EXTERNAL
-            //Get cookie
-            $confirm = $request->cookie('confirm');
-
             //Check
-            if (Hash::check(Auth::user()->otp_token, $confirm)) {
+            if (Hash::check($request->cookie('confirm'), Auth::user()->otp_token)) {
                 return $next($request);
             } else {
                 return redirect()->route('checkip');
-            }            
+            }
         }
     }
 }
