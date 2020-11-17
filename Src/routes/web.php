@@ -66,7 +66,7 @@ Route::middleware('auth')->group(function () {
     Route::get('checkip', [CheckipController::class, 'index'])->name('checkip');
     Route::post('checkip', [CheckipController::class, 'confirm'])->name('confirm');
 
-    // Route::middleware('checkip')->group(function () {
+    Route::middleware('checkip')->group(function () {
 
         Route::middleware('can:admin-gate')->group(function () {
             Route::prefix('admin')->name('admin.')->group(function () {
@@ -161,7 +161,7 @@ Route::middleware('auth')->group(function () {
                 });
             });
         });
-    // });
+    });
 
     /**----------------------------------------*
      * Common Routes
