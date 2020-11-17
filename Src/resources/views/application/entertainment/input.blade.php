@@ -124,7 +124,7 @@ $file_path              = Session::has('inputs') ? Session::get('inputs')['file_
                     <label class="col-lg-2 col-form-label text-left">{{ __('label.entertainment.during_trip') }}</label>
                     <div class="col-lg-10 text-lg-left text-left">
                         <fieldset class="@error('during_trip') form-control is-invalid @enderror">
-                            @foreach (config('const.business.during_trip') as $key => $value)
+                            @foreach (config('const.entertainment.during_trip') as $key => $value)
                                 <label class="radio-inline com_title col-form-label">
                                     <input type="radio" name="during_trip" value="{{ $value }}" @if($during_trip !== null && $during_trip == $value) checked @endif>
                                     {{ __('label.'. $key) }}
@@ -289,7 +289,7 @@ $file_path              = Session::has('inputs') ? Session::get('inputs')['file_
                     </label>
                     <div class="col-lg-10 text-lg-left text-left">
                         <fieldset class="@error('check_row') form-control is-invalid @enderror">
-                            @foreach (config('const.business.check_row') as $key => $value)
+                            @foreach (config('const.entertainment.check_row') as $key => $value)
                             <label class="radio-inline com_title col-form-label">
                                 <input type="radio" name="check_row" value="{{ $value }}" @if($check_row !== null && $check_row == $value) checked @endif>
                                 {{ __('label.'. $key) }}
@@ -310,7 +310,7 @@ $file_path              = Session::has('inputs') ? Session::get('inputs')['file_
                     </label>
                     <div class="col-lg-10 text-lg-left text-left">
                         <fieldset class="@error('has_entertainment_times') form-control is-invalid @enderror">
-                            @foreach (config('const.business.has_et_times') as $key => $value)
+                            @foreach (config('const.entertainment.has_et_times') as $key => $value)
                             <label class="radio-inline com_title col-form-label">
                                 <input type="radio" name="has_entertainment_times" value="{{ $value }}" @if($has_et_times !== null && $has_et_times == $value) checked @endif>
                                 {{ __('label.'. $key) }}
@@ -323,7 +323,7 @@ $file_path              = Session::has('inputs') ? Session::get('inputs')['file_
                         </span>
                         @enderror
                         <div id="entertainment_times" style="padding-left: 0px"
-                            class="col-lg-10 @if(empty($has_et_times) || ($has_et_times !== null && $has_et_times == config('const.business.has_et_times.no'))) d-none @endif">
+                            class="col-lg-10 @if(empty($has_et_times) || ($has_et_times !== null && $has_et_times == config('const.entertainment.has_et_times.no'))) d-none @endif">
                             <input type="number" name="entertainment_times" class="form-control @error('entertainment_times') is-invalid @enderror"
                                 value="{{ $et_times }}" placeholder="{{ __('label.entertainment.entertainment_times') }}">
                             @error('entertainment_times')
@@ -341,7 +341,7 @@ $file_path              = Session::has('inputs') ? Session::get('inputs')['file_
                     </label>
                     <div class="col-lg-10 text-lg-left text-left">
                         <fieldset class="@error('existence_projects') form-control is-invalid @enderror">
-                            @foreach (config('const.business.existence_projects') as $key => $value)
+                            @foreach (config('const.entertainment.existence_projects') as $key => $value)
                             <label class="radio-inline com_title col-form-label">
                                 <input type="radio" name="existence_projects" value="{{ $value }}" @if($existence_projects !==null &&
                                     $existence_projects==$value) checked @endif>
@@ -363,7 +363,7 @@ $file_path              = Session::has('inputs') ? Session::get('inputs')['file_
                     </label>
                     <div class="col-lg-10 text-lg-left text-left">
                         <fieldset class="@error('includes_family') form-control is-invalid @enderror">
-                            @foreach (config('const.business.includes_family') as $key => $value)
+                            @foreach (config('const.entertainment.includes_family') as $key => $value)
                             <label class="radio-inline com_title col-form-label">
                                 <input type="radio" name="includes_family" value="{{ $value }}" @if($includes_family !==null &&
                                     $includes_family==$value) checked @endif>

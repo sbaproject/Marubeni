@@ -161,7 +161,7 @@ return [
         'details_dutles' => 'Details of dutles',
         'if_need' => 'If need',
         'persons' => 'Persons',
-        'per_person_excluding_vnd' => 'Per Person(Excluding VND)',
+        'per_person_excluding_vnd' => 'Per Person(Excluding VAT)',
         'entrainment_infomation' => 'Entrainment Infomation',
     ],
     //Type Application

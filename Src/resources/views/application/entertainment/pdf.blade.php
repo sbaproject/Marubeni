@@ -41,10 +41,13 @@
 		font-weight: 400;
 		font-style: normal;
 		}
-		
+		/* margin page */
+		@page{
+			margin: 5px;
+		}
 		body {
-		font-family: "notosans-regular, notosans-bold, notosans-bolditalic,notosans-italic";
-		font-size: 10px;
+			font-family: "notosans-regular, notosans-bold, notosans-bolditalic,notosans-italic";
+			font-size: 10px;
 		}
 		table {
 			border-collapse: collapse;
@@ -100,6 +103,12 @@
 		#tb-2 td {
 			font-size: 8px;
 		}
+		#tb-0 {
+			margin-bottom: 10px;
+		}
+		#tb-0 td {
+			border:0px;
+		}
 		.start{
 			font-family: 'sawarabiGothic-regular';
 			font-weight: 400 !important;
@@ -122,6 +131,9 @@
 		.under{
 			text-decoration: underline;
 		}
+		/* .page-break {
+			page-break-after: always;
+		} */
 	</style>
 </head>
 
@@ -145,16 +157,52 @@
 		<div class="vi">ĐƠN ĐỀ NGHỊ CHẤP THUẬN TRƯỚC & THANH TOÁN CHI PHÍ TIẾP KHÁCH</div>
 	</div>
 
+	<table id="tb-0">
+		<tr>
+			<td class="bold" style="width: 30%;font-size:12px">
+				Pre-approval/ Chấp thuận trước
+			</td>
+			<td class="right" style="width: 15%;vertical-align: bottom">
+				Applied date/ Ngày:
+			</td>
+			<td style="width: 10%;vertical-align: bottom">
+				<div style="border-bottom:1px solid;margin-top:-3px">
+					
+				</div>
+			</td>
+			<td style="width: 6%"></td>
+			<td class="right" style="width: 15%;vertical-align: bottom">Full Name/ Họ tên:</td>
+			<td style="width: 24%;vertical-align: bottom">
+				<div style="border-bottom:1px solid;margin-top:-3px">
+					{{ $user->name }}
+				</div>
+			</td>
+		</tr>
+	</table>
+
 	<table>
 		<tr>
 			<td class="center">Date & Time/ Thời gian</td>
-			<td colspan="3"></td>
+			<td colspan="3">
+				@if ($inputs['entertainment_dt'] != null)
+				{{ date('d/m/Y H:i', strtotime($inputs['entertainment_dt'])) }}
+				@endif
+			</td>
 		</tr>
 		<tr>
 			<td class="center" style="width: 25%">Place/ Địa điểm</td>
-			<td style="width: 58%"></td>
+			<td style="width: 58%">
+				{{ $inputs['place'] }}
+			</td>
 			<td class="center" style="width: 12%">During biz trip</td>
-			<td class="center" style="width: 5%">Yes</td>
+			<td class="center" style="width: 5%">
+				@if($inputs['during_trip'] !== null)
+				@php
+				$arr = config('const.entertainment.during_trip');
+				@endphp
+				{{ Str::upper(array_search($inputs['during_trip'], $arr)) }}
+				@endif
+			</td>
 		</tr>
 	</table>
 
@@ -190,16 +238,23 @@
 			</td>
 			<td class="center" style="width: 5%">PO</td>
 		</tr>
-		<tr>
-			<td>Chi tiết nhiệm vụ</td>
-			<td>Chi tiết nhiệm vụ</td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td>Chi tiết nhiệm vụChi tiết nhiệm vụChi tiết nhiệm vụ</td>
-			<td></td>
-		</tr>
+		@foreach ($inputs['infos'] as $item)
+		@php
+			$isEmpty = empty($item['cp_name']) && empty($item['title']) && empty($item['name_attendants']) && empty($item['details_dutles']);
+		@endphp
+			<tr>
+				<td style="@if($isEmpty) height:20px @endif">
+					{{ $item['cp_name'] }}
+				</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td>{{ $item['title'] }}</td>
+				<td>{{ $item['name_attendants'] }}</td>
+				<td>{{ $item['details_dutles'] }}</td>
+				<td></td>
+			</tr>
+		@endforeach
 	</table>
 
 	<table id="tb-3">
@@ -222,14 +277,50 @@
 			</td>
 		</tr>
 		<tr>
-			<td class="center">YES</td>
-			<td class="center">YES 5 TIMES</td>
-			<td class="center">YES</td>
-			<td class="center">NO</td>
+			@php
+				$isEmpty = empty($inputs['check_row']) && empty($inputs['has_entertainment_times']) && empty($inputs['existence_projects']) && empty($inputs['includes_family']);
+			@endphp
+			<td class="center" style="@if($isEmpty) height:20px @endif">
+				@if($inputs['check_row'] !== null)
+					@php
+					$arr = config('const.entertainment.check_row');
+					@endphp
+					{{ Str::upper(array_search($inputs['check_row'], $arr)) }}
+				@endif
+			</td>
+			<td class="center">
+				@if($inputs['has_entertainment_times'] !== null)
+					@php
+					if($inputs['has_entertainment_times'] == config('const.entertainment.has_et_times.yes')){
+						echo 'YES ' . $inputs['entertainment_times'] . ' TIMES';
+					} elseif ($inputs['has_entertainment_times'] == config('const.entertainment.has_et_times.no')) {
+						echo 'NO';
+					}
+					@endphp
+				@endif
+			</td>
+			<td class="center">
+				@if($inputs['existence_projects'] !== null)
+					@php
+					$arr = config('const.entertainment.existence_projects');
+					@endphp
+					{{ Str::upper(array_search($inputs['existence_projects'], $arr)) }}
+				@endif
+			</td>
+			<td class="center">
+				@if($inputs['includes_family'] !== null)
+					@php
+					$arr = config('const.entertainment.includes_family');
+					@endphp
+					{{ Str::upper(array_search($inputs['includes_family'], $arr)) }}
+				@endif
+			</td>
 		</tr>
 		<tr>
 			<td class="bg" style="font-size: 9px">Project Name (under negotiation and/or in near future) (if any)</td>
-			<td colspan="3"></td>
+			<td colspan="3">
+				{{ $inputs['project_name'] }}
+			</td>
 		</tr>
 		<tr>
 			<td colspan="4" class="center bg">
@@ -245,7 +336,7 @@
 				<div>Reason for the Entertainment</div>
 				<div>Lý do tiếp khách</div>
 			</td>
-			<td>Lý do tiếp khách</td>
+			<td>{{ $inputs['entertainment_reason'] }}</td>
 		</tr>
 	</table>
 
@@ -254,10 +345,10 @@
 			<td class="center" rowspan="2" style="width: 30%;border-bottom:0px">
 				<span class="bold">Estimated</span> Total Number of Persons
 			</td>
-			<td class="center bold" rowspan="3" style="width: 7%">
-				100
+			<td class="center bold" rowspan="3" style="width: 7%;border-right:0px">
+				{{ $inputs['entertainment_person'] }}
 			</td>
-			<td class="center" rowspan="3" style="width: 7%">
+			<td class="center" rowspan="3" style="width: 7%;border-left:0px">
 				<div>Persons</div>
 				<div>Người</div>
 			</td>
@@ -266,7 +357,9 @@
 				<span class="bold under">excluding VAT</span>
 			</td>
 			<td class="right bg-y" style="width: 12%;border-bottom:0px;border-left:1px dotted">
-				VND 99,999,999
+				@if (is_numeric($inputs['est_amount']))
+					{{ 'VND '.number_format($inputs['est_amount']) }}
+				@endif
 			</td>
 		</tr>
 		<tr>
@@ -274,7 +367,14 @@
 				(Per Person/ Mỗi người) <span class="bold under">excluding VAT</span>
 			</td>
 			<td class="right bold bg-y" style="border-top:1px dotted;border-bottom:0px;border-left:1px dotted">
-				VND 50,000,000
+				@if (is_numeric($inputs['est_amount']) && is_numeric($inputs['entertainment_person']))
+					@if ($inputs['entertainment_person'] != 0)
+						@php
+							$excludeVAT = $inputs['est_amount'] / $inputs['entertainment_person'];
+							echo 'VND '. number_format($excludeVAT);
+						@endphp
+					@endif
+				@endif
 			</td>
 		</tr>
 		<tr>
@@ -285,7 +385,15 @@
 				(Per Person/ Mỗi người) <span class="bold under">including VAT</span>
 			</td>
 			<td class="right bold bg-y" style="border-top:1px dotted;border-left:1px dotted">
-				VND 50,000,000
+				@if (is_numeric($inputs['est_amount']) && is_numeric($inputs['entertainment_person']))
+					@if ($inputs['entertainment_person'] != 0)
+						@php
+						$excludeVAT = $inputs['est_amount'] / $inputs['entertainment_person'];
+						$includeVAT = round($excludeVAT * 1.1, 0);
+						echo 'VND '. number_format($includeVAT);
+						@endphp
+					@endif
+				@endif
 			</td>
 		</tr>
 	</table>
@@ -302,7 +410,9 @@
 					Diễn giải nếu số tiền cho mỗi người vượt quá ngân sách hoặc các trường hợp đặc biệt khác
 				</div>
 			</td>
-			<td colspan="3"></td>
+			<td colspan="3">
+				{{ $inputs['reason_budget_over'] }}
+			</td>
 		</tr>
 		<tr>
 			<td class="center" style="width: 30%">
@@ -362,7 +472,5 @@
 			<td style="width: 20%;height:50px"></td>
 		</tr>
 	</table>
-
 </body>
-
 </html>

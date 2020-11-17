@@ -120,7 +120,7 @@ return [
 	/**
 	 * Entertainment Application
 	 */
-	'business' => [
+	'entertainment' => [
 		'during_trip' => [
 			'yes' => 1,
 			'no' => 0,

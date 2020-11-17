@@ -29,7 +29,7 @@ class EntertainmentController extends Controller
     {
         // get companies
         $companies = Company::all('name');
-        $companies = Arr::pluck($companies->toArray(),'name');
+        $companies = Arr::pluck($companies->toArray(), 'name');
 
         return view('application.entertainment.input', compact('companies'));
     }
@@ -143,7 +143,7 @@ class EntertainmentController extends Controller
                 $rules['infos.*.name_attendants']   = 'required';
                 $rules['infos.*.details_dutles']    = 'required';
 
-                if($inputs['has_entertainment_times'] == true){
+                if ($inputs['has_entertainment_times'] == true) {
                     $rules['entertainment_times'] = 'required|numeric';
                 }
             }
