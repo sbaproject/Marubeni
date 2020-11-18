@@ -213,7 +213,7 @@ return [
         'list_of_approval_un_documents' => 'Danh Sách Đơn Đã Duyệt / Chưa Thanh Toán',
         'list_of_approval_in_documents' => 'Danh Sách Đơn Đã Duyệt / Đang Thanh Toán',
         'list_of_declined_documents' => 'Danh Sách Đơn Trả Về',
-        'list_of_reject_documents' => 'Danh Sách Đơn Khước từ',
+        'list_of_reject_documents' => 'Danh Sách Đơn Khước Từ',
         'list_of_completed_documents' => 'Danh Sách Đơn Hoàn Tất',
         'no' => 'Số Thứ Tự',
         'application_type' => 'Loại Đơn',
@@ -318,6 +318,7 @@ return [
         'btn_back' => 'Trở về',
         //Validation
         'valid_not_compare' => 'Mã không Chính Xác, Vui lòng thử lại !',
+        'valid_expired' => 'MÃ ĐÃ HẾT HIỆU LỰC, ĐÃ GỬI LẠI MÃ MỚI !  Vui lòng thử lại !',
         //Mail content
         'mail_subject' => 'Xác Nhận Truy Cập Mạng Ngoài',
         'mail_content' => 'Mã Xác Nhận Truy Cập Mạng Ngoài',

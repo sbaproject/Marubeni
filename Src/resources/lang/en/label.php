@@ -319,6 +319,7 @@ return [
         'btn_back' => 'Back',
         //Validation
         'valid_not_compare' => 'The Code is not Correct, Please try again !',
+        'valid_expired' => 'THE CODE HAD EXPRIRED, SENT A NEW CODE!  Please try again !',
         //Mail content
         'mail_subject' => 'Confirm Access External Network',
         'mail_content' => 'The Code Confirm Access External Network',

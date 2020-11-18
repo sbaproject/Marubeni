@@ -36,6 +36,7 @@ class CheckipController extends Controller
             ];
             SendEmail::dispatch($message)->delay(now()->addMinute(1));
 
+            //dd(1);
             return response()->view('auth.checkip')->withCookie($code);
         } else {
 
@@ -53,11 +54,15 @@ class CheckipController extends Controller
         ],);
 
         //Check Code
-        $validator->after(function ($validator) use ($data) {
-            if (!Hash::check(trim($data['code']), Auth::user()->otp_token)) {
+        $validator->after(function ($validator) use ($data, $request) {
+            if (!Hash::check(trim($data['code']), Auth::user()->otp_token) && !empty($request->cookie('code'))) {
                 $validator->errors()->add('code', __('label.checkip.valid_not_compare'));
             }
+            if (!(trim($data['code']) == $request->cookie('code'))) {
+                $validator->errors()->add('code', __('label.checkip.valid_expired'));
+            }
         });
+
         $validator->validate();
 
         //Create Cookie -> Confirm Success

@@ -54,6 +54,7 @@
                                                         {{ route('admin.flow.edit', $flow->id) }}
                                                     </x-slot>
                                                     <x-slot name="deleteUrl">
+                                                        {{ route('admin.flow.update', $flow->id) }}
                                                     </x-slot>
                                                 </x-action>
                                             </td>
