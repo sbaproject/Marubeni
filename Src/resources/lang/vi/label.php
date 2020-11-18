@@ -213,7 +213,7 @@ return [
         'list_of_approval_un_documents' => 'Danh Sách Đơn Đã Duyệt / Chưa Thanh Toán',
         'list_of_approval_in_documents' => 'Danh Sách Đơn Đã Duyệt / Đang Thanh Toán',
         'list_of_declined_documents' => 'Danh Sách Đơn Trả Về',
-        'list_of_reject_documents' => 'Danh Sách Đơn Khước từ',
+        'list_of_reject_documents' => 'Danh Sách Đơn Khước Từ',
         'list_of_completed_documents' => 'Danh Sách Đơn Hoàn Tất',
         'no' => 'Số Thứ Tự',
         'application_type' => 'Loại Đơn',
