@@ -3,28 +3,29 @@
 use App\Libs\Common;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LocaleController;
+use App\Http\Controllers\CheckipController;
+use App\Http\Controllers\User\ConfirmController;
 use App\Http\Controllers\User\UserListCotroller;
 use App\Http\Controllers\User\UserEditController;
-use App\Http\Controllers\User\UserRegisterController;
-use App\Http\Controllers\User\UserDashboardController;
-use App\Http\Controllers\User\UserChangePassController;
-use App\Http\Controllers\User\UserStatusController;
 use App\Http\Controllers\User\UserDraftController;
+use App\Http\Controllers\User\UserStatusController;
+use App\Http\Controllers\User\ApproveListController;
 use App\Http\Controllers\User\UserCompanyController;
-use App\Http\Controllers\User\ConfirmController;
-use App\Http\Controllers\Admin\AdminDashboardController;
-use App\Http\Controllers\Application\FormListController;
-use App\Http\Controllers\Admin\AdminFlowSettingController;
-use App\Http\Controllers\Admin\AdminCompanyController;
 use App\Http\Controllers\Admin\AdminBudgetController;
 use App\Http\Controllers\Admin\AdminStatusController;
+use App\Http\Controllers\User\UserRegisterController;
+use App\Http\Controllers\Admin\AdminCompanyController;
+use App\Http\Controllers\User\UserDashboardController;
+use App\Http\Controllers\User\UserChangePassController;
 
-use App\Http\Controllers\CheckipController;
+use App\Http\Controllers\Admin\AdminDashboardController;
 
+use App\Http\Controllers\Application\FormListController;
+use App\Http\Controllers\Admin\AdminFlowSettingController;
 use App\Http\Controllers\Application\Business\BusinessTripController;
-use App\Http\Controllers\Application\Entertainment\EntertainmentController;
 use App\Http\Controllers\Application\Leave\LeaveApplicationController;
-use App\Http\Controllers\LocaleController;
+use App\Http\Controllers\Application\Entertainment\EntertainmentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -66,7 +67,7 @@ Route::middleware('auth')->group(function () {
     Route::get('checkip', [CheckipController::class, 'index'])->name('checkip');
     Route::post('checkip', [CheckipController::class, 'confirm'])->name('confirm');
 
-    Route::middleware('checkip')->group(function () {
+    // Route::middleware('checkip')->group(function () {
 
         Route::middleware('can:admin-gate')->group(function () {
             Route::prefix('admin')->name('admin.')->group(function () {
@@ -159,9 +160,11 @@ Route::middleware('auth')->group(function () {
                     Route::get('edit/{id}', [EntertainmentController::class, 'show'])->name('show');
                     Route::post('edit/{id}', [EntertainmentController::class, 'update'])->name('update');
                 });
+                // Approve list
+                Route::get('/approve-list', [ApproveListController::class, 'index'])->name('approve.list');
             });
         });
-    });
+    // });
 
     /**----------------------------------------*
      * Common Routes

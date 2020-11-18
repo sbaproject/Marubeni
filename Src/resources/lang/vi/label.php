@@ -53,7 +53,7 @@ return [
     'form' => [
         'leave' => 'Đơn xin nghỉ phép',
         'biz_trip' => 'Đơn công tác',
-        'entertaiment' => 'Đơn tiếp khách',
+        'entertainment' => 'Đơn tiếp khách',
         // get by id
         '1' => 'Đơn xin nghỉ phép',
         '2' => 'Đơn công tác',

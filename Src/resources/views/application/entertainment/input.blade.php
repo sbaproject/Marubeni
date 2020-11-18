@@ -65,7 +65,7 @@ $file_path              = Session::has('inputs') ? Session::get('inputs')['file_
         enctype="multipart/form-data">
         @csrf
         <div class="main-top">
-            <h4 class="main-header-text">{{ Str::upper(__('label.form.entertaiment')) }}</h4>
+            <h4 class="main-header-text">{{ Str::upper(__('label.form.entertainment')) }}</h4>
             <button type="submit" name="pdf" value="pdf" class="btn btn-outline-dark" href="#">
                 <i class="fas fa-external-link-alt" style="margin-right: 5px; color: #fff;"></i>
                 {{ __('label.button.export') }}

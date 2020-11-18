@@ -72,12 +72,17 @@ return [
         'biz_trip' => 2,        // Business Trip Application
 		'entertainment' => 3,    // Entertainment Application
 		// prefix of form
-		'prefix' => [
-			1 => 'LA',
-			2 => 'BT',
-			3 => 'EA',
-		]
-    ],
+		// 'prefix' => [
+		// 	1 => 'LA',
+		// 	2 => 'BT',
+		// 	3 => 'EA',
+		// ]
+	],
+	'form_prefix' => [
+		1 => 'LA',
+		2 => 'BT',
+		3 => 'EA',
+	],
     /**
      * applications
      */
@@ -141,6 +146,10 @@ return [
 			'yes' => 1,
 			'no' => 0,
 		],
+	],
+	'approver_type' => [
+		'to' => 0,
+		'cc' => 1,
 	]
 
 ];

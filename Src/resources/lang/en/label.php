@@ -54,11 +54,11 @@ return [
     'form' => [
         'leave' => 'Leave',
         'biz_trip' => 'Business Trip',
-        'entertaiment' => 'Entertaiment',
+        'entertainment' => 'Entertainment',
         // get by id
         '1' => 'Leave',
         '2' => 'Business Trip',
-        '3' => 'Entertaiment',
+        '3' => 'Entertainment',
     ],
     /**
      * Menu
