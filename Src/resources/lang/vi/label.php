@@ -318,6 +318,7 @@ return [
         'btn_back' => 'Trở về',
         //Validation
         'valid_not_compare' => 'Mã không Chính Xác, Vui lòng thử lại !',
+        'valid_expired' => 'MÃ ĐÃ HẾT HIỆU LỰC, ĐÃ GỬI LẠI MÃ MỚI !  Vui lòng thử lại !',
         //Mail content
         'mail_subject' => 'Xác Nhận Truy Cập Mạng Ngoài',
         'mail_content' => 'Mã Xác Nhận Truy Cập Mạng Ngoài',
