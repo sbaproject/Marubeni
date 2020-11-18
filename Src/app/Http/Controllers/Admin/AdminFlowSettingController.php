@@ -144,16 +144,24 @@ class AdminFlowSettingController extends Controller
                     $stepType = 2;
                 }
                 $order = 0;
+                $index = 0;
                 $selectOrder = -1;
                 foreach ($destinationSteps as $k => $destination) {
                     $approverType = (int)$destination;
                     $approverId = $approverList[$key][$k];
-                    $order = $order + 1;
+                    $index++;
                     if ($approverType === 0) {
                         $selectOrder =  $selectOrder + 1;
+                        $order = $selectOrder + 1;
+                    }else{
+                        $order = 0;
                     }
-                    if ($order === count($destinationSteps) && $approverType === 0) {
+                    if ($index === count($destinationSteps) && $approverType === 0) {
                         $order = 99;
+                    }
+
+                    if ($selectOrder === -1){
+                        $selectOrder = 0;
                     }
 
                     $dataStep = array();
@@ -206,7 +214,7 @@ class AdminFlowSettingController extends Controller
             ->join('flows', 'flows.id', '=', 'steps.flow_id')
             ->where('steps.flow_id', $id)->whereNull('flows.deleted_at')
             ->orderBy('steps.step_type', 'asc')
-            ->orderBy('steps.order', 'asc')
+            ->orderBy('steps.id', 'asc')
             ->get();
 
         $forms =  Form::all();
@@ -313,15 +321,24 @@ class AdminFlowSettingController extends Controller
                 }
                 $order = 0;
                 $selectOrder = -1;
+                $index = 0;
                 foreach ($destinationSteps as $k => $destination) {
                     $approverType = (int)$destination;
                     $approverId = $approverList[$key][$k];
-                    $order = $order + 1;
+                    $index++;
                     if ($approverType === 0) {
                         $selectOrder =  $selectOrder + 1;
+                        $order = $selectOrder + 1;
+                    }else{
+                        $order = 0;
                     }
-                    if ($order === count($destinationSteps) && $approverType === 0) {
+
+                    if ($index === count($destinationSteps) && $approverType === 0) {
                         $order = 99;
+                    }
+
+                    if ($selectOrder === -1){
+                        $selectOrder = 0;
                     }
 
                     $dataStep = array();
