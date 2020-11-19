@@ -13,7 +13,7 @@ Approve List
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h4 style="font-weight: 600;">SEARCH</h4>
+                <h4 style="font-weight: 600;">{{ Str::upper(__('label.button.search')) }}</h4>
             </div>
         </div>
     </div>
@@ -28,12 +28,14 @@ Approve List
                                 <div class="col-xl-8 col-lg-9">
                                     <div class="form-group row">
                                         <label for="shourui"
-                                            class="col-sm-4 col-form-label text-center font-weight-normal">Application Type</label>
+                                            class="col-sm-4 col-form-label text-center font-weight-normal">{{ __('label.status.application_type') }}</label>
                                         <div class="col-sm-8">
                                             <select id="application_type" name="application_type" class="form-control">
                                                 <option value="" selected>{{ __('label.select') }}</option>
                                                 @foreach (config('const.form') as $key => $value)
-                                                    <option value={{ $value }}>{{ __('label.form.'.$key) }}</option>
+                                                    <option value={{ $value }} @if(isset($inputs['application_type']) && $inputs['application_type'] == $value) selected @endif>
+                                                        {{ __('label.form.'.$key) }}
+                                                    </option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -44,9 +46,11 @@ Approve List
                                 <div class="col-xl-8 col-lg-9">
                                     <div class="form-group row">
                                         <label for="inputKeyword"
-                                            class="col-sm-4 col-form-label text-center font-weight-normal">Keyword</label>
+                                            class="col-sm-4 col-form-label text-center font-weight-normal">{{ __('label.keyword') }}</label>
                                         <div class="col-sm-8">
-                                            <input type="text" id="keyword" name="keyword" class="form-control" autocomplete="off">
+                                            <input type="text" id="keyword" name="keyword" class="form-control" autocomplete="off"
+                                                value="{{ isset($inputs['keyword']) ? $inputs['keyword'] : '' }}"
+                                                placeholder="{{ __('label.search_by_app_no_applicant') }}">
                                         </div>
                                     </div>
                                 </div>
@@ -70,29 +74,35 @@ Approve List
 <!-- Main content -->
 <section class="content">
     <h4 class="mb-2" style="font-weight: 600;"><i class="nav-icon fas fa-file-alt" aria-hidden="true"
-            style="margin-right: 5px;"></i>PENDING APPROVAL DOCUMENT</h4>
+            style="margin-right: 5px;"></i>{{ Str::upper(__('label.pending_approval')) }}</h4>
     <div class="card">
         <div class="card-body p-0 card-list-items">
-            <table class="table">
+            <table class="table table-bordered">
                 <thead>
                     <tr class="list-title">
-                        <th>Application No</th>
-                        <th>Application type</th>
-                        <th>Apply Date</th>
-                        <th>Next Approver</th>
+                        <th>{{ __('label.application_no') }}</th>
+                        <th>{{ __('label.status.application_type') }}</th>
+                        <th>{{ __('label.status.apply_date') }}</th>
+                        <th>{{ __('label.status.next_approver') }}</th>
                         <th></th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach($data as $item)
                     <tr class="list-content">
-                        <td>NO-TM-0000</td>
-                        <td>交際費申請</td>
-                        <td>2020/10/22</td>
-                        <td>text text</td>
+                        <td>{{ $item->application_no }}</td>
+                        <td>{{ $item->application_type }}</td>
+                        <td>
+                            @if(config('app.locale') == 'en')
+                                {{ date('Y/m/d', strtotime($item->apply_date)) }}
+                            @else
+                                {{ date('d/m/Y', strtotime($item->apply_date)) }}
+                            @endif
+                        </td>
+                        <td>{{ $item->next_approver }}</td>
                         <td>
                             <a class="btn btn-details" href="/pages/examples/09_application_info.html">
-                                View Details
+                                {{ __('label.status.view_details') }}
                                 <i class="fas fa-angle-right" style="margin-left: 5px;"></i>
                             </a>
                         </td>

@@ -32,7 +32,7 @@ class Application extends Model
 
     public function getApplicationNoAttribute()
     {
-        $prefix = config('const.form_prefix.prefix.'.$this->form_id);
+        $prefix = config('const.form_prefix.'.$this->form_id);
         $application_no = $prefix.'-'.str_pad($this->id, config('const.num_fillzero'), "0", STR_PAD_LEFT);
         return $application_no;
     }

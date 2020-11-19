@@ -48,6 +48,12 @@ return [
     'choose_file' => 'Choose file',
     'yes' => 'Yes',
     'no' => 'No',
+    'or' => 'Or',
+    'keyword' => 'Keyword',
+    'application_no' => 'Application No',
+    'applicant_name' => 'Applicant name',
+    'search_by_app_no_applicant' => 'Search by Application No or Applicant name',
+    'pending_approval' => 'Pending Approval Application',
     /**
      * Form
      */
