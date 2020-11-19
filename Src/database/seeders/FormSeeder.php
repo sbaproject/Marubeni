@@ -18,7 +18,7 @@ class FormSeeder extends Seeder
      */
     public function run()
     {
-       
+
 
         DB::table('forms')->delete();
 
@@ -29,21 +29,24 @@ class FormSeeder extends Seeder
          */
         DB::table('forms')->insert([
             'id' => 1,
-            'name' => 'Leave',  
+            'name' => 'Leave',
+            'prefix' => 'LA',
             'created_by' => $firstId,
             'created_at' => Carbon::now(),
         ]);
 
         DB::table('forms')->insert([
             'id' => 2,
-            'name' => 'Biz Trip',  
+            'name' => 'Biz Trip',
+            'prefix' => 'BT',
             'created_by' => $firstId,
             'created_at' => Carbon::now(),
         ]);
 
         DB::table('forms')->insert([
             'id' => 3,
-            'name' => 'Entertaiment',  
+            'name' => 'Entertaiment',
+            'prefix' => 'ET',
             'created_by' => $firstId,
             'created_at' => Carbon::now(),
         ]);

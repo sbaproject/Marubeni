@@ -21,12 +21,12 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             FormSeeder::class,
             ApplicantSeeder::class,
-            BudgetSeeder::class,
-            GroupSeeder::class,
+            //BudgetSeeder::class,
+            //GroupSeeder::class,
             ApplicationSeeder::class,
-            LeaveSeeder::class,
-            FlowSeeder::class,
-            StepSeeder::class,
+            //LeaveSeeder::class,
+            //FlowSeeder::class,
+            //StepSeeder::class,
             CompanySeeder::class,
         ]);
     }

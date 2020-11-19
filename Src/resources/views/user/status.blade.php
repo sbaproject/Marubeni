@@ -84,7 +84,7 @@
                             @foreach ($list_applications_status as $application_status)
                                 @php
                                 if ($index < 10) $index='0' . $index @endphp <tr class="list-content">
-                                    <td>{{ $index }}</td>
+                                    <td>{{ !empty($application_status->application_no) ? $application_status->application_no : '' }}</td>
                                     <td>{{ !empty($application_status->nameapp) ? $application_status->nameapp : '' }}</td>
                                     <td>{{ !empty($application_status->datecreate) ? \Carbon\Carbon::parse($application_status->datecreate)->format('d/m/Y') : '' }}
                                     </td>

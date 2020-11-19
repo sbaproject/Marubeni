@@ -40,7 +40,7 @@ class UserStatusController extends Controller
             $end_date = $data['dataDateTo'] . ' 23:59:59';
 
             $list_applications_status = DB::table('applications')
-                ->select('forms.name as nameapp', 'applications.created_at as datecreate', 'users.name as nameuser','applications.form_id','applications.id')
+                ->select('CONCAT(CONCAT(forms.prefix,'-'),LPAD(applications.`id`, 0000, 0)) AS application_no', 'applications.created_at as datecreate', 'users.name as nameuser','applications.form_id','applications.id')
 
                 //Join
                 ->join('forms', 'applications.form_id', '=', 'forms.id')
