@@ -77,7 +77,7 @@ class ApproveListController extends Controller
 
         // paginator
         $page = $request->page;
-        $size = 1;
+        $size = config('const.paginator.items');
         $collect = collect($data);
         $data = new LengthAwarePaginator(
             $collect->forPage($page, $size),
