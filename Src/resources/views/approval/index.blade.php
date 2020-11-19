@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('title')
-Approve List
+{{ Str::upper(__('label.pending_approval')) }}
 @endsection
 @section('css')
 <link rel="stylesheet" href="css/user/08_waiting_approval_list.css">
@@ -22,7 +22,7 @@ Approve List
             <div class="card">
                 <div class="card-body">
                     <div class="search-content">
-                        <form action="{{ route('user.approve.list') }}" method="GET">
+                        <form action="{{ route('user.approval.index') }}" method="GET">
                             @csrf
                             <div class="row">
                                 <div class="col-xl-8 col-lg-9">
@@ -101,7 +101,7 @@ Approve List
                         </td>
                         <td>{{ $item->next_approver }}</td>
                         <td>
-                            <a class="btn btn-details" href="/pages/examples/09_application_info.html">
+                            <a class="btn btn-details" href="{{ route('user.approval.show',$item->application_id) }}">
                                 {{ __('label.status.view_details') }}
                                 <i class="fas fa-angle-right" style="margin-left: 5px;"></i>
                             </a>

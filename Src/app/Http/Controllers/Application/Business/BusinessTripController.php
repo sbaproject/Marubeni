@@ -67,9 +67,12 @@ class BusinesstripController extends Controller
         }
 
         // get business application
-        $model = Businesstrip::where('application_id', $id)->first();
+        // $model = Businesstrip::where('application_id', $id)->first();
 
-        return view('application.business.input', compact('application', 'model', 'id'));
+        // dd($application);
+
+
+        return view('application.business.input', compact('application'));
     }
 
     public function update(Request $request, $id)
@@ -100,7 +103,7 @@ class BusinesstripController extends Controller
         }
 
         // save
-        $msgErr = $this->doSaveData($request, $inputs);
+        $msgErr = $this->doSaveData($request, $inputs, $application);
         if (!empty($msgErr)) {
             return Common::redirectBackWithAlertFail($msgErr)->with('inputs', $inputs);
         }
@@ -137,7 +140,7 @@ class BusinesstripController extends Controller
         }
     }
 
-    public function doSaveData($request, &$inputs)
+    public function doSaveData($request, &$inputs, $app = null)
     {
         $msgErr = '';
 
@@ -205,6 +208,27 @@ class BusinesstripController extends Controller
                 $application['created_at'] = Carbon::now();
             }
 
+            // delete old file
+            if (!empty($app)) {
+                $filePath = $app->file_path;
+                // attchached file was changed
+                if ($inputs['file_path'] != $filePath) {
+                    if (!empty($app->file_path)) {
+                        if (Storage::exists($app->file_path)) {
+                            Storage::delete($app->file_path);
+                        }
+                    }
+                    $filePath = null;
+                }
+            }
+            // upload new attached file
+            if ($request->file('input_file')) {
+                $fileName = time() . $user->id . '_' . $request->file('input_file')->getClientOriginalName();
+                $filePath = $request->file('input_file')->storeAs('uploads/application/', $fileName);
+            }
+
+            $application['file_path'] = isset($filePath) ? $filePath : null;
+
             // save applications
             if (!$request->id) {
                 $applicationId = DB::table('applications')->insertGetId($application);
@@ -218,24 +242,6 @@ class BusinesstripController extends Controller
             if ($request->id) {
                 $biz = Businesstrip::where('application_id', $request->id)->first();
             }
-            // delete old file
-            if (isset($biz)) {
-                $filePath = $biz->file_path;
-                // attchached file was changed
-                if ($inputs['file_path'] != $filePath) {
-                    if (!empty($biz->file_path)) {
-                        if (Storage::exists($biz->file_path)) {
-                            Storage::delete($biz->file_path);
-                        }
-                    }
-                    $filePath = null;
-                }
-            }
-            // upload new attached file
-            if ($request->file('input_file')) {
-                $fileName = time() . $user->id . '_' . $request->file('input_file')->getClientOriginalName();
-                $filePath = $request->file('input_file')->storeAs('uploads/application/', $fileName);
-            }
 
             // prepare leave data
             $bizData = [
@@ -246,7 +252,7 @@ class BusinesstripController extends Controller
                 'accompany' => $inputs['accompany'],
                 'borne_by' => $inputs['borne_by'],
                 'comment' => $inputs['comment'],
-                'file_path' => isset($filePath) ? $filePath : null,
+                // 'file_path' => isset($filePath) ? $filePath : null,
                 'updated_by' => $user->id,
                 'updated_at' => Carbon::now(),
             ];

@@ -54,6 +54,7 @@ return [
     'applicant_name' => 'Applicant name',
     'search_by_app_no_applicant' => 'Search by Application No or Applicant name',
     'pending_approval' => 'Pending Approval Application',
+    'application_info' => 'Application Information',
     /**
      * Form
      */

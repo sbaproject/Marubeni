@@ -78,7 +78,7 @@ class LeaveApplicationController extends Controller
         }
 
         // get leave application
-        $model = Leave::where('application_id', $id)->first();
+        // $model = Leave::where('application_id', $id)->first();
 
         // code leaves
         $codeLeaves = config('const.code_leave');
@@ -89,7 +89,7 @@ class LeaveApplicationController extends Controller
         // logged user
         $user = Auth::user();
 
-        return view('application.leave.input', compact('codeLeaves', 'paidTypes', 'model', 'id', 'user'));
+        return view('application.leave.input', compact('codeLeaves', 'paidTypes', 'application', 'user'));
     }
 
     public function update(Request $request, $id)
@@ -159,7 +159,7 @@ class LeaveApplicationController extends Controller
         }
     }
 
-    public function doSaveData($request, &$inputs, $mApplication = null)
+    public function doSaveData($request, &$inputs, $app = null)
     {
         $msgErr = '';
 
@@ -221,6 +221,29 @@ class LeaveApplicationController extends Controller
                 $application['created_at'] = Carbon::now();
             }
 
+            // delete old file
+            if (!empty($app)) {
+                // $leave = Leave::where('application_id', $mApplication->id)->first();
+                $filePath = $app->file_path;
+                // attchached file was changed
+                if ($inputs['file_path'] != $filePath) {
+                    if (!empty($app->file_path)) {
+                        if (Storage::exists($app->file_path)) {
+                            Storage::delete($app->file_path);
+                        }
+                    }
+                    $filePath = null;
+                }
+            }
+            // upload new attached file
+            if ($request->file('input_file')) {
+                // $extension = '.' . $request->file('input_file')->extension();
+                $fileName = time() . $user->id . '_' . $request->file('input_file')->getClientOriginalName();
+                $filePath = $request->file('input_file')->storeAs('uploads/application/', $fileName);
+            }
+
+            $application['file_path'] = isset($filePath) ? $filePath : null;
+
             // add
             if (!$request->id) {
                 $applicationId = DB::table('applications')->insertGetId($application);
@@ -233,26 +256,6 @@ class LeaveApplicationController extends Controller
             /**-------------------------
              * create [Leave Application] detail
              *-------------------------*/
-            // delete old file
-            if ($request->id) {
-                $leave = Leave::where('application_id', $mApplication->id)->first();
-                $filePath = $leave->file_path;
-                // attchached file was changed
-                if ($inputs['file_path'] != $filePath) {
-                    if (!empty($leave->file_path)) {
-                        if (Storage::exists($leave->file_path)) {
-                            Storage::delete($leave->file_path);
-                        }
-                    }
-                    $filePath = null;
-                }
-            }
-            // upload new attached file
-            if ($request->file('input_file')) {
-                // $extension = '.' . $request->file('input_file')->extension();
-                $fileName = time() . $user->id . '_' . $request->file('input_file')->getClientOriginalName();
-                $filePath = $request->file('input_file')->storeAs('uploads/application/', $fileName);
-            }
 
             // prepare leave data
             $leaveData = [
@@ -266,7 +269,7 @@ class LeaveApplicationController extends Controller
                 'time_to' => $inputs['time_to'],
                 'maternity_from' => $inputs['maternity_from'],
                 'maternity_to' => $inputs['maternity_to'],
-                'file_path' => isset($filePath) ? $filePath : null,
+                // 'file_path' => isset($filePath) ? $filePath : null,
                 'days_use' => $inputs['days_use'],
                 'times_use' => $inputs['times_use'],
                 'updated_by' => $user->id,
@@ -305,7 +308,7 @@ class LeaveApplicationController extends Controller
         return Common::redirectRouteWithAlertSuccess('user.form.index');
     }
 
-    public function pdf($request, $inputs, $mApplication = null)
+    public function pdf($request, $inputs)
     {
         // get logged user
         $user = Auth::user();

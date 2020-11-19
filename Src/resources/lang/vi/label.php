@@ -43,6 +43,7 @@ return [
     'applicant_name' => 'Người đề nghị',
     'search_by_app_no_applicant' => 'Tìm theo mã số đơn hoặc tên người đề nghị',
     'pending_approval' => 'Đơn chờ duyệt',
+    'application_info' => 'Thông tin đơn',
     /**
      * Paginator
      */

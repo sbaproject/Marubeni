@@ -5,10 +5,11 @@ namespace App\Http\Controllers\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\Application;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Pagination\LengthAwarePaginator;
 
-class ApproveListController extends Controller
+class ApprovalController extends Controller
 {
     public function index(Request $request)
     {
@@ -84,9 +85,15 @@ class ApproveListController extends Controller
             $collect->count(),
             $size,
             $page,
-            ['path' => route('user.approve.list')]
+            ['path' => route('user.approval.index')]
         );
 
-        return view('user.approvelist', compact('data', 'inputs'));
+        return view('approval.index', compact('data', 'inputs'));
+    }
+
+    public function show(Request $request, Application $app) {
+
+        // dd($app);
+        return view('approval.show', compact('app'));
     }
 }

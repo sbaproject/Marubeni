@@ -29,21 +29,21 @@
 @section('content')
 @php
 
-$trans          = Session::has('inputs') ? Session::get('inputs')['trans']         : (isset($model) ? $model->transportations : null);
-$destinations   = Session::has('inputs') ? Session::get('inputs')['destinations']  : (isset($model) ? $model->destinations : null);
-$trip_dt_from   = Session::has('inputs') ? Session::get('inputs')['trip_dt_from']  : (isset($model) ? $model->trip_dt_from : null);
-$trip_dt_to     = Session::has('inputs') ? Session::get('inputs')['trip_dt_to']    : (isset($model) ? $model->trip_dt_to : null);
-$accommodation  = Session::has('inputs') ? Session::get('inputs')['accommodation'] : (isset($model) ? $model->accommodation : null);
-$accompany      = Session::has('inputs') ? Session::get('inputs')['accompany']     : (isset($model) ? $model->accompany : null);
-$borne_by       = Session::has('inputs') ? Session::get('inputs')['borne_by']      : (isset($model) ? $model->borne_by : null);
-$comment        = Session::has('inputs') ? Session::get('inputs')['comment']       : (isset($model) ? $model->comment : null);
-$file_path      = Session::has('inputs') ? Session::get('inputs')['file_path']     : (isset($model) ? $model->file_path : null);
+$trans          = Session::has('inputs') ? Session::get('inputs')['trans']         : (isset($application) ? $application->business->transportations : null);
+$destinations   = Session::has('inputs') ? Session::get('inputs')['destinations']  : (isset($application) ? $application->business->destinations : null);
+$trip_dt_from   = Session::has('inputs') ? Session::get('inputs')['trip_dt_from']  : (isset($application) ? $application->business->trip_dt_from : null);
+$trip_dt_to     = Session::has('inputs') ? Session::get('inputs')['trip_dt_to']    : (isset($application) ? $application->business->trip_dt_to : null);
+$accommodation  = Session::has('inputs') ? Session::get('inputs')['accommodation'] : (isset($application) ? $application->business->accommodation : null);
+$accompany      = Session::has('inputs') ? Session::get('inputs')['accompany']     : (isset($application) ? $application->business->accompany : null);
+$borne_by       = Session::has('inputs') ? Session::get('inputs')['borne_by']      : (isset($application) ? $application->business->borne_by : null);
+$comment        = Session::has('inputs') ? Session::get('inputs')['comment']       : (isset($application) ? $application->business->comment : null);
+$file_path      = Session::has('inputs') ? Session::get('inputs')['file_path']     : (isset($application) ? $application->file_path : null);
 
 @endphp
 <section class="content leave-application">
     <x-alert />
     <form method="POST"
-        action="@if (isset($id)) {{ route('user.business.update', $id) }} @else {{ route('user.business.store') }} @endif"
+        action="@if (isset($application)) {{ route('user.business.update', $application->id) }} @else {{ route('user.business.store') }} @endif"
         enctype="multipart/form-data">
         @csrf
         <div class="main-top">
@@ -55,7 +55,7 @@ $file_path      = Session::has('inputs') ? Session::get('inputs')['file_path']  
         </div>
         <div class="card">
             <div class="card-body">
-                @if (isset($id))
+                @if (isset($application))
                     <div class="form-group row">
                         <div class="col-sm-2 text-left">
                             <label>{{ __('label.business.application_no') }}</label>
@@ -303,8 +303,8 @@ $file_path      = Session::has('inputs') ? Session::get('inputs')['file_path']  
                     </div>
                     <div class="col-sm-5">
                         {{-- for edit --}}
-                        @if(isset($id) && !empty($file_path))
-                        @if ($model->file_path === $file_path)
+                        @if(isset($application) && !empty($file_path))
+                        @if ($application->file_path === $file_path)
                         <div class="file-show input-group mb-3">
                             <label class="form-control file-link">
                                 <a id="file_link" href="{{ Storage::url($file_path) }}" target="_blank">
@@ -319,8 +319,8 @@ $file_path      = Session::has('inputs') ? Session::get('inputs')['file_path']  
                         @endif
                         <div class="file-block input-group mb-3
                                         @php
-                                            if((isset($id) && !empty($file_path))){
-                                                if($model->file_path === $file_path){
+                                            if((isset($application) && !empty($file_path))){
+                                                if($application->file_path === $file_path){
                                                     echo 'd-none';
                                                 }
                                             }

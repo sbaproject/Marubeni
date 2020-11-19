@@ -20,23 +20,23 @@
 
 @section('content')
 @php
-    $code_leave     = Session::has('inputs') ? Session::get('inputs')['code_leave']     :  (isset($model) ? $model->code_leave : null);
-    $paid_type      = Session::has('inputs') ? Session::get('inputs')['paid_type']      :  (isset($model) ? $model->paid_type : null);
-    $reason_leave   = Session::has('inputs') ? Session::get('inputs')['reason_leave']   :  (isset($model) ? $model->reason_leave : null);
-    $date_from      = Session::has('inputs') ? Session::get('inputs')['date_from']      :  (isset($model) ? $model->date_from : null);
-    $date_to        = Session::has('inputs') ? Session::get('inputs')['date_to']        :  (isset($model) ? $model->date_to : null);
-    $time_day       = Session::has('inputs') ? Session::get('inputs')['time_day']       :  (isset($model) ? $model->time_day : null);
-    $time_from      = Session::has('inputs') ? Session::get('inputs')['time_from']      :  (isset($model) ? $model->time_from : null);
-    $time_to        = Session::has('inputs') ? Session::get('inputs')['time_to']        :  (isset($model) ? $model->time_to : null);
-    $maternity_from = Session::has('inputs') ? Session::get('inputs')['maternity_from'] :  (isset($model) ? $model->maternity_from : null);
-    $maternity_to   = Session::has('inputs') ? Session::get('inputs')['maternity_to']   :  (isset($model) ? $model->maternity_to : null);
-    $file_path      = Session::has('inputs') ? Session::get('inputs')['file_path']      :  (isset($model) ? $model->file_path : null);
-    $days_use       = Session::has('inputs') ? Session::get('inputs')['days_use']       :  (isset($model) ? $model->days_use : null);
-    $times_use      = Session::has('inputs') ? Session::get('inputs')['times_use']      :  (isset($model) ? $model->times_use : null);
+    $code_leave     = Session::has('inputs') ? Session::get('inputs')['code_leave']     :  (isset($application) ? $application->leave->code_leave : null);
+    $paid_type      = Session::has('inputs') ? Session::get('inputs')['paid_type']      :  (isset($application) ? $application->leave->paid_type : null);
+    $reason_leave   = Session::has('inputs') ? Session::get('inputs')['reason_leave']   :  (isset($application) ? $application->leave->reason_leave : null);
+    $date_from      = Session::has('inputs') ? Session::get('inputs')['date_from']      :  (isset($application) ? $application->leave->date_from : null);
+    $date_to        = Session::has('inputs') ? Session::get('inputs')['date_to']        :  (isset($application) ? $application->leave->date_to : null);
+    $time_day       = Session::has('inputs') ? Session::get('inputs')['time_day']       :  (isset($application) ? $application->leave->time_day : null);
+    $time_from      = Session::has('inputs') ? Session::get('inputs')['time_from']      :  (isset($application) ? $application->leave->time_from : null);
+    $time_to        = Session::has('inputs') ? Session::get('inputs')['time_to']        :  (isset($application) ? $application->leave->time_to : null);
+    $maternity_from = Session::has('inputs') ? Session::get('inputs')['maternity_from'] :  (isset($application) ? $application->leave->maternity_from : null);
+    $maternity_to   = Session::has('inputs') ? Session::get('inputs')['maternity_to']   :  (isset($application) ? $application->leave->maternity_to : null);
+    $days_use       = Session::has('inputs') ? Session::get('inputs')['days_use']       :  (isset($application) ? $application->leave->days_use : null);
+    $times_use      = Session::has('inputs') ? Session::get('inputs')['times_use']      :  (isset($application) ? $application->leave->times_use : null);
+    $file_path      = Session::has('inputs') ? Session::get('inputs')['file_path']      :  (isset($application) ? $application->file_path : null);
 @endphp
 <section class="content leave-application">
     <x-alert />
-    <form method="POST" action="@if (isset($id)) {{ route('user.leave.update', $id) }} @else {{ route('user.leave.store') }} @endif"
+    <form method="POST" action="@if (isset($application)) {{ route('user.leave.update', $application->id) }} @else {{ route('user.leave.store') }} @endif"
         enctype="multipart/form-data">
         @csrf
         <div class="main-top">
@@ -308,8 +308,8 @@
                     </div>
                     <div class="col-sm-5">
                         {{-- for edit --}}
-                        @if(isset($id) && !empty($file_path))
-                            @if ($model->file_path === $file_path)
+                        @if(isset($application) && !empty($file_path))
+                            @if ($application->file_path === $file_path)
                                 <div class="file-show input-group mb-3">
                                     <label class="form-control file-link">
                                         <a id="file_link" href="{{ Storage::url($file_path) }}" target="_blank">
@@ -324,8 +324,8 @@
                         @endif
                         <div class="file-block input-group mb-3
                                         @php
-                                            if((isset($id) && !empty($file_path))){
-                                                if($model->file_path === $file_path){
+                                            if((isset($application) && !empty($file_path))){
+                                                if($application->file_path === $file_path){
                                                     echo 'd-none';
                                                 }
                                             }

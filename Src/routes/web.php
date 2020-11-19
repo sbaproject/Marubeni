@@ -10,7 +10,6 @@ use App\Http\Controllers\User\UserListCotroller;
 use App\Http\Controllers\User\UserEditController;
 use App\Http\Controllers\User\UserDraftController;
 use App\Http\Controllers\User\UserStatusController;
-use App\Http\Controllers\User\ApproveListController;
 use App\Http\Controllers\User\UserCompanyController;
 use App\Http\Controllers\Admin\AdminBudgetController;
 use App\Http\Controllers\Admin\AdminStatusController;
@@ -26,6 +25,7 @@ use App\Http\Controllers\Admin\AdminFlowSettingController;
 use App\Http\Controllers\Application\Business\BusinessTripController;
 use App\Http\Controllers\Application\Leave\LeaveApplicationController;
 use App\Http\Controllers\Application\Entertainment\EntertainmentController;
+use App\Http\Controllers\User\ApprovalController;
 
 /*
 |--------------------------------------------------------------------------
@@ -160,8 +160,12 @@ Route::middleware('auth')->group(function () {
                     Route::get('edit/{id}', [EntertainmentController::class, 'show'])->name('show');
                     Route::post('edit/{id}', [EntertainmentController::class, 'update'])->name('update');
                 });
-                // Approve list
-                Route::get('/approve-list', [ApproveListController::class, 'index'])->name('approve.list');
+                // Approval
+                Route::prefix('approval')->name('approval.')->group(function() {
+                    Route::get('list', [ApprovalController::class, 'index'])->name('index');
+                    Route::get('detail/{app}', [ApprovalController::class, 'show'])->name('show');
+                    Route::post('detail/{app}', [ApprovalController::class, 'update'])->name('update');
+                });
             });
         });
     // });

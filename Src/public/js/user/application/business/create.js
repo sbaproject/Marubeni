@@ -64,7 +64,7 @@ $(document).ready(function () {
         $('.file-block').removeClass('d-none');
     });
     // open link attached file
-    $('.file-link').on('click', function () {
+    $('.file-link').on('click', function (e) {
         $(this).find('a')[0].click();
     });
 

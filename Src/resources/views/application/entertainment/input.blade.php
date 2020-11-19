@@ -41,27 +41,27 @@
 @section('content')
 @php
 
-$infos                  = Session::has('inputs') ? Session::get('inputs')['infos']                      : (isset($model) ? $model->entertainmentinfos : null);
-$entertainment_dt       = Session::has('inputs') ? Session::get('inputs')['entertainment_dt']           : (isset($model) ? $model->entertainment_dt : null);
-$place                  = Session::has('inputs') ? Session::get('inputs')['place']                      : (isset($model) ? $model->place : null);
-$during_trip            = Session::has('inputs') ? Session::get('inputs')['during_trip']                : (isset($model) ? $model->during_trip : null);
-$check_row              = Session::has('inputs') ? Session::get('inputs')['check_row']                  : (isset($model) ? $model->check_row : null);
-$has_et_times           = Session::has('inputs') ? Session::get('inputs')['has_entertainment_times']    : (isset($model) ? $model->has_entertainment_times : null);
-$et_times               = Session::has('inputs') ? Session::get('inputs')['entertainment_times']        : (isset($model) ? $model->entertainment_times : null);
-$existence_projects     = Session::has('inputs') ? Session::get('inputs')['existence_projects']         : (isset($model) ? $model->existence_projects : null);
-$includes_family        = Session::has('inputs') ? Session::get('inputs')['includes_family']            : (isset($model) ? $model->includes_family : null);
-$project_name           = Session::has('inputs') ? Session::get('inputs')['project_name']               : (isset($model) ? $model->project_name : null);
-$entertainment_reason   = Session::has('inputs') ? Session::get('inputs')['entertainment_reason']       : (isset($model) ? $model->entertainment_reason : null);
-$entertainment_person   = Session::has('inputs') ? Session::get('inputs')['entertainment_person']       : (isset($model) ? $model->entertainment_person : null);
-$est_amount             = Session::has('inputs') ? Session::get('inputs')['est_amount']                 : (isset($model) ? $model->est_amount : null);
-$reason_budget_over     = Session::has('inputs') ? Session::get('inputs')['reason_budget_over']         : (isset($model) ? $model->reason_budget_over : null);
-$file_path              = Session::has('inputs') ? Session::get('inputs')['file_path']                  : (isset($model) ? $model->file_path : null);
+$infos                  = Session::has('inputs') ? Session::get('inputs')['infos']                      : (isset($application) ? $application->entertainment->entertainmentinfos : null);
+$entertainment_dt       = Session::has('inputs') ? Session::get('inputs')['entertainment_dt']           : (isset($application) ? $application->entertainment->entertainment_dt : null);
+$place                  = Session::has('inputs') ? Session::get('inputs')['place']                      : (isset($application) ? $application->entertainment->place : null);
+$during_trip            = Session::has('inputs') ? Session::get('inputs')['during_trip']                : (isset($application) ? $application->entertainment->during_trip : null);
+$check_row              = Session::has('inputs') ? Session::get('inputs')['check_row']                  : (isset($application) ? $application->entertainment->check_row : null);
+$has_et_times           = Session::has('inputs') ? Session::get('inputs')['has_entertainment_times']    : (isset($application) ? $application->entertainment->has_entertainment_times : null);
+$et_times               = Session::has('inputs') ? Session::get('inputs')['entertainment_times']        : (isset($application) ? $application->entertainment->entertainment_times : null);
+$existence_projects     = Session::has('inputs') ? Session::get('inputs')['existence_projects']         : (isset($application) ? $application->entertainment->existence_projects : null);
+$includes_family        = Session::has('inputs') ? Session::get('inputs')['includes_family']            : (isset($application) ? $application->entertainment->includes_family : null);
+$project_name           = Session::has('inputs') ? Session::get('inputs')['project_name']               : (isset($application) ? $application->entertainment->project_name : null);
+$entertainment_reason   = Session::has('inputs') ? Session::get('inputs')['entertainment_reason']       : (isset($application) ? $application->entertainment->entertainment_reason : null);
+$entertainment_person   = Session::has('inputs') ? Session::get('inputs')['entertainment_person']       : (isset($application) ? $application->entertainment->entertainment_person : null);
+$est_amount             = Session::has('inputs') ? Session::get('inputs')['est_amount']                 : (isset($application) ? $application->entertainment->est_amount : null);
+$reason_budget_over     = Session::has('inputs') ? Session::get('inputs')['reason_budget_over']         : (isset($application) ? $application->entertainment->reason_budget_over : null);
+$file_path              = Session::has('inputs') ? Session::get('inputs')['file_path']                  : (isset($application) ? $application->file_path : null);
 
 @endphp
 <section class="content">
     <x-alert />
     <form method="POST"
-        action="@if (isset($id)) {{ route('user.entertainment.update', $id) }} @else {{ route('user.entertainment.store') }} @endif"
+        action="@if (isset($application)) {{ route('user.entertainment.update', $application->id) }} @else {{ route('user.entertainment.store') }} @endif"
         enctype="multipart/form-data">
         @csrf
         <div class="main-top">
@@ -73,7 +73,7 @@ $file_path              = Session::has('inputs') ? Session::get('inputs')['file_
         </div>
         <div class="card">
             <div class="card-body">
-                @if (isset($id))
+                @if (isset($application))
                 <div class="form-group row">
                     <div class="col-sm-2 text-left">
                         <label>{{ __('label.entertainment.application_no') }}</label>
@@ -455,8 +455,8 @@ $file_path              = Session::has('inputs') ? Session::get('inputs')['file_
                     </div>
                     <div class="col-sm-5">
                         {{-- for edit --}}
-                        @if(isset($id) && !empty($file_path))
-                        @if ($model->file_path === $file_path)
+                        @if(isset($application) && !empty($file_path))
+                        @if ($application->file_path === $file_path)
                         <div class="file-show input-group mb-3">
                             <label class="form-control file-link">
                                 <a id="file_link" href="{{ Storage::url($file_path) }}" target="_blank">
@@ -471,8 +471,8 @@ $file_path              = Session::has('inputs') ? Session::get('inputs')['file_
                         @endif
                         <div class="file-block input-group mb-3
                                         @php
-                                            if((isset($id) && !empty($file_path))){
-                                                if($model->file_path === $file_path){
+                                            if((isset($application) && !empty($file_path))){
+                                                if($application->file_path === $file_path){
                                                     echo 'd-none';
                                                 }
                                             }

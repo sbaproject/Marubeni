@@ -74,13 +74,13 @@ class EntertainmentController extends Controller
         }
 
         // get business application
-        $model = Entertaiment::where('application_id', $id)->first();
+        // $model = Entertaiment::where('application_id', $id)->first();
 
         // get companies
         $companies = Company::all('name');
         $companies = Arr::pluck($companies->toArray(), 'name');
 
-        return view('application.entertainment.input', compact('application', 'model', 'id', 'companies'));
+        return view('application.entertainment.input', compact('application', 'companies'));
     }
 
     public function update(Request $request, $id)
@@ -111,7 +111,7 @@ class EntertainmentController extends Controller
         }
 
         // save
-        $msgErr = $this->doSaveData($request, $inputs);
+        $msgErr = $this->doSaveData($request, $inputs, $application);
         if (!empty($msgErr)) {
             return Common::redirectBackWithAlertFail($msgErr)->with('inputs', $inputs);
         }
@@ -171,7 +171,7 @@ class EntertainmentController extends Controller
         }
     }
 
-    public function doSaveData($request, &$inputs)
+    public function doSaveData($request, &$inputs, $app = null)
     {
         $msgErr = '';
 
@@ -263,6 +263,27 @@ class EntertainmentController extends Controller
             $application['group_id']        = $group->id;
             $application['current_step']    = $currentStep;
 
+            // delete old file
+            if (!empty($app)) {
+                $filePath = $app->file_path;
+                // attchached file was changed
+                if ($inputs['file_path'] != $filePath) {
+                    if (!empty($app->file_path)) {
+                        if (Storage::exists($app->file_path)) {
+                            Storage::delete($app->file_path);
+                        }
+                    }
+                    $filePath = null;
+                }
+            }
+            // upload new attached file
+            if ($request->file('input_file')) {
+                $fileName = time() . $user->id . '_' . $request->file('input_file')->getClientOriginalName();
+                $filePath = $request->file('input_file')->storeAs('uploads/application/', $fileName);
+            }
+
+            $application['file_path'] = isset($filePath) ? $filePath : null;
+
             // save applications
             if (!$request->id) {
                 $application['created_by']      = $user->id;
@@ -276,27 +297,9 @@ class EntertainmentController extends Controller
             /**-------------------------
              * create [Entertainment Application] detail
              *-------------------------*/
-            if ($request->id) {
-                $entertainment = Entertaiment::where('application_id', $request->id)->first();
-            }
-            // delete old file
-            if (isset($entertainment)) {
-                $filePath = $entertainment->file_path;
-                // attchached file was changed
-                if ($inputs['file_path'] != $filePath) {
-                    if (!empty($entertainment->file_path)) {
-                        if (Storage::exists($entertainment->file_path)) {
-                            Storage::delete($entertainment->file_path);
-                        }
-                    }
-                    $filePath = null;
-                }
-            }
-            // upload new attached file
-            if ($request->file('input_file')) {
-                $fileName = time() . $user->id . '_' . $request->file('input_file')->getClientOriginalName();
-                $filePath = $request->file('input_file')->storeAs('uploads/application/', $fileName);
-            }
+            // if ($request->id) {
+            //     $entertainment = Entertaiment::where('application_id', $request->id)->first();
+            // }
 
             // prepare entertainment data
             $etData = [
@@ -317,23 +320,21 @@ class EntertainmentController extends Controller
                 'updated_by'                => $user->id,
                 'updated_at'                => Carbon::now(),
             ];
-            // for new
-            if (!$request->id) {
+
+            // save entertainment application
+            if (empty($app)) {
                 $etData['application_id'] = $applicationId;
                 $etData['created_by'] = $user->id;
                 $etData['created_at'] = Carbon::now();
-            }
 
-            // save entertainment application
-            if (!$request->id) {
                 $etId = DB::table('entertaiments')->insertGetId($etData);
             } else {
-                DB::table('entertaiments')->where('id', $entertainment->id)->update($etData);
-                DB::table('entertaiment_infos')->where('entertaiment_id', $entertainment->id)->delete();
+                DB::table('entertaiments')->where('id', $app->entertainment->id)->update($etData);
+                DB::table('entertaiment_infos')->where('entertaiment_id', $app->entertainment->id)->delete();
             }
             // save transportations
             if (!isset($etId)) {
-                $etId = $entertainment->id;
+                $etId = $app->entertainment->id;
             }
             $entertaimentInfos = [];
             foreach ($inputs['infos'] as $value) {
