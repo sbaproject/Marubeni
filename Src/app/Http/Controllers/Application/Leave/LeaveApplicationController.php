@@ -159,7 +159,7 @@ class LeaveApplicationController extends Controller
         }
     }
 
-    public function doSaveData($request, $inputs, $mApplication = null)
+    public function doSaveData($request, &$inputs, $mApplication = null)
     {
         $msgErr = '';
 

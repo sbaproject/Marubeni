@@ -137,7 +137,7 @@ class BusinesstripController extends Controller
         }
     }
 
-    public function doSaveData($request, $inputs)
+    public function doSaveData($request, &$inputs)
     {
         $msgErr = '';
 
