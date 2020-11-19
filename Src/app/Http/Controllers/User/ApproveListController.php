@@ -39,39 +39,39 @@ class ApproveListController extends Controller
         // get data
         $sql = "SELECT
                  CONCAT(CONCAT(fo.prefix,'-'),LPAD(a.`id`, " . $fillZero . ", '0')) AS application_no
-                ,a.`id` AS application_id
+                ,a.`id`             AS application_id
                 ,a.`current_step`
                 ,a.`status`
-                ,a.`created_at` AS apply_date
+                ,a.`created_at`     AS apply_date
                 ,f.`form_id`
                 ,f.`group_id`
                 ,s.`id` AS step_id
                 ,s.`approver_id`
                 ,s.`step_type`
                 ,s.`approver_type`
-                ,u.`name` AS approver_name
-                ,us.`name` AS applicant_name
+                ,u.`name`           AS approver_name
+                ,us.`name`          AS applicant_name
                 ,f.id AS flow_id
-                ,fo.name AS application_type
+                ,fo.name            AS application_type
                 ,(
-                    SELECT us.name
-                    FROM steps
-                    INNER JOIN users us ON us.id = approver_id
-                    WHERE `flow_id` = s.`flow_id` 
-                    AND `approver_type` = s.`approver_type`
-                    AND (
-                            (`step_type` = s.`step_type` AND s.`order` <> :completed1 AND `select_order` = s.`order`)
-                            OR
-                            (s.`order` = :completed2 AND (`step_type` = (s.`step_type` + 1) AND `select_order` = 0))
-                        )
+                    SELECT  us.name
+                    FROM    steps
+                            INNER JOIN users us ON us.id = approver_id
+                    WHERE   `flow_id` = s.`flow_id` 
+                    AND     `approver_type` = s.`approver_type`
+                    AND     (
+                                (`step_type` = s.`step_type` AND s.`order` <> :completed1 AND `select_order` = s.`order`)
+                                OR
+                                (s.`order` = :completed2 AND (`step_type` = (s.`step_type` + 1) AND `select_order` = 0))
+                            )
                 ) AS next_approver
-            FROM applications a
-            INNER JOIN forms fo ON a.`form_id` = fo.`id` " . $formIdCondition . "
-            INNER JOIN flows f ON f.`form_id` = a.`form_id` AND f.`group_id` = a.`group_id`
-            INNER JOIN steps s ON s.`flow_id` = f.`id` AND s.`approver_type` = :approver_type AND a.`status` = s.`select_order` AND s.`step_type` = a.`current_step`
-            INNER JOIN users u ON u.`id` = s.`approver_id` AND s.`approver_id` = :userId
-            INNER JOIN users us ON us.`id` = a.`created_by`
-            WHERE a.`status` BETWEEN 0 AND 98 " . $keywordCondition;
+            FROM    applications a
+                    INNER JOIN forms fo ON a.`form_id` = fo.`id` " . $formIdCondition . "
+                    INNER JOIN flows f ON f.`form_id` = a.`form_id` AND f.`group_id` = a.`group_id`
+                    INNER JOIN steps s ON s.`flow_id` = f.`id` AND s.`approver_type` = :approver_type AND a.`status` = s.`select_order` AND s.`step_type` = a.`current_step`
+                    INNER JOIN users u ON u.`id` = s.`approver_id` AND s.`approver_id` = :userId
+                    INNER JOIN users us ON us.`id` = a.`created_by`
+            WHERE   a.`status` BETWEEN 0 AND 98 " . $keywordCondition;
 
         $data = DB::select($sql, $params);
 

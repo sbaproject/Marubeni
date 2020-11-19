@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Application\Business;
 
+use PDF;
+use Exception;
 use Carbon\Carbon;
 use App\Libs\Common;
 use App\Models\Application;
@@ -12,7 +14,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
-use PDF;
+use App\Exceptions\Entertainment\NotFoundFlowSettingException;
 
 class BusinesstripController extends Controller
 {
@@ -47,7 +49,10 @@ class BusinesstripController extends Controller
         }
 
         // save
-        $this->doSaveData($request, $inputs);
+        $msgErr = $this->doSaveData($request, $inputs);
+        if (!empty($msgErr)) {
+            return Common::redirectBackWithAlertFail($msgErr)->with('inputs', $inputs);
+        }
 
         // redirect atfer save
         return $this->doRedirect($inputs);
@@ -95,7 +100,10 @@ class BusinesstripController extends Controller
         }
 
         // save
-        $this->doSaveData($request, $inputs);
+        $msgErr = $this->doSaveData($request, $inputs);
+        if (!empty($msgErr)) {
+            return Common::redirectBackWithAlertFail($msgErr)->with('inputs', $inputs);
+        }
 
         // redirect atfer save
         return $this->doRedirect($inputs);
@@ -131,7 +139,11 @@ class BusinesstripController extends Controller
 
     public function doSaveData($request, $inputs)
     {
-        DB::transaction(function () use ($request, $inputs) {
+        $msgErr = '';
+
+        DB::beginTransaction();
+
+        try {
             // get user
             $user = Auth::user();
 
@@ -181,6 +193,10 @@ class BusinesstripController extends Controller
                     })
                     ->where('groups.deleted_at', '=', null)
                     ->first();
+
+                if (empty($group)) {
+                    throw new NotFoundFlowSettingException();
+                }
 
                 $application['form_id'] = $formId;
                 $application['group_id'] = $group->id;
@@ -265,7 +281,20 @@ class BusinesstripController extends Controller
                 $transportations[] = $item;
             }
             DB::table('transportations')->insert($transportations);
-        });
+
+            DB::commit();
+        } catch (Exception $ex) {
+            DB::rollBack();
+            unset($inputs['input_file']);
+            if ($ex instanceof NotFoundFlowSettingException) {
+                
+                $msgErr = $ex->getMessage();
+            } else {
+                $msgErr = $ex->getMessage();
+            }
+        }
+
+        return $msgErr;
     }
 
     public function doRedirect($inputs)

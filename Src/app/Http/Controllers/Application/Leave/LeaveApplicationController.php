@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Application\Leave;
 
+use PDF;
+use Exception;
 use Carbon\Carbon;
 use App\Libs\Common;
 use App\Models\Leave;
@@ -12,7 +14,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
-use PDF;
+use App\Exceptions\Entertainment\NotFoundFlowSettingException;
 
 class LeaveApplicationController extends Controller
 {
@@ -58,7 +60,10 @@ class LeaveApplicationController extends Controller
         }
 
         // save
-        $this->doSaveData($request, $inputs);
+        $msgErr = $this->doSaveData($request, $inputs);
+        if (!empty($msgErr)) {
+            return Common::redirectBackWithAlertFail($msgErr)->with('inputs', $inputs);
+        }
 
         // continue create new application after save success
         return $this->doRedirect($inputs);
@@ -118,7 +123,10 @@ class LeaveApplicationController extends Controller
         }
 
         // save
-        $this->doSaveData($request, $inputs, $mApplication);
+        $msgErr = $this->doSaveData($request, $inputs, $mApplication);
+        if (!empty($msgErr)) {
+            return Common::redirectBackWithAlertFail($msgErr)->with('inputs', $inputs);
+        }
 
         // continue create new application after save success
         if (isset($inputs['subsequent'])) {
@@ -153,7 +161,11 @@ class LeaveApplicationController extends Controller
 
     public function doSaveData($request, $inputs, $mApplication = null)
     {
-        DB::transaction(function () use ($request, $inputs, $mApplication) {
+        $msgErr = '';
+
+        DB::beginTransaction();
+
+        try {
             // get user
             $user = Auth::user();
 
@@ -197,6 +209,10 @@ class LeaveApplicationController extends Controller
                     ->where('groups.budget_id', '=', null)
                     ->where('groups.deleted_at', '=', null)
                     ->first();
+
+                if (empty($group)) {
+                    throw new NotFoundFlowSettingException();
+                }
 
                 $application['form_id'] = $formId;
                 $application['group_id'] = $group->id;
@@ -264,7 +280,19 @@ class LeaveApplicationController extends Controller
             }
 
             DB::table('leaves')->updateOrInsert(['application_id' => $request->id], $leaveData);
-        });
+
+            DB::commit();
+        } catch (Exception $ex) {
+            DB::rollBack();
+            unset($inputs['input_file']);
+            if ($ex instanceof NotFoundFlowSettingException) {
+                $msgErr = $ex->getMessage();
+            } else {
+                $msgErr = $ex->getMessage();
+            }
+        }
+
+        return $msgErr;
     }
 
     public function doRedirect($inputs)

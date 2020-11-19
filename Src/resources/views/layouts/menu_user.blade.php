@@ -62,7 +62,7 @@
             </ul>
         </li>
         <li class="nav-item">
-            <a href="/pages/examples/08_waiting_approval_list.html" class="nav-link">
+            <a href="{{ route('user.approve.list') }}" class="nav-link">
                 <i class="nav-icon fa fa-check-square"></i>
                 <p>{{ __('label.menu.approval') }}</p>
             </a>
