@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             FormSeeder::class,
             ApplicantSeeder::class,
-            //BudgetSeeder::class,
+            BudgetSeeder::class,
             //GroupSeeder::class,
             ApplicationSeeder::class,
             //LeaveSeeder::class,
