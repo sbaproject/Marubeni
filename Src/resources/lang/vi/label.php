@@ -188,7 +188,7 @@ return [
     'dashboard' => [
         //form
         'list_application' => 'Danh sách Tất Cả Đơn',
-        'application_no' => 'Số Thứ Tự',
+        'application_no' => 'Mã Đơn',
         'application_name' => 'Loại Đơn',
         'status' => 'Trạng Thái',
         'apply_date' => 'Ngày Nộp Đơn',
@@ -221,7 +221,7 @@ return [
         'list_of_declined_documents' => 'Danh Sách Đơn Trả Về',
         'list_of_reject_documents' => 'Danh Sách Đơn Khước Từ',
         'list_of_completed_documents' => 'Danh Sách Đơn Hoàn Tất',
-        'no' => 'Số Thứ Tự',
+        'no' => 'Mã Đơn',
         'application_type' => 'Loại Đơn',
         'apply_date' => 'Ngày Nộp Đơn',
         'next_approver' => 'Người Phê Duyệt Kế Tiếp',

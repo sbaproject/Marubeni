@@ -12,6 +12,7 @@ class AdminStatusController extends Controller
     public function index($status, Request $request)
     {
         $data = $request->input();
+        $fillZero = config('const.num_fillzero');
 
         //Set case in Status is Approvel
         if (intval($status) == config('const.application.status.approvel_un') or intval($status) == config('const.application.status.approvel_in')) {
@@ -38,7 +39,7 @@ class AdminStatusController extends Controller
             $end_date = $data['dataDateTo'] . ' 23:59:59';
 
             $list_applications_status = DB::table('applications')
-                ->select('forms.name as nameapp', 'applications.created_at as datecreate', 'users.name as nameuser','applications.form_id','applications.id')
+                ->select(DB::raw("CONCAT(CONCAT(forms.prefix,'-'),LPAD(applications.`id`, " . $fillZero . ", '0')) AS application_no"), 'forms.name As nameapp', 'applications.created_at as datecreate', 'users.name as nameuser', 'applications.form_id', 'applications.id')
 
                 //Join
                 ->join('forms', 'applications.form_id', '=', 'forms.id')
@@ -70,7 +71,7 @@ class AdminStatusController extends Controller
 
             //Load Page
             $list_applications_status = DB::table('applications')
-                ->select('forms.name As nameapp', 'applications.created_at As datecreate', 'users.name As nameuser','applications.form_id','applications.id')
+                ->select(DB::raw("CONCAT(CONCAT(forms.prefix,'-'),LPAD(applications.`id`, " . $fillZero . ", '0')) AS application_no"), 'forms.name As nameapp', 'applications.created_at as datecreate', 'users.name as nameuser', 'applications.form_id', 'applications.id')
 
                 //Join
                 ->join('forms', 'applications.form_id', '=', 'forms.id')
