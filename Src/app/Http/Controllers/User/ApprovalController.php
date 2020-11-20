@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers\User;
 
+use Exception;
+use App\Libs\Common;
+use App\Models\User;
+use App\Models\Leave;
+use App\Models\Application;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Models\Application;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Pagination\LengthAwarePaginator;
 
@@ -91,9 +95,106 @@ class ApprovalController extends Controller
         return view('approval.index', compact('data', 'inputs'));
     }
 
-    public function show(Request $request, Application $app) {
-
-        // dd($app);
+    public function show(Request $request, Application $app)
+    {
         return view('approval.show', compact('app'));
+    }
+
+    public function update(Request $request, Application $app)
+    {
+        if (isset($request->approve) || isset($request->reject) || isset($request->declined)) {
+
+            $user = Auth::user();
+
+            //check logged user has approval permission
+            if (!$user->approval) {
+                abort(403);
+            }
+
+            $appDetail = DB::table('applications')
+                ->select(
+                    'applications.*',
+                    'steps.flow_id',
+                    'steps.approver_id',
+                    'steps.approver_type',
+                    DB::raw('(SELECT MAX(`step_type`) FROM steps WHERE flow_id = 5) AS step_count')
+                )
+                ->join('flows', function ($join) {
+                    $join->on('flows.form_id', '=', 'applications.form_id')
+                        ->whereRaw('flows.group_id = applications.group_id');
+                })
+                ->join('steps', function ($join) {
+                    $join->on('steps.flow_id', '=', 'flows.id')
+                        ->whereRaw('steps.select_order = applications.status')
+                        ->whereRaw('steps.step_type = applications.current_step');
+                })
+                ->join('users', 'users.id', '=', 'steps.approver_id')
+                ->where('applications.id', '=', $app->id)
+                ->where('applications.deleted_at', '=', null)
+                // ->whereRaw('applications.status between 0 and 98')
+                ->first();
+
+                dd($appDetail);
+
+            // not found application
+            if (empty($appDetail)) {
+                abort('Khong the thao tac voi don nay');
+            }
+            // check available status application
+            if ($appDetail->status < 0 || $appDetail->status > 98) {
+                return Common::redirectBackWithAlertFail('Thao tac khong hop le doi voi don nay.');
+            }
+            // check available next approval
+            if ($appDetail->approver_id != $user->id) {
+                return Common::redirectBackWithAlertFail('Ban khong co quyen de thao tac');
+            }
+
+            DB::beginTransaction();
+            try {
+                // for leave application
+                if ($appDetail->form_id == config('const.form.leave')) {
+                    $leave = Leave::where('application_id', $appDetail->id)->first();
+                    if (!empty($leave)) {
+                        // if leave_code is AL or SL (with paid_type = AL)
+                        if (
+                            $leave->code_leave == config('const.code_leave.AL')
+                            || ($leave->code_leave == config('const.code_leave.SL') && $leave->paid_type == config('const.paid_type.AL'))
+                        ) {
+                            $applicant = User::find($appDetail->created_by);
+                            if (!empty($applicant)) {
+                                $dayUse = empty($leave->days_use) ? 0 : $leave->days_use;
+                                $timeUse = empty($leave->times_use) ? 0 : $leave->times_use;
+                                $applicant->leave_remaining_days = $applicant->leave_remaining_days - $dayUse;
+                                $applicant->leave_remaining_time = $applicant->leave_remaining_time - $timeUse;
+                                $applicant->updated_by = $user->id;
+                                $applicant->save();
+                            }
+                        }
+                    }
+                }
+
+                // update status
+
+
+                DB::commit();
+
+                return Common::redirectBackWithAlertSuccess();
+            } catch (Exception $ex) {
+
+                DB::rollBack();
+                dd($ex);
+            }
+
+
+
+
+
+            if (isset($request->approve)) {
+            } elseif (isset($request->reject)) {
+            } elseif (isset($request->declined)) {
+            }
+        } else {
+            abort(404);
+        }
     }
 }
