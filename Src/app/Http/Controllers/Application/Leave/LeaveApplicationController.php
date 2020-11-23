@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use App\Libs\Common;
 use App\Models\Leave;
 use App\Models\Application;
+use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -77,28 +78,20 @@ class LeaveApplicationController extends Controller
             abort('403');
         }
 
+        if (empty($application->leave)) {
+            abort(404);
+        }
+
         // get leave application
         // $model = Leave::where('application_id', $id)->first();
 
-        // code leaves
-        $codeLeaves = config('const.code_leave');
-
-        // paid types
-        $paidTypes = config('const.paid_type');
-
-        // logged user
-        $user = Auth::user();
-
-        return view('application.leave.input', compact('codeLeaves', 'paidTypes', 'application', 'user'));
+        return view('application.leave.input', compact('application'));
     }
 
     public function update(Request $request, $id)
     {
         // check owner
-        $mApplication = Application::findOrFail($id);
-        if (Auth::user()->id !== $mApplication->created_by) {
-            abort('403');
-        }
+        $application = Application::findOrFail($id);
 
         // get inputs
         $inputs = $request->all();
@@ -110,7 +103,10 @@ class LeaveApplicationController extends Controller
         if (isset($inputs['apply']) || isset($inputs['draft']) || isset($inputs['pdf'])) {
             // export pdf
             if (isset($inputs['pdf'])) {
-                return $this->pdf($request, $inputs, $mApplication);
+                return $this->pdf($request, $inputs, $application);
+            }
+            if (Auth::user()->id !== $application->created_by) {
+                abort('403');
             }
         } else {
             abort(404);
@@ -123,7 +119,7 @@ class LeaveApplicationController extends Controller
         }
 
         // save
-        $msgErr = $this->doSaveData($request, $inputs, $mApplication);
+        $msgErr = $this->doSaveData($request, $inputs, $application);
         if (!empty($msgErr)) {
             return Common::redirectBackWithAlertFail($msgErr)->with('inputs', $inputs);
         }
@@ -308,17 +304,87 @@ class LeaveApplicationController extends Controller
         return Common::redirectRouteWithAlertSuccess('user.form.index');
     }
 
-    public function pdf($request, $inputs)
+    public function pdf($request, $inputs, $application = null)
     {
-        // get logged user
-        $user = Auth::user();
+        if ($application != null) {
+            // get list of approver (include TO & CC)
+            $approvers = DB::table('applications')
+                ->select('steps.approver_id')
+                ->join('flows', function ($join) {
+                    $join->on('flows.form_id', '=', 'applications.form_id')
+                        ->whereRaw('flows.group_id = applications.group_id');
+                })
+                ->join('steps', 'steps.flow_id', '=', 'flows.id')
+                ->where('applications.id', '=', $request->id)
+                ->where('applications.deleted_at', '=', null)
+                ->get()
+                ->toArray();
+
+            $approvers = Arr::pluck($approvers, 'approver_id');
+            // check logged user has permission to access
+            $loggedUser = Auth::user();
+            if (!in_array($loggedUser->id, $approvers) && $application->created_by !== $loggedUser->id) {
+                abort(403);
+            }
+        }
+
+        if (empty($application)) {
+            $inputs['applicant'] = Auth::user();
+        } else {
+            $inputs['applicant'] = $application->applicant;
+        }
 
         // PDF::setOptions(['defaultFont' => 'Roboto-Black']);
-        $pdf = PDF::loadView('application.leave.pdf', compact('user', 'inputs'));
+        $pdf = PDF::loadView('application.leave.pdf', compact('application', 'inputs'));
 
         // preview pdf
         return $pdf->stream('Leave_Application.pdf');
         // download
         // return $pdf->download('Leave_Application.pdf');
+    }
+
+    public function preview(Request $request, $id)
+    {
+        $application = Application::findOrFail($id);
+        $previewFlg = true;
+
+        if (empty($application->leave)) {
+            abort(404);
+        }
+
+        // get list of approver (include TO & CC)
+        $approvers = DB::table('applications')
+            ->select('steps.approver_id')
+            ->join('flows', function ($join) {
+                $join->on('flows.form_id', '=', 'applications.form_id')
+                    ->whereRaw('flows.group_id = applications.group_id');
+            })
+            ->join('steps', 'steps.flow_id', '=', 'flows.id')
+            ->where('applications.id', '=', $id)
+            ->where('applications.deleted_at', '=', null)
+            ->get()
+            ->toArray();
+
+        $approvers = Arr::pluck($approvers, 'approver_id');
+        // check logged user has permission to access
+        $loggedUser = Auth::user();
+        if (!in_array($loggedUser->id, $approvers) && $application->created_by !== $loggedUser->id) {
+            abort(403);
+        }
+
+        return view('application.leave.input', compact('application', 'previewFlg'));
+    }
+
+    public function previewPdf(Request $request, $id)
+    {
+        $application = Application::findOrFail($id);
+
+        $inputs = $request->input();
+
+        if (isset($inputs['pdf'])) {
+            return $this->pdf($request, $inputs, $application);
+        } else {
+            abort(404);
+        }
     }
 }

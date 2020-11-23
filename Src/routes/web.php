@@ -145,6 +145,8 @@ Route::middleware('auth')->group(function () {
                     Route::post('add', [LeaveApplicationController::class, 'store'])->name('store');
                     Route::get('edit/{id}', [LeaveApplicationController::class, 'show'])->name('show');
                     Route::post('edit/{id}', [LeaveApplicationController::class, 'update'])->name('update');
+                    Route::get('preview/{id}', [LeaveApplicationController::class, 'preview'])->name('preview');
+                    Route::post('preview/{id}', [LeaveApplicationController::class, 'previewPdf'])->name('preview.pdf');
                 });
                 // Business Trip Application
                 Route::prefix('business')->name('business.')->group(function () {
@@ -152,6 +154,8 @@ Route::middleware('auth')->group(function () {
                     Route::post('add', [BusinessTripController::class, 'store'])->name('store');
                     Route::get('edit/{id}', [BusinessTripController::class, 'show'])->name('show');
                     Route::post('edit/{id}', [BusinessTripController::class, 'update'])->name('update');
+                    Route::get('preview/{id}', [BusinessTripController::class, 'preview'])->name('preview');
+                    Route::post('preview/{id}', [BusinessTripController::class, 'previewPdf'])->name('preview.pdf');
                 });
                 // Entertainment Application
                 Route::prefix('entertainment')->name('entertainment.')->group(function () {
@@ -159,12 +163,14 @@ Route::middleware('auth')->group(function () {
                     Route::post('add', [EntertainmentController::class, 'store'])->name('store');
                     Route::get('edit/{id}', [EntertainmentController::class, 'show'])->name('show');
                     Route::post('edit/{id}', [EntertainmentController::class, 'update'])->name('update');
+                    Route::get('preview/{id}', [EntertainmentController::class, 'preview'])->name('preview');
+                    Route::post('preview/{id}', [EntertainmentController::class, 'previewPdf'])->name('preview.pdf');
                 });
                 // Approval
                 Route::prefix('approval')->name('approval.')->group(function() {
                     Route::get('list', [ApprovalController::class, 'index'])->name('index');
-                    Route::get('detail/{app}', [ApprovalController::class, 'show'])->name('show');
-                    Route::post('detail/{app}', [ApprovalController::class, 'update'])->name('update');
+                    Route::get('detail/{id}', [ApprovalController::class, 'show'])->name('show');
+                    Route::post('detail/{id}', [ApprovalController::class, 'update'])->name('update');
                 });
             });
         });

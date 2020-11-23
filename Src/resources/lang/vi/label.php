@@ -22,6 +22,9 @@ return [
         'draft' => 'Nháp',
         'export' => 'Xuất PDF',
         'approval' => 'Phê Duyệt',
+        'preview' => 'Xem trước',
+        'reject' => 'Khước từ',
+        'declined' => 'Trả về',
     ],
     'rememberme' => 'Nhớ đăng nhập',
     'forgotpassword' => 'Quên mật khẩu ?',
@@ -44,6 +47,9 @@ return [
     'search_by_app_no_applicant' => 'Tìm theo mã số đơn hoặc tên người đề nghị',
     'pending_approval' => 'Đơn chờ duyệt',
     'application_info' => 'Thông tin đơn',
+    'no_attached_file' => 'Không có tập tin đính kèm',
+    'comment' => 'Chú thích',
+    'applicant' => 'Người đề nghị',
     /**
      * Paginator
      */

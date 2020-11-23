@@ -53,12 +53,12 @@ $(document).ready(function () {
     });
     $('#timeLeaveFrom').datetimepicker({
         format: 'HH:mm',
-        defaultDate: $('#time_from').val(),
+        // defaultDate: $('#time_from').val(),
         useCurrent: false
     });
     $('#timeLeaveTo').datetimepicker({
         format: 'HH:mm',
-        defaultDate: $('#time_to').val(),
+        // defaultDate: $('#time_to').val(),
         useCurrent: false
     });
     // show
@@ -132,6 +132,122 @@ $(document).ready(function () {
             $('#maternity_to').val(null);
         }
     });
+
+    /**----------------------------------------------------------------------
+     * 
+     ----------------------------------------------------------------------*/
+
+    if (!previewFlg) {
+        settingPageByCodeLeave($('select[name="rd_code_leave"]'));
+    }
+
+    // code_leave change
+    $('select[name="rd_code_leave"]').on('change', function () {
+        $('#code_leave').val($(this).val());
+        settingPageByCodeLeave($(this));
+    });
+
+    $('input[type=radio][name="rd_paid_type"]').on('change', function () {
+        if ($(this).val() == paid_type.AL) {
+            $('#days_use').removeAttr('readonly');
+            $('#times_use').removeAttr('readonly');
+        } else {
+            $('#days_use').val('');
+            $('#times_use').val('');
+            $('#days_use').attr('readonly', 'readonly');
+            $('#times_use').attr('readonly', 'readonly');
+        }
+        $('#paid_type').val($(this).val());
+    });
+
+    function settingPageByCodeLeave(codeLeaveSelector) {
+        $('input[type=text][data-target="#dateLeaveFrom"]').removeAttr('readonly');
+        $('input[type=text][data-target="#dateLeaveTo"]').removeAttr('readonly');
+        $('input[type=text][data-target="#timeLeaveDate"]').removeAttr('readonly');
+        $('#timeLeaveFrom').removeAttr('readonly');
+        $('#timeLeaveTo').removeAttr('readonly');
+        $('input[type=text][data-target="#maternityLeaveFrom"]').removeAttr('readonly');
+        $('input[type=text][data-target="#maternityLeaveTo"]').removeAttr('readonly');
+        $('input[type=radio][name="rd_paid_type"]').removeAttr('disabled');
+        $('#days_use').removeAttr('readonly');
+        $('#times_use').removeAttr('readonly');
+
+        if (codeLeaveSelector.val() == code_leave.ML) {
+            $('#dateLeaveFrom').data("DateTimePicker").date(null);
+            $('#dateLeaveTo').data("DateTimePicker").date(null);
+            $('#timeLeaveDate').data("DateTimePicker").date(null);
+            $('#timeLeaveFrom').data("DateTimePicker").date(null);
+            $('#timeLeaveTo').data("DateTimePicker").date(null);
+            $('#days_use').val('');
+            $('#times_use').val('');
+            // date leave
+            $('input[type=text][data-target="#dateLeaveFrom"]').attr('readonly', 'readonly');
+            $('input[type=text][data-target="#dateLeaveTo"]').attr('readonly', 'readonly');
+            // time leave
+            $('input[type=text][data-target="#timeLeaveDate"]').attr('readonly', 'readonly');
+            $('#timeLeaveFrom').attr('readonly', 'readonly');
+            $('#timeLeaveTo').attr('readonly', 'readonly');
+            // paid_type
+            $('input[type=radio][name="rd_paid_type"]').attr('disabled', 'disabled');
+            $('input[type=radio][name="rd_paid_type"]').prop('checked', false);
+            $('#paid_type').val('');
+            // days & times used
+            $('#days_use').attr('readonly', 'readonly');
+            $('#times_use').attr('readonly', 'readonly');
+        } else if (codeLeaveSelector.val() != "empty") {
+            $('#maternityLeaveFrom').data("DateTimePicker").date(null);
+            $('#maternityLeaveTo').data("DateTimePicker").date(null);
+            $('input[type=text][data-target="#maternityLeaveFrom"]').attr('readonly', 'readonly');
+            $('input[type=text][data-target="#maternityLeaveTo"]').attr('readonly', 'readonly');
+
+            if (codeLeaveSelector.val() != code_leave.SL) {
+                $('input[type=radio][name="rd_paid_type"]').attr('disabled', 'disabled');
+                $('input[type=radio][name="rd_paid_type"]').prop('checked', false);
+                $('#paid_type').val('');
+                if (codeLeaveSelector.val() != code_leave.AL) {
+                    $('#days_use').attr('readonly', 'readonly');
+                    $('#times_use').attr('readonly', 'readonly');
+                    $('#days_use').val('');
+                    $('#times_use').val('');
+                }
+                return;
+            }
+
+            if (codeLeaveSelector.val() == code_leave.SL) {
+                if ($('input[type=radio][name="rd_paid_type"]:checked').val() != paid_type.AL){
+                    $('#days_use').attr('readonly', 'readonly');
+                    $('#times_use').attr('readonly', 'readonly');
+                    $('#days_use').val('');
+                    $('#times_use').val('');
+                }
+                return;
+            }
+        } else {
+            $('#dateLeaveFrom').data("DateTimePicker").date(null);
+            $('#dateLeaveTo').data("DateTimePicker").date(null);
+            $('#timeLeaveDate').data("DateTimePicker").date(null);
+            $('#timeLeaveFrom').data("DateTimePicker").date(null);
+            $('#timeLeaveTo').data("DateTimePicker").date(null);
+            $('#maternityLeaveFrom').data("DateTimePicker").date(null);
+            $('#maternityLeaveTo').data("DateTimePicker").date(null);
+            $('input[type=radio][name="rd_paid_type"]').prop('checked', false);
+            $('#paid_type').val('');
+
+            $('#days_use').val('');
+            $('#times_use').val('');
+
+            $('input[type=text][data-target="#dateLeaveFrom"]').attr('readonly', 'readonly');
+            $('input[type=text][data-target="#dateLeaveTo"]').attr('readonly', 'readonly');
+            $('input[type=text][data-target="#timeLeaveDate"]').attr('readonly', 'readonly');
+            $('#timeLeaveFrom').attr('readonly', 'readonly');
+            $('#timeLeaveTo').attr('readonly', 'readonly');
+            $('input[type=text][data-target="#maternityLeaveFrom"]').attr('readonly', 'readonly');
+            $('input[type=text][data-target="#maternityLeaveTo"]').attr('readonly', 'readonly');
+            $('input[type=radio][name="rd_paid_type"]').attr('disabled', 'disabled');
+            $('#days_use').attr('readonly', 'readonly');
+            $('#times_use').attr('readonly', 'readonly');
+        }
+    }
 
     /**----------------------------------------------------------------------
      * Browse file

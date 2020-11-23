@@ -174,7 +174,7 @@
 			<td class="right" style="width: 15%;vertical-align: bottom">Full Name/ Họ tên:</td>
 			<td style="width: 24%;vertical-align: bottom">
 				<div style="border-bottom:1px solid;margin-top:-3px">
-					{{ $user->name }}
+					{{ $inputs['applicant']->name }}
 				</div>
 			</td>
 		</tr>

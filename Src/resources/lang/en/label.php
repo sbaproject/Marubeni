@@ -24,6 +24,9 @@ return [
         'draft' => 'Draft',
         'export' => 'Export PDF',
         'approval' => 'Approval',
+        'preview' => 'Preview',
+        'reject' => 'Reject',
+        'declined' => 'Declined',
     ],
     'rememberme' => 'Remember me',
     'forgotpassword' => 'Forgot your password ?',
@@ -55,6 +58,9 @@ return [
     'search_by_app_no_applicant' => 'Search by Application No or Applicant name',
     'pending_approval' => 'Pending Approval Application',
     'application_info' => 'Application Information',
+    'no_attached_file' => 'No attached file',
+    'comment' => 'Comment',
+    'applicant' => 'Applicant',
     /**
      * Form
      */

@@ -73,6 +73,10 @@ class EntertainmentController extends Controller
             abort('403');
         }
 
+        if (empty($application->entertainment)) {
+            abort(404);
+        }
+
         // get business application
         // $model = Entertaiment::where('application_id', $id)->first();
 
@@ -87,9 +91,6 @@ class EntertainmentController extends Controller
     {
         // check owner
         $application = Application::findOrFail($id);
-        if (Auth::user()->id !== $application->created_by) {
-            abort('403');
-        }
 
         // get inputs
         $inputs = $this->getInputs($request);
@@ -98,7 +99,10 @@ class EntertainmentController extends Controller
         if (isset($inputs['apply']) || isset($inputs['draft']) || isset($inputs['pdf'])) {
             // export pdf
             if (isset($inputs['pdf'])) {
-                return $this->pdf($request, $inputs);
+                return $this->pdf($request, $inputs, $application);
+            }
+            if (Auth::user()->id !== $application->created_by) {
+                abort('403');
             }
         } else {
             abort(404);
@@ -397,17 +401,87 @@ class EntertainmentController extends Controller
         return Common::redirectRouteWithAlertSuccess('user.form.index');
     }
 
-    public function pdf($request, $inputs, $mApplication = null)
+    public function pdf($request, $inputs, $application = null)
     {
-        // get logged user
-        $user = Auth::user();
+        if ($application != null) {
+            // get list of approver (include TO & CC)
+            $approvers = DB::table('applications')
+                ->select('steps.approver_id')
+                ->join('flows', function ($join) {
+                    $join->on('flows.form_id', '=', 'applications.form_id')
+                        ->whereRaw('flows.group_id = applications.group_id');
+                })
+                ->join('steps', 'steps.flow_id', '=', 'flows.id')
+                ->where('applications.id', '=', $request->id)
+                ->where('applications.deleted_at', '=', null)
+                ->get()
+                ->toArray();
+
+            $approvers = Arr::pluck($approvers, 'approver_id');
+            // check logged user has permission to access
+            $loggedUser = Auth::user();
+            if (!in_array($loggedUser->id, $approvers) && $application->created_by !== $loggedUser->id) {
+                abort(403);
+            }
+        }
+
+        if (empty($application)) {
+            $inputs['applicant'] = Auth::user();
+        } else {
+            $inputs['applicant'] = $application->applicant;
+        }
 
         // PDF::setOptions(['defaultFont' => 'Roboto-Black']);
-        $pdf = PDF::loadView('application.entertainment.pdf', compact('user', 'inputs'));
+        $pdf = PDF::loadView('application.entertainment.pdf', compact('application', 'inputs'));
 
         // preview pdf
-        return $pdf->stream('Business_Application.pdf');
+        return $pdf->stream('Entertainment_Application.pdf');
         // download
         // return $pdf->download('Leave_Application.pdf');
+    }
+
+    public function preview(Request $request, $id)
+    {
+        $application = Application::findOrFail($id);
+        $companies = [];
+        $previewFlg = true;
+
+        if (empty($application->entertainment)) {
+            abort(404);
+        }
+
+        // get list of approver (include TO & CC)
+        $approvers = DB::table('applications')
+            ->select('steps.approver_id')
+            ->join('flows', function ($join) {
+                $join->on('flows.form_id', '=', 'applications.form_id')
+                    ->whereRaw('flows.group_id = applications.group_id');
+            })
+            ->join('steps', 'steps.flow_id', '=', 'flows.id')
+            ->where('applications.id', '=', $id)
+            ->where('applications.deleted_at', '=', null)
+            ->get()
+            ->toArray();
+
+        $approvers = Arr::pluck($approvers, 'approver_id');
+        // check logged user has permission to access
+        if (!in_array(Auth::user()->id, $approvers) && $application->created_by !== Auth::user()->id) {
+            abort(403);
+        }
+
+        return view('application.entertainment.input', compact('application', 'previewFlg', 'companies'));
+    }
+
+    public function previewPdf(Request $request, $id)
+    {
+        $application = Application::findOrFail($id);
+
+        $inputs = $request->input();
+
+        if (isset($inputs['pdf'])) {
+            return $this->pdf($request, $inputs, $application);
+        } else {
+            abort(404);
+        }
     }
 }

@@ -172,11 +172,11 @@
 			</tr>
 			<tr>
 				<td>Full Name/ Họ tên:</td>
-				<td>{{ $user->name }}</td>
+				<td>{{ $inputs['applicant']->name }}</td>
 			</tr>
 			<tr>
 				<td>Sec Code/ Mã bộ phận:</td>
-				<td>{{ $user->department->name }}</td>
+				<td>{{ $inputs['applicant']->department->name }}</td>
 			</tr>
 		</table>
 	</div>

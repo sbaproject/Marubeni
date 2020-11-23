@@ -41,27 +41,36 @@
 @section('content')
 @php
 
-$infos                  = Session::has('inputs') ? Session::get('inputs')['infos']                      : (isset($application) ? $application->entertainment->entertainmentinfos : null);
-$entertainment_dt       = Session::has('inputs') ? Session::get('inputs')['entertainment_dt']           : (isset($application) ? $application->entertainment->entertainment_dt : null);
-$place                  = Session::has('inputs') ? Session::get('inputs')['place']                      : (isset($application) ? $application->entertainment->place : null);
-$during_trip            = Session::has('inputs') ? Session::get('inputs')['during_trip']                : (isset($application) ? $application->entertainment->during_trip : null);
-$check_row              = Session::has('inputs') ? Session::get('inputs')['check_row']                  : (isset($application) ? $application->entertainment->check_row : null);
-$has_et_times           = Session::has('inputs') ? Session::get('inputs')['has_entertainment_times']    : (isset($application) ? $application->entertainment->has_entertainment_times : null);
-$et_times               = Session::has('inputs') ? Session::get('inputs')['entertainment_times']        : (isset($application) ? $application->entertainment->entertainment_times : null);
-$existence_projects     = Session::has('inputs') ? Session::get('inputs')['existence_projects']         : (isset($application) ? $application->entertainment->existence_projects : null);
-$includes_family        = Session::has('inputs') ? Session::get('inputs')['includes_family']            : (isset($application) ? $application->entertainment->includes_family : null);
-$project_name           = Session::has('inputs') ? Session::get('inputs')['project_name']               : (isset($application) ? $application->entertainment->project_name : null);
-$entertainment_reason   = Session::has('inputs') ? Session::get('inputs')['entertainment_reason']       : (isset($application) ? $application->entertainment->entertainment_reason : null);
-$entertainment_person   = Session::has('inputs') ? Session::get('inputs')['entertainment_person']       : (isset($application) ? $application->entertainment->entertainment_person : null);
-$est_amount             = Session::has('inputs') ? Session::get('inputs')['est_amount']                 : (isset($application) ? $application->entertainment->est_amount : null);
-$reason_budget_over     = Session::has('inputs') ? Session::get('inputs')['reason_budget_over']         : (isset($application) ? $application->entertainment->reason_budget_over : null);
-$file_path              = Session::has('inputs') ? Session::get('inputs')['file_path']                  : (isset($application) ? $application->file_path : null);
+    $infos                  = Session::has('inputs') ? Session::get('inputs')['infos']                      : (isset($application) ? $application->entertainment->entertainmentinfos : null);
+    $entertainment_dt       = Session::has('inputs') ? Session::get('inputs')['entertainment_dt']           : (isset($application) ? $application->entertainment->entertainment_dt : null);
+    $place                  = Session::has('inputs') ? Session::get('inputs')['place']                      : (isset($application) ? $application->entertainment->place : null);
+    $during_trip            = Session::has('inputs') ? Session::get('inputs')['during_trip']                : (isset($application) ? $application->entertainment->during_trip : null);
+    $check_row              = Session::has('inputs') ? Session::get('inputs')['check_row']                  : (isset($application) ? $application->entertainment->check_row : null);
+    $has_et_times           = Session::has('inputs') ? Session::get('inputs')['has_entertainment_times']    : (isset($application) ? $application->entertainment->has_entertainment_times : null);
+    $et_times               = Session::has('inputs') ? Session::get('inputs')['entertainment_times']        : (isset($application) ? $application->entertainment->entertainment_times : null);
+    $existence_projects     = Session::has('inputs') ? Session::get('inputs')['existence_projects']         : (isset($application) ? $application->entertainment->existence_projects : null);
+    $includes_family        = Session::has('inputs') ? Session::get('inputs')['includes_family']            : (isset($application) ? $application->entertainment->includes_family : null);
+    $project_name           = Session::has('inputs') ? Session::get('inputs')['project_name']               : (isset($application) ? $application->entertainment->project_name : null);
+    $entertainment_reason   = Session::has('inputs') ? Session::get('inputs')['entertainment_reason']       : (isset($application) ? $application->entertainment->entertainment_reason : null);
+    $entertainment_person   = Session::has('inputs') ? Session::get('inputs')['entertainment_person']       : (isset($application) ? $application->entertainment->entertainment_person : null);
+    $est_amount             = Session::has('inputs') ? Session::get('inputs')['est_amount']                 : (isset($application) ? $application->entertainment->est_amount : null);
+    $reason_budget_over     = Session::has('inputs') ? Session::get('inputs')['reason_budget_over']         : (isset($application) ? $application->entertainment->reason_budget_over : null);
+    $file_path              = Session::has('inputs') ? Session::get('inputs')['file_path']                  : (isset($application) ? $application->file_path : null);
 
+    if(isset($application)){
+        if(isset($previewFlg)){
+            $actionUrl = route('user.entertainment.preview.pdf', $application->id);
+        } else {
+            $actionUrl = route('user.entertainment.update', $application->id);
+        }
+    } else {
+        $actionUrl = route('user.entertainment.store');
+    }
 @endphp
 <section class="content">
     <x-alert />
     <form method="POST"
-        action="@if (isset($application)) {{ route('user.entertainment.update', $application->id) }} @else {{ route('user.entertainment.store') }} @endif"
+        action="{{ $actionUrl }}"
         enctype="multipart/form-data">
         @csrf
         <div class="main-top">
@@ -91,7 +100,7 @@ $file_path              = Session::has('inputs') ? Session::get('inputs')['file_
                             <div id="datetime" data-target-input="nearest" class="input-group date">
                                 <input type="text"
                                     class="form-control datetimepicker-input @error('entertainment_dt') is-invalid @enderror"
-                                    data-target="#datetime" />
+                                    data-target="#datetime" @if(isset($previewFlg)) readonly @endif/>
                                 <div class="input-group-addon input-group-append" data-target="#datetime"
                                     data-toggle="datetimepicker">
                                     <div class="input-group-text"><i class="fa fa-calendar-alt"></i>
@@ -111,7 +120,8 @@ $file_path              = Session::has('inputs') ? Session::get('inputs')['file_
                 <div class="form-group row ">
                     <label class="col-lg-2 col-form-label text-left">{{ __('label.entertainment.place') }}</label>
                     <div class="col-lg-10">
-                        <input type="text" name="place" class="form-control @error('place') is-invalid @enderror" value="{{ $place }}">
+                        <input type="text" name="place" class="form-control @error('place') is-invalid @enderror" value="{{ $place }}"
+                            @if(isset($previewFlg)) readonly @endif>
                         @error('place')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -126,11 +136,13 @@ $file_path              = Session::has('inputs') ? Session::get('inputs')['file_
                         <fieldset class="@error('during_trip') form-control is-invalid @enderror">
                             @foreach (config('const.entertainment.during_trip') as $key => $value)
                                 <label class="radio-inline com_title col-form-label">
-                                    <input type="radio" name="during_trip" value="{{ $value }}" @if($during_trip !== null && $during_trip == $value) checked @endif>
+                                    <input type="radio" name="rd_during_trip" value="{{ $value }}" @if($during_trip !== null && $during_trip == $value) checked @endif
+                                        @if(isset($previewFlg)) disabled @endif>
                                     {{ __('label.'. $key) }}
                                 </label>
                             @endforeach
                         </fieldset>
+                        <input type="hidden" id="during_trip" name="during_trip" value="{{ $during_trip }}">
                         @error('during_trip')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -148,17 +160,20 @@ $file_path              = Session::has('inputs') ? Session::get('inputs')['file_
                             @if (!empty($infos))
                             @foreach ($infos as $key => $value)
                             <div class="card card-body card-company">
+                                @if(!isset($previewFlg))
                                 <div class="d-delete d-flex justify-content-end @if(count($infos) === 1 && $key === 0) d-none @endif">
                                     <button class="btnDelete btn btn-danger btn-sm pt-0 pb-0 pl-3 pr-3 mb-1">
                                         {{ __('label.button.delete') }}
                                     </button>
                                 </div>
-                                <div class="form-group row ">
+                                @endif
+                                <div class="form-group row">
                                     <label class="col-lg-2 col-form-label com_title text-left">{{ __('label.entertainment.cp_name') }}</label>
                                     <div class="col-lg-10">
                                         <div id="scrollable-dropdown-menu">
                                             <input type="text" class="form-control cp_name @error('infos.'.$key.'.cp_name') is-invalid @enderror"
-                                                name="infos[{{ $key }}][cp_name]" autocomplete="off" value="{{ $infos[$key]['cp_name'] }}">
+                                                name="infos[{{ $key }}][cp_name]" autocomplete="off" value="{{ $infos[$key]['cp_name'] }}"
+                                                @if(isset($previewFlg)) readonly @endif>
                                         </div>
                                         @error('infos.'.$key.'.cp_name')
                                         <span class="invalid-feedback" role="alert">
@@ -172,7 +187,8 @@ $file_path              = Session::has('inputs') ? Session::get('inputs')['file_
                                     <div class="col-lg-10">
                                         <input type="text" class="form-control title @error('infos.'.$key.'.title') is-invalid @enderror"
                                             name="infos[{{ $key }}][title]" autocomplete="off"
-                                            value="{{ $infos[$key]['title'] }}">
+                                            value="{{ $infos[$key]['title'] }}"
+                                            @if(isset($previewFlg)) readonly @endif>
                                         @error('infos.'.$key.'.title')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -185,7 +201,8 @@ $file_path              = Session::has('inputs') ? Session::get('inputs')['file_
                                     <div class="col-lg-10">
                                         <input type="text" class="form-control name_attendants @error('infos.'.$key.'.name_attendants') is-invalid @enderror"
                                             name="infos[{{ $key }}][name_attendants]" autocomplete="off"
-                                            value="{{ $infos[$key]['name_attendants'] }}">
+                                            value="{{ $infos[$key]['name_attendants'] }}"
+                                            @if(isset($previewFlg)) readonly @endif>
                                         @error('infos.'.$key.'.name_attendants')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -198,7 +215,8 @@ $file_path              = Session::has('inputs') ? Session::get('inputs')['file_
                                     <div class="col-lg-10">
                                         <input type="text" class="form-control details_dutles @error('infos.'.$key.'.details_dutles') is-invalid @enderror"
                                             name="infos[{{ $key }}][details_dutles]" autocomplete="off"
-                                            value="{{ $infos[$key]['details_dutles'] }}">
+                                            value="{{ $infos[$key]['details_dutles'] }}"
+                                            @if(isset($previewFlg)) readonly @endif>
                                         @error('infos.'.$key.'.details_dutles')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -219,26 +237,30 @@ $file_path              = Session::has('inputs') ? Session::get('inputs')['file_
                                     <label class="col-lg-2 col-form-label com_title text-left">{{ __('label.entertainment.cp_name') }}</label>
                                     <div class="col-lg-10">
                                         <div id="scrollable-dropdown-menu">
-                                            <input type="text" class="form-control cp_name" name="infos[0][cp_name]" autocomplete="off">
+                                            <input type="text" class="form-control cp_name" name="infos[0][cp_name]" autocomplete="off"
+                                                @if(isset($previewFlg)) readonly @endif>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group row ">
                                     <label class="col-lg-2 col-form-label com_title text-left">{{ __('label.entertainment.title') }}</label>
                                     <div class="col-lg-10">
-                                        <input type="text" class="form-control title" name="infos[0][title]" autocomplete="off">
+                                        <input type="text" class="form-control title" name="infos[0][title]" autocomplete="off"
+                                            @if(isset($previewFlg)) readonly @endif>
                                     </div>
                                 </div>
                                 <div class="form-group row ">
                                     <label class="col-lg-2 col-form-label com_title text-left">{{ __('label.entertainment.name_attendants') }}</label>
                                     <div class="col-lg-10">
-                                        <input type="text" class="form-control name_attendants" name="infos[0][name_attendants]" autocomplete="off">
+                                        <input type="text" class="form-control name_attendants" name="infos[0][name_attendants]" autocomplete="off"
+                                            @if(isset($previewFlg)) readonly @endif>
                                     </div>
                                 </div>
                                 <div class="form-group row ">
                                     <label class="col-lg-2 col-form-label com_title text-left">{{ __('label.entertainment.details_dutles') }}</label>
                                     <div class="col-lg-10">
-                                        <input type="text" class="form-control details_dutles" name="infos[0][details_dutles]" autocomplete="off">
+                                        <input type="text" class="form-control details_dutles" name="infos[0][details_dutles]" autocomplete="off"
+                                            @if(isset($previewFlg)) readonly @endif>
                                     </div>
                                 </div>
                             </div>
@@ -255,30 +277,32 @@ $file_path              = Session::has('inputs') ? Session::get('inputs')['file_
                                 <label class="col-lg-2 col-form-label com_title text-left">{{ __('label.entertainment.cp_name') }}</label>
                                 <div class="col-lg-10">
                                     <div id="scrollable-dropdown-menu">
-                                        <input type="text" class="form-control cp_name" autocomplete="off">
+                                        <input type="text" class="form-control cp_name" autocomplete="off" @if(isset($previewFlg)) readonly @endif>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group row ">
                                 <label class="col-lg-2 col-form-label com_title text-left">{{ __('label.entertainment.title') }}</label>
                                 <div class="col-lg-10">
-                                    <input type="text" class="form-control title" autocomplete="off">
+                                    <input type="text" class="form-control title" autocomplete="off" @if(isset($previewFlg)) readonly @endif>
                                 </div>
                             </div>
                             <div class="form-group row ">
                                 <label class="col-lg-2 col-form-label com_title text-left">{{ __('label.entertainment.name_attendants') }}</label>
                                 <div class="col-lg-10">
-                                    <input type="text" class="form-control name_attendants" autocomplete="off">
+                                    <input type="text" class="form-control name_attendants" autocomplete="off" @if(isset($previewFlg)) readonly @endif>
                                 </div>
                             </div>
                             <div class="form-group row ">
                                 <label class="col-lg-2 col-form-label com_title text-left">{{ __('label.entertainment.details_dutles') }}</label>
                                 <div class="col-lg-10">
-                                    <input type="text" class="form-control details_dutles" autocomplete="off">
+                                    <input type="text" class="form-control details_dutles" autocomplete="off" @if(isset($previewFlg)) readonly @endif>
                                 </div>
                             </div>
                         </div>
+                        @if(!isset($previewFlg))
                         <button id="btnAdd" class="btn btn-outline-dark">+ {{ __('label.button.addnew') }}</button>
+                        @endif
                         <!-- ./form chil -->
                     </div>
                 </div>
@@ -291,11 +315,13 @@ $file_path              = Session::has('inputs') ? Session::get('inputs')['file_
                         <fieldset class="@error('check_row') form-control is-invalid @enderror">
                             @foreach (config('const.entertainment.check_row') as $key => $value)
                             <label class="radio-inline com_title col-form-label">
-                                <input type="radio" name="check_row" value="{{ $value }}" @if($check_row !== null && $check_row == $value) checked @endif>
+                                <input type="radio" name="rd_check_row" value="{{ $value }}" @if($check_row !== null && $check_row == $value) checked @endif
+                                    @if(isset($previewFlg)) disabled @endif>
                                 {{ __('label.'. $key) }}
                             </label>
                             @endforeach
                         </fieldset>
+                        <input type="hidden" id="check_row" name="check_row" value="{{ $check_row }}">
                         @error('check_row')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -312,11 +338,13 @@ $file_path              = Session::has('inputs') ? Session::get('inputs')['file_
                         <fieldset class="@error('has_entertainment_times') form-control is-invalid @enderror">
                             @foreach (config('const.entertainment.has_et_times') as $key => $value)
                             <label class="radio-inline com_title col-form-label">
-                                <input type="radio" name="has_entertainment_times" value="{{ $value }}" @if($has_et_times !== null && $has_et_times == $value) checked @endif>
+                                <input type="radio" name="rd_has_entertainment_times" value="{{ $value }}" @if($has_et_times !== null && $has_et_times == $value) checked @endif
+                                    @if(isset($previewFlg)) disabled @endif>
                                 {{ __('label.'. $key) }}
                             </label>
                             @endforeach
                         </fieldset>
+                        <input type="hidden" id="has_entertainment_times" name="has_entertainment_times" value="{{ $has_et_times }}">
                         @error('has_entertainment_times')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -325,7 +353,8 @@ $file_path              = Session::has('inputs') ? Session::get('inputs')['file_
                         <div id="entertainment_times" style="padding-left: 0px"
                             class="col-lg-10 @if(empty($has_et_times) || ($has_et_times !== null && $has_et_times == config('const.entertainment.has_et_times.no'))) d-none @endif">
                             <input type="number" name="entertainment_times" class="form-control @error('entertainment_times') is-invalid @enderror"
-                                value="{{ $et_times }}" placeholder="{{ __('label.entertainment.entertainment_times') }}">
+                                value="{{ $et_times }}" placeholder="{{ __('label.entertainment.entertainment_times') }}"
+                                @if(isset($previewFlg)) readonly @endif>
                             @error('entertainment_times')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -343,12 +372,14 @@ $file_path              = Session::has('inputs') ? Session::get('inputs')['file_
                         <fieldset class="@error('existence_projects') form-control is-invalid @enderror">
                             @foreach (config('const.entertainment.existence_projects') as $key => $value)
                             <label class="radio-inline com_title col-form-label">
-                                <input type="radio" name="existence_projects" value="{{ $value }}" @if($existence_projects !==null &&
-                                    $existence_projects==$value) checked @endif>
+                                <input type="radio" name="rd_existence_projects" value="{{ $value }}" @if($existence_projects !==null &&
+                                    $existence_projects==$value) checked @endif
+                                    @if(isset($previewFlg)) disabled @endif>
                                 {{ __('label.'. $key) }}
                             </label>
                             @endforeach
                         </fieldset>
+                        <input type="hidden" id="existence_projects" name="existence_projects" value="{{ $existence_projects }}">
                         @error('existence_projects')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -365,12 +396,14 @@ $file_path              = Session::has('inputs') ? Session::get('inputs')['file_
                         <fieldset class="@error('includes_family') form-control is-invalid @enderror">
                             @foreach (config('const.entertainment.includes_family') as $key => $value)
                             <label class="radio-inline com_title col-form-label">
-                                <input type="radio" name="includes_family" value="{{ $value }}" @if($includes_family !==null &&
-                                    $includes_family==$value) checked @endif>
+                                <input type="radio" name="rd_includes_family" value="{{ $value }}" @if($includes_family !==null &&
+                                    $includes_family==$value) checked @endif
+                                    @if(isset($previewFlg)) disabled @endif>
                                 {{ __('label.'. $key) }}
                             </label>
                             @endforeach
                         </fieldset>
+                        <input type="hidden" id="includes_family" name="includes_family" value="{{ $includes_family }}">
                         @error('includes_family')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -386,7 +419,8 @@ $file_path              = Session::has('inputs') ? Session::get('inputs')['file_
                         <label style="color: #df2333f1;">{{ __('label.entertainment.if_need') }}</label>
                     </label>
                     <div class="col-lg-10">
-                        <textarea id="project_name" name="project_name" class="form-control" rows="2">{{ $project_name }}</textarea>
+                        <textarea id="project_name" name="project_name" class="form-control" rows="2"
+                            @if(isset($previewFlg)) readonly @endif>{{ $project_name }}</textarea>
                     </div>
                 </div>
                 <hr>
@@ -395,7 +429,8 @@ $file_path              = Session::has('inputs') ? Session::get('inputs')['file_
                         {{ __('label.entertainment.entertainment_reason') }}
                     </label>
                     <div class="col-lg-10">
-                        <textarea id="entertainment_reason" name="entertainment_reason" class="form-control" rows="5">{{ $entertainment_reason }}</textarea>
+                        <textarea id="entertainment_reason" name="entertainment_reason" class="form-control" rows="5"
+                            @if(isset($previewFlg)) readonly @endif>{{ $entertainment_reason }}</textarea>
                     </div>
                 </div>
                 <hr>
@@ -407,7 +442,7 @@ $file_path              = Session::has('inputs') ? Session::get('inputs')['file_
                         <div class="form-group row ">
                             <div class="col-lg-4">
                                 <input type="number" name="entertainment_person" class="form-control @error('entertainment_person') is-invalid @enderror"
-                                    value="{{ $entertainment_person }}">
+                                    value="{{ $entertainment_person }}" @if(isset($previewFlg)) readonly @endif>
                             </div>
                             <label class="col-lg-8 col-form-label com_title text-lg-left text-left">{{ __('label.entertainment.persons') }}</label>
                         </div>
@@ -425,7 +460,7 @@ $file_path              = Session::has('inputs') ? Session::get('inputs')['file_
                         <div class="form-group row ">
                             <div class="col-lg-4">
                                 <input type="number" name="est_amount" class="form-control @error('est_amount') is-invalid @enderror"
-                                    value="{{ $est_amount }}">
+                                    value="{{ $est_amount }}" @if(isset($previewFlg)) readonly @endif>
                             </div>
                             <label class="col-lg-8 col-form-label com_title text-lg-left text-left">
                                 {{ __('label.entertainment.per_person_excluding_vnd') }}
@@ -445,7 +480,8 @@ $file_path              = Session::has('inputs') ? Session::get('inputs')['file_
                         {{ __('label.entertainment.reason_budget_over') }}
                     </label>
                     <div class="col-lg-10">
-                        <textarea id="reason_budget_over" name="reason_budget_over" class="form-control" rows="3">{{ $reason_budget_over }}</textarea>
+                        <textarea id="reason_budget_over" name="reason_budget_over" class="form-control" rows="3"
+                            @if(isset($previewFlg)) readonly @endif>{{ $reason_budget_over }}</textarea>
                     </div>
                 </div>
                 <hr>
@@ -454,54 +490,68 @@ $file_path              = Session::has('inputs') ? Session::get('inputs')['file_
                         <label for="myfile">{{ __('label.leave.caption.file_path') }}</label>
                     </div>
                     <div class="col-sm-5">
-                        {{-- for edit --}}
-                        @if(isset($application) && !empty($file_path))
-                        @if ($application->file_path === $file_path)
-                        <div class="file-show input-group mb-3">
-                            <label class="form-control file-link">
-                                <a id="file_link" href="{{ Storage::url($file_path) }}" target="_blank">
-                                    {{ basename($file_path) }}
-                                </a>
-                            </label>
-                            <label class="custom-file-upload file-remove">
-                                <i class="fas fa-trash"></i>
-                            </label>
-                        </div>
-                        @endif
-                        @endif
-                        <div class="file-block input-group mb-3
-                                        @php
-                                            if((isset($application) && !empty($file_path))){
-                                                if($application->file_path === $file_path){
-                                                    echo 'd-none';
+                        @if(isset($previewFlg))
+                            @if(isset($application) && !empty($file_path))
+                            <div class="file-show input-group mb-3">
+                                <label class="form-control file-link">
+                                    <a id="file_link" href="{{ Storage::url($file_path) }}" target="_blank">
+                                        {{ basename($file_path) }}
+                                    </a>
+                                </label>
+                            </div>
+                            @else
+                            <div>{{ __('label.no_attached_file') }}</div>
+                            @endif
+                        @else
+                            {{-- for edit --}}
+                            @if(isset($application) && !empty($file_path))
+                            @if ($application->file_path === $file_path)
+                            <div class="file-show input-group mb-3">
+                                <label class="form-control file-link">
+                                    <a id="file_link" href="{{ Storage::url($file_path) }}" target="_blank">
+                                        {{ basename($file_path) }}
+                                    </a>
+                                </label>
+                                <label class="custom-file-upload file-remove">
+                                    <i class="fas fa-trash"></i>
+                                </label>
+                            </div>
+                            @endif
+                            @endif
+                            <div class="file-block input-group mb-3
+                                            @php
+                                                if((isset($application) && !empty($file_path))){
+                                                    if($application->file_path === $file_path){
+                                                        echo 'd-none';
+                                                    }
                                                 }
-                                            }
-                                        @endphp">
-                            <label for="input_file"
-                                class="form-control file-name @error('input_file') is-invalid @enderror"
-                                place-holder="{{ __('label.choose_file') }}">
-                                @if (old('input_file') != null)
-                                {{ old('input_file') }}
-                                @else
-                                {{ __('label.choose_file') }}
-                                @endif
-                            </label>
-                            <label for="input_file" class="custom-file-upload">
-                                <i class="fas fa-paperclip"></i>
-                            </label>
-                            <input type="file" id="input_file" name="input_file" />
-                            <label class="custom-file-upload file-remove">
-                                <i class="fas fa-trash"></i>
-                            </label>
-                        </div>
-                        @error('input_file')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
-                        <input type="hidden" id="file_path" name="file_path" value="{{ $file_path }}">
+                                            @endphp">
+                                <label for="input_file" class="form-control file-name @error('input_file') is-invalid @enderror"
+                                    place-holder="{{ __('label.choose_file') }}">
+                                    @if (old('input_file') != null)
+                                    {{ old('input_file') }}
+                                    @else
+                                    {{ __('label.choose_file') }}
+                                    @endif
+                                </label>
+                                <label for="input_file" class="custom-file-upload">
+                                    <i class="fas fa-paperclip"></i>
+                                </label>
+                                <input type="file" id="input_file" name="input_file" />
+                                <label class="custom-file-upload file-remove">
+                                    <i class="fas fa-trash"></i>
+                                </label>
+                            </div>
+                            @error('input_file')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                            <input type="hidden" id="file_path" name="file_path" value="{{ $file_path }}">
+                        @endif
                     </div>
                 </div>
+                @if (!isset($previewFlg))
                 <hr>
                 <div class="form-group row">
                     <div class="col-sm-2 text-left">
@@ -509,14 +559,17 @@ $file_path              = Session::has('inputs') ? Session::get('inputs')['file_
                     </div>
                     <div class="col-sm-10">
                         <div class="form-check">
-                            <input type="checkbox" id="subsequent" name="subsequent" class="form-check-input" @if(old('subsequent') !=null) checked @endif>
+                            <input type="checkbox" id="subsequent" name="subsequent" class="form-check-input" @if(old('subsequent')
+                                !=null) checked @endif>
                             <label class="form-check-label" for="subsequent">{{ __('label.on') }}</label>
                         </div>
                     </div>
                 </div>
+                @endif
             </div>
         </div>
         <!-- /.card -->
+        @if (!isset($previewFlg))
         <div>
             <button type="submit" name="apply" value="apply" class="btn btn-apply btn-custom">
                 <i class="far fa-check-circle" style="margin-right: 5px;"></i>
@@ -531,6 +584,7 @@ $file_path              = Session::has('inputs') ? Session::get('inputs')['file_
                 {{ __('label.button.cancel') }}
             </a>
         </div>
+        @endif
         <br>
         <br>
     </form>

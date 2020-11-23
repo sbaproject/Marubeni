@@ -24,9 +24,9 @@ class CreateUsersTableV1 extends Migration
             $table->unsignedTinyInteger('location')->default(0)->comment('0: Ha Noi, 1: Ho Chi minh');
             $table->unsignedInteger('department_id');
             $table->unsignedTinyInteger('approval')->comment('0: OFF, 1: ON');
-            $table->unsignedTinyInteger('leave_days')->nullable()->default(0);
-            $table->unsignedTinyInteger('leave_lemaining_days')->nullable()->default(0);
-            $table->unsignedTinyInteger('leave_lemaining_time')->nullable()->default(0);
+            $table->integer('leave_days')->nullable()->default(0);
+            $table->integer('leave_lemaining_days')->nullable()->default(0);
+            $table->integer('leave_lemaining_time')->nullable()->default(0);
             $table->text('memo')->nullable();
             $table->string('locale')->default('en')->comment('Current selected language of user');
             $table->unsignedBigInteger('created_by')->nullable();
