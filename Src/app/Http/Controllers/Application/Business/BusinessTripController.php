@@ -82,7 +82,6 @@ class BusinesstripController extends Controller
 
     public function update(Request $request, $id)
     {
-        // check owner
         $application = Application::findOrFail($id);
 
         // get inputs
@@ -321,23 +320,24 @@ class BusinesstripController extends Controller
     public function pdf($request, $inputs, $application = null)
     {
         if ($application != null) {
+
+            $loggedUser = Auth::user();
             // get list of approver (include TO & CC)
             $approvers = DB::table('applications')
-            ->select('steps.approver_id')
-            ->join('flows', function ($join) {
-                $join->on('flows.form_id', '=', 'applications.form_id')
-                ->whereRaw('flows.group_id = applications.group_id');
-            })
+                ->select('steps.approver_id')
+                ->join('flows', function ($join) {
+                    $join->on('flows.form_id', '=', 'applications.form_id')
+                        ->whereRaw('flows.group_id = applications.group_id');
+                })
                 ->join('steps', 'steps.flow_id', '=', 'flows.id')
+                ->where('steps.approver_id', '=', $loggedUser->id)
                 ->where('applications.id', '=', $request->id)
                 ->where('applications.deleted_at', '=', null)
-                ->get()
-                ->toArray();
+                ->first();
 
-            $approvers = Arr::pluck($approvers, 'approver_id');
             // check logged user has permission to access
-            $loggedUser = Auth::user();
-            if (!in_array($loggedUser->id, $approvers) && $application->created_by !== $loggedUser->id) {
+            // if logged user is not owner of application and also not approval user(TO or CC).
+            if (empty($approvers) && $application->created_by !== $loggedUser->id) {
                 abort(403);
             }
         }
@@ -366,6 +366,8 @@ class BusinesstripController extends Controller
             abort(404);
         }
 
+        $loggedUser = Auth::user();
+
         // get list of approver (include TO & CC)
         $approvers = DB::table('applications')
             ->select('steps.approver_id')
@@ -374,14 +376,14 @@ class BusinesstripController extends Controller
                     ->whereRaw('flows.group_id = applications.group_id');
             })
             ->join('steps', 'steps.flow_id', '=', 'flows.id')
+            ->where('steps.approver_id', '=', $loggedUser->id)
             ->where('applications.id', '=', $id)
             ->where('applications.deleted_at', '=', null)
-            ->get()
-            ->toArray();
+            ->first();
 
-        $approvers = Arr::pluck($approvers, 'approver_id');
         // check logged user has permission to access
-        if (!in_array(Auth::user()->id, $approvers) && $application->created_by !== Auth::user()->id) {
+        // if logged user is not owner of application and also not approval user(TO or CC).
+        if (empty($approvers) && $application->created_by !== $loggedUser->id) {
             abort(403);
         }
 

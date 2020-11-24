@@ -29,16 +29,17 @@
 @section('content')
 @php
 
-    $trans          = Session::has('inputs') ? Session::get('inputs')['trans']         : (isset($application) ? $application->business->transportations : null);
-    $destinations   = Session::has('inputs') ? Session::get('inputs')['destinations']  : (isset($application) ? $application->business->destinations : null);
-    $trip_dt_from   = Session::has('inputs') ? Session::get('inputs')['trip_dt_from']  : (isset($application) ? $application->business->trip_dt_from : null);
-    $trip_dt_to     = Session::has('inputs') ? Session::get('inputs')['trip_dt_to']    : (isset($application) ? $application->business->trip_dt_to : null);
-    $accommodation  = Session::has('inputs') ? Session::get('inputs')['accommodation'] : (isset($application) ? $application->business->accommodation : null);
-    $accompany      = Session::has('inputs') ? Session::get('inputs')['accompany']     : (isset($application) ? $application->business->accompany : null);
-    $borne_by       = Session::has('inputs') ? Session::get('inputs')['borne_by']      : (isset($application) ? $application->business->borne_by : null);
-    $comment        = Session::has('inputs') ? Session::get('inputs')['comment']       : (isset($application) ? $application->business->comment : null);
-    $file_path      = Session::has('inputs') ? Session::get('inputs')['file_path']     : (isset($application) ? $application->file_path : null);
+    $trans          = Session::exists('inputs') ? Session::get('inputs')['trans']         : (isset($application) ? $application->business->transportations : null);
+    $destinations   = Session::exists('inputs') ? Session::get('inputs')['destinations']  : (isset($application) ? $application->business->destinations : null);
+    $trip_dt_from   = Session::exists('inputs') ? Session::get('inputs')['trip_dt_from']  : (isset($application) ? $application->business->trip_dt_from : null);
+    $trip_dt_to     = Session::exists('inputs') ? Session::get('inputs')['trip_dt_to']    : (isset($application) ? $application->business->trip_dt_to : null);
+    $accommodation  = Session::exists('inputs') ? Session::get('inputs')['accommodation'] : (isset($application) ? $application->business->accommodation : null);
+    $accompany      = Session::exists('inputs') ? Session::get('inputs')['accompany']     : (isset($application) ? $application->business->accompany : null);
+    $borne_by       = Session::exists('inputs') ? Session::get('inputs')['borne_by']      : (isset($application) ? $application->business->borne_by : null);
+    $comment        = Session::exists('inputs') ? Session::get('inputs')['comment']       : (isset($application) ? $application->business->comment : null);
+    $file_path      = Session::exists('inputs') ? Session::get('inputs')['file_path']     : (isset($application) ? $application->file_path : null);
 
+    // get action url
     if(isset($application)){
         if(isset($previewFlg)){
             $actionUrl = route('user.business.preview.pdf', $application->id);

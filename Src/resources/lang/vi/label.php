@@ -15,6 +15,7 @@ return [
         'edit' => 'Sửa',
         'delete' => 'Xóa',
         'cancel' => 'Hủy',
+        'accept' => 'Chấp nhận',
         'search' => 'Tìm kiếm',
         'login' => 'Đăng nhập',
         'logout' => 'Đăng xuất',

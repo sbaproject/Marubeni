@@ -17,6 +17,7 @@ return [
         'edit' => 'Edit',
         'delete' => 'Delete',
         'cancel' => 'Cancel',
+        'accept' => 'Accept',
         'search' => 'Search',
         'login' => 'Login',
         'logout' => 'Logout',

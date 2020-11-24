@@ -25,21 +25,22 @@
 
 @section('content')
 @php
-    $code_leave     = Session::has('inputs') ? Session::get('inputs')['code_leave']     :  (isset($application) ? $application->leave->code_leave : null);
-    $paid_type      = Session::has('inputs') ? Session::get('inputs')['paid_type']      :  (isset($application) ? $application->leave->paid_type : null);
-    $reason_leave   = Session::has('inputs') ? Session::get('inputs')['reason_leave']   :  (isset($application) ? $application->leave->reason_leave : null);
-    $date_from      = Session::has('inputs') ? Session::get('inputs')['date_from']      :  (isset($application) ? $application->leave->date_from : null);
-    $date_to        = Session::has('inputs') ? Session::get('inputs')['date_to']        :  (isset($application) ? $application->leave->date_to : null);
-    $time_day       = Session::has('inputs') ? Session::get('inputs')['time_day']       :  (isset($application) ? $application->leave->time_day : null);
-    $time_from      = Session::has('inputs') ? Session::get('inputs')['time_from']      :  (isset($application) ? $application->leave->time_from : null);
-    $time_to        = Session::has('inputs') ? Session::get('inputs')['time_to']        :  (isset($application) ? $application->leave->time_to : null);
-    $maternity_from = Session::has('inputs') ? Session::get('inputs')['maternity_from'] :  (isset($application) ? $application->leave->maternity_from : null);
-    $maternity_to   = Session::has('inputs') ? Session::get('inputs')['maternity_to']   :  (isset($application) ? $application->leave->maternity_to : null);
-    $days_use       = Session::has('inputs') ? Session::get('inputs')['days_use']       :  (isset($application) ? $application->leave->days_use : null);
-    $times_use      = Session::has('inputs') ? Session::get('inputs')['times_use']      :  (isset($application) ? $application->leave->times_use : null);
-    $file_path      = Session::has('inputs') ? Session::get('inputs')['file_path']      :  (isset($application) ? $application->file_path : null);
+    $code_leave     = Session::exists('inputs') ? Session::get('inputs')['code_leave']     :  (isset($application) ? $application->leave->code_leave : null);
+    $paid_type      = Session::exists('inputs') ? Session::get('inputs')['paid_type']      :  (isset($application) ? $application->leave->paid_type : null);
+    $reason_leave   = Session::exists('inputs') ? Session::get('inputs')['reason_leave']   :  (isset($application) ? $application->leave->reason_leave : null);
+    $date_from      = Session::exists('inputs') ? Session::get('inputs')['date_from']      :  (isset($application) ? $application->leave->date_from : null);
+    $date_to        = Session::exists('inputs') ? Session::get('inputs')['date_to']        :  (isset($application) ? $application->leave->date_to : null);
+    $time_day       = Session::exists('inputs') ? Session::get('inputs')['time_day']       :  (isset($application) ? $application->leave->time_day : null);
+    $time_from      = Session::exists('inputs') ? Session::get('inputs')['time_from']      :  (isset($application) ? $application->leave->time_from : null);
+    $time_to        = Session::exists('inputs') ? Session::get('inputs')['time_to']        :  (isset($application) ? $application->leave->time_to : null);
+    $maternity_from = Session::exists('inputs') ? Session::get('inputs')['maternity_from'] :  (isset($application) ? $application->leave->maternity_from : null);
+    $maternity_to   = Session::exists('inputs') ? Session::get('inputs')['maternity_to']   :  (isset($application) ? $application->leave->maternity_to : null);
+    $days_use       = Session::exists('inputs') ? Session::get('inputs')['days_use']       :  (isset($application) ? $application->leave->days_use : null);
+    $times_use      = Session::exists('inputs') ? Session::get('inputs')['times_use']      :  (isset($application) ? $application->leave->times_use : null);
+    $file_path      = Session::exists('inputs') ? Session::get('inputs')['file_path']      :  (isset($application) ? $application->file_path : null);
     $applicant      = isset($application) ? $application->applicant : Auth::user();
 
+    // get action url
     if(isset($application)){
         if(isset($previewFlg)){
             $actionUrl = route('user.leave.preview.pdf', $application->id);
@@ -432,7 +433,8 @@
         <!-- /.card -->
         @if (!isset($previewFlg))
         <div>
-            <button type="submit" name="apply" value="apply" class="btn btn-apply btn-custom">
+            <button type="submit" name="apply" value="apply" class="btn btn-apply btn-custom"
+                data-toggle="modal" data-target="#popup-confirm" onclick="return false;">
                 <i class="far fa-check-circle" style="margin-right: 5px;"></i>
                 {{ __('label.button.apply') }}
             </button>
@@ -450,4 +452,16 @@
         <br>
     </form>
 </section>
+
+<x-popup-confirm title="Xac nhan" body="Ban muon luu ?" accept="{{ __('label.button.apply') }}" />
+
+<script>
+    $(function(){
+        // $('input[type="submit"]').on('click', function(e){
+        //     e.preventDefault();
+        //     return false;
+        // });
+    });
+</script>
+
 @endsection

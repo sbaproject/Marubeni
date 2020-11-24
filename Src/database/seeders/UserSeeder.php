@@ -68,12 +68,12 @@ class UserSeeder extends Seeder
             'updated_by' => $firstId
         ]);
 
-        for ($i = 5; $i < 100; $i++) {
+        for ($i = 3; $i < 100; $i++) {
             $role = Arr::random(config('const.role'));
             $approval = $role == 1 ? config('const.approval.off') : Arr::random(config('const.approval'));
             DB::table('users')->insert([
-                'name' => $faker->name(),
-                'email' => $faker->email(),
+                'name' => 'user'.$i,
+                'email' => 'user' . $i.'@gmail.com',
                 'password' => Hash::make('123'),
                 'role' => $role,
                 'location' => Arr::random(config('const.location')),

@@ -41,22 +41,23 @@
 @section('content')
 @php
 
-    $infos                  = Session::has('inputs') ? Session::get('inputs')['infos']                      : (isset($application) ? $application->entertainment->entertainmentinfos : null);
-    $entertainment_dt       = Session::has('inputs') ? Session::get('inputs')['entertainment_dt']           : (isset($application) ? $application->entertainment->entertainment_dt : null);
-    $place                  = Session::has('inputs') ? Session::get('inputs')['place']                      : (isset($application) ? $application->entertainment->place : null);
-    $during_trip            = Session::has('inputs') ? Session::get('inputs')['during_trip']                : (isset($application) ? $application->entertainment->during_trip : null);
-    $check_row              = Session::has('inputs') ? Session::get('inputs')['check_row']                  : (isset($application) ? $application->entertainment->check_row : null);
-    $has_et_times           = Session::has('inputs') ? Session::get('inputs')['has_entertainment_times']    : (isset($application) ? $application->entertainment->has_entertainment_times : null);
-    $et_times               = Session::has('inputs') ? Session::get('inputs')['entertainment_times']        : (isset($application) ? $application->entertainment->entertainment_times : null);
-    $existence_projects     = Session::has('inputs') ? Session::get('inputs')['existence_projects']         : (isset($application) ? $application->entertainment->existence_projects : null);
-    $includes_family        = Session::has('inputs') ? Session::get('inputs')['includes_family']            : (isset($application) ? $application->entertainment->includes_family : null);
-    $project_name           = Session::has('inputs') ? Session::get('inputs')['project_name']               : (isset($application) ? $application->entertainment->project_name : null);
-    $entertainment_reason   = Session::has('inputs') ? Session::get('inputs')['entertainment_reason']       : (isset($application) ? $application->entertainment->entertainment_reason : null);
-    $entertainment_person   = Session::has('inputs') ? Session::get('inputs')['entertainment_person']       : (isset($application) ? $application->entertainment->entertainment_person : null);
-    $est_amount             = Session::has('inputs') ? Session::get('inputs')['est_amount']                 : (isset($application) ? $application->entertainment->est_amount : null);
-    $reason_budget_over     = Session::has('inputs') ? Session::get('inputs')['reason_budget_over']         : (isset($application) ? $application->entertainment->reason_budget_over : null);
-    $file_path              = Session::has('inputs') ? Session::get('inputs')['file_path']                  : (isset($application) ? $application->file_path : null);
+    $infos                  = Session::exists('inputs') ? Session::get('inputs')['infos']                      : (isset($application) ? $application->entertainment->entertainmentinfos : null);
+    $entertainment_dt       = Session::exists('inputs') ? Session::get('inputs')['entertainment_dt']           : (isset($application) ? $application->entertainment->entertainment_dt : null);
+    $place                  = Session::exists('inputs') ? Session::get('inputs')['place']                      : (isset($application) ? $application->entertainment->place : null);
+    $during_trip            = Session::exists('inputs') ? Session::get('inputs')['during_trip']                : (isset($application) ? $application->entertainment->during_trip : null);
+    $check_row              = Session::exists('inputs') ? Session::get('inputs')['check_row']                  : (isset($application) ? $application->entertainment->check_row : null);
+    $has_et_times           = Session::exists('inputs') ? Session::get('inputs')['has_entertainment_times']    : (isset($application) ? $application->entertainment->has_entertainment_times : null);
+    $et_times               = Session::exists('inputs') ? Session::get('inputs')['entertainment_times']        : (isset($application) ? $application->entertainment->entertainment_times : null);
+    $existence_projects     = Session::exists('inputs') ? Session::get('inputs')['existence_projects']         : (isset($application) ? $application->entertainment->existence_projects : null);
+    $includes_family        = Session::exists('inputs') ? Session::get('inputs')['includes_family']            : (isset($application) ? $application->entertainment->includes_family : null);
+    $project_name           = Session::exists('inputs') ? Session::get('inputs')['project_name']               : (isset($application) ? $application->entertainment->project_name : null);
+    $entertainment_reason   = Session::exists('inputs') ? Session::get('inputs')['entertainment_reason']       : (isset($application) ? $application->entertainment->entertainment_reason : null);
+    $entertainment_person   = Session::exists('inputs') ? Session::get('inputs')['entertainment_person']       : (isset($application) ? $application->entertainment->entertainment_person : null);
+    $est_amount             = Session::exists('inputs') ? Session::get('inputs')['est_amount']                 : (isset($application) ? $application->entertainment->est_amount : null);
+    $reason_budget_over     = Session::exists('inputs') ? Session::get('inputs')['reason_budget_over']         : (isset($application) ? $application->entertainment->reason_budget_over : null);
+    $file_path              = Session::exists('inputs') ? Session::get('inputs')['file_path']                  : (isset($application) ? $application->file_path : null);
 
+    // get action url
     if(isset($application)){
         if(isset($previewFlg)){
             $actionUrl = route('user.entertainment.preview.pdf', $application->id);
