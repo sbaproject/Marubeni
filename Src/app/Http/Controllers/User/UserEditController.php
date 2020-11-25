@@ -40,9 +40,11 @@ class UserEditController extends Controller
         $validator = User::makeValidator($inputs, $user, $data, true);
 
         // validate fail
-        if ($validator->fails()) {
-            return Common::redirectViewWithAlertFail('user.edit', compact('data'))->withErrors($validator);
-        }
+        // if ($validator->fails()) {
+        //     return Common::redirectViewWithAlertFail('user.edit', compact('data'))->withErrors($validator);
+        // }
+
+        $validator->validate();
 
         // update
         $user->save();
