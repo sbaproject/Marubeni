@@ -118,13 +118,16 @@
                     <div class="row">
                         <div class="col-12">
                             @if ($isAbleToAction)
-                                <button type="submit" name="approve" value="approve" class="btn btn-success bt_border">
+                                <button type="button" name="approve" value="approve" class="btn btn-success bt_border"
+                                    data-toggle="modal" data-target="#popup-confirm">
                                     {{ __('label.button.approval') }}
                                 </button>
-                                <button type="submit" name="reject" value="reject" class="btn btn-danger bt_border">
+                                <button type="button" name="reject" value="reject" class="btn btn-danger bt_border"
+                                    data-toggle="modal" data-target="#popup-confirm">
                                     {{ __('label.button.reject') }}
                                 </button>
-                                <button type="submit" name="declined" value="declined" class="btn btn-secondary bt_border bt_preview">
+                                <button type="button" name="declined" value="declined" class="btn btn-secondary bt_border bt_preview"
+                                    data-toggle="modal" data-target="#popup-confirm">
                                     {{ __('label.button.declined') }}
                                 </button>
                             @endif

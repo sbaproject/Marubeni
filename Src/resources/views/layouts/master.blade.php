@@ -114,6 +114,9 @@
         <div class="content-wrapper">
             @yield('content')
         </div>
+
+        {{-- confirming popup --}}
+        <x-popup-confirm />
     </div>
 </body>
 

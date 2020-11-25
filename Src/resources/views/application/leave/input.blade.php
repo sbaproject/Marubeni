@@ -433,12 +433,13 @@
         <!-- /.card -->
         @if (!isset($previewFlg))
         <div>
-            <button type="submit" name="apply" value="apply" class="btn btn-apply btn-custom"
-                data-toggle="modal" data-target="#popup-confirm" onclick="return false;">
+            <button type="button" name="apply" value="apply" class="btn btn-apply btn-custom"
+                data-toggle="modal" data-target="#popup-confirm">
                 <i class="far fa-check-circle" style="margin-right: 5px;"></i>
                 {{ __('label.button.apply') }}
             </button>
-            <button type="submit" name="draft" value="draft" class="btn btn-draft btn-custom">
+            <button type="button" name="draft" value="draft" class="btn btn-draft btn-custom"
+                data-toggle="modal" data-target="#popup-confirm">
                 <i class="nav-icon fas fa-edit" style="margin-right: 5px;"></i>
                 {{ __('label.button.draft') }}
             </button>
@@ -452,16 +453,7 @@
         <br>
     </form>
 </section>
-
-<x-popup-confirm title="Xac nhan" body="Ban muon luu ?" accept="{{ __('label.button.apply') }}" />
-
-<script>
-    $(function(){
-        // $('input[type="submit"]').on('click', function(e){
-        //     e.preventDefault();
-        //     return false;
-        // });
-    });
-</script>
+{{-- confirming popup --}}
+{{-- <x-popup-confirm/> --}}
 
 @endsection

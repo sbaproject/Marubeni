@@ -4,16 +4,20 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLongTitle">{{ $title }}</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" id="popup_btn_close" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-               {{ $body }}
+                {{ $body }}
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ $close }}</button>
-                <button type="button" id="popup_btn_ok" class="btn btn-primary">{{ $accept }}</button>
+                <button type="button" id="popup_btn_cancel" class="btn btn-secondary" data-dismiss="modal">{{ $close }}</button>
+                <button type="button" id="popup_btn_ok" class="btn btn-accept">{{ $accept }}</button>
+                <button type="button" id="popup_btn_ok_processing" class="btn btn-accept" disabled style="display: none">
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    {{ __('label.button.processing') }}
+                </button>
             </div>
         </div>
     </div>
@@ -25,14 +29,31 @@
         });
         $('#popup_btn_ok').on('click', function(e) {
             e.preventDefault();
-            if(popupRelatedTarget.getAttribute('type') == 'submit'){
-                popupRelatedTarget.form.submit();
+            if(popupRelatedTarget.attr('type') === 'button'){
+                let form = popupRelatedTarget[0].form;
+                if(form){
+                    // lock closing modal
+                    $('#popup_btn_cancel').attr('disabled','disabled');
+                    $('#popup_btn_close').attr('disabled','disabled');
+                    
+                    // $('#popup-confirm').data('bs.modal')._config.keyboard = false;
+                    $('#popup-confirm').data('bs.modal')._config.backdrop = 'static';
+                    // show processing button
+                    $(this).hide();
+                    $('#popup_btn_ok_processing').show();
+                    // push submit name to server (optional)
+                    let targetName = $(popupRelatedTarget).attr('name');
+                    if(targetName){
+                        let hidSubmit = '<input type="hidden" name="' + targetName + '" value="' + targetName + '" />';
+                        $(form).append(hidSubmit);
+                    }
+                    // submit form
+                    form.submit();
+                }
             }
-            // if(popupRelatedTarget.getAttribute('type') == 'button'){
-            //     if(popupRelatedTarget.form){
-            //         popupRelatedTarget.form.submit();
-            //     }
-            // }
+        });
+        $('[data-target="#popup-confirm"]').on('click', function(){
+            $('#popup-confirm').modal('show', $(this));
         });
     });
 </script>

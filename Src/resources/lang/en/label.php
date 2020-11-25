@@ -28,6 +28,7 @@ return [
         'preview' => 'Preview',
         'reject' => 'Reject',
         'declined' => 'Declined',
+        'processing' => 'Processing',
     ],
     'rememberme' => 'Remember me',
     'forgotpassword' => 'Forgot your password ?',
@@ -62,6 +63,8 @@ return [
     'no_attached_file' => 'No attached file',
     'comment' => 'Comment',
     'applicant' => 'Applicant',
+    'confirming_title' => 'Confirm',
+    'sure_to_continue' => 'Are you sure to continue ?',
     /**
      * Form
      */

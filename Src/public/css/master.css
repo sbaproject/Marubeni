@@ -299,6 +299,17 @@ select.form-control.is-invalid, .was-validated .form-control:invalid {
 .card-list-items {
     overflow-x: auto;
 }
+.btn-accept{
+    background-color: #96000C;
+    color: #ffffff;
+    border-color: #96000C;
+    box-shadow: none;
+}
+.btn-accept:hover{
+    background-color: #640007d4;
+    border-color: #640007d4;
+    color: #ffffff;
+}
 
 @media screen and (max-width: 575px) {
     .col-xs-5ths {

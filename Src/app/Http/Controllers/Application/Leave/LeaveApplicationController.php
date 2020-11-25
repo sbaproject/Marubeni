@@ -44,7 +44,6 @@ class LeaveApplicationController extends Controller
             $inputs['paid_type'] = null;
         }
 
-        dd($inputs);
         // check post method
         if (isset($inputs['apply']) || isset($inputs['draft']) || isset($inputs['pdf'])) {
             // export pdf

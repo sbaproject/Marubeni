@@ -11,8 +11,9 @@
     <li class="list-inline-item">
         <form action="{{ $deleteUrl }}" method="POST">
             @csrf
-            <button type="submit" class="btn btn-danger btn-sm rounded-0 @isset($deleteDisabled) disabled @endisset" data-toggle="tooltip"
-                title="{{ __('label.button.delete') }}" @isset($deleteDisabled) disabled  @endisset>
+            <button type="button" class="btn btn-danger btn-sm rounded-0 @isset($deleteDisabled) disabled @endisset" data-toggle="tooltip"
+                title="{{ __('label.button.delete') }}" @isset($deleteDisabled) disabled  @endisset
+                data-toggle="modal" data-target="#popup-confirm">
                 <i class="fa fa-trash"></i>
             </button>
         </form>

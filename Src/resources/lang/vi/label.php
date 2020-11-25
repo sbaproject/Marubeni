@@ -26,6 +26,7 @@ return [
         'preview' => 'Xem trước',
         'reject' => 'Khước từ',
         'declined' => 'Trả về',
+        'processing' => 'Đang xử lý',
     ],
     'rememberme' => 'Nhớ đăng nhập',
     'forgotpassword' => 'Quên mật khẩu ?',
@@ -51,6 +52,8 @@ return [
     'no_attached_file' => 'Không có tập tin đính kèm',
     'comment' => 'Chú thích',
     'applicant' => 'Người đề nghị',
+    'confirming_title' => 'Xác nhận',
+    'sure_to_continue' => 'Bạn vẫn muốn tiếp tục xử lý ?',
     /**
      * Paginator
      */
