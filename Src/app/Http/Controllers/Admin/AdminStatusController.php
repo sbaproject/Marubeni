@@ -53,9 +53,11 @@ class AdminStatusController extends Controller
                 ->where('applications.status', '<=', $end)
                 ->where('applications.current_step', '>=', $stepStr)
                 ->where('applications.current_step', '<=', $stepEnd)
-                ->where(DB::raw('CAST(steps.step_type AS SIGNED)'), DB::raw('CAST(applications.current_step AS SIGNED)'))
-                ->where(DB::raw('CAST(steps.select_order AS SIGNED)'), DB::raw('CAST(applications.status AS SIGNED)'))
-                ->where('steps.approver_type', 0)
+
+                //When
+                ->when(intval($status) != config('const.application.status.completed'), function ($q) {
+                    $q = $q->where(DB::raw('CAST(steps.step_type AS SIGNED)'), DB::raw('CAST(applications.current_step AS SIGNED)'))->where(DB::raw('CAST(steps.select_order AS SIGNED)'), DB::raw('CAST(applications.status AS SIGNED)'));
+                })
 
                 //Condition Time
                 ->where('applications.created_at', '>=', $str_date)
@@ -85,9 +87,11 @@ class AdminStatusController extends Controller
                 ->where('applications.status', '<=', $end)
                 ->where('applications.current_step', '>=', $stepStr)
                 ->where('applications.current_step', '<=', $stepEnd)
-                ->where(DB::raw('CAST(steps.step_type AS SIGNED)'), DB::raw('CAST(applications.current_step AS SIGNED)'))
-                ->where(DB::raw('CAST(steps.select_order AS SIGNED)'), DB::raw('CAST(applications.status AS SIGNED)'))
-                ->where('steps.approver_type', 0)
+
+                //When
+                ->when(intval($status) != config('const.application.status.completed'), function ($q) {
+                    $q = $q->where(DB::raw('CAST(steps.step_type AS SIGNED)'), DB::raw('CAST(applications.current_step AS SIGNED)'))->where(DB::raw('CAST(steps.select_order AS SIGNED)'), DB::raw('CAST(applications.status AS SIGNED)'));
+                })
 
                 //Condition Time
                 ->where('applications.created_at', '>=', $str_date)

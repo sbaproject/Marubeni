@@ -56,8 +56,11 @@ class UserStatusController extends Controller
                 ->where('applications.current_step', '>=', $stepStr)
                 ->where('applications.current_step', '<=', $stepEnd)
                 ->where('applications.created_by', $userId)
-                ->where(DB::raw('CAST(steps.step_type AS SIGNED)'), DB::raw('CAST(applications.current_step AS SIGNED)'))
-                ->where(DB::raw('CAST(steps.select_order AS SIGNED)'), DB::raw('CAST(applications.status AS SIGNED)'))
+
+                //When
+                ->when(intval($status) != config('const.application.status.completed'), function ($q) {
+                    $q = $q->where(DB::raw('CAST(steps.step_type AS SIGNED)'), DB::raw('CAST(applications.current_step AS SIGNED)'))->where(DB::raw('CAST(steps.select_order AS SIGNED)'), DB::raw('CAST(applications.status AS SIGNED)'));
+                })
 
                 //Condition Time
                 ->where('applications.created_at', '>=', $str_date)
@@ -88,8 +91,11 @@ class UserStatusController extends Controller
                 ->where('applications.current_step', '>=', $stepStr)
                 ->where('applications.current_step', '<=', $stepEnd)
                 ->where('applications.created_by', $userId)
-                ->where(DB::raw('CAST(steps.step_type AS SIGNED)'), DB::raw('CAST(applications.current_step AS SIGNED)'))
-                ->where(DB::raw('CAST(steps.select_order AS SIGNED)'), DB::raw('CAST(applications.status AS SIGNED)'))
+
+                //When
+                ->when(intval($status) != config('const.application.status.completed'), function ($q) {
+                    $q = $q->where(DB::raw('CAST(steps.step_type AS SIGNED)'), DB::raw('CAST(applications.current_step AS SIGNED)'))->where(DB::raw('CAST(steps.select_order AS SIGNED)'), DB::raw('CAST(applications.status AS SIGNED)'));
+                })
 
                 //Condition Time
                 ->where('applications.created_at', '>=', $str_date)
