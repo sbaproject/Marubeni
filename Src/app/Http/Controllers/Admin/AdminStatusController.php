@@ -89,6 +89,10 @@ class AdminStatusController extends Controller
                 ->where(DB::raw('CAST(steps.select_order AS SIGNED)'), DB::raw('CAST(applications.status AS SIGNED)'))
                 ->where('steps.approver_type', 0)
 
+                //Condition Time
+                ->where('applications.created_at', '>=', $str_date)
+                ->where('applications.created_at', '<=', $end_date)
+
                 ->orderBy('applications.id', 'desc')
                 ->whereNull('applications.deleted_at')
                 ->paginate(5);
