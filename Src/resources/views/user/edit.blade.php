@@ -9,6 +9,7 @@
     <div class="card">
         <div class="card-body">
             <div class="search-content">
+                <x-alert/>
                 <form method="POST" action="{{ Request::url() }}">
                     @csrf
                     {{-- ID --}}
