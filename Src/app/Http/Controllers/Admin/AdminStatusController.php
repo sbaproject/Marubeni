@@ -68,8 +68,8 @@ class AdminStatusController extends Controller
                 ->paginate(5);
         } else {
 
-            $str_date = Carbon::now();
-            $end_date = Carbon::now();
+            $str_date = config('const.time_search.from');
+            $end_date = config('const.time_search.to');
 
             //Load Page
             $list_applications_status = DB::table('applications')

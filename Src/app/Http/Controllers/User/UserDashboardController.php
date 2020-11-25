@@ -45,8 +45,8 @@ class UserDashboardController extends Controller
             $count_completed =  Application::where('created_by', $userId)->where('status', config('const.application.status.completed'))->where('created_at', '>=', $str_date)->where('created_at', '<=', $end_date)->count();
         } else {
 
-            $str_date = Carbon::now();
-            $end_date = Carbon::now();
+            $str_date = config('const.time_search.from');
+            $end_date = config('const.time_search.to');
 
             if ($id == config('const.application.status.all')) {
                 $list_application =  Application::where('created_by', $userId)->where('status', '!=', config('const.application.status.draft'))->where('created_at', '>=', $str_date)->where('created_at', '<=', $end_date)->orderBy('id', 'DESC')->paginate(5);

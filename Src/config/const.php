@@ -1,5 +1,6 @@
 
 <?php
+use Carbon\Carbon;
 
 return [
 	/**
@@ -150,6 +151,12 @@ return [
 	'approver_type' => [
 		'to' => 0,
 		'cc' => 1,
-	]
-
+    ],
+    /**
+	 * Time Search
+	 */
+    'time_search' => [
+		'from' => Carbon::now()->startOfMonth(),
+		'to' => Carbon::now()->endOfMonth(),
+    ]
 ];
