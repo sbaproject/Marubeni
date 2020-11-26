@@ -43,6 +43,17 @@ class Handler extends ExceptionHandler
             return redirect()->route('login');
         }
 
+        if($this->isHttpException($e)){
+            switch ($e->getStatusCode()) {
+                case 404:
+                    return redirect()->route('404');
+                    break;
+                case 403:
+                    return redirect()->route('403');
+                    break;
+            }
+        }
+
         return parent::render($request, $e);
     }
 }

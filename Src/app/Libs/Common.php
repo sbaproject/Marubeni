@@ -139,10 +139,23 @@ class Common
 			$user = User::find(Auth::user()->id);
 			if ($locale !== $user->locale) {
 				$user->locale = $locale;
+				$user->timestamps = false; // disable updated_at field
 				$user->save();
 			}
 		} else {
 			Session::put('set_locale', $locale);
 		}
+	}
+
+	public static function getRoutePreviewApplication($appId, $formId)
+	{
+		if ($formId === config('const.form.leave')) {
+			return route('user.leave.preview', $appId);
+		} elseif ($formId === config('const.form.biz_trip')) {
+			return route('user.business.preview', $appId);
+		} elseif ($formId === config('const.form.entertainment')) {
+			return route('user.entertainment.preview', $appId);
+		}
+		return '';
 	}
 }

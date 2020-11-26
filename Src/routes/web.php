@@ -7,25 +7,26 @@ use App\Http\Controllers\LocaleController;
 use App\Http\Controllers\CheckipController;
 use App\Http\Controllers\User\ConfirmController;
 use App\Http\Controllers\User\UserListCotroller;
+use App\Http\Controllers\User\ApprovalController;
 use App\Http\Controllers\User\UserEditController;
 use App\Http\Controllers\User\UserDraftController;
+use App\Http\Controllers\Error\ErrorPageController;
 use App\Http\Controllers\User\UserStatusController;
 use App\Http\Controllers\User\UserCompanyController;
 use App\Http\Controllers\Admin\AdminBudgetController;
 use App\Http\Controllers\Admin\AdminStatusController;
 use App\Http\Controllers\User\UserRegisterController;
 use App\Http\Controllers\Admin\AdminCompanyController;
+
 use App\Http\Controllers\User\UserDashboardController;
+
 use App\Http\Controllers\User\UserChangePassController;
-
 use App\Http\Controllers\Admin\AdminDashboardController;
-
 use App\Http\Controllers\Application\FormListController;
 use App\Http\Controllers\Admin\AdminFlowSettingController;
 use App\Http\Controllers\Application\Business\BusinessTripController;
 use App\Http\Controllers\Application\Leave\LeaveApplicationController;
 use App\Http\Controllers\Application\Entertainment\EntertainmentController;
-use App\Http\Controllers\User\ApprovalController;
 
 /*
 |--------------------------------------------------------------------------
@@ -55,6 +56,10 @@ Auth::routes([
 
 // set locale
 Route::get('locale/{locale}', LocaleController::class)->where('locale', "(vi|en)")->name('locale');
+
+// error page
+Route::get('404',[ErrorPageController::class, 'notfound'])->name('404');
+Route::get('403', [ErrorPageController::class, 'forbidden'])->name('403');
 
 /**
  * Authenticated user

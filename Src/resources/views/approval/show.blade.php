@@ -91,17 +91,7 @@
                     @csrf
                     <div class="row">
                         <div class="col-12">
-                            @php
-                                $preUrl = '';
-                                if($app->form_id === config('const.form.leave')){
-                                    $preUrl = route('user.leave.preview', $app->id);
-                                } elseif($app->form_id === config('const.form.biz_trip')){
-                                    $preUrl = route('user.business.preview', $app->id);
-                                } elseif($app->form_id === config('const.form.entertainment')){
-                                    $preUrl = route('user.entertainment.preview', $app->id);
-                                }
-                            @endphp
-                            <a href="{{ $preUrl }}" class="btn btn-secondary bt_border bt_preview" target="_blank">
+                            <a href="{{ Common::getRoutePreviewApplication($app->id, $app->form_id) }}" class="btn btn-secondary bt_border bt_preview" target="_blank">
                                 {{ __('label.button.preview') }}
                             </a>
                         </div>

@@ -312,7 +312,7 @@ return [
         'title_login_pass' => 'LOGIN',
         'email_address' => 'E-Mail',
         'password' => 'Password',
-        'remember' => 'Remember',
+        'remember' => 'Remember me',
         'btn_login' => 'Login',
         'link_forgot_pass' => 'Forgot Password?',
         //form fogot password

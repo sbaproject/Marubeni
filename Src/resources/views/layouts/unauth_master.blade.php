@@ -38,6 +38,7 @@
     <!-- Bootstrap 4 -->
     {{-- <script src="js/bootstrap/js/bootstrap.bundle.min.js"></script>
     --}}
+    <script src="js/bootstrap/js/bootstrap.min.js"></script>
     <!-- AdminLTE App -->
     {{-- <script src="js/adminlte.min.js"></script> --}}
     <!-- moment -->
@@ -74,6 +75,26 @@
             @yield('content')
         </div>
     </div>
+    <!-- Loading Modal -->
+    <div class="modal" id="popup-loading" tabindex="-1" role="dialog" data-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered justify-content-center" role="document">
+            <button class="btn btn-accept" type="button">
+                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                <span class="sr-only">Loading...</span>
+            </button>
+        </div>
+    </div>
+    <script>
+        // $("#popup-loading").modal('show');
+        $(window).on('load',function(){
+            $("#popup-loading").modal('hide');
+        });
+        $(window).on('beforeunload', function(){
+            if(!($("#popup-confirm").data('bs.modal') || {})._isShown){
+                $("#popup-loading").modal('show');
+            }
+        });
+    </script>
 </body>
 
 </html>

@@ -230,6 +230,8 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         // DomPDF 
         'PDF' => Barryvdh\DomPDF\Facade::class,
+        // Common
+        'Common' => App\Libs\Common::class,
     ],
 
 ];

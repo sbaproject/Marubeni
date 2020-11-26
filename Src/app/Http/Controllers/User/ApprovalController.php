@@ -58,7 +58,7 @@ class ApprovalController extends Controller
                 ,s.`approver_type`
                 ,u.`name`           AS approver_name
                 ,us.`name`          AS applicant_name
-                ,f.id AS flow_id
+                ,f.id               AS flow_id
                 ,fo.name            AS application_type
                 ,(
                     SELECT  us.name

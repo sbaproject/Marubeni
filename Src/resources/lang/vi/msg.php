@@ -15,4 +15,12 @@ return [
     'entertainment' => [
         '01' => 'Không tìm thấy quy trình duyệt đơn phù hợp.',
     ],
+    /**
+     * Page error
+     */
+    'page_error' => [
+        '404' => 'Chúng tôi không tìm thấy trang mà bạn yêu cầu.',
+        '403' => 'Bạn không đủ quyền để truy cập trang.',
+        'go_home' => 'Về trang chủ',
+    ],
 ];

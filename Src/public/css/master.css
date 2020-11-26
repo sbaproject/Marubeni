@@ -319,3 +319,9 @@ select.form-control.is-invalid, .was-validated .form-control:invalid {
         width: auto !important;
     }
 }
+/*
+* Page Error
+*/
+.code-state{
+    font-size: 5.5rem;
+}

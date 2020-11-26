@@ -310,7 +310,7 @@ return [
         'title_login_pass' => 'ĐĂNG NHẬP',
         'email_address' => 'E-Mail',
         'password' => 'Mật khẩu',
-        'remember' => 'Nhớ mật khẩu',
+        'remember' => 'Nhớ đăng nhập',
         'btn_login' => 'Đăng nhập',
         'link_forgot_pass' => 'Quên mật khẩu?',
         //form fogot password
