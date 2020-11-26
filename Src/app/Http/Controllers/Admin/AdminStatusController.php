@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class AdminStatusController extends Controller
@@ -32,75 +31,47 @@ class AdminStatusController extends Controller
             $stepEnd = 2;
         }
 
+        //When Search by Time
         if (!empty($data['dataDateFrom']) && !empty($data['dataDateTo'])) {
 
-            //When Search
             $str_date = $data['dataDateFrom'] . ' 00:00:00';
             $end_date = $data['dataDateTo'] . ' 23:59:59';
-
-            $list_applications_status = DB::table('applications')
-                ->select(DB::raw("CONCAT(CONCAT(forms.prefix,'-'),LPAD(applications.`id`, " . $fillZero . ", '0')) AS application_no"), 'forms.name As nameapp', 'applications.created_at as datecreate', 'users.name as nameuser', 'applications.form_id', 'applications.id')
-
-                //Join
-                ->join('forms', 'applications.form_id', '=', 'forms.id')
-                ->join('groups', 'applications.group_id', '=', 'groups.id')
-                ->join('flows', 'groups.id', '=', 'flows.group_id')
-                ->join('steps', 'flows.id', '=', 'steps.flow_id')
-                ->join('users', 'users.id', '=', 'steps.approver_id')
-
-                //Where
-                ->where('applications.status', '>=', $sta)
-                ->where('applications.status', '<=', $end)
-                ->where('applications.current_step', '>=', $stepStr)
-                ->where('applications.current_step', '<=', $stepEnd)
-
-                //When
-                ->when(intval($status) != config('const.application.status.completed'), function ($q) {
-                    $q = $q->where(DB::raw('CAST(steps.step_type AS SIGNED)'), DB::raw('CAST(applications.current_step AS SIGNED)'))->where(DB::raw('CAST(steps.select_order AS SIGNED)'), DB::raw('CAST(applications.status AS SIGNED)'));
-                })
-
-                //Condition Time
-                ->where('applications.created_at', '>=', $str_date)
-                ->where('applications.created_at', '<=', $end_date)
-
-                ->orderBy('applications.id', 'desc')
-                ->whereNull('applications.deleted_at')
-                ->paginate(5);
         } else {
-
-            $str_date = config('const.time_search.from');
-            $end_date = config('const.time_search.to');
-
-            //Load Page
-            $list_applications_status = DB::table('applications')
-                ->select(DB::raw("CONCAT(CONCAT(forms.prefix,'-'),LPAD(applications.`id`, " . $fillZero . ", '0')) AS application_no"), 'forms.name As nameapp', 'applications.created_at as datecreate', 'users.name as nameuser', 'applications.form_id', 'applications.id')
-
-                //Join
-                ->join('forms', 'applications.form_id', '=', 'forms.id')
-                ->join('groups', 'applications.group_id', '=', 'groups.id')
-                ->join('flows', 'groups.id', '=', 'flows.group_id')
-                ->join('steps', 'flows.id', '=', 'steps.flow_id')
-                ->join('users', 'users.id', '=', 'steps.approver_id')
-
-                //Where
-                ->where('applications.status', '>=', $sta)
-                ->where('applications.status', '<=', $end)
-                ->where('applications.current_step', '>=', $stepStr)
-                ->where('applications.current_step', '<=', $stepEnd)
-
-                //When
-                ->when(intval($status) != config('const.application.status.completed'), function ($q) {
-                    $q = $q->where(DB::raw('CAST(steps.step_type AS SIGNED)'), DB::raw('CAST(applications.current_step AS SIGNED)'))->where(DB::raw('CAST(steps.select_order AS SIGNED)'), DB::raw('CAST(applications.status AS SIGNED)'));
-                })
-
-                //Condition Time
-                ->where('applications.created_at', '>=', $str_date)
-                ->where('applications.created_at', '<=', $end_date)
-
-                ->orderBy('applications.id', 'desc')
-                ->whereNull('applications.deleted_at')
-                ->paginate(5);
+            $str_date = config('const.init_time_search.from');
+            $end_date = config('const.init_time_search.to');
         }
+
+        $list_applications_status = DB::table('applications')
+            ->select(DB::raw("CONCAT(CONCAT(forms.prefix,'-'),LPAD(applications.`id`, " . $fillZero . ", '0')) AS application_no"), 'forms.name As nameapp', 'applications.created_at as datecreate', 'users.name as nameuser', 'applications.form_id', 'applications.id')
+
+            //Join
+            ->join('forms', 'applications.form_id', '=', 'forms.id')
+            ->join('groups', 'applications.group_id', '=', 'groups.id')
+            ->join('flows', 'groups.id', '=', 'flows.group_id')
+            ->join('steps', 'flows.id', '=', 'steps.flow_id')
+            ->join('users', 'users.id', '=', 'steps.approver_id')
+
+            //Where
+            ->where('applications.status', '>=', $sta)
+            ->where('applications.status', '<=', $end)
+            ->where('applications.current_step', '>=', $stepStr)
+            ->where('applications.current_step', '<=', $stepEnd)
+
+            //When
+            ->when(intval($status) != config('const.application.status.completed'), function ($q) {
+                $q = $q->where(DB::raw('CAST(steps.step_type AS SIGNED)'), DB::raw('CAST(applications.current_step AS SIGNED)'))->where(DB::raw('CAST(steps.select_order AS SIGNED)'), DB::raw('CAST(applications.status AS SIGNED)'));
+            })
+            ->when(intval($status) == config('const.application.status.completed'), function ($q) {
+                $q = $q->where(DB::raw('CAST(steps.step_type AS SIGNED)'), DB::raw('CAST(applications.current_step AS SIGNED)'))->where(DB::raw('CAST(steps.order AS SIGNED)'), DB::raw('CAST(applications.status AS SIGNED)'));
+            })
+
+            //Condition Time
+            ->where('applications.created_at', '>=', $str_date)
+            ->where('applications.created_at', '<=', $end_date)
+
+            ->orderBy('applications.id', 'desc')
+            ->whereNull('applications.deleted_at')
+            ->paginate(5);
 
         // Type Application
         $intstatus = (int)$status;

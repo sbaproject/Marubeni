@@ -155,7 +155,7 @@ return [
     /**
 	 * Time Search
 	 */
-    'time_search' => [
+    'init_time_search' => [
 		'from' => Carbon::now()->startOfMonth(),
 		'to' => Carbon::now()->endOfMonth(),
     ]
