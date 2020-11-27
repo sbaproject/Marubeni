@@ -128,7 +128,7 @@
                             @foreach ($list_application as $application)
                                  <tr class="list-content">
                                     <td>{{ !empty($application->application_no) ? $application->application_no : '' }}</td>
-                                    <td>{{ !empty($application->form_id) ? $application->Form->name : '' }}</td>
+                                    <td>{{ !empty($application->form_name) ? $application->form_name : '' }}</td>
                                     <td>
                                         <div
                                             class=" {{ $application->status == config('const.application.status.applying') ? 'status-apply' : ($application->status == config('const.application.status.declined') ? 'status-declined' : ($application->status == config('const.application.status.reject') ? 'status-reject' : ($application->status == config('const.application.status.completed') ? 'status-completed' : 'status-approval'))) }}">

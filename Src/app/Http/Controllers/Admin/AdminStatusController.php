@@ -41,7 +41,8 @@ class AdminStatusController extends Controller
             $end_date = config('const.init_time_search.to');
         }
 
-        $list_applications_status = DB::table('applications')
+        //List Leave
+        $list_applications_status_leave = DB::table('applications')
             ->select(DB::raw("CONCAT(CONCAT(forms.prefix,'-'),LPAD(applications.`id`, " . $fillZero . ", '0')) AS application_no"), 'forms.name As nameapp', 'applications.created_at as datecreate', 'users.name as nameuser', 'applications.form_id', 'applications.id')
 
             //Join
@@ -56,7 +57,54 @@ class AdminStatusController extends Controller
             ->where('applications.status', '<=', $end)
             ->where('applications.current_step', '>=', $stepStr)
             ->where('applications.current_step', '<=', $stepEnd)
-            ->where('steps.approver_type', 0)
+            ->where('steps.approver_type', config('const.approver_type.to'))
+            ->whereIn('forms.id', [config('const.form.leave')])
+
+            //When
+            ->when(intval($status) != config('const.application.status.completed'), function ($q) {
+                $q = $q->where(DB::raw('CAST(steps.step_type AS SIGNED)'), DB::raw('CAST(applications.current_step AS SIGNED)'))->where(DB::raw('CAST(steps.select_order AS SIGNED)'), DB::raw('CAST(applications.status AS SIGNED)'));
+            })
+            ->when(intval($status) == config('const.application.status.completed'), function ($q) {
+                $q = $q->where(DB::raw('CAST(steps.step_type AS SIGNED)'), DB::raw('CAST(applications.current_step AS SIGNED)'))->where(DB::raw('CAST(steps.order AS SIGNED)'), DB::raw('CAST(applications.status AS SIGNED)'));
+            })
+
+            //Condition Time
+            ->where('applications.created_at', '>=', $str_date)
+            ->where('applications.created_at', '<=', $end_date)
+
+            ->orderBy('applications.id', 'desc')
+            ->whereNull('applications.deleted_at');
+
+        //List Entertainment, Business Trip
+        $list_applications_status = DB::table('applications')
+            ->select(DB::raw("CONCAT(CONCAT(forms.prefix,'-'),LPAD(applications.`id`, " . $fillZero . ", '0')) AS application_no"), 'forms.name As nameapp', 'applications.created_at as datecreate', 'users.name as nameuser', 'applications.form_id', 'applications.id')
+
+            //Join
+            ->join('forms', 'applications.form_id', '=', 'forms.id')
+            ->join('groups', 'applications.group_id', '=', 'groups.id')
+            ->join('flows', 'groups.id', '=', 'flows.group_id')
+            ->join('steps', 'flows.id', '=', 'steps.flow_id')
+            ->join('users', 'users.id', '=', 'steps.approver_id')
+
+            //Where
+            ->when(intval($status) == config('const.application.status.approvel_in'), function ($q) {
+                $q = $q->where('applications.status', '>=', 0);
+            })
+            ->when(intval($status) != config('const.application.status.approvel_in'), function ($q) use ($sta) {
+                $q = $q->where('applications.status', '>=', $sta)
+                    ->whereNotIn('applications.id', function ($query) {
+                        return $query->select('id')
+                            ->from('applications')
+                            ->where('applications.status', '=', 0)
+                            ->Where('applications.current_step', '=', 2);
+                    });
+            })
+
+            ->where('applications.status', '<=', $end)
+            ->where('applications.current_step', '>=', $stepStr)
+            ->where('applications.current_step', '<=', $stepEnd)
+            ->where('steps.approver_type', config('const.approver_type.to'))
+            ->whereIn('forms.id', [config('const.form.biz_trip'), config('const.form.entertainment')])
 
             //When
             ->when(intval($status) != config('const.application.status.completed'), function ($q) {
@@ -72,6 +120,7 @@ class AdminStatusController extends Controller
 
             ->orderBy('applications.id', 'desc')
             ->whereNull('applications.deleted_at')
+            ->union($list_applications_status_leave)
             ->paginate(5);
 
         // Type Application

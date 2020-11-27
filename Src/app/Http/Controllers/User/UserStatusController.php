@@ -44,6 +44,7 @@ class UserStatusController extends Controller
             $end_date = config('const.init_time_search.to');
         }
 
+        //List Leave
         $list_applications_status_leave = DB::table('applications')
             ->select(DB::raw("CONCAT(CONCAT(forms.prefix,'-'),LPAD(applications.`id`, " . $fillZero . ", '0')) AS application_no"), 'forms.name As nameapp', 'applications.created_at as datecreate', 'users.name as nameuser', 'applications.form_id', 'applications.id')
 
@@ -60,8 +61,8 @@ class UserStatusController extends Controller
             ->where('applications.current_step', '>=', $stepStr)
             ->where('applications.current_step', '<=', $stepEnd)
             ->where('applications.created_by', $userId)
-            ->where('steps.approver_type', 0)
-            ->whereIn('forms.id', [1])
+            ->where('steps.approver_type', config('const.approver_type.to'))
+            ->whereIn('forms.id', [config('const.form.leave')])
 
             //When
             ->when(intval($status) != config('const.application.status.completed'), function ($q) {
@@ -78,6 +79,7 @@ class UserStatusController extends Controller
             ->orderBy('applications.id', 'desc')
             ->whereNull('applications.deleted_at');
 
+        //List Entertainment, Business Trip
         $list_applications_status = DB::table('applications')
             ->select(DB::raw("CONCAT(CONCAT(forms.prefix,'-'),LPAD(applications.`id`, " . $fillZero . ", '0')) AS application_no"), 'forms.name As nameapp', 'applications.created_at as datecreate', 'users.name as nameuser', 'applications.form_id', 'applications.id')
 
@@ -94,11 +96,11 @@ class UserStatusController extends Controller
             })
             ->when(intval($status) != config('const.application.status.approvel_in'), function ($q) use ($sta) {
                 $q = $q->where('applications.status', '>=', $sta)
-                    ->whereNotExists(function ($query) {
-                        return $query
+                    ->whereNotIn('applications.id', function ($query) {
+                        return $query->select('id')
                             ->from('applications')
-                            ->where('applications.status', '!=', 0)
-                            ->Where('applications.current_step', '!=', 2);
+                            ->where('applications.status', '=', 0)
+                            ->Where('applications.current_step', '=', 2);
                     });
             })
 
@@ -106,8 +108,8 @@ class UserStatusController extends Controller
             ->where('applications.current_step', '>=', $stepStr)
             ->where('applications.current_step', '<=', $stepEnd)
             ->where('applications.created_by', $userId)
-            ->where('steps.approver_type', 0)
-            ->whereIn('forms.id', [2, 3])
+            ->where('steps.approver_type', config('const.approver_type.to'))
+            ->whereIn('forms.id', [config('const.form.biz_trip'), config('const.form.entertainment')])
 
             //When
             ->when(intval($status) != config('const.application.status.completed'), function ($q) {
@@ -123,7 +125,7 @@ class UserStatusController extends Controller
 
             ->orderBy('applications.id', 'desc')
             ->whereNull('applications.deleted_at')
-            //->union($list_applications_status_leave)
+            ->union($list_applications_status_leave)
             ->paginate(5);
 
         // Type Application
