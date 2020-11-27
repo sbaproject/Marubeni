@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    
     //=======================================
     // Datetimepicker
     //=======================================
@@ -13,7 +14,7 @@ $(document).ready(function () {
         useCurrent: false,
         icons: {
             clear: 'fa fa-trash',
-            today: 'fa fa-clock',
+            today: 'fa fa-clock'
         }
     });
     // change
@@ -110,12 +111,12 @@ $(document).ready(function () {
             {
                 hint: false,
                 highlight: true,
-                minLength: 1,
+                minLength: 1
             },
             {
                 limit: 999,
                 source: substringMatcher(companies)
-            },
+            }
         );
     }
 
@@ -128,7 +129,7 @@ $(document).ready(function () {
     // Entertainment Infos Block
     //=======================================
     // add new entertainment info element
-    $('#btnAdd').on('click', function (e) {
+    $('#btnAdd').on("click", function (e) {
 
         e.preventDefault();
 

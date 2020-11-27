@@ -6,12 +6,24 @@ $(document).ready(function () {
     $('#dateLeaveFrom').datetimepicker({
         format: 'ddd, DD/MM/YYYY',
         defaultDate: $('#date_from').val(),
-        useCurrent: false
+        useCurrent: false,
+        showTodayButton: true,
+        showClear: true,
+        icons: {
+            clear: 'fa fa-trash',
+            today: 'fa fa-clock'
+        }
     });
     $('#dateLeaveTo').datetimepicker({
         format: 'ddd, DD/MM/YYYY',
         defaultDate: $('#date_to').val(),
-        useCurrent: false
+        useCurrent: false,
+        showTodayButton: true,
+        showClear: true,
+        icons: {
+            clear: 'fa fa-trash',
+            today: 'fa fa-clock'
+        }
     });
     // show
     var dateFrom = $('#dateLeaveFrom').data("DateTimePicker").date();
@@ -49,17 +61,35 @@ $(document).ready(function () {
     $('#timeLeaveDate').datetimepicker({
         format: 'ddd, DD/MM/YYYY',
         defaultDate: $('#time_day').val(),
-        useCurrent: false
+        useCurrent: false,
+        showTodayButton: true,
+        showClear: true,
+        icons: {
+            clear: 'fa fa-trash',
+            today: 'fa fa-clock'
+        }
     });
     $('#timeLeaveFrom').datetimepicker({
         format: 'HH:mm',
         // defaultDate: $('#time_from').val(),
-        useCurrent: false
+        useCurrent: false,
+        showTodayButton: true,
+        showClear: true,
+        icons: {
+            clear: 'fa fa-trash',
+            today: 'fa fa-clock'
+        }
     });
     $('#timeLeaveTo').datetimepicker({
         format: 'HH:mm',
         // defaultDate: $('#time_to').val(),
-        useCurrent: false
+        useCurrent: false,
+        showTodayButton: true,
+        showClear: true,
+        icons: {
+            clear: 'fa fa-trash',
+            today: 'fa fa-clock'
+        }
     });
     // show
     var timeDay = $('#timeLeaveDate').data("DateTimePicker").date();
@@ -97,12 +127,24 @@ $(document).ready(function () {
     $('#maternityLeaveFrom').datetimepicker({
         format: 'ddd, DD/MM/YYYY',
         defaultDate: $('#maternity_from').val(),
-        useCurrent: false
+        useCurrent: false,
+        showTodayButton: true,
+        showClear: true,
+        icons: {
+            clear: 'fa fa-trash',
+            today: 'fa fa-clock'
+        }
     });
     $('#maternityLeaveTo').datetimepicker({
         format: 'ddd, DD/MM/YYYY',
         defaultDate: $('#maternity_to').val(),
-        useCurrent: false
+        useCurrent: false,
+        showTodayButton: true,
+        showClear: true,
+        icons: {
+            clear: 'fa fa-trash',
+            today: 'fa fa-clock'
+        }
     });
     // show
     var maternityLeaveFrom = $('#maternityLeaveFrom').data("DateTimePicker").date();
@@ -273,5 +315,4 @@ $(document).ready(function () {
     $('.file-link').on('click', function () {
         $(this).find('a')[0].click();
     });
-
 });

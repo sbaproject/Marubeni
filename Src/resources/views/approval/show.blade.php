@@ -77,9 +77,13 @@
                                 </div>
                                 <div class="col-sm-9 pl-sm-0">
                                     <div class="app_info last_item">
-                                        <a href="{{ Storage::url($app->file_path) }}" target="_blank">
-                                            {{ basename($app->file_path) }}
-                                        </a>
+                                        @if (!empty($app->file_path))
+                                            <a href="{{ Storage::url($app->file_path) }}" target="_blank">
+                                                {{ basename($app->file_path) }}
+                                            </a>
+                                        @else
+                                            {{ __('label.no_attached_file') }}
+                                        @endif
                                     </div>
                                 </div>
                             </div>
