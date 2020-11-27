@@ -81,7 +81,7 @@
                                     <td>{{ !empty($application_status->nameapp) ? $application_status->nameapp : '' }}</td>
                                     <td>{{ !empty($application_status->datecreate) ? \Carbon\Carbon::parse($application_status->datecreate)->format('d/m/Y') : '' }}
                                     </td>
-                                    <td>{{ !empty($application_status->nameuser) ? $application_status->nameuser : '' }}
+                                    <td>{{ (!empty($application_status->nameuser) && $intstatus != config('const.application.status.completed')) ? $application_status->nameuser : '' }}
                                     </td>
                                     <td>
                                         <a class="btn btn-details"
