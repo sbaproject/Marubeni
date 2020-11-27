@@ -56,6 +56,7 @@ class AdminStatusController extends Controller
             ->where('applications.status', '<=', $end)
             ->where('applications.current_step', '>=', $stepStr)
             ->where('applications.current_step', '<=', $stepEnd)
+            ->where('steps.approver_type', 0)
 
             //When
             ->when(intval($status) != config('const.application.status.completed'), function ($q) {

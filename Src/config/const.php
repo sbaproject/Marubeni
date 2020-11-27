@@ -148,6 +148,9 @@ return [
 			'no' => 0,
 		],
 	],
+	/**
+	 * Approver Type
+	 */
 	'approver_type' => [
 		'to' => 0,
 		'cc' => 1,
@@ -158,5 +161,5 @@ return [
     'init_time_search' => [
 		'from' => Carbon::now()->startOfMonth(),
 		'to' => Carbon::now()->endOfMonth(),
-    ]
+    ],
 ];
