@@ -61,7 +61,7 @@ class AdminStatusController extends Controller
             ->whereIn('forms.id', [config('const.form.leave')])
 
             //When
-            ->when(intval($status) != config('const.application.status.completed'), function ($q) {
+            ->when(intval($status) != config('const.application.status.completed') && intval($status) != config('const.application.status.declined') && intval($status) != config('const.application.status.reject'), function ($q) {
                 $q = $q->where(DB::raw('CAST(steps.step_type AS SIGNED)'), DB::raw('CAST(applications.current_step AS SIGNED)'))->where(DB::raw('CAST(steps.select_order AS SIGNED)'), DB::raw('CAST(applications.status AS SIGNED)'));
             })
             ->when(intval($status) == config('const.application.status.completed'), function ($q) {
@@ -72,6 +72,7 @@ class AdminStatusController extends Controller
             ->where('applications.created_at', '>=', $str_date)
             ->where('applications.created_at', '<=', $end_date)
 
+            //OrderBy
             ->orderBy('applications.id', 'desc')
             ->whereNull('applications.deleted_at');
 
@@ -107,7 +108,7 @@ class AdminStatusController extends Controller
             ->whereIn('forms.id', [config('const.form.biz_trip'), config('const.form.entertainment')])
 
             //When
-            ->when(intval($status) != config('const.application.status.completed'), function ($q) {
+            ->when(intval($status) != config('const.application.status.completed') && intval($status) != config('const.application.status.declined') && intval($status) != config('const.application.status.reject'), function ($q) {
                 $q = $q->where(DB::raw('CAST(steps.step_type AS SIGNED)'), DB::raw('CAST(applications.current_step AS SIGNED)'))->where(DB::raw('CAST(steps.select_order AS SIGNED)'), DB::raw('CAST(applications.status AS SIGNED)'));
             })
             ->when(intval($status) == config('const.application.status.completed'), function ($q) {
@@ -118,6 +119,7 @@ class AdminStatusController extends Controller
             ->where('applications.created_at', '>=', $str_date)
             ->where('applications.created_at', '<=', $end_date)
 
+            //OrderBy
             ->orderBy('applications.id', 'desc')
             ->whereNull('applications.deleted_at')
             ->union($list_applications_status_leave)

@@ -1,0 +1,4 @@
+.card-list-items{
+    overflow-x: scroll;
+    overflow-y: hidden;
+}
