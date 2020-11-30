@@ -113,7 +113,7 @@
                 style="margin-right: 5px;margin-bottom: 5px;"></i>{{ $intstatus == config('const.application.status.applying') ? __('label.status.list_of_applying_documents') : ($intstatus == config('const.application.status.approvel') ? __('label.status.list_of_approval_documents') : ($intstatus == config('const.application.status.declined') ? __('label.status.list_of_declined_documents') : ($intstatus == config('const.application.status.reject') ? __('label.status.list_of_reject_documents') : ($intstatus == config('const.application.status.completed') ? __('label.status.list_of_completed_documents') : __('label.dashboard.list_application'))))) }}</h4>
         <div class="card">
             <div class="card-body p-0 card-list-items">
-                <table class="table" id="table_list_status">
+                <table class="table table-bordered" id="table_list_status">
                     <thead>
                         <tr class="list-title">
                             <th>{{ __('label.dashboard.application_no') }}</th>

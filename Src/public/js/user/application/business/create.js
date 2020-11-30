@@ -6,12 +6,16 @@ $(document).ready(function () {
     $('#trip_from').datetimepicker({
         format: 'ddd, DD/MM/YYYY',
         defaultDate: $('#trip_dt_from').val(),
-        useCurrent: false
+        useCurrent: false,
+        showTodayButton: true,
+        showClear: true
     });
     $('#trip_to').datetimepicker({
         format: 'ddd, DD/MM/YYYY',
         defaultDate: $('#trip_dt_to').val(),
-        useCurrent: false
+        useCurrent: false,
+        showTodayButton: true,
+        showClear: true
     });
     // show
     var tripFrom = $('#trip_from').data("DateTimePicker").date();

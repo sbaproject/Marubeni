@@ -4,13 +4,17 @@ $(document).ready(function () {
         format: 'ddd, DD/MM/YYYY',
         defaultDate: $('#str_date').attr("value"),
         maxDate: $('#end_date').attr("value"),
-        useCurrent: false
+        useCurrent: false,
+        showTodayButton: true,
+        showClear: true
     });
     $('#dateTo').datetimepicker({
         format: 'ddd, DD/MM/YYYY',
         defaultDate: $('#end_date').attr("value"),
         minDate: $('#str_date').attr("value"),
-        useCurrent: false
+        useCurrent: false,
+        showTodayButton: true,
+        showClear: true
     });
 
     //Get time startup

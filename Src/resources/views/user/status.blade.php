@@ -62,7 +62,7 @@
         </h4>
         <div class="card">
             <div class="card-body p-0 card-list-items">
-                <table class="table">
+                <table class="table table-bordered">
                     <thead>
                         <tr class="list-title">
                             <th>{{ __('label.status.no') }}</th>

@@ -559,6 +559,7 @@
                 if (options.disabledTimeIntervals && (granularity === 'h' || granularity === 'm' || granularity === 's')) {
                     var found = false;
                     $.each(options.disabledTimeIntervals, function () {
+                        debugger;
                         if (targetMoment.isBetween(this[0], this[1])) {
                             found = true;
                             return false;
@@ -1180,10 +1181,20 @@
                 clear: clear,
 
                 today: function () {
-                    var todaysDate = getMoment();
+                    // issue: default of lib if picker was set maxDate then when hitting on todayButton
+                    // you can not focus to the equal date of maxDate.
+                    // SBA custom fixed by using [sbaDayOnly] option to get day only (without time)
+                    if (options.sbaDayOnly === true) {
+                        var todaysDate = getMoment().clone().hour(0).minute(0).second(0).millisecond(0);
+                    } else {
+                        var todaysDate = getMoment();
+                    }
+
                     if (isValid(todaysDate, 'd')) {
                         setValue(todaysDate);
                     }
+
+                    // toggle();
                 },
 
                 close: hide
@@ -2327,6 +2338,16 @@
             return picker;
         };
 
+        // SBA custom
+        picker.sbaDayOnly = function (sbaDayOnly) {
+
+            if (arguments.length === 0) {
+                return options.sbaDayOnly;
+            }
+
+            options.sbaDayOnly = sbaDayOnly;
+        };
+
         // initializing element and component attributes
         if (element.is('input')) {
             input = element;
@@ -2466,7 +2487,7 @@
             down: 'fa fa-chevron-down',
             previous: 'fa fa-chevron-left',
             next: 'fa fa-chevron-right',
-            today: 'fa fa-screenshot',
+            today: 'fa fa-clock',
             clear: 'fa fa-trash',
             close: 'fa fa-remove'
         },
@@ -2629,7 +2650,9 @@
         disabledTimeIntervals: false,
         disabledHours: false,
         enabledHours: false,
-        viewDate: false
+        viewDate: false,
+        // SBA custom
+        sbaDayOnly: true
     };
 
     return $.fn.datetimepicker;

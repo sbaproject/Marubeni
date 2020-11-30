@@ -114,7 +114,7 @@
         </h4>
         <div class="card">
             <div class="card-body p-0 card-list-items">
-                <table class="table" id="table_list_status">
+                <table class="table table-bordered" id="table_list_status">
                     <thead>
                         <tr class="list-title">
                             <th>{{ __('label.dashboard.application_no') }}</th>

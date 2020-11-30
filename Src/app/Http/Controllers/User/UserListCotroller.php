@@ -35,7 +35,8 @@ class UserListCotroller extends Controller
         }
         if (isset($conditions['user_no'])) {
             $fillZero = config('const.num_fillzero');
-            $whereUserNo = "(id LIKE '%{$conditions['user_no']}%' OR LPAD('{$conditions['user_no']}', {$fillZero}, '0') = LPAD(id, {$fillZero}, '0'))";
+            // $whereUserNo = "(id LIKE '%{$conditions['user_no']}%' OR LPAD('{$conditions['user_no']}', {$fillZero}, '0') = LPAD(id, {$fillZero}, '0'))";
+            $whereUserNo = "LPAD(id, {$fillZero}, '0') LIKE '%{$conditions['user_no']}%'";
         }
 
         // get data

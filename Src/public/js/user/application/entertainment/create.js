@@ -12,10 +12,7 @@ $(document).ready(function () {
         showTodayButton: true,
         showClear: true,
         useCurrent: false,
-        icons: {
-            clear: 'fa fa-trash',
-            today: 'fa fa-clock'
-        }
+        sbaDayOnly: false
     });
     // change
     $("#datetime").on("dp.change", function (e) {

@@ -40,7 +40,7 @@
     <!-- AdminLTE App -->
     <script src="js/adminlte.min.js"></script>
     <!-- Master CSS-->
-    <script src="js/master.js"></script>
+    {{-- <script src="js/master.js"></script> --}}
     <!-- Bootstrap Switch -->
     {{-- <script src="js/bootstrap-switch/js/bootstrap-switch.min.js"></script> --}}
     {{-- Custom JS per page here --}}
