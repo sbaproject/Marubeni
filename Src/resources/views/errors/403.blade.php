@@ -8,7 +8,7 @@
         <div class="code-state">403</div>
         <div>{{ __('msg.page_error.403') }}</div>
         <div>
-            <a href="">{{ __('msg.page_error.go_home') }}</a>
+            <a href="{{ Common::getHomeUrl() }}">{{ __('msg.page_error.go_home') }}</a>
         </div>
     </p>
 </div>

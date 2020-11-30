@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use function PHPUnit\Framework\isEmpty;
 use Illuminate\Support\Facades\Session;
 
@@ -157,5 +158,29 @@ class Common
 			return route('user.entertainment.preview', $appId);
 		}
 		return '';
+	}
+
+	/**
+	 * Redirect to home page
+	 */
+	public static function redirectHome(){
+		return redirect(static::getHomeUrl());
+	}
+
+	/**
+	 * Get URL of Home page
+	 */
+	public static function getHomeUrl()
+	{
+		if (Auth::check()) {
+			// for admin
+			if (Gate::allows('admin-gate')) {
+				return route('admin.dashboard', config('const.application.status.all'));
+			}
+			// for user
+			return route('user.dashboard', config('const.application.status.all'));
+		} else {
+			return route('login');
+		}
 	}
 }

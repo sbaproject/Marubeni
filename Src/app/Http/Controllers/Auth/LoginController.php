@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Libs\Common;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Providers\RouteServiceProvider;
@@ -61,7 +62,8 @@ class LoginController extends Controller
      */
     protected function authenticated($request, $user)
     {
-        return redirect('/');
+        // return redirect('/');
+        return Common::redirectHome();
     }
 
     /**
@@ -72,6 +74,6 @@ class LoginController extends Controller
         // default redirect to '/'
         // if want to redirect to another routes, change here.
         // return redirect()->intended();
-        return;
+        return redirect()->route('login');
     }
 }

@@ -12,19 +12,19 @@
     <!-----------------START LINK CSS ------------------------------>
     <base href="{{ asset('') }}">
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="css/lib/fontawesome-free/css/all.min.css">
+    {{-- <link rel="stylesheet" href="css/lib/fontawesome-free/css/all.min.css"> --}}
     <!-- Ionicons -->
-    <link rel="stylesheet" href="css/lib/ionicons.min.css">
+    {{-- <link rel="stylesheet" href="css/lib/ionicons.min.css"> --}}
     <!-- Tempusdominus Bbootstrap 4 -->
-    <link rel="stylesheet" href="css/lib/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+    {{-- <link rel="stylesheet" href="css/lib/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css"> --}}
     <!-- overlayScrollbars -->
     <link rel="stylesheet" href="css/lib/adminlte.min.css">
     <!-- jquery-ui css -->
-    <link rel="stylesheet" href="css/lib/jquery-ui.css">
+    {{-- <link rel="stylesheet" href="css/lib/jquery-ui.css"> --}}
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="css/lib/google_font_sans_pro.css">
     <!-- icheck-bootstrap -->
-    <link rel="stylesheet" href="css/lib/icheck-bootstrap/icheck-bootstrap.min.css">
+    {{-- <link rel="stylesheet" href="css/lib/icheck-bootstrap/icheck-bootstrap.min.css"> --}}
     <!-- Custom master css -->
     <link rel="stylesheet" href="css/master.css">
     <link rel="stylesheet" href="css/login.css">
@@ -34,7 +34,7 @@
     <!-----------------START LINK JAVASCRIPT ---------------------->
     <!-- jQuery -->
     <script src="js/jquery/jquery.min.js"></script>
-    <script src="js/jquery/jquery-ui.js"></script>
+    {{-- <script src="js/jquery/jquery-ui.js"></script> --}}
     <!-- Bootstrap 4 -->
     {{-- <script src="js/bootstrap/js/bootstrap.bundle.min.js"></script>
     --}}
@@ -61,7 +61,7 @@
             <!-- Left navbar links -->
             <ul class="navbar-nav bg-custom">
                 <li class="nav-item">
-                    <a href="/">
+                    <a href="{{ Common::getHomeUrl() }}">
                         <img src="images/logo.png" alt="Logo" class="" style="max-width: 100%;">
                     </a>
                 </li>

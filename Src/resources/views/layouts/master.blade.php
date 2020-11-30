@@ -75,7 +75,7 @@
                 @if (Auth::check())
                 <li class="nav-item user-panel-custom">
                     <div class="info">
-                        <a href="#" class="text-name">{{ Auth::user()->name }}</a>
+                        <a href="{{ Common::getHomeUrl() }}" class="text-name">{{ Auth::user()->name }}</a>
                         /
                         <a href="{{ route('logout') }}" class="text-name" onclick="event.preventDefault();
                                 document.getElementById('logout-form').submit();">
@@ -94,7 +94,7 @@
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-primary elevation-4 sidebar-no-expand">
             <!-- Brand Logo -->
-            <a href="/" class="brand-link">
+            <a href="{{ Common::getHomeUrl() }}" class="brand-link">
                 <img src="images/logo.png" alt="Logo" class="" style="max-width: 100%;">
             </a>
             <!-- Sidebar -->
