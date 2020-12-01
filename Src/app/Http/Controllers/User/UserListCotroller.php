@@ -39,14 +39,22 @@ class UserListCotroller extends Controller
             $whereUserNo = "LPAD(id, {$fillZero}, '0') LIKE '%{$conditions['user_no']}%'";
         }
 
+        // sorting by column
+        $sortColNames = [
+            'id' => __('label._no_'),
+            // 'name' => __('validation.attributes.department'),
+            'name' => __('validation.attributes.user.name'),
+        ];
+        $sort = Common::getSortColumnHeader($request, $sortColNames, 0, 0, true);
+
         // get data
         $users = User::where($where)
             ->whereRaw($whereUserNo)
-            ->orderBy('id')
+            ->orderByRaw($sort->order_by)
             ->with('department')
             ->paginate(config('const.paginator.items'));
 
-        return view('user.list', compact('conditions', 'locations', 'departments', 'users'));
+        return view('user.list', compact('conditions', 'locations', 'departments', 'users', 'sort'));
     }
 
     public function delete(User $user)

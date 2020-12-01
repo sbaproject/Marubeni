@@ -80,7 +80,10 @@
             <table class="table table-bordered">
                 <thead>
                     <tr class="list-title">
-                        <th>{{ __('label.application_no') }}</th>
+                        <th>
+                            {{-- {{ __('label.application_no') }} --}}
+                            {!! $sort->titles['application_no'] !!}
+                        </th>
                         <th>{{ __('label.status.application_type') }}</th>
                         <th>{{ __('label.status.apply_date') }}</th>
                         <th>{{ __('label.status.next_approver') }}</th>

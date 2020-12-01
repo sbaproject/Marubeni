@@ -6,9 +6,7 @@ use PDF;
 use Exception;
 use Carbon\Carbon;
 use App\Libs\Common;
-use App\Models\Leave;
 use App\Models\Application;
-use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -232,8 +230,9 @@ class LeaveApplicationController extends Controller
             }
             // upload new attached file
             if ($request->file('input_file')) {
-                // $extension = '.' . $request->file('input_file')->extension();
-                $fileName = time() . $user->id . '_' . $request->file('input_file')->getClientOriginalName();
+                $extension = '.' . $request->file('input_file')->extension();
+                // $fileName = time() . $user->id . '_' . $request->file('input_file')->getClientOriginalName();
+                $fileName = time() . $user->id . $extension;
                 $filePath = $request->file('input_file')->storeAs('uploads/application/', $fileName);
             }
 
@@ -286,7 +285,7 @@ class LeaveApplicationController extends Controller
             if ($ex instanceof NotFoundFlowSettingException) {
                 $msgErr = $ex->getMessage();
             } else {
-                $msgErr = $ex->getMessage();
+                $msgErr = __('msg.save_fail');
             }
         }
 

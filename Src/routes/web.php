@@ -2,7 +2,6 @@
 
 use App\Libs\Common;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LocaleController;
 use App\Http\Controllers\CheckipController;
@@ -17,9 +16,7 @@ use App\Http\Controllers\User\UserCompanyController;
 use App\Http\Controllers\Admin\AdminBudgetController;
 use App\Http\Controllers\Admin\AdminStatusController;
 use App\Http\Controllers\User\UserRegisterController;
-
 use App\Http\Controllers\Admin\AdminCompanyController;
-
 use App\Http\Controllers\User\UserDashboardController;
 use App\Http\Controllers\User\UserChangePassController;
 use App\Http\Controllers\Admin\AdminDashboardController;

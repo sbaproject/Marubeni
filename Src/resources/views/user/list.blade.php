@@ -121,9 +121,15 @@
             <table class="table table-bordered " style="min-width: 500px;">
                 <thead>
                     <tr>
-                        <th style="width: 100px">{{ __('label._no_') }}</th>
+                        <th style="width: 100px">
+                            {{-- {{ __('label._no_') }} --}}
+                            {!! $sort->titles['id'] !!}
+                        </th>
                         <th>{{ __('validation.attributes.department') }}</th>
-                        <th>{{ __('validation.attributes.user.name') }}</th>
+                        <th>
+                            {{-- {{ __('validation.attributes.user.name') }} --}}
+                            {!! $sort->titles['name'] !!}
+                        </th>
                         <th style="width: 150px">{{ __('label.action') }}</th>
                     </tr>
                 </thead>

@@ -281,7 +281,9 @@ class EntertainmentController extends Controller
             }
             // upload new attached file
             if ($request->file('input_file')) {
-                $fileName = time() . $user->id . '_' . $request->file('input_file')->getClientOriginalName();
+                $extension = '.' . $request->file('input_file')->extension();
+                // $fileName = time() . $user->id . '_' . $request->file('input_file')->getClientOriginalName();
+                $fileName = time() . $user->id . $extension;
                 $filePath = $request->file('input_file')->storeAs('uploads/application/', $fileName);
             }
 
@@ -289,8 +291,8 @@ class EntertainmentController extends Controller
 
             // save applications
             if (!$request->id) {
-                $application['created_by']      = $user->id;
-                $application['created_at']      = Carbon::now();
+                $application['created_by'] = $user->id;
+                $application['created_at'] = Carbon::now();
 
                 $applicationId = DB::table('applications')->insertGetId($application);
             } else {
@@ -360,7 +362,7 @@ class EntertainmentController extends Controller
             if ($ex instanceof NotFoundFlowSettingException) {
                 $msgErr = $ex->getMessage();
             } else {
-                $msgErr = $ex->getMessage();
+                $msgErr = __('msg.save_fail');
             }
         }
 

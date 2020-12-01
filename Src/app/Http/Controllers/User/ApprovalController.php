@@ -43,6 +43,12 @@ class ApprovalController extends Controller
             $params['applicationNo'] = '%' . $request->keyword . '%';
         }
 
+        // sorting by column
+        $sortColNames = [
+            'application_no' => __('label.application_no')
+        ];
+        $sort = Common::getSortColumnHeader($request, $sortColNames, 0, 0, true);
+
         // get data
         $sql = "SELECT
                  CONCAT(CONCAT(fo.prefix,'-'),LPAD(a.`id`, " . $fillZero . ", '0')) AS application_no
@@ -78,7 +84,8 @@ class ApprovalController extends Controller
                     INNER JOIN steps s ON s.`flow_id` = f.`id` AND s.`approver_type` = :approver_type AND a.`status` = s.`select_order` AND s.`step_type` = a.`current_step`
                     INNER JOIN users u ON u.`id` = s.`approver_id` AND s.`approver_id` = :userId
                     INNER JOIN users us ON us.`id` = a.`created_by`
-            WHERE   a.`status` BETWEEN 0 AND 98 " . $keywordCondition;
+            WHERE   a.`status` BETWEEN 0 AND 98 " . $keywordCondition ."
+            ORDER BY " . $sort->order_by;
 
         $data = DB::select($sql, $params);
 
@@ -94,7 +101,7 @@ class ApprovalController extends Controller
             ['path' => route('user.approval.index')]
         );
 
-        return view('approval.index', compact('data', 'inputs'));
+        return view('approval.index', compact('data', 'inputs', 'sort'));
     }
 
     public function show(Request $request, $id)

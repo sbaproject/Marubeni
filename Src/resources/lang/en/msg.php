@@ -21,6 +21,6 @@ return [
     'page_error' => [
         '404' => 'Page not found.',
         '403' => 'You do not have permission to access this action.',
-        'go_home' => 'Go home page',
+        'go_home' => 'Go to home page',
     ],
 ];

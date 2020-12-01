@@ -74,9 +74,6 @@ class BusinesstripController extends Controller
         // get business application
         // $model = Businesstrip::where('application_id', $id)->first();
 
-        // dd($application);
-
-
         return view('application.business.input', compact('application'));
     }
 
@@ -205,11 +202,11 @@ class BusinesstripController extends Controller
                     throw new NotFoundFlowSettingException();
                 }
 
-                $application['form_id'] = $formId;
-                $application['group_id'] = $group->id;
-                $application['current_step'] = $currentStep;
-                $application['created_by'] = $user->id;
-                $application['created_at'] = Carbon::now();
+                $application['form_id']         = $formId;
+                $application['group_id']        = $group->id;
+                $application['current_step']    = $currentStep;
+                $application['created_by']      = $user->id;
+                $application['created_at']      = Carbon::now();
             }
 
             // delete old file
@@ -227,7 +224,9 @@ class BusinesstripController extends Controller
             }
             // upload new attached file
             if ($request->file('input_file')) {
-                $fileName = time() . $user->id . '_' . $request->file('input_file')->getClientOriginalName();
+                $extension = '.' . $request->file('input_file')->extension();
+                // $fileName = time() . $user->id . '_' . $request->file('input_file')->getClientOriginalName();
+                $fileName = time() . $user->id . $extension;
                 $filePath = $request->file('input_file')->storeAs('uploads/application/', $fileName);
             }
 
@@ -249,22 +248,22 @@ class BusinesstripController extends Controller
 
             // prepare leave data
             $bizData = [
-                'destinations' => $inputs['destinations'],
-                'trip_dt_from' => $inputs['trip_dt_from'],
-                'trip_dt_to' => $inputs['trip_dt_to'],
+                'destinations'  => $inputs['destinations'],
+                'trip_dt_from'  => $inputs['trip_dt_from'],
+                'trip_dt_to'    => $inputs['trip_dt_to'],
                 'accommodation' => $inputs['accommodation'],
-                'accompany' => $inputs['accompany'],
-                'borne_by' => $inputs['borne_by'],
-                'comment' => $inputs['comment'],
+                'accompany'     => $inputs['accompany'],
+                'borne_by'      => $inputs['borne_by'],
+                'comment'       => $inputs['comment'],
                 // 'file_path' => isset($filePath) ? $filePath : null,
-                'updated_by' => $user->id,
-                'updated_at' => Carbon::now(),
+                'updated_by'    => $user->id,
+                'updated_at'    => Carbon::now(),
             ];
             // for new
             if (!$request->id) {
-                $bizData['application_id'] = $applicationId;
-                $bizData['created_by'] = $user->id;
-                $bizData['created_at'] = Carbon::now();
+                $bizData['application_id']  = $applicationId;
+                $bizData['created_by']      = $user->id;
+                $bizData['created_at']      = Carbon::now();
             }
 
             // DB::table('businesstrips')->updateOrInsert(['application_id' => $request->id], $bizData);
@@ -281,12 +280,12 @@ class BusinesstripController extends Controller
             }
             $transportations = [];
             foreach ($inputs['trans'] as $value) {
-                $item['businesstrip_id'] = $bizId;
-                $item['departure'] = $value['departure'];
-                $item['arrive'] = $value['arrive'];
-                $item['method'] = $value['method'];
-                $item['created_at'] = Carbon::now();
-                $item['updated_at'] = Carbon::now();
+                $item['businesstrip_id']    = $bizId;
+                $item['departure']          = $value['departure'];
+                $item['arrive']             = $value['arrive'];
+                $item['method']             = $value['method'];
+                $item['created_at']         = Carbon::now();
+                $item['updated_at']         = Carbon::now();
 
                 $transportations[] = $item;
             }
@@ -297,10 +296,9 @@ class BusinesstripController extends Controller
             DB::rollBack();
             unset($inputs['input_file']);
             if ($ex instanceof NotFoundFlowSettingException) {
-
                 $msgErr = $ex->getMessage();
             } else {
-                $msgErr = $ex->getMessage();
+                $msgErr = __('msg.save_fail');
             }
         }
 

@@ -140,7 +140,7 @@ return [
          * Laravel Framework Service Providers...
          */
         Illuminate\Auth\AuthServiceProvider::class,
-        // Illuminate\Broadcasting\BroadcastServiceProvider::class, // unsused
+        Illuminate\Broadcasting\BroadcastServiceProvider::class, // unsused
         Illuminate\Bus\BusServiceProvider::class,
         Illuminate\Cache\CacheServiceProvider::class,
         Illuminate\Foundation\Providers\ConsoleSupportServiceProvider::class,
@@ -151,11 +151,11 @@ return [
         Illuminate\Foundation\Providers\FoundationServiceProvider::class,
         Illuminate\Hashing\HashServiceProvider::class,
         Illuminate\Mail\MailServiceProvider::class,
-        // Illuminate\Notifications\NotificationServiceProvider::class, // unsused
+        Illuminate\Notifications\NotificationServiceProvider::class,
         Illuminate\Pagination\PaginationServiceProvider::class,
-        // Illuminate\Pipeline\PipelineServiceProvider::class, // unsused
+        Illuminate\Pipeline\PipelineServiceProvider::class, // unsused
         Illuminate\Queue\QueueServiceProvider::class,
-        // Illuminate\Redis\RedisServiceProvider::class, // unsused
+        Illuminate\Redis\RedisServiceProvider::class, // unsused
         Illuminate\Auth\Passwords\PasswordResetServiceProvider::class,
         Illuminate\Session\SessionServiceProvider::class,
         Illuminate\Translation\TranslationServiceProvider::class,
@@ -171,7 +171,7 @@ return [
          */
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
-        // App\Providers\BroadcastServiceProvider::class, // unsused
+        App\Providers\BroadcastServiceProvider::class, // unsused
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         //DomPDF
