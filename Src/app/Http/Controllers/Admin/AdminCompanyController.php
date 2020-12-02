@@ -45,14 +45,14 @@ class AdminCompanyController extends Controller
             $list_company = Company::orderBy('id', 'DESC')->paginate(5);
         }
 
-        return view('admin.company', compact('list_company', 'req_arr'));
+        return view('admin.company.index', compact('list_company', 'req_arr'));
     }
 
     public function create()
     {
         $idcompany = DB::table('INFORMATION_SCHEMA.TABLES')->select('AUTO_INCREMENT')->where('TABLE_NAME', 'companies')->get()[0]->AUTO_INCREMENT;
 
-        return view('admin.company_new', compact('idcompany'));
+        return view('admin.company.create', compact('idcompany'));
     }
 
     public function store(Request $request)
@@ -84,7 +84,7 @@ class AdminCompanyController extends Controller
     {
         $idcompany = $company->id;
 
-        return view('admin.company_edit', compact('company', 'idcompany'));
+        return view('admin.company.show', compact('company', 'idcompany'));
     }
 
     public function update($id, Request $request)

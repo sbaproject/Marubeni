@@ -40,7 +40,7 @@ class AdminBudgetController extends Controller
         // ENTERTAINMENT - Settlement - PO
         $amount8 = Budget::where('budget_type', config('const.budget.budget_type.entertainment'))->where('step_type', config('const.budget.step_type.settlement'))->where('position', config('const.budget.position.po'))->get('amount')->first();
 
-        return view('admin.budget', compact('amount1', 'amount2', 'amount3', 'amount4', 'amount5', 'amount6', 'amount7', 'amount8'));
+        return view('admin.budget.show', compact('amount1', 'amount2', 'amount3', 'amount4', 'amount5', 'amount6', 'amount7', 'amount8'));
     }
 
     public function update(Request $request)

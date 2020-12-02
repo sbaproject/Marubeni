@@ -45,7 +45,7 @@ class AdminDashboardController extends Controller
         // Type Application
         $intstatus = (int)$id;
 
-        return view('admin.dashboard', compact('list_application', 'count_applying', 'count_approval', 'count_declined', 'count_reject', 'count_completed', 'str_date', 'end_date', 'intstatus'));
+        return view('admin.dashboard.index', compact('list_application', 'count_applying', 'count_approval', 'count_declined', 'count_reject', 'count_completed', 'str_date', 'end_date', 'intstatus'));
     }
 
     //Get List Application by Condition

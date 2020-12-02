@@ -43,7 +43,7 @@ class UserDashboardController extends Controller
         // Type Application
         $intstatus = (int)$id;
 
-        return view('user.dashboard', compact('list_application', 'count_applying', 'count_approval', 'count_declined', 'count_reject', 'count_completed', 'str_date', 'end_date', 'intstatus'));
+        return view('user.dashboard.index', compact('list_application', 'count_applying', 'count_approval', 'count_declined', 'count_reject', 'count_completed', 'str_date', 'end_date', 'intstatus'));
     }
 
     //Get List Application by Condition

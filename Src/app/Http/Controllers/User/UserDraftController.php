@@ -20,7 +20,7 @@ class UserDraftController extends Controller
 
         $list_application_draft =  Application::where('created_by', $userId)->where('applications.status', config('const.application.status.draft'))->orderBy('updated_at', 'DESC')->paginate(10);
 
-        return view('user.draft', compact('list_application_draft'));
+        return view('user.draft.index', compact('list_application_draft'));
     }
 
     public function delete($id)
