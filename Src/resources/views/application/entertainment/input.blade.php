@@ -464,7 +464,7 @@
                     <div class="col-lg-10 text-lg-left text-left">
                         <div class="form-group row ">
                             <div class="col-lg-4">
-                                <input type="text" class="form-control est_amount @error('est_amount') is-invalid @enderror"
+                                <input type="text" class="form-control est_amount @error('est_amount') is-invalid @enderror" max-number="9"
                                     value="{{ $est_amount }}" @if(isset($previewFlg)) readonly @endif>
                                 <input type="hidden" name="est_amount" value="{{ $est_amount }}">
                             </div>

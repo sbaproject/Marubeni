@@ -28,12 +28,21 @@ $(document).ready(function () {
     //=======================================
 
     new Cleave('.est_amount', {
+        // stripLeadingZeroes: true,
+        // numericOnly:true,
+        // delimiters: [','],
+        // blocks: [3, 3, 3],
+        numeral: true,
+        numeralDecimalScale: 0,
+        numeralThousandsGroupStyle: 'thousand',
         stripLeadingZeroes: true,
-        numericOnly:true,
-        delimiters: [','],
-        blocks: [3, 3, 3],
         onValueChanged: function (e) {
-            $('[name="est_amount"]').val(e.target.rawValue);
+            let maxLength = $($(this)[0].element).attr('max-number');
+            if (e.target.rawValue.length > maxLength) {
+                this.setRawValue(this.lastInputValue);
+            } else {
+                $('[name="est_amount"]').val(e.target.rawValue);
+            }
         }
     });
 
