@@ -77,7 +77,7 @@
             style="margin-right: 5px;"></i>{{ Str::upper(__('label.pending_approval')) }}</h4>
     <div class="card">
         <div class="card-body p-0 card-list-items">
-            <table class="table table-bordered">
+            <table class="table table-bordered table-hover">
                 <thead>
                     <tr class="list-title">
                         <th class="sortable {{ $sortable->headers['application_no']->activeCls }}">

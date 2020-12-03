@@ -24,6 +24,36 @@ $(document).ready(function () {
     });
 
     //=======================================
+    // Cleave input (formatting inputs)
+    //=======================================
+
+    new Cleave('.est_amount', {
+        stripLeadingZeroes: true,
+        numericOnly:true,
+        delimiters: [','],
+        blocks: [3, 3, 3],
+        onValueChanged: function (e) {
+            $('[name="est_amount"]').val(e.target.rawValue);
+        }
+    });
+
+    new Cleave('.entertainment_person', {
+        numericOnly: true,
+        blocks: [3],
+        onValueChanged: function (e) {
+            $('[name="entertainment_person"]').val(e.target.rawValue);
+        }
+    });
+
+    new Cleave('.entertainment_times', {
+        numericOnly: true,
+        blocks: [3],
+        onValueChanged: function (e) {
+            $('[name="entertainment_times"]').val(e.target.rawValue);
+        }
+    });
+
+    //=======================================
     // Browser file
     //=======================================
 

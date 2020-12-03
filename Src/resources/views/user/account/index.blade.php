@@ -118,7 +118,7 @@
     <div class="card">
         <div class="card-body p-0 card-list-items">
             {{-- List Users --}}
-            <table class="table table-bordered " style="min-width: 500px;">
+            <table class="table table-bordered table-hover " style="min-width: 500px;">
                 <thead>
                     <tr>
                         <th style="width: 100px" class="sortable {{ $sortable->headers['user_number']->activeCls }}">

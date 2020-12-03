@@ -29,6 +29,8 @@
 <script src="js/bootstrap-datetimepicker.js"></script>
 {{-- typehead js --}}
 <script src="js/typehead/typeahead.bundle.min.js"></script>
+{{-- cleave js --}}
+<script src="js/cleave/cleave.min.js"></script>
 {{-- for this view --}}
 <script src="js/user/application/entertainment/create.js"></script>
 
@@ -353,9 +355,10 @@
                         @enderror
                         <div id="entertainment_times" style="padding-left: 0px"
                             class="col-lg-10 @if(empty($has_et_times) || ($has_et_times !== null && $has_et_times == config('const.entertainment.has_et_times.no'))) d-none @endif">
-                            <input type="number" name="entertainment_times" class="form-control @error('entertainment_times') is-invalid @enderror"
+                            <input type="text" class="form-control entertainment_times @error('entertainment_times') is-invalid @enderror"
                                 value="{{ $et_times }}" placeholder="{{ __('label.entertainment.entertainment_times') }}"
                                 @if(isset($previewFlg)) readonly @endif>
+                                <input type="hidden" name="entertainment_times" value="{{ $et_times }}">
                             @error('entertainment_times')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -442,8 +445,9 @@
                     <div class="col-lg-10">
                         <div class="form-group row ">
                             <div class="col-lg-4">
-                                <input type="number" name="entertainment_person" class="form-control @error('entertainment_person') is-invalid @enderror"
+                                <input type="text" class="form-control entertainment_person @error('entertainment_person') is-invalid @enderror"
                                     value="{{ $entertainment_person }}" @if(isset($previewFlg)) readonly @endif>
+                                    <input type="hidden" name="entertainment_person" value="{{ $entertainment_person }}">
                             </div>
                             <label class="col-lg-8 col-form-label com_title text-lg-left text-left">{{ __('label.entertainment.persons') }}</label>
                         </div>
@@ -460,8 +464,9 @@
                     <div class="col-lg-10 text-lg-left text-left">
                         <div class="form-group row ">
                             <div class="col-lg-4">
-                                <input type="number" name="est_amount" class="form-control @error('est_amount') is-invalid @enderror"
+                                <input type="text" class="form-control est_amount @error('est_amount') is-invalid @enderror"
                                     value="{{ $est_amount }}" @if(isset($previewFlg)) readonly @endif>
+                                <input type="hidden" name="est_amount" value="{{ $est_amount }}">
                             </div>
                             <label class="col-lg-8 col-form-label com_title text-lg-left text-left">
                                 {{ __('label.entertainment.per_person_excluding_vnd') }}
