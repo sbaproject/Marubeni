@@ -130,25 +130,7 @@
             </div>
         </div>
     </div>
-    <script>
-        $("#popup-loading").modal('show');
-        $(window).on('load',function(){
-            $("#popup-loading").modal('hide');
-        });
-        $(window).on('beforeunload', function(){
-            if(!($("#popup-confirm").data('bs.modal') || {})._isShown){
-                $("#popup-loading").modal('show');
-            }
-        });
-        // $('form').on('submit', function (event, force) {
-        //     if(!force){
-        //         event.preventDefault();
-        //         // $("#popup-loading").modal('show');
-        //         $(this).find('[type="submit"]').prop('disabled', true);
-        //         $(this).trigger('submit', true);
-        //     }
-        // });
-    </script>
+    <script src="js/master.js"></script>
 </body>
 
 </html>

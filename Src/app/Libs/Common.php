@@ -191,17 +191,17 @@ class Common
 	 * @param array $sort_name_cols : array of name columns want to order. Example: ['col_name_1' => 'caption_1','col_name_2' => 'caption_2',...].
 	 * @param int $default_sort_col : default sorting column that based on array $sort_name_cols. Begin of index is 0.
 	 * @param int $default_sort_direction : default sorting direction . 0 -> asc | 1 -> desc.
-	 * @return object include 's' is order column | 'd' is order direction | 'titles' is list of title header columns.
+	 * @return object include 's' is order column | 'd' is order direction | 'headers' is list of title header columns.
 	 */
-	public static function getSortColumnHeader($request, $sort_name_cols, $default_sort_col, $default_sort_direction, $isOrderRaw = false /*, $icon_show = 1*/)
+	public static function getSortable($request, $sort_name_cols, $default_sort_col, $default_sort_direction, $isOrderRaw = false /*, $icon_show = 1*/)
 	{
 		$sort_directs = ['asc', 'desc'];
 
 		$sort = (object)[
-			's' => array_keys($sort_name_cols)[$default_sort_col],
-			'd' => $sort_directs[$default_sort_direction],
-			'order_by' => null,
-			'titles' => null
+			's'			=> array_keys($sort_name_cols)[$default_sort_col],
+			'd'			=> $sort_directs[$default_sort_direction],
+			'order_by'	=> null,
+			'headers' 	=> null
 		];
 
 		if ($request->query("s") != null && $request->query("d") != null) {
@@ -227,25 +227,32 @@ class Common
 
 		foreach ($sort_name_cols as $key => $value) {
 
-			$title = $value;
-			$icon_sort = ' <i class="fa fa-sort fa-1" aria-hidden="true"></i>';
-			$queryStrings['s'] = array_search($key, array_keys($sort_name_cols));
-			$queryStrings['d'] = 0;
+			$title				= $value;
+			$icon_direction		= ' <i class="fa fa-sort fa-1" aria-hidden="true"></i>';
+			$queryStrings['s']	= array_search($key, array_keys($sort_name_cols));
+			$queryStrings['d']	= 0;
+			$activeCls			= ''; // active class CSS(current sorting column)
 
 			if ($sort->s == $key) {
 				if (array_search($sort->d, $sort_directs) == 0) {
-					$title = $value;
-					$icon_sort = ' ▲';
-					$queryStrings['d'] = 1;
+					$title				= $value;
+					$icon_direction		= ' ▲';
+					$queryStrings['d']	= 1;
 				} else {
-					$title = $value;
-					$icon_sort = ' ▼';
-					$queryStrings['d'] = 0;
+					$title				= $value;
+					$icon_direction		= ' ▼';
+					$queryStrings['d']	= 0;
 				}
+				$activeCls = 'stb-selected';
 			}
 			$url = url()->current() . '?' . http_build_query($queryStrings);
-			// if (!$icon_show) $icon_sort = '';
-			$sort->titles[$key] = "<a href='" . $url . "' > " . $title . "</a>" . $icon_sort;
+			// if (!$icon_show) $icon_direction = '';
+			$prop = (object)[
+				'title' => "<a href='{$url}' style='display:none'>{$title}</a><span>{$title}</span>{$icon_direction}",
+				'activeCls' => $activeCls
+			];
+
+			$sort->headers[$key] = $prop;
 		}
 
 		return $sort;

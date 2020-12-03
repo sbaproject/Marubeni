@@ -292,6 +292,9 @@ select.form-control.is-invalid, .was-validated .form-control:invalid {
 .table th, td {
     text-align: center;
 }
+.table>thead>tr>th {
+    vertical-align: middle;
+}
 .btn-danger{
     background-color:  #96000c;
     border-color: #96000c;
@@ -324,4 +327,13 @@ select.form-control.is-invalid, .was-validated .form-control:invalid {
 */
 .code-state{
     font-size: 5.5rem;
+}
+
+/* Sortable */
+.table>thead>tr>th.sortable {
+    cursor: pointer;
+}
+.table>thead>tr>th.sortable.stb-selected {
+    background-color: #96000C;
+    color: #ffffff;
 }

@@ -96,6 +96,7 @@ return [
         'approval' => 'APPROVAL',
         'settings' => 'SETTINGS',
         'company_registration' => 'Company Registration',
+        'company_list' => 'Company Management',
         'change_password' => 'Change Password',
         'employee_setting' => 'Employee Setting',
         'budget_setting' => 'Budget Setting',

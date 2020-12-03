@@ -121,14 +121,17 @@
             <table class="table table-bordered " style="min-width: 500px;">
                 <thead>
                     <tr>
-                        <th style="width: 100px">
+                        <th style="width: 100px" class="sortable {{ $sortable->headers['user_number']->activeCls }}">
                             {{-- {{ __('label._no_') }} --}}
-                            {!! $sort->titles['id'] !!}
+                            {!! $sortable->headers['user_number']->title !!}
                         </th>
-                        <th>{{ __('validation.attributes.department') }}</th>
-                        <th>
+                        <th class="sortable {{ $sortable->headers['department_name']->activeCls }}">
+                            {{-- {{ __('validation.attributes.department') }} --}}
+                            {!! $sortable->headers['department_name']->title !!}
+                        </th>
+                        <th class="sortable {{ $sortable->headers['user_name']->activeCls }}">
                             {{-- {{ __('validation.attributes.user.name') }} --}}
-                            {!! $sort->titles['name'] !!}
+                            {!! $sortable->headers['user_name']->title !!}
                         </th>
                         <th style="width: 150px">{{ __('label.action') }}</th>
                     </tr>
@@ -136,18 +139,18 @@
                 <tbody>
                     @foreach($users as $user)
                     <tr>
-                        <td>{{ $user->user_no }}</td>
-                        <td>{{ $user->department->name }}</td>
-                        <td>{{ $user->name }}</td>
+                        <td>{{ $user->user_number }}</td>
+                        <td>{{ $user->department_name }}</td>
+                        <td>{{ $user->user_name }}</td>
                         <td>
                             {{-- using action component with if stament --}}
                             <x-action>
                                 <x-slot name="editUrl">
-                                    {{ route('admin.user.show', $user->id) }}
+                                    {{ route('admin.user.show', $user->user_id) }}
                                 </x-slot>
-                                @if ($user->id !== Auth::user()->id)
+                                @if ($user->user_id !== Auth::user()->id)
                                 <x-slot name="deleteUrl">
-                                    {{ route('admin.user.delete', $user->id) }}
+                                    {{ route('admin.user.delete', $user->user_id) }}
                                 </x-slot>
                                 @endif
                             </x-action>

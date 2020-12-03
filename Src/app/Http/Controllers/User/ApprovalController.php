@@ -43,11 +43,14 @@ class ApprovalController extends Controller
             $params['applicationNo'] = '%' . $request->keyword . '%';
         }
 
-        // sorting by column
+        // sorting columns
         $sortColNames = [
-            'application_no' => __('label.application_no')
+            'application_no'    => __('label.application_no'),
+            'application_type'  => __('label.status.application_type'),
+            'apply_date'        => __('label.status.apply_date'),
+            'next_approver'     => __('label.status.next_approver'),
         ];
-        $sort = Common::getSortColumnHeader($request, $sortColNames, 0, 0, true);
+        $sortable = Common::getSortable($request, $sortColNames, 0, 0, true);
 
         // get data
         $sql = "SELECT
@@ -58,7 +61,7 @@ class ApprovalController extends Controller
                 ,a.`created_at`     AS apply_date
                 ,f.`form_id`
                 ,f.`group_id`
-                ,s.`id` AS step_id
+                ,s.`id`             AS step_id
                 ,s.`approver_id`
                 ,s.`step_type`
                 ,s.`approver_type`
@@ -85,7 +88,7 @@ class ApprovalController extends Controller
                     INNER JOIN users u ON u.`id` = s.`approver_id` AND s.`approver_id` = :userId
                     INNER JOIN users us ON us.`id` = a.`created_by`
             WHERE   a.`status` BETWEEN 0 AND 98 " . $keywordCondition ."
-            ORDER BY " . $sort->order_by;
+            ORDER BY " . $sortable->order_by;
 
         $data = DB::select($sql, $params);
 
@@ -101,7 +104,7 @@ class ApprovalController extends Controller
             ['path' => route('user.approval.index')]
         );
 
-        return view('approval.index', compact('data', 'inputs', 'sort'));
+        return view('approval.index', compact('data', 'inputs', 'sortable'));
     }
 
     public function show(Request $request, $id)

@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\User\Account;
 
+use Carbon\Carbon;
+use App\Libs\Common;
 use App\Models\User;
 use App\Models\Department;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Libs\Common;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class UserListCotroller extends Controller
@@ -19,49 +20,59 @@ class UserListCotroller extends Controller
         $departments = Department::all();
 
         // get parameter query string
-        $conditions = $request->all();
+        $conditions = $request->input();
 
-        // make [where] filter
+        // search conditions
         $where = [];
-        $whereUserNo = '1=1';
         if (isset($conditions['location'])) {
-            $where[] = ['location', '=', $conditions['location']];
+            $where[] = ['users.location', '=', $conditions['location']];
         }
         if (isset($conditions['department'])) {
-            $where[] = ['department_id', '=', $conditions['department']];
+            $where[] = ['users.department_id', '=', $conditions['department']];
         }
         if (isset($conditions['name'])) {
-            $where[] = ['name', 'LIKE', '%' . trim($conditions['name']) . '%'];
+            $where[] = ['users.name', 'LIKE', '%' . trim($conditions['name']) . '%'];
         }
         if (isset($conditions['user_no'])) {
             $fillZero = config('const.num_fillzero');
-            // $whereUserNo = "(id LIKE '%{$conditions['user_no']}%' OR LPAD('{$conditions['user_no']}', {$fillZero}, '0') = LPAD(id, {$fillZero}, '0'))";
-            $whereUserNo = "LPAD(id, {$fillZero}, '0') LIKE '%{$conditions['user_no']}%'";
+            $where[] = [DB::raw("LPAD(users.id,{$fillZero}, '0')"), "LIKE",  '%' . $conditions['user_no'] . '%'];
         }
 
-        // sorting by column
-        $sortColNames = [
-            'id' => __('label._no_'),
-            // 'name' => __('validation.attributes.department'),
-            'name' => __('validation.attributes.user.name'),
+        // sorting columns
+        $sortableCols = [
+            'user_number'       => __('label._no_'),
+            'department_name'   => __('validation.attributes.department'),
+            'user_name'         => __('validation.attributes.user.name'),
         ];
-        $sort = Common::getSortColumnHeader($request, $sortColNames, 0, 0, true);
+        $sortable = Common::getSortable($request, $sortableCols, 0, 0, true);
 
-        // get data
-        $users = User::where($where)
-            ->whereRaw($whereUserNo)
-            ->orderByRaw($sort->order_by)
-            ->with('department')
+        // selection columns
+        $userNo = "LPAD(users.id, " . config('const.num_fillzero') . ", '0')";
+        $selectCols = [
+            'users.id           as user_id',
+            DB::raw($userNo . " as user_number"),
+            'users.name         as user_name',
+            'departments.name   as department_name',
+        ];
+
+        // get results
+        $users = User::join('departments', function ($join) {
+            $join->on('users.department_id', '=', 'departments.id')
+                ->where('departments.deleted_at', null);
+        })
+            ->where($where)
+            ->orderByRaw($sortable->order_by)
+            ->select($selectCols)
             ->paginate(config('const.paginator.items'));
 
-        return view('user.account.index', compact('conditions', 'locations', 'departments', 'users', 'sort'));
+        return view('user.account.index', compact('conditions', 'locations', 'departments', 'users', 'sortable'));
     }
 
     public function delete(User $user)
     {
         $loggedUser = Auth::user();
         // do not delete your self
-        if($user->id === $loggedUser->id) {
+        if ($user->id === $loggedUser->id) {
             return Common::redirectBackWithAlertFail(__('msg.delete_fail'));
         }
         $user = User::find($user->id);

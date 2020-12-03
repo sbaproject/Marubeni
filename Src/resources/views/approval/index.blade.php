@@ -80,13 +80,22 @@
             <table class="table table-bordered">
                 <thead>
                     <tr class="list-title">
-                        <th>
+                        <th class="sortable {{ $sortable->headers['application_no']->activeCls }}">
                             {{-- {{ __('label.application_no') }} --}}
-                            {!! $sort->titles['application_no'] !!}
+                            {!! $sortable->headers['application_no']->title !!}
                         </th>
-                        <th>{{ __('label.status.application_type') }}</th>
-                        <th>{{ __('label.status.apply_date') }}</th>
-                        <th>{{ __('label.status.next_approver') }}</th>
+                        <th class="sortable {{ $sortable->headers['application_type']->activeCls }}">
+                            {{-- {{ __('label.status.application_type') }} --}}
+                            {!! $sortable->headers['application_type']->title !!}
+                        </th>
+                        <th class="sortable {{ $sortable->headers['apply_date']->activeCls }}">
+                            {{-- {{ __('label.status.apply_date') }} --}}
+                            {!! $sortable->headers['apply_date']->title !!}
+                        </th>
+                        <th class="sortable {{ $sortable->headers['next_approver']->activeCls }}">
+                            {{-- {{ __('label.status.next_approver') }} --}}
+                            {!! $sortable->headers['next_approver']->title !!}
+                        </th>
                         <th></th>
                     </tr>
                 </thead>
@@ -96,7 +105,7 @@
                         <td>{{ $item->application_no }}</td>
                         <td>{{ $item->application_type }}</td>
                         <td>
-                            @if(config('app.locale') == 'en')
+                            @if(config('app.locale') === 'en')
                                 {{ date('Y/m/d', strtotime($item->apply_date)) }}
                             @else
                                 {{ date('d/m/Y', strtotime($item->apply_date)) }}
