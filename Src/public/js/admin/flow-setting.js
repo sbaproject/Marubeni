@@ -56,7 +56,7 @@ $( document ).ready(function() {
   });
 
 
-  $( document ).on( "click", ".btn-submit-flow", function() {
+$( document ).on( "click", ".btn-submit-flow", function() {
   	$(this).attr("disabled", "disabled");
   	var validFrm = $("#frmFlowSetting").valid();
   	var chApprover = true; 
@@ -71,13 +71,77 @@ $( document ).ready(function() {
   		else{
   			$(this).parent().removeClass("is-invalid");
   		}
-	 });
-  	 if (validFrm && chApprover){
+	});
+  	var dataFrm = $("#frmFlowSetting").serializeArray();
+
+  	//console.log(dataFrm);
+
+  	var find2 = false;
+  	var destination_1_end_name = '';
+  	var destination_1_end_value = '';
+  	var destination_2_end_name = '';
+  	var destination_2_end_value = '';
+
+    // check destination 1 , check destination 2
+    $(".destination-error").fadeOut();
+	$.each(dataFrm, function( k, v ) {
+		var name = v.name;
+		if (name.indexOf("destination") >= 0){			        
+	        // check start step 1
+			if (name  == 'destination[1][0]'){
+				if (v.value == '1'){				
+					$(".destination-0-error").fadeIn();
+					chApprover = false;				
+				}			
+			}
+
+	        // get value end of step 1
+			if (name.indexOf("destination[1]") >= 0){
+				destination_1_end_name = name;
+				destination_1_end_value = v.value;
+			}
+
+			if (name.indexOf("destination[2]") >= 0){	            
+	            if (!find2){	            	
+					// check start step 2
+					find2 = true;		
+					id = name.substring(name.lastIndexOf("[")+1,name.lastIndexOf("]"));
+					if (v.value == '1'){		
+						$(".destination-"+id+"-error").fadeIn();
+						chApprover = false;						
+					}
+	            }
+	            // get value end of step 2
+				destination_2_end_name = name;
+			    destination_2_end_value = v.value;	            
+			}			
+		}
+	});
+
+	// check end step 1
+	if (destination_1_end_name != ''){
+		var idx = destination_1_end_name.substring(destination_1_end_name.lastIndexOf("[")+1,destination_1_end_name.lastIndexOf("]"));            
+		if (destination_1_end_value == '1'){		
+			$(".destination-"+idx+"-error").fadeIn();
+			chApprover = false;
+		}
+    }    
+
+    // check end step 2
+    if (destination_2_end_name != ''){
+    	var idx = destination_2_end_name.substring(destination_2_end_name.lastIndexOf("[")+1,destination_2_end_name.lastIndexOf("]"));            
+		if (destination_2_end_value == '1'){		
+			$(".destination-"+idx+"-error").fadeIn();
+			chApprover = false;
+		}
+    }
+  	 
+  	if (validFrm && chApprover){
   	 	$("#frmFlowSetting").submit();
-  	 }else{
+  	}else{
   	 	$(this).removeAttr("disabled", "disabled");  	
-  	 }  	 
-  });
+  	}  	 
+});
 
 
    $('.select2').select2();
@@ -89,16 +153,19 @@ $( document ).ready(function() {
 	   	if (form === 2){   
 	   	 	$(".form-trip").fadeIn();
 	   	 	$(".form-entertaiment").fadeOut();
+	   	 	$(".block-add-step").fadeIn();
 
 	   	}else if (form  === 3){	   		
 	   	 	$(".form-entertaiment").fadeIn();
 	   	 	$(".form-not-po").fadeOut();
-	   	 	$(".form-trip").fadeOut();	   	 	
+	   	 	$(".form-trip").fadeOut();	
+	   	 	$(".block-add-step").fadeIn();
 
 	   	}else{
 	        $(".form-entertaiment").fadeOut();
 	        $(".form-trip").fadeOut();
 	        $(".form-not-po").fadeOut();
+	        $(".block-add-step").fadeOut();
 	   	}
    });
 
@@ -147,6 +214,13 @@ $( document ).ready(function() {
 	        html += '<input type="radio" value="1" name="destination['+step+']['+index_idx+']">CC';
 	        html += '</label>';
 	        html += '</div>';
+
+	        html += '<div>';
+            html +=  '<span id="destination-'+index_idx+'-error" class="invalid-feedback destination-'+index_idx+'-error destination-error">';
+            html +=  DESTINATION_INVALID_BEGIN;
+            html +=  '</span>';
+            html +=  '</div>';
+
 	        html += '</td>';
 	        html += '</tr>';
 	        html += '<tr>';
@@ -205,6 +279,13 @@ $( document ).ready(function() {
 	        html += '<input type="radio" value="1" name="destination['+step+']['+index_idx+']">CC';
 	        html += '</label>';
 	        html += '</div>';
+
+	        html += '<div>';
+            html +=  '<span id="destination-'+index_idx+'-error" class="invalid-feedback destination-'+index_idx+'-error destination-error">';
+            html +=  DESTINATION_INVALID_END;
+            html +=  '</span>';
+            html +=  '</div>';
+
 	        html += '</td>';
 	        html += '</tr>';
 	        html += '<tr>';

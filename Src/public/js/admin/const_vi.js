@@ -8,3 +8,5 @@ var FLOW_STEP = "Bước";
 var FLOW_DESTINATION = "Nơi đơn chuyển tới";
 var FLOW_ADD = "Thêm";
 var FLOW_DELETE = "Xóa";
+var DESTINATION_INVALID_BEGIN = 'Nơi đơn chuyển tới phải bắt đầu là TO';
+var DESTINATION_INVALID_END = 'Nơi đơn chuyển tới phải kết thúc là TO';

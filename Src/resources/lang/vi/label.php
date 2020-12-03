@@ -301,6 +301,8 @@ return [
         'update' => 'Cập nhật',
         'cancel' => 'Hủy',
         'approver_required' => 'Vui lòng chọn người phê duyệt',
+        'destination_invalid_begin' => 'Nơi đơn chuyển tới phải bắt đầu là TO',
+        'destination_invalid_end' => 'Nơi đơn chuyển tới phải kết thúc là TO',
     ],
     /**
      * Login

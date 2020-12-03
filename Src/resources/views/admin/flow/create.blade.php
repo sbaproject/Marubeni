@@ -108,6 +108,11 @@
                                   <input type="radio" value="1" name="destination[1][0]">CC
                                 </label>
                             </div>
+                            <div>
+                              <span id="destination-0-error" class="invalid-feedback destination-0-error destination-error">
+                              {{ __('label.flow.destination_invalid_begin') }}
+                              </span>
+                            </div>
                         </td>
                     </tr>
                     <tr>

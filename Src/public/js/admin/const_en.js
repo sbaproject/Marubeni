@@ -8,3 +8,5 @@ var FLOW_STEP = "Step";
 var FLOW_DESTINATION = "Destination";
 var FLOW_ADD = "Add";
 var FLOW_DELETE = "Delete";
+var DESTINATION_INVALID_BEGIN = 'The destination must start with the TO';
+var DESTINATION_INVALID_END = 'The destination must end with the TO';

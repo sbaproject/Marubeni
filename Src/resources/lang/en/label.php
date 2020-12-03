@@ -303,6 +303,8 @@ return [
         'update' => 'Update',
         'cancel' => 'cancel',
         'approver_required' => 'Please select a approver',
+        'destination_invalid_begin' => 'The destination must start with the TO',
+        'destination_invalid_end' => 'The destination must end with the TO',
     ],
     /**
      * Login

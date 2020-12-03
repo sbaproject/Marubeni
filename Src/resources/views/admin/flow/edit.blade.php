@@ -97,7 +97,13 @@
             $step_index = 0;
             @endphp
             @foreach ($steps as $step)
+                @php
+                    if(strval($flow->form_id) === '1'){
+                      $step->step_type = 1;
+                    }
+                @endphp
                 @if($step->step_type != $start_step)
+                   
                     @if($start_step === -1)
             <h5 class="mt-5">{{ __('label.flow.step') }} {{$step->step_type}}</h5>        
             <div class="border border-secondary p-3 wrap-step-1 section-step-{{ $step->step_type }}">
@@ -118,7 +124,7 @@
                       @endphp      
                     @endif
                 @endif
-                @if($step->order > 1)
+                @if($step_index > 0)
                 <div class="section-approver approver-{{ $step->step_type }}-{{$step_index + 1}}">    
                   <div class="d-flex justify-between">
                     <div class="text-muted">{{ __('label.flow.approver') }} <span class="title-approver">{{ $step_index + 1}}</span></div>
@@ -144,6 +150,15 @@
                                     <input type="radio" value="1" name="destination[{{ $step->step_type }}][{{ $step_index }}]" @if(strval($step->approver_type) === '1') checked="checked" @endif>CC
                                   </label>
                               </div>
+                              <div>
+                              <span id="destination-{{ $step_index }}-error" class="invalid-feedback destination-{{ $step_index }}-error destination-error">
+                              @if($step_index > 0)  
+                               {{ __('label.flow.destination_invalid_end') }}
+                              @else 
+                               {{ __('label.flow.destination_invalid_begin') }}
+                              @endif
+                              </span>
+                            </div>
                           </td>
                       </tr>
                       <tr>
@@ -159,7 +174,7 @@
                           </td>
                       </tr>
                   </table>
-                @if($step->order > 1)  
+                @if($step_index > 0) 
                 </div>
                 @endif
             @php
@@ -173,9 +188,7 @@
             </div>
             </div>
             </div>
-            @if($start_step < 2) 
-            <div class="mt-3 block-add-step"><button type="button" data-step="1" data-index="0" class="btn-add-step btn btn-outline-dark pt-1 pb-1 pl-3 pr-3">+ {{ __('label.flow.step') }}</button></div>
-            @endif
+            <div class="mt-3 block-add-step" style="display: none"><button type="button" data-step="1" data-index="0" class="btn-add-step btn btn-outline-dark pt-1 pb-1 pl-3 pr-3">+ {{ __('label.flow.step') }}</button></div>
 
 
             <div class="mt-5 mb-5 text-center">
