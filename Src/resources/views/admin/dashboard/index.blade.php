@@ -114,7 +114,7 @@
         </h4>
         <div class="card">
             <div class="card-body p-0 card-list-items">
-                <table class="table table-bordered" id="table_list_status">
+                <table class="table table-bordered table-hover" id="table_list_status">
                     <thead>
                         <tr class="list-title">
                             <th>{{ __('label.dashboard.application_no') }}</th>
@@ -139,9 +139,10 @@
                                     <td>{{ !empty($application->created_at) ? \Carbon\Carbon::parse($application->created_at)->format('d/m/Y') : '' }}
                                     </td>
                                     <td>
-                                        <a class="btn btn-details"
-                                            href="{{ $application->form_id == config('const.form.leave') ? route('user.leave.show', $application->id) : ($application->form_id == config('const.form.biz_trip') ? route('user.business.show', $application->id) : ($application->form_id == config('const.form.entertaiment') ? route('user.entertainment.show', $application->id) : '')) }}">{{ __('label.dashboard.view_details') }}<i
-                                                class="fas fa-angle-right" style="margin-left: 5px;"></i></a>
+                                        <a class="btn btn-details" href="{{ Common::getRouteEditApplication($application->id, $application->form_id) }}">
+                                            {{ __('label.dashboard.view_details') }}
+                                            <i class="fas fa-angle-right" style="margin-left: 5px;"></i>
+                                        </a>
                                     </td>
                                 </tr>
                             @endforeach

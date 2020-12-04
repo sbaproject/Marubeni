@@ -62,7 +62,7 @@
         </h4>
         <div class="card">
             <div class="card-body p-0 card-list-items">
-                <table class="table table-bordered">
+                <table class="table table-bordered table-hover">
                     <thead>
                         <tr class="list-title">
                             <th>{{ __('label.status.no') }}</th>
@@ -84,9 +84,10 @@
                                     <td>{{ (!empty($application_status->nameuser) && $intstatus != config('const.application.status.completed')) ? $application_status->nameuser : '' }}
                                     </td>
                                     <td>
-                                        <a class="btn btn-details"
-                                            href="{{ $application_status->form_id == config('const.form.leave') ? route('user.leave.show', $application_status->id) : ($application_status->form_id == config('const.form.biz_trip') ? route('user.business.show', $application_status->id) : ($application_status->form_id == config('const.form.entertaiment') ? route('user.entertainment.show', $application_status->id) : '')) }}">{{ __('label.status.view_details') }}<i
-                                                class="fas fa-angle-right" style="margin-left: 5px;"></i></a>
+                                        <a class="btn btn-details" href="{{ Common::getRouteEditApplication($application_status->id, $application_status->form_id) }}">
+                                            {{ __('label.status.view_details') }}
+                                            <i class="fas fa-angle-right" style="margin-left: 5px;"></i>
+                                        </a>
                                     </td>
                                 </tr>
                             @endforeach

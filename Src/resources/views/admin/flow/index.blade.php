@@ -22,7 +22,7 @@
             <div class="card-body p-0 ">
                 <div class="wrap_tbl_ad">
                     <div class="content_roll">
-                        <table class="table table-bordered " style="min-width: 500px;">
+                        <table class="table table-bordered table-hover" style="min-width: 500px;">
                             <thead>
                                 <tr>
                                     <th style="width: 10px;">{{ __('label.flow.no') }}</th>

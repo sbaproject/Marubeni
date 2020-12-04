@@ -91,13 +91,13 @@ $(document).ready(function () {
     //=======================================
     // Radio Button Changes
     //=======================================
-    $('input[type=radio][name="rd_during_trip"]').on('change', function () {
+    $('[name="rd_during_trip"]').on('change', function () {
         $('#during_trip').val($(this).val());
     });
-    $('input[type=radio][name="rd_check_row"]').on('change', function () {
+    $('[name="rd_check_row"]').on('change', function () {
         $('#check_row').val($(this).val());
     });
-    $('input[type=radio][name="rd_has_entertainment_times"]').on('change', function () {
+    $('[name="rd_has_entertainment_times"]').on('change', function () {
         $('#has_entertainment_times').val($(this).val());
         if ($(this).val() == true) {
             $('#entertainment_times').removeClass('d-none');
@@ -106,17 +106,17 @@ $(document).ready(function () {
             $('input[type=number][name="entertainment_times"]').val('');
         }
     });
-    $('input[type=radio][name="rd_existence_projects"]').on('change', function () {
+    $('[name="rd_existence_projects"]').on('change', function () {
         $('#existence_projects').val($(this).val());
     });
-    $('input[type=radio][name="rd_includes_family"]').on('change', function () {
+    $('[name="rd_includes_family"]').on('change', function () {
         $('#includes_family').val($(this).val());
     });
-    $('#during_trip').val($('input[type=radio][name="rd_during_trip"]:checked').val());
-    $('#check_row').val($('input[type=radio][name="rd_check_row"]:checked').val());
-    $('#has_entertainment_times').val($('input[type=radio][name="rd_has_entertainment_times"]:checked').val());
-    $('#existence_projects').val($('input[type=radio][name="rd_existence_projects"]:checked').val());
-    $('#includes_family').val($('input[type=radio][name="rd_includes_family"]:checked').val());
+    $('#during_trip').val($('[name="rd_during_trip"]:checked').val());
+    $('#check_row').val($('[name="rd_check_row"]:checked').val());
+    $('#has_entertainment_times').val($('[name="rd_has_entertainment_times"]:checked').val());
+    $('#existence_projects').val($('[name="rd_existence_projects"]:checked').val());
+    $('#includes_family').val($('[name="rd_includes_family"]:checked').val());
 
     //=======================================
     // Auto complete (typehead.js)

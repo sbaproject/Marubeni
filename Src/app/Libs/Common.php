@@ -148,6 +148,24 @@ class Common
 		}
 	}
 
+	/**
+	 * Get route of modified application
+	 */
+	public static function getRouteEditApplication($appId, $formId)
+	{
+		if ($formId === config('const.form.leave')) {
+			return route('user.leave.show', $appId);
+		} elseif ($formId === config('const.form.biz_trip')) {
+			return route('user.business.show', $appId);
+		} elseif ($formId === config('const.form.entertainment')) {
+			return route('user.entertainment.show', $appId);
+		}
+		return '';
+	}
+
+	/**
+	 * Get route of preview application
+	 */
 	public static function getRoutePreviewApplication($appId, $formId)
 	{
 		if ($formId === config('const.form.leave')) {

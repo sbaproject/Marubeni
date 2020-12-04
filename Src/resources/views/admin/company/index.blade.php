@@ -79,7 +79,7 @@
         <div class="card">
             <div class="card-body p-0 card-list-items">
                 <div class="wrap_tbl_ad">
-                    <table class="table table-bordered " style="min-width: 500px;">
+                    <table class="table table-bordered table-hover" style="min-width: 500px;">
                         <thead>
                             <tr>
                                 <th rowspan="2" class="align-middle" style="width: 10px;">{{ __('label.company.no') }}</th>

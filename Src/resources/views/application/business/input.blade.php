@@ -23,7 +23,7 @@
 <script src="js/moment/locale/{{ config('app.locale') }}.js"></script>
 <script src="js/bootstrap-datetimepicker.js"></script>
 {{-- for this view --}}
-<script src="js/user/application/business/create.js"></script>
+<script src="js/user/application/business/input.js"></script>
 @endsection
 
 @section('content')
@@ -330,7 +330,8 @@
                             @if(isset($application) && !empty($file_path))
                             <div class="file-show input-group mb-3">
                                 <label class="form-control file-link">
-                                    <a id="file_link" href="{{ Storage::url($file_path) }}" target="_blank">
+                                    {{ basename($file_path) }}
+                                    <a href="{{ Storage::url($file_path) }}" class="d-none" target="_blank">
                                         {{ basename($file_path) }}
                                     </a>
                                 </label>

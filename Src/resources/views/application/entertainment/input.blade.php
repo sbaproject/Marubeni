@@ -32,7 +32,7 @@
 {{-- cleave js --}}
 <script src="js/cleave/cleave.min.js"></script>
 {{-- for this view --}}
-<script src="js/user/application/entertainment/create.js"></script>
+<script src="js/user/application/entertainment/input.js"></script>
 
 <script>
     // list of name companies
@@ -500,7 +500,8 @@
                             @if(isset($application) && !empty($file_path))
                             <div class="file-show input-group mb-3">
                                 <label class="form-control file-link">
-                                    <a id="file_link" href="{{ Storage::url($file_path) }}" target="_blank">
+                                    {{ basename($file_path) }}
+                                    <a href="{{ Storage::url($file_path) }}" class="d-none" target="_blank">
                                         {{ basename($file_path) }}
                                     </a>
                                 </label>

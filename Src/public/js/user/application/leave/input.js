@@ -1,8 +1,8 @@
 $(document).ready(function () {
-    /**
-     * Date of leave
-     */
-    // init
+    //=======================================
+    // Datetimpicker
+    //=======================================
+
     $('#dateLeaveFrom').datetimepicker({
         format: 'ddd, DD/MM/YYYY',
         defaultDate: $('#date_from').val(),
@@ -149,21 +149,21 @@ $(document).ready(function () {
         }
     });
 
-    /**----------------------------------------------------------------------
-     * 
-     ----------------------------------------------------------------------*/
+    //=======================================
+    // Disabled or Enabled inputs by CodeLeave
+    //=======================================
 
     if (!previewFlg) {
-        settingPageByCodeLeave($('select[name="rd_code_leave"]'));
+        settingPageByCodeLeave($('[name="rd_code_leave"]'));
     }
 
-    // code_leave change
-    $('select[name="rd_code_leave"]').on('change', function () {
+    // code_leave was changed
+    $('[name="rd_code_leave"]').on('change', function () {
         $('#code_leave').val($(this).val());
         settingPageByCodeLeave($(this));
     });
 
-    $('input[type=radio][name="rd_paid_type"]').on('change', function () {
+    $('[name="rd_paid_type"]').on('change', function () {
         if ($(this).val() == paid_type.AL) {
             $('#days_use').removeAttr('readonly');
             $('#times_use').removeAttr('readonly');
@@ -177,14 +177,16 @@ $(document).ready(function () {
     });
 
     function settingPageByCodeLeave(codeLeaveSelector) {
-        $('input[type=text][data-target="#dateLeaveFrom"]').removeAttr('readonly');
-        $('input[type=text][data-target="#dateLeaveTo"]').removeAttr('readonly');
-        $('input[type=text][data-target="#timeLeaveDate"]').removeAttr('readonly');
+
+        $('[data-target="#dateLeaveFrom"]').removeAttr('readonly');
+        $('[data-target="#dateLeaveTo"]').removeAttr('readonly');
+        $('[data-target="#timeLeaveDate"]').removeAttr('readonly');
+        $('[data-target="#maternityLeaveFrom"]').removeAttr('readonly');
+        $('[data-target="#maternityLeaveTo"]').removeAttr('readonly');
+        $('[name="rd_paid_type"]').removeAttr('disabled');
+
         $('#timeLeaveFrom').removeAttr('readonly');
         $('#timeLeaveTo').removeAttr('readonly');
-        $('input[type=text][data-target="#maternityLeaveFrom"]').removeAttr('readonly');
-        $('input[type=text][data-target="#maternityLeaveTo"]').removeAttr('readonly');
-        $('input[type=radio][name="rd_paid_type"]').removeAttr('disabled');
         $('#days_use').removeAttr('readonly');
         $('#times_use').removeAttr('readonly');
 
@@ -197,28 +199,30 @@ $(document).ready(function () {
             $('#days_use').val('');
             $('#times_use').val('');
             // date leave
-            $('input[type=text][data-target="#dateLeaveFrom"]').attr('readonly', 'readonly');
-            $('input[type=text][data-target="#dateLeaveTo"]').attr('readonly', 'readonly');
+            $('[data-target="#dateLeaveFrom"]').attr('readonly', 'readonly');
+            $('[data-target="#dateLeaveTo"]').attr('readonly', 'readonly');
             // time leave
-            $('input[type=text][data-target="#timeLeaveDate"]').attr('readonly', 'readonly');
+            $('[data-target="#timeLeaveDate"]').attr('readonly', 'readonly');
             $('#timeLeaveFrom').attr('readonly', 'readonly');
             $('#timeLeaveTo').attr('readonly', 'readonly');
             // paid_type
-            $('input[type=radio][name="rd_paid_type"]').attr('disabled', 'disabled');
-            $('input[type=radio][name="rd_paid_type"]').prop('checked', false);
+            $('[name="rd_paid_type"]').attr('disabled', 'disabled');
+            $('[name="rd_paid_type"]').prop('checked', false);
             $('#paid_type').val('');
             // days & times used
             $('#days_use').attr('readonly', 'readonly');
             $('#times_use').attr('readonly', 'readonly');
+
         } else if (codeLeaveSelector.val() != "empty") {
+
             $('#maternityLeaveFrom').data("DateTimePicker").date(null);
             $('#maternityLeaveTo').data("DateTimePicker").date(null);
-            $('input[type=text][data-target="#maternityLeaveFrom"]').attr('readonly', 'readonly');
-            $('input[type=text][data-target="#maternityLeaveTo"]').attr('readonly', 'readonly');
+            $('[data-target="#maternityLeaveFrom"]').attr('readonly', 'readonly');
+            $('[data-target="#maternityLeaveTo"]').attr('readonly', 'readonly');
 
             if (codeLeaveSelector.val() != code_leave.SL) {
-                $('input[type=radio][name="rd_paid_type"]').attr('disabled', 'disabled');
-                $('input[type=radio][name="rd_paid_type"]').prop('checked', false);
+                $('[name="rd_paid_type"]').attr('disabled', 'disabled');
+                $('[name="rd_paid_type"]').prop('checked', false);
                 $('#paid_type').val('');
                 if (codeLeaveSelector.val() != code_leave.AL) {
                     $('#days_use').attr('readonly', 'readonly');
@@ -230,7 +234,7 @@ $(document).ready(function () {
             }
 
             if (codeLeaveSelector.val() == code_leave.SL) {
-                if ($('input[type=radio][name="rd_paid_type"]:checked').val() != paid_type.AL){
+                if ($('[name="rd_paid_type"]:checked').val() != paid_type.AL) {
                     $('#days_use').attr('readonly', 'readonly');
                     $('#times_use').attr('readonly', 'readonly');
                     $('#days_use').val('');
@@ -238,7 +242,9 @@ $(document).ready(function () {
                 }
                 return;
             }
+
         } else {
+
             $('#dateLeaveFrom').data("DateTimePicker").date(null);
             $('#dateLeaveTo').data("DateTimePicker").date(null);
             $('#timeLeaveDate').data("DateTimePicker").date(null);
@@ -246,28 +252,29 @@ $(document).ready(function () {
             $('#timeLeaveTo').data("DateTimePicker").date(null);
             $('#maternityLeaveFrom').data("DateTimePicker").date(null);
             $('#maternityLeaveTo').data("DateTimePicker").date(null);
-            $('input[type=radio][name="rd_paid_type"]').prop('checked', false);
-            $('#paid_type').val('');
+            $('[name="rd_paid_type"]').prop('checked', false);
 
+            $('#paid_type').val('');
             $('#days_use').val('');
             $('#times_use').val('');
 
-            $('input[type=text][data-target="#dateLeaveFrom"]').attr('readonly', 'readonly');
-            $('input[type=text][data-target="#dateLeaveTo"]').attr('readonly', 'readonly');
-            $('input[type=text][data-target="#timeLeaveDate"]').attr('readonly', 'readonly');
+            $('[data-target="#dateLeaveFrom"]').attr('readonly', 'readonly');
+            $('[data-target="#dateLeaveTo"]').attr('readonly', 'readonly');
+            $('[data-target="#timeLeaveDate"]').attr('readonly', 'readonly');
+            $('[data-target="#maternityLeaveFrom"]').attr('readonly', 'readonly');
+            $('[data-target="#maternityLeaveTo"]').attr('readonly', 'readonly');
+            $('[name="rd_paid_type"]').attr('disabled', 'disabled');
+
             $('#timeLeaveFrom').attr('readonly', 'readonly');
             $('#timeLeaveTo').attr('readonly', 'readonly');
-            $('input[type=text][data-target="#maternityLeaveFrom"]').attr('readonly', 'readonly');
-            $('input[type=text][data-target="#maternityLeaveTo"]').attr('readonly', 'readonly');
-            $('input[type=radio][name="rd_paid_type"]').attr('disabled', 'disabled');
             $('#days_use').attr('readonly', 'readonly');
             $('#times_use').attr('readonly', 'readonly');
         }
     }
 
-    /**----------------------------------------------------------------------
-     * Browse file
-     ----------------------------------------------------------------------*/
+    //=======================================
+    // Browser file
+    //=======================================
     $('#input_file').val(null);
     $('#input_file').on('change', function (e) {
         //get the file name

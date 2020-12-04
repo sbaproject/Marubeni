@@ -186,9 +186,7 @@ label.radio-inline{
 select.form-control.is-invalid, .was-validated .form-control:invalid {
     background-position: right calc(1em + .1875rem) center;
 }
-/**
-*   Paginator
-*/
+/* Paginator */
 .pager_custom {
     justify-content: center;
     margin-top: 1rem;
@@ -224,18 +222,14 @@ select.form-control.is-invalid, .was-validated .form-control:invalid {
 .bt_direct .bt_right {
     padding: 3px 25px 3px 13px;
 }
-/**
-*   Info User
-*/
+/* User Info */
 .text-name{
     color: black;
 }
 .user-deparment{
     color: gray;
 }
-/**
-*   Button Search
-*/
+/* Button Search */
 .btn-search {
     width: 100%;
     display: inline-grid;
@@ -295,6 +289,12 @@ select.form-control.is-invalid, .was-validated .form-control:invalid {
 .table>thead>tr>th {
     vertical-align: middle;
 }
+table>tbody>tr>td {
+    vertical-align: middle !important;
+    /* padding-left: 0 !important; */
+    /* padding-right: 0 !important; */
+    padding: 5px 5px !important;
+}
 .btn-danger{
     background-color:  #96000c;
     border-color: #96000c;
@@ -322,9 +322,7 @@ select.form-control.is-invalid, .was-validated .form-control:invalid {
         width: auto !important;
     }
 }
-/*
-* Page Error
-*/
+/* Page Error */
 .code-state{
     font-size: 5.5rem;
 }
@@ -336,4 +334,9 @@ select.form-control.is-invalid, .was-validated .form-control:invalid {
 .table>thead>tr>th.sortable.stb-selected {
     background-color: #96000C;
     color: #ffffff;
+}
+
+/* Browse File */
+.file-link {
+    color: #007bff;
 }
