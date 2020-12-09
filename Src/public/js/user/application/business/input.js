@@ -4,14 +4,14 @@ $(document).ready(function () {
     //=======================================
     // init
     $('#trip_from').datetimepicker({
-        format: 'ddd, DD/MM/YYYY',
+        format: 'DD/MM/YYYY',
         defaultDate: $('#trip_dt_from').val(),
         useCurrent: false,
         showTodayButton: true,
         showClear: true
     });
     $('#trip_to').datetimepicker({
-        format: 'ddd, DD/MM/YYYY',
+        format: 'DD/MM/YYYY',
         defaultDate: $('#trip_dt_to').val(),
         useCurrent: false,
         showTodayButton: true,
@@ -71,6 +71,18 @@ $(document).ready(function () {
     $('.file-link').on('click', function (e) {
         $(this).find('a')[0].click();
     });
+
+    //=======================================
+    // Subsequen changes
+    //=======================================
+    $('[name="cb_subsequent"]').on('change', function () {
+        if ($(this).prop('checked')) {
+            $('#subsequent').val(1);
+        } else {
+            $('#subsequent').val(0);
+        }
+    });
+    $('#subsequent').val($('[name="cb_subsequent"]').prop('checked') ? 1 : 0);
 
     //=======================================
     // Itinerary & Transportation Block

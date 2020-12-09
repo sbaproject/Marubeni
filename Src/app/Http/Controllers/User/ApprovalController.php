@@ -58,6 +58,7 @@ class ApprovalController extends Controller
                 ,a.`id`             AS application_id
                 ,a.`current_step`
                 ,a.`status`
+                ,a.`subsequent`
                 ,a.`created_at`     AS apply_date
                 ,f.`form_id`
                 ,f.`group_id`

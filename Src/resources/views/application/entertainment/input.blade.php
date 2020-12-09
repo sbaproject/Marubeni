@@ -43,21 +43,23 @@
 @section('content')
 @php
 
-    $infos                  = Session::exists('inputs') ? Session::get('inputs')['infos']                      : (isset($application) ? $application->entertainment->entertainmentinfos : null);
-    $entertainment_dt       = Session::exists('inputs') ? Session::get('inputs')['entertainment_dt']           : (isset($application) ? $application->entertainment->entertainment_dt : null);
-    $place                  = Session::exists('inputs') ? Session::get('inputs')['place']                      : (isset($application) ? $application->entertainment->place : null);
-    $during_trip            = Session::exists('inputs') ? Session::get('inputs')['during_trip']                : (isset($application) ? $application->entertainment->during_trip : null);
-    $check_row              = Session::exists('inputs') ? Session::get('inputs')['check_row']                  : (isset($application) ? $application->entertainment->check_row : null);
-    $has_et_times           = Session::exists('inputs') ? Session::get('inputs')['has_entertainment_times']    : (isset($application) ? $application->entertainment->has_entertainment_times : null);
-    $et_times               = Session::exists('inputs') ? Session::get('inputs')['entertainment_times']        : (isset($application) ? $application->entertainment->entertainment_times : null);
-    $existence_projects     = Session::exists('inputs') ? Session::get('inputs')['existence_projects']         : (isset($application) ? $application->entertainment->existence_projects : null);
-    $includes_family        = Session::exists('inputs') ? Session::get('inputs')['includes_family']            : (isset($application) ? $application->entertainment->includes_family : null);
-    $project_name           = Session::exists('inputs') ? Session::get('inputs')['project_name']               : (isset($application) ? $application->entertainment->project_name : null);
-    $entertainment_reason   = Session::exists('inputs') ? Session::get('inputs')['entertainment_reason']       : (isset($application) ? $application->entertainment->entertainment_reason : null);
-    $entertainment_person   = Session::exists('inputs') ? Session::get('inputs')['entertainment_person']       : (isset($application) ? $application->entertainment->entertainment_person : null);
-    $est_amount             = Session::exists('inputs') ? Session::get('inputs')['est_amount']                 : (isset($application) ? $application->entertainment->est_amount : null);
-    $reason_budget_over     = Session::exists('inputs') ? Session::get('inputs')['reason_budget_over']         : (isset($application) ? $application->entertainment->reason_budget_over : null);
-    $file_path              = Session::exists('inputs') ? Session::get('inputs')['file_path']                  : (isset($application) ? $application->file_path : null);
+    $infos                      = Session::exists('inputs') ? Session::get('inputs')['infos']                      : (isset($application) ? $application->entertainment->entertainmentinfos : null);
+    $entertainment_dt           = Session::exists('inputs') ? Session::get('inputs')['entertainment_dt']           : (isset($application) ? $application->entertainment->entertainment_dt : null);
+    $place                      = Session::exists('inputs') ? Session::get('inputs')['place']                      : (isset($application) ? $application->entertainment->place : null);
+    $during_trip                = Session::exists('inputs') ? Session::get('inputs')['during_trip']                : (isset($application) ? $application->entertainment->during_trip : null);
+    $check_row                  = Session::exists('inputs') ? Session::get('inputs')['check_row']                  : (isset($application) ? $application->entertainment->check_row : null);
+    $has_et_times               = Session::exists('inputs') ? Session::get('inputs')['has_entertainment_times']    : (isset($application) ? $application->entertainment->has_entertainment_times : null);
+    $et_times                   = Session::exists('inputs') ? Session::get('inputs')['entertainment_times']        : (isset($application) ? $application->entertainment->entertainment_times : null);
+    $existence_projects         = Session::exists('inputs') ? Session::get('inputs')['existence_projects']         : (isset($application) ? $application->entertainment->existence_projects : null);
+    $includes_family            = Session::exists('inputs') ? Session::get('inputs')['includes_family']            : (isset($application) ? $application->entertainment->includes_family : null);
+    $project_name               = Session::exists('inputs') ? Session::get('inputs')['project_name']               : (isset($application) ? $application->entertainment->project_name : null);
+    $entertainment_reason       = Session::exists('inputs') ? Session::get('inputs')['entertainment_reason']       : (isset($application) ? $application->entertainment->entertainment_reason : null);
+    $entertainment_reason_other = Session::exists('inputs') ? Session::get('inputs')['entertainment_reason_other'] :(isset($application)  ? $application->entertainment->entertainment_reason_other : null);
+    $entertainment_person       = Session::exists('inputs') ? Session::get('inputs')['entertainment_person']       : (isset($application) ? $application->entertainment->entertainment_person : null);
+    $est_amount                 = Session::exists('inputs') ? Session::get('inputs')['est_amount']                 : (isset($application) ? $application->entertainment->est_amount : null);
+    $reason_budget_over         = Session::exists('inputs') ? Session::get('inputs')['reason_budget_over']         : (isset($application) ? $application->entertainment->reason_budget_over : null);
+    $subsequent                 = Session::exists('inputs') ? Session::get('inputs')['subsequent']                 : (isset($application) ? $application->subsequent : null);
+    $file_path                  = Session::exists('inputs') ? Session::get('inputs')['file_path']                  : (isset($application) ? $application->file_path : null);
 
     // get action url
     if(isset($application)){
@@ -353,11 +355,10 @@
                             <strong>{{ $message }}</strong>
                         </span>
                         @enderror
-                        <div id="entertainment_times" style="padding-left: 0px"
-                            class="col-lg-10 @if(empty($has_et_times) || ($has_et_times !== null && $has_et_times == config('const.entertainment.has_et_times.no'))) d-none @endif">
-                            <input type="text" class="form-control entertainment_times @error('entertainment_times') is-invalid @enderror"
+                        <div style="padding-left: 0px" class="col-lg-10">
+                            <input type="text" id="txt_entertainment_times" class="form-control entertainment_times @error('entertainment_times') is-invalid @enderror"
                                 value="{{ $et_times }}" placeholder="{{ __('label.entertainment.entertainment_times') }}"
-                                @if(isset($previewFlg)) readonly @endif>
+                                @if(isset($previewFlg) || (empty($has_et_times) || ($has_et_times !== null && $has_et_times == config('const.entertainment.has_et_times.no')))) readonly @endif>
                                 <input type="hidden" name="entertainment_times" value="{{ $et_times }}">
                             @error('entertainment_times')
                             <span class="invalid-feedback" role="alert">
@@ -433,8 +434,33 @@
                         {{ __('label.entertainment.entertainment_reason') }}
                     </label>
                     <div class="col-lg-10">
-                        <textarea id="entertainment_reason" name="entertainment_reason" class="form-control" rows="5"
-                            @if(isset($previewFlg)) readonly @endif>{{ $entertainment_reason }}</textarea>
+                        <select name="rd_entertainment_reason" style="width: auto;" class="form-control @error('entertainment_reason') is-invalid @enderror"
+                            @if(isset($previewFlg)) disabled @endif>
+                            <option value="empty" @if($entertainment_reason == 'empty' ) selected @endif>
+                                {{ __('label.select') }}
+                            </option>
+                            @foreach (config('const.entertainment.reason') as $key => $value)
+                            <option value="{{ $value }}"
+                                @if($entertainment_reason !==null && strval($entertainment_reason)===strval($value)) selected @endif>
+                                {{ __('label.entertainment.reason.'.$value) }}
+                            </option>
+                            @endforeach
+                        </select>
+                        @error('entertainment_reason')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                        <input type="hidden" id="entertainment_reason" name="entertainment_reason" value="{{ $entertainment_reason }}">
+                        <div style="margin-top: 10px">
+                            <textarea id="entertainment_reason_other" name="entertainment_reason_other" class="form-control @error('entertainment_reason_other') is-invalid @enderror"
+                                rows="3" @if(isset($previewFlg)) readonly @endif>{{ $entertainment_reason_other }}</textarea>
+                            @error('entertainment_reason_other')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>
                     </div>
                 </div>
                 <hr>
@@ -558,7 +584,6 @@
                         @endif
                     </div>
                 </div>
-                @if (!isset($previewFlg))
                 <hr>
                 <div class="form-group row">
                     <div class="col-sm-2 text-left">
@@ -566,13 +591,14 @@
                     </div>
                     <div class="col-sm-10">
                         <div class="form-check">
-                            <input type="checkbox" id="subsequent" name="subsequent" class="form-check-input" @if(old('subsequent')
-                                !=null) checked @endif>
-                            <label class="form-check-label" for="subsequent">{{ __('label.on') }}</label>
+                            <input type="checkbox" id="cb_subsequent" name="cb_subsequent" class="form-check-input"
+                                    @if($subsequent !== null && $subsequent == config('const.check.on')) checked @endif
+                                    @if(isset($previewFlg)) disabled @endif>
+                                <input type="hidden" id="subsequent" name="subsequent" value="{{ $subsequent }}">
+                            <label class="form-check-label" for="cb_subsequent">{{ __('label.on') }}</label>
                         </div>
                     </div>
                 </div>
-                @endif
             </div>
         </div>
         <!-- /.card -->

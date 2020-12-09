@@ -4,14 +4,14 @@ $(document).ready(function () {
     //=======================================
 
     $('#dateLeaveFrom').datetimepicker({
-        format: 'ddd, DD/MM/YYYY',
+        format: 'DD/MM/YYYY',
         defaultDate: $('#date_from').val(),
         useCurrent: false,
         showTodayButton: true,
         showClear: true
     });
     $('#dateLeaveTo').datetimepicker({
-        format: 'ddd, DD/MM/YYYY',
+        format: 'DD/MM/YYYY',
         defaultDate: $('#date_to').val(),
         useCurrent: false,
         showTodayButton: true,
@@ -51,7 +51,7 @@ $(document).ready(function () {
      */
     // init
     $('#timeLeaveDate').datetimepicker({
-        format: 'ddd, DD/MM/YYYY',
+        format: 'DD/MM/YYYY',
         defaultDate: $('#time_day').val(),
         useCurrent: false,
         showTodayButton: true,
@@ -107,14 +107,14 @@ $(document).ready(function () {
 
     //init
     $('#maternityLeaveFrom').datetimepicker({
-        format: 'ddd, DD/MM/YYYY',
+        format: 'DD/MM/YYYY',
         defaultDate: $('#maternity_from').val(),
         useCurrent: false,
         showTodayButton: true,
         showClear: true
     });
     $('#maternityLeaveTo').datetimepicker({
-        format: 'ddd, DD/MM/YYYY',
+        format: 'DD/MM/YYYY',
         defaultDate: $('#maternity_to').val(),
         useCurrent: false,
         showTodayButton: true,
@@ -148,6 +148,18 @@ $(document).ready(function () {
             $('#maternity_to').val(null);
         }
     });
+
+    //=======================================
+    // Subsequen changes
+    //=======================================
+    $('[name="cb_subsequent"]').on('change', function () {
+        if ($(this).prop('checked')) {
+            $('#subsequent').val(1);
+        } else {
+            $('#subsequent').val(0);
+        }
+    });
+    $('#subsequent').val($('[name="cb_subsequent"]').prop('checked') ? 1 : 0);
 
     //=======================================
     // Disabled or Enabled inputs by CodeLeave

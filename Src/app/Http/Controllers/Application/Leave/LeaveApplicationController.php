@@ -37,10 +37,7 @@ class LeaveApplicationController extends Controller
     public function store(Request $request)
     {
         // get inputs
-        $inputs = $request->all();
-        if (!isset($inputs['paid_type'])) {
-            $inputs['paid_type'] = null;
-        }
+        $inputs = $this->getInputs($request);
 
         // check post method
         if (isset($inputs['apply']) || isset($inputs['draft']) || isset($inputs['pdf'])) {
@@ -91,10 +88,7 @@ class LeaveApplicationController extends Controller
         $application = Application::findOrFail($id);
 
         // get inputs
-        $inputs = $request->all();
-        if (!isset($inputs['paid_type'])) {
-            $inputs['paid_type'] = null;
-        }
+        $inputs = $this->getInputs($request);
 
         // check post method
         if (isset($inputs['apply']) || isset($inputs['draft']) || isset($inputs['pdf'])) {
@@ -173,45 +167,28 @@ class LeaveApplicationController extends Controller
                 $status = config('const.application.status.draft');
             }
 
-            // prepare data
-            $application = [
-                'status' => $status,
-                'updated_by' => $user->id,
-                'updated_at' => Carbon::now(),
-            ];
+            // get current step
+            $currentStep = config('const.budget.step_type.settlement'); // [leave form] default = 2
 
-            // for new
-            if (!$request->id) {
+            // get [leave form] id
+            $formId = config('const.form.leave');
 
-                // get current step
-                $currentStep = config('const.budget.step_type.settlement'); // [leave form] default = 2
+            // get group
+            $group = DB::table('groups')
+            ->select('groups.*')
+            ->join('applicants', function ($join) use ($user) {
+                $join->on('groups.applicant_id', '=', 'applicants.id')
+                ->where('applicants.role', '=', $user->role)
+                ->where('applicants.location', '=', $user->location)
+                ->where('applicants.department_id', '=', $user->department_id)
+                ->where('applicants.deleted_at', '=', null);
+            })
+            ->where('groups.budget_id', '=', null)
+            ->where('groups.deleted_at', '=', null)
+            ->first();
 
-                // get [leave form] id
-                $formId = config('const.form.leave');
-
-                // get group
-                $group = DB::table('groups')
-                    ->select('groups.*')
-                    ->join('applicants', function ($join) use ($user) {
-                        $join->on('groups.applicant_id', '=', 'applicants.id')
-                            ->where('applicants.role', '=', $user->role)
-                            ->where('applicants.location', '=', $user->location)
-                            ->where('applicants.department_id', '=', $user->department_id)
-                            ->where('applicants.deleted_at', '=', null);
-                    })
-                    ->where('groups.budget_id', '=', null)
-                    ->where('groups.deleted_at', '=', null)
-                    ->first();
-
-                if (empty($group)) {
-                    throw new NotFoundFlowSettingException();
-                }
-
-                $application['form_id'] = $formId;
-                $application['group_id'] = $group->id;
-                $application['current_step'] = $currentStep;
-                $application['created_by'] = $user->id;
-                $application['created_at'] = Carbon::now();
+            if (empty($group)) {
+                throw new NotFoundFlowSettingException();
             }
 
             // delete old file
@@ -236,10 +213,23 @@ class LeaveApplicationController extends Controller
                 $filePath = $request->file('input_file')->storeAs('uploads/application/', $fileName);
             }
 
-            $application['file_path'] = isset($filePath) ? $filePath : null;
+            // prepare data
+            $application = [
+                'form_id' => $formId,
+                'group_id' => $group->id,
+                'current_step' => $currentStep,
+                'status' => $status,
+                'subsequent' => $inputs['subsequent'],
+                'file_path' => isset($filePath) ? $filePath : null,
+                'updated_by' => $user->id,
+                'updated_at' => Carbon::now()
+            ];
 
             // add
             if (!$request->id) {
+                $application['created_by'] = $user->id;
+                $application['created_at'] = Carbon::now();
+
                 $applicationId = DB::table('applications')->insertGetId($application);
             }
             // update
@@ -386,5 +376,20 @@ class LeaveApplicationController extends Controller
         } else {
             abort(404);
         }
+    }
+
+    public function getInputs($request)
+    {
+        $inputs = $request->all();
+
+        if (!isset($inputs['paid_type'])) {
+            $inputs['paid_type'] = null;
+        }
+
+        if (!isset($inputs['subsequent'])) {
+            $inputs['subsequent'] = null;
+        }
+
+        return $inputs;
     }
 }

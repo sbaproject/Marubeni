@@ -34,7 +34,12 @@
                                     <div class="app_title">{{ __('label.application_no') }}</div>
                                 </div>
                                 <div class="col-sm-9 pl-sm-0">
-                                    <div class="app_info">{{ $app->application_no }}</div>
+                                    <div class="app_info">
+                                        {{ $app->application_no }}
+                                        @if ($app->subsequent == config('const.check.on'))
+                                            <span style="color: red">Subsequent</span>
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
                             <div class="row">

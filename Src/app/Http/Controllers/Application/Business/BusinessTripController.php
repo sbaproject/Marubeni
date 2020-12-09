@@ -31,7 +31,7 @@ class BusinesstripController extends Controller
     public function store(Request $request)
     {
         // get input data
-        $inputs = $request->all();
+        $inputs = $this->getInputs($request);
 
         // check post method
         if (isset($inputs['apply']) || isset($inputs['draft']) || isset($inputs['pdf'])) {
@@ -82,7 +82,7 @@ class BusinesstripController extends Controller
         $application = Application::findOrFail($id);
 
         // get inputs
-        $inputs = $request->all();
+        $inputs = $this->getInputs($request);
 
         // check post method
         if (isset($inputs['apply']) || isset($inputs['draft']) || isset($inputs['pdf'])) {
@@ -162,51 +162,36 @@ class BusinesstripController extends Controller
                 $status = config('const.application.status.draft');
             }
 
-            // prepare data
-            $application = [
-                'status' => $status,
-                'updated_by' => $user->id,
-                'updated_at' => Carbon::now(),
-            ];
+            // get current step
+            $currentStep = config('const.budget.step_type.application'); // [business form] default = 1
 
-            // for new
-            if (!$request->id) {
+            // get [business form] id
+            $formId = config('const.form.biz_trip');
 
-                // get current step
-                $currentStep = config('const.budget.step_type.application'); // [business form] default = 1
-
-                // get [business form] id
-                $formId = config('const.form.biz_trip');
-
-                // get group
-                $group = DB::table('groups')
-                    ->select('groups.*')
-                    ->join('applicants', function ($join) use ($user) {
-                        $join->on('groups.applicant_id', '=', 'applicants.id')
-                            ->where('applicants.role', '=', $user->role)
-                            ->where('applicants.location', '=', $user->location)
-                            ->where('applicants.department_id', '=', $user->department_id)
-                            ->where('applicants.deleted_at', '=', null);
-                    })
-                    ->join('budgets', function ($join) use ($currentStep) {
-                        $join->on('groups.budget_id', '=', 'budgets.id')
-                            ->where('budgets.budget_type', '=', config('const.budget.budget_type.business'))
-                            ->where('budgets.step_type', '=', $currentStep)
-                            ->where('budgets.position', '=', config('const.budget.position.business')) // set temp, change here
-                            ->where('budgets.deleted_at', '=', null);
-                    })
-                    ->where('groups.deleted_at', '=', null)
-                    ->first();
-
-                if (empty($group)) {
-                    throw new NotFoundFlowSettingException();
+            // get group
+            $group = DB::table('groups')
+            ->select('groups.*')
+            ->join('applicants', function ($join) use ($user) {
+                $join->on('groups.applicant_id', '=', 'applicants.id')
+                ->where('applicants.role', '=', $user->role)
+                ->where('applicants.location', '=', $user->location)
+                ->where('applicants.department_id', '=', $user->department_id)
+                ->where('applicants.deleted_at', '=', null);
+            })
+            ->join('budgets',
+                function ($join) use ($currentStep) {
+                    $join->on('groups.budget_id', '=', 'budgets.id')
+                    ->where('budgets.budget_type', '=', config('const.budget.budget_type.business'))
+                    ->where('budgets.step_type', '=', $currentStep)
+                    ->where('budgets.position', '=', config('const.budget.position.business')) // set temp, change here
+                    ->where('budgets.deleted_at', '=', null);
                 }
+            )
+            ->where('groups.deleted_at', '=', null)
+            ->first();
 
-                $application['form_id']         = $formId;
-                $application['group_id']        = $group->id;
-                $application['current_step']    = $currentStep;
-                $application['created_by']      = $user->id;
-                $application['created_at']      = Carbon::now();
+            if (empty($group)) {
+                throw new NotFoundFlowSettingException();
             }
 
             // delete old file
@@ -230,10 +215,23 @@ class BusinesstripController extends Controller
                 $filePath = $request->file('input_file')->storeAs('uploads/application/', $fileName);
             }
 
-            $application['file_path'] = isset($filePath) ? $filePath : null;
+            // prepare data
+            $application = [
+                'form_id' => $formId,
+                'group_id' => $group->id,
+                'current_step' => $currentStep,
+                'status' => $status,
+                'subsequent' => $inputs['subsequent'],
+                'file_path' => isset($filePath) ? $filePath : null,
+                'updated_by' => $user->id,
+                'updated_at' => Carbon::now()
+            ];
 
             // save applications
             if (!$request->id) {
+                $application['created_by']      = $user->id;
+                $application['created_at']      = Carbon::now();
+
                 $applicationId = DB::table('applications')->insertGetId($application);
             } else {
                 DB::table('applications')->where('id', $request->id)->update($application);
@@ -399,5 +397,16 @@ class BusinesstripController extends Controller
         } else {
             abort(404);
         }
+    }
+
+    public function getInputs($request)
+    {
+        $inputs = $request->all();
+
+        if (!isset($inputs['subsequent'])) {
+            $inputs['subsequent'] = null;
+        }
+
+        return $inputs;
     }
 }

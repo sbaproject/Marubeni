@@ -38,6 +38,7 @@
     $days_use       = Session::exists('inputs') ? Session::get('inputs')['days_use']       :  (isset($application) ? $application->leave->days_use : null);
     $times_use      = Session::exists('inputs') ? Session::get('inputs')['times_use']      :  (isset($application) ? $application->leave->times_use : null);
     $file_path      = Session::exists('inputs') ? Session::get('inputs')['file_path']      :  (isset($application) ? $application->file_path : null);
+    $subsequent     = Session::exists('inputs') ? Session::get('inputs')['subsequent']     :  (isset($application) ? $application->subsequent : null);
     $applicant      = isset($application) ? $application->applicant : Auth::user();
 
     // get action url
@@ -413,7 +414,6 @@
                         @endif
                     </div>
                 </div>
-                @if (!isset($previewFlg))
                 <hr class="line-bottom">
                 <div class="form-group row">
                     <div class="col-sm-2 text-left">
@@ -421,13 +421,14 @@
                     </div>
                     <div class="col-sm-10">
                         <div class="form-check">
-                            <input type="checkbox" id="subsequent" name="subsequent" class="form-check-input" @if (old('subsequent')
-                                !=null) checked @endif>
-                            <label class="form-check-label" for="subsequent">{{ __('label.on') }}</label>
+                            <input type="checkbox" id="cb_subsequent" name="cb_subsequent" class="form-check-input"
+                                @if($subsequent !==null && $subsequent == config('const.check.on')) checked @endif
+                                @if(isset($previewFlg)) disabled @endif>
+                            <input type="hidden" id="subsequent" name="subsequent" value="{{ $subsequent }}">
+                            <label class="form-check-label" for="cb_subsequent">{{ __('label.on') }}</label>
                         </div>
                     </div>
                 </div>
-                @endif
             </div>
             <!-- /.card-body -->
         </div>

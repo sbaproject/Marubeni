@@ -1,11 +1,13 @@
 $(document).ready(function () {
+
+    formLoad();
     
     //=======================================
     // Datetimepicker
     //=======================================
     // init
     $('#datetime').datetimepicker({
-        format: 'ddd, DD/MM/YYYY HH:mm',
+        format: 'DD/MM/YYYY HH:mm',
         defaultDate: $('#entertainment_dt').val() != '' ? moment($('#entertainment_dt').val()) : false,
         toolbarPlacement: 'bottom',
         sideBySide: true,
@@ -89,7 +91,7 @@ $(document).ready(function () {
     });
 
     //=======================================
-    // Radio Button Changes
+    // Radio Button & Checkbox Changes
     //=======================================
     $('[name="rd_during_trip"]').on('change', function () {
         $('#during_trip').val($(this).val());
@@ -100,9 +102,9 @@ $(document).ready(function () {
     $('[name="rd_has_entertainment_times"]').on('change', function () {
         $('#has_entertainment_times').val($(this).val());
         if ($(this).val() == true) {
-            $('#entertainment_times').removeClass('d-none');
+            $('#txt_entertainment_times').removeAttr('readonly');
         } else {
-            $('#entertainment_times').addClass('d-none');
+            $('#txt_entertainment_times').attr('readonly', 'readonly');
             $('input[type=number][name="entertainment_times"]').val('');
         }
     });
@@ -112,11 +114,40 @@ $(document).ready(function () {
     $('[name="rd_includes_family"]').on('change', function () {
         $('#includes_family').val($(this).val());
     });
+    $('[name="cb_subsequent"]').on('change', function () {
+        if ($(this).prop('checked')) {
+            $('#subsequent').val(1);
+        } else {
+            $('#subsequent').val(0);
+        }
+    });
+    $('[name="rd_entertainment_reason"]').on('change', function () {
+        $('#entertainment_reason').val($(this).val());
+        if ($(this).val() == 10) { // Other
+            $('#entertainment_reason_other').removeAttr('readonly');
+        } else {
+            $('#entertainment_reason_other').attr('readonly', 'readonly');
+        }
+    });
+
     $('#during_trip').val($('[name="rd_during_trip"]:checked').val());
     $('#check_row').val($('[name="rd_check_row"]:checked').val());
     $('#has_entertainment_times').val($('[name="rd_has_entertainment_times"]:checked').val());
     $('#existence_projects').val($('[name="rd_existence_projects"]:checked').val());
     $('#includes_family').val($('[name="rd_includes_family"]:checked').val());
+    $('#entertainment_reason').val($('[name="rd_entertainment_reason"]:checked').val());
+    $('#subsequent').val($('[name="cb_subsequent"]').prop('checked') ? 1 : 0);
+
+    //=======================================
+    // Form load
+    //=======================================
+    function formLoad() {
+        if ($('[name="rd_entertainment_reason"]').val() == 10) { // Other
+            $('#entertainment_reason_other').removeAttr('readonly');
+        } else {
+            $('#entertainment_reason_other').attr('readonly', 'readonly');
+        }
+    }
 
     //=======================================
     // Auto complete (typehead.js)

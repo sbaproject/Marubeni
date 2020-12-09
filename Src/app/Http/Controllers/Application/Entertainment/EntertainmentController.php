@@ -139,6 +139,7 @@ class EntertainmentController extends Controller
                 $rules['has_entertainment_times']   = 'required_select';
                 $rules['existence_projects']        = 'required_select';
                 $rules['includes_family']           = 'required_select';
+                $rules['entertainment_reason']      = 'required_select';
                 $rules['entertainment_person']      = 'required|numeric';
                 $rules['est_amount']                = 'required|numeric';
                 $rules['infos.*.cp_name']           = 'required';
@@ -149,22 +150,28 @@ class EntertainmentController extends Controller
                 if ($inputs['has_entertainment_times'] == true) {
                     $rules['entertainment_times'] = 'required|numeric';
                 }
+                // entertainment reason is [Other = 10] option
+                if ($inputs['entertainment_reason'] == config('const.entertainment.reason.other')) {
+                    $rules['entertainment_reason_other'] = 'required';
+                }
             }
             $customAttributes = [
-                'entertainment_dt'          => __('label.entertainment.entertainment_dt'),
-                'place'                     => __('label.entertainment.place'),
-                'during_trip'               => __('label.entertainment.during_trip'),
-                'check_row'                 => __('label.entertainment.check_row'),
-                'has_entertainment_times'   => __('label.entertainment.entertainment_times'),
-                'entertainment_times'       => __('label.entertainment.entertainment_times'),
-                'existence_projects'        => __('label.entertainment.existence_projects'),
-                'includes_family'           => __('label.entertainment.includes_family'),
-                'entertainment_person'      => __('label.entertainment.entertainment_person'),
-                'est_amount'                => __('label.entertainment.est_amount'),
-                'infos.*.cp_name'           => __('label.entertainment.cp_name'),
-                'infos.*.title'             => __('label.entertainment.title'),
-                'infos.*.name_attendants'   => __('label.entertainment.name_attendants'),
-                'infos.*.details_dutles'    => __('label.entertainment.details_dutles'),
+                'entertainment_dt'              => __('label.entertainment.entertainment_dt'),
+                'place'                         => __('label.entertainment.place'),
+                'during_trip'                   => __('label.entertainment.during_trip'),
+                'check_row'                     => __('label.entertainment.check_row'),
+                'has_entertainment_times'       => __('label.entertainment.entertainment_times'),
+                'entertainment_reason'          => __('label.entertainment.entertainment_reason'),
+                'entertainment_reason_other'    => __('label.entertainment.entertainment_reason_other'),
+                'entertainment_times'           => __('label.entertainment.entertainment_times'),
+                'existence_projects'            => __('label.entertainment.existence_projects'),
+                'includes_family'               => __('label.entertainment.includes_family'),
+                'entertainment_person'          => __('label.entertainment.entertainment_person'),
+                'est_amount'                    => __('label.entertainment.est_amount'),
+                'infos.*.cp_name'               => __('label.entertainment.cp_name'),
+                'infos.*.title'                 => __('label.entertainment.title'),
+                'infos.*.name_attendants'       => __('label.entertainment.name_attendants'),
+                'infos.*.details_dutles'        => __('label.entertainment.details_dutles'),
             ];
             $validator = Validator::make($inputs, $rules, [], $customAttributes);
             if ($validator->fails()) {
@@ -194,13 +201,6 @@ class EntertainmentController extends Controller
             } else if (isset($inputs['draft'])) {
                 $status = config('const.application.status.draft');
             }
-
-            // prepare data
-            $application = [
-                'status' => $status,
-                'updated_by' => $user->id,
-                'updated_at' => Carbon::now(),
-            ];
 
             // get current step
             $currentStep = config('const.budget.step_type.application'); // [entertainment form] default = 1
@@ -262,10 +262,6 @@ class EntertainmentController extends Controller
                 throw new NotFoundFlowSettingException();
             }
 
-            $application['form_id']         = $formId;
-            $application['group_id']        = $group->id;
-            $application['current_step']    = $currentStep;
-
             // delete old file
             if (!empty($app)) {
                 $filePath = $app->file_path;
@@ -287,7 +283,17 @@ class EntertainmentController extends Controller
                 $filePath = $request->file('input_file')->storeAs('uploads/application/', $fileName);
             }
 
-            $application['file_path'] = isset($filePath) ? $filePath : null;
+            // prepare data
+            $application = [
+                'form_id' => $formId,
+                'group_id' => $group->id,
+                'current_step' => $currentStep,
+                'status' => $status,
+                'subsequent' => $inputs['subsequent'],
+                'file_path' => isset($filePath) ? $filePath : null,
+                'updated_by' => $user->id,
+                'updated_at' => Carbon::now()
+            ];
 
             // save applications
             if (!$request->id) {
@@ -313,11 +319,12 @@ class EntertainmentController extends Controller
                 'during_trip'               => $inputs['during_trip'],
                 'check_row'                 => $inputs['check_row'],
                 'has_entertainment_times'   => $inputs['has_entertainment_times'],
-                'entertainment_times'       => $inputs['entertainment_times'],
+                'entertainment_times'       => $inputs['has_entertainment_times'] == config('const.check.off') ? null : $inputs['entertainment_times'],
                 'existence_projects'        => $inputs['existence_projects'],
                 'includes_family'           => $inputs['includes_family'],
                 'project_name'              => $inputs['project_name'],
                 'entertainment_reason'      => $inputs['entertainment_reason'],
+                'entertainment_reason'      => $inputs['entertainment_reason'] == config('const.entertainment.reason.other') ? $inputs['entertainment_reason_other'] : null,
                 'entertainment_person'      => $inputs['entertainment_person'],
                 'est_amount'                => $inputs['est_amount'],
                 'reason_budget_over'        => $inputs['reason_budget_over'],
@@ -387,6 +394,9 @@ class EntertainmentController extends Controller
         }
         if (!isset($inputs['includes_family'])) {
             $inputs['includes_family'] = null;
+        }
+        if (!isset($inputs['subsequent'])) {
+            $inputs['subsequent'] = null;
         }
 
         return $inputs;
