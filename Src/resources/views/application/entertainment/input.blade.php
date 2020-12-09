@@ -36,7 +36,9 @@
 
 <script>
     // list of name companies
-    var companies = @json($companies);
+    const _COMPANIES = @json($companies);
+    const _REASON_OTHER = @json(config('const.entertainment.reason.other'));
+    const _PREVIEW_FLG = @json(isset($previewFlg) ? true : false);
 </script>
 @endsection
 
@@ -446,12 +448,12 @@
                             </option>
                             @endforeach
                         </select>
+                        <input type="hidden" id="entertainment_reason" name="entertainment_reason" value="{{ $entertainment_reason }}">
                         @error('entertainment_reason')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
                         @enderror
-                        <input type="hidden" id="entertainment_reason" name="entertainment_reason" value="{{ $entertainment_reason }}">
                         <div style="margin-top: 10px">
                             <textarea id="entertainment_reason_other" name="entertainment_reason_other" class="form-control @error('entertainment_reason_other') is-invalid @enderror"
                                 rows="3" @if(isset($previewFlg)) readonly @endif>{{ $entertainment_reason_other }}</textarea>

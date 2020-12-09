@@ -123,7 +123,7 @@ $(document).ready(function () {
     });
     $('[name="rd_entertainment_reason"]').on('change', function () {
         $('#entertainment_reason').val($(this).val());
-        if ($(this).val() == 10) { // Other
+        if ($(this).val() == _REASON_OTHER) { // Other
             $('#entertainment_reason_other').removeAttr('readonly');
         } else {
             $('#entertainment_reason_other').attr('readonly', 'readonly');
@@ -135,15 +135,18 @@ $(document).ready(function () {
     $('#has_entertainment_times').val($('[name="rd_has_entertainment_times"]:checked').val());
     $('#existence_projects').val($('[name="rd_existence_projects"]:checked').val());
     $('#includes_family').val($('[name="rd_includes_family"]:checked').val());
-    $('#entertainment_reason').val($('[name="rd_entertainment_reason"]:checked').val());
     $('#subsequent').val($('[name="cb_subsequent"]').prop('checked') ? 1 : 0);
 
     //=======================================
     // Form load
     //=======================================
     function formLoad() {
-        if ($('[name="rd_entertainment_reason"]').val() == 10) { // Other
-            $('#entertainment_reason_other').removeAttr('readonly');
+        // entertainment reason
+        $('#entertainment_reason').val($('[name="rd_entertainment_reason"]').val());
+        if ($('[name="rd_entertainment_reason"]').val() == _REASON_OTHER) { // Other
+            if (!_PREVIEW_FLG) {
+                $('#entertainment_reason_other').removeAttr('readonly');
+            }
         } else {
             $('#entertainment_reason_other').attr('readonly', 'readonly');
         }
@@ -182,7 +185,7 @@ $(document).ready(function () {
             },
             {
                 limit: 999,
-                source: substringMatcher(companies)
+                source: substringMatcher(_COMPANIES)
             }
         );
     }

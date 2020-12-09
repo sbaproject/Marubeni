@@ -314,23 +314,23 @@ class EntertainmentController extends Controller
 
             // prepare entertainment data
             $etData = [
-                'entertainment_dt'          => $inputs['entertainment_dt'],
-                'place'                     => $inputs['place'],
-                'during_trip'               => $inputs['during_trip'],
-                'check_row'                 => $inputs['check_row'],
-                'has_entertainment_times'   => $inputs['has_entertainment_times'],
-                'entertainment_times'       => $inputs['has_entertainment_times'] == config('const.check.off') ? null : $inputs['entertainment_times'],
-                'existence_projects'        => $inputs['existence_projects'],
-                'includes_family'           => $inputs['includes_family'],
-                'project_name'              => $inputs['project_name'],
-                'entertainment_reason'      => $inputs['entertainment_reason'],
-                'entertainment_reason'      => $inputs['entertainment_reason'] == config('const.entertainment.reason.other') ? $inputs['entertainment_reason_other'] : null,
-                'entertainment_person'      => $inputs['entertainment_person'],
-                'est_amount'                => $inputs['est_amount'],
-                'reason_budget_over'        => $inputs['reason_budget_over'],
-                'file_path'                 => isset($filePath) ? $filePath : null,
-                'updated_by'                => $user->id,
-                'updated_at'                => Carbon::now(),
+                'entertainment_dt'              => $inputs['entertainment_dt'],
+                'place'                         => $inputs['place'],
+                'during_trip'                   => $inputs['during_trip'],
+                'check_row'                     => $inputs['check_row'],
+                'has_entertainment_times'       => $inputs['has_entertainment_times'],
+                'entertainment_times'           => $inputs['has_entertainment_times'] == config('const.check.off') ? null : $inputs['entertainment_times'],
+                'existence_projects'            => $inputs['existence_projects'],
+                'includes_family'               => $inputs['includes_family'],
+                'project_name'                  => $inputs['project_name'],
+                'entertainment_reason'          => $inputs['entertainment_reason'] != 'empty' ? $inputs['entertainment_reason'] : null,
+                'entertainment_reason_other'    => $inputs['entertainment_reason'] == config('const.entertainment.reason.other') ? $inputs['entertainment_reason_other'] : null,
+                'entertainment_person'          => $inputs['entertainment_person'],
+                'est_amount'                    => $inputs['est_amount'],
+                'reason_budget_over'            => $inputs['reason_budget_over'],
+                'file_path'                     => isset($filePath) ? $filePath : null,
+                'updated_by'                    => $user->id,
+                'updated_at'                    => Carbon::now(),
             ];
 
             // save entertainment application
@@ -369,7 +369,7 @@ class EntertainmentController extends Controller
             if ($ex instanceof NotFoundFlowSettingException) {
                 $msgErr = $ex->getMessage();
             } else {
-                $msgErr = __('msg.save_fail');
+                $msgErr = __($ex->getMessage());
             }
         }
 
