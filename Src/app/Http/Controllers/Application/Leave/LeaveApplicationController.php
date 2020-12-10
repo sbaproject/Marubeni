@@ -132,18 +132,22 @@ class LeaveApplicationController extends Controller
                 $rules['input_file'] = 'mimes:txt,pdf,jpg,jpeg,png|max:200';
             }
             if (isset($inputs['apply'])) {
+
                 $rules['code_leave'] = 'required_select';
                 $rules['reason_leave'] = 'required';
 
-                if ($inputs['code_leave'] == config('const.code_leave.ML')) {
-                    $rules['maternity_from'] = 'required';
-                    $rules['maternity_to'] = 'required';
-                } else {
-                    $rules['date_from'] = 'required';
-                    $rules['date_to'] = 'required';
-                    // only for SICKLEAVE
-                    if ($inputs['code_leave'] == config('const.code_leave.SL')) {
-                        $rules['paid_type'] = 'required_select';
+                if ($inputs['code_leave'] != "empty") {
+
+                    if ($inputs['code_leave'] == config('const.code_leave.ML')) {
+                        $rules['maternity_from'] = 'required';
+                        $rules['maternity_to'] = 'required';
+                    } else {
+                        $rules['date_from'] = 'required';
+                        $rules['date_to'] = 'required';
+                        // only for SICKLEAVE
+                        if ($inputs['code_leave'] == config('const.code_leave.SL')) {
+                            $rules['paid_type'] = 'required_select';
+                        }
                     }
                 }
             }
