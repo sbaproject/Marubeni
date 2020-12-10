@@ -62,7 +62,8 @@ a.tab-locale.en{
 }
 @media screen and (max-width: 992px) {
     .content-wrapper {
-        padding: 0!important;
+        /* padding: 0!important; */
+        padding: 10px;
     }
 }
 /**

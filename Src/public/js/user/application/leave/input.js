@@ -150,6 +150,26 @@ $(document).ready(function () {
     });
 
     //=======================================
+    // Cleave input (formatting inputs)
+    //=======================================
+
+    new Cleave('.days_use', {
+        numericOnly: true,
+        blocks: [3],
+        onValueChanged: function (e) {
+            $('[name="days_use"]').val(e.target.rawValue);
+        }
+    });
+
+    new Cleave('.times_use', {
+        numericOnly: true,
+        blocks: [3],
+        onValueChanged: function (e) {
+            $('[name="times_use"]').val(e.target.rawValue);
+        }
+    });
+
+    //=======================================
     // Subsequen changes
     //=======================================
     $('[name="cb_subsequent"]').on('change', function () {
@@ -177,13 +197,15 @@ $(document).ready(function () {
 
     $('[name="rd_paid_type"]').on('change', function () {
         if ($(this).val() == paid_type.AL) {
-            $('#days_use').removeAttr('readonly');
-            $('#times_use').removeAttr('readonly');
+            $('#txt_days_use').removeAttr('readonly');
+            $('#txt_times_use').removeAttr('readonly');
         } else {
-            $('#days_use').val('');
-            $('#times_use').val('');
-            $('#days_use').attr('readonly', 'readonly');
-            $('#times_use').attr('readonly', 'readonly');
+            $('#txt_days_use').val('');
+            $('#txt_times_use').val('');
+            $('[name="days_use"]').val('');
+            $('[name="times_use"]').val('');
+            $('#txt_days_use').attr('readonly', 'readonly');
+            $('#txt_times_use').attr('readonly', 'readonly');
         }
         $('#paid_type').val($(this).val());
     });
@@ -199,8 +221,8 @@ $(document).ready(function () {
 
         $('#timeLeaveFrom').removeAttr('readonly');
         $('#timeLeaveTo').removeAttr('readonly');
-        $('#days_use').removeAttr('readonly');
-        $('#times_use').removeAttr('readonly');
+        $('#txt_days_use').removeAttr('readonly');
+        $('#txt_times_use').removeAttr('readonly');
 
         if (codeLeaveSelector.val() == code_leave.ML) {
             $('#dateLeaveFrom').data("DateTimePicker").date(null);
@@ -208,8 +230,10 @@ $(document).ready(function () {
             $('#timeLeaveDate').data("DateTimePicker").date(null);
             $('#timeLeaveFrom').data("DateTimePicker").date(null);
             $('#timeLeaveTo').data("DateTimePicker").date(null);
-            $('#days_use').val('');
-            $('#times_use').val('');
+            $('#txt_days_use').val('');
+            $('#txt_times_use').val('');
+            $('[name="days_use"]').val('');
+            $('[name="times_use"]').val('');
             // date leave
             $('[data-target="#dateLeaveFrom"]').attr('readonly', 'readonly');
             $('[data-target="#dateLeaveTo"]').attr('readonly', 'readonly');
@@ -222,8 +246,8 @@ $(document).ready(function () {
             $('[name="rd_paid_type"]').prop('checked', false);
             $('#paid_type').val('');
             // days & times used
-            $('#days_use').attr('readonly', 'readonly');
-            $('#times_use').attr('readonly', 'readonly');
+            $('#txt_days_use').attr('readonly', 'readonly');
+            $('#txt_times_use').attr('readonly', 'readonly');
 
         } else if (codeLeaveSelector.val() != "empty") {
 
@@ -237,20 +261,24 @@ $(document).ready(function () {
                 $('[name="rd_paid_type"]').prop('checked', false);
                 $('#paid_type').val('');
                 if (codeLeaveSelector.val() != code_leave.AL) {
-                    $('#days_use').attr('readonly', 'readonly');
-                    $('#times_use').attr('readonly', 'readonly');
-                    $('#days_use').val('');
-                    $('#times_use').val('');
+                    $('#txt_days_use').attr('readonly', 'readonly');
+                    $('#txt_times_use').attr('readonly', 'readonly');
+                    $('#txt_days_use').val('');
+                    $('#txt_times_use').val('');
+                    $('[name="days_use"]').val('');
+                    $('[name="times_use"]').val('');
                 }
                 return;
             }
 
             if (codeLeaveSelector.val() == code_leave.SL) {
                 if ($('[name="rd_paid_type"]:checked').val() != paid_type.AL) {
-                    $('#days_use').attr('readonly', 'readonly');
-                    $('#times_use').attr('readonly', 'readonly');
-                    $('#days_use').val('');
-                    $('#times_use').val('');
+                    $('#txt_days_use').attr('readonly', 'readonly');
+                    $('#txt_times_use').attr('readonly', 'readonly');
+                    $('#txt_days_use').val('');
+                    $('#txt_times_use').val('');
+                    $('[name="days_use"]').val('');
+                    $('[name="times_use"]').val('');
                 }
                 return;
             }
@@ -267,8 +295,10 @@ $(document).ready(function () {
             $('[name="rd_paid_type"]').prop('checked', false);
 
             $('#paid_type').val('');
-            $('#days_use').val('');
-            $('#times_use').val('');
+            $('#txt_days_use').val('');
+            $('#txt_times_use').val('');
+            $('[name="days_use"]').val('');
+            $('[name="times_use"]').val('');
 
             $('[data-target="#dateLeaveFrom"]').attr('readonly', 'readonly');
             $('[data-target="#dateLeaveTo"]').attr('readonly', 'readonly');
@@ -279,8 +309,8 @@ $(document).ready(function () {
 
             $('#timeLeaveFrom').attr('readonly', 'readonly');
             $('#timeLeaveTo').attr('readonly', 'readonly');
-            $('#days_use').attr('readonly', 'readonly');
-            $('#times_use').attr('readonly', 'readonly');
+            $('#txt_days_use').attr('readonly', 'readonly');
+            $('#txt_times_use').attr('readonly', 'readonly');
         }
     }
 

@@ -134,6 +134,10 @@ return [
             'remaining' => 'Số ngày phép chưa sử dụng',
             'days' => 'Ngày',
             'hours' => 'Giờ',
+            'date_from' => 'Nghỉ theo ngày (Từ)',
+            'date_to' => 'Nghỉ theo ngày (Đến)',
+            'maternity_from' => 'Nghỉ sinh con (Từ)',
+            'maternity_to' => 'Nghỉ sinh con (Đến)',
         ],
     ],
     /**

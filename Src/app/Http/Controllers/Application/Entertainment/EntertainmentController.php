@@ -405,9 +405,9 @@ class EntertainmentController extends Controller
     public function doRedirect($inputs)
     {
         // continue create new application after save success
-        if (isset($inputs['subsequent']) && $inputs['subsequent'] == true) {
-            return Common::redirectRouteWithAlertSuccess('user.entertainment.create');
-        }
+        // if (isset($inputs['subsequent']) && $inputs['subsequent'] == true) {
+        //     return Common::redirectRouteWithAlertSuccess('user.entertainment.create');
+        // }
         // back to list application
         return Common::redirectRouteWithAlertSuccess('user.form.index');
     }

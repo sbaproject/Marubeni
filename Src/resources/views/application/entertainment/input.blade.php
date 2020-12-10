@@ -357,7 +357,7 @@
                             <strong>{{ $message }}</strong>
                         </span>
                         @enderror
-                        <div style="padding-left: 0px" class="col-lg-10">
+                        <div style="padding-left: 0px" class="col-lg-12">
                             <input type="text" id="txt_entertainment_times" class="form-control entertainment_times @error('entertainment_times') is-invalid @enderror"
                                 value="{{ $et_times }}" placeholder="{{ __('label.entertainment.entertainment_times') }}"
                                 @if(isset($previewFlg) || (empty($has_et_times) || ($has_et_times !== null && $has_et_times == config('const.entertainment.has_et_times.no')))) readonly @endif>
@@ -456,7 +456,8 @@
                         @enderror
                         <div style="margin-top: 10px">
                             <textarea id="entertainment_reason_other" name="entertainment_reason_other" class="form-control @error('entertainment_reason_other') is-invalid @enderror"
-                                rows="3" @if(isset($previewFlg)) readonly @endif>{{ $entertainment_reason_other }}</textarea>
+                                rows="3" placeholder="{{ __('label.entertainment.entertainment_reason_other') }}"
+                                @if(isset($previewFlg)) readonly @endif>{{ $entertainment_reason_other }}</textarea>
                             @error('entertainment_reason_other')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>

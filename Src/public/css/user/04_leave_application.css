@@ -104,20 +104,15 @@ input[type="file"] {
     cursor: pointer;
     border-radius:4px;
 }
-@media (max-width: 320px) {
-    .btn-apply {
+@media (max-width: 540px) {
+    .btn-custom{
         display: block;
         margin: 0 auto;
         margin-bottom: 15px;
-    }
-    .btn-draft {
-        display: block;
-        margin: 0 auto;
-        margin-bottom: 15px;
+        width: 50%;
     }
     .btn-cancel {
-        display: block;
-        margin: 0 auto;
+        margin-bottom: 0px;
     }
 }
 

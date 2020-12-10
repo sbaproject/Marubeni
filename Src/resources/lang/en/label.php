@@ -137,6 +137,10 @@ return [
             'remaining' => 'Remaining',
             'days' => 'Days',
             'hours' => 'Hours',
+            'date_from' => 'Date of leave (From)',
+            'date_to' => 'Date of leave (To)',
+            'maternity_from' => 'Maternity leave (From)',
+            'maternity_to' => 'Maternity leave (To)',
         ],
     ],
     /**

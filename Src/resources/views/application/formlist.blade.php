@@ -16,21 +16,21 @@
 			<div class="container">
 				<x-alert />
 				<div class="row">
-					<div class="col-sm-4">
+					<div class="col-sm-12 col-md-4 btn">
 						<a href="{{ route('user.entertainment.create') }}">
 							<div class="application-item">
 								{{ __('label.form.entertainment') }}
 							</div>
 						</a>
 					</div>
-					<div class="col-sm-4">
+					<div class="col-sm-12 col-md-4 btn">
 						<a href="{{ route('user.business.create') }}">
 							<div class="application-item">
 								{{ __('label.form.biz_trip') }}
 							</div>
 						</a>
 					</div>
-					<div class="col-sm-4">
+					<div class="col-sm-12 col-md-4 btn">
 						<a href="{{ route('user.leave.create') }}">
 							<div class="application-item">
 								{{ __('label.form.leave') }}

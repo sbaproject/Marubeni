@@ -7,6 +7,11 @@
 @section('css')
 {{-- for this view --}}
 <link rel="stylesheet" href="css/user/04_leave_application.css">
+<style type="text/css">
+.invalid-feedback {
+    display: block;
+}
+</style>
 @endsection
 
 @section('js')
@@ -14,6 +19,8 @@
 <script src="js/moment/moment.min.js"></script>
 <script src="js/moment/locale/{{ config('app.locale') }}.js"></script>
 <script src="js/bootstrap-datetimepicker.js"></script>
+{{-- cleave js --}}
+<script src="js/cleave/cleave.min.js"></script>
 {{-- for this view --}}
 <script src="js/user/application/leave/input.js"></script>
 <script>
@@ -149,7 +156,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <div class="input-group date" id="dateLeaveFrom" data-target-input="nearest">
-                                        <input type="text" class="form-control datetimepicker-input"
+                                        <input type="text" class="form-control datetimepicker-input @error('date_from') is-invalid @enderror"
                                             data-target="#dateLeaveFrom"
                                             @if(isset($previewFlg) || $code_leave == config('const.code_leave.ML')) readonly @endif/>
                                         <div class="input-group-addon input-group-append" data-target="#dateLeaveFrom"
@@ -158,6 +165,11 @@
                                             </div>
                                         </div>
                                     </div>
+                                    @error('date_from')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
                                     <input type="hidden" id="date_from" name="date_from" value="{{ $date_from }}">
                                 </div>
                             </div>
@@ -167,7 +179,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <div class="input-group date" id="dateLeaveTo" data-target-input="nearest">
-                                        <input type="text" class="form-control datetimepicker-input"
+                                        <input type="text" class="form-control datetimepicker-input @error('date_to') is-invalid @enderror"
                                             data-target="#dateLeaveTo"
                                             @if(isset($previewFlg) || $code_leave == config('const.code_leave.ML')) readonly @endif/>
                                         <div class="input-group-addon input-group-append" data-target="#dateLeaveTo"
@@ -176,6 +188,11 @@
                                             </div>
                                         </div>
                                     </div>
+                                    @error('date_to')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
                                     <input type="hidden" id="date_to" name="date_to" value="{{ $date_to }}">
                                 </div>
                             </div>
@@ -247,7 +264,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <div class="input-group date" id="maternityLeaveFrom" data-target-input="nearest">
-                                        <input type="text" class="form-control datetimepicker-input"
+                                        <input type="text" class="form-control datetimepicker-input @error('maternity_from') is-invalid @enderror"
                                             data-target="#maternityLeaveFrom"
                                             @if(isset($previewFlg) || $code_leave != config('const.code_leave.ML')) readonly @endif/>
                                         <div class="input-group-addon input-group-append"
@@ -256,6 +273,11 @@
                                             </div>
                                         </div>
                                     </div>
+                                    @error('maternity_from')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
                                     <input type="hidden" id="maternity_from" name="maternity_from"
                                         value="{{ $maternity_from }}">
                                 </div>
@@ -266,7 +288,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <div class="input-group date" id="maternityLeaveTo" data-target-input="nearest">
-                                        <input type="text" class="form-control datetimepicker-input"
+                                        <input type="text" class="form-control datetimepicker-input @error('maternity_to') is-invalid @enderror"
                                             data-target="#maternityLeaveTo"
                                             @if(isset($previewFlg) || $code_leave != config('const.code_leave.ML')) readonly @endif/>
                                         <div class="input-group-addon input-group-append"
@@ -275,6 +297,11 @@
                                             </div>
                                         </div>
                                     </div>
+                                    @error('maternity_to')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
                                     <input type="hidden" id="maternity_to" name="maternity_to"
                                         value="{{ $maternity_to }}">
                                 </div>
@@ -322,15 +349,17 @@
                                             $daysUsedReadFlg = true;
                                         }
                                 @endphp
-                                <input type="number" id="days_use" name="days_use" class="form-control input-custom-2" 
+                                <input type="text" id="txt_days_use" class="form-control input-custom-2 days_use" 
                                     value="{{ $days_use }}" autocomplete="off"
                                     @if(isset($daysUsedReadFlg)) readonly @endif>
+                                    <input type="hidden" name="days_use" value="{{ $days_use }}">
                                 &nbsp;&nbsp;
                                 <span>{{ __('label.leave.caption.days') }}</span>
                                 &nbsp;&nbsp;&nbsp;&nbsp;
-                                <input type="number" id="times_use" name="times_use" class="form-control input-custom-2"
+                                <input type="text" id="txt_times_use" name="times_use" class="form-control input-custom-2 times_use"
                                     value="{{ $times_use }}" autocomplete="off"
                                     @if(isset($daysUsedReadFlg)) readonly @endif>
+                                    <input type="hidden" name="times_use" value="{{ $times_use }}">
                                 &nbsp;&nbsp;
                                 <span>{{ __('label.leave.caption.hours') }}</span>
                             </div>
