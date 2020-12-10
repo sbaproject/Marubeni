@@ -122,16 +122,24 @@ class BusinesstripController extends Controller
                 $rules['input_file'] = 'mimes:txt,pdf,jpg,jpeg,png|max:200';
             }
             if (isset($inputs['apply'])) {
-                $rules['trip_dt_from'] = 'required';
-                $rules['trip_dt_to'] = 'required';
+                $rules['destinations']      = 'required';
+                $rules['accommodation']     = 'required';
+                $rules['accompany']         = 'required';
+                $rules['borne_by']          = 'required';
+                $rules['trip_dt_from']      = 'required';
+                $rules['trip_dt_to']        = 'required';
                 $rules['trans.*.departure'] = 'required';
-                $rules['trans.*.arrive'] = 'required';
-                $rules['trans.*.method'] = 'required';
+                $rules['trans.*.arrive']    = 'required';
+                $rules['trans.*.method']    = 'required';
             }
             $customAttributes = [
+                'destinations'      => __('label.business.trip_destination'),
+                'accommodation'     => __('label.business.accommodation'),
+                'accompany'         => __('label.business.accompany'),
+                'borne_by'          => __('label.business.borne_by'),
                 'trans.*.departure' => __('label.business.departure'),
-                'trans.*.arrive' => __('label.business.arrival'),
-                'trans.*.method' => __('label.business.method'),
+                'trans.*.arrive'    => __('label.business.arrival'),
+                'trans.*.method'    => __('label.business.method'),
             ];
             $validator = Validator::make($inputs, $rules, [], $customAttributes);
             if ($validator->fails()) {
@@ -306,7 +314,7 @@ class BusinesstripController extends Controller
     public function doRedirect($inputs)
     {
         // continue create new application after save success
-        if (isset($inputs['subsequent'])) {
+        if (isset($inputs['subsequent']) && $inputs['subsequent'] == true) {
             return Common::redirectRouteWithAlertSuccess('user.business.create');
         }
         // back to list application

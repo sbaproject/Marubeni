@@ -119,11 +119,17 @@ $(document).ready(function () {
             $(this).find('.arrive').attr('name', 'trans[' + index + '][arrive]');
             $(this).find('.method').attr('name', 'trans[' + index + '][method]');
             // always keep at least one element
-            if (transportElements.length === 1 && index === 0) {
+            if ((transportElements.length === 1 && index === 0)) {
                 $(this).find('.d-delete').addClass('d-none');
             } else {
                 $(this).find('.d-delete').removeClass('d-none');
             }
         });
+        // maximum is 4 blocks only
+        if (transportElements.length >= 4) {
+            $('#btnAdd').addClass('d-none');
+        } else {
+            $('#btnAdd').removeClass('d-none');
+        }
     }
 });

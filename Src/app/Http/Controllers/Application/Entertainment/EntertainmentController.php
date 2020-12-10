@@ -369,7 +369,7 @@ class EntertainmentController extends Controller
             if ($ex instanceof NotFoundFlowSettingException) {
                 $msgErr = $ex->getMessage();
             } else {
-                $msgErr = __($ex->getMessage());
+                $msgErr = __('msg.save_fail');
             }
         }
 
@@ -405,7 +405,7 @@ class EntertainmentController extends Controller
     public function doRedirect($inputs)
     {
         // continue create new application after save success
-        if (isset($inputs['subsequent'])) {
+        if (isset($inputs['subsequent']) && $inputs['subsequent'] == true) {
             return Common::redirectRouteWithAlertSuccess('user.entertainment.create');
         }
         // back to list application

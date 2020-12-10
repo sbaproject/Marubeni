@@ -83,8 +83,13 @@
                         <label>{{ __('label.business.trip_destination') }}</label>
                     </div>
                     <div class="col-sm-10">
-                        <input type="text" id="destinations" name="destinations" class="form-control"
+                        <input type="text" id="destinations" name="destinations" class="form-control @error('destinations') is-invalid @enderror"
                             autocomplete="off" value="{{ $destinations }}" @if(isset($previewFlg)) readonly @endif>
+                        @error('destinations')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
                     </div>
                 </div>
                 <hr>
@@ -277,7 +282,9 @@
                             </div>
                         </div>
                         @if(!isset($previewFlg))
-                        <button id="btnAdd" class="btn btn-outline-dark">+ {{ __('label.button.addnew') }}</button>
+                        <button id="btnAdd" class="btn btn-outline-dark @if(!empty($trans) && count($trans) >= 4) d-none @endif">
+                            + {{ __('label.button.addnew') }}
+                        </button>
                         @endif
                     </div>
                 </div>
@@ -287,8 +294,13 @@
                         <label>{{ __('label.business.accommodation') }}</label>
                     </div>
                     <div class="col-sm-10">
-                        <input type="text" id="accommodation" name="accommodation" class="form-control"
+                        <input type="text" id="accommodation" name="accommodation" class="form-control @error('accommodation') is-invalid @enderror"
                             autocomplete="off" value="{{ $accommodation }}" @if(isset($previewFlg)) readonly @endif>
+                        @error('accommodation')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
                     </div>
                 </div>
                 <hr>
@@ -297,8 +309,13 @@
                         <label>{{ __('label.business.accompany') }}</label>
                     </div>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="accompany" name="accompany"
+                        <input type="text" id="accompany" name="accompany" class="form-control @error('accompany') is-invalid @enderror"
                             autocomplete="off" value="{{ $accompany }}" @if(isset($previewFlg)) readonly @endif>
+                        @error('accompany')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
                     </div>
                 </div>
                 <hr>
@@ -307,8 +324,13 @@
                         <label>{{ __('label.business.borne_by') }}</label>
                     </div>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="borne_by" name="borne_by"
+                        <input type="text" id="borne_by" name="borne_by" class="form-control @error('borne_by') is-invalid @enderror"
                              autocomplete="off" value="{{ $borne_by }}" @if(isset($previewFlg)) readonly @endif>
+                        @error('borne_by')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
                     </div>
                 </div>
                 <hr>

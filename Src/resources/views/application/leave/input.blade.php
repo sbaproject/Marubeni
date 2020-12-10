@@ -97,9 +97,14 @@
                         <label>{{ __('label.leave.caption.reason_leave') }}</label>
                     </div>
                     <div class="col-sm-10">
-                        <textarea class="form-control" name="reason_leave" id="reason_leave" rows="3"
+                        <textarea name="reason_leave" id="reason_leave" rows="3" class="form-control @error('reason_leave') is-invalid @enderror"
                             style="width: 100%;" @if(isset($previewFlg)) readonly @endif
                             placeholder="{{ __('label.leave.caption.reason_leave') }}">{{ $reason_leave }}</textarea>
+                        @error('reason_leave')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
                     </div>
                 </div>
                 <hr class="line-bottom">
@@ -208,8 +213,8 @@
                             </div>
                             <div class="col-sm-6 col-lg-4">
                                 <div class="row mb-2">
-                                    <span class="col-md-2">{{ __('label.from') }}</span>
-                                    <div class="col-md-10">
+                                    <span class="col-md-3">{{ __('label.from') }}</span>
+                                    <div class="col-md-9">
                                         <input type="text" id="timeLeaveFrom" name="time_from"
                                             class="form-control datetimepicker-input" data-toggle="datetimepicker"
                                             data-target="#timeLeaveFrom" autocomplete="off"
@@ -218,8 +223,8 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <span class="col-md-2">{{ __('label.to') }}</span>
-                                    <div class="col-md-10">
+                                    <span class="col-md-3">{{ __('label.to') }}</span>
+                                    <div class="col-md-9">
                                         <input type="text" id="timeLeaveTo" name="time_to"
                                             class="form-control datetimepicker-input" data-toggle="datetimepicker"
                                             data-target="#timeLeaveTo" autocomplete="off"
@@ -295,12 +300,12 @@
                         <div class="row mb-2">
                             <span class="col-sm-2">{{ __('label.leave.caption.used_this_year') }}</span>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control input-custom-2" id="used_days" name="used_days" 
+                                <input type="text" class="form-control input-custom-2" id="used_days" name="used_days"
                                     value="{{ $applicant->leave_days - $applicant->leave_remaining_days }}" readonly>
                                 &nbsp;&nbsp;
                                 <span>{{ __('label.leave.caption.days') }}</span>
                                 &nbsp;&nbsp;&nbsp;&nbsp;
-                                <input type="text" class="form-control input-custom-2" id="used_time" name="used_hours" 
+                                <input type="text" class="form-control input-custom-2" id="used_time" name="used_hours"
                                     value="" readonly>
                                 &nbsp;&nbsp;
                                 <span>{{ __('label.leave.caption.hours') }}</span>

@@ -132,13 +132,17 @@ class LeaveApplicationController extends Controller
                 $rules['input_file'] = 'mimes:txt,pdf,jpg,jpeg,png|max:200';
             }
             if (isset($inputs['apply'])) {
-                $rules['code_leave'] = 'required_select';
+                $rules['code_leave']    = 'required_select';
+                $rules['reason_leave']  = 'required';
                 // only for SICKLEAVE
                 if ($inputs['code_leave'] == config('const.code_leave.SL')) {
                     $rules['paid_type'] = 'required_select';
                 }
             }
-            $validator = Validator::make($inputs, $rules);
+            $customAttributes = [
+                'reason_leave' => __('label.leave.caption.reason_leave'),
+            ];
+            $validator = Validator::make($inputs, $rules, [], $customAttributes);
             if ($validator->fails()) {
                 unset($inputs['input_file']);
                 return $validator;
@@ -215,14 +219,14 @@ class LeaveApplicationController extends Controller
 
             // prepare data
             $application = [
-                'form_id' => $formId,
-                'group_id' => $group->id,
-                'current_step' => $currentStep,
-                'status' => $status,
-                'subsequent' => $inputs['subsequent'],
-                'file_path' => isset($filePath) ? $filePath : null,
-                'updated_by' => $user->id,
-                'updated_at' => Carbon::now()
+                'form_id'       => $formId,
+                'group_id'      => $group->id,
+                'current_step'  => $currentStep,
+                'status'        => $status,
+                'subsequent'    => $inputs['subsequent'],
+                'file_path'     => isset($filePath) ? $filePath : null,
+                'updated_by'    => $user->id,
+                'updated_at'    => Carbon::now()
             ];
 
             // add
@@ -243,21 +247,20 @@ class LeaveApplicationController extends Controller
 
             // prepare leave data
             $leaveData = [
-                'code_leave' => $inputs['code_leave'] !== 'empty' ? $inputs['code_leave'] : null,
-                'paid_type' => $inputs['paid_type'],
-                'reason_leave' => $inputs['reason_leave'],
-                'date_from' => $inputs['date_from'],
-                'date_to' => $inputs['date_to'],
-                'time_day' => $inputs['time_day'],
-                'time_from' => $inputs['time_from'],
-                'time_to' => $inputs['time_to'],
-                'maternity_from' => $inputs['maternity_from'],
-                'maternity_to' => $inputs['maternity_to'],
-                // 'file_path' => isset($filePath) ? $filePath : null,
-                'days_use' => $inputs['days_use'],
-                'times_use' => $inputs['times_use'],
-                'updated_by' => $user->id,
-                'updated_at' => Carbon::now(),
+                'code_leave'        => $inputs['code_leave'] !== 'empty' ? $inputs['code_leave'] : null,
+                'paid_type'         => $inputs['paid_type'],
+                'reason_leave'      => $inputs['reason_leave'],
+                'date_from'         => $inputs['date_from'],
+                'date_to'           => $inputs['date_to'],
+                'time_day'          => $inputs['time_day'],
+                'time_from'         => $inputs['time_from'],
+                'time_to'           => $inputs['time_to'],
+                'maternity_from'    => $inputs['maternity_from'],
+                'maternity_to'      => $inputs['maternity_to'],
+                'days_use'          => $inputs['days_use'],
+                'times_use'         => $inputs['times_use'],
+                'updated_by'        => $user->id,
+                'updated_at'        => Carbon::now(),
             ];
             // for new
             if (!$request->id) {
@@ -285,7 +288,7 @@ class LeaveApplicationController extends Controller
     public function doRedirect($inputs)
     {
         // continue create new application after save success
-        if (isset($inputs['subsequent'])) {
+        if (isset($inputs['subsequent']) && $inputs['subsequent'] == true) {
             return Common::redirectRouteWithAlertSuccess('user.leave.create');
         }
         // back to list application
