@@ -181,4 +181,8 @@ return [
         'from' => Carbon::now()->startOfMonth(),
         'to' => Carbon::now()->endOfMonth(),
     ],
+    /**
+     * Wokring hours per day
+     */
+    'working_hours_per_day' => 8,
 ];

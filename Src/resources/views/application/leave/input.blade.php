@@ -324,16 +324,28 @@
                                 <span>{{ __('label.leave.caption.days') }}</span>
                             </div>
                         </div>
+                        @php
+                            // get used time in this year
+                            $workingHourPerDay = config('const.working_hours_per_day');
+                            // get total entitled hours
+                            $entitledHours = $applicant->leave_days * $workingHourPerDay;
+                            // get total used hours
+                            $totalUsedHours = $entitledHours - ($applicant->leave_remaining_days * $workingHourPerDay) - $applicant->leave_remaining_time;
+                            // used days
+                            $usedDays = intval($totalUsedHours / $workingHourPerDay);
+                            // used hours
+                            $usedHours = (($totalUsedHours % $workingHourPerDay) / $workingHourPerDay) * $workingHourPerDay;
+                        @endphp
                         <div class="row mb-2">
                             <span class="col-sm-2">{{ __('label.leave.caption.used_this_year') }}</span>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control input-custom-2" id="used_days" name="used_days"
-                                    value="{{ $applicant->leave_days - $applicant->leave_remaining_days }}" readonly>
+                                    value="{{ $usedDays }}" readonly>
                                 &nbsp;&nbsp;
                                 <span>{{ __('label.leave.caption.days') }}</span>
                                 &nbsp;&nbsp;&nbsp;&nbsp;
                                 <input type="text" class="form-control input-custom-2" id="used_time" name="used_hours"
-                                    value="" readonly>
+                                    value="{{ $usedHours }}" readonly>
                                 &nbsp;&nbsp;
                                 <span>{{ __('label.leave.caption.hours') }}</span>
 
@@ -357,7 +369,7 @@
                                 <span>{{ __('label.leave.caption.days') }}</span>
                                 &nbsp;&nbsp;&nbsp;&nbsp;
                                 <input type="text" id="txt_times_use" name="times_use" class="form-control input-custom-2 times_use"
-                                    value="{{ $times_use }}" autocomplete="off"
+                                    value="{{ $times_use }}" autocomplete="off" max-number="2" max-value="24"
                                     @if(isset($daysUsedReadFlg)) readonly @endif>
                                     <input type="hidden" name="times_use" value="{{ $times_use }}">
                                 &nbsp;&nbsp;

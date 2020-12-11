@@ -37,6 +37,7 @@ $(document).ready(function () {
         numeral: true,
         numeralDecimalScale: 0,
         numeralThousandsGroupStyle: 'thousand',
+        numeralPositiveOnly: true,
         stripLeadingZeroes: true,
         onValueChanged: function (e) {
             let maxLength = $($(this)[0].element).attr('max-number');

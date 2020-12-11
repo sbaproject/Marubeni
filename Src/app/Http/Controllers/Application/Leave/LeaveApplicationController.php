@@ -61,7 +61,6 @@ class LeaveApplicationController extends Controller
             return Common::redirectBackWithAlertFail($msgErr)->with('inputs', $inputs);
         }
 
-        // continue create new application after save success
         return $this->doRedirect($inputs);
     }
 
@@ -115,12 +114,7 @@ class LeaveApplicationController extends Controller
             return Common::redirectBackWithAlertFail($msgErr)->with('inputs', $inputs);
         }
 
-        // continue create new application after save success
-        if (isset($inputs['subsequent'])) {
-            return Common::redirectRouteWithAlertSuccess('user.leave.create');
-        }
-        // back to list application
-        return Common::redirectRouteWithAlertSuccess('user.form.index');
+        return $this->doRedirect($inputs);
     }
 
     public function doValidate($request, &$inputs)

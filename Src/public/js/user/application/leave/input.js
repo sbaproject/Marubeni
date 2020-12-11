@@ -161,11 +161,32 @@ $(document).ready(function () {
         }
     });
 
+    // new Cleave('.times_use', {
+    //     numericOnly: true,
+    //     blocks: [2],
+    //     onValueChanged: function (e) {
+    //         $('[name="times_use"]').val(e.target.rawValue);
+    //     }
+    // });
+
     new Cleave('.times_use', {
-        numericOnly: true,
-        blocks: [2],
+        // stripLeadingZeroes: true,
+        // numericOnly:true,
+        // delimiters: [','],
+        // blocks: [3, 3, 3],
+        numeral: true,
+        numeralDecimalScale: 0,
+        // numeralThousandsGroupStyle: 'thousand',
+        numeralPositiveOnly: true,
+        stripLeadingZeroes: true,
         onValueChanged: function (e) {
-            $('[name="times_use"]').val(e.target.rawValue);
+            let maxLength = $($(this)[0].element).attr('max-number');
+            let maxValue = $($(this)[0].element).attr('max-value');
+            if (e.target.rawValue.length > parseInt(maxLength) || parseInt(e.target.rawValue) > parseInt(maxValue)) {
+                this.setRawValue(this.lastInputValue);
+            } else {
+                $('[name="times_use"]').val(e.target.rawValue);
+            }
         }
     });
 
