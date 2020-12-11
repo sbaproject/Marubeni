@@ -88,7 +88,7 @@ class ApprovalController extends Controller
                     INNER JOIN steps s ON s.`flow_id` = f.`id` AND s.`approver_type` = :approver_type AND a.`status` = s.`select_order` AND s.`step_type` = a.`current_step`
                     INNER JOIN users u ON u.`id` = s.`approver_id` AND s.`approver_id` = :userId
                     INNER JOIN users us ON us.`id` = a.`created_by`
-            WHERE   a.`status` BETWEEN 0 AND 98 " . $keywordCondition ."
+            WHERE   a.`status` BETWEEN 0 AND 98 " . $keywordCondition . "
             ORDER BY " . $sortable->order_by;
 
         $data = DB::select($sql, $params);
@@ -242,8 +242,17 @@ class ApprovalController extends Controller
                                     if (!empty($applicant)) {
                                         $dayUse = empty($leave->days_use) ? 0 : $leave->days_use;
                                         $timeUse = empty($leave->times_use) ? 0 : $leave->times_use;
-                                        $applicant->leave_remaining_days = $applicant->leave_remaining_days - $dayUse;
-                                        $applicant->leave_remaining_time = $applicant->leave_remaining_time - $timeUse;
+
+                                        $remainingHours = ($applicant->leave_remaining_days * 8);
+
+                                        $rmh = $remainingHours - (($dayUse * 8) + $timeUse);
+
+                                        $d = $rmh / 8;
+                                        $h = $rmh % 8;
+
+                                        $applicant->leave_remaining_days = $d;
+                                        $applicant->leave_remaining_time = $h * 8;
+
                                         $applicant->updated_by = $user->id;
                                         $applicant->save();
                                     }

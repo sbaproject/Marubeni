@@ -136,8 +136,7 @@ class LeaveApplicationController extends Controller
                 $rules['code_leave'] = 'required_select';
                 $rules['reason_leave'] = 'required';
 
-                if ($inputs['code_leave'] != "empty") {
-
+                if ($inputs['code_leave'] !== null && $inputs['code_leave'] != "empty") {
                     if ($inputs['code_leave'] == config('const.code_leave.ML')) {
                         $rules['maternity_from'] = 'required';
                         $rules['maternity_to'] = 'required';
@@ -151,6 +150,7 @@ class LeaveApplicationController extends Controller
                     }
                 }
             }
+
             $customAttributes = [
                 'reason_leave' => __('label.leave.caption.reason_leave'),
                 'date_from' => __('label.leave.caption.date_from'),
@@ -158,6 +158,7 @@ class LeaveApplicationController extends Controller
                 'maternity_from' => __('label.leave.caption.maternity_from'),
                 'maternity_to' => __('label.leave.caption.maternity_to'),
             ];
+
             $validator = Validator::make($inputs, $rules, [], $customAttributes);
             if ($validator->fails()) {
                 unset($inputs['input_file']);

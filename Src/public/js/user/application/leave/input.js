@@ -155,7 +155,7 @@ $(document).ready(function () {
 
     new Cleave('.days_use', {
         numericOnly: true,
-        blocks: [3],
+        blocks: [2],
         onValueChanged: function (e) {
             $('[name="days_use"]').val(e.target.rawValue);
         }
@@ -163,7 +163,7 @@ $(document).ready(function () {
 
     new Cleave('.times_use', {
         numericOnly: true,
-        blocks: [3],
+        blocks: [2],
         onValueChanged: function (e) {
             $('[name="times_use"]').val(e.target.rawValue);
         }
