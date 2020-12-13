@@ -137,7 +137,10 @@ class LeaveApplicationController extends Controller
                     } else {
                         $rules['date_from'] = 'required';
                         $rules['date_to'] = 'required';
-                        // only for SICKLEAVE
+                        if ($inputs['code_leave'] == config('const.code_leave.AL')
+                            || $inputs['paid_type'] == config('const.paid_type.AL')) {
+                            $rules['days_use'] = 'required';
+                        }
                         if ($inputs['code_leave'] == config('const.code_leave.SL')) {
                             $rules['paid_type'] = 'required_select';
                         }
@@ -146,11 +149,12 @@ class LeaveApplicationController extends Controller
             }
 
             $customAttributes = [
-                'reason_leave' => __('label.leave.caption.reason_leave'),
-                'date_from' => __('label.leave.caption.date_from'),
-                'date_to' => __('label.leave.caption.date_to'),
-                'maternity_from' => __('label.leave.caption.maternity_from'),
-                'maternity_to' => __('label.leave.caption.maternity_to'),
+                'reason_leave'      => __('label.leave.caption.reason_leave'),
+                'date_from'         => __('label.leave.caption.date_from'),
+                'date_to'           => __('label.leave.caption.date_to'),
+                'maternity_from'    => __('label.leave.caption.maternity_from'),
+                'maternity_to'      => __('label.leave.caption.maternity_to'),
+                'days_use'          => __('label.leave.caption.days_use'),
             ];
 
             $validator = Validator::make($inputs, $rules, [], $customAttributes);

@@ -141,6 +141,7 @@ return [
             'date_to' => 'Date of leave (To)',
             'maternity_from' => 'Maternity leave (From)',
             'maternity_to' => 'Maternity leave (To)',
+            'days_use' => 'Take this time (Days)',
         ],
     ],
     /**

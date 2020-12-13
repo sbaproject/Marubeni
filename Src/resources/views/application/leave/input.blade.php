@@ -316,8 +316,8 @@
                     </div>
                     <div class="col-sm-10">
                         <div class="row mb-2">
-                            <span class="col-sm-2">{{ __('label.leave.caption.entitled_year') }}</span>
-                            <div class="col-sm-10">
+                            <span class="col-md-2">{{ __('label.leave.caption.entitled_year') }}</span>
+                            <div class="col-md-10">
                                 <input type="text" id="entitled" name="entitled_days" class="form-control input-custom-2"
                                     value="{{ $applicant->leave_days }}" readonly>
                                 &nbsp;&nbsp;
@@ -337,8 +337,8 @@
                             $usedHours = (($totalUsedHours % $workingHourPerDay) / $workingHourPerDay) * $workingHourPerDay;
                         @endphp
                         <div class="row mb-2">
-                            <span class="col-sm-2">{{ __('label.leave.caption.used_this_year') }}</span>
-                            <div class="col-sm-10">
+                            <span class="col-md-2">{{ __('label.leave.caption.used_this_year') }}</span>
+                            <div class="col-md-10">
                                 <input type="text" class="form-control input-custom-2" id="used_days" name="used_days"
                                     value="{{ $usedDays }}" readonly>
                                 &nbsp;&nbsp;
@@ -352,8 +352,8 @@
                             </div>
                         </div>
                         <div class="row mb-2">
-                            <span class="col-sm-2">{{ __('label.leave.caption.take_this_time') }}</span>
-                            <div class="col-sm-10">
+                            <span class="col-md-2">{{ __('label.leave.caption.take_this_time') }}</span>
+                            <div class="col-md-10">
                                 @php
                                     if(isset($previewFlg)
                                         || $code_leave == config('const.code_leave.ML')
@@ -361,7 +361,7 @@
                                             $daysUsedReadFlg = true;
                                         }
                                 @endphp
-                                <input type="text" id="txt_days_use" class="form-control input-custom-2 days_use" 
+                                <input type="text" id="txt_days_use" class="form-control input-custom-2 days_use @error('days_use') is-invalid @enderror" 
                                     value="{{ $days_use }}" autocomplete="off"
                                     @if(isset($daysUsedReadFlg)) readonly @endif>
                                     <input type="hidden" name="days_use" value="{{ $days_use }}">
@@ -374,11 +374,16 @@
                                     <input type="hidden" name="times_use" value="{{ $times_use }}">
                                 &nbsp;&nbsp;
                                 <span>{{ __('label.leave.caption.hours') }}</span>
+                                @error('days_use')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
                             </div>
                         </div>
                         <div class="row">
-                            <span class="col-sm-2">{{ __('label.leave.caption.remaining') }}</span>
-                            <div class="col-sm-10">
+                            <span class="col-md-2">{{ __('label.leave.caption.remaining') }}</span>
+                            <div class="col-md-10">
                                 <input type="text" class="form-control input-custom-2" id="remaining_days"
                                     name="remaining_days" value="{{ $applicant->leave_remaining_days }}" readonly>
                                 &nbsp;&nbsp;

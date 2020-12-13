@@ -138,6 +138,7 @@ return [
             'date_to' => 'Nghỉ theo ngày (Đến)',
             'maternity_from' => 'Nghỉ sinh con (Từ)',
             'maternity_to' => 'Nghỉ sinh con (Đến)',
+            'days_use' => 'Số ngày phép xin nghỉ',
         ],
     ],
     /**
