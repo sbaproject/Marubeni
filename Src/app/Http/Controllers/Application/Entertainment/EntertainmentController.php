@@ -132,9 +132,11 @@ class EntertainmentController extends Controller
                 $rules['input_file'] = 'mimes:txt,pdf,jpg,jpeg,png|max:200';
             }
             if (isset($inputs['apply'])) {
+
                 $rules['entertainment_dt']          = 'required';
                 $rules['place']                     = 'required';
                 $rules['during_trip']               = 'required_select';
+                $rules['budget_position']           = 'required_select';
                 $rules['check_row']                 = 'required_select';
                 $rules['has_entertainment_times']   = 'required_select';
                 $rules['existence_projects']        = 'required_select';
@@ -159,6 +161,7 @@ class EntertainmentController extends Controller
                 'entertainment_dt'              => __('label.entertainment.entertainment_dt'),
                 'place'                         => __('label.entertainment.place'),
                 'during_trip'                   => __('label.entertainment.during_trip'),
+                'budget_position'               => __('label.entertainment.budget_position'),
                 'check_row'                     => __('label.entertainment.check_row'),
                 'has_entertainment_times'       => __('label.entertainment.entertainment_times'),
                 'entertainment_reason'          => __('label.entertainment.entertainment_reason'),
@@ -203,11 +206,11 @@ class EntertainmentController extends Controller
             }
 
             // get current step
-            $currentStep = config('const.budget.step_type.application'); // [entertainment form] default = 1
+            $currentStep = config('const.budget.step_type.application');
             // get budget type
             $budgetType = config('const.budget.budget_type.entertainment');
             // get position
-            $position = config('const.budget.position.po'); // set temp -> change here
+            $position = $inputs['budget_position'];
             // get budget comparation type
             $budget = Budget::where([
                 'budget_type' => $budgetType,
@@ -317,6 +320,7 @@ class EntertainmentController extends Controller
                 'entertainment_dt'              => $inputs['entertainment_dt'],
                 'place'                         => $inputs['place'],
                 'during_trip'                   => $inputs['during_trip'],
+                'check_row'                     => $inputs['budget_position'],
                 'check_row'                     => $inputs['check_row'],
                 'has_entertainment_times'       => $inputs['has_entertainment_times'],
                 'entertainment_times'           => $inputs['has_entertainment_times'] == config('const.check.off') ? null : $inputs['entertainment_times'],
@@ -382,6 +386,9 @@ class EntertainmentController extends Controller
 
         if (!isset($inputs['during_trip'])) {
             $inputs['during_trip'] = null;
+        }
+        if (!isset($inputs['budget_postion'])) {
+            $inputs['budget_postion'] = null;
         }
         if (!isset($inputs['check_row'])) {
             $inputs['check_row'] = null;

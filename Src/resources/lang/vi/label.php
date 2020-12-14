@@ -183,6 +183,7 @@ return [
         'persons' => 'Số người',
         'per_person_excluding_vnd' => 'Trên mỗi người(Không bao gồm VAT)',
         'entrainment_infomation' => 'Thông tin giải trí',
+        'budget_position' => 'Loại ngân sách',
         'reason' => [
             1    => '会食(民間)',
             2    => '会食(PO)',

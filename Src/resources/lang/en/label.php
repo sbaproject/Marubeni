@@ -165,7 +165,6 @@ return [
      */
     'entertainment' => [
         'application_no' => 'Application No',
-
         'entertainment_dt' => 'Date & Time',
         'place' => 'Place',
         'during_trip' => 'During biz trip',
@@ -187,6 +186,7 @@ return [
         'persons' => 'Persons',
         'per_person_excluding_vnd' => 'Per Person(Excluding VAT)',
         'entrainment_infomation' => 'Entrainment Infomation',
+        'budget_position' => 'Budget type',
         'reason' => [
             1   => 'Dinner (private sector)',
             2   => 'Dinner (PO)',

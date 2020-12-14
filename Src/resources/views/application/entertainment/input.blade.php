@@ -60,6 +60,7 @@
     $entertainment_person       = Session::exists('inputs') ? Session::get('inputs')['entertainment_person']       : (isset($application) ? $application->entertainment->entertainment_person : null);
     $est_amount                 = Session::exists('inputs') ? Session::get('inputs')['est_amount']                 : (isset($application) ? $application->entertainment->est_amount : null);
     $reason_budget_over         = Session::exists('inputs') ? Session::get('inputs')['reason_budget_over']         : (isset($application) ? $application->entertainment->reason_budget_over : null);
+    $budget_position            = Session::exists('inputs') ? Session::get('inputs')['budget_position']            : (isset($application) ? $application->budget_position : null);
     $subsequent                 = Session::exists('inputs') ? Session::get('inputs')['subsequent']                 : (isset($application) ? $application->subsequent : null);
     $file_path                  = Session::exists('inputs') ? Session::get('inputs')['file_path']                  : (isset($application) ? $application->file_path : null);
 
@@ -311,6 +312,29 @@
                         <button id="btnAdd" class="btn btn-outline-dark">+ {{ __('label.button.addnew') }}</button>
                         @endif
                         <!-- ./form chil -->
+                    </div>
+                </div>
+                <hr>
+                <div class="form-group row ">
+                    <label class="col-lg-2 col-form-label text-left">
+                        {{ __('label.entertainment.budget_position') }}
+                    </label>
+                    <div class="col-lg-10 text-lg-left text-left">
+                        <fieldset class="@error('budget_position') form-control is-invalid @enderror">
+                            @foreach (config('const.entertainment.budget_position') as $key => $value)
+                            <label class="radio-inline com_title col-form-label">
+                                <input type="radio" name="rd_budget_position" value="{{ $value }}" @if($budget_position !==null &&
+                                    $budget_position==$value) checked @endif @if(isset($previewFlg)) disabled @endif>
+                                {{ __('label.budget.'. $key) }}
+                            </label>
+                            @endforeach
+                        </fieldset>
+                        <input type="hidden" id="budget_position" name="budget_position" value="{{ $budget_position }}">
+                        @error('budget_position')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
                     </div>
                 </div>
                 <hr>

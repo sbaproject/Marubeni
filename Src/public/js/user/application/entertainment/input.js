@@ -97,6 +97,9 @@ $(document).ready(function () {
     $('[name="rd_during_trip"]').on('change', function () {
         $('#during_trip').val($(this).val());
     });
+    $('[name="rd_budget_position"]').on('change', function () {
+        $('#budget_position').val($(this).val());
+    });
     $('[name="rd_check_row"]').on('change', function () {
         $('#check_row').val($(this).val());
     });
@@ -132,6 +135,7 @@ $(document).ready(function () {
     });
 
     $('#during_trip').val($('[name="rd_during_trip"]:checked').val());
+    $('#budget_position').val($('[name="rd_budget_position"]:checked').val());
     $('#check_row').val($('[name="rd_check_row"]:checked').val());
     $('#has_entertainment_times').val($('[name="rd_has_entertainment_times"]:checked').val());
     $('#existence_projects').val($('[name="rd_existence_projects"]:checked').val());

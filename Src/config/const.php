@@ -134,6 +134,10 @@ return [
 	 * Entertainment Application
 	 */
     'entertainment' => [
+        'budget_position' => [
+            'po' => 1,
+            'not_po' => 2,
+        ],
         'during_trip' => [
             'yes' => 1,
             'no' => 0,
