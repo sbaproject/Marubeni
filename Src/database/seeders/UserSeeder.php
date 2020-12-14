@@ -35,6 +35,8 @@ class UserSeeder extends Seeder
             'role' => 99, // admin
             'department_id' => 3, // ADMI
             'approval' => 0, // OFF
+            'leave_days' => config('const.annual_leave_days_per_year'),
+            'leave_remaining_days' => config('const.annual_leave_days_per_year'),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
         ]);
@@ -49,6 +51,8 @@ class UserSeeder extends Seeder
             'role' => 1, // Staff
             'department_id' => 1, // Sales
             'approval' => 0, // OFF
+            'leave_days' => config('const.annual_leave_days_per_year'),
+            'leave_remaining_days' => config('const.annual_leave_days_per_year'),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
             'created_by' => $firstId,
@@ -62,6 +66,8 @@ class UserSeeder extends Seeder
             'role' => 2, // GM
             'department_id' => 1, // Sales
             'approval' => 1, // ON
+            'leave_days' => config('const.annual_leave_days_per_year'),
+            'leave_remaining_days' => config('const.annual_leave_days_per_year'),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
             'created_by' => $firstId,
@@ -79,6 +85,8 @@ class UserSeeder extends Seeder
                 'location' => Arr::random(config('const.location')),
                 'department_id' => Arr::random($department_ids),
                 'approval' => $approval,
+                'leave_days' => config('const.annual_leave_days_per_year'),
+                'leave_remaining_days' => config('const.annual_leave_days_per_year'),
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
                 'created_by' => $firstId,

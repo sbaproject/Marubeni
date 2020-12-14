@@ -288,7 +288,7 @@ return [
         'settlement' => 'Thanh Toán',
         'economy_class' => 'Hạng Phổ Thông',
         'business_class' => 'Hạng Thương Gia',
-        'pre_approvel_settlement_for_entertainment_free' => 'ĐỀ NGHỊ CHẬP THUẬN TRƯỚC & THANH TOÁN CHI PHÍ TIẾP KHÁCH',
+        'pre_approvel_settlement_for_entertainment_free' => 'ĐỀ NGHỊ CHẤP THUẬN TRƯỚC & THANH TOÁN CHI PHÍ TIẾP KHÁCH',
         'not_po' => 'Not PO',
         'po' => 'PO',
     ],

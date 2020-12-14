@@ -31,9 +31,11 @@ class UserRegisterController extends Controller
 
         // save new user
         $user = new User();
-        $user->department_id = $inputs['department'];
-        $user->password = Hash::make('123'); // temp data
-        $user->created_by = Auth::user()->id;
+        $user->department_id        = $inputs['department'];
+        $user->password             = Hash::make('123'); // temp data
+        $user->leave_days           = config('const.annual_leave_days_per_year');
+        $user->leave_remaining_days = config('const.annual_leave_days_per_year');
+        $user->created_by           = Auth::user()->id;
 
         $user->fill($inputs)->save();
 

@@ -185,4 +185,8 @@ return [
      * Wokring hours per day
      */
     'working_hours_per_day' => 8,
+    /**
+     * Annual leave days per year
+     */
+    'annual_leave_days_per_year' => 12,
 ];
