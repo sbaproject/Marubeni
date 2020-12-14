@@ -47,6 +47,15 @@ $(document).ready(function () {
     });
 
     //=======================================
+    // Radio Button
+    //=======================================
+    $('[name="rd_budget_position"]').on('change', function () {
+        $('#budget_position').val($(this).val());
+    });
+    $('#budget_position').val($('[name="rd_budget_position"]:checked').val());
+
+
+    //=======================================
     // Browser file
     //=======================================
 

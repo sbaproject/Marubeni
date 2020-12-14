@@ -17,16 +17,16 @@ class AdminBudgetController extends Controller
     public function show()
     {
         // Bushiness Trip - Assignment - Economy Class
-        $amount1 = Budget::where('budget_type', config('const.budget.budget_type.business'))->where('step_type', config('const.budget.step_type.application'))->where('position', config('const.budget.position.economy'))->get('amount')->first();
+        $amount1 = Budget::where('budget_type', config('const.budget.budget_type.business'))->where('step_type', config('const.budget.step_type.application'))->where('position', config('const.budget.position.economy_class'))->get('amount')->first();
 
         // Bushiness Trip - Assignment - Business Class
-        $amount2 = Budget::where('budget_type', config('const.budget.budget_type.business'))->where('step_type', config('const.budget.step_type.application'))->where('position',  config('const.budget.position.business'))->get('amount')->first();
+        $amount2 = Budget::where('budget_type', config('const.budget.budget_type.business'))->where('step_type', config('const.budget.step_type.application'))->where('position',  config('const.budget.position.business_class'))->get('amount')->first();
 
         // Bushiness Trip - Settlement - Economy Class
-        $amount3 = Budget::where('budget_type', config('const.budget.budget_type.business'))->where('step_type', config('const.budget.step_type.settlement'))->where('position',  config('const.budget.position.economy'))->get('amount')->first();
+        $amount3 = Budget::where('budget_type', config('const.budget.budget_type.business'))->where('step_type', config('const.budget.step_type.settlement'))->where('position',  config('const.budget.position.economy_class'))->get('amount')->first();
 
         // Bushiness Trip - Settlement - Business Class
-        $amount4 = Budget::where('budget_type', config('const.budget.budget_type.business'))->where('step_type', config('const.budget.step_type.settlement'))->where('position',  config('const.budget.position.business'))->get('amount')->first();
+        $amount4 = Budget::where('budget_type', config('const.budget.budget_type.business'))->where('step_type', config('const.budget.step_type.settlement'))->where('position',  config('const.budget.position.business_class'))->get('amount')->first();
 
         // ENTERTAINMENT - Assignment - Not PO
         $amount5 = Budget::where('budget_type', config('const.budget.budget_type.entertainment'))->where('step_type', config('const.budget.step_type.application'))->where('position', config('const.budget.position.not_po'))->get('amount')->first();
@@ -60,25 +60,25 @@ class AdminBudgetController extends Controller
         $req_arr = $request->all();
 
         // Bushiness Trip - Assignment - Economy Class
-        $amount1 = Budget::where('budget_type', config('const.budget.budget_type.business'))->where('step_type', config('const.budget.step_type.application'))->where('position', config('const.budget.position.economy'))->get()->first();
+        $amount1 = Budget::where('budget_type', config('const.budget.budget_type.business'))->where('step_type', config('const.budget.step_type.application'))->where('position', config('const.budget.position.economy_class'))->get()->first();
         $amount1->amount = $data['amount1'];
         $amount1->updated_by = Auth::user()->id;
         $amount1->save();
 
         // Bushiness Trip - Assignment - Business Class
-        $amount2 = Budget::where('budget_type', config('const.budget.budget_type.business'))->where('step_type', config('const.budget.step_type.application'))->where('position',  config('const.budget.position.business'))->get()->first();
+        $amount2 = Budget::where('budget_type', config('const.budget.budget_type.business'))->where('step_type', config('const.budget.step_type.application'))->where('position',  config('const.budget.position.business_class'))->get()->first();
         $amount2->amount = $data['amount2'];
         $amount2->updated_by = Auth::user()->id;
         $amount2->save();
 
         // Bushiness Trip - Settlement - Economy Class
-        $amount3 = Budget::where('budget_type', config('const.budget.budget_type.business'))->where('step_type', config('const.budget.step_type.settlement'))->where('position',  config('const.budget.position.economy'))->get()->first();
+        $amount3 = Budget::where('budget_type', config('const.budget.budget_type.business'))->where('step_type', config('const.budget.step_type.settlement'))->where('position',  config('const.budget.position.economy_class'))->get()->first();
         $amount3->amount = $data['amount3'];
         $amount3->updated_by = Auth::user()->id;
         $amount3->save();
 
         // Bushiness Trip - Settlement - Business Class
-        $amount4 = Budget::where('budget_type', config('const.budget.budget_type.business'))->where('step_type', config('const.budget.step_type.settlement'))->where('position',  config('const.budget.position.business'))->get()->first();
+        $amount4 = Budget::where('budget_type', config('const.budget.budget_type.business'))->where('step_type', config('const.budget.step_type.settlement'))->where('position',  config('const.budget.position.business_class'))->get()->first();
         $amount4->amount = $data['amount4'];
         $amount4->updated_by = Auth::user()->id;
         $amount4->save();

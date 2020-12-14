@@ -122,6 +122,7 @@ class BusinesstripController extends Controller
                 $rules['input_file'] = 'mimes:txt,pdf,jpg,jpeg,png|max:200';
             }
             if (isset($inputs['apply'])) {
+                $rules['budget_position']   = 'required_select';
                 $rules['destinations']      = 'required';
                 $rules['accommodation']     = 'required';
                 $rules['accompany']         = 'required';
@@ -133,6 +134,7 @@ class BusinesstripController extends Controller
                 $rules['trans.*.method']    = 'required';
             }
             $customAttributes = [
+                'budget_position'   => __('label.business.budget_position'),
                 'destinations'      => __('label.business.trip_destination'),
                 'accommodation'     => __('label.business.accommodation'),
                 'accompany'         => __('label.business.accompany'),
@@ -176,6 +178,9 @@ class BusinesstripController extends Controller
             // get [business form] id
             $formId = config('const.form.biz_trip');
 
+            // get budget position
+            $budgetPosition = $inputs['budget_position'];
+
             // get group
             $group = DB::table('groups')
             ->select('groups.*')
@@ -187,11 +192,11 @@ class BusinesstripController extends Controller
                 ->where('applicants.deleted_at', '=', null);
             })
             ->join('budgets',
-                function ($join) use ($currentStep) {
+                function ($join) use ($currentStep, $budgetPosition) {
                     $join->on('groups.budget_id', '=', 'budgets.id')
                     ->where('budgets.budget_type', '=', config('const.budget.budget_type.business'))
                     ->where('budgets.step_type', '=', $currentStep)
-                    ->where('budgets.position', '=', config('const.budget.position.business')) // set temp, change here
+                    ->where('budgets.position', '=', $budgetPosition)
                     ->where('budgets.deleted_at', '=', null);
                 }
             )
@@ -225,14 +230,15 @@ class BusinesstripController extends Controller
 
             // prepare data
             $application = [
-                'form_id' => $formId,
-                'group_id' => $group->id,
-                'current_step' => $currentStep,
-                'status' => $status,
-                'subsequent' => $inputs['subsequent'],
-                'file_path' => isset($filePath) ? $filePath : null,
-                'updated_by' => $user->id,
-                'updated_at' => Carbon::now()
+                'form_id'           => $formId,
+                'group_id'          => $group->id,
+                'current_step'      => $currentStep,
+                'status'            => $status,
+                'subsequent'        => $inputs['subsequent'],
+                'budget_position'   => $budgetPosition,
+                'file_path'         => isset($filePath) ? $filePath : null,
+                'updated_by'        => $user->id,
+                'updated_at'        => Carbon::now()
             ];
 
             // save applications
@@ -411,6 +417,9 @@ class BusinesstripController extends Controller
     {
         $inputs = $request->all();
 
+        if (!isset($inputs['budget_postion'])) {
+            $inputs['budget_postion'] = null;
+        }
         if (!isset($inputs['subsequent'])) {
             $inputs['subsequent'] = null;
         }

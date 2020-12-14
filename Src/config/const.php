@@ -114,8 +114,8 @@ return [
         'position' => [
             'po' => 1,
             'not_po' => 2,
-            'economy' => 3,
-            'business' => 4,
+            'economy_class' => 3,
+            'business_class' => 4,
         ],
         'budget_type' => [
             'business' => 2,
@@ -134,10 +134,10 @@ return [
 	 * Entertainment Application
 	 */
     'entertainment' => [
-        'budget_position' => [
-            'po' => 1,
-            'not_po' => 2,
-        ],
+        // 'budget_position' => [
+        //     'po' => 1,
+        //     'not_po' => 2,
+        // ],
         'during_trip' => [
             'yes' => 1,
             'no' => 0,

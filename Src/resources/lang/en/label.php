@@ -159,6 +159,7 @@ return [
         'accompany' => 'Accompany',
         'borne_by' => 'Expenses to BE Borne by',
         'comment' => 'Comment',
+        'budget_position' => 'Budget type',
     ],
     /**
      * Entertainment Application

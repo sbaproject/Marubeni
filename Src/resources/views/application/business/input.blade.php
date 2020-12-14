@@ -29,16 +29,17 @@
 @section('content')
 @php
 
-    $trans          = Session::exists('inputs') ? Session::get('inputs')['trans']         : (isset($application) ? $application->business->transportations : null);
-    $destinations   = Session::exists('inputs') ? Session::get('inputs')['destinations']  : (isset($application) ? $application->business->destinations : null);
-    $trip_dt_from   = Session::exists('inputs') ? Session::get('inputs')['trip_dt_from']  : (isset($application) ? $application->business->trip_dt_from : null);
-    $trip_dt_to     = Session::exists('inputs') ? Session::get('inputs')['trip_dt_to']    : (isset($application) ? $application->business->trip_dt_to : null);
-    $accommodation  = Session::exists('inputs') ? Session::get('inputs')['accommodation'] : (isset($application) ? $application->business->accommodation : null);
-    $accompany      = Session::exists('inputs') ? Session::get('inputs')['accompany']     : (isset($application) ? $application->business->accompany : null);
-    $borne_by       = Session::exists('inputs') ? Session::get('inputs')['borne_by']      : (isset($application) ? $application->business->borne_by : null);
-    $comment        = Session::exists('inputs') ? Session::get('inputs')['comment']       : (isset($application) ? $application->business->comment : null);
-    $subsequent     = Session::exists('inputs') ? Session::get('inputs')['subsequent']    : (isset($application) ? $application->subsequent : null);
-    $file_path      = Session::exists('inputs') ? Session::get('inputs')['file_path']     : (isset($application) ? $application->file_path : null);
+    $trans              = Session::exists('inputs') ? Session::get('inputs')['trans']           : (isset($application) ? $application->business->transportations : null);
+    $destinations       = Session::exists('inputs') ? Session::get('inputs')['destinations']    : (isset($application) ? $application->business->destinations : null);
+    $trip_dt_from       = Session::exists('inputs') ? Session::get('inputs')['trip_dt_from']    : (isset($application) ? $application->business->trip_dt_from : null);
+    $trip_dt_to         = Session::exists('inputs') ? Session::get('inputs')['trip_dt_to']      : (isset($application) ? $application->business->trip_dt_to : null);
+    $accommodation      = Session::exists('inputs') ? Session::get('inputs')['accommodation']   : (isset($application) ? $application->business->accommodation : null);
+    $accompany          = Session::exists('inputs') ? Session::get('inputs')['accompany']       : (isset($application) ? $application->business->accompany : null);
+    $borne_by           = Session::exists('inputs') ? Session::get('inputs')['borne_by']        : (isset($application) ? $application->business->borne_by : null);
+    $comment            = Session::exists('inputs') ? Session::get('inputs')['comment']         : (isset($application) ? $application->business->comment : null);
+    $subsequent         = Session::exists('inputs') ? Session::get('inputs')['subsequent']      : (isset($application) ? $application->subsequent : null);
+    $budget_position    = Session::exists('inputs') ? Session::get('inputs')['budget_position'] : (isset($application) ? $application->budget_position : null);
+    $file_path          = Session::exists('inputs') ? Session::get('inputs')['file_path']       : (isset($application) ? $application->file_path : null);
 
     // get action url
     if(isset($application)){
@@ -50,6 +51,7 @@
     } else {
         $actionUrl = route('user.business.store');
     }
+
 @endphp
 <section class="content leave-application">
     <x-alert />
@@ -286,6 +288,42 @@
                             + {{ __('label.button.addnew') }}
                         </button>
                         @endif
+                    </div>
+                </div>
+                <hr>
+                <div class="form-group row ">
+                    <label class="col-lg-2 col-form-label text-left">
+                        {{ __('label.entertainment.budget_position') }}
+                    </label>
+                    <div class="col-lg-10 text-lg-left text-left">
+                        <fieldset class="@error('budget_position') form-control is-invalid @enderror">
+                            <label class="radio-inline com_title col-form-label">
+                                @php
+                                $val = config('const.budget.position.economy_class');
+                                $key = array_search($val, config('const.budget.position'));
+                                @endphp
+                                <input type="radio" name="rd_budget_position" value="{{ $val }}"
+                                    @if($budget_position !==null && $budget_position==$val) checked @endif
+                                    @if(isset($previewFlg)) disabled @endif>
+                                {{ __('label.budget.'. $key) }}
+                            </label>
+                            <label class="radio-inline com_title col-form-label">
+                                @php
+                                $val = config('const.budget.position.business_class');
+                                $key = array_search($val, config('const.budget.position'));
+                                @endphp
+                                <input type="radio" name="rd_budget_position" value="{{ $val }}"
+                                    @if($budget_position !==null && $budget_position==$val) checked @endif
+                                    @if(isset($previewFlg)) disabled @endif>
+                                {{ __('label.budget.'. $key) }}
+                            </label>
+                        </fieldset>
+                        <input type="hidden" id="budget_position" name="budget_position" value="{{ $budget_position }}">
+                        @error('budget_position')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
                     </div>
                 </div>
                 <hr>

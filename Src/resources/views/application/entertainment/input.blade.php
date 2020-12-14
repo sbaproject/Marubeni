@@ -321,13 +321,26 @@
                     </label>
                     <div class="col-lg-10 text-lg-left text-left">
                         <fieldset class="@error('budget_position') form-control is-invalid @enderror">
-                            @foreach (config('const.entertainment.budget_position') as $key => $value)
                             <label class="radio-inline com_title col-form-label">
-                                <input type="radio" name="rd_budget_position" value="{{ $value }}" @if($budget_position !==null &&
-                                    $budget_position==$value) checked @endif @if(isset($previewFlg)) disabled @endif>
+                                @php
+                                $val = config('const.budget.position.po');
+                                $key = array_search($val, config('const.budget.position'));
+                                @endphp
+                                <input type="radio" name="rd_budget_position" value="{{ $val }}"
+                                    @if($budget_position !==null && $budget_position==$val) checked @endif
+                                    @if(isset($previewFlg)) disabled @endif>
                                 {{ __('label.budget.'. $key) }}
                             </label>
-                            @endforeach
+                            <label class="radio-inline com_title col-form-label">
+                                @php
+                                $val = config('const.budget.position.not_po');
+                                $key = array_search($val, config('const.budget.position'));
+                                @endphp
+                                <input type="radio" name="rd_budget_position" value="{{ $val }}"
+                                    @if($budget_position !==null && $budget_position==$val) checked @endif
+                                    @if(isset($previewFlg)) disabled @endif>
+                                {{ __('label.budget.'. $key) }}
+                            </label>
                         </fieldset>
                         <input type="hidden" id="budget_position" name="budget_position" value="{{ $budget_position }}">
                         @error('budget_position')

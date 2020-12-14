@@ -156,6 +156,7 @@ return [
         'accompany' => 'Người đi cùng',
         'borne_by' => 'Chi phí chịu bởi',
         'comment' => 'Nội dung công tác',
+        'budget_position' => 'Loại ngân sách',
     ],
     /**
      * Entertainment Application

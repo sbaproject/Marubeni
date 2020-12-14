@@ -209,13 +209,13 @@ class EntertainmentController extends Controller
             $currentStep = config('const.budget.step_type.application');
             // get budget type
             $budgetType = config('const.budget.budget_type.entertainment');
-            // get position
-            $position = $inputs['budget_position'];
+            // get budget position
+            $budgetPosition = $inputs['budget_position'];
             // get budget comparation type
             $budget = Budget::where([
                 'budget_type' => $budgetType,
                 'step_type' => $currentStep,
-                'position' => $position,
+                'position' => $budgetPosition,
             ])->first();
 
             // not found available flow setting
@@ -245,11 +245,11 @@ class EntertainmentController extends Controller
                 })
                 ->join(
                     'budgets',
-                    function ($join) use ($currentStep, $budgetType, $position) {
+                    function ($join) use ($currentStep, $budgetType, $budgetPosition) {
                         $join->on('groups.budget_id', '=', 'budgets.id')
                             ->where('budgets.budget_type', '=', $budgetType)
                             ->where('budgets.step_type', '=', $currentStep)
-                            ->where('budgets.position', '=', $position) // set temp, change here
+                            ->where('budgets.position', '=', $budgetPosition) // set temp, change here
                             ->where('budgets.deleted_at', '=', null);
                     }
                 )
@@ -288,14 +288,15 @@ class EntertainmentController extends Controller
 
             // prepare data
             $application = [
-                'form_id' => $formId,
-                'group_id' => $group->id,
-                'current_step' => $currentStep,
-                'status' => $status,
-                'subsequent' => $inputs['subsequent'],
-                'file_path' => isset($filePath) ? $filePath : null,
-                'updated_by' => $user->id,
-                'updated_at' => Carbon::now()
+                'form_id'           => $formId,
+                'group_id'          => $group->id,
+                'current_step'      => $currentStep,
+                'status'            => $status,
+                'subsequent'        => $inputs['subsequent'],
+                'budget_position'   => $budgetPosition,
+                'file_path'         => isset($filePath) ? $filePath : null,
+                'updated_by'        => $user->id,
+                'updated_at'        => Carbon::now()
             ];
 
             // save applications
@@ -320,7 +321,6 @@ class EntertainmentController extends Controller
                 'entertainment_dt'              => $inputs['entertainment_dt'],
                 'place'                         => $inputs['place'],
                 'during_trip'                   => $inputs['during_trip'],
-                'check_row'                     => $inputs['budget_position'],
                 'check_row'                     => $inputs['check_row'],
                 'has_entertainment_times'       => $inputs['has_entertainment_times'],
                 'entertainment_times'           => $inputs['has_entertainment_times'] == config('const.check.off') ? null : $inputs['entertainment_times'],
