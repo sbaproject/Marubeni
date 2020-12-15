@@ -3,6 +3,9 @@
 
 use Carbon\Carbon;
 
+const APPLICATION_STEP = 1;
+const SETTLEMENT_STEP = 2;
+
 return [
     /**
      * Roles
@@ -106,6 +109,10 @@ return [
             'completed' => 99,
             'all' => 999,
         ],
+        'step_type' => [
+            'application' => APPLICATION_STEP,
+            'settlement' => SETTLEMENT_STEP,
+        ],
     ],
     /**
 	 * Budgets
@@ -122,8 +129,8 @@ return [
             'entertainment' => 3,
         ],
         'step_type' => [
-            'application' => 1,
-            'settlement' => 2,
+            'application' => APPLICATION_STEP,
+            'settlement' => SETTLEMENT_STEP,
         ],
         'budeget_type_compare' => [
             'less_equal' => 0,

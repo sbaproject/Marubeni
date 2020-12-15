@@ -165,22 +165,22 @@ class BusinesstripController extends Controller
              * create application
              *-------------------------*/
 
+            // get type form of application
+            $formId = config('const.form.biz_trip');
             // get status
             if (isset($inputs['apply'])) {
                 $status = config('const.application.status.applying');
             } else if (isset($inputs['draft'])) {
                 $status = config('const.application.status.draft');
             }
-
             // get current step
-            $currentStep = config('const.budget.step_type.application'); // [business form] default = 1
-
-            // get [business form] id
-            $formId = config('const.form.biz_trip');
-
+            if (!empty($app)) {
+                $currentStep = $app->current_step;
+            } else {
+                $currentStep = config('const.budget.step_type.application');
+            }
             // get budget position
             $budgetPosition = $inputs['budget_position'];
-
             // get group
             $group = DB::table('groups')
             ->select('groups.*')

@@ -204,9 +204,14 @@ class EntertainmentController extends Controller
             } else if (isset($inputs['draft'])) {
                 $status = config('const.application.status.draft');
             }
-
+            // get type form of application
+            $formId = config('const.form.entertainment');
             // get current step
-            $currentStep = config('const.budget.step_type.application');
+            if (!empty($app)) {
+                $currentStep = $app->current_step;
+            } else {
+                $currentStep = config('const.budget.step_type.application');
+            }
             // get budget type
             $budgetType = config('const.budget.budget_type.entertainment');
             // get budget position
@@ -230,9 +235,6 @@ class EntertainmentController extends Controller
                 $budgetTypeCompare = config('const.budget.budeget_type_compare.greater_than');
             }
 
-            // get [entertainment form] id
-            $formId = config('const.form.entertainment');
-
             // get group
             $group = DB::table('groups')
                 ->select('groups.*')
@@ -249,7 +251,7 @@ class EntertainmentController extends Controller
                         $join->on('groups.budget_id', '=', 'budgets.id')
                             ->where('budgets.budget_type', '=', $budgetType)
                             ->where('budgets.step_type', '=', $currentStep)
-                            ->where('budgets.position', '=', $budgetPosition) // set temp, change here
+                            ->where('budgets.position', '=', $budgetPosition)
                             ->where('budgets.deleted_at', '=', null);
                     }
                 )
