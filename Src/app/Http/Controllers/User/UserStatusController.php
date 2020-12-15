@@ -17,16 +17,21 @@ class UserStatusController extends Controller
         $fillZero = config('const.num_fillzero');
 
         //Set case in Status is Approvel
-        if (intval($status) == config('const.application.status.approvel_un') or intval($status) == config('const.application.status.approvel_in')) {
+        if (intval($status) == config('const.application.status.applying')) {
+            $sta = 0;
+            $end = 98;
+            $stepStr = 1;
+            $stepEnd = 1;
+        } else if (intval($status) == config('const.application.status.approvel_un')) {
+            $sta = 0;
+            $end = 0;
+            $stepStr = 2;
+            $stepEnd = 2;
+        } else if (intval($status) == config('const.application.status.approvel_in')) {
             $sta = 1;
             $end = 98;
-            if (intval($status) == config('const.application.status.approvel_un')) {
-                $stepStr = 1;
-                $stepEnd = 1;
-            } else if (intval($status) == config('const.application.status.approvel_in')) {
-                $stepStr = 2;
-                $stepEnd = 2;
-            }
+            $stepStr = 2;
+            $stepEnd = 2;
         } else {
             $sta = intval($status);
             $end = intval($status);
@@ -44,43 +49,7 @@ class UserStatusController extends Controller
             $end_date = config('const.init_time_search.to');
         }
 
-        //List Leave
-        $list_applications_status_leave = DB::table('applications')
-            ->select(DB::raw("CONCAT(CONCAT(forms.prefix,'-'),LPAD(applications.`id`, " . $fillZero . ", '0')) AS application_no"), 'forms.name As nameapp', 'applications.created_at as datecreate', 'users.name as nameuser', 'applications.form_id', 'applications.id')
-
-            //Join
-            ->join('forms', 'applications.form_id', '=', 'forms.id')
-            ->join('groups', 'applications.group_id', '=', 'groups.id')
-            ->join('flows', 'groups.id', '=', 'flows.group_id')
-            ->join('steps', 'flows.id', '=', 'steps.flow_id')
-            ->join('users', 'users.id', '=', 'steps.approver_id')
-
-            //Where
-            ->where('applications.status', '>=', $sta)
-            ->where('applications.status', '<=', $end)
-            ->where('applications.current_step', '>=', $stepStr)
-            ->where('applications.current_step', '<=', $stepEnd)
-            ->where('applications.created_by', $userId)
-            ->where('steps.approver_type', config('const.approver_type.to'))
-            ->whereIn('forms.id', [config('const.form.leave')])
-
-            //When
-            ->when(intval($status) != config('const.application.status.completed') && intval($status) != config('const.application.status.declined') && intval($status) != config('const.application.status.reject'), function ($q) {
-                $q = $q->where(DB::raw('CAST(steps.step_type AS SIGNED)'), DB::raw('CAST(applications.current_step AS SIGNED)'))->where(DB::raw('CAST(steps.select_order AS SIGNED)'), DB::raw('CAST(applications.status AS SIGNED)'));
-            })
-            ->when(intval($status) == config('const.application.status.completed'), function ($q) {
-                $q = $q->where(DB::raw('CAST(steps.step_type AS SIGNED)'), DB::raw('CAST(applications.current_step AS SIGNED)'))->where(DB::raw('CAST(steps.order AS SIGNED)'), DB::raw('CAST(applications.status AS SIGNED)'));
-            })
-
-            //Condition Time
-            ->where('applications.created_at', '>=', $str_date)
-            ->where('applications.created_at', '<=', $end_date)
-
-            //OrderBy
-            ->orderBy('applications.id', 'desc')
-            ->whereNull('applications.deleted_at');
-
-        //List Entertainment, Business Trip
+        //Get List
         $list_applications_status = DB::table('applications')
             ->select(DB::raw("CONCAT(CONCAT(forms.prefix,'-'),LPAD(applications.`id`, " . $fillZero . ", '0')) AS application_no"), 'forms.name As nameapp', 'applications.created_at as datecreate', 'users.name as nameuser', 'applications.form_id', 'applications.id')
 
@@ -91,34 +60,27 @@ class UserStatusController extends Controller
             ->join('steps', 'flows.id', '=', 'steps.flow_id')
             ->join('users', 'users.id', '=', 'steps.approver_id')
 
-            //Where
-            ->when(intval($status) == config('const.application.status.approvel_in'), function ($q) {
-                $q = $q->where('applications.status', '>=', 0);
+            //When
+            ->when(intval($status) == config('const.application.status.declined') or intval($status) == config('const.application.status.reject'), function ($q) {
+                $q = $q->where(DB::raw('CAST(applications.current_step AS SIGNED)'), DB::raw('CAST(steps.step_type AS SIGNED)'))
+                    ->where(DB::raw('0'), DB::raw('CAST(steps.select_order AS SIGNED)'));
             })
-            ->when(intval($status) != config('const.application.status.approvel_in'), function ($q) use ($sta) {
-                $q = $q->where('applications.status', '>=', $sta)
-                    ->whereNotIn('applications.id', function ($query) {
-                        return $query->select('id')
-                            ->from('applications')
-                            ->where('applications.status', '=', 0)
-                            ->Where('applications.current_step', '=', 2);
-                    });
+            ->when(intval($status) != config('const.application.status.completed') && intval($status) != config('const.application.status.declined') && intval($status) != config('const.application.status.reject'), function ($q) {
+                $q = $q->where(DB::raw('CAST(applications.current_step AS SIGNED)'), DB::raw('CAST(steps.step_type AS SIGNED)'))
+                    ->where(DB::raw('CAST(applications.status AS SIGNED)'), DB::raw('CAST(steps.select_order AS SIGNED)'));
+            })
+            ->when(intval($status) == config('const.application.status.completed'), function ($q) {
+                $q = $q->where(DB::raw('CAST(applications.current_step AS SIGNED)'), DB::raw('CAST(steps.step_type AS SIGNED)'))
+                    ->where(DB::raw('CAST(applications.status AS SIGNED)'), DB::raw('CAST(steps.order AS SIGNED)'));
             })
 
+            //Where
+            ->where('applications.status', '>=', $sta)
             ->where('applications.status', '<=', $end)
             ->where('applications.current_step', '>=', $stepStr)
             ->where('applications.current_step', '<=', $stepEnd)
             ->where('applications.created_by', $userId)
             ->where('steps.approver_type', config('const.approver_type.to'))
-            ->whereIn('forms.id', [config('const.form.biz_trip'), config('const.form.entertainment')])
-
-            //When
-            ->when(intval($status) != config('const.application.status.completed') && intval($status) != config('const.application.status.declined') && intval($status) != config('const.application.status.reject'), function ($q) {
-                $q = $q->where(DB::raw('CAST(steps.step_type AS SIGNED)'), DB::raw('CAST(applications.current_step AS SIGNED)'))->where(DB::raw('CAST(steps.select_order AS SIGNED)'), DB::raw('CAST(applications.status AS SIGNED)'));
-            })
-            ->when(intval($status) == config('const.application.status.completed'), function ($q) {
-                $q = $q->where(DB::raw('CAST(steps.step_type AS SIGNED)'), DB::raw('CAST(applications.current_step AS SIGNED)'))->where(DB::raw('CAST(steps.order AS SIGNED)'), DB::raw('CAST(applications.status AS SIGNED)'));
-            })
 
             //Condition Time
             ->where('applications.created_at', '>=', $str_date)
@@ -127,7 +89,6 @@ class UserStatusController extends Controller
             //OrderBy
             ->orderBy('applications.id', 'desc')
             ->whereNull('applications.deleted_at')
-            ->union($list_applications_status_leave)
             ->paginate(5);
 
         // Type Application

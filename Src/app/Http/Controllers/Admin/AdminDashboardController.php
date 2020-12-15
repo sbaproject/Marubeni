@@ -11,8 +11,6 @@ class AdminDashboardController extends Controller
 {
     public function index($id, Request $request)
     {
-
-        $userId = Auth::user()->id;
         $data = $request->input();
 
         $str_date = null;
@@ -28,19 +26,42 @@ class AdminDashboardController extends Controller
             $end_date = config('const.init_time_search.to');
         }
 
+        //Set case in Status is Approvel
+        if (intval($id) == config('const.application.status.all')) {
+            $sta = -2;
+            $end = 99;
+            $stepStr = 1;
+            $stepEnd = 2;
+        } else if (intval($id) == config('const.application.status.applying')) {
+            $sta = 0;
+            $end = 98;
+            $stepStr = 1;
+            $stepEnd = 1;
+        } else if (intval($id) == config('const.application.status.approvel')) {
+            $sta = 0;
+            $end = 98;
+            $stepStr = 2;
+            $stepEnd = 2;
+        } else {
+            $sta = intval($id);
+            $end = intval($id);
+            $stepStr = 1;
+            $stepEnd = 2;
+        }
+
         //Get Applications By Condition
-        $list_application = $this->list_application($id, $str_date, $end_date);
+        $list_application = $this->list_application($sta, $end, $stepStr, $stepEnd, $str_date, $end_date);
 
         //Count Applications By Condition
-        $count_applying  = $this->list_application(config('const.application.status.applying'), $str_date, $end_date)->count();
+        $count_applying  = $this->list_application(0, 98, 1, 1, $str_date, $end_date)->count();
 
-        $count_approval  = $this->list_application(config('const.application.status.approvel'), $str_date, $end_date)->count();
+        $count_approval  = $this->list_application(0, 98, 2, 2, $str_date, $end_date)->count();
 
-        $count_declined  = $this->list_application(config('const.application.status.declined'), $str_date, $end_date)->count();
+        $count_declined  = $this->list_application(-1, -1, 1, 2, $str_date, $end_date)->count();
 
-        $count_reject  = $this->list_application(config('const.application.status.reject'), $str_date, $end_date)->count();
+        $count_reject  = $this->list_application(-2, -2, 1, 2, $str_date, $end_date)->count();
 
-        $count_completed  = $this->list_application(config('const.application.status.completed'), $str_date, $end_date)->count();
+        $count_completed  = $this->list_application(99, 99, 1, 2, $str_date, $end_date)->count();
 
         // Type Application
         $intstatus = (int)$id;
@@ -49,94 +70,28 @@ class AdminDashboardController extends Controller
     }
 
     //Get List Application by Condition
-    private function list_application($id, $str_date, $end_date)
+    private function list_application($sta, $end, $stepStr, $stepEnd, $str_date, $end_date)
     {
         $fillZero = config('const.num_fillzero');
 
-        //List Leave
-        $list_application_leave =  DB::table('applications')
-            ->select(DB::raw("CONCAT(CONCAT(forms.prefix,'-'),LPAD(applications.`id`, " . $fillZero . ", '0')) AS application_no"), 'forms.name As form_name', 'applications.created_at As created_at', 'applications.status As status', 'applications.form_id As form_id', 'applications.id As id')
-
-            //Join
-            ->join('forms', 'applications.form_id', '=', 'forms.id')
-
-            //When
-            ->when($id == config('const.application.status.all'), function ($q) {
-                $q = $q->where('applications.status', '!=', config('const.application.status.draft'));
-            })
-            ->when($id == config('const.application.status.applying'), function ($q) {
-                $q = $q->where('applications.status', config('const.application.status.applying'));
-            })
-            ->when($id == config('const.application.status.approvel'), function ($q) {
-                $q = $q->whereBetween('applications.status', [1, 98]);
-            })
-            ->when($id == config('const.application.status.declined'), function ($q) {
-                $q = $q->where('applications.status', config('const.application.status.declined'));
-            })
-            ->when($id == config('const.application.status.reject'), function ($q) {
-                $q = $q->where('applications.status', config('const.application.status.reject'));
-            })
-            ->when($id == config('const.application.status.completed'), function ($q) {
-                $q = $q->where('applications.status', config('const.application.status.completed'));
-            })
-
-            //Where
-            ->where('applications.created_at', '>=', $str_date)
-            ->where('applications.created_at', '<=', $end_date)
-            ->whereIn('forms.id', [config('const.form.leave')])
-
-            //OrderBy
-            ->orderBy('applications.id', 'DESC')
-            ->whereNull('applications.deleted_at');
-
-        //List Entertainment, Business Trip
+        //List
         $list_application =  DB::table('applications')
-            ->select(DB::raw("CONCAT(CONCAT(forms.prefix,'-'),LPAD(applications.`id`, " . $fillZero . ", '0')) AS application_no"), 'forms.name As form_name', 'applications.created_at As created_at', DB::raw('(CASE WHEN applications.status = 0 AND applications.current_step = 2 THEN 1 ELSE applications.status END) AS status'), 'applications.form_id As form_id', 'applications.id As id')
+            ->select(DB::raw("CONCAT(CONCAT(forms.prefix,'-'),LPAD(applications.`id`, " . $fillZero . ", '0')) AS application_no"), 'forms.name As form_name', 'applications.created_at As created_at', 'applications.status As status', 'applications.current_step As current_step', 'applications.form_id As form_id', 'applications.id As id')
 
             //Join
             ->join('forms', 'applications.form_id', '=', 'forms.id')
 
-            //When
-            ->when($id == config('const.application.status.all'), function ($q) {
-                $q = $q->where('applications.status', '!=', config('const.application.status.draft'));
-            })
-            ->when($id == config('const.application.status.applying'), function ($q) {
-                $q = $q->where('applications.status', config('const.application.status.applying'))
-                    ->whereNotIn('applications.id', function ($query) {
-                        return $query->select('id')
-                            ->from('applications')
-                            ->where('applications.status', '=', 0)
-                            ->Where('applications.current_step', '=', 2);
-                    });
-            })
-            ->when($id == config('const.application.status.approvel'), function ($q) {
-                $q = $q->whereBetween('applications.status', [0, 98])
-                    ->whereNotIn('applications.id', function ($query) {
-                        return $query->select('id')
-                            ->from('applications')
-                            ->where('applications.status', '=', 0)
-                            ->Where('applications.current_step', '=', 1);
-                    });
-            })
-            ->when($id == config('const.application.status.declined'), function ($q) {
-                $q = $q->where('applications.status', config('const.application.status.declined'));
-            })
-            ->when($id == config('const.application.status.reject'), function ($q) {
-                $q = $q->where('applications.status', config('const.application.status.reject'));
-            })
-            ->when($id == config('const.application.status.completed'), function ($q) {
-                $q = $q->where('applications.status', config('const.application.status.completed'));
-            })
-
             //Where
+            ->where('applications.status', '>=', $sta)
+            ->where('applications.status', '<=', $end)
+            ->where('applications.current_step', '>=', $stepStr)
+            ->where('applications.current_step', '<=', $stepEnd)
             ->where('applications.created_at', '>=', $str_date)
             ->where('applications.created_at', '<=', $end_date)
-            ->whereIn('forms.id', [config('const.form.biz_trip'), config('const.form.entertainment')])
 
             //OrderBy
             ->orderBy('applications.id', 'DESC')
             ->whereNull('applications.deleted_at')
-            ->union($list_application_leave)
             ->paginate(5);
 
         return  $list_application;

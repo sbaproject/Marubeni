@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('title')
-{{ $intstatus == config('const.application.status.applying') ? __('label.status.list_of_applying_documents') : ($intstatus == config('const.application.status.approvel') ? __('label.status.list_of_approval_documents') : ($intstatus == config('const.application.status.declined') ? __('label.status.list_of_declined_documents') : ($intstatus == config('const.application.status.reject') ? __('label.status.list_of_reject_documents') : ($intstatus == config('const.application.status.completed') ? __('label.status.list_of_completed_documents') : __('label.dashboard.list_application'))))) }}
+    {{ $intstatus == config('const.application.status.applying') ? __('label.status.list_of_applying_documents') : ($intstatus == config('const.application.status.approvel') ? __('label.status.list_of_approval_documents') : ($intstatus == config('const.application.status.declined') ? __('label.status.list_of_declined_documents') : ($intstatus == config('const.application.status.reject') ? __('label.status.list_of_reject_documents') : ($intstatus == config('const.application.status.completed') ? __('label.status.list_of_completed_documents') : __('label.dashboard.list_application'))))) }}
 @endsection
 @section('css')
     <link rel="stylesheet" href="css/user/01_dashboard.css">
@@ -58,7 +58,7 @@
     <section class="content-dashboard">
         <div class="row" style="text-align: center;">
             <div class="col-xs-5ths">
-                <a href="{{ route('user.dashboard',config('const.application.status.applying'))}}">
+                <a href="{{ route('user.dashboard', config('const.application.status.applying')) }}">
                     <div class="card">
                         <div class="card-body card-wrap-items">
                             <span>{{ __('label.dashboard.applying') }}</span>
@@ -68,7 +68,7 @@
                 </a>
             </div>
             <div class="col-xs-5ths col-set">
-                <a href="{{ route('user.dashboard',config('const.application.status.approvel'))}}">
+                <a href="{{ route('user.dashboard', config('const.application.status.approvel')) }}">
                     <div class="card">
                         <div class="card-body card-wrap-items">
                             <span>{{ __('label.dashboard.approval') }}</span>
@@ -78,7 +78,7 @@
                 </a>
             </div>
             <div class="col-xs-5ths col-set">
-                <a href="{{ route('user.dashboard',config('const.application.status.declined'))}}">
+                <a href="{{ route('user.dashboard', config('const.application.status.declined')) }}">
                     <div class="card">
                         <div class="card-body card-wrap-items">
                             <span>{{ __('label.dashboard.declined') }}</span>
@@ -88,7 +88,7 @@
                 </a>
             </div>
             <div class="col-xs-5ths col-set">
-                <a href="{{ route('user.dashboard',config('const.application.status.reject'))}}">
+                <a href="{{ route('user.dashboard', config('const.application.status.reject')) }}">
                     <div class="card">
                         <div class="card-body card-wrap-items">
                             <span>{{ __('label.dashboard.reject') }}</span>
@@ -98,7 +98,7 @@
                 </a>
             </div>
             <div class="col-xs-5ths col-set">
-                <a href="{{ route('user.dashboard',config('const.application.status.completed'))}}">
+                <a href="{{ route('user.dashboard', config('const.application.status.completed')) }}">
                     <div class="card">
                         <div class="card-body card-wrap-items">
                             <span>{{ __('label.dashboard.completed') }}</span>
@@ -110,7 +110,8 @@
         </div>
         <h4 class="mb-2" style="border-bottom: 1px solid #000;font-weight: bold;margin-top: 25px;"><i
                 class="nav-icon fas fa-file-alt" aria-hidden="true"
-                style="margin-right: 5px;margin-bottom: 5px;"></i>{{ $intstatus == config('const.application.status.applying') ? __('label.status.list_of_applying_documents') : ($intstatus == config('const.application.status.approvel') ? __('label.status.list_of_approval_documents') : ($intstatus == config('const.application.status.declined') ? __('label.status.list_of_declined_documents') : ($intstatus == config('const.application.status.reject') ? __('label.status.list_of_reject_documents') : ($intstatus == config('const.application.status.completed') ? __('label.status.list_of_completed_documents') : __('label.dashboard.list_application'))))) }}</h4>
+                style="margin-right: 5px;margin-bottom: 5px;"></i>{{ $intstatus == config('const.application.status.applying') ? __('label.status.list_of_applying_documents') : ($intstatus == config('const.application.status.approvel') ? __('label.status.list_of_approval_documents') : ($intstatus == config('const.application.status.declined') ? __('label.status.list_of_declined_documents') : ($intstatus == config('const.application.status.reject') ? __('label.status.list_of_reject_documents') : ($intstatus == config('const.application.status.completed') ? __('label.status.list_of_completed_documents') : __('label.dashboard.list_application'))))) }}
+        </h4>
         <div class="card">
             <div class="card-body p-0 card-list-items">
                 <table class="table table-bordered table-hover" id="table_list_status">
@@ -126,24 +127,25 @@
                     <tbody>
                         @if (isset($list_application))
                             @foreach ($list_application as $application)
-                                 <tr class="list-content">
+                                <tr class="list-content">
                                     <td>{{ !empty($application->application_no) ? $application->application_no : '' }}</td>
                                     <td>{{ !empty($application->form_name) ? $application->form_name : '' }}</td>
                                     <td>
                                         <div
-                                            class=" {{ $application->status == config('const.application.status.applying') ? 'status-apply' : ($application->status == config('const.application.status.declined') ? 'status-declined' : ($application->status == config('const.application.status.reject') ? 'status-reject' : ($application->status == config('const.application.status.completed') ? 'status-completed' : 'status-approval'))) }}">
-                                            {{ $application->status == config('const.application.status.applying') ? __('label.dashboard.applying') : ($application->status == config('const.application.status.declined') ? __('label.dashboard.declined') : ($application->status == config('const.application.status.reject') ? __('label.dashboard.reject') : ($application->status == config('const.application.status.completed') ? __('label.dashboard.completed') : __('label.dashboard.approval')))) }}
+                                            class=" {{ ($application->status > 0 and $application->status < 98 and $application->current_step == 1) ? 'status-apply' : ($application->status == config('const.application.status.declined') ? 'status-declined' : ($application->status == config('const.application.status.reject') ? 'status-reject' : ($application->status == config('const.application.status.completed') ? 'status-completed' : 'status-approval'))) }}">
+                                            {{ ($application->status > 0 and $application->status < 98 and $application->current_step == 1) ? __('label.dashboard.applying') : ($application->status == config('const.application.status.declined') ? __('label.dashboard.declined') : ($application->status == config('const.application.status.reject') ? __('label.dashboard.reject') : ($application->status == config('const.application.status.completed') ? __('label.dashboard.completed') : __('label.dashboard.approval')))) }}
                                         </div>
                                     </td>
                                     <td>{{ !empty($application->created_at) ? \Carbon\Carbon::parse($application->created_at)->format('d/m/Y') : '' }}
                                     </td>
                                     <td>
-                                        <a class="btn btn-details" href="{{ Common::getRouteEditApplication($application->id, $application->form_id) }}">
+                                        <a class="btn btn-details"
+                                            href="{{ Common::getRouteEditApplication($application->id, $application->form_id) }}">
                                             {{ __('label.dashboard.view_details') }}
                                             <i class="fas fa-angle-right" style="margin-left: 5px;"></i>
                                         </a>
                                     </td>
-                                    </tr>
+                                </tr>
                             @endforeach
                         @endif
                     </tbody>
