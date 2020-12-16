@@ -32,4 +32,57 @@ $(document).ready(function () {
         $('#dateFrom').data("DateTimePicker").maxDate(e.date);
         $('#dataDateTo').val(e.date.format('YYYY-MM-DD'));
     });
+
+    //Set Property for Search of Type
+    $("#applying").mousemove(function(){
+        $('#typeApply').val(0);
+    });
+    $("#applying").mouseout(function(){
+        $('#typeApply').val('');
+    });
+
+    $("#approval").mousemove(function(){
+        $('#typeApply').val(1);
+    });
+    $("#approval").mouseout(function(){
+        $('#typeApply').val('');
+    });
+
+    $("#declined").mousemove(function(){
+        $('#typeApply').val(-1);
+    });
+    $("#declined").mouseout(function(){
+        $('#typeApply').val('');
+    });
+
+    $("#reject").mousemove(function(){
+        $('#typeApply').val(-2);
+    });
+    $("#reject").mouseout(function(){
+        $('#typeApply').val('');
+    });
+
+    $("#completed").mousemove(function(){
+        $('#typeApply').val(99);
+    });
+    $("#completed").mouseout(function(){
+        $('#typeApply').val('');
+    });
+
+    //Set Property for Submit Form
+    $("#applying").click(function(){
+        $('#formSearch').submit();
+    });
+    $("#approval").click(function(){
+        $('#formSearch').submit();
+    });
+    $("#declined").click(function(){
+        $('#formSearch').submit();
+    });
+    $("#reject").click(function(){
+        $('#formSearch').submit();
+    });
+    $("#completed").click(function(){
+        $('#formSearch').submit();
+    });
 });

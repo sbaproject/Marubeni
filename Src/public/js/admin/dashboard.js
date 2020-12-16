@@ -40,7 +40,7 @@ $(document).ready(function () {
     $("#applying").mouseout(function(){
         $('#typeApply').val('');
     });
-    
+
     $("#approval").mousemove(function(){
         $('#typeApply').val(1);
     });

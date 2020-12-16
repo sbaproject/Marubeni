@@ -16,8 +16,7 @@ class AdminDashboardController extends Controller
         $end_date = null;
 
         //When Search by Time
-        if (!empty($data['dataDateFrom']) && !empty($data['dataDateTo'])) {
-
+        if (isset($data['dataDateFrom']) && isset($data['dataDateTo'])) {
             $str_date = $data['dataDateFrom'] . ' 00:00:00';
             $end_date = $data['dataDateTo'] . ' 23:59:59';
         } else {
@@ -25,15 +24,14 @@ class AdminDashboardController extends Controller
             $end_date = config('const.init_time_search.to');
         }
 
-        if (empty($data['typeApply']) && $data['typeApply'] != 0) {
+        if (!isset($data['typeApply'])) {
             $sta = -2;
             $end = 99;
             $stepStr = 1;
             $stepEnd = 2;
 
             // Type Application
-            $intstatus = 999;
-            
+            $intstatus = config('const.application.status.all');
         } else {
 
             //Set case in Status is Approvel
@@ -42,7 +40,6 @@ class AdminDashboardController extends Controller
                 $end = 98;
                 $stepStr = 1;
                 $stepEnd = 1;
-                dd(1);
             } else if (intval($data['typeApply']) == config('const.application.status.approvel')) {
                 $sta = 0;
                 $end = 98;
@@ -55,6 +52,7 @@ class AdminDashboardController extends Controller
                 $stepEnd = 2;
             }
 
+            // Type Application
             $intstatus = $data['typeApply'];
         }
 
@@ -71,8 +69,6 @@ class AdminDashboardController extends Controller
         $count_reject  = $this->list_application(-2, -2, 1, 2, $str_date, $end_date)->count();
 
         $count_completed  = $this->list_application(99, 99, 1, 2, $str_date, $end_date)->count();
-
-        
 
         return view('admin.dashboard.index', compact('list_application', 'count_applying', 'count_approval', 'count_declined', 'count_reject', 'count_completed', 'str_date', 'end_date', 'intstatus'));
     }

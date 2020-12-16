@@ -17,7 +17,7 @@
 @section('content')
 <form method="get" id="formSearch" action="">
     <section class="content-header">
-        
+
             @csrf
             <div class="row">
                 <div class="col-md-4 col-sm-4">
@@ -52,10 +52,10 @@
                                 style="margin-right:5px;"></i>{{ __('label.button.search') }}</button>
                     </div>
                 </div>
-        
-    </section>
 
-    <!-- Main content --><input type="hidden" id="typeApply" name="typeApply">
+    </section>
+    <input type="hidden" id="typeApply" name="typeApply">
+    <!-- Main content -->
     <section class="content-dashboard">
         <div class="row" style="text-align: center;">
             <div class="col-xs-5ths">
@@ -66,7 +66,7 @@
                         </div>
                     </div>
             </div>
-        
+
             <div class="col-xs-5ths col-set">
                     <div class="card">
                         <div class="card-body card-wrap-items" id="approval">

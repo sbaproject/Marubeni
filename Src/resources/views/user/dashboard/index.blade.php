@@ -54,58 +54,50 @@
         </form>
     </section>
 
+    <input type="hidden" id="typeApply" name="typeApply">
     <!-- Main content -->
     <section class="content-dashboard">
         <div class="row" style="text-align: center;">
             <div class="col-xs-5ths">
-                <a href="{{ route('user.dashboard', config('const.application.status.applying')) }}">
-                    <div class="card">
-                        <div class="card-body card-wrap-items">
-                            <span>{{ __('label.dashboard.applying') }}</span>
-                            <span class="right-number">({{ $count_applying }})</span>
-                        </div>
+                <div class="card">
+                    <div class="card-body card-wrap-items" id="applying">
+                        <span>{{ __('label.dashboard.applying') }}</span>
+                        <span class="right-number">({{ $count_applying }})</span>
                     </div>
-                </a>
+                </div>
+            </div>
+
+            <div class="col-xs-5ths col-set">
+                <div class="card">
+                    <div class="card-body card-wrap-items" id="approval">
+                        <span>{{ __('label.dashboard.approval') }}</span>
+                        <span class="right-number">({{ $count_approval }})</span>
+                    </div>
+                </div>
             </div>
             <div class="col-xs-5ths col-set">
-                <a href="{{ route('user.dashboard', config('const.application.status.approvel')) }}">
-                    <div class="card">
-                        <div class="card-body card-wrap-items">
-                            <span>{{ __('label.dashboard.approval') }}</span>
-                            <span class="right-number">({{ $count_approval }})</span>
-                        </div>
+                <div class="card">
+                    <div class="card-body card-wrap-items" id="declined">
+                        <span>{{ __('label.dashboard.declined') }}</span>
+                        <span class="right-number">({{ $count_declined }})</span>
                     </div>
-                </a>
+                </div>
             </div>
             <div class="col-xs-5ths col-set">
-                <a href="{{ route('user.dashboard', config('const.application.status.declined')) }}">
-                    <div class="card">
-                        <div class="card-body card-wrap-items">
-                            <span>{{ __('label.dashboard.declined') }}</span>
-                            <span class="right-number">({{ $count_declined }})</span>
-                        </div>
+                <div class="card">
+                    <div class="card-body card-wrap-items" id="reject">
+                        <span>{{ __('label.dashboard.reject') }}</span>
+                        <span class="right-number">({{ $count_reject }})</span>
                     </div>
-                </a>
+                </div>
             </div>
             <div class="col-xs-5ths col-set">
-                <a href="{{ route('user.dashboard', config('const.application.status.reject')) }}">
-                    <div class="card">
-                        <div class="card-body card-wrap-items">
-                            <span>{{ __('label.dashboard.reject') }}</span>
-                            <span class="right-number">({{ $count_reject }})</span>
-                        </div>
+                <div class="card">
+                    <div class="card-body card-wrap-items" id="completed">
+                        <span>{{ __('label.dashboard.completed') }}</span>
+                        <span class="right-number">({{ $count_completed }})</span>
                     </div>
-                </a>
-            </div>
-            <div class="col-xs-5ths col-set">
-                <a href="{{ route('user.dashboard', config('const.application.status.completed')) }}">
-                    <div class="card">
-                        <div class="card-body card-wrap-items">
-                            <span>{{ __('label.dashboard.completed') }}</span>
-                            <span class="right-number">({{ $count_completed }})</span>
-                        </div>
-                    </div>
-                </a>
+                </div>
             </div>
         </div>
         <h4 class="mb-2" style="border-bottom: 1px solid #000;font-weight: bold;margin-top: 25px;"><i
