@@ -129,7 +129,7 @@ class ApprovalController extends Controller
                     ->whereRaw('steps.select_order = applications.status')
                     ->whereRaw('steps.step_type = applications.current_step');
             })
-            ->join('flows', 'flows.id', '=', 'steps.flow_id')
+            ->leftJoin('flows', 'flows.id', '=', 'steps.flow_id')
             ->join('forms', 'forms.id', '=', 'applications.form_id')
             ->leftJoin('users', 'users.id', '=', 'steps.approver_id')
             ->join('users AS us', 'us.id', '=', 'applications.created_by')

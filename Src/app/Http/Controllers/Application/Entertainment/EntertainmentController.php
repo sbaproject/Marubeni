@@ -423,17 +423,21 @@ class EntertainmentController extends Controller
         if ($application != null) {
             $loggedUser = Auth::user();
             // get list of approver (include TO & CC)
-            $approvers = DB::table('applications')
-                ->select('steps.approver_id')
-                ->join('flows', function ($join) {
-                    $join->on('flows.form_id', '=', 'applications.form_id')
-                        ->whereRaw('flows.group_id = applications.group_id');
-                })
-                ->join('steps', 'steps.flow_id', '=', 'flows.id')
+            $approvers = DB::table('steps')
+            ->select('steps.approver_id')
+            ->where('steps.flow_id', function ($query) use ($request, $loggedUser) {
+                $query->select('steps.flow_id')
+                ->from('applications')
+                ->join('steps',
+                    'steps.group_id',
+                    'applications.group_id'
+                )
                 ->where('steps.approver_id', '=', $loggedUser->id)
-                ->where('applications.id', '=', $request->id)
+                ->where('applications.id', $request->id)
                 ->where('applications.deleted_at', '=', null)
-                ->first();
+                ->limit(1);
+            })
+            ->first();
 
             // check logged user has permission to access
             // if logged user is not owner of application and also not approval user(TO or CC).
@@ -470,16 +474,17 @@ class EntertainmentController extends Controller
         $loggedUser = Auth::user();
 
         // get list of approver (include TO & CC)
-        $approvers = DB::table('applications')
+        $approvers = DB::table('steps')
             ->select('steps.approver_id')
-            ->join('flows', function ($join) {
-                $join->on('flows.form_id', '=', 'applications.form_id')
-                    ->whereRaw('flows.group_id = applications.group_id');
+            ->where('steps.flow_id', function ($query) use ($id, $loggedUser) {
+                $query->select('steps.flow_id')
+                ->from('applications')
+                ->join('steps', 'steps.group_id', 'applications.group_id')
+                ->where('steps.approver_id', '=', $loggedUser->id)
+                ->where('applications.id', $id)
+                ->where('applications.deleted_at', '=', null)
+                ->limit(1);
             })
-            ->join('steps', 'steps.flow_id', '=', 'flows.id')
-            ->where('steps.approver_id', '=', $loggedUser->id)
-            ->where('applications.id', '=', $id)
-            ->where('applications.deleted_at', '=', null)
             ->first();
 
         // check logged user has permission to access
