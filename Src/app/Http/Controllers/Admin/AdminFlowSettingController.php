@@ -109,7 +109,7 @@ class AdminFlowSettingController extends Controller
                 $selectOrder = -1;
                 // Form Leave
                 if ($formId === 1) {
-                    $group = DB::table('groups')->where('applicant_id', $applicantId)->first();
+                    $group = DB::table('groups')->where('applicant_id', $applicantId)->whereNull('budget_id')->first();
                     if (empty($group)) {
                         $groupId = DB::table('groups')->insertGetId(['applicant_id' => $applicantId, 'created_by' => $user->id, 'created_at' => Carbon::now()]);
                     } else {
@@ -296,7 +296,7 @@ class AdminFlowSettingController extends Controller
 
                     // Form Leave
                     if ($formId === 1) {
-                        $group = DB::table('groups')->where('applicant_id', $applicantId)->first();
+                        $group = DB::table('groups')->where('applicant_id', $applicantId)->whereNull('budget_id')->first();
                         if (empty($group)) {
                             $groupId = DB::table('groups')->insertGetId(['applicant_id' => $applicantId, 'created_by' => $user->id, 'created_at' => Carbon::now()]);
                         } else {
@@ -398,7 +398,7 @@ class AdminFlowSettingController extends Controller
 
         // Form Leave
         if ($formId === 1) {
-            $group = DB::table('groups')->where('applicant_id', $applicantId)->first();
+            $group = DB::table('groups')->where('applicant_id', $applicantId)->whereNull('budget_id')->first();
             if (!empty($group)) {
                 $groupId = $group->id;
             }
