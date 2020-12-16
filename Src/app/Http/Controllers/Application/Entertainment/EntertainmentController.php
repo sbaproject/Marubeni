@@ -245,16 +245,13 @@ class EntertainmentController extends Controller
                         ->where('applicants.department_id', '=', $user->department_id)
                         ->where('applicants.deleted_at', '=', null);
                 })
-                ->join(
-                    'budgets',
-                    function ($join) use ($currentStep, $budgetType, $budgetPosition) {
-                        $join->on('groups.budget_id', '=', 'budgets.id')
-                            ->where('budgets.budget_type', '=', $budgetType)
-                            ->where('budgets.step_type', '=', $currentStep)
-                            ->where('budgets.position', '=', $budgetPosition)
-                            ->where('budgets.deleted_at', '=', null);
-                    }
-                )
+                ->join('budgets', function ($join) use ($currentStep, $budgetType, $budgetPosition) {
+                    $join->on('groups.budget_id', '=', 'budgets.id')
+                        ->where('budgets.budget_type', '=', $budgetType)
+                        ->where('budgets.step_type', '=', $currentStep)
+                        ->where('budgets.position', '=', $budgetPosition)
+                        ->where('budgets.deleted_at', '=', null);
+                })
                 ->where([
                     'groups.budget_type_compare' => $budgetTypeCompare,
                     'groups.deleted_at' => null,

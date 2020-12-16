@@ -14,7 +14,8 @@ class AlertStepsTable extends Migration
     public function up()
     {
         Schema::table('steps', function (Blueprint $table) {
-            $table->unsignedInteger('group_id');
+            $table->unsignedInteger('group_id')->after('flow_id');
+            $table->foreign('group_id')->references('id')->on('groups');
         });
     }
 
@@ -26,6 +27,7 @@ class AlertStepsTable extends Migration
     public function down()
     {
         Schema::table('steps', function (Blueprint $table) {
+            $table->foreign('group_id')->references('id')->on('groups');
            $table->dropColumn('group_id');
         });
     }

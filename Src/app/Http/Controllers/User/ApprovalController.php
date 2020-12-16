@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Pagination\LengthAwarePaginator;
+use App\Exceptions\Entertainment\NotFoundFlowSettingException;
 
 class ApprovalController extends Controller
 {
@@ -60,21 +61,20 @@ class ApprovalController extends Controller
                 ,a.`status`
                 ,a.`subsequent`
                 ,a.`created_at`     AS apply_date
-                ,f.`form_id`
-                ,f.`group_id`
+                ,a.`form_id`
+                ,s.`group_id`
                 ,s.`id`             AS step_id
                 ,s.`approver_id`
                 ,s.`step_type`
                 ,s.`approver_type`
                 ,u.`name`           AS approver_name
                 ,us.`name`          AS applicant_name
-                ,f.id               AS flow_id
                 ,fo.name            AS application_type
                 ,(
                     SELECT  us.name
                     FROM    steps
                             INNER JOIN users us ON us.id = approver_id
-                    WHERE   `flow_id` = s.`flow_id` 
+                    WHERE   `flow_id` = s.`flow_id`
                     AND     `approver_type` = s.`approver_type`
                     AND     (
                                 (`step_type` = s.`step_type` AND s.`order` <> :completed1 AND `select_order` = s.`order`)
@@ -84,8 +84,8 @@ class ApprovalController extends Controller
                 ) AS next_approver
             FROM    applications a
                     INNER JOIN forms fo ON a.`form_id` = fo.`id` " . $formIdCondition . "
-                    INNER JOIN flows f ON f.`form_id` = a.`form_id` AND f.`group_id` = a.`group_id`
-                    INNER JOIN steps s ON s.`flow_id` = f.`id` AND s.`approver_type` = :approver_type AND a.`status` = s.`select_order` AND s.`step_type` = a.`current_step`
+                    INNER JOIN groups g ON a.`group_id` = g.`id`
+                    INNER JOIN steps s ON s.`group_id` = g.`id` AND s.`approver_type` = :approver_type AND a.`status` = s.`select_order` AND s.`step_type` = a.`current_step`
                     INNER JOIN users u ON u.`id` = s.`approver_id` AND s.`approver_id` = :userId
                     INNER JOIN users us ON us.`id` = a.`created_by`
             WHERE   a.`status` BETWEEN 0 AND 98 " . $keywordCondition . "
@@ -123,15 +123,13 @@ class ApprovalController extends Controller
                 DB::raw('us.name AS applicant'),
                 DB::raw('(SELECT MAX(`step_type`) FROM steps WHERE flow_id = flows.id) AS step_count')
             )
-            ->join('flows', function ($join) {
-                $join->on('flows.form_id', '=', 'applications.form_id')
-                    ->whereRaw('flows.group_id = applications.group_id');
-            })
+            ->join('groups', 'groups.id', 'applications.group_id')
             ->leftJoin('steps', function ($join) {
-                $join->on('steps.flow_id', '=', 'flows.id')
+                $join->on('steps.group_id', '=', 'groups.id')
                     ->whereRaw('steps.select_order = applications.status')
                     ->whereRaw('steps.step_type = applications.current_step');
             })
+            ->join('flows', 'flows.id', '=', 'steps.flow_id')
             ->join('forms', 'forms.id', '=', 'applications.form_id')
             ->leftJoin('users', 'users.id', '=', 'steps.approver_id')
             ->join('users AS us', 'us.id', '=', 'applications.created_by')
@@ -145,20 +143,21 @@ class ApprovalController extends Controller
         }
 
         // get list of approver (include TO & CC)
-        $approvers = DB::table('applications')
+        $approvers = DB::table('steps')
             ->select('steps.approver_id')
-            ->join('flows', function ($join) {
-                $join->on('flows.form_id', '=', 'applications.form_id')
-                    ->whereRaw('flows.group_id = applications.group_id');
+            ->where('steps.flow_id', function ($query) use ($id) {
+                $query->select('steps.flow_id')
+                    ->from('applications')
+                    ->join('steps', 'steps.group_id', 'applications.group_id')
+                    ->where('applications.id', $id)
+                    ->where('applications.deleted_at', '=', null)
+                    ->limit(1);
             })
-            ->join('steps', 'steps.flow_id', '=', 'flows.id')
-            ->where('applications.id', '=', $id)
-            ->where('applications.deleted_at', '=', null)
             ->get()
             ->toArray();
 
-        $approvers = Arr::pluck($approvers, 'approver_id');
         // check logged user has permission to access
+        $approvers = Arr::pluck($approvers, 'approver_id');
         if (!in_array(Auth::user()->id, $approvers) && $app->created_by !== Auth::user()->id) {
             abort(403);
         }
@@ -178,6 +177,7 @@ class ApprovalController extends Controller
                 abort(403);
             }
 
+            // get application detail
             $appDetail = DB::table('applications')
                 ->select(
                     'applications.*',
@@ -186,17 +186,22 @@ class ApprovalController extends Controller
                     'steps.approver_type',
                     'steps.order',
                     'steps.select_order',
-                    DB::raw('(SELECT MAX(`step_type`) FROM steps WHERE flow_id = flows.id) AS step_count')
+                    'budgets.budget_type',
+                    'groups.applicant_id        as group_applicant_id',
+                    'groups.budget_type_compare',
+                    'users.role                 as approver_role',
+                    'users.location             as approver_location',
+                    'users.department_id           as approver_department',
+                    DB::raw('(select max(step_type) from steps where flow_id = flows.id) as step_count')
                 )
-                ->join('flows', function ($join) {
-                    $join->on('flows.form_id', '=', 'applications.form_id')
-                        ->whereRaw('flows.group_id = applications.group_id');
-                })
+                ->join('groups', 'groups.id', 'applications.group_id')
+                ->join('budgets', 'budgets.id', 'groups.budget_id')
                 ->join('steps', function ($join) {
-                    $join->on('steps.flow_id', '=', 'flows.id')
+                    $join->on('steps.group_id', '=', 'groups.id')
                         ->whereRaw('steps.select_order = applications.status')
                         ->whereRaw('steps.step_type = applications.current_step');
                 })
+                ->join('flows', 'flows.id', '=', 'steps.flow_id')
                 ->join('users', 'users.id', '=', 'steps.approver_id')
                 ->where('applications.id', '=', $id)
                 ->where('applications.deleted_at', '=', null)
@@ -226,8 +231,32 @@ class ApprovalController extends Controller
                     if ($appDetail->order == config('const.application.status.completed')) {
                         if ($appDetail->form_id == config('const.form.biz_trip') || $appDetail->form_id == config('const.form.entertainment')) {
                             if ($appDetail->current_step < $appDetail->step_count) {
-                                $data['current_step'] = $appDetail->current_step + 1;
-                                $data['status'] = config('const.application.status.applying');
+                                // get next step of approval flow
+                                $nextStep = $appDetail->current_step + 1;
+                                // get group
+                                $group = DB::table('groups')
+                                    ->select('groups.*')
+                                    ->join('budgets', function ($join) use ($nextStep, $appDetail) {
+                                        $join->on('groups.budget_id', '=', 'budgets.id')
+                                            ->where('budgets.budget_type', '=', $appDetail->budget_type)
+                                            ->where('budgets.step_type', '=', $nextStep)
+                                            ->where('budgets.position', '=', $appDetail->budget_position)
+                                            ->where('budgets.deleted_at', '=', null);
+                                    })
+                                    ->where([
+                                        'groups.applicant_id' => $appDetail->group_applicant_id,
+                                        'groups.budget_type_compare' => $appDetail->budget_type_compare,
+                                        'groups.deleted_at' => null,
+                                    ])
+                                    ->first();
+                                // not found available flow setting
+                                if (empty($group)) {
+                                    throw new NotFoundFlowSettingException();
+                                }
+
+                                $data['current_step']   = $nextStep;
+                                $data['group_id']       = $group->id;
+                                $data['status']         = config('const.application.status.applying');
                             }
                         } elseif ($appDetail->form_id == config('const.form.leave')) {
                             // for leave application
@@ -269,7 +298,7 @@ class ApprovalController extends Controller
                     $data['status'] = config('const.application.status.declined');
                 }
 
-                $data['comment'] = $inputs['comment'];
+                $data['comment']    = $inputs['comment'];
                 $data['updated_by'] = $user->id;
                 $data['updated_at'] = Carbon::now();
 
@@ -280,7 +309,11 @@ class ApprovalController extends Controller
                 return Common::redirectBackWithAlertSuccess();
             } catch (Exception $ex) {
                 DB::rollBack();
-                return Common::redirectBackWithAlertFail();
+                $msgErr = null;
+                if ($ex instanceof NotFoundFlowSettingException) {
+                    $msgErr = $ex->getMessage();
+                }
+                return Common::redirectBackWithAlertFail($msgErr);
             }
         } else {
             abort(404);
