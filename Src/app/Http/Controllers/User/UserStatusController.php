@@ -56,8 +56,7 @@ class UserStatusController extends Controller
             //Join
             ->join('forms', 'applications.form_id', '=', 'forms.id')
             ->join('groups', 'applications.group_id', '=', 'groups.id')
-            ->join('flows', 'groups.id', '=', 'flows.group_id')
-            ->join('steps', 'flows.id', '=', 'steps.flow_id')
+            ->join('steps', 'groups.id', '=', 'steps.group_id')
             ->join('users', 'users.id', '=', 'steps.approver_id')
 
             //When
