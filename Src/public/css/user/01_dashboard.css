@@ -54,18 +54,19 @@ input.form-control.calendar-from {
     padding: 0px 25px 25px 25px;
 }
 
-.content-dashboard .row .col-xs-5ths a{
+.content-dashboard .row .col-xs-5ths .card .card-body{
     color: #000;
     font-weight: 600;
+    cursor: pointer;
 }
 
-.content-dashboard .row .col-xs-5ths a:hover{
+.content-dashboard .row .col-xs-5ths .card .card-body{
     text-decoration: none;
 }
 
 .card-body.card-wrap-items:hover{
     background-color: #96000C;
-    color: #fff;
+    color: #fff !important;
     text-decoration: none;
 }
 

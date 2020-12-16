@@ -69,9 +69,9 @@ class CheckipController extends Controller
         $confirm = cookie('confirm', $request->cookie('code'), 180);
 
         if (Gate::allows('admin-gate')) {
-            return redirect()->route('admin.dashboard', config('const.application.status.all'))->withCookie($confirm);
+            return redirect()->route('admin.dashboard')->withCookie($confirm);
         }
         // for user
-        return redirect()->route('user.dashboard', config('const.application.status.all'))->withCookie($confirm);
+        return redirect()->route('user.dashboard')->withCookie($confirm);
     }
 }

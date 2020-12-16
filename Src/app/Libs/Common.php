@@ -194,10 +194,10 @@ class Common
 		if (Auth::check()) {
 			// for admin
 			if (Gate::allows('admin-gate')) {
-				return route('admin.dashboard', config('const.application.status.all'));
+				return route('admin.dashboard');
 			}
 			// for user
-			return route('user.dashboard', config('const.application.status.all'));
+			return route('user.dashboard');
 		} else {
 			return route('login');
 		}
