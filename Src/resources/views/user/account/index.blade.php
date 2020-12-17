@@ -116,6 +116,9 @@
         </a>
     </div>
     <div class="card">
+        {{-- paginator --}}
+        {{ $users->total() }}
+        {{$users->withQueryString()->links('paginator')}}
         <div class="card-body p-0 card-list-items">
             {{-- List Users --}}
             <table class="table table-bordered table-hover " style="min-width: 500px;">

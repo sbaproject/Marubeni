@@ -62,6 +62,7 @@ return [
         'next' => 'Trang sau',
         'first' => 'Trang đầu',
         'last' => 'Trang cuối',
+        'show_result_label' =>'Hiển thị từ :from - :to của :total dòng dữ liệu.',
     ],
     /**
      * Form

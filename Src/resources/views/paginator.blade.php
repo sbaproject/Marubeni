@@ -1,3 +1,18 @@
+@if ($paginator->total() > 0)
+<div class="clearfix text-center" style="margin-top: 1rem;margin-bottom: 1rem">
+    @php
+        $total = $paginator->total();
+        $from = (($paginator->currentPage() - 1) * $paginator->perPage()) + 1;
+        if($paginator->hasMorePages()){
+            $to = $paginator->currentPage() * $paginator->perPage();
+        } else {
+            $to = $total;
+        }
+    @endphp
+    {{ __('label.paginator.show_result_label',['total' => $total, 'from' => $from, 'to' => $to]) }}
+    </div>
+@endif
+
 @if ($paginator->hasPages())
 <div class="clearfix p-0 text-center pb-3">
     <div class="pager-wrap">

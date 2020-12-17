@@ -60,10 +60,10 @@ class UserListCotroller extends Controller
             $join->on('users.department_id', '=', 'departments.id')
                 ->where('departments.deleted_at', null);
         })
-            ->where($where)
-            ->orderByRaw($sortable->order_by)
-            ->select($selectCols)
-            ->paginate(config('const.paginator.items'));
+        ->where($where)
+        ->orderByRaw($sortable->order_by)
+        ->select($selectCols)
+        ->paginate(config('const.paginator.items'));
 
         return view('user.account.index', compact('conditions', 'locations', 'departments', 'users', 'sortable'));
     }

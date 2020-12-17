@@ -127,7 +127,7 @@ Route::middleware('auth')->group(function () {
             /**----------------------------------------*
              * Only user role
              *-----------------------------------------*/
-            Route::middleware('can:user-gate')->group(function () {
+            // Route::middleware('can:user-gate')->group(function () {
                 // Dashboard
                 Route::get('dashboard', [UserDashboardController::class, 'index'])->name('dashboard');
                 // Confirm
@@ -175,7 +175,7 @@ Route::middleware('auth')->group(function () {
                     Route::get('detail/{id}', [ApprovalController::class, 'show'])->name('show');
                     Route::post('detail/{id}', [ApprovalController::class, 'update'])->name('update');
                 });
-            });
+            // });
         });
     // });
 

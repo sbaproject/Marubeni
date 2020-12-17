@@ -44,6 +44,7 @@ return [
         'next' => 'Next page',
         'first' => 'First page',
         'last' => 'Last page',
+        'show_result_label' => 'Showing :from - :to of :total items.',
     ],
     'action' => 'Action',
     '_no_' => 'NO.',
