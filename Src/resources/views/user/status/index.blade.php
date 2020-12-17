@@ -15,7 +15,7 @@
     <script src="js/user/status.js"></script>
 @endsection
 @section('content')
-    <section class="content-header">
+    <section class="invoice p-3 mb-3">
         <form method="get" id="formSearch" action="">
             @csrf
             <div class="row">
@@ -55,7 +55,7 @@
     </section>
 
     <!-- Main content -->
-    <section class="content-status">
+    <section class="invoice p-3 mb-3">
         <h4 class="mb-2" style="border-bottom: 1px solid #000;font-weight: bold;"><i class="nav-icon fas fa-file-alt"
                 aria-hidden="true"
                 style="margin-right: 5px;margin-bottom: 5px;"></i>{{ $intstatus == config('const.application.status.applying') ? __('label.status.list_of_applying_documents') : ($intstatus == config('const.application.status.approvel_un') ? __('label.status.list_of_approval_un_documents') : ($intstatus == config('const.application.status.approvel_in') ? __('label.status.list_of_approval_in_documents') : ($intstatus == config('const.application.status.declined') ? __('label.status.list_of_declined_documents') : ($intstatus == config('const.application.status.reject') ? __('label.status.list_of_reject_documents') : ($intstatus == config('const.application.status.completed') ? __('label.status.list_of_completed_documents') : ''))))) }}

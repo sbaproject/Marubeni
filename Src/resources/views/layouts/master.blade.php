@@ -51,7 +51,7 @@
 
 </head>
 
-<body class="hold-transition sidebar-mini layout-fixed">
+<body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed">
     <!-- Site wrapper -->
     <div class="wrapper">
         <!-- Navbar -->
@@ -94,7 +94,7 @@
             </ul>
         </nav>
         <!-- Main Sidebar Container -->
-        <aside class="main-sidebar sidebar-primary elevation-4 sidebar-no-expand">
+        <aside class="main-sidebar sidebar-primary elevation-4">
             <!-- Brand Logo -->
             <a href="{{ Common::getHomeUrl() }}" class="brand-link">
                 <img src="images/logo.png" alt="Logo" class="" style="max-width: 100%;">

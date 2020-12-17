@@ -12,9 +12,9 @@
                 {{ $body }}
             </div>
             <div class="modal-footer">
-                <button type="button" id="popup_btn_cancel" class="btn btn-secondary" data-dismiss="modal">{{ $close }}</button>
-                <button type="button" id="popup_btn_ok" class="btn btn-accept">{{ $accept }}</button>
-                <button type="button" id="popup_btn_ok_processing" class="btn btn-accept" disabled style="display: none">
+                <button type="button" id="popup_btn_cancel" class="btn bg-gradient-secondary" data-dismiss="modal">{{ $close }}</button>
+                <button type="button" id="popup_btn_ok" class="btn bg-gradient-danger">{{ $accept }}</button>
+                <button type="button" id="popup_btn_ok_processing" class="btn bg-gradient-danger" disabled style="display: none">
                     <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                     {{ __('label.button.processing') }}
                 </button>

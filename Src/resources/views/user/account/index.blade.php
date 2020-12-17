@@ -18,7 +18,7 @@
     </div>
     <div class="row">
         <div class="col-xl-8 col-lg-10">
-            <div class="card">
+            <div class="invoice p-3 mb-3">
                 <div class="card-body">
                     <div class="search-content">
                         <x-alert />
@@ -28,7 +28,7 @@
                                     {{-- Location --}}
                                     <div class="form-group row">
                                         <label for="location"
-                                            class="col-lg-3 col-form-label text-center font-weight-normal">{{ __('validation.attributes.location') }}</label>
+                                            class="col-lg-3 col-form-label text-center font-weight-bold">{{ __('validation.attributes.location') }}</label>
                                         <div class="col-lg-9">
                                             <select id="location" name="location" class="form-control">
                                                 <option value='' selected>{{ __('label.select') }}</option>
@@ -44,7 +44,7 @@
                                     {{-- Employee No --}}
                                     <div class="form-group row">
                                         <label for="user_no"
-                                            class="col-lg-3 col-form-label text-center font-weight-normal">
+                                            class="col-lg-3 col-form-label text-center font-weight-bold">
                                             {{ __('validation.attributes.user_no') }}
                                         </label>
                                         <div class="col-lg-9">
@@ -55,7 +55,7 @@
                                     {{-- Department --}}
                                     <div class="form-group row">
                                         <label for="department"
-                                            class="col-lg-3 col-form-label text-center font-weight-normal">
+                                            class="col-lg-3 col-form-label text-center font-weight-bold">
                                             {{ __('validation.attributes.department') }}
                                         </label>
                                         <div class="col-lg-9">
@@ -77,7 +77,7 @@
                                     {{-- Name --}}
                                     <div class="form-group row">
                                         <label for="name"
-                                            class="col-lg-3 col-form-label text-center font-weight-normal">
+                                            class="col-lg-3 col-form-label text-center font-weight-bold">
                                             {{ __('validation.attributes.user.name') }}
                                         </label>
                                         <div class="col-lg-9">
@@ -90,7 +90,7 @@
                                     {{-- Submit --}}
                                     <div class="form-group row">
                                         <div class="col-lg-10">
-                                            <button type="submit" class="btn btn-primary search_bt">
+                                            <button type="submit" class="btn bg-gradient-primary">
                                                 <i class="nav-icon fas fa-search"></i>
                                                 {{ __('label.button.search') }}
                                             </button>
@@ -109,16 +109,14 @@
 <section class="content">
     {{-- Add new button --}}
     <div class="button_wrap">
-        <a class="btn btn-danger pt-1 pb-1 pl-5 pr-5"
+        <a class="btn bg-gradient-danger"
             href="{{ route('admin.user.create') }}">
             <i class="nav-icon fa fa-plus-circle"></i>
             {{ __('label.button.addnew') }}
         </a>
     </div>
-    <div class="card">
+    <div class="invoice p-3 mb-3">
         {{-- paginator --}}
-        {{ $users->total() }}
-        {{$users->withQueryString()->links('paginator')}}
         <div class="card-body p-0 card-list-items">
             {{-- List Users --}}
             <table class="table table-bordered table-hover " style="min-width: 500px;">

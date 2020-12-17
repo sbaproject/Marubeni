@@ -1,7 +1,7 @@
 <ul class="list-inline m-0">
     @isset($editUrl)
     <li class="list-inline-item">
-        <a href="{{ $editUrl }}" title="{{ __('label.button.edit') }}" class="btn btn-success btn-sm rounded-0 @isset($editDisabled) disabled @endisset"
+        <a href="{{ $editUrl }}" title="{{ __('label.button.edit') }}" class="btn bg-gradient-success btn-sm @isset($editDisabled) disabled @endisset"
             data-toggle="tooltip">
             <i class="fa fa-edit"></i>
         </a>
@@ -11,7 +11,7 @@
     <li class="list-inline-item">
         <form action="{{ $deleteUrl }}" method="POST">
             @csrf
-            <button type="button" class="btn btn-danger btn-sm rounded-0 @isset($deleteDisabled) disabled @endisset" data-toggle="tooltip"
+            <button type="button" class="btn bg-gradient-danger btn-sm @isset($deleteDisabled) disabled @endisset" data-toggle="tooltip"
                 title="{{ __('label.button.delete') }}" @isset($deleteDisabled) disabled  @endisset
                 data-toggle="modal" data-target="#popup-confirm">
                 <i class="fa fa-trash"></i>

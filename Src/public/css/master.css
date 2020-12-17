@@ -3,7 +3,8 @@ body{
     font-size: 15px;
 }
 .content-wrapper {
-    padding: 25px 0px 0px 25px;
+    /* padding: 25px 0px 0px 25px; */
+    padding: .5rem;
 }
 .sidebar {
 	padding: 0;
@@ -60,10 +61,13 @@ a.tab-locale.selected {
 a.tab-locale.en{
 	margin-left: -5px;
 }
+.content-wrapper>.content{
+    padding: 0;
+}
 @media screen and (max-width: 992px) {
     .content-wrapper {
         /* padding: 0!important; */
-        padding: 10px;
+        /* padding: 10px; */
     }
 }
 /**
@@ -332,9 +336,12 @@ table>tbody>tr>td {
 .table>thead>tr>th.sortable {
     cursor: pointer;
 }
+.table>thead>tr>th.sortable>i.fa-sort{
+    color: #C0C0C0;
+}
 .table>thead>tr>th.sortable.stb-selected {
-    background-color: #96000C;
-    color: #ffffff;
+    /* background-color: #96000C;
+    color: #ffffff; */
 }
 
 /* Browse File */

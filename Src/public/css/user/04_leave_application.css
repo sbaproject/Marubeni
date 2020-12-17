@@ -75,14 +75,14 @@ hr.line-bottom {
 }
 
 .btn-cancel {
-    background: darkgray;
+    /* background: darkgray;
     color: #000;
-    font-weight: 600;
+    font-weight: 600; */
 }
 
 .btn-cancel:hover {
-    background: #96000c;
-    color: #fff;
+    /* background: #96000c;
+    color: #fff; */
 }
 
 input[type="file"] {
@@ -106,7 +106,7 @@ input[type="file"] {
     border-radius:4px;
 }
 @media (max-width: 540px) {
-    .btn-custom{
+    .btn-form{
         display: block;
         margin: 0 auto;
         margin-bottom: 15px;

@@ -66,12 +66,12 @@
         @csrf
         <div class="main-top">
             <h4 class="main-header-text">{{ Str::upper(__('label.form.leave')) }}</h4>
-            <button type="submit" name="pdf" value="pdf" class="btn btn-outline-dark" href="#">
+            <button type="submit" name="pdf" value="pdf" class="btn bg-gradient-danger" href="#">
                 <i class="fas fa-external-link-alt" style="margin-right: 5px; color: #fff;"></i>
                 {{ __('label.button.export') }}
             </button>
         </div>
-        <div class="card">
+        <div class="invoice p-3 mb-3">
             <div class="card-body">
                 <div class="form-group row">
                     <div class="col-sm-2 text-left">
@@ -486,17 +486,17 @@
         <!-- /.card -->
         @if (!isset($previewFlg))
         <div>
-            <button type="button" name="apply" value="apply" class="btn btn-apply btn-custom"
+            <button type="button" name="apply" value="apply" class="btn bg-gradient-success btn-form"
                 data-toggle="modal" data-target="#popup-confirm">
                 <i class="far fa-check-circle" style="margin-right: 5px;"></i>
                 {{ __('label.button.apply') }}
             </button>
-            <button type="button" name="draft" value="draft" class="btn btn-draft btn-custom"
+            <button type="button" name="draft" value="draft" class="btn btn bg-gradient-info btn-form"
                 data-toggle="modal" data-target="#popup-confirm">
                 <i class="nav-icon fas fa-edit" style="margin-right: 5px;"></i>
                 {{ __('label.button.draft') }}
             </button>
-            <a href="{{ route('user.form.index') }}" class="btn btn-cancel btn-custom">
+            <a href="{{ route('user.form.index') }}" class="btn btn bg-gradient-secondary btn-form btn-cancel">
                 <i class="fa fa-ban" aria-hidden="true" style="margin-right: 5px;"></i>
                 {{ __('label.button.cancel') }}
             </a>

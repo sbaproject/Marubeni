@@ -12,14 +12,14 @@
 } */
 
 .list-title th{
-    border-right: 1px solid #fff;
-    background: darkgray;
+    /* border-right: 1px solid #fff; */
+    /* background: darkgray; */
     text-align: center;
 }
 
 tr.list-content td
 {
-    border-right: 1px solid darkgray;
+    /* border-right: 1px solid darkgray; */
     text-align: center;
 }
 

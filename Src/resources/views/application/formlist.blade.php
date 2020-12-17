@@ -9,9 +9,18 @@
 @endsection
 
 @section('content')
+<section class="content-header">
+	<div class="container-fluid">
+		<div class="row mb-2">
+			<div class="col-sm-12">
+				<h1>{{ __('label.application_list') }}</h1>
+			</div>
+		</div>
+	</div><!-- /.container-fluid -->
+</section>
 <section class="content">
-	<h4 class="mb-2">{{ __('label.application_list') }}</h4>
-	<div class="card">
+	{{-- <h4 class="mb-2">{{ __('label.application_list') }}</h4> --}}
+	<div class="invoice p-3 mb-3">
 		<div class="card-body p-4">
 			<div class="container">
 				<x-alert />
