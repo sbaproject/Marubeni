@@ -9,6 +9,7 @@ return [
     'save_fail' => 'Save fail.',
     'delete_fail' => 'Delete success',
     'no_data' => 'No data found.',
+    'sure_to_continue' => 'Are you sure to continue ?',
     /**
      * Entertainment Application
      */

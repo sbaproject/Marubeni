@@ -28,7 +28,7 @@ class PopupConfirm extends Component
             $title = __('label.confirming_title');
         }
         if (empty($body)) {
-            $body = __('label.sure_to_continue');
+            $body = __('msg.sure_to_continue');
         }
         $this->title = $title;
         $this->body = $body;

@@ -9,6 +9,7 @@ return [
     'save_fail' => 'Lưu thất bại.',
     'delete_fail' => 'Xóa thất bại.',
     'no_data' => 'Không tìm thấy dữ liệu.',
+    'sure_to_continue' => 'Bạn vẫn muốn tiếp tục xử lý ?',
     /**
      * Entertainment Application
      */

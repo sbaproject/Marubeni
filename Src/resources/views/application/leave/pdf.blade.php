@@ -168,7 +168,13 @@
 		<table>
 			<tr>
 				<td>Applied Date/ Ngày:</td>
-				<td></td>
+				<td>
+					@if (empty($application))
+					{{ Carbon\Carbon::now()->format('d/m/Y') }}
+					@else
+					{{ date('d/m/Y', strtotime($application->created_at)) }}
+					@endif
+				</td>
 			</tr>
 			<tr>
 				<td>Full Name/ Họ tên:</td>

@@ -64,7 +64,7 @@ return [
     'comment' => 'Comment',
     'applicant' => 'Applicant',
     'confirming_title' => 'Confirm',
-    'sure_to_continue' => 'Are you sure to continue ?',
+    'times' => 'Times',
     /**
      * Form
      */

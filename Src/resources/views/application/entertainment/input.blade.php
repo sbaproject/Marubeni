@@ -394,17 +394,25 @@
                             <strong>{{ $message }}</strong>
                         </span>
                         @enderror
-                        <div style="padding-left: 0px" class="col-lg-12">
-                            <input type="text" id="txt_entertainment_times" class="form-control entertainment_times @error('entertainment_times') is-invalid @enderror"
-                                value="{{ $et_times }}" placeholder="{{ __('label.entertainment.entertainment_times') }}"
-                                @if(isset($previewFlg) || (empty($has_et_times) || ($has_et_times !== null && $has_et_times == config('const.entertainment.has_et_times.no')))) readonly @endif>
+                        <div class="form-group row">
+                            <div style="padding-left: 0px" class="col-md-4">
+                                <input type="text" id="txt_entertainment_times"
+                                    class="form-control entertainment_times @error('entertainment_times') is-invalid @enderror"
+                                    value="{{ $et_times }}" placeholder="{{ __('label.entertainment.entertainment_times') }}" @if(isset($previewFlg)
+                                    || (empty($has_et_times) || ($has_et_times !==null &&
+                                    $has_et_times==config('const.entertainment.has_et_times.no')))) readonly @endif>
                                 <input type="hidden" name="entertainment_times" value="{{ $et_times }}">
-                            @error('entertainment_times')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
+                                @error('entertainment_times')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
+                            <label class="col-lg-8 col-form-label com_title text-lg-left text-left">
+                                {{ __('label.times') }}
+                            </label>
                         </div>
+                        
                     </div>
                 </div>
                 <hr>

@@ -167,7 +167,11 @@
 			</td>
 			<td style="width: 10%;vertical-align: bottom">
 				<div style="border-bottom:1px solid;margin-top:-3px">
-					
+					@if (empty($application))
+						{{ Carbon\Carbon::now()->format('d/m/Y') }}
+					@else
+						{{ date('d/m/Y', strtotime($application->created_at)) }}
+					@endif
 				</div>
 			</td>
 			<td style="width: 6%"></td>

@@ -53,7 +53,7 @@ return [
     'comment' => 'Chú thích',
     'applicant' => 'Người đề nghị',
     'confirming_title' => 'Xác nhận',
-    'sure_to_continue' => 'Bạn vẫn muốn tiếp tục xử lý ?',
+    'times' => 'Số lần',
     /**
      * Paginator
      */
