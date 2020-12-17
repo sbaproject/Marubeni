@@ -178,24 +178,30 @@ class ApprovalController extends Controller
             }
 
             // get application detail
+            $cols = [
+                'applications.*',
+                'steps.flow_id',
+                'steps.approver_id',
+                'steps.approver_type',
+                'steps.order',
+                'steps.select_order',
+                'groups.applicant_id        as group_applicant_id',
+                'groups.budget_type_compare',
+                'users.role                 as approver_role',
+                'users.location             as approver_location',
+                'users.department_id        as approver_department',
+                DB::raw('(select max(step_type) from steps where flow_id = flows.id) as step_count')
+            ];
+            $isLeaveApplication = $inputs['form_id'] == config('const.form.leave');
+            if (!$isLeaveApplication) {
+                $cols[] = 'budgets.budget_type';
+            }
             $appDetail = DB::table('applications')
-                ->select(
-                    'applications.*',
-                    'steps.flow_id',
-                    'steps.approver_id',
-                    'steps.approver_type',
-                    'steps.order',
-                    'steps.select_order',
-                    'budgets.budget_type',
-                    'groups.applicant_id        as group_applicant_id',
-                    'groups.budget_type_compare',
-                    'users.role                 as approver_role',
-                    'users.location             as approver_location',
-                    'users.department_id           as approver_department',
-                    DB::raw('(select max(step_type) from steps where flow_id = flows.id) as step_count')
-                )
+                ->select($cols)
                 ->join('groups', 'groups.id', 'applications.group_id')
-                ->join('budgets', 'budgets.id', 'groups.budget_id')
+                ->when(!$isLeaveApplication, function ($query) {
+                    $query->join('budgets', 'budgets.id', 'groups.budget_id');
+                })
                 ->join('steps', function ($join) {
                     $join->on('steps.group_id', '=', 'groups.id')
                         ->whereRaw('steps.select_order = applications.status')
@@ -230,10 +236,11 @@ class ApprovalController extends Controller
                     // make application next to step of approval flow (with Leave Application just have one step)
                     if ($appDetail->order == config('const.application.status.completed')) {
                         if ($appDetail->form_id == config('const.form.biz_trip') || $appDetail->form_id == config('const.form.entertainment')) {
+                            // setup for next step ortherwise application is completed
                             if ($appDetail->current_step < $appDetail->step_count) {
                                 // get next step of approval flow
                                 $nextStep = $appDetail->current_step + 1;
-                                // get group
+                                // get group for next step
                                 $group = DB::table('groups')
                                     ->select('groups.*')
                                     ->join('budgets', function ($join) use ($nextStep, $appDetail) {
@@ -249,6 +256,7 @@ class ApprovalController extends Controller
                                         'groups.deleted_at' => null,
                                     ])
                                     ->first();
+
                                 // not found available flow setting
                                 if (empty($group)) {
                                     throw new NotFoundFlowSettingException();

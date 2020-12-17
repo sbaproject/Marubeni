@@ -1,5 +1,31 @@
 //! moment.js locale configuration
-
+const DTP_TOOL_TIPS = {
+    today: 'Hôm nay',
+    clear: 'Xóa lựa chọn',
+    close: 'Đóng',
+    selectMonth: 'Chọn Tháng',
+    prevMonth: 'Tháng trước',
+    nextMonth: 'Tháng sau',
+    selectYear: 'Chọn năm',
+    prevYear: 'Năm trước',
+    nextYear: 'Năm sau',
+    selectDecade: 'Chọn thập kỷ',
+    prevDecade: 'Thập kỷ trước',
+    nextDecade: 'Thập kỷ sau',
+    prevCentury: 'Thế kỷ trước',
+    nextCentury: 'Thế kỷ sau',
+    pickHour: 'Chọn giờ',
+    incrementHour: 'Tăng giờ',
+    decrementHour: 'Giảm giờ',
+    pickMinute: 'Chọn phút',
+    incrementMinute: 'Tăng phút',
+    decrementMinute: 'Giảm phút',
+    pickSecond: 'Chọn giây',
+    incrementSecond: 'Tăng giây',
+    decrementSecond: 'Giảm giây',
+    togglePeriod: 'Chuyển đổi thời gian',
+    selectTime: 'Chọn thời gian'
+};
 ;(function (global, factory) {
    typeof exports === 'object' && typeof module !== 'undefined'
        && typeof require === 'function' ? factory(require('../moment')) :
