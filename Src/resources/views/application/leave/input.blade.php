@@ -26,7 +26,7 @@
 <script>
     const code_leave = @json(config('const.code_leave'));
     const paid_type = @json(config('const.paid_type'));
-    const previewFlg = @json(isset($previewFlg) ? true : false);
+    const previewFlg = @json($previewFlg ? true : false);
 </script>
 @endsection
 
@@ -50,7 +50,7 @@
 
     // get action url
     if(isset($application)){
-        if(isset($previewFlg)){
+        if($previewFlg){
             $actionUrl = route('user.leave.preview.pdf', $application->id);
         } else {
             $actionUrl = route('user.leave.update', $application->id);
@@ -75,12 +75,12 @@
             <div class="card-body">
                 <div class="form-group row">
                     <div class="col-sm-2 text-left">
-                        <label>{{ __('label.leave.caption.code_leave') }}</label>
+                        <label>{{ __('label.leave.caption.code_leave') }}<span class="text-danger required"> (*)</span></label>
                     </div>
                     <div class="col-sm-10">
                         <select name="rd_code_leave" style="width: auto;"
                             class="form-control @error('code_leave') is-invalid @enderror"
-                            @if(isset($previewFlg)) disabled @endif>
+                            @if($previewFlg) disabled @endif>
                             <option value="empty" @if($code_leave == 'empty') selected @endif>
                                 {{ __('label.select') }}
                             </option>
@@ -101,11 +101,11 @@
                 <hr class="line-bottom">
                 <div class="form-group row">
                     <div class="col-sm-2 text-left">
-                        <label>{{ __('label.leave.caption.reason_leave') }}</label>
+                        <label>{{ __('label.leave.caption.reason_leave') }}<span class="text-danger required"> (*)</span></label>
                     </div>
                     <div class="col-sm-10">
                         <textarea name="reason_leave" id="reason_leave" rows="3" class="form-control @error('reason_leave') is-invalid @enderror"
-                            style="width: 100%;" @if(isset($previewFlg)) readonly @endif
+                            style="width: 100%;" @if($previewFlg) readonly @endif
                             placeholder="{{ __('label.leave.caption.reason_leave') }}">{{ $reason_leave }}</textarea>
                         @error('reason_leave')
                         <span class="invalid-feedback" role="alert">
@@ -117,11 +117,11 @@
                 <hr class="line-bottom">
                 <div class="form-group row">
                     <div class="col-sm-2 text-left">
-                        <label>{{ __('label.leave.caption.paid_type') }}</label>
+                        <label>{{ __('label.leave.caption.paid_type') }}<span id="rq_paid_type" class="text-danger required"> (*)</span></label>
                     </div>
                     <div class="col-sm-10">
                         @php
-                            if(isset($previewFlg)
+                            if($previewFlg
                                 || $code_leave != config('const.code_leave.SL')
                                 || ($code_leave == config('const.code_leave.SL') && $paid_type != config('const.paid_type.AL'))){
                                 $paidTypeReadFlg = true;
@@ -148,7 +148,7 @@
                 <hr class="line-bottom">
                 <div class="form-group row">
                     <div class="col-sm-2 text-left">
-                        <label>{{ __('label.leave.caption.date_leave') }}</label>
+                        <label>{{ __('label.leave.caption.date_leave') }}<span id="rq_date_leave" class="text-danger required"> (*)</span></label>
                     </div>
                     <div class="col-sm-10">
                         <div class="row mb-2">
@@ -158,7 +158,7 @@
                                     <div class="input-group date" id="dateLeaveFrom" data-target-input="nearest">
                                         <input type="text" class="form-control datetimepicker-input @error('date_from') is-invalid @enderror"
                                             data-target="#dateLeaveFrom"
-                                            @if(isset($previewFlg) || $code_leave == config('const.code_leave.ML')) readonly @endif/>
+                                            @if($previewFlg || $code_leave == config('const.code_leave.ML')) readonly @endif/>
                                         <div class="input-group-addon input-group-append" data-target="#dateLeaveFrom"
                                             data-toggle="datetimepicker">
                                             <div class="input-group-text"><i class="fa fa-calendar-alt"></i>
@@ -181,7 +181,7 @@
                                     <div class="input-group date" id="dateLeaveTo" data-target-input="nearest">
                                         <input type="text" class="form-control datetimepicker-input @error('date_to') is-invalid @enderror"
                                             data-target="#dateLeaveTo"
-                                            @if(isset($previewFlg) || $code_leave == config('const.code_leave.ML')) readonly @endif/>
+                                            @if($previewFlg || $code_leave == config('const.code_leave.ML')) readonly @endif/>
                                         <div class="input-group-addon input-group-append" data-target="#dateLeaveTo"
                                             data-toggle="datetimepicker">
                                             <div class="input-group-text"><i class="fa fa-calendar-alt"></i>
@@ -215,7 +215,7 @@
                                                 data-target-input="nearest">
                                                 <input type="text" class="form-control datetimepicker-input"
                                                     data-target="#timeLeaveDate"
-                                                    @if(isset($previewFlg) || $code_leave == config('const.code_leave.ML')) readonly @endif/>
+                                                    @if($previewFlg || $code_leave == config('const.code_leave.ML')) readonly @endif/>
                                                 <div class="input-group-addon input-group-append"
                                                     data-target="#timeLeaveDate" data-toggle="datetimepicker">
                                                     <div class="input-group-text"><i class="fa fa-calendar-alt"></i>
@@ -236,7 +236,7 @@
                                             class="form-control datetimepicker-input" data-toggle="datetimepicker"
                                             data-target="#timeLeaveFrom" autocomplete="off"
                                             value="{{ $time_from }}"
-                                            @if(isset($previewFlg) || $code_leave == config('const.code_leave.ML')) readonly @endif/>
+                                            @if($previewFlg || $code_leave == config('const.code_leave.ML')) readonly @endif/>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -246,7 +246,7 @@
                                             class="form-control datetimepicker-input" data-toggle="datetimepicker"
                                             data-target="#timeLeaveTo" autocomplete="off"
                                             value="{{ $time_to }}"
-                                            @if(isset($previewFlg) || $code_leave == config('const.code_leave.ML')) readonly @endif/>
+                                            @if($previewFlg || $code_leave == config('const.code_leave.ML')) readonly @endif/>
                                     </div>
                                 </div>
                             </div>
@@ -256,7 +256,7 @@
                 <hr class="line-bottom">
                 <div class="form-group row">
                     <div class="col-sm-2 text-left">
-                        <label>{{ __('label.leave.caption.maternity_leave') }}</label>
+                        <label>{{ __('label.leave.caption.maternity_leave') }}<span id="rq_maternity_leave" class="text-danger required"> (*)</span></label>
                     </div>
                     <div class="col-sm-10">
                         <div class="row mb-2">
@@ -266,7 +266,7 @@
                                     <div class="input-group date" id="maternityLeaveFrom" data-target-input="nearest">
                                         <input type="text" class="form-control datetimepicker-input @error('maternity_from') is-invalid @enderror"
                                             data-target="#maternityLeaveFrom"
-                                            @if(isset($previewFlg) || $code_leave != config('const.code_leave.ML')) readonly @endif/>
+                                            @if($previewFlg || $code_leave != config('const.code_leave.ML')) readonly @endif/>
                                         <div class="input-group-addon input-group-append"
                                             data-target="#maternityLeaveFrom" data-toggle="datetimepicker">
                                             <div class="input-group-text"><i class="fa fa-calendar-alt"></i>
@@ -290,7 +290,7 @@
                                     <div class="input-group date" id="maternityLeaveTo" data-target-input="nearest">
                                         <input type="text" class="form-control datetimepicker-input @error('maternity_to') is-invalid @enderror"
                                             data-target="#maternityLeaveTo"
-                                            @if(isset($previewFlg) || $code_leave != config('const.code_leave.ML')) readonly @endif/>
+                                            @if($previewFlg || $code_leave != config('const.code_leave.ML')) readonly @endif/>
                                         <div class="input-group-addon input-group-append"
                                             data-target="#maternityLeaveTo" data-toggle="datetimepicker">
                                             <div class="input-group-text"><i class="fa fa-calendar-alt"></i>
@@ -352,10 +352,10 @@
                             </div>
                         </div>
                         <div class="row mb-2">
-                            <span class="col-md-2">{{ __('label.leave.caption.take_this_time') }}</span>
+                            <span class="col-md-2">{{ __('label.leave.caption.take_this_time') }} <span id="rq_take_this_time" class="text-danger required"> (*)</span></span>
                             <div class="col-md-10">
                                 @php
-                                    if(isset($previewFlg)
+                                    if($previewFlg
                                         || $code_leave == config('const.code_leave.ML')
                                         || ($code_leave == config('const.code_leave.SL') && $paid_type != config('const.paid_type.AL'))) {
                                             $daysUsedReadFlg = true;
@@ -403,7 +403,7 @@
                         <label for="myfile">{{ __('label.leave.caption.file_path') }}</label>
                     </div>
                     <div class="col-sm-5">
-                        @if(isset($previewFlg))
+                        @if($previewFlg)
                             @if(isset($application) && !empty($file_path))
                             <div class="file-show input-group mb-3">
                                 <label class="form-control file-link">
@@ -474,7 +474,7 @@
                         <div class="form-check">
                             <input type="checkbox" id="cb_subsequent" name="cb_subsequent" class="form-check-input"
                                 @if($subsequent !==null && $subsequent == config('const.check.on')) checked @endif
-                                @if(isset($previewFlg)) disabled @endif>
+                                @if($previewFlg) disabled @endif>
                             <input type="hidden" id="subsequent" name="subsequent" value="{{ $subsequent }}">
                             <label class="form-check-label" for="cb_subsequent">{{ __('label.on') }}</label>
                         </div>
@@ -484,8 +484,8 @@
             <!-- /.card-body -->
         </div>
         <!-- /.card -->
-        @if (!isset($previewFlg))
-        <div>
+        @if (!$previewFlg)
+        <div class="text-center">
             <button type="button" name="apply" value="apply" class="btn bg-gradient-success btn-form"
                 data-toggle="modal" data-target="#popup-confirm">
                 <i class="far fa-check-circle" style="margin-right: 5px;"></i>

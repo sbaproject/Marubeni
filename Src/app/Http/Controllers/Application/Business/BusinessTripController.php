@@ -25,7 +25,9 @@ class BusinesstripController extends Controller
 
     public function create()
     {
-        return view('application.business.input');
+        $previewFlg = false;
+
+        return view('application.business.input', compact('previewFlg'));
     }
 
     public function store(Request $request)
@@ -71,10 +73,13 @@ class BusinesstripController extends Controller
             abort(404);
         }
 
+        // if application is completed status => NOT ALLOWS EDIT
+        $previewFlg = $application->status == config('const.application.status.completed');
+
         // get business application
         // $model = Businesstrip::where('application_id', $id)->first();
 
-        return view('application.business.input', compact('application'));
+        return view('application.business.input', compact('application', 'previewFlg'));
     }
 
     public function update(Request $request, $id)
@@ -183,25 +188,26 @@ class BusinesstripController extends Controller
             $budgetPosition = $inputs['budget_position'];
             // get group
             $group = DB::table('groups')
-            ->select('groups.*')
-            ->join('applicants', function ($join) use ($user) {
-                $join->on('groups.applicant_id', '=', 'applicants.id')
-                ->where('applicants.role', '=', $user->role)
-                ->where('applicants.location', '=', $user->location)
-                ->where('applicants.department_id', '=', $user->department_id)
-                ->where('applicants.deleted_at', '=', null);
-            })
-            ->join('budgets',
-                function ($join) use ($currentStep, $budgetPosition) {
-                    $join->on('groups.budget_id', '=', 'budgets.id')
-                    ->where('budgets.budget_type', '=', config('const.budget.budget_type.business'))
-                    ->where('budgets.step_type', '=', $currentStep)
-                    ->where('budgets.position', '=', $budgetPosition)
-                    ->where('budgets.deleted_at', '=', null);
-                }
-            )
-            ->where('groups.deleted_at', '=', null)
-            ->first();
+                ->select('groups.*')
+                ->join('applicants', function ($join) use ($user) {
+                    $join->on('groups.applicant_id', '=', 'applicants.id')
+                        ->where('applicants.role', '=', $user->role)
+                        ->where('applicants.location', '=', $user->location)
+                        ->where('applicants.department_id', '=', $user->department_id)
+                        ->where('applicants.deleted_at', '=', null);
+                })
+                ->join(
+                    'budgets',
+                    function ($join) use ($currentStep, $budgetPosition) {
+                        $join->on('groups.budget_id', '=', 'budgets.id')
+                            ->where('budgets.budget_type', '=', config('const.budget.budget_type.business'))
+                            ->where('budgets.step_type', '=', $currentStep)
+                            ->where('budgets.position', '=', $budgetPosition)
+                            ->where('budgets.deleted_at', '=', null);
+                    }
+                )
+                ->where('groups.deleted_at', '=', null)
+                ->first();
 
             if (empty($group)) {
                 throw new NotFoundFlowSettingException();
@@ -334,21 +340,21 @@ class BusinesstripController extends Controller
             $loggedUser = Auth::user();
             // get list of approver (include TO & CC)
             $approvers = DB::table('steps')
-            ->select('steps.approver_id')
-            ->where('steps.flow_id', function ($query) use ($request, $loggedUser) {
-                $query->select('steps.flow_id')
-                    ->from('applications')
-                    ->join(
-                        'steps',
-                        'steps.group_id',
-                        'applications.group_id'
-                    )
-                    ->where('steps.approver_id', '=', $loggedUser->id)
-                    ->where('applications.id', $request->id)
-                    ->where('applications.deleted_at', '=', null)
-                    ->limit(1);
-            })
-            ->first();
+                ->select('steps.approver_id')
+                ->where('steps.flow_id', function ($query) use ($request, $loggedUser) {
+                    $query->select('steps.flow_id')
+                        ->from('applications')
+                        ->join(
+                            'steps',
+                            'steps.group_id',
+                            'applications.group_id'
+                        )
+                        ->where('steps.approver_id', '=', $loggedUser->id)
+                        ->where('applications.id', $request->id)
+                        ->where('applications.deleted_at', '=', null)
+                        ->limit(1);
+                })
+                ->first();
 
             // check logged user has permission to access
             // if logged user is not owner of application and also not approval user(TO or CC).
@@ -385,17 +391,17 @@ class BusinesstripController extends Controller
 
         // get list of approver (include TO & CC)
         $approvers = DB::table('steps')
-        ->select('steps.approver_id')
-        ->where('steps.flow_id', function ($query) use ($id, $loggedUser) {
-            $query->select('steps.flow_id')
-                ->from('applications')
-                ->join('steps', 'steps.group_id', 'applications.group_id')
-                ->where('steps.approver_id', '=', $loggedUser->id)
-                ->where('applications.id', $id)
-                ->where('applications.deleted_at', '=', null)
-                ->limit(1);
-        })
-        ->first();
+            ->select('steps.approver_id')
+            ->where('steps.flow_id', function ($query) use ($id, $loggedUser) {
+                $query->select('steps.flow_id')
+                    ->from('applications')
+                    ->join('steps', 'steps.group_id', 'applications.group_id')
+                    ->where('steps.approver_id', '=', $loggedUser->id)
+                    ->where('applications.id', $id)
+                    ->where('applications.deleted_at', '=', null)
+                    ->limit(1);
+            })
+            ->first();
 
         // check logged user has permission to access
         // if logged user is not owner of application and also not approval user(TO or CC).

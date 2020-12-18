@@ -241,6 +241,7 @@ return [
         'application_name' => 'Application Type',
         'date_create' => 'Apply Date',
         'action' => 'Actions',
+        'list' => 'Draft list',
     ],
     /**
      * Status

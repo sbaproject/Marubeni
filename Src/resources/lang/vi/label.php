@@ -240,6 +240,7 @@ return [
         'application_name' => 'Loại Đơn',
         'date_create' => 'Ngày Tạo',
         'action' => 'Chức Năng',
+        'list' => 'Danh sách nháp',
     ],
     /**
      * Status

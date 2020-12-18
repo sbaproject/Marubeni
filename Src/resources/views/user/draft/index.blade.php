@@ -3,8 +3,17 @@
 {{ __('label.menu.draft') }}
 @endsection
 @section('content')
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h4 style="font-weight: 600;">{{ Str::upper(__('label.draft.list')) }}</h4>
+                </div>
+            </div>
+        </div>
+    </section>
     <section class="content">
-        <div class="card">
+        <div class="invoice p-3 mb-3">
             <x-alert />
             <div class="card-body p-0 card-list-items">
                 <div class="wrap_tbl_ad">
@@ -31,7 +40,7 @@
                                         <td>
                                             <x-action>
                                                 <x-slot name="editUrl">
-                                                    {{ $application_draft->form_id == config('const.form.leave') ? route('user.leave.show', $application_draft->id) : ($application_draft->form_id == config('const.form.biz_trip') ? route('user.business.show', $application_draft->id) : ($application_draft->form_id == config('const.form.entertaiment') ? route('user.entertainment.show', $application_draft->id) : '')) }}
+                                                    {{ Common::getRouteEditApplication($application_draft->id, $application_draft->form_id) }}
                                                 </x-slot>
                                                 <x-slot name="deleteUrl">
                                                     {{ route('user.draft.delete', $application_draft->id) }}

@@ -31,7 +31,9 @@ class EntertainmentController extends Controller
         $companies = Company::all('name');
         $companies = Arr::pluck($companies->toArray(), 'name');
 
-        return view('application.entertainment.input', compact('companies'));
+        $previewFlg = false;
+
+        return view('application.entertainment.input', compact('companies', 'previewFlg'));
     }
 
     public function store(Request $request)
@@ -84,7 +86,10 @@ class EntertainmentController extends Controller
         $companies = Company::all('name');
         $companies = Arr::pluck($companies->toArray(), 'name');
 
-        return view('application.entertainment.input', compact('application', 'companies'));
+        // if application is completed status => NOT ALLOWS EDIT
+        $previewFlg = $application->status == config('const.application.status.completed');
+
+        return view('application.entertainment.input', compact('application', 'companies', 'previewFlg'));
     }
 
     public function update(Request $request, $id)

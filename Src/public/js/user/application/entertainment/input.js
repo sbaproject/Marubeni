@@ -107,8 +107,10 @@ $(document).ready(function () {
         $('#has_entertainment_times').val($(this).val());
         if ($(this).val() == true) {
             $('#txt_entertainment_times').removeAttr('readonly');
+            $('#rq_et_times').removeClass('d-none');
         } else {
             $('#txt_entertainment_times').attr('readonly', 'readonly');
+            $('#rq_et_times').addClass('d-none');
             $('input[type=number][name="entertainment_times"]').val('');
         }
     });
@@ -129,8 +131,10 @@ $(document).ready(function () {
         $('#entertainment_reason').val($(this).val());
         if ($(this).val() == _REASON_OTHER) { // Other
             $('#entertainment_reason_other').removeAttr('readonly');
+            $('#entertainment_reason_other').removeClass('d-none');
         } else {
             $('#entertainment_reason_other').attr('readonly', 'readonly');
+            $('#entertainment_reason_other').addClass('d-none');
         }
     });
 
@@ -152,8 +156,20 @@ $(document).ready(function () {
             if (!_PREVIEW_FLG) {
                 $('#entertainment_reason_other').removeAttr('readonly');
             }
+            $('#entertainment_reason_other').removeClass('d-none');
         } else {
             $('#entertainment_reason_other').attr('readonly', 'readonly');
+            $('#entertainment_reason_other').addClass('d-none');
+        }
+
+        // entertainment_times
+        if ($('[name="has_entertainment_times"]').val() == true) {
+            $('#txt_entertainment_times').removeAttr('readonly');
+            $('#rq_et_times').removeClass('d-none');
+        } else {
+            $('#txt_entertainment_times').attr('readonly', 'readonly');
+            $('#rq_et_times').addClass('d-none');
+            $('input[type=number][name="entertainment_times"]').val('');
         }
     }
 
@@ -243,5 +259,11 @@ $(document).ready(function () {
                 $(this).find('.d-delete').removeClass('d-none');
             }
         });
+        // maximum is 4 blocks only
+        if (infosElements.length >= 4) {
+            $('#btnAdd').addClass('d-none');
+        } else {
+            $('#btnAdd').removeClass('d-none');
+        }
     }
 });

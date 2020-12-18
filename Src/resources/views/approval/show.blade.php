@@ -25,7 +25,7 @@
         <div class="row">
             <div class="col-lg-9 col-md-12">
                 <h4 class="mb-2" style="font-weight: 600;">{{ Str::upper(__('label.application_info')) }}</h4>
-                <div class="card card-app">
+                <div class="invoice p-3 mb-3 card-app">
                     <x-alert/>
                     <div class="card-body p-0">
                         <div class="appcation_info">
@@ -95,48 +95,50 @@
                         </div>
                     </div>
                     <!-- /.card-body -->
-                </div>
-                <form action="{{ route('user.approval.update', $app->id) }}" method="POST">
-                    @csrf
-                    <div class="row">
-                        <div class="col-12">
-                            <a href="{{ Common::getRoutePreviewApplication($app->id, $app->form_id) }}" class="btn btn-secondary bt_border bt_preview" target="_blank">
-                                {{ __('label.button.preview') }}
-                            </a>
+                    <form action="{{ route('user.approval.update', $app->id) }}" method="POST" class="mt-1">
+                        @csrf
+                        <div class="row">
+                            <div class="col-12">
+                                <a href="{{ Common::getRoutePreviewApplication($app->id, $app->form_id) }}"
+                                    class="btn btn-outline-secondary" target="_blank">
+                                    {{ __('label.button.preview') }}
+                                </a>
+                            </div>
                         </div>
-                    </div>
-                    <div class="row wrap_comment">
-                        <div class="col-md-3 col-xl-2 ">
-                            <span class="comment_title">{{ __('label.comment') }}</span>
+                        <div class="row wrap_comment">
+                            <div class="col-md-3 col-xl-2 ">
+                                <span class="comment_title">{{ __('label.comment') }}</span>
+                            </div>
+                            <div class="col-md-9 col-xl-10">
+                                <textarea class="form-control comment_area" id="app_comment" name="comment" rows="4" @if (!$isAbleToAction)
+                                    readonly @endif placeholder="{{ __('label.comment') }}">{{ $app_comment }}</textarea>
+                            </div>
                         </div>
-                        <div class="col-md-9 col-xl-10">
-                            <textarea class="form-control comment_area" id="app_comment" name="comment" rows="4" @if (!$isAbleToAction) readonly @endif
-                                placeholder="{{ __('label.comment') }}">{{ $app_comment }}</textarea>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12">
-                            @if ($isAbleToAction)
-                                <button type="button" name="approve" value="approve" class="btn btn-success bt_border"
-                                    data-toggle="modal" data-target="#popup-confirm">
+                        <div class="row text-center">
+                            <div class="col-12">
+                                @if ($isAbleToAction)
+                                <button type="button" name="approve" value="approve" class="btn bg-gradient-success" data-toggle="modal"
+                                    data-target="#popup-confirm">
                                     {{ __('label.button.approval') }}
                                 </button>
-                                <button type="button" name="reject" value="reject" class="btn btn-danger bt_border"
-                                    data-toggle="modal" data-target="#popup-confirm">
+                                <button type="button" name="reject" value="reject" class="btn bg-gradient-danger" data-toggle="modal"
+                                    data-target="#popup-confirm">
                                     {{ __('label.button.reject') }}
                                 </button>
-                                <button type="button" name="declined" value="declined" class="btn btn-secondary bt_border bt_preview"
-                                    data-toggle="modal" data-target="#popup-confirm">
+                                <button type="button" name="declined" value="declined" class="btn bg-gradient-warning" data-toggle="modal"
+                                    data-target="#popup-confirm">
                                     {{ __('label.button.declined') }}
                                 </button>
-                            @endif
-                            <a href="{{ route('user.approval.index') }}" class="btn btn-secondary bt_border bt_preview">
-                                {{ __('label.button.cancel') }}
-                            </a>
+                                @endif
+                                <a href="{{ route('user.approval.index') }}" class="btn bg-gradient-secondary">
+                                    {{ __('label.button.cancel') }}
+                                </a>
+                            </div>
                         </div>
-                    </div>
-                    <input type="hidden" name="form_id" value="{{ $app->form_id }}">
-                </form>
+                        <input type="hidden" name="form_id" value="{{ $app->form_id }}">
+                    </form>
+                </div>
+                
             </div>
         </div>
     </div>

@@ -35,10 +35,9 @@
 <script src="js/user/application/entertainment/input.js"></script>
 
 <script>
-    // list of name companies
-    const _COMPANIES = @json($companies);
+    const _COMPANIES    = @json($companies);
     const _REASON_OTHER = @json(config('const.entertainment.reason.other'));
-    const _PREVIEW_FLG = @json(isset($previewFlg) ? true : false);
+    const _PREVIEW_FLG  = @json($previewFlg);
 </script>
 @endsection
 
@@ -66,7 +65,7 @@
 
     // get action url
     if(isset($application)){
-        if(isset($previewFlg)){
+        if($previewFlg){
             $actionUrl = route('user.entertainment.preview.pdf', $application->id);
         } else {
             $actionUrl = route('user.entertainment.update', $application->id);
@@ -102,13 +101,15 @@
                 <hr>
                 @endif
                 <div class="form-group row ">
-                    <label class="col-lg-2 col-form-label text-left">{{ __('label.entertainment.entertainment_dt') }}</label>
+                    <label class="col-lg-2 col-form-label text-left">
+                        {{ __('label.entertainment.entertainment_dt') }}<span class="text-danger required"> (*)</span>
+                    </label>
                     <div class="col-lg-4">
                         <div class="form-group">
                             <div id="datetime" data-target-input="nearest" class="input-group date">
                                 <input type="text"
                                     class="form-control datetimepicker-input @error('entertainment_dt') is-invalid @enderror"
-                                    data-target="#datetime" @if(isset($previewFlg)) readonly @endif/>
+                                    data-target="#datetime" @if($previewFlg) readonly @endif/>
                                 <div class="input-group-addon input-group-append" data-target="#datetime"
                                     data-toggle="datetimepicker">
                                     <div class="input-group-text"><i class="fa fa-calendar-alt"></i>
@@ -126,10 +127,12 @@
                 </div>
                 <hr>
                 <div class="form-group row ">
-                    <label class="col-lg-2 col-form-label text-left">{{ __('label.entertainment.place') }}</label>
+                    <label class="col-lg-2 col-form-label text-left">
+                        {{ __('label.entertainment.place') }}<span class="text-danger required"> (*)</span>
+                    </label>
                     <div class="col-lg-10">
                         <input type="text" name="place" class="form-control @error('place') is-invalid @enderror" value="{{ $place }}"
-                            @if(isset($previewFlg)) readonly @endif>
+                            @if($previewFlg) readonly @endif>
                         @error('place')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -139,13 +142,15 @@
                 </div>
                 <hr>
                 <div class="form-group row ">
-                    <label class="col-lg-2 col-form-label text-left">{{ __('label.entertainment.during_trip') }}</label>
+                    <label class="col-lg-2 col-form-label text-left">
+                        {{ __('label.entertainment.during_trip') }}<span class="text-danger required"> (*)</span>
+                    </label>
                     <div class="col-lg-10 text-lg-left text-left">
                         <fieldset class="@error('during_trip') form-control is-invalid @enderror">
                             @foreach (config('const.entertainment.during_trip') as $key => $value)
                                 <label class="radio-inline com_title col-form-label">
                                     <input type="radio" name="rd_during_trip" value="{{ $value }}" @if($during_trip !== null && $during_trip == $value) checked @endif
-                                        @if(isset($previewFlg)) disabled @endif>
+                                        @if($previewFlg) disabled @endif>
                                     {{ __('label.'. $key) }}
                                 </label>
                             @endforeach
@@ -161,14 +166,14 @@
                 <hr>
                 <div class="form-group row">
                     <label class="col-lg-2 col-form-label text-left d-flex align-items-left justify-content-left">
-                        {{ __('label.entertainment.entrainment_infomation') }}
+                        {{ __('label.entertainment.entrainment_infomation') }}<span class="text-danger required"> (*)</span>
                     </label>
                     <div class="col-lg-10">
                         <div id="infos_block">
                             @if (!empty($infos))
                             @foreach ($infos as $key => $value)
                             <div class="card card-body card-company">
-                                @if(!isset($previewFlg))
+                                @if(!$previewFlg)
                                 <div class="d-delete d-flex justify-content-end @if(count($infos) === 1 && $key === 0) d-none @endif">
                                     <button class="btnDelete btn bg-gradient-danger btn-sm pt-0 pb-0 pl-3 pr-3 mb-1">
                                         {{ __('label.button.delete') }}
@@ -176,12 +181,14 @@
                                 </div>
                                 @endif
                                 <div class="form-group row">
-                                    <label class="col-lg-2 col-form-label com_title text-left">{{ __('label.entertainment.cp_name') }}</label>
-                                    <div class="col-lg-10">
+                                    <label class="col-lg-3 col-form-label com_title text-left">
+                                        {{ __('label.entertainment.cp_name') }}<span class="text-danger required"> (*)</span>
+                                    </label>
+                                    <div class="col-lg-9">
                                         <div id="scrollable-dropdown-menu">
                                             <input type="text" class="form-control cp_name @error('infos.'.$key.'.cp_name') is-invalid @enderror"
                                                 name="infos[{{ $key }}][cp_name]" autocomplete="off" value="{{ $infos[$key]['cp_name'] }}"
-                                                @if(isset($previewFlg)) readonly @endif>
+                                                @if($previewFlg) readonly @endif>
                                         </div>
                                         @error('infos.'.$key.'.cp_name')
                                         <span class="invalid-feedback" role="alert">
@@ -191,12 +198,14 @@
                                     </div>
                                 </div>
                                 <div class="form-group row ">
-                                    <label class="col-lg-2 col-form-label com_title text-left">{{ __('label.entertainment.title') }}</label>
-                                    <div class="col-lg-10">
+                                    <label class="col-lg-3 col-form-label com_title text-left">
+                                        {{ __('label.entertainment.title') }}<span class="text-danger required"> (*)</span>
+                                    </label>
+                                    <div class="col-lg-9">
                                         <input type="text" class="form-control title @error('infos.'.$key.'.title') is-invalid @enderror"
                                             name="infos[{{ $key }}][title]" autocomplete="off"
                                             value="{{ $infos[$key]['title'] }}"
-                                            @if(isset($previewFlg)) readonly @endif>
+                                            @if($previewFlg) readonly @endif>
                                         @error('infos.'.$key.'.title')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -205,12 +214,14 @@
                                     </div>
                                 </div>
                                 <div class="form-group row ">
-                                    <label class="col-lg-2 col-form-label com_title text-left">{{ __('label.entertainment.name_attendants') }}</label>
-                                    <div class="col-lg-10">
+                                    <label class="col-lg-3 col-form-label com_title text-left">
+                                        {{ __('label.entertainment.name_attendants') }}<span class="text-danger required"> (*)</span>
+                                    </label>
+                                    <div class="col-lg-9">
                                         <input type="text" class="form-control name_attendants @error('infos.'.$key.'.name_attendants') is-invalid @enderror"
                                             name="infos[{{ $key }}][name_attendants]" autocomplete="off"
                                             value="{{ $infos[$key]['name_attendants'] }}"
-                                            @if(isset($previewFlg)) readonly @endif>
+                                            @if($previewFlg) readonly @endif>
                                         @error('infos.'.$key.'.name_attendants')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -219,12 +230,14 @@
                                     </div>
                                 </div>
                                 <div class="form-group row ">
-                                    <label class="col-lg-2 col-form-label com_title text-left">{{ __('label.entertainment.details_dutles') }}</label>
-                                    <div class="col-lg-10">
+                                    <label class="col-lg-3 col-form-label com_title text-left">
+                                        {{ __('label.entertainment.details_dutles') }}<span class="text-danger required"> (*)</span>
+                                    </label>
+                                    <div class="col-lg-9">
                                         <input type="text" class="form-control details_dutles @error('infos.'.$key.'.details_dutles') is-invalid @enderror"
                                             name="infos[{{ $key }}][details_dutles]" autocomplete="off"
                                             value="{{ $infos[$key]['details_dutles'] }}"
-                                            @if(isset($previewFlg)) readonly @endif>
+                                            @if($previewFlg) readonly @endif>
                                         @error('infos.'.$key.'.details_dutles')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -242,33 +255,41 @@
                                     </button>
                                 </div>
                                 <div class="form-group row ">
-                                    <label class="col-lg-2 col-form-label com_title text-left">{{ __('label.entertainment.cp_name') }}</label>
-                                    <div class="col-lg-10">
+                                    <label class="col-lg-3 col-form-label com_title text-left">
+                                        {{ __('label.entertainment.cp_name') }}<span class="text-danger required"> (*)</span>
+                                    </label>
+                                    <div class="col-lg-9">
                                         <div id="scrollable-dropdown-menu">
                                             <input type="text" class="form-control cp_name" name="infos[0][cp_name]" autocomplete="off"
-                                                @if(isset($previewFlg)) readonly @endif>
+                                                @if($previewFlg) readonly @endif>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group row ">
-                                    <label class="col-lg-2 col-form-label com_title text-left">{{ __('label.entertainment.title') }}</label>
-                                    <div class="col-lg-10">
+                                    <label class="col-lg-3 col-form-label com_title text-left">
+                                        {{ __('label.entertainment.title') }}<span class="text-danger required"> (*)</span>
+                                    </label>
+                                    <div class="col-lg-9">
                                         <input type="text" class="form-control title" name="infos[0][title]" autocomplete="off"
-                                            @if(isset($previewFlg)) readonly @endif>
+                                            @if($previewFlg) readonly @endif>
                                     </div>
                                 </div>
                                 <div class="form-group row ">
-                                    <label class="col-lg-2 col-form-label com_title text-left">{{ __('label.entertainment.name_attendants') }}</label>
-                                    <div class="col-lg-10">
+                                    <label class="col-lg-3 col-form-label com_title text-left">
+                                        {{ __('label.entertainment.name_attendants') }}<span class="text-danger required"> (*)</span>
+                                    </label>
+                                    <div class="col-lg-9">
                                         <input type="text" class="form-control name_attendants" name="infos[0][name_attendants]" autocomplete="off"
-                                            @if(isset($previewFlg)) readonly @endif>
+                                            @if($previewFlg) readonly @endif>
                                     </div>
                                 </div>
                                 <div class="form-group row ">
-                                    <label class="col-lg-2 col-form-label com_title text-left">{{ __('label.entertainment.details_dutles') }}</label>
-                                    <div class="col-lg-10">
+                                    <label class="col-lg-3 col-form-label com_title text-left">
+                                        {{ __('label.entertainment.details_dutles') }}<span class="text-danger required"> (*)</span>
+                                    </label>
+                                    <div class="col-lg-9">
                                         <input type="text" class="form-control details_dutles" name="infos[0][details_dutles]" autocomplete="off"
-                                            @if(isset($previewFlg)) readonly @endif>
+                                            @if($previewFlg) readonly @endif>
                                     </div>
                                 </div>
                             </div>
@@ -282,34 +303,44 @@
                                 </button>
                             </div>
                             <div class="form-group row ">
-                                <label class="col-lg-2 col-form-label com_title text-left">{{ __('label.entertainment.cp_name') }}</label>
-                                <div class="col-lg-10">
+                                <label class="col-lg-3 col-form-label com_title text-left">
+                                    {{ __('label.entertainment.cp_name') }}<span class="text-danger required"> (*)</span>
+                                </label>
+                                <div class="col-lg-9">
                                     <div id="scrollable-dropdown-menu">
-                                        <input type="text" class="form-control cp_name" autocomplete="off" @if(isset($previewFlg)) readonly @endif>
+                                        <input type="text" class="form-control cp_name" autocomplete="off" @if($previewFlg) readonly @endif>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group row ">
-                                <label class="col-lg-2 col-form-label com_title text-left">{{ __('label.entertainment.title') }}</label>
-                                <div class="col-lg-10">
-                                    <input type="text" class="form-control title" autocomplete="off" @if(isset($previewFlg)) readonly @endif>
+                                <label class="col-lg-3 col-form-label com_title text-left">
+                                    {{ __('label.entertainment.title') }}<span class="text-danger required"> (*)</span>
+                                </label>
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control title" autocomplete="off" @if($previewFlg) readonly @endif>
                                 </div>
                             </div>
                             <div class="form-group row ">
-                                <label class="col-lg-2 col-form-label com_title text-left">{{ __('label.entertainment.name_attendants') }}</label>
-                                <div class="col-lg-10">
-                                    <input type="text" class="form-control name_attendants" autocomplete="off" @if(isset($previewFlg)) readonly @endif>
+                                <label class="col-lg-3 col-form-label com_title text-left">
+                                    {{ __('label.entertainment.name_attendants') }}<span class="text-danger required"> (*)</span>
+                                </label>
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control name_attendants" autocomplete="off" @if($previewFlg) readonly @endif>
                                 </div>
                             </div>
                             <div class="form-group row ">
-                                <label class="col-lg-2 col-form-label com_title text-left">{{ __('label.entertainment.details_dutles') }}</label>
-                                <div class="col-lg-10">
-                                    <input type="text" class="form-control details_dutles" autocomplete="off" @if(isset($previewFlg)) readonly @endif>
+                                <label class="col-lg-3 col-form-label com_title text-left">
+                                    {{ __('label.entertainment.details_dutles') }}<span class="text-danger required"> (*)</span>
+                                </label>
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control details_dutles" autocomplete="off" @if($previewFlg) readonly @endif>
                                 </div>
                             </div>
                         </div>
-                        @if(!isset($previewFlg))
-                        <button id="btnAdd" class="btn bg-gradient-danger">+ {{ __('label.button.addnew') }}</button>
+                        @if(!$previewFlg)
+                        <button id="btnAdd" class="btn bg-gradient-danger @if(!empty($infos) && count($infos) >= 4) d-none @endif">
+                            + {{ __('label.button.addnew') }}
+                        </button>
                         @endif
                         <!-- ./form chil -->
                     </div>
@@ -317,7 +348,7 @@
                 <hr>
                 <div class="form-group row ">
                     <label class="col-lg-2 col-form-label text-left">
-                        {{ __('label.entertainment.budget_position') }}
+                        {{ __('label.entertainment.budget_position') }}<span class="text-danger required"> (*)</span>
                     </label>
                     <div class="col-lg-10 text-lg-left text-left">
                         <fieldset class="@error('budget_position') form-control is-invalid @enderror">
@@ -328,7 +359,7 @@
                                 @endphp
                                 <input type="radio" name="rd_budget_position" value="{{ $val }}"
                                     @if($budget_position !==null && $budget_position==$val) checked @endif
-                                    @if(isset($previewFlg)) disabled @endif>
+                                    @if($previewFlg) disabled @endif>
                                 {{ __('label.budget.'. $key) }}
                             </label>
                             <label class="radio-inline com_title col-form-label">
@@ -338,7 +369,7 @@
                                 @endphp
                                 <input type="radio" name="rd_budget_position" value="{{ $val }}"
                                     @if($budget_position !==null && $budget_position==$val) checked @endif
-                                    @if(isset($previewFlg)) disabled @endif>
+                                    @if($previewFlg) disabled @endif>
                                 {{ __('label.budget.'. $key) }}
                             </label>
                         </fieldset>
@@ -353,14 +384,14 @@
                 <hr>
                 <div class="form-group row ">
                     <label class="col-lg-2 col-form-label text-left">
-                        {{ __('label.entertainment.check_row') }}
+                        {{ __('label.entertainment.check_row') }}<span class="text-danger required"> (*)</span>
                     </label>
                     <div class="col-lg-10 text-lg-left text-left">
                         <fieldset class="@error('check_row') form-control is-invalid @enderror">
                             @foreach (config('const.entertainment.check_row') as $key => $value)
                             <label class="radio-inline com_title col-form-label">
                                 <input type="radio" name="rd_check_row" value="{{ $value }}" @if($check_row !== null && $check_row == $value) checked @endif
-                                    @if(isset($previewFlg)) disabled @endif>
+                                    @if($previewFlg) disabled @endif>
                                 {{ __('label.'. $key) }}
                             </label>
                             @endforeach
@@ -376,14 +407,14 @@
                 <hr>
                 <div class="form-group row">
                     <label class="col-lg-2 col-form-label text-left">
-                        {{ __('label.entertainment.entertainment_times') }}
+                        {{ __('label.entertainment.entertainment_times') }}<span class="text-danger required"> (*)</span>
                     </label>
                     <div class="col-lg-10 text-lg-left text-left">
                         <fieldset class="@error('has_entertainment_times') form-control is-invalid @enderror">
                             @foreach (config('const.entertainment.has_et_times') as $key => $value)
                             <label class="radio-inline com_title col-form-label">
                                 <input type="radio" name="rd_has_entertainment_times" value="{{ $value }}" @if($has_et_times !== null && $has_et_times == $value) checked @endif
-                                    @if(isset($previewFlg)) disabled @endif>
+                                    @if($previewFlg) disabled @endif>
                                 {{ __('label.'. $key) }}
                             </label>
                             @endforeach
@@ -398,7 +429,7 @@
                             <div style="padding-left: 0px" class="col-md-4">
                                 <input type="text" id="txt_entertainment_times"
                                     class="form-control entertainment_times @error('entertainment_times') is-invalid @enderror"
-                                    value="{{ $et_times }}" placeholder="{{ __('label.entertainment.entertainment_times') }}" @if(isset($previewFlg)
+                                    value="{{ $et_times }}" placeholder="{{ __('label.entertainment.entertainment_times') }}" @if($previewFlg
                                     || (empty($has_et_times) || ($has_et_times !==null &&
                                     $has_et_times==config('const.entertainment.has_et_times.no')))) readonly @endif>
                                 <input type="hidden" name="entertainment_times" value="{{ $et_times }}">
@@ -409,7 +440,7 @@
                                 @enderror
                             </div>
                             <label class="col-lg-8 col-form-label com_title text-lg-left text-left">
-                                {{ __('label.times') }}
+                                {{ __('label.times') }}<span id="rq_et_times" class="text-danger required"> (*)</span>
                             </label>
                         </div>
                         
@@ -418,7 +449,7 @@
                 <hr>
                 <div class="form-group row">
                     <label class="col-lg-2 col-form-label text-left">
-                        {{ __('label.entertainment.existence_projects') }}
+                        {{ __('label.entertainment.existence_projects') }}<span class="text-danger required"> (*)</span>
                     </label>
                     <div class="col-lg-10 text-lg-left text-left">
                         <fieldset class="@error('existence_projects') form-control is-invalid @enderror">
@@ -426,7 +457,7 @@
                             <label class="radio-inline com_title col-form-label">
                                 <input type="radio" name="rd_existence_projects" value="{{ $value }}" @if($existence_projects !==null &&
                                     $existence_projects==$value) checked @endif
-                                    @if(isset($previewFlg)) disabled @endif>
+                                    @if($previewFlg) disabled @endif>
                                 {{ __('label.'. $key) }}
                             </label>
                             @endforeach
@@ -442,7 +473,7 @@
                 <hr>
                 <div class="form-group row ">
                     <label class="col-lg-2 col-form-label text-left">
-                        {{ __('label.entertainment.includes_family') }}
+                        {{ __('label.entertainment.includes_family') }}<span class="text-danger required"> (*)</span>
                     </label>
                     <div class="col-lg-10 text-lg-left text-left">
                         <fieldset class="@error('includes_family') form-control is-invalid @enderror">
@@ -450,7 +481,7 @@
                             <label class="radio-inline com_title col-form-label">
                                 <input type="radio" name="rd_includes_family" value="{{ $value }}" @if($includes_family !==null &&
                                     $includes_family==$value) checked @endif
-                                    @if(isset($previewFlg)) disabled @endif>
+                                    @if($previewFlg) disabled @endif>
                                 {{ __('label.'. $key) }}
                             </label>
                             @endforeach
@@ -472,17 +503,17 @@
                     </label>
                     <div class="col-lg-10">
                         <textarea id="project_name" name="project_name" class="form-control" rows="2"
-                            @if(isset($previewFlg)) readonly @endif>{{ $project_name }}</textarea>
+                            @if($previewFlg) readonly @endif>{{ $project_name }}</textarea>
                     </div>
                 </div>
                 <hr>
                 <div class="form-group row ">
                     <label class="col-lg-2 col-form-label text-left d-flex align-items-left justify-content-left">
-                        {{ __('label.entertainment.entertainment_reason') }}
+                        {{ __('label.entertainment.entertainment_reason') }}<span class="text-danger required"> (*)</span>
                     </label>
                     <div class="col-lg-10">
                         <select name="rd_entertainment_reason" style="width: auto;" class="form-control @error('entertainment_reason') is-invalid @enderror"
-                            @if(isset($previewFlg)) disabled @endif>
+                            @if($previewFlg) disabled @endif>
                             <option value="empty" @if($entertainment_reason == 'empty' ) selected @endif>
                                 {{ __('label.select') }}
                             </option>
@@ -500,9 +531,10 @@
                         </span>
                         @enderror
                         <div style="margin-top: 10px">
-                            <textarea id="entertainment_reason_other" name="entertainment_reason_other" class="form-control @error('entertainment_reason_other') is-invalid @enderror"
+                            <textarea id="entertainment_reason_other" name="entertainment_reason_other"
+                                class="form-control @error('entertainment_reason_other') is-invalid @enderror"
                                 rows="3" placeholder="{{ __('label.entertainment.entertainment_reason_other') }}"
-                                @if(isset($previewFlg)) readonly @endif>{{ $entertainment_reason_other }}</textarea>
+                                @if($previewFlg) readonly @endif>{{ $entertainment_reason_other }}</textarea>
                             @error('entertainment_reason_other')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -514,13 +546,13 @@
                 <hr>
                 <div class="form-group row ">
                     <label class="col-lg-2 col-form-label text-left">
-                        {{ __('label.entertainment.entertainment_person') }}
+                        {{ __('label.entertainment.entertainment_person') }}<span class="text-danger required"> (*)</span>
                     </label>
                     <div class="col-lg-10">
                         <div class="form-group row ">
                             <div class="col-lg-4">
                                 <input type="text" class="form-control entertainment_person @error('entertainment_person') is-invalid @enderror"
-                                    value="{{ $entertainment_person }}" @if(isset($previewFlg)) readonly @endif>
+                                    value="{{ $entertainment_person }}" @if($previewFlg) readonly @endif>
                                     <input type="hidden" name="entertainment_person" value="{{ $entertainment_person }}">
                             </div>
                             <label class="col-lg-8 col-form-label com_title text-lg-left text-left">{{ __('label.entertainment.persons') }}</label>
@@ -534,12 +566,14 @@
                 </div>
                 <hr>
                 <div class="form-group row ">
-                    <label class="col-lg-2 col-form-label text-left">{{ __('label.entertainment.est_amount') }}</label>
+                    <label class="col-lg-2 col-form-label text-left">
+                        {{ __('label.entertainment.est_amount') }}<span class="text-danger required"> (*)</span>
+                    </label>
                     <div class="col-lg-10 text-lg-left text-left">
                         <div class="form-group row ">
                             <div class="col-lg-4">
                                 <input type="text" class="form-control est_amount @error('est_amount') is-invalid @enderror" max-number="9"
-                                    value="{{ $est_amount }}" @if(isset($previewFlg)) readonly @endif>
+                                    value="{{ $est_amount }}" @if($previewFlg) readonly @endif>
                                 <input type="hidden" name="est_amount" value="{{ $est_amount }}">
                             </div>
                             <label class="col-lg-8 col-form-label com_title text-lg-left text-left">
@@ -561,7 +595,7 @@
                     </label>
                     <div class="col-lg-10">
                         <textarea id="reason_budget_over" name="reason_budget_over" class="form-control" rows="3"
-                            @if(isset($previewFlg)) readonly @endif>{{ $reason_budget_over }}</textarea>
+                            @if($previewFlg) readonly @endif>{{ $reason_budget_over }}</textarea>
                     </div>
                 </div>
                 <hr>
@@ -570,7 +604,7 @@
                         <label for="myfile">{{ __('label.leave.caption.file_path') }}</label>
                     </div>
                     <div class="col-sm-5">
-                        @if(isset($previewFlg))
+                        @if($previewFlg)
                             @if(isset($application) && !empty($file_path))
                             <div class="file-show input-group mb-3">
                                 <label class="form-control file-link">
@@ -641,7 +675,7 @@
                         <div class="form-check">
                             <input type="checkbox" id="cb_subsequent" name="cb_subsequent" class="form-check-input"
                                     @if($subsequent !== null && $subsequent == config('const.check.on')) checked @endif
-                                    @if(isset($previewFlg)) disabled @endif>
+                                    @if($previewFlg) disabled @endif>
                                 <input type="hidden" id="subsequent" name="subsequent" value="{{ $subsequent }}">
                             <label class="form-check-label" for="cb_subsequent">{{ __('label.on') }}</label>
                         </div>
@@ -650,8 +684,8 @@
             </div>
         </div>
         <!-- /.card -->
-        @if (!isset($previewFlg))
-        <div>
+        @if (!$previewFlg)
+        <div class="text-center">
             <button type="button" name="apply" value="apply" class="btn bg-gradient-success btn-form" data-toggle="modal"
                 data-target="#popup-confirm">
                 <i class="far fa-check-circle" style="margin-right: 5px;"></i>

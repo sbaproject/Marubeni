@@ -43,7 +43,7 @@
 
     // get action url
     if(isset($application)){
-        if(isset($previewFlg)){
+        if($previewFlg){
             $actionUrl = route('user.business.preview.pdf', $application->id);
         } else {
             $actionUrl = route('user.business.update', $application->id);
@@ -82,11 +82,11 @@
                 @endif
                 <div class="form-group row">
                     <div class="col-sm-2 text-left">
-                        <label>{{ __('label.business.trip_destination') }}</label>
+                        <label>{{ __('label.business.trip_destination') }}<span class="text-danger required"> (*)</span></label>
                     </div>
                     <div class="col-sm-10">
                         <input type="text" id="destinations" name="destinations" class="form-control @error('destinations') is-invalid @enderror"
-                            autocomplete="off" value="{{ $destinations }}" @if(isset($previewFlg)) readonly @endif>
+                            autocomplete="off" value="{{ $destinations }}" @if($previewFlg) readonly @endif>
                         @error('destinations')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -97,7 +97,7 @@
                 <hr>
                 <div class="form-group row">
                     <div class="col-sm-2 text-left">
-                        <label>{{ __('label.business.date_trip') }}</label>
+                        <label>{{ __('label.business.date_trip') }}<span class="text-danger required"> (*)</span></label>
                     </div>
                     <div class="col-sm-10">
                         <div class="col-sm-6 pl-0 pr-0">
@@ -107,7 +107,7 @@
                                     <div class="form-group">
                                         <div id="trip_from" data-target-input="nearest" class="input-group date">
                                             <input type="text" class="form-control datetimepicker-input @error('trip_dt_from') is-invalid @enderror"
-                                                data-target="#trip_from" @if(isset($previewFlg)) readonly @endif />
+                                                data-target="#trip_from" @if($previewFlg) readonly @endif />
                                             <div class="input-group-addon input-group-append"
                                                 data-target="#trip_from" data-toggle="datetimepicker">
                                                 <div class="input-group-text"><i class="fa fa-calendar-alt"></i>
@@ -129,7 +129,7 @@
                                     <div class="form-group">
                                         <div class="input-group date" id="trip_to" data-target-input="nearest">
                                             <input type="text" class="form-control datetimepicker-input @error('trip_dt_to') is-invalid @enderror"
-                                                data-target="#trip_to" @if(isset($previewFlg)) readonly @endif/>
+                                                data-target="#trip_to" @if($previewFlg) readonly @endif/>
                                             <div class="input-group-addon input-group-append"
                                                 data-target="#trip_to" data-toggle="datetimepicker">
                                                 <div class="input-group-text"><i class="fa fa-calendar-alt"></i>
@@ -151,14 +151,14 @@
                 <hr>
                 <div class="form-group row">
                     <div class="col-sm-2 text-left">
-                        <label>{{ __('label.business.transportation') }}</label>
+                        <label>{{ __('label.business.transportation') }}<span class="text-danger required"> (*)</span></label>
                     </div>
                     <div class="col-sm-10">
                         <div id="transport_block">
                             @if (!empty($trans))
                                 @foreach ($trans as $key => $value)
                                 <div class="card card-body card-itinerary-transport">
-                                    @if(!isset($previewFlg))
+                                    @if(!$previewFlg)
                                     <div class="d-delete d-flex justify-content-end @if(count($trans) === 1 && $key === 0) d-none @endif">
                                         <button class="btnDelete btn bg-gradient-danger btn-sm pt-0 pb-0 pl-3 pr-3 mb-1">
                                             {{ __('label.button.delete') }}
@@ -168,11 +168,11 @@
                                     <div class="form-group row">
                                         <div class="col-sm-6">
                                             <div class="row mb-2">
-                                                <span class="col-md-3">{{ __('label.business.departure') }}</span>
+                                                <span class="col-md-3">{{ __('label.business.departure') }}<span class="text-danger required"> (*)</span></span>
                                                 <div class="col-md-9">
                                                     <input type="text" class="form-control departure @error('trans.'.$key.'.departure') is-invalid @enderror"
                                                         name="trans[{{ $key }}][departure]" value="{{ $trans[$key]['departure'] }}" autocomplete="off"
-                                                        @if(isset($previewFlg)) readonly @endif>
+                                                        @if($previewFlg) readonly @endif>
                                                     @error('trans.'.$key.'.departure')
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>
@@ -181,11 +181,11 @@
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <span class="col-md-3">{{ __('label.business.arrival') }}</span>
+                                                <span class="col-md-3">{{ __('label.business.arrival') }}<span class="text-danger required"> (*)</span></span>
                                                 <div class="col-md-9">
                                                     <input type="text" class="form-control arrive @error('trans.'.$key.'.arrive') is-invalid @enderror"
                                                         name="trans[{{ $key }}][arrive]" value="{{ $trans[$key]['arrive'] }}" autocomplete="off"
-                                                        @if(isset($previewFlg)) readonly @endif>
+                                                        @if($previewFlg) readonly @endif>
                                                     @error('trans.'.$key.'.arrive')
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>
@@ -196,11 +196,11 @@
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="row">
-                                                <span class="col-md-3">{{ __('label.business.method') }}</span>
+                                                <span class="col-md-3">{{ __('label.business.method') }}<span class="text-danger required"> (*)</span></span>
                                                 <div class="col-md-9">
                                                     <input type="text" class="form-control method @error('trans.'.$key.'.method') is-invalid @enderror"
                                                         name="trans[{{ $key }}][method]" value="{{ $trans[$key]['method'] }}" autocomplete="off"
-                                                        @if(isset($previewFlg)) readonly @endif>
+                                                        @if($previewFlg) readonly @endif>
                                                     @error('trans.'.$key.'.method')
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>
@@ -222,26 +222,26 @@
                                     <div class="form-group row">
                                         <div class="col-sm-6">
                                             <div class="row mb-2">
-                                                <span class="col-md-3">{{ __('label.business.departure') }}</span>
+                                                <span class="col-md-3">{{ __('label.business.departure') }}<span class="text-danger required"> (*)</span></span>
                                                 <div class="col-md-9">
                                                     <input type="text" class="form-control departure" name="trans[0][departure]"
-                                                        autocomplete="off" @if(isset($previewFlg)) readonly @endif>
+                                                        autocomplete="off" @if($previewFlg) readonly @endif>
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <span class="col-md-3">{{ __('label.business.arrival') }}</span>
+                                                <span class="col-md-3">{{ __('label.business.arrival') }}<span class="text-danger required"> (*)</span></span>
                                                 <div class="col-md-9">
                                                     <input type="text" class="form-control arrive" name="trans[0][arrive]"
-                                                        autocomplete="off" @if(isset($previewFlg)) readonly @endif>
+                                                        autocomplete="off" @if($previewFlg) readonly @endif>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="row">
-                                                <span class="col-md-3">{{ __('label.business.method') }}</span>
+                                                <span class="col-md-3">{{ __('label.business.method') }}<span class="text-danger required"> (*)</span></span>
                                                 <div class="col-md-9">
                                                     <input type="text" class="form-control method" name="trans[0][method]"
-                                                        autocomplete="off" @if(isset($previewFlg)) readonly @endif>
+                                                        autocomplete="off" @if($previewFlg) readonly @endif>
                                                 </div>
                                             </div>
                                         </div>
@@ -257,33 +257,33 @@
                                 <div class="form-group row">
                                     <div class="col-sm-6">
                                         <div class="row mb-2">
-                                            <span class="col-md-3">{{ __('label.business.departure') }}</span>
+                                            <span class="col-md-3">{{ __('label.business.departure') }}<span class="text-danger required"> (*)</span></span>
                                             <div class="col-md-9">
                                                 <input type="text" class="form-control departure" autocomplete="off"
-                                                    @if(isset($previewFlg)) readonly @endif>
+                                                    @if($previewFlg) readonly @endif>
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <span class="col-md-3">{{ __('label.business.arrival') }}</span>
+                                            <span class="col-md-3">{{ __('label.business.arrival') }}<span class="text-danger required"> (*)</span></span>
                                             <div class="col-md-9">
                                                 <input type="text" class="form-control arrive" autocomplete="off"
-                                                    @if(isset($previewFlg)) readonly @endif>
+                                                    @if($previewFlg) readonly @endif>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="row">
-                                            <span class="col-md-3">{{ __('label.business.method') }}</span>
+                                            <span class="col-md-3">{{ __('label.business.method') }}<span class="text-danger required"> (*)</span></span>
                                             <div class="col-md-9">
                                                 <input type="text" class="form-control method" autocomplete="off"
-                                                    @if(isset($previewFlg)) readonly @endif>
+                                                    @if($previewFlg) readonly @endif>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        @if(!isset($previewFlg))
+                        @if(!$previewFlg)
                         <button id="btnAdd" class="btn bg-gradient-danger @if(!empty($trans) && count($trans) >= 4) d-none @endif">
                             + {{ __('label.button.addnew') }}
                         </button>
@@ -293,7 +293,7 @@
                 <hr>
                 <div class="form-group row ">
                     <label class="col-lg-2 col-form-label text-left">
-                        {{ __('label.entertainment.budget_position') }}
+                        {{ __('label.entertainment.budget_position') }}<span class="text-danger required"> (*)</span>
                     </label>
                     <div class="col-lg-10 text-lg-left text-left">
                         <fieldset class="@error('budget_position') form-control is-invalid @enderror">
@@ -304,7 +304,7 @@
                                 @endphp
                                 <input type="radio" name="rd_budget_position" value="{{ $val }}"
                                     @if($budget_position !==null && $budget_position==$val) checked @endif
-                                    @if(isset($previewFlg)) disabled @endif>
+                                    @if($previewFlg) disabled @endif>
                                 {{ __('label.budget.'. $key) }}
                             </label>
                             <label class="radio-inline com_title col-form-label">
@@ -314,7 +314,7 @@
                                 @endphp
                                 <input type="radio" name="rd_budget_position" value="{{ $val }}"
                                     @if($budget_position !==null && $budget_position==$val) checked @endif
-                                    @if(isset($previewFlg)) disabled @endif>
+                                    @if($previewFlg) disabled @endif>
                                 {{ __('label.budget.'. $key) }}
                             </label>
                         </fieldset>
@@ -329,11 +329,11 @@
                 <hr>
                 <div class="form-group row">
                     <div class="col-sm-2 text-left">
-                        <label>{{ __('label.business.accommodation') }}</label>
+                        <label>{{ __('label.business.accommodation') }}<span class="text-danger required"> (*)</span></label>
                     </div>
                     <div class="col-sm-10">
                         <input type="text" id="accommodation" name="accommodation" class="form-control @error('accommodation') is-invalid @enderror"
-                            autocomplete="off" value="{{ $accommodation }}" @if(isset($previewFlg)) readonly @endif>
+                            autocomplete="off" value="{{ $accommodation }}" @if($previewFlg) readonly @endif>
                         @error('accommodation')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -344,11 +344,11 @@
                 <hr>
                 <div class="form-group row">
                     <div class="col-sm-2 text-left">
-                        <label>{{ __('label.business.accompany') }}</label>
+                        <label>{{ __('label.business.accompany') }}<span class="text-danger required"> (*)</span></label>
                     </div>
                     <div class="col-sm-10">
                         <input type="text" id="accompany" name="accompany" class="form-control @error('accompany') is-invalid @enderror"
-                            autocomplete="off" value="{{ $accompany }}" @if(isset($previewFlg)) readonly @endif>
+                            autocomplete="off" value="{{ $accompany }}" @if($previewFlg) readonly @endif>
                         @error('accompany')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -359,11 +359,11 @@
                 <hr>
                 <div class="form-group row">
                     <div class="col-sm-2 text-left">
-                        <label>{{ __('label.business.borne_by') }}</label>
+                        <label>{{ __('label.business.borne_by') }}<span class="text-danger required"> (*)</span></label>
                     </div>
                     <div class="col-sm-10">
                         <input type="text" id="borne_by" name="borne_by" class="form-control @error('borne_by') is-invalid @enderror"
-                             autocomplete="off" value="{{ $borne_by }}" @if(isset($previewFlg)) readonly @endif>
+                             autocomplete="off" value="{{ $borne_by }}" @if($previewFlg) readonly @endif>
                         @error('borne_by')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -378,7 +378,7 @@
                     </div>
                     <div class="col-sm-10">
                         <textarea class="form-control" id="comment" name="comment" rows="2" style="width: 100%;"
-                            @if(isset($previewFlg)) readonly @endif>{{ $comment }}</textarea>
+                            @if($previewFlg) readonly @endif>{{ $comment }}</textarea>
                     </div>
                 </div>
                 <hr>
@@ -387,7 +387,7 @@
                         <label for="myfile">{{ __('label.leave.caption.file_path') }}</label>
                     </div>
                     <div class="col-sm-5">
-                        @if(isset($previewFlg))
+                        @if($previewFlg)
                             @if(isset($application) && !empty($file_path))
                             <div class="file-show input-group mb-3">
                                 <label class="form-control file-link">
@@ -458,7 +458,7 @@
                         <div class="form-check">
                             <input type="checkbox" id="cb_subsequent" name="cb_subsequent" class="form-check-input"
                                 @if($subsequent !==null && $subsequent==config('const.check.on')) checked @endif
-                                @if(isset($previewFlg)) disabled @endif>
+                                @if($previewFlg) disabled @endif>
                             <input type="hidden" id="subsequent" name="subsequent" value="{{ $subsequent }}">
                             <label class="form-check-label" for="cb_subsequent">{{ __('label.on') }}</label>
                         </div>
@@ -467,8 +467,8 @@
             </div>
         </div>
         <!-- /.card -->
-        @if (!isset($previewFlg))
-            <div>
+        @if (!$previewFlg)
+            <div class="text-center">
                 <button type="button" name="apply" value="apply" class="btn bg-gradient-success btn-form" data-toggle="modal"
                     data-target="#popup-confirm">
                     <i class="far fa-check-circle" style="margin-right: 5px;"></i>

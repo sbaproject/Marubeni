@@ -220,6 +220,7 @@ $(document).ready(function () {
         if ($(this).val() == paid_type.AL) {
             $('#txt_days_use').removeAttr('readonly');
             $('#txt_times_use').removeAttr('readonly');
+            $('#rq_take_this_time').removeClass('d-none');
         } else {
             $('#txt_days_use').val('');
             $('#txt_times_use').val('');
@@ -227,6 +228,7 @@ $(document).ready(function () {
             $('[name="times_use"]').val('');
             $('#txt_days_use').attr('readonly', 'readonly');
             $('#txt_times_use').attr('readonly', 'readonly');
+            $('#rq_take_this_time').addClass('d-none');
         }
         $('#paid_type').val($(this).val());
     });
@@ -239,6 +241,11 @@ $(document).ready(function () {
         $('[data-target="#maternityLeaveFrom"]').removeAttr('readonly');
         $('[data-target="#maternityLeaveTo"]').removeAttr('readonly');
         $('[name="rd_paid_type"]').removeAttr('disabled');
+        
+        $('#rq_paid_type').removeClass('d-none');
+        $('#rq_date_leave').removeClass('d-none');
+        $('#rq_maternity_leave').removeClass('d-none');
+        $('#rq_take_this_time').removeClass('d-none');
 
         $('#timeLeaveFrom').removeAttr('readonly');
         $('#timeLeaveTo').removeAttr('readonly');
@@ -258,6 +265,7 @@ $(document).ready(function () {
             // date leave
             $('[data-target="#dateLeaveFrom"]').attr('readonly', 'readonly');
             $('[data-target="#dateLeaveTo"]').attr('readonly', 'readonly');
+            $('#rq_date_leave').addClass('d-none');
             // time leave
             $('[data-target="#timeLeaveDate"]').attr('readonly', 'readonly');
             $('#timeLeaveFrom').attr('readonly', 'readonly');
@@ -265,10 +273,12 @@ $(document).ready(function () {
             // paid_type
             $('[name="rd_paid_type"]').attr('disabled', 'disabled');
             $('[name="rd_paid_type"]').prop('checked', false);
+            $('#rq_paid_type').addClass('d-none');
             $('#paid_type').val('');
             // days & times used
             $('#txt_days_use').attr('readonly', 'readonly');
             $('#txt_times_use').attr('readonly', 'readonly');
+            $('#rq_take_this_time').addClass('d-none');
 
         } else if (codeLeaveSelector.val() != "empty") {
 
@@ -276,14 +286,17 @@ $(document).ready(function () {
             $('#maternityLeaveTo').data("DateTimePicker").date(null);
             $('[data-target="#maternityLeaveFrom"]').attr('readonly', 'readonly');
             $('[data-target="#maternityLeaveTo"]').attr('readonly', 'readonly');
+            $('#rq_maternity_leave').addClass('d-none');
 
             if (codeLeaveSelector.val() != code_leave.SL) {
                 $('[name="rd_paid_type"]').attr('disabled', 'disabled');
                 $('[name="rd_paid_type"]').prop('checked', false);
+                $('#rq_paid_type').addClass('d-none');
                 $('#paid_type').val('');
                 if (codeLeaveSelector.val() != code_leave.AL) {
                     $('#txt_days_use').attr('readonly', 'readonly');
                     $('#txt_times_use').attr('readonly', 'readonly');
+                    $('#rq_take_this_time').addClass('d-none');
                     $('#txt_days_use').val('');
                     $('#txt_times_use').val('');
                     $('[name="days_use"]').val('');
@@ -296,11 +309,13 @@ $(document).ready(function () {
                 if ($('[name="rd_paid_type"]:checked').val() != paid_type.AL) {
                     $('#txt_days_use').attr('readonly', 'readonly');
                     $('#txt_times_use').attr('readonly', 'readonly');
+                    $('#rq_take_this_time').addClass('d-none');
                     $('#txt_days_use').val('');
                     $('#txt_times_use').val('');
                     $('[name="days_use"]').val('');
                     $('[name="times_use"]').val('');
                 }
+                $('#rq_paid_type').removeClass('d-none');
                 return;
             }
 
@@ -327,6 +342,11 @@ $(document).ready(function () {
             $('[data-target="#maternityLeaveFrom"]').attr('readonly', 'readonly');
             $('[data-target="#maternityLeaveTo"]').attr('readonly', 'readonly');
             $('[name="rd_paid_type"]').attr('disabled', 'disabled');
+            
+            $('#rq_paid_type').addClass('d-none');
+            $('#rq_date_leave').addClass('d-none');
+            $('#rq_maternity_leave').addClass('d-none');
+            $('#rq_take_this_time').addClass('d-none');
 
             $('#timeLeaveFrom').attr('readonly', 'readonly');
             $('#timeLeaveTo').attr('readonly', 'readonly');

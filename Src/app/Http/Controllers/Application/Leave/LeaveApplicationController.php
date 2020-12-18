@@ -28,10 +28,12 @@ class LeaveApplicationController extends Controller
         // logged user
         $user = Auth::user();
 
+        $previewFlg = false;
+
         // clear flash input
         // session()->flashInput([]);
 
-        return view('application.leave.input', compact('codeLeaves', 'paidTypes', 'user'));
+        return view('application.leave.input', compact('codeLeaves', 'paidTypes', 'user', 'previewFlg'));
     }
 
     public function store(Request $request)
@@ -76,10 +78,13 @@ class LeaveApplicationController extends Controller
             abort(404);
         }
 
+        // if application is completed status => NOT ALLOWS EDIT
+        $previewFlg = $application->status == config('const.application.status.completed');
+
         // get leave application
         // $model = Leave::where('application_id', $id)->first();
 
-        return view('application.leave.input', compact('application'));
+        return view('application.leave.input', compact('application', 'previewFlg'));
     }
 
     public function update(Request $request, $id)
