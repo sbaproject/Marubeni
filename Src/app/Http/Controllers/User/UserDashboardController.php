@@ -61,15 +61,15 @@ class UserDashboardController extends Controller
         $list_application = $this->list_application($sta, $end, $stepStr, $stepEnd, $str_date, $end_date);
 
         //Count Applications By Condition
-        $count_applying  = $this->list_application(0, 98, 1, 1, $str_date, $end_date)->count();
+        $count_applying  = $this->list_application_count(0, 98, 1, 1, $str_date, $end_date)->count();
 
-        $count_approval  = $this->list_application(0, 98, 2, 2, $str_date, $end_date)->count();
+        $count_approval  = $this->list_application_count(0, 98, 2, 2, $str_date, $end_date)->count();
 
-        $count_declined  = $this->list_application(-1, -1, 1, 2, $str_date, $end_date)->count();
+        $count_declined  = $this->list_application_count(-1, -1, 1, 2, $str_date, $end_date)->count();
 
-        $count_reject  = $this->list_application(-2, -2, 1, 2, $str_date, $end_date)->count();
+        $count_reject  = $this->list_application_count(-2, -2, 1, 2, $str_date, $end_date)->count();
 
-        $count_completed  = $this->list_application(99, 99, 1, 2, $str_date, $end_date)->count();
+        $count_completed  = $this->list_application_count(99, 99, 1, 2, $str_date, $end_date)->count();
 
         return view('admin.dashboard.index', compact('list_application', 'count_applying', 'count_approval', 'count_declined', 'count_reject', 'count_completed', 'str_date', 'end_date', 'intstatus'));
     }
@@ -100,6 +100,36 @@ class UserDashboardController extends Controller
             ->orderBy('applications.id', 'DESC')
             ->whereNull('applications.deleted_at')
             ->paginate(5);
+
+        return  $list_application;
+    }
+
+    //Get Count
+    private function list_application_count($sta, $end, $stepStr, $stepEnd, $str_date, $end_date)
+    {
+        $fillZero = config('const.num_fillzero');
+        $userId = Auth::user()->id;
+
+        //List
+        $list_application =  DB::table('applications')
+            ->select(DB::raw("CONCAT(CONCAT(forms.prefix,'-'),LPAD(applications.`id`, " . $fillZero . ", '0')) AS application_no"), 'forms.name As form_name', 'applications.created_at As created_at', 'applications.status As status', 'applications.current_step As current_step', 'applications.form_id As form_id', 'applications.id As id')
+
+            //Join
+            ->join('forms', 'applications.form_id', '=', 'forms.id')
+
+            //Where
+            ->where('applications.status', '>=', $sta)
+            ->where('applications.status', '<=', $end)
+            ->where('applications.current_step', '>=', $stepStr)
+            ->where('applications.current_step', '<=', $stepEnd)
+            ->where('applications.created_at', '>=', $str_date)
+            ->where('applications.created_at', '<=', $end_date)
+            ->where('applications.created_by', $userId)
+
+            //OrderBy
+            ->orderBy('applications.id', 'DESC')
+            ->whereNull('applications.deleted_at')
+            ->get();
 
         return  $list_application;
     }
