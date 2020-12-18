@@ -165,7 +165,7 @@
                 </div>
                 <hr>
                 <div class="form-group row">
-                    <label class="col-lg-2 col-form-label text-left d-flex align-items-left justify-content-left">
+                    <label class="col-lg-2 col-form-label text-left">
                         {{ __('label.entertainment.entrainment_infomation') }}<span class="text-danger required"> (*)</span>
                     </label>
                     <div class="col-lg-10">
@@ -508,7 +508,7 @@
                 </div>
                 <hr>
                 <div class="form-group row ">
-                    <label class="col-lg-2 col-form-label text-left d-flex align-items-left justify-content-left">
+                    <label class="col-lg-2 col-form-label text-left">
                         {{ __('label.entertainment.entertainment_reason') }}<span class="text-danger required"> (*)</span>
                     </label>
                     <div class="col-lg-10">
