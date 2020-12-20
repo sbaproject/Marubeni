@@ -12,7 +12,7 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-lg-6">
-                <h1>{{ __('label.button.search') }}</h1>
+                <h1>{{ __('label.menu.employee_setting') }}</h1>
             </div>
         </div>
     </div>

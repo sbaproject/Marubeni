@@ -7,10 +7,10 @@ body{
     padding: .5rem;
 }
 .sidebar {
-	padding: 0;
+	/* padding: 0; */
 }
 .nav-treeview {
-    padding-left: 2rem !important;
+    /* padding-left: 2rem !important; */
 }
 .nav-item>.nav-link i{
     display: inline-block;
@@ -24,13 +24,24 @@ body{
 	color: #ffffff;
 }
 .nav-sidebar>.nav-item {
-	border-bottom: 0.5px solid #ffffff;
+	border-bottom: 0.5px solid #ab535a;
 }
 .nav-sidebar>.nav-item:hover {
 	background: #96000C;
 }
 .nav-item>.nav-link i .icon-links {
 	float: right !important;
+}
+.nav-sidebar .nav-item>.nav-link{
+    margin: 0;
+}
+/* .nav-sidebar>.nav-item.menu-open>.nav-link,.nav-sidebar>.nav-item:hover>.nav-link, */
+/* .nav-sidebar>.nav-item.menu-open>.nav-link:hover, */
+.nav-sidebar>.nav-item>.nav-link:hover,
+.nav-sidebar>.nav-item>.nav-link:focus,
+.nav-treeview>.nav-item>.nav-link:hover,
+.nav-treeview>.nav-item>.nav-link.active{
+    background-color: #ab535a;
 }
 .main-sidebar{
     background:#96000C;
@@ -48,21 +59,41 @@ body{
 	margin-right: 20px;
 }
 .tab-locale {
-	background-color: #C0C0C0;
-	border: 1px solid #ffffff;
-	color: #000;
-	padding: 0px 8px 0px 8px;
+	background-color: #f8f9fa;
+    border: 1px solid  #dc3545;
+    color: #000;
+    padding: 0px 8px 0px 8px;
+    border-radius: 5px 0 0 5px;
+    font-size: 1rem;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+.tab-locale:hover {
+    background-color: #e9ecef;
 }
 a.tab-locale.selected {
-	background-color: #96000C;
-	border: 0.5px solid #ffffff;
-	color: #ffffff;
+	background-color: #dc3545;
+    border-color: #dc3545;
+    color: #ffffff;
+}
+a.tab-locale.selected:hover {
+	background-color: #bd2130;
 }
 a.tab-locale.en{
-	margin-left: -5px;
+    /* margin-left: -5px; */
+    border-radius: 0px 5px 5px 0px;
+}
+.lang{
+    margin-right: 5px;
 }
 .content-wrapper>.content{
     padding: 0;
+}
+.btn-dtp-left {
+    border-radius: .25rem 0 0 .25rem !important;
+    border-right: 0;
+}
+.alert-msg {
+    margin-bottom: 0 !important;
 }
 @media screen and (max-width: 992px) {
     .content-wrapper {
@@ -322,6 +353,7 @@ table>tbody>tr>td {
 @media screen and (max-width: 575px) {
     .col-xs-5ths {
         width: 100% !important;
+        margin-bottom: 1rem;
     }
     .input-group {
         width: auto !important;

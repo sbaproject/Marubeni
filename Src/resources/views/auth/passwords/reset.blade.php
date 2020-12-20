@@ -36,7 +36,7 @@
                         autocomplete="new-password">
                 </div> <!-- form-group// -->
                 <div class="form-group btn-login">
-                    <button type="submit" class="btn btn-danger btn-block">{{ __('label.login.btn_create_pass') }}</button>
+                    <button type="submit" class="btn btn-block bg-gradient-danger">{{ __('label.login.btn_create_pass') }}</button>
                 </div> <!-- form-group// -->
 
             </form>

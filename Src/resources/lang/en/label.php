@@ -66,6 +66,13 @@ return [
     'applicant' => 'Applicant',
     'confirming_title' => 'Confirm',
     'times' => 'Times',
+    'title' => [
+        'user' => [
+            'list' => 'Employees',
+            'edit' => 'Employee Edit',
+            'add' => 'Employee Add',
+        ],
+    ],
     /**
      * Form
      */
@@ -99,9 +106,9 @@ return [
         'company_registration' => 'Company Registration',
         'company_list' => 'Company Management',
         'change_password' => 'Change Password',
-        'employee_setting' => 'Employee Setting',
-        'budget_setting' => 'Budget Setting',
-        'approval_flow_setting' => 'Approval Flow Setting',
+        'employee_setting' => 'Employees',
+        'budget_setting' => 'Budgets',
+        'approval_flow_setting' => 'Approval Flows',
     ],
     /**
      * Leave Application

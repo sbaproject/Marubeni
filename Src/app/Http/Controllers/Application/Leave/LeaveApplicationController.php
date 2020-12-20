@@ -142,8 +142,10 @@ class LeaveApplicationController extends Controller
                     } else {
                         $rules['date_from'] = 'required';
                         $rules['date_to'] = 'required';
-                        if ($inputs['code_leave'] == config('const.code_leave.AL')
-                            || $inputs['paid_type'] == config('const.paid_type.AL')) {
+                        if (
+                            $inputs['code_leave'] == config('const.code_leave.AL')
+                            || $inputs['paid_type'] == config('const.paid_type.AL')
+                        ) {
                             $rules['days_use'] = 'required';
                         }
                         if ($inputs['code_leave'] == config('const.code_leave.SL')) {
@@ -211,7 +213,7 @@ class LeaveApplicationController extends Controller
                 ->where('groups.deleted_at', '=', null)
                 ->first();
 
-            if (empty($group)) {
+            if (empty($group) && isset($inputs['apply'])) {
                 throw new NotFoundFlowSettingException();
             }
 
@@ -240,11 +242,11 @@ class LeaveApplicationController extends Controller
             // prepare data
             $application = [
                 'form_id'       => $formId,
-                'group_id'      => $group->id,
+                'group_id'      => $group->id ?? null,
                 'current_step'  => $currentStep,
                 'status'        => $status,
                 'subsequent'    => $inputs['subsequent'],
-                'file_path'     => isset($filePath) ? $filePath : null,
+                'file_path'     => $filePath ?? null,
                 'updated_by'    => $user->id,
                 'updated_at'    => Carbon::now()
             ];
@@ -322,21 +324,22 @@ class LeaveApplicationController extends Controller
             $loggedUser = Auth::user();
             // get list of approver (include TO & CC)
             $approvers = DB::table('steps')
-            ->select('steps.approver_id')
-            ->where('steps.flow_id', function ($query) use ($request, $loggedUser) {
-                $query->select('steps.flow_id')
-                    ->from('applications')
-                    ->join(
-                        'steps',
-                        'steps.group_id',
-                        'applications.group_id'
-                    )
-                    ->where('steps.approver_id', '=', $loggedUser->id)
-                    ->where('applications.id', $request->id)
-                    ->where('applications.deleted_at', '=', null)
-                    ->limit(1);
-            })
-            ->first();
+                ->select('steps.approver_id')
+                ->where('steps.flow_id', function ($query) use ($request, $loggedUser) {
+                    $query->select('steps.flow_id')
+                        ->from('applications')
+                        ->join(
+                            'steps',
+                            'steps.group_id',
+                            'applications.group_id'
+                        )
+                        ->where('steps.approver_id', '=', $loggedUser->id)
+                        ->where('applications.id', $request->id)
+                        ->where('applications.deleted_at', '=', null)
+                        ->limit(1);
+                })
+                ->where('steps.step_type', $application->current_step)
+                ->first();
 
             // check logged user has permission to access
             // if logged user is not owner of application and also not approval user(TO or CC).
@@ -373,17 +376,18 @@ class LeaveApplicationController extends Controller
 
         // get list of approver (include TO & CC)
         $approvers = DB::table('steps')
-        ->select('steps.approver_id')
-        ->where('steps.flow_id', function ($query) use ($id, $loggedUser) {
-            $query->select('steps.flow_id')
-            ->from('applications')
-            ->join('steps', 'steps.group_id', 'applications.group_id')
-            ->where('steps.approver_id', '=', $loggedUser->id)
-            ->where('applications.id', $id)
-                ->where('applications.deleted_at', '=', null)
-                ->limit(1);
-        })
-        ->first();
+            ->select('steps.approver_id')
+            ->where('steps.flow_id', function ($query) use ($id, $loggedUser) {
+                $query->select('steps.flow_id')
+                    ->from('applications')
+                    ->join('steps', 'steps.group_id', 'applications.group_id')
+                    ->where('steps.approver_id', '=', $loggedUser->id)
+                    ->where('applications.id', $id)
+                    ->where('applications.deleted_at', '=', null)
+                    ->limit(1);
+            })
+            ->where('steps.step_type', $application->current_step)
+            ->first();
 
         // check logged user has permission to access
         // if logged user is not owner of application and also not approval user(TO or CC).

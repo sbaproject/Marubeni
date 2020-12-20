@@ -16,10 +16,9 @@
             @csrf
             <div class="row">
                 <div class="col-xl-8 col-lg-10">
-                    <div class="card">
+                    <div class="invoice p-3 mb-3">
                         <div class="card-body">
                             <div class="search-content">
-
                                 <div class="row">
                                     <div class="col-xl-8 col-lg-9">
                                         <div class="form-group row">
@@ -57,8 +56,10 @@
                                     </div>
                                     <div class="col-xl-3 col-lg-3">
                                         <div class="btn-search">
-                                            <button class="btn btn-default sty-search" type="submit"><i class="fa fa-search"
-                                                    style="margin-right:5px;"></i>{{ __('label.button.search') }}</button>
+                                            <button class="btn bg-gradient-primary" type="submit">
+                                                <i class="fa fa-search" style="margin-right:5px;"></i>
+                                                {{ __('label.button.search') }}
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -72,11 +73,11 @@
     <!-- Main content -->
     <section class="content">
         <div class="button_wrap">
-            <a href="{{ route('admin.company.create') }}" class="btn btn-danger  pt-1 pb-1 pl-5 pr-5"><i
-                    class="nav-icon fa fa-plus-circle" style="margin-right:5px;"></i>{{ __('label.button.addnew') }}</a>
+            <a href="{{ route('admin.company.create') }}" class="btn bg-gradient-danger">
+                <i class="nav-icon fa fa-plus-circle" style="margin-right:5px;"></i>{{ __('label.button.addnew') }}</a>
         </div>
         <x-alert />
-        <div class="card">
+        <div class="invoice p-3 mb-3">
             <div class="card-body p-0 card-list-items">
                 <div class="wrap_tbl_ad">
                     <table class="table table-bordered table-hover" style="min-width: 500px;">

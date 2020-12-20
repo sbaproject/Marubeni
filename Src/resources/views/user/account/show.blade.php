@@ -5,8 +5,17 @@
 @endsection
 
 @section('content')
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-lg-6">
+                <h1>{{ __('label.title.user.edit') }}</h1>
+            </div>
+        </div>
+    </div>
+</section>
 <div class="col-lg-9">
-    <div class="card">
+    <div class="invoice p-3 mb-3">
         <div class="card-body">
             <div class="search-content">
                 <x-alert/>
@@ -166,13 +175,13 @@
                     <br>
                     <div class="mt-5 mb-5 text-center">
                         {{-- Submit --}}
-                        <button type="submit" class="btn btn-danger pt-1 pb-1 mr-4 col-5 col-sm-2 col-md-4 col-lg-2">
+                        <button type="submit" class="btn bg-gradient-success">
                             <i class="nav-icon far fa-check-circle"></i>
                             {{ __('label.button.update') }}
                         </button>
                         {{-- Cancel --}}
                         <a href="{{ route('admin.user.index') }}"
-                            class="btn btn-outline-dark pt-1 pb-1 col-5 col-sm-2 col-md-4 col-lg-2">
+                            class="btn bg-gradient-secondary">
                             <i class="nav-icon far fa-times-circle"></i>
                             {{__('label.button.cancel')}}
                         </a>

@@ -3,7 +3,7 @@
     <li class="list-inline-item">
         <a href="{{ $editUrl }}" title="{{ __('label.button.edit') }}" class="btn bg-gradient-success btn-sm @isset($editDisabled) disabled @endisset"
             data-toggle="tooltip">
-            <i class="fa fa-edit"></i>
+            <i class="fa fa-pencil-alt"></i>
         </a>
     </li>
     @endisset

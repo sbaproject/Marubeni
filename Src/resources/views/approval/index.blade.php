@@ -56,7 +56,7 @@
                                 </div>
                                 <div class="col-xl-3 col-lg-3">
                                     <div class="">
-                                        <button class="btn btn-block bg-gradient-danger" type="submit">
+                                        <button class="btn btn-block bg-gradient-primary" type="submit">
                                             <i class="fa fa-search" style="margin-right:5px;"></i>
                                             {{ __('label.button.search') }}
                                         </button>
@@ -80,6 +80,7 @@
             <table class="table table-bordered table-hover">
                 <thead>
                     <tr class="list-title">
+                        <th></th>
                         <th class="sortable {{ $sortable->headers['application_no']->activeCls }}">
                             {{-- {{ __('label.application_no') }} --}}
                             {!! $sortable->headers['application_no']->title !!}
@@ -102,6 +103,13 @@
                 <tbody>
                     @foreach($data as $item)
                     <tr class="list-content">
+                        <td>
+                            @if ($item->approver_type == config('const.approver_type.to'))
+                            <span class="badge bg-success">TO</span>
+                            @else
+                            <span class="badge bg-warning">CC</span>
+                            @endif
+                        </td>
                         <td>{{ $item->application_no }}</td>
                         <td>{{ $item->application_type }}</td>
                         <td>

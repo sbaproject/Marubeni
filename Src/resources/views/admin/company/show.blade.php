@@ -11,7 +11,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <h4 class="mb-2" style="font-weight: 600;">{{ __('label.company.company_registration') }}</h4>
-                <div class="card card-company">
+                <div class="invoice p-3 mb-3">
                     <div class="card-body">
                         <form id="frmCompany" name="frmCompany" method="POST" action="{{ route("admin.company.update",$idcompany)}}">
                             @csrf
@@ -129,8 +129,8 @@
                             </div>
                             <div class="row">
                                 <div class="col-12 btn_button">
-                                    <button type="submit" class="btn btn-register"><i class="far fa-check-circle" style="margin-right: 5px;"></i>{{ __('label.button.register') }}</button>
-                                    <a role="button" href="{{ route('admin.company.index') }}" class="btn btn-cancel"><i class="fa fa-ban" aria-hidden="true" style="margin-right: 5px;"></i>{{ __('label.button.cancel') }}</a>
+                                    <button type="submit" class="btn bg-gradient-success"><i class="far fa-check-circle" style="margin-right: 5px;"></i>{{ __('label.button.register') }}</button>
+                                    <a role="button" href="{{ route('admin.company.index') }}" class="btn bg-gradient-secondary"><i class="fa fa-ban" aria-hidden="true" style="margin-right: 5px;"></i>{{ __('label.button.cancel') }}</a>
                                 </div>
                             </div>
                         </form>

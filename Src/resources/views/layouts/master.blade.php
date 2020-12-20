@@ -59,7 +59,7 @@
             <!-- Left navbar links -->
             <ul class="navbar-nav bg-custom">
                 <li class="nav-item">
-                    <a class="nav-link rg-menu" data-widget="pushmenu" href="#" role="button">
+                    <a class="nav-link rg-menu" data-widget="pushmenu" data-enable-remember="TRUE" href="#" role="button">
                         <i class="fas fa-bars" style="color: darkgray;"></i>
                     </a>
                 </li>

@@ -17,7 +17,6 @@
 @section('content')
     <form method="get" id="formSearch" action="">
         <section class="content-header">
-
             @csrf
             <div class="row">
                 <div class="col-md-4 col-sm-4">
@@ -48,8 +47,8 @@
                 </div>
                 <div class="col-xl-2 col-lg-3 col-md-3 col-sm-3">
                     <div class="btn-search">
-                        <button class="btn btn-default sty-search" type="submit"><i class="fa fa-search"
-                                style="margin-right:5px;"></i>{{ __('label.button.search') }}</button>
+                        <button type="submit" class="btn bg-gradient-primary">
+                            <i class="fa fa-search" style="margin-right:5px;"></i>{{ __('label.button.search') }}</button>
                     </div>
                 </div>
 
@@ -61,7 +60,7 @@
             <div class="row" style="text-align: center;">
                 <div class="col-xs-5ths">
                     <div class="card">
-                        <div class="card-body card-wrap-items" id="applying">
+                        <div class="btn btn-block bg-gradient-success btn-status" id="applying">
                             <span>{{ __('label.dashboard.applying') }}</span>
                             <span class="right-number">({{ $count_applying }})</span>
                         </div>
@@ -70,7 +69,7 @@
 
                 <div class="col-xs-5ths col-set">
                     <div class="card">
-                        <div class="card-body card-wrap-items" id="approval">
+                        <div class="btn btn-block bg-gradient-danger btn-status" id="approval">
                             <span>{{ __('label.dashboard.approval') }}</span>
                             <span class="right-number">({{ $count_approval }})</span>
                         </div>
@@ -78,7 +77,7 @@
                 </div>
                 <div class="col-xs-5ths col-set">
                     <div class="card">
-                        <div class="card-body card-wrap-items" id="declined">
+                        <div class="btn btn-block bg-gradient-warning btn-status" id="declined">
                             <span>{{ __('label.dashboard.declined') }}</span>
                             <span class="right-number">({{ $count_declined }})</span>
                         </div>
@@ -86,7 +85,7 @@
                 </div>
                 <div class="col-xs-5ths col-set">
                     <div class="card">
-                        <div class="card-body card-wrap-items" id="reject">
+                        <div class="btn btn-block bg-gradient-secondary btn-status" id="reject">
                             <span>{{ __('label.dashboard.reject') }}</span>
                             <span class="right-number">({{ $count_reject }})</span>
                         </div>
@@ -94,7 +93,7 @@
                 </div>
                 <div class="col-xs-5ths col-set">
                     <div class="card">
-                        <div class="card-body card-wrap-items" id="completed">
+                        <div class="btn btn-block bg-gradient-primary btn-status" id="completed">
                             <span>{{ __('label.dashboard.completed') }}</span>
                             <span class="right-number">({{ $count_completed }})</span>
                         </div>

@@ -3,101 +3,100 @@
 {{ $intstatus == config('const.application.status.applying') ? __('label.status.list_of_applying_documents') : ($intstatus == config('const.application.status.approvel') ? __('label.status.list_of_approval_documents') : ($intstatus == config('const.application.status.declined') ? __('label.status.list_of_declined_documents') : ($intstatus == config('const.application.status.reject') ? __('label.status.list_of_reject_documents') : ($intstatus == config('const.application.status.completed') ? __('label.status.list_of_completed_documents') : __('label.dashboard.list_application'))))) }}
 @endsection
 @section('css')
-    <link rel="stylesheet" href="css/user/01_dashboard.css">
+<link rel="stylesheet" href="css/user/01_dashboard.css">
 @endsection
 @section('js')
-    <!-- moment -->
-    <script src="js/moment/moment.min.js"></script>
-    <!-- moment locale-->
-    <script src="js/moment/locale/{{ config('app.locale') }}.js"></script>
-    <!-- DateTime Bootstrap 4 -->
-    <script src="js/bootstrap-datetimepicker.js"></script>
-    <script src="js/admin/dashboard.js"></script>
+<!-- moment -->
+<script src="js/moment/moment.min.js"></script>
+<!-- moment locale-->
+<script src="js/moment/locale/{{ config('app.locale') }}.js"></script>
+<!-- DateTime Bootstrap 4 -->
+<script src="js/bootstrap-datetimepicker.js"></script>
+<script src="js/admin/dashboard.js"></script>
 @endsection
 @section('content')
 <form method="get" id="formSearch" action="">
-    <section class="content-header">
-
-            @csrf
-            <div class="row">
-                <div class="col-md-4 col-sm-4">
-                    <label class="lbl-from">{{ __('label.date_from') }}</label>
-                    <div class="form-group">
-                        <div class="input-group date" id="dateFrom" data-target-input="nearest">
-                            <div class="input-group-addon input-group-append" data-target="#dateFrom"
-                                data-toggle="datetimepicker">
-                                <div class="input-group-text"><i class="fa fa-calendar-alt"></i></div>
-                            </div>
-                            <input type="text" class="form-control datetimepicker-input" data-target="#dateFrom" />
+    <section class="invoice p-3 mb-3 content-header">
+        @csrf
+        <div class="row">
+            <div class="col-md-4 col-sm-4">
+                <label class="lbl-from">{{ __('label.date_from') }}</label>
+                <div class="form-group">
+                    <div class="input-group date" id="dateFrom" data-target-input="nearest">
+                        <div class="input-group-addon input-group-append" data-target="#dateFrom"
+                            data-toggle="datetimepicker">
+                            <div class="input-group-text btn-dtp-left"><i class="fa fa-calendar-alt"></i></div>
                         </div>
-                        <input type="hidden" id="dataDateFrom" name="dataDateFrom">
+                        <input type="text" class="form-control datetimepicker-input" data-target="#dateFrom" />
                     </div>
+                    <input type="hidden" id="dataDateFrom" name="dataDateFrom">
                 </div>
-                <div class="col-md-4 col-sm-4">
-                    <label class="lbl-to">{{ __('label.date_to') }}</label>
-                    <div class="form-group">
-                        <div class="input-group date" id="dateTo" data-target-input="nearest">
-                            <div class="input-group-addon input-group-append" data-target="#dateTo"
-                                data-toggle="datetimepicker">
-                                <div class="input-group-text"><i class="fa fa-calendar-alt"></i></div>
-                            </div>
-                            <input type="text" class="form-control datetimepicker-input" data-target="#dateTo" />
+            </div>
+            <div class="col-md-4 col-sm-4">
+                <label class="lbl-to">{{ __('label.date_to') }}</label>
+                <div class="form-group">
+                    <div class="input-group date" id="dateTo" data-target-input="nearest">
+                        <div class="input-group-addon input-group-append" data-target="#dateTo"
+                            data-toggle="datetimepicker">
+                            <div class="input-group-text btn-dtp-left"><i class="fa fa-calendar-alt"></i></div>
                         </div>
-                        <input type="hidden" id="dataDateTo" name="dataDateTo">
+                        <input type="text" class="form-control datetimepicker-input" data-target="#dateTo" />
                     </div>
+                    <input type="hidden" id="dataDateTo" name="dataDateTo">
                 </div>
-                <div class="col-md-2 col-sm-2">
-                    <div class="btn-search">
-                        <button class="btn btn-default sty-search" type="submit"><i class="fa fa-search"
-                                style="margin-right:5px;"></i>{{ __('label.button.search') }}</button>
-                    </div>
+            </div>
+            <div class="col-md-2 col-sm-2">
+                <div class="btn-search">
+                    <button class="btn bg-gradient-primary" type="submit"><i class="fa fa-search"
+                            style="margin-right:5px;"></i>{{ __('label.button.search') }}</button>
                 </div>
+            </div>
 
     </section>
     <input type="hidden" id="typeApply" name="typeApply">
     <!-- Main content -->
-    <section class="content-dashboard">
+    <section class="invoice p-3 mb-3 content-dashboard">
         <div class="row" style="text-align: center;">
             <div class="col-xs-5ths">
-                    <div class="card">
-                        <div class="card-body card-wrap-items" id="applying">
-                            <span>{{ __('label.dashboard.applying') }}</span>
-                            <span class="right-number">({{ $count_applying }})</span>
-                        </div>
+                <div class="">
+                    <div class="btn btn-block bg-gradient-success btn-status" id="applying">
+                        <span>{{ __('label.dashboard.applying') }}</span>
+                        <div class="right-number">({{ $count_applying }})</div>
                     </div>
+                </div>
             </div>
 
             <div class="col-xs-5ths col-set">
-                    <div class="card">
-                        <div class="card-body card-wrap-items" id="approval">
-                            <span>{{ __('label.dashboard.approval') }}</span>
-                            <span class="right-number">({{ $count_approval }})</span>
-                        </div>
+                <div class="">
+                    <div class="btn btn-block bg-gradient-danger btn-status" id="approval">
+                        <span>{{ __('label.dashboard.approval') }}</span>
+                        <div class="right-number">({{ $count_approval }})</div>
                     </div>
+                </div>
             </div>
             <div class="col-xs-5ths col-set">
-                    <div class="card">
-                        <div class="card-body card-wrap-items" id="declined">
-                            <span>{{ __('label.dashboard.declined') }}</span>
-                            <span class="right-number">({{ $count_declined }})</span>
-                        </div>
+                <div class="">
+                    <div class="btn btn-block bg-gradient-warning btn-status" id="declined">
+                        <span>{{ __('label.dashboard.declined') }}</span>
+                        <div class="right-number">({{ $count_declined }})</div>
                     </div>
+                </div>
             </div>
             <div class="col-xs-5ths col-set">
-                    <div class="card">
-                        <div class="card-body card-wrap-items" id="reject">
-                            <span>{{ __('label.dashboard.reject') }}</span>
-                            <span class="right-number">({{ $count_reject }})</span>
-                        </div>
+                <div class="">
+                    <div class="btn btn-block bg-gradient-secondary btn-status" id="reject">
+                        <span>{{ __('label.dashboard.reject') }}</span>
+                        <div class="right-number">({{ $count_reject }})</div>
                     </div>
+                </div>
             </div>
             <div class="col-xs-5ths col-set">
-                    <div class="card">
-                        <div class="card-body card-wrap-items" id="completed">
-                            <span>{{ __('label.dashboard.completed') }}</span>
-                            <span class="right-number">({{ $count_completed }})</span>
-                        </div>
+                <div class="">
+                    <div class="btn btn-block bg-gradient-primary btn-status" id="completed">
+                        <span>{{ __('label.dashboard.completed') }}</span>
+                        <div class="right-number">({{ $count_completed }})</div>
                     </div>
+                </div>
             </div>
         </div>
         <h4 class="mb-2" style="border-bottom: 1px solid #000;font-weight: bold;margin-top: 25px;"><i
@@ -108,7 +107,7 @@
             <div class="card-body p-0 card-list-items">
                 <table class="table table-bordered table-hover" id="table_list_status">
                     <thead>
-                        <tr class="list-title">
+                        <tr class="">
                             <th>{{ __('label.dashboard.application_no') }}</th>
                             <th>{{ __('label.dashboard.application_name') }}</th>
                             <th>{{ __('label.dashboard.status') }}</th>
@@ -118,33 +117,34 @@
                     </thead>
                     <tbody>
                         @if (isset($list_application))
-                            @foreach ($list_application as $application)
-                                <tr class="list-content">
-                                    <td>{{ !empty($application->application_no) ? $application->application_no : '' }}</td>
-                                    <td>{{ !empty($application->form_name) ? $application->form_name : '' }}</td>
-                                    <td>
-                                        <div
-                                            class=" {{ ($application->status >= 0 and $application->status <= 98 and $application->current_step == 1) ? 'status-apply' : ($application->status == config('const.application.status.declined') ? 'status-declined' : ($application->status == config('const.application.status.reject') ? 'status-reject' : ($application->status == config('const.application.status.completed') ? 'status-completed' : 'status-approval'))) }}">
-                                            {{ ($application->status >= 0 and $application->status <= 98 and $application->current_step == 1) ? __('label.dashboard.applying') : ($application->status == config('const.application.status.declined') ? __('label.dashboard.declined') : ($application->status == config('const.application.status.reject') ? __('label.dashboard.reject') : ($application->status == config('const.application.status.completed') ? __('label.dashboard.completed') : __('label.dashboard.approval')))) }}
-                                        </div>
-                                    </td>
-                                    <td>{{ !empty($application->created_at) ? \Carbon\Carbon::parse($application->created_at)->format('d/m/Y') : '' }}
-                                    </td>
-                                    <td>
-                                        <a class="btn btn-details" href="{{ Common::getRouteEditApplication($application->id, $application->form_id) }}">
-                                            {{ __('label.dashboard.view_details') }}
-                                            <i class="fas fa-angle-right" style="margin-left: 5px;"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                            @endforeach
+                        @foreach ($list_application as $application)
+                        <tr class="">
+                            <td>{{ !empty($application->application_no) ? $application->application_no : '' }}</td>
+                            <td>{{ !empty($application->form_name) ? $application->form_name : '' }}</td>
+                            <td>
+                                <div
+                                    class="badge {{ ($application->status >= 0 and $application->status <= 98 and $application->current_step == 1) ? 'badge-success' : ($application->status == config('const.application.status.declined') ? 'badge-warning' : ($application->status == config('const.application.status.reject') ? 'badge-secondary' : ($application->status == config('const.application.status.completed') ? 'badge-primary' : 'badge-danger'))) }}">
+                                    {{ ($application->status >= 0 and $application->status <= 98 and $application->current_step == 1) ? __('label.dashboard.applying') : ($application->status == config('const.application.status.declined') ? __('label.dashboard.declined') : ($application->status == config('const.application.status.reject') ? __('label.dashboard.reject') : ($application->status == config('const.application.status.completed') ? __('label.dashboard.completed') : __('label.dashboard.approval')))) }}
+                                </div>
+                            </td>
+                            <td>{{ !empty($application->created_at) ? \Carbon\Carbon::parse($application->created_at)->format('d/m/Y') : '' }}
+                            </td>
+                            <td>
+                                <a class="btn bg-gradient-info"
+                                    href="{{ Common::getRouteEditApplication($application->id, $application->form_id) }}">
+                                    {{ __('label.dashboard.view_details') }}
+                                    <i class="fas fa-angle-right" style="margin-left: 5px;"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        @endforeach
                         @endif
                     </tbody>
                 </table>
             </div>
         </div>
         @if (isset($list_application))
-            {{ $list_application->withQueryString()->links('paginator') }}
+        {{ $list_application->withQueryString()->links('paginator') }}
         @endif
         <div id='str_date' value='{{ $str_date }}'>
         </div>

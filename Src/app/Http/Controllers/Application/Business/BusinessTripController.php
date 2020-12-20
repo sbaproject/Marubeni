@@ -209,7 +209,7 @@ class BusinesstripController extends Controller
                 ->where('groups.deleted_at', '=', null)
                 ->first();
 
-            if (empty($group)) {
+            if (empty($group) && isset($inputs['apply'])) {
                 throw new NotFoundFlowSettingException();
             }
 
@@ -237,12 +237,12 @@ class BusinesstripController extends Controller
             // prepare data
             $application = [
                 'form_id'           => $formId,
-                'group_id'          => $group->id,
+                'group_id'          => $group->id ?? null,
                 'current_step'      => $currentStep,
                 'status'            => $status,
                 'subsequent'        => $inputs['subsequent'],
                 'budget_position'   => $budgetPosition,
-                'file_path'         => isset($filePath) ? $filePath : null,
+                'file_path'         => $filePath ?? null,
                 'updated_by'        => $user->id,
                 'updated_at'        => Carbon::now()
             ];
@@ -354,6 +354,7 @@ class BusinesstripController extends Controller
                         ->where('applications.deleted_at', '=', null)
                         ->limit(1);
                 })
+                ->where('steps.step_type', $application->current_step)
                 ->first();
 
             // check logged user has permission to access
@@ -401,6 +402,7 @@ class BusinesstripController extends Controller
                     ->where('applications.deleted_at', '=', null)
                     ->limit(1);
             })
+            ->where('steps.step_type', $application->current_step)
             ->first();
 
         // check logged user has permission to access

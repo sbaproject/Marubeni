@@ -37,7 +37,7 @@
                     </div> <!-- checkbox .// -->
                 </div> <!-- form-group// -->
                 <div class="form-group btn-login">
-                    <button type="submit" class="btn btn-danger btn-block">{{ __('label.login.btn_login') }}</button>
+                    <button type="submit" class="btn btn-block bg-gradient-danger">{{ __('label.login.btn_login') }}</button>
                 </div> <!-- form-group// -->
                 <p class="mb-1" style="text-align: center;">
                     <a href="{{ route('password.request') }}"

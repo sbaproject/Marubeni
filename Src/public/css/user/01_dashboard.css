@@ -1,6 +1,6 @@
 .content-header {
     background-color: #fff;
-    border: #fff;
+    /* border: #fff; */
     padding-top: 10px;
 }
 
@@ -50,7 +50,7 @@ input.form-control.calendar-from {
 .content-dashboard {
     margin-top: 20px;
     background-color: #fff;
-    border: #fff;
+    /* border: #fff; */
     padding: 0px 25px 25px 25px;
 }
 
@@ -68,6 +68,7 @@ input.form-control.calendar-from {
     background-color: #96000C;
     color: #fff !important;
     text-decoration: none;
+    border-radius: .25rem;
 }
 
 .total-links a{
@@ -135,6 +136,11 @@ tr.list-content td div.status-completed
     padding: 5px;
     border-radius: 5px;
     color: #000;
+}
+
+.btn-status{
+    font-weight: 600;
+    font-size: inherit;
 }
 
 

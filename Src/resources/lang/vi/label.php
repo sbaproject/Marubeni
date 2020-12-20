@@ -54,6 +54,13 @@ return [
     'applicant' => 'Người đề nghị',
     'confirming_title' => 'Xác nhận',
     'times' => 'Số lần',
+    'title' => [
+        'user' => [
+            'list' => 'Danh mục nhân viên',
+            'edit' => 'Chỉnh sửa nhân viên',
+            'add' => 'Thêm nhân viên'
+        ],
+    ],
     /**
      * Paginator
      */
@@ -224,7 +231,7 @@ return [
         'application_name' => 'Loại Đơn',
         'status' => 'Trạng Thái',
         'apply_date' => 'Ngày Nộp Đơn',
-        'view_details' => 'Xem Chi tiết',
+        'view_details' => 'Xem chi tiết',
         'applying' => 'Đơn Đang Xin',
         'approval' => 'Đơn Phê Duyệt',
         'declined' => 'Đơn Trả Về',
@@ -258,7 +265,7 @@ return [
         'application_type' => 'Loại Đơn',
         'apply_date' => 'Ngày Nộp Đơn',
         'next_approver' => 'Người Phê Duyệt Kế Tiếp',
-        'view_details' => 'Xem Chi tiết',
+        'view_details' => 'Xem chi tiết',
     ],
     /**
      * Company

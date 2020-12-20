@@ -13,7 +13,7 @@
 					<h4 class="main-header-text" style="font-weight: 500;">{{ __('label.change_pass') }}</h4>
 				</div>
 				<form method="POST" action="{{ route('changepass.update') }}">
-					<div class="card card-company">
+					<div class="invoice p-3 mb-3 card-company">
 						<div class="card-body">
 							<x-alert />
 							@csrf
@@ -60,23 +60,28 @@
 											<strong>{{ $message }}</strong>
 										</span>
 										@enderror
+										<br>
+									<button type="submit" class="btn bg-gradient-success">
+										<i class="nav-icon far fa-check-circle"></i>
+										{{ __('label.button.change') }}
+									</button>
 								</div>
 							</div>
 
 						</div>
 						<!-- /.card-body -->
 					</div>
-					<br>
+					{{-- <br>
 					<div class="row">
 						<div class="col-lg-9">
 							<button type="submit"
-								class="btn btn-danger pt-1 pb-1 mr-4 col-5 col-sm-2 col-md-4 col-lg-2">
+								class="btn bg-gradient-success">
 								<i class="nav-icon far fa-check-circle"></i>
 								{{ __('label.button.change') }}
 							</button>
 						</div>
 					</div>
-					<br>
+					<br> --}}
 				</form>
 			</div>
 		</div>

@@ -229,15 +229,18 @@ class EntertainmentController extends Controller
             ])->first();
 
             // not found available flow setting
-            if (empty($budget)) {
+            if (empty($budget) && isset($inputs['apply'])) {
                 throw new NotFoundFlowSettingException();
             }
 
             // get budget comparation type
-            if ($inputs['est_amount'] <= $budget->amount) {
-                $budgetTypeCompare = config('const.budget.budeget_type_compare.less_equal');
-            } else {
-                $budgetTypeCompare = config('const.budget.budeget_type_compare.greater_than');
+            $budgetTypeCompare = null;
+            if(isset($inputs['est_amount']) && !empty($budget)){
+                if ($inputs['est_amount'] <= $budget->amount) {
+                    $budgetTypeCompare = config('const.budget.budeget_type_compare.less_equal');
+                } else {
+                    $budgetTypeCompare = config('const.budget.budeget_type_compare.greater_than');
+                }
             }
 
             // get group
@@ -265,7 +268,7 @@ class EntertainmentController extends Controller
                 ->first();
 
             // not found available flow setting
-            if (empty($group)) {
+            if (empty($group) && isset($inputs['apply'])) {
                 throw new NotFoundFlowSettingException();
             }
 
@@ -293,12 +296,12 @@ class EntertainmentController extends Controller
             // prepare data
             $application = [
                 'form_id'           => $formId,
-                'group_id'          => $group->id,
+                'group_id'          => $group->id ?? null,
                 'current_step'      => $currentStep,
                 'status'            => $status,
                 'subsequent'        => $inputs['subsequent'],
                 'budget_position'   => $budgetPosition,
-                'file_path'         => isset($filePath) ? $filePath : null,
+                'file_path'         => $filePath ?? null,
                 'updated_by'        => $user->id,
                 'updated_at'        => Carbon::now()
             ];
@@ -429,20 +432,22 @@ class EntertainmentController extends Controller
             $loggedUser = Auth::user();
             // get list of approver (include TO & CC)
             $approvers = DB::table('steps')
-            ->select('steps.approver_id')
-            ->where('steps.flow_id', function ($query) use ($request, $loggedUser) {
-                $query->select('steps.flow_id')
-                ->from('applications')
-                ->join('steps',
-                    'steps.group_id',
-                    'applications.group_id'
-                )
-                ->where('steps.approver_id', '=', $loggedUser->id)
-                ->where('applications.id', $request->id)
-                ->where('applications.deleted_at', '=', null)
-                ->limit(1);
-            })
-            ->first();
+                ->select('steps.approver_id')
+                ->where('steps.flow_id', function ($query) use ($request, $loggedUser) {
+                    $query->select('steps.flow_id')
+                        ->from('applications')
+                        ->join(
+                            'steps',
+                            'steps.group_id',
+                            'applications.group_id'
+                        )
+                        ->where('steps.approver_id', '=', $loggedUser->id)
+                        ->where('applications.id', $request->id)
+                        ->where('applications.deleted_at', '=', null)
+                        ->limit(1);
+                })
+                ->where('steps.step_type', $application->current_step)
+                ->first();
 
             // check logged user has permission to access
             // if logged user is not owner of application and also not approval user(TO or CC).
@@ -483,13 +488,14 @@ class EntertainmentController extends Controller
             ->select('steps.approver_id')
             ->where('steps.flow_id', function ($query) use ($id, $loggedUser) {
                 $query->select('steps.flow_id')
-                ->from('applications')
-                ->join('steps', 'steps.group_id', 'applications.group_id')
-                ->where('steps.approver_id', '=', $loggedUser->id)
-                ->where('applications.id', $id)
-                ->where('applications.deleted_at', '=', null)
-                ->limit(1);
+                    ->from('applications')
+                    ->join('steps', 'steps.group_id', 'applications.group_id')
+                    ->where('steps.approver_id', '=', $loggedUser->id)
+                    ->where('applications.id', $id)
+                    ->where('applications.deleted_at', '=', null)
+                    ->limit(1);
             })
+            ->where('steps.step_type', $application->current_step)
             ->first();
 
         // check logged user has permission to access

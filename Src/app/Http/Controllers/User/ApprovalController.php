@@ -30,7 +30,9 @@ class ApprovalController extends Controller
             'userId' => Auth::user()->id,
             'completed1' => config('const.application.status.completed'),
             'completed2' => config('const.application.status.completed'),
-            'approver_type' => config('const.approver_type.to'),
+            'approver_type_to_1' => config('const.approver_type.to'),
+            'approver_type_to_2' => config('const.approver_type.to'),
+            'approver_type_cc' => config('const.approver_type.cc'),
         ];
         if (isset($request->application_type)) {
             $formIdCondition = " AND a.`form_id` = :formId";
@@ -70,24 +72,44 @@ class ApprovalController extends Controller
                 ,u.`name`           AS approver_name
                 ,us.`name`          AS applicant_name
                 ,fo.name            AS application_type
-                ,(
-                    SELECT  us.name
-                    FROM    steps
-                            INNER JOIN users us ON us.id = approver_id
-                    WHERE   `flow_id` = s.`flow_id`
-                    AND     `approver_type` = s.`approver_type`
-                    AND     (
-                                (`step_type` = s.`step_type` AND s.`order` <> :completed1 AND `select_order` = s.`order`)
-                                OR
-                                (s.`order` = :completed2 AND (`step_type` = (s.`step_type` + 1) AND `select_order` = 0))
-                            )
-                ) AS next_approver
+                ,CASE WHEN s.`approver_type` = :approver_type_to_1
+                    THEN (
+                        SELECT  us.name
+                        FROM    steps
+                                INNER JOIN users us
+                                    ON us.id = approver_id
+                        WHERE   `flow_id` = s.`flow_id`
+                        AND     `approver_type` = s.`approver_type`
+                        AND     (
+                                    (`step_type` = s.`step_type` AND s.`order` <> :completed1 AND `select_order` = s.`order`)
+                                    OR
+                                    (s.`order` = :completed2 AND (`step_type` = (s.`step_type` + 1) AND `select_order` = 0))
+                                )
+                    ) ELSE (
+                        SELECT  us.name
+                        FROM    steps
+                                INNER JOIN users us
+                                    ON us.id = steps.approver_id
+                        WHERE	steps.`group_id` = a.`group_id`
+                        AND 	steps.`select_order` = a.`status`
+                        AND 	steps.`step_type` = a.`current_step`
+                        AND 	steps.`approver_type` = 0
+                        AND 	a.`status` BETWEEN 0 AND 98
+                    ) END  AS next_approver
             FROM    applications a
-                    INNER JOIN forms fo ON a.`form_id` = fo.`id` " . $formIdCondition . "
-                    INNER JOIN groups g ON a.`group_id` = g.`id`
-                    INNER JOIN steps s ON s.`group_id` = g.`id` AND s.`approver_type` = :approver_type AND a.`status` = s.`select_order` AND s.`step_type` = a.`current_step`
-                    INNER JOIN users u ON u.`id` = s.`approver_id` AND s.`approver_id` = :userId
-                    INNER JOIN users us ON us.`id` = a.`created_by`
+                    INNER JOIN forms fo 
+                        ON a.`form_id` = fo.`id` " . $formIdCondition . "
+                    INNER JOIN groups g
+                        ON a.`group_id` = g.`id`
+                    INNER JOIN steps s
+                        ON s.`group_id` = g.`id` 
+                        AND ((s.`approver_type` = :approver_type_to_2 AND a.`status` = s.`select_order`) OR (s.`approver_type` = :approver_type_cc))
+                        AND s.`step_type` = a.`current_step`
+                    INNER JOIN users u
+                        ON u.`id` = s.`approver_id`
+                        AND s.`approver_id` = :userId
+                    INNER JOIN users us
+                        ON us.`id` = a.`created_by`
             WHERE   a.`status` BETWEEN 0 AND 98 " . $keywordCondition . "
             ORDER BY " . $sortable->order_by;
 
@@ -153,6 +175,7 @@ class ApprovalController extends Controller
                     ->where('applications.deleted_at', '=', null)
                     ->limit(1);
             })
+            ->where('steps.step_type', $app->current_step)
             ->get()
             ->toArray();
 
