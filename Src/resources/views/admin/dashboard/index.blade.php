@@ -109,10 +109,18 @@
                 <table class="table table-bordered table-hover" id="table_list_status">
                     <thead>
                         <tr class="list-title">
-                            <th>{{ __('label.dashboard.application_no') }}</th>
-                            <th>{{ __('label.dashboard.application_name') }}</th>
-                            <th>{{ __('label.dashboard.status') }}</th>
-                            <th>{{ __('label.dashboard.apply_date') }}</th>
+                            <th class="sortable {{ $sortable->headers['application_no']->activeCls }}">
+                                {!! $sortable->headers['application_no']->title !!}
+                            </th>
+                            <th class="sortable {{ $sortable->headers['form_name']->activeCls }}">
+                                {!! $sortable->headers['form_name']->title !!}
+                            </th>
+                            <th class="sortable {{ $sortable->headers['status']->activeCls }}">
+                                {!! $sortable->headers['status']->title !!}
+                            </th>
+                            <th class="sortable {{ $sortable->headers['created_at']->activeCls }}">
+                                {!! $sortable->headers['created_at']->title !!}
+                            </th>
                             <th></th>
                         </tr>
                     </thead>

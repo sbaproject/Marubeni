@@ -4,9 +4,9 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Libs\Common;
 
 class UserStatusController extends Controller
 {
@@ -49,6 +49,15 @@ class UserStatusController extends Controller
             $end_date = config('const.init_time_search.to');
         }
 
+        // sorting columns
+        $sortColNames = [
+            'application_no'    => __('label.status.no'),
+            'nameapp'           => __('label.status.application_type'),
+            'datecreate'        => __('label.status.apply_date'),
+            'nameuser'          => __('label.status.next_approver'),
+        ];
+        $sortable = Common::getSortable($request, $sortColNames, 0, 0, true);
+
         //Get List
         $list_applications_status = DB::table('applications')
             ->select(DB::raw("CONCAT(CONCAT(forms.prefix,'-'),LPAD(applications.`id`, " . $fillZero . ", '0')) AS application_no"), 'forms.name As nameapp', 'applications.created_at as datecreate', 'users.name as nameuser', 'applications.form_id', 'applications.id')
@@ -86,13 +95,13 @@ class UserStatusController extends Controller
             ->where('applications.created_at', '<=', $end_date)
 
             //OrderBy
-            ->orderBy('applications.id', 'desc')
+            ->orderBy($sortable->s, $sortable->d)
             ->whereNull('applications.deleted_at')
             ->paginate(5);
 
         // Type Application
         $intstatus = (int)$status;
 
-        return view('user.status.index', compact('list_applications_status', 'intstatus', 'str_date', 'end_date'));
+        return view('user.status.index', compact('list_applications_status', 'intstatus', 'str_date', 'end_date', 'sortable'));
     }
 }
