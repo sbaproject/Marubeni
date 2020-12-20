@@ -121,7 +121,7 @@
                         </td>
                         <td>{{ $item->next_approver }}</td>
                         <td>
-                            <a class="btn btn-info" href="{{ route('user.approval.show',$item->application_id) }}">
+                            <a class="btn bg-gradient-info" href="{{ route('user.approval.show',$item->application_id) }}">
                                 {{ __('label.status.view_details') }}
                                 <i class="fas fa-angle-right" style="margin-left: 5px;"></i>
                             </a>

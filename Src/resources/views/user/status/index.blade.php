@@ -65,10 +65,18 @@
                 <table class="table table-bordered table-hover">
                     <thead>
                         <tr class="">
-                            <th>{{ __('label.status.no') }}</th>
-                            <th>{{ __('label.status.application_type') }}</th>
-                            <th>{{ __('label.status.apply_date') }}</th>
-                            <th>{{ __('label.status.next_approver') }}</th>
+                            <th class="sortable {{ $sortable->headers['application_no']->activeCls }}">
+                                {!! $sortable->headers['application_no']->title !!}
+                            </th>
+                            <th class="sortable {{ $sortable->headers['nameapp']->activeCls }}">
+                                {!! $sortable->headers['nameapp']->title !!}
+                            </th>
+                            <th class="sortable {{ $sortable->headers['datecreate']->activeCls }}">
+                                {!! $sortable->headers['datecreate']->title !!}
+                            </th>
+                            <th class="sortable {{ $sortable->headers['nameuser']->activeCls }}">
+                                {!! $sortable->headers['nameuser']->title !!}
+                            </th>
                             <th></th>
                         </tr>
                     </thead>
@@ -84,7 +92,7 @@
                                     <td>{{ !empty($application_status->nameuser) && $intstatus != config('const.application.status.completed') ? $application_status->nameuser : '' }}
                                     </td>
                                     <td>
-                                        <a class="btn btn-info" href="{{ Common::getRouteEditApplication($application_status->id, $application_status->form_id) }}">
+                                        <a class="btn bg-gradient-info" href="{{ Common::getRouteEditApplication($application_status->id, $application_status->form_id) }}">
                                             {{ __('label.status.view_details') }}
                                             <i class="fas fa-angle-right" style="margin-left: 5px;"></i>
                                         </a>

@@ -16,7 +16,7 @@
 @endsection
 @section('content')
     <form method="get" id="formSearch" action="">
-        <section class="content-header">
+        <section class="invoice p-3 mb-3 content-header">
             @csrf
             <div class="row">
                 <div class="col-md-4 col-sm-4">
@@ -25,7 +25,7 @@
                         <div class="input-group date" id="dateFrom" data-target-input="nearest">
                             <div class="input-group-addon input-group-append" data-target="#dateFrom"
                                 data-toggle="datetimepicker">
-                                <div class="input-group-text"><i class="fa fa-calendar-alt"></i></div>
+                                <div class="input-group-text btn-dtp-left"><i class="fa fa-calendar-alt"></i></div>
                             </div>
                             <input type="text" class="form-control datetimepicker-input" data-target="#dateFrom" />
                         </div>
@@ -38,7 +38,7 @@
                         <div class="input-group date" id="dateTo" data-target-input="nearest">
                             <div class="input-group-addon input-group-append" data-target="#dateTo"
                                 data-toggle="datetimepicker">
-                                <div class="input-group-text"><i class="fa fa-calendar-alt"></i></div>
+                                <div class="input-group-text btn-dtp-left"><i class="fa fa-calendar-alt"></i></div>
                             </div>
                             <input type="text" class="form-control datetimepicker-input" data-target="#dateTo" />
                         </div>
@@ -56,46 +56,46 @@
 
         <input type="hidden" id="typeApply" name="typeApply">
         <!-- Main content -->
-        <section class="content-dashboard">
+        <section class="invoice p-3 mb-3 content-dashboard">
             <div class="row" style="text-align: center;">
                 <div class="col-xs-5ths">
-                    <div class="card">
+                    <div class="">
                         <div class="btn btn-block bg-gradient-success btn-status" id="applying">
                             <span>{{ __('label.dashboard.applying') }}</span>
-                            <span class="right-number">({{ $count_applying }})</span>
+                            <div class="right-number">({{ $count_applying }})</div>
                         </div>
                     </div>
                 </div>
 
                 <div class="col-xs-5ths col-set">
-                    <div class="card">
+                    <div class="">
                         <div class="btn btn-block bg-gradient-danger btn-status" id="approval">
                             <span>{{ __('label.dashboard.approval') }}</span>
-                            <span class="right-number">({{ $count_approval }})</span>
+                            <div class="right-number">({{ $count_approval }})</div>
                         </div>
                     </div>
                 </div>
                 <div class="col-xs-5ths col-set">
-                    <div class="card">
+                    <div class="">
                         <div class="btn btn-block bg-gradient-warning btn-status" id="declined">
                             <span>{{ __('label.dashboard.declined') }}</span>
-                            <span class="right-number">({{ $count_declined }})</span>
+                            <div class="right-number">({{ $count_declined }})</div>
                         </div>
                     </div>
                 </div>
                 <div class="col-xs-5ths col-set">
-                    <div class="card">
+                    <div class="">
                         <div class="btn btn-block bg-gradient-secondary btn-status" id="reject">
                             <span>{{ __('label.dashboard.reject') }}</span>
-                            <span class="right-number">({{ $count_reject }})</span>
+                            <div class="right-number">({{ $count_reject }})</div>
                         </div>
                     </div>
                 </div>
                 <div class="col-xs-5ths col-set">
-                    <div class="card">
+                    <div class="">
                         <div class="btn btn-block bg-gradient-primary btn-status" id="completed">
                             <span>{{ __('label.dashboard.completed') }}</span>
-                            <span class="right-number">({{ $count_completed }})</span>
+                            <div class="right-number">({{ $count_completed }})</div>
                         </div>
                     </div>
                 </div>
@@ -108,18 +108,26 @@
                 <div class="card-body p-0 card-list-items">
                     <table class="table table-bordered table-hover" id="table_list_status">
                         <thead>
-                            <tr class="list-title">
-                                <th>{{ __('label.dashboard.application_no') }}</th>
-                                <th>{{ __('label.dashboard.application_name') }}</th>
-                                <th>{{ __('label.dashboard.status') }}</th>
-                                <th>{{ __('label.dashboard.apply_date') }}</th>
+                            <tr class="">
+                                <th class="sortable {{ $sortable->headers['application_no']->activeCls }}">
+                                    {!! $sortable->headers['application_no']->title !!}
+                                </th>
+                                <th class="sortable {{ $sortable->headers['form_name']->activeCls }}">
+                                    {!! $sortable->headers['form_name']->title !!}
+                                </th>
+                                <th class="sortable {{ $sortable->headers['status']->activeCls }}">
+                                    {!! $sortable->headers['status']->title !!}
+                                </th>
+                                <th class="sortable {{ $sortable->headers['created_at']->activeCls }}">
+                                    {!! $sortable->headers['created_at']->title !!}
+                                </th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody>
                             @if (isset($list_application))
                                 @foreach ($list_application as $application)
-                                    <tr class="list-content">
+                                    <tr class="">
                                         <td>{{ !empty($application->application_no) ? $application->application_no : '' }}
                                         </td>
                                         <td>{{ !empty($application->form_name) ? $application->form_name : '' }}</td>
@@ -132,7 +140,7 @@
                                         <td>{{ !empty($application->created_at) ? \Carbon\Carbon::parse($application->created_at)->format('d/m/Y') : '' }}
                                         </td>
                                         <td>
-                                            <a class="btn btn-details"
+                                            <a class="btn bg-gradient-info"
                                                 href="{{ Common::getRouteEditApplication($application->id, $application->form_id) }}">
                                                 {{ __('label.dashboard.view_details') }}
                                                 <i class="fas fa-angle-right" style="margin-left: 5px;"></i>

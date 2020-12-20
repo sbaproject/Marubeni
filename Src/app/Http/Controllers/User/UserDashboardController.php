@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Libs\Common;
 
 class UserDashboardController extends Controller
 {
@@ -57,8 +58,17 @@ class UserDashboardController extends Controller
             $intstatus = $data['typeApply'];
         }
 
+        // sorting columns
+        $sortColNames = [
+            'application_no'    => __('label.dashboard.application_no'),
+            'form_name'  => __('label.dashboard.application_name'),
+            'status'        => __('label.dashboard.status'),
+            'created_at'     => __('label.dashboard.apply_date'),
+        ];
+        $sortable = Common::getSortable($request, $sortColNames, 0, 0, true);
+
         //Get Applications By Condition
-        $list_application = $this->list_application($sta, $end, $stepStr, $stepEnd, $str_date, $end_date);
+        $list_application = $this->list_application($sta, $end, $stepStr, $stepEnd, $str_date, $end_date, $sortable);
 
         //Count Applications By Condition
         $count_applying  = $this->list_application_count(0, 98, 1, 1, $str_date, $end_date)->count();
@@ -71,11 +81,12 @@ class UserDashboardController extends Controller
 
         $count_completed  = $this->list_application_count(99, 99, 1, 2, $str_date, $end_date)->count();
 
-        return view('admin.dashboard.index', compact('list_application', 'count_applying', 'count_approval', 'count_declined', 'count_reject', 'count_completed', 'str_date', 'end_date', 'intstatus'));
+
+        return view('user.dashboard.index', compact('list_application', 'count_applying', 'count_approval', 'count_declined', 'count_reject', 'count_completed', 'str_date', 'end_date', 'intstatus', 'sortable'));
     }
 
     //Get List Application by Condition
-    private function list_application($sta, $end, $stepStr, $stepEnd, $str_date, $end_date)
+    private function list_application($sta, $end, $stepStr, $stepEnd, $str_date, $end_date, $sortable)
     {
         $fillZero = config('const.num_fillzero');
         $userId = Auth::user()->id;
@@ -97,7 +108,7 @@ class UserDashboardController extends Controller
             ->where('applications.created_by', $userId)
 
             //OrderBy
-            ->orderBy('applications.id', 'DESC')
+            ->orderBy($sortable->s, $sortable->d)
             ->whereNull('applications.deleted_at')
             ->paginate(5);
 
@@ -126,8 +137,6 @@ class UserDashboardController extends Controller
             ->where('applications.created_at', '<=', $end_date)
             ->where('applications.created_by', $userId)
 
-            //OrderBy
-            ->orderBy('applications.id', 'DESC')
             ->whereNull('applications.deleted_at')
             ->get();
 

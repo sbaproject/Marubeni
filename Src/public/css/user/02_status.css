@@ -49,9 +49,9 @@ input.form-control.calendar-from {
 
 .content-status {
     margin-top: 20px;
-    background-color: #fff;
-    border: #fff;
-    padding: 25px;
+    /* background-color: #fff; */
+    /* border: #fff; */
+    /* padding: 25px; */
 }
 
 .card {
