@@ -21,7 +21,7 @@
             <div class="invoice p-3 mb-3">
                 <div class="card-body">
                     <div class="search-content">
-                        <x-alert />
+                        {{-- <x-alert /> --}}
                         <form action="{{ route('admin.user.index') }}" method="GET">
                             <div class="row">
                                 <div class="col-lg-10 col-xl-9">

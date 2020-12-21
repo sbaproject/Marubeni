@@ -23,7 +23,7 @@ return [
         'draft' => 'Nháp',
         'export' => 'Xuất PDF',
         'approval' => 'Phê Duyệt',
-        'preview' => 'Xem trước',
+        'preview' => 'Xem chi tiết',
         'reject' => 'Khước từ',
         'declined' => 'Trả về',
         'processing' => 'Đang xử lý',
@@ -54,6 +54,7 @@ return [
     'applicant' => 'Người đề nghị',
     'confirming_title' => 'Xác nhận',
     'times' => 'Số lần',
+    'step' => 'Bước',
     'title' => [
         'user' => [
             'list' => 'Danh mục nhân viên',
@@ -70,6 +71,13 @@ return [
         'first' => 'Trang đầu',
         'last' => 'Trang cuối',
         'show_result_label' =>'Hiển thị từ :from - :to của :total dòng dữ liệu.',
+    ],
+    /**
+     * Step Type
+     */
+    'step_type' => [
+        1 => 'Nộp đơn',
+        2 => 'Thanh toán',
     ],
     /**
      * Form

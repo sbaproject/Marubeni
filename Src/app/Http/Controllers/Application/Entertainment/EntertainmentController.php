@@ -32,8 +32,9 @@ class EntertainmentController extends Controller
         $companies = Arr::pluck($companies->toArray(), 'name');
 
         $previewFlg = false;
+        $inProgressFlg = false;
 
-        return view('application.entertainment.input', compact('companies', 'previewFlg'));
+        return view('application.entertainment.input', compact('companies','previewFlg','inProgressFlg'));
     }
 
     public function store(Request $request)
@@ -86,10 +87,17 @@ class EntertainmentController extends Controller
         $companies = Company::all('name');
         $companies = Arr::pluck($companies->toArray(), 'name');
 
-        // if application is completed status => NOT ALLOWS EDIT
-        $previewFlg = $application->status == config('const.application.status.completed');
+        // if application is completed or rejected status => NOT ALLOWS EDIT
+        $previewFlg = $application->status == config('const.application.status.completed')
+                        || $application->status == config('const.application.status.reject');
 
-        return view('application.entertainment.input', compact('application', 'companies', 'previewFlg'));
+        // check application is in approval progress or not (by find any applicaiton_id in hisotry table)
+        $inProgressFlg = $application->status != config('const.application.status.draft');
+        // if(!$previewFlg){
+        //     $inProgressFlg = DB::table('history_approval')->where('application', $id)->exists();
+        // }
+
+        return view('application.entertainment.input', compact('application', 'companies', 'previewFlg', 'inProgressFlg'));
     }
 
     public function update(Request $request, $id)

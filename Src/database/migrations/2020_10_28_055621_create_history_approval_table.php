@@ -15,11 +15,12 @@ class CreateHistoryApprovalTable extends Migration
     {
         Schema::create('history_approval', function (Blueprint $table) {
             $table->unsignedInteger('id', true);
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('approved_by');
             $table->unsignedInteger('application_id');
+            $table->unsignedTinyInteger('status')->comment('0:applying, -1:declined, -2:reject, -3:draft, 1->5:approved, 99:completed');
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('approved_by')->references('id')->on('users');
             $table->foreign('application_id')->references('id')->on('applications');
         });
     }

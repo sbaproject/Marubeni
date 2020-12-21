@@ -16,7 +16,7 @@
         <div class="col-lg-9">
             <div class="invoice p-3 mb-3">
                 <div class="card-body">
-                    <x-alert />
+                    {{-- <x-alert /> --}}
                     <div class="search-content">
                         <form method="post" id="formBudget" action="">
                             @csrf

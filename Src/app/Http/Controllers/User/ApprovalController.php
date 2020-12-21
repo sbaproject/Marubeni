@@ -35,12 +35,12 @@ class ApprovalController extends Controller
             'approver_type_cc' => config('const.approver_type.cc'),
         ];
         if (isset($request->application_type)) {
-            $formIdCondition = " AND a.`form_id` = :formId";
+            $formIdCondition = " AND a.form_id = :formId";
             $params['formId'] = $request->application_type;
         }
         if (isset($request->keyword)) {
-            $applicantNameCondition = " us.`name` LIKE :applicantName";
-            $appNoCondition = "CONCAT(CONCAT(fo.prefix,'-'),LPAD(a.`id`, " . $fillZero . ", '0')) LIKE :applicationNo";
+            $applicantNameCondition = " us.name LIKE :applicantName";
+            $appNoCondition = "CONCAT(CONCAT(fo.prefix,'-'),LPAD(a.id, " . $fillZero . ", '0')) LIKE :applicationNo";
             $keywordCondition = " AND (" . $appNoCondition . " OR " . $applicantNameCondition . ")";
             $params['applicantName'] = '%' . $request->keyword . '%';
             $params['applicationNo'] = '%' . $request->keyword . '%';
@@ -52,65 +52,66 @@ class ApprovalController extends Controller
             'application_type'  => __('label.status.application_type'),
             'apply_date'        => __('label.status.apply_date'),
             'next_approver'     => __('label.status.next_approver'),
+            'step_type'         => __('label.step'),
         ];
-        $sortable = Common::getSortable($request, $sortColNames, 0, 0, true);
+        $sortable = Common::getSortable($request, $sortColNames, 2, 1, true);
 
         // get data
         $sql = "SELECT
-                 CONCAT(CONCAT(fo.prefix,'-'),LPAD(a.`id`, " . $fillZero . ", '0')) AS application_no
-                ,a.`id`             AS application_id
-                ,a.`current_step`
-                ,a.`status`
-                ,a.`subsequent`
-                ,a.`created_at`     AS apply_date
-                ,a.`form_id`
-                ,s.`group_id`
-                ,s.`id`             AS step_id
-                ,s.`approver_id`
-                ,s.`step_type`
-                ,s.`approver_type`
-                ,u.`name`           AS approver_name
-                ,us.`name`          AS applicant_name
-                ,fo.name            AS application_type
-                ,CASE WHEN s.`approver_type` = :approver_type_to_1
+                 CONCAT(CONCAT(fo.prefix,'-'),LPAD(a.id, " . $fillZero . ", '0')) AS application_no
+                ,a.id             AS application_id
+                ,a.current_step
+                ,a.status
+                ,a.subsequent
+                ,a.created_at     AS apply_date
+                ,a.form_id
+                ,s.group_id
+                ,s.id             AS step_id
+                ,s.approver_id
+                ,s.step_type
+                ,s.approver_type
+                ,u.name           AS approver_name
+                ,us.name          AS applicant_name
+                ,fo.name          AS application_type
+                ,CASE WHEN s.approver_type = :approver_type_to_1
                     THEN (
                         SELECT  us.name
                         FROM    steps
                                 INNER JOIN users us
                                     ON us.id = approver_id
-                        WHERE   `flow_id` = s.`flow_id`
-                        AND     `approver_type` = s.`approver_type`
+                        WHERE   flow_id = s.flow_id
+                        AND     approver_type = s.approver_type
                         AND     (
-                                    (`step_type` = s.`step_type` AND s.`order` <> :completed1 AND `select_order` = s.`order`)
+                                    (step_type = s.step_type AND s.order <> :completed1 AND select_order = s.order)
                                     OR
-                                    (s.`order` = :completed2 AND (`step_type` = (s.`step_type` + 1) AND `select_order` = 0))
+                                    (s.order = :completed2 AND (step_type = (s.step_type + 1) AND select_order = 0))
                                 )
                     ) ELSE (
                         SELECT  us.name
                         FROM    steps
                                 INNER JOIN users us
                                     ON us.id = steps.approver_id
-                        WHERE	steps.`group_id` = a.`group_id`
-                        AND 	steps.`select_order` = a.`status`
-                        AND 	steps.`step_type` = a.`current_step`
-                        AND 	steps.`approver_type` = 0
-                        AND 	a.`status` BETWEEN 0 AND 98
+                        WHERE	steps.group_id = a.group_id
+                        AND 	steps.select_order = a.status
+                        AND 	steps.step_type = a.current_step
+                        AND 	steps.approver_type = 0
+                        AND 	a.status BETWEEN 0 AND 98
                     ) END  AS next_approver
             FROM    applications a
                     INNER JOIN forms fo 
-                        ON a.`form_id` = fo.`id` " . $formIdCondition . "
+                        ON a.form_id = fo.id " . $formIdCondition . "
                     INNER JOIN groups g
-                        ON a.`group_id` = g.`id`
+                        ON a.group_id = g.id
                     INNER JOIN steps s
-                        ON s.`group_id` = g.`id` 
-                        AND ((s.`approver_type` = :approver_type_to_2 AND a.`status` = s.`select_order`) OR (s.`approver_type` = :approver_type_cc))
-                        AND s.`step_type` = a.`current_step`
+                        ON s.group_id = g.id 
+                        AND ((s.approver_type = :approver_type_to_2 AND a.status = s.select_order) OR (s.approver_type = :approver_type_cc))
+                        AND s.step_type = a.current_step
                     INNER JOIN users u
-                        ON u.`id` = s.`approver_id`
-                        AND s.`approver_id` = :userId
+                        ON u.id = s.approver_id
+                        AND s.approver_id = :userId
                     INNER JOIN users us
-                        ON us.`id` = a.`created_by`
-            WHERE   a.`status` BETWEEN 0 AND 98 " . $keywordCondition . "
+                        ON us.id = a.created_by
+            WHERE   a.status BETWEEN 0 AND 98 " . $keywordCondition . "
             ORDER BY " . $sortable->order_by;
 
         $data = DB::select($sql, $params);
@@ -136,14 +137,14 @@ class ApprovalController extends Controller
         $app = DB::table('applications')
             ->select(
                 'applications.*',
-                DB::raw("CONCAT(CONCAT(forms.prefix,'-'),LPAD(applications.`id`, " . config('const.num_fillzero') . ", '0')) AS application_no"),
+                DB::raw("CONCAT(CONCAT(forms.prefix,'-'),LPAD(applications.id, " . config('const.num_fillzero') . ", '0')) AS application_no"),
                 'steps.flow_id',
                 'steps.approver_id',
                 'steps.approver_type',
                 'steps.order',
                 'steps.select_order',
                 DB::raw('us.name AS applicant'),
-                DB::raw('(SELECT MAX(`step_type`) FROM steps WHERE flow_id = flows.id) AS step_count')
+                DB::raw('(SELECT MAX(step_type) FROM steps WHERE flow_id = flows.id) AS step_count')
             )
             ->join('groups', 'groups.id', 'applications.group_id')
             ->leftJoin('steps', function ($join) {
@@ -335,9 +336,19 @@ class ApprovalController extends Controller
 
                 DB::table('applications')->where('id', $id)->update($data);
 
+                // create approval history
+                $historyData = [
+                    'approved_by'       => $user->id,
+                    'application_id'    => $user->id,
+                    'status'            => $data['status'],
+                    'created_at'        => Carbon::now(),
+                    'updated_at'        => Carbon::now(),
+                ];
+                DB::table('history_approval')->insert($historyData);
+
                 DB::commit();
 
-                return Common::redirectBackWithAlertSuccess();
+                return Common::redirectRouteWithAlertSuccess('user.approval.index');
             } catch (Exception $ex) {
                 DB::rollBack();
                 $msgErr = null;

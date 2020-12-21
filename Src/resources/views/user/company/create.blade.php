@@ -8,7 +8,7 @@
 @section('content')
 <section class="content">
     <div class="container-fluid">
-        <x-alert />
+        {{-- <x-alert /> --}}
         <div class="row">
             <div class="col-sm-12">
                 <h4 class="mb-2" style="font-weight: 600;">{{ __('label.company.company_registration') }}</h4>

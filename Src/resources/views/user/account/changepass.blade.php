@@ -15,7 +15,7 @@
 				<form method="POST" action="{{ route('changepass.update') }}">
 					<div class="invoice p-3 mb-3 card-company">
 						<div class="card-body">
-							<x-alert />
+							{{-- <x-alert /> --}}
 							@csrf
 							<div class="form-group row ">
 								<label for="name"

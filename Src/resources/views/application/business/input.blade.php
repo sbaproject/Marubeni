@@ -54,7 +54,7 @@
 
 @endphp
 <section class="content leave-application">
-    <x-alert />
+    {{-- <x-alert /> --}}
     <form method="POST"
         action="{{ $actionUrl }}"
         enctype="multipart/form-data">
@@ -467,24 +467,26 @@
             </div>
         </div>
         <!-- /.card -->
-        @if (!$previewFlg)
-            <div class="text-center">
+        <div class="text-center">
+            @if (!$previewFlg)
                 <button type="button" name="apply" value="apply" class="btn bg-gradient-success btn-form" data-toggle="modal"
                     data-target="#popup-confirm">
                     <i class="far fa-check-circle" style="margin-right: 5px;"></i>
                     {{ __('label.button.apply') }}
                 </button>
-                <button type="button" name="draft" value="draft" class="btn btn bg-gradient-info btn-form" data-toggle="modal"
-                    data-target="#popup-confirm">
-                    <i class="nav-icon fas fa-edit" style="margin-right: 5px;"></i>
-                    {{ __('label.button.draft') }}
-                </button>
-                <a href="{{ route('user.form.index') }}" class="btn btn bg-gradient-secondary btn-form btn-cancel">
-                    <i class="fa fa-ban" aria-hidden="true" style="margin-right: 5px;"></i>
-                    {{ __('label.button.cancel') }}
-                </a>
-            </div>
-        @endif
+                @if (!$inProgressFlg)
+                    <button type="button" name="draft" value="draft" class="btn btn bg-gradient-info btn-form" data-toggle="modal"
+                        data-target="#popup-confirm">
+                        <i class="nav-icon fas fa-edit" style="margin-right: 5px;"></i>
+                        {{ __('label.button.draft') }}
+                    </button>
+                @endif
+            @endif
+            <a href="{{ route('user.form.index') }}" class="btn btn bg-gradient-secondary btn-form btn-cancel">
+                <i class="fa fa-ban" aria-hidden="true" style="margin-right: 5px;"></i>
+                {{ __('label.button.cancel') }}
+            </a>
+        </div>
         <br>
         <br>
     </form>

@@ -27,8 +27,8 @@ class AlertStepsTable extends Migration
     public function down()
     {
         Schema::table('steps', function (Blueprint $table) {
-            $table->foreign('group_id')->references('id')->on('groups');
-           $table->dropColumn('group_id');
+            $table->dropForeign('group_id')->references('id')->on('groups');
+            $table->dropColumn('group_id');
         });
     }
 }

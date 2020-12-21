@@ -81,6 +81,10 @@
                 <thead>
                     <tr class="list-title">
                         <th></th>
+                        {{-- <th>{{ __('label.step') }}</th> --}}
+                        <th class="sortable {{ $sortable->headers['step_type']->activeCls }}">
+                            {!! $sortable->headers['step_type']->title !!}
+                        </th>
                         <th class="sortable {{ $sortable->headers['application_no']->activeCls }}">
                             {{-- {{ __('label.application_no') }} --}}
                             {!! $sortable->headers['application_no']->title !!}
@@ -109,6 +113,9 @@
                             @else
                             <span class="badge bg-warning">CC</span>
                             @endif
+                        </td>
+                        <td>
+                            {{ __('label.step_type.'.$item->step_type) }}
                         </td>
                         <td>{{ $item->application_no }}</td>
                         <td>{{ $item->application_type }}</td>

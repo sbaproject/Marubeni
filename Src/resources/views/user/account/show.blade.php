@@ -18,7 +18,7 @@
     <div class="invoice p-3 mb-3">
         <div class="card-body">
             <div class="search-content">
-                <x-alert/>
+                {{-- <x-alert/> --}}
                 <form method="POST" action="{{ Request::url() }}">
                     @csrf
                     {{-- ID --}}

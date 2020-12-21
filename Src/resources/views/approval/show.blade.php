@@ -26,7 +26,7 @@
             <div class="col-lg-9 col-md-12">
                 <h4 class="mb-2" style="font-weight: 600;">{{ Str::upper(__('label.application_info')) }}</h4>
                 <div class="invoice p-3 mb-3 card-app">
-                    <x-alert/>
+                    {{-- <x-alert/> --}}
                     <div class="card-body p-0">
                         <div class="appcation_info">
                             <div class="row ">

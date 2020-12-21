@@ -13,7 +13,7 @@
     </section>
     <!-- Main content -->
     <section class="content">
-        <x-alert />
+        {{-- <x-alert /> --}}
         <div class="button_wrap">
             <a href="{{ route('admin.flow.create') }}" class="btn bg-gradient-danger">
                 <i class="nav-icon fa fa-plus-circle" style="margin-right: 5px"></i>{{ __('label.button.addnew') }}</a>

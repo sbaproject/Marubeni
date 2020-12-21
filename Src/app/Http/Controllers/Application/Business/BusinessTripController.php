@@ -26,8 +26,9 @@ class BusinesstripController extends Controller
     public function create()
     {
         $previewFlg = false;
+        $inProgressFlg = false;
 
-        return view('application.business.input', compact('previewFlg'));
+        return view('application.business.input', compact('previewFlg', 'inProgressFlg'));
     }
 
     public function store(Request $request)
@@ -73,13 +74,20 @@ class BusinesstripController extends Controller
             abort(404);
         }
 
-        // if application is completed status => NOT ALLOWS EDIT
-        $previewFlg = $application->status == config('const.application.status.completed');
+        // if application is completed or rejected status => NOT ALLOWS EDIT
+        $previewFlg = $application->status == config('const.application.status.completed')
+                        || $application->status == config('const.application.status.reject');
+
+        // check application is in approval progress or not (by find any applicaiton_id in hisotry table)
+        $inProgressFlg = $application->status != config('const.application.status.draft');
+        // if(!$previewFlg){
+        //     $inProgressFlg = DB::table('history_approval')->where('application', $id)->exists();
+        // }
 
         // get business application
         // $model = Businesstrip::where('application_id', $id)->first();
 
-        return view('application.business.input', compact('application', 'previewFlg'));
+        return view('application.business.input', compact('application', 'previewFlg', 'inProgressFlg'));
     }
 
     public function update(Request $request, $id)

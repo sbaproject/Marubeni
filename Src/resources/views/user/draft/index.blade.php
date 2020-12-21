@@ -14,7 +14,7 @@
     </section>
     <section class="content">
         <div class="invoice p-3 mb-3">
-            <x-alert />
+            {{-- <x-alert /> --}}
             <div class="card-body p-0 card-list-items">
                 <div class="wrap_tbl_ad">
                     <table class="table table-bordered table-hover" style="min-width: 500px;">

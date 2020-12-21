@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="css/lib/select2-bootstrap4-theme/select2-bootstrap4.min.css">
     <!--  All Min Css -->
     <link rel="stylesheet" href="css/lib/adminlte.OverlayScrollbars.min.css">
+    <link rel="stylesheet" href="css/lib/adminlte.toastr.min.css">
     <link rel="stylesheet" href="css/lib/adminlte.min.css">
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="css/lib/google_font_sans_pro.css">
@@ -40,6 +41,7 @@
     <script src="js/bootstrap/js/bootstrap.min.js"></script>
     <!-- AdminLTE App -->
     <script src="js/adminlte.overlayScrollbars.min.js"></script>
+    <script src="js/adminlte.toastr.min.js"></script>
     <script src="js/adminlte.min.js"></script>
     <!-- Master CSS-->
     {{-- <script src="js/master.js"></script> --}}
@@ -52,6 +54,7 @@
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed">
+    <x-alert/>
     <!-- Site wrapper -->
     <div class="wrapper">
         <!-- Navbar -->

@@ -4,10 +4,10 @@ return [
     /**
      * Messages
      */
-    'save_success' => 'Lưu thành công.',
-    'delete_success' => 'Xóa thành công.',
-    'save_fail' => 'Lưu thất bại.',
-    'delete_fail' => 'Xóa thất bại.',
+    'save_success' => 'Dữ liệu đã được lưu thành công !',
+    'delete_success' => 'Dữ liệu đã được xóa thành công !',
+    'save_fail' => 'Lưu dữ liệu không thành công !',
+    'delete_fail' => 'Xóa dữ liệu không thành công !',
     'no_data' => 'Không tìm thấy dữ liệu.',
     'sure_to_continue' => 'Bạn vẫn muốn tiếp tục xử lý ?',
     /**

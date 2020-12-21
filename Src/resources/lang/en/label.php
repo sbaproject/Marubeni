@@ -39,13 +39,6 @@ return [
     'select' => 'Select',
     'on' => 'ON',
     'off' => 'OFF',
-    'paginator' => [
-        'prev' => 'Previous page',
-        'next' => 'Next page',
-        'first' => 'First page',
-        'last' => 'Last page',
-        'show_result_label' => 'Showing :from - :to of :total items.',
-    ],
     'action' => 'Action',
     '_no_' => 'NO.',
     'email_address' => 'E-Mail address',
@@ -66,12 +59,30 @@ return [
     'applicant' => 'Applicant',
     'confirming_title' => 'Confirm',
     'times' => 'Times',
+    'step' => 'Step',
     'title' => [
         'user' => [
             'list' => 'Employees',
             'edit' => 'Employee Edit',
             'add' => 'Employee Add',
         ],
+    ],
+    /**
+     * Paginator
+     */
+    'paginator' => [
+        'prev' => 'Previous page',
+        'next' => 'Next page',
+        'first' => 'First page',
+        'last' => 'Last page',
+        'show_result_label' => 'Showing :from - :to of :total items.',
+    ],
+    /**
+     * Step Type
+     */
+    'step_type' => [
+        1 => 'Application',
+        2 => 'Settlement',
     ],
     /**
      * Form
@@ -165,7 +176,7 @@ return [
         'transportation' => 'Itinerary & Transportation',
         'accommodation' => 'Accommodation',
         'accompany' => 'Accompany',
-        'borne_by' => 'Expenses to BE Borne by',
+        'borne_by' => 'Expenses to be charged by',
         'comment' => 'Comment',
         'budget_position' => 'Budget type',
     ],
@@ -180,7 +191,7 @@ return [
         'check_row' => 'Confirmation of Compliance with Laws',
         'entertainment_times' => 'No. of Entertainment for past 1 year',
         'existence_projects' => 'Existence of projects',
-        'includes_family' => 'Includes its Family/Friend',
+        'includes_family' => 'Including Family/Friend',
         'project_name' => 'Project Name',
         'entertainment_reason' => 'Reason for the Entertainment',
         'entertainment_reason_other' => 'Other reason for the Entertainment',
@@ -190,11 +201,11 @@ return [
         'cp_name' => 'Company Name',
         'title' => 'Title',
         'name_attendants' => 'Name of Attendants',
-        'details_dutles' => 'Details of dutles',
+        'details_dutles' => 'Details of duties',
         'if_need' => 'If need',
         'persons' => 'Persons',
         'per_person_excluding_vnd' => 'Per Person(Excluding VAT)',
-        'entrainment_infomation' => 'Entrainment Infomation',
+        'entrainment_infomation' => 'Entertainment Infomation',
         'budget_position' => 'Budget type',
         'reason' => [
             1   => 'Dinner (private sector)',

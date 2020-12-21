@@ -29,11 +29,12 @@ class LeaveApplicationController extends Controller
         $user = Auth::user();
 
         $previewFlg = false;
+        $inProgressFlg = false;
 
         // clear flash input
         // session()->flashInput([]);
 
-        return view('application.leave.input', compact('codeLeaves', 'paidTypes', 'user', 'previewFlg'));
+        return view('application.leave.input', compact('codeLeaves', 'paidTypes', 'user', 'previewFlg', 'inProgressFlg'));
     }
 
     public function store(Request $request)
@@ -78,13 +79,20 @@ class LeaveApplicationController extends Controller
             abort(404);
         }
 
-        // if application is completed status => NOT ALLOWS EDIT
-        $previewFlg = $application->status == config('const.application.status.completed');
+        // if application is completed or rejected status => NOT ALLOWS EDIT
+        $previewFlg = $application->status == config('const.application.status.completed')
+                        || $application->status == config('const.application.status.reject');
+
+        // check application is in approval progress or not (by find any applicaiton_id in hisotry table)
+        $inProgressFlg = $application->status != config('const.application.status.draft');
+        // if(!$previewFlg){
+        //     $inProgressFlg = DB::table('history_approval')->where('application', $id)->exists();
+        // }
 
         // get leave application
         // $model = Leave::where('application_id', $id)->first();
 
-        return view('application.leave.input', compact('application', 'previewFlg'));
+        return view('application.leave.input', compact('application', 'previewFlg', 'inProgressFlg'));
     }
 
     public function update(Request $request, $id)

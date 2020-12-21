@@ -23,7 +23,7 @@
 	<div class="invoice p-3 mb-3">
 		<div class="card-body p-4">
 			<div class="container">
-				<x-alert />
+				{{-- <x-alert /> --}}
 				<div class="row">
 					<div class="col-sm-12 col-md-4 btn">
 						<a href="{{ route('user.entertainment.create') }}">

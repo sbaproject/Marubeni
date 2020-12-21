@@ -4,10 +4,10 @@ return [
     /**
      * Messages
      */
-    'save_success' => 'Save success.',
-    'delete_success' => 'Delete success',
-    'save_fail' => 'Save fail.',
-    'delete_fail' => 'Delete success',
+    'save_success' => 'Data has been saved successfully !',
+    'delete_success' => 'Data has been deleted successfully !',
+    'save_fail' => 'Data has not been saved !',
+    'delete_fail' => 'Data has not been deleted !',
     'no_data' => 'No data found.',
     'sure_to_continue' => 'Are you sure to continue ?',
     /**

@@ -380,3 +380,14 @@ table>tbody>tr>td {
 .file-link {
     color: #007bff;
 }
+
+.toasts-top-center.fixed{
+    position: fixed;
+}
+.toasts-top-center {
+    position: absolute;
+    right: 50%;
+    top: 1%;
+    z-index: 1040;
+    transform: translate(50%);
+}

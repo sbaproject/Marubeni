@@ -76,7 +76,7 @@
             <a href="{{ route('admin.company.create') }}" class="btn bg-gradient-danger">
                 <i class="nav-icon fa fa-plus-circle" style="margin-right:5px;"></i>{{ __('label.button.addnew') }}</a>
         </div>
-        <x-alert />
+        {{-- <x-alert /> --}}
         <div class="invoice p-3 mb-3">
             <div class="card-body p-0 card-list-items">
                 <div class="wrap_tbl_ad">
