@@ -133,8 +133,8 @@
                                         <td>{{ !empty($application->form_name) ? $application->form_name : '' }}</td>
                                         <td>
                                             <div
-                                                class="badge {{ ($application->status >= 0 and $application->status <= 98 and $application->current_step == 1) ? 'badge-success' : ($application->status == config('const.application.status.declined') ? 'badge-warning' : ($application->status == config('const.application.status.reject') ? 'badge-secondary' : ($application->status == config('const.application.status.completed') ? 'badge-primary' : 'badge-danger'))) }}">
-                                                {{ ($application->status >= 0 and $application->status <= 98 and $application->current_step == 1) ? __('label.dashboard.applying') : ($application->status == config('const.application.status.declined') ? __('label.dashboard.declined') : ($application->status == config('const.application.status.reject') ? __('label.dashboard.reject') : ($application->status == config('const.application.status.completed') ? __('label.dashboard.completed') : __('label.dashboard.approval')))) }}
+                                                class="badge {{ ($application->status_css >= 0 and $application->status_css <= 98 and $application->current_step == 1) ? 'badge-success' : ($application->status_css == config('const.application.status.declined') ? 'badge-warning' : ($application->status_css == config('const.application.status.reject') ? 'badge-secondary' : ($application->status_css == config('const.application.status.completed') ? 'badge-primary' : 'badge-danger'))) }}">
+                                                {{ !empty($application->status) ? $application->status : '' }}
                                             </div>
                                         </td>
                                         <td>{{ !empty($application->created_at) ? \Carbon\Carbon::parse($application->created_at)->format('d/m/Y') : '' }}

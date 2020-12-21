@@ -90,7 +90,16 @@ class AdminDashboardController extends Controller
 
         //List
         $list_application =  DB::table('applications')
-            ->select(DB::raw("CONCAT(CONCAT(forms.prefix,'-'),LPAD(applications.`id`, " . $fillZero . ", '0')) AS application_no"), 'forms.name As form_name', 'applications.created_at As created_at', 'applications.status As status', 'applications.current_step As current_step', 'applications.form_id As form_id', 'applications.id As id')
+            ->select(
+                DB::raw("CONCAT(CONCAT(forms.prefix,'-'),LPAD(applications.`id`, " . $fillZero . ", '0')) AS application_no"),
+                'forms.name As form_name',
+                'applications.created_at As created_at',
+                DB::raw('(CASE WHEN (applications.status >= 0 AND applications.status <= 98 AND applications.current_step = 1) THEN "' . __('label.dashboard.applying') . '" ELSE (CASE WHEN (applications.status = "' . config('const.application.status.declined') . '") THEN "' . __('label.dashboard.declined') . '" ELSE (CASE WHEN (applications.status = "' . config('const.application.status.reject') . '") THEN "' . __('label.dashboard.reject') . '" ELSE (CASE WHEN (applications.status = "' . config('const.application.status.completed') . '") THEN "' . __('label.dashboard.completed') . '" ELSE ("' . __('label.dashboard.approval') . '") END ) END) END) END) AS status'),
+                'applications.status As status_css',
+                'applications.current_step As current_step',
+                'applications.form_id As form_id',
+                'applications.id As id'
+            )
 
             //Join
             ->join('forms', 'applications.form_id', '=', 'forms.id')
@@ -111,29 +120,29 @@ class AdminDashboardController extends Controller
         return  $list_application;
     }
 
-     //Get Count
-     private function list_application_count($sta, $end, $stepStr, $stepEnd, $str_date, $end_date)
-     {
-         $fillZero = config('const.num_fillzero');
+    //Get Count
+    private function list_application_count($sta, $end, $stepStr, $stepEnd, $str_date, $end_date)
+    {
+        $fillZero = config('const.num_fillzero');
 
-         //List
-         $list_application =  DB::table('applications')
-             ->select(DB::raw("CONCAT(CONCAT(forms.prefix,'-'),LPAD(applications.`id`, " . $fillZero . ", '0')) AS application_no"), 'forms.name As form_name', 'applications.created_at As created_at', 'applications.status As status', 'applications.current_step As current_step', 'applications.form_id As form_id', 'applications.id As id')
+        //List
+        $list_application =  DB::table('applications')
+            ->select(DB::raw("CONCAT(CONCAT(forms.prefix,'-'),LPAD(applications.`id`, " . $fillZero . ", '0')) AS application_no"), 'forms.name As form_name', 'applications.created_at As created_at', 'applications.status As status', 'applications.current_step As current_step', 'applications.form_id As form_id', 'applications.id As id')
 
-             //Join
-             ->join('forms', 'applications.form_id', '=', 'forms.id')
+            //Join
+            ->join('forms', 'applications.form_id', '=', 'forms.id')
 
-             //Where
-             ->where('applications.status', '>=', $sta)
-             ->where('applications.status', '<=', $end)
-             ->where('applications.current_step', '>=', $stepStr)
-             ->where('applications.current_step', '<=', $stepEnd)
-             ->where('applications.created_at', '>=', $str_date)
-             ->where('applications.created_at', '<=', $end_date)
+            //Where
+            ->where('applications.status', '>=', $sta)
+            ->where('applications.status', '<=', $end)
+            ->where('applications.current_step', '>=', $stepStr)
+            ->where('applications.current_step', '<=', $stepEnd)
+            ->where('applications.created_at', '>=', $str_date)
+            ->where('applications.created_at', '<=', $end_date)
 
-             ->whereNull('applications.deleted_at')
-             ->get();
+            ->whereNull('applications.deleted_at')
+            ->get();
 
-         return  $list_application;
-     }
+        return  $list_application;
+    }
 }
