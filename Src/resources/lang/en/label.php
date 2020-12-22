@@ -60,6 +60,7 @@ return [
     'confirming_title' => 'Confirm',
     'times' => 'Times',
     'step' => 'Step',
+    'status_caption' => 'Status',
     'title' => [
         'user' => [
             'list' => 'Employees',
@@ -120,6 +121,19 @@ return [
         'employee_setting' => 'Employees',
         'budget_setting' => 'Budgets',
         'approval_flow_setting' => 'Approval Flows',
+    ],
+    /**
+     * Application
+     */
+    'application' => [
+        'status' => [
+            'applying' => 'Applying',
+            'approval' => 'Approval',
+            'reject' => 'Rejected',
+            'decline' => 'Declined',
+            'complete' => 'Completed',
+            'draft' => 'Draft',
+        ],
     ],
     /**
      * Leave Application

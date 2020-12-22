@@ -34,7 +34,16 @@ class LeaveApplicationController extends Controller
         // clear flash input
         // session()->flashInput([]);
 
-        return view('application.leave.input', compact('codeLeaves', 'paidTypes', 'user', 'previewFlg', 'inProgressFlg'));
+        return view(
+            'application.leave.input',
+            compact(
+                'codeLeaves',
+                'paidTypes',
+                'user',
+                'previewFlg',
+                'inProgressFlg'
+            )
+        );
     }
 
     public function store(Request $request)

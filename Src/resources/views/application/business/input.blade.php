@@ -69,13 +69,23 @@
         <div class="invoice p-3 mb-3">
             <div class="card-body">
                 @if (isset($application))
+                <div class="form-group row">
+                    <div class="col-sm-2 text-left">
+                        <label>{{ __('label.status_caption') }}</label>
+                    </div>
+                    <div class="col-sm-10">
+                        {!! Common::getStatusApplicationBadge($application->status, $application->current_step) !!}
+                    </div>
+                </div>
+                <hr>
+                @endif
+                @if (isset($application))
                     <div class="form-group row">
                         <div class="col-sm-2 text-left">
                             <label>{{ __('label.business.application_no') }}</label>
                         </div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" readonly
-                                value="{{ $application->application_no }}">
+                            {{ $application->application_no }}
                         </div>
                     </div>
                     <hr>

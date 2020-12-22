@@ -55,6 +55,7 @@ return [
     'confirming_title' => 'Xác nhận',
     'times' => 'Số lần',
     'step' => 'Bước',
+    'status_caption' => 'Trạng thái',
     'title' => [
         'user' => [
             'list' => 'Danh mục nhân viên',
@@ -115,6 +116,19 @@ return [
         'employee_setting' => 'Danh Mục Nhân Viên',
         'budget_setting' => 'Ngân Sách',
         'approval_flow_setting' => 'Quy Trình Phê Duyệt',
+    ],
+    /**
+     * Application
+     */
+    'application' => [
+        'status' => [
+            'applying' => 'Đơn đang xin',
+            'approval' => 'Đơn phê duyệt',
+            'reject' => 'Đơn khước từ',
+            'decline' => 'Đơn trả về',
+            'complete' => 'Đơn hoàn tất',
+            'draft' => 'Bản nháp',
+        ],
     ],
     /**
      * Leave application

@@ -132,10 +132,12 @@
                                         </td>
                                         <td>{{ !empty($application->form_name) ? $application->form_name : '' }}</td>
                                         <td>
-                                            <div
+                                            {{-- <div
                                                 class="badge {{ ($application->status_css >= 0 and $application->status_css <= 98 and $application->current_step == 1) ? 'badge-success' : ($application->status_css == config('const.application.status.declined') ? 'badge-warning' : ($application->status_css == config('const.application.status.reject') ? 'badge-secondary' : ($application->status_css == config('const.application.status.completed') ? 'badge-primary' : 'badge-danger'))) }}">
                                                 {{ !empty($application->status) ? $application->status : '' }}
-                                            </div>
+                                                
+                                            </div> --}}
+                                            {!! Common::getStatusApplicationBadge($application->status_css, $application->current_step) !!}
                                         </td>
                                         <td>{{ !empty($application->created_at) ? \Carbon\Carbon::parse($application->created_at)->format('d/m/Y') : '' }}
                                         </td>

@@ -275,4 +275,38 @@ class Common
 
 		return $sort;
 	}
+
+	/**
+	 * Generate status application with badge html style
+	 * @param int $status Current status of application
+	 * @param int $currentStep Current step of application
+	 * @return string status badge html
+	 */
+	public static function getStatusApplicationBadge($status, $currentStep)
+	{
+
+		if ($status >= 0 && $status <= 98 && $currentStep == config('const.application.step_type.application')) {
+			$statusName = __('label.application.status.applying');
+			$statusBadgeCss = 'badge-success';
+		} elseif ($status == config('const.application.status.declined')) {
+			$statusName = __('label.application.status.decline');
+			$statusBadgeCss = 'badge-warning';
+		} elseif ($status == config('const.application.status.reject')) {
+			$statusName = __('label.application.status.reject');
+			$statusBadgeCss = 'badge-secondary';
+		} elseif ($status == config('const.application.status.completed')) {
+			$statusName = __('label.application.status.complete');
+			$statusBadgeCss = 'badge-primary';
+		} elseif ($status == config('const.application.status.draft')) {
+			$statusName = __('label.application.status.draft');
+			$statusBadgeCss = 'badge-info';
+		} else {
+			$statusName = __('label.application.status.approval');
+			$statusBadgeCss = 'badge-danger';
+		}
+
+		$statusBadgeHtml = "<span class='badge {$statusBadgeCss}'>{$statusName}</span>";
+
+		return $statusBadgeHtml;
+	}
 }
