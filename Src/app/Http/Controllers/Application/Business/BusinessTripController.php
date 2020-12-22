@@ -74,11 +74,14 @@ class BusinesstripController extends Controller
             abort(404);
         }
 
-        // if application is completed or rejected status => NOT ALLOWS EDIT
-        $previewFlg = $application->status == config('const.application.status.completed')
-                        || $application->status == config('const.application.status.reject');
+        // if application is in approval progress => NOT ALLOWS EDIT
+        $previewFlg = ($application->status != config('const.application.status.draft')
+            && $application->status != config('const.application.status.applying')
+            && $application->status != config('const.application.status.declined'))
+            || ($application->current_step > config('const.application.step_type.application')
+                && $application->status != config('const.application.status.declined'));
 
-        // check application is in approval progress or not (by find any applicaiton_id in hisotry table)
+        // disabled draft button if application was applied.
         $inProgressFlg = $application->status != config('const.application.status.draft');
         // if(!$previewFlg){
         //     $inProgressFlg = DB::table('history_approval')->where('application', $id)->exists();

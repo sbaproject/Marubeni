@@ -34,7 +34,7 @@ class EntertainmentController extends Controller
         $previewFlg = false;
         $inProgressFlg = false;
 
-        return view('application.entertainment.input', compact('companies','previewFlg','inProgressFlg'));
+        return view('application.entertainment.input', compact('companies', 'previewFlg', 'inProgressFlg'));
     }
 
     public function store(Request $request)
@@ -87,11 +87,14 @@ class EntertainmentController extends Controller
         $companies = Company::all('name');
         $companies = Arr::pluck($companies->toArray(), 'name');
 
-        // if application is completed or rejected status => NOT ALLOWS EDIT
-        $previewFlg = $application->status == config('const.application.status.completed')
-                        || $application->status == config('const.application.status.reject');
+        // if application is in approval progress => NOT ALLOWS EDIT
+        $previewFlg = ($application->status != config('const.application.status.draft')
+            && $application->status != config('const.application.status.applying')
+            && $application->status != config('const.application.status.declined'))
+            || ($application->current_step > config('const.application.step_type.application')
+                && $application->status != config('const.application.status.declined'));
 
-        // check application is in approval progress or not (by find any applicaiton_id in hisotry table)
+        // disabled draft button if application was applied.
         $inProgressFlg = $application->status != config('const.application.status.draft');
         // if(!$previewFlg){
         //     $inProgressFlg = DB::table('history_approval')->where('application', $id)->exists();
@@ -243,7 +246,7 @@ class EntertainmentController extends Controller
 
             // get budget comparation type
             $budgetTypeCompare = null;
-            if(isset($inputs['est_amount']) && !empty($budget)){
+            if (isset($inputs['est_amount']) && !empty($budget)) {
                 if ($inputs['est_amount'] <= $budget->amount) {
                     $budgetTypeCompare = config('const.budget.budeget_type_compare.less_equal');
                 } else {

@@ -6,6 +6,6 @@ use Exception;
 class NotFoundFlowSettingException extends Exception {
     public function __construct()
     {
-        parent::__construct(__('msg.entertainment.01'));
+        parent::__construct(__('msg.application.error.flow_not_found'));
     }
 }

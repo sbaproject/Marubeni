@@ -11,10 +11,20 @@ return [
     'no_data' => 'No data found.',
     'sure_to_continue' => 'Are you sure to continue ?',
     /**
-     * Entertainment Application
+     * Application
      */
-    'entertainment' => [
-        '01' => 'Not found available flow setting for this application.',
+    'application' => [
+        'error' => [
+            '404' => 'Not found available application !',
+            '403' => 'You do not have permission access to this application !',
+            'unvalid_action' => 'Status of this form is no longer valid with your action !',
+            'flow_not_found' => 'Not found available flow setting for this application !',
+        ],
+        'success' => [
+            'approve_ok' => 'Application has been approved successfully !',
+            'apply_ok' => 'Application has been applied successfully !',
+            'draft_ok' => 'Application has been saved with draft successfully !',
+        ],
     ],
     /**
      * Page Error

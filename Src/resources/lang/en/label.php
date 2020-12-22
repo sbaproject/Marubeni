@@ -27,7 +27,7 @@ return [
         'approval' => 'Approval',
         'preview' => 'Preview',
         'reject' => 'Reject',
-        'declined' => 'Declined',
+        'declined' => 'Decline',
         'processing' => 'Processing',
     ],
     'rememberme' => 'Remember me',

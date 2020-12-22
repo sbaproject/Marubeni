@@ -11,10 +11,20 @@ return [
     'no_data' => 'Không tìm thấy dữ liệu.',
     'sure_to_continue' => 'Bạn vẫn muốn tiếp tục xử lý ?',
     /**
-     * Entertainment Application
+     * Application
      */
-    'entertainment' => [
-        '01' => 'Không tìm thấy quy trình duyệt đơn phù hợp.',
+    'application' => [
+        'error' => [
+            '404' => 'Không tìm thấy đơn phù hợp mà bạn yêu cầu !',
+            '403' => 'Bạn không có quyền để truy cập đơn này !',
+            'unvalid_action' => 'Trạng thái của đơn không còn phù hợp cho hành động xét duyệt này !',
+            'flow_not_found' => 'Không tìm thấy quy trình duyệt đơn phù hợp !',
+        ],
+        'success' => [
+            'approve_ok' => 'Đơn vừa được phê duyệt thành công !',
+            'apply_ok' => 'Đã nộp đơn thành công !',
+            'draft_ok' => 'Đơn đã được lưu nháp thành công !',
+        ],
     ],
     /**
      * Page error

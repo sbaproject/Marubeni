@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\Leave;
 use App\Models\Application;
 use Illuminate\Support\Arr;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -162,7 +163,7 @@ class ApprovalController extends Controller
             ->first();
 
         if (empty($app)) {
-            abort(404);
+            return $this->redirectError(__('msg.application.error.404'));
         }
 
         // get list of approver (include TO & CC)
@@ -183,7 +184,7 @@ class ApprovalController extends Controller
         // check logged user has permission to access
         $approvers = Arr::pluck($approvers, 'approver_id');
         if (!in_array(Auth::user()->id, $approvers) && $app->created_by !== Auth::user()->id) {
-            abort(403);
+            return $this->redirectError(__('msg.application.error.403'));
         }
 
         return view('approval.show', compact('app'));
@@ -198,7 +199,7 @@ class ApprovalController extends Controller
 
             //check logged user has approval permission
             if (!$user->approval) {
-                abort(403);
+                return Common::redirectRouteWithAlertFail('user.approval.index');
             }
 
             // get application detail
@@ -240,17 +241,17 @@ class ApprovalController extends Controller
 
             // not found application
             if (empty($appDetail)) {
-                abort(404);
+                return $this->redirectError(__('msg.application.error.404'));
             }
             // check available status application
             if ($appDetail->status < 0 || $appDetail->status > 98) {
                 // return Common::redirectBackWithAlertFail('Thao tac khong hop le doi voi don nay.')->with('inputs', $inputs);
-                abort(404);
+                return $this->redirectError(__('msg.application.error.unvalid_action'));
             }
             // check available next approval
             if ($appDetail->approver_id != $user->id) {
                 // return Common::redirectBackWithAlertFail('Ban khong co quyen de thao tac')->with('inputs', $inputs);
-                abort(403);
+                return $this->redirectError(__('msg.application.error.403'));
             }
 
             DB::beginTransaction();
@@ -348,7 +349,7 @@ class ApprovalController extends Controller
 
                 DB::commit();
 
-                return Common::redirectRouteWithAlertSuccess('user.approval.index');
+                return Common::redirectRouteWithAlertSuccess('user.approval.index', __('msg.application.success.approve_ok'));
             } catch (Exception $ex) {
                 DB::rollBack();
                 $msgErr = null;
@@ -358,7 +359,12 @@ class ApprovalController extends Controller
                 return Common::redirectBackWithAlertFail($msgErr);
             }
         } else {
-            abort(404);
+            return $this->redirect404();
         }
+    }
+
+    public function redirectError($msg)
+    {
+        return Common::redirectRouteWithAlertFail('user.approval.index', $msg);
     }
 }
