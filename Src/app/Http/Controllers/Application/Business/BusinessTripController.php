@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use App\Exceptions\Entertainment\NotFoundFlowSettingException;
@@ -64,22 +65,26 @@ class BusinesstripController extends Controller
 
     public function show($id)
     {
-        // check owner
         $application = Application::findOrFail($id);
-        if (Auth::user()->id !== $application->created_by) {
-            abort('403');
-        }
-
         if (empty($application->business)) {
             abort(404);
+        }
+        // check valid accessing
+        if (Auth::user()->id !== $application->created_by) {
+            if (Gate::denies('admin-gate')) {
+                abort(403);
+            } else {
+                $showWithAdminFlg = true;
+            }
         }
 
         // if application is in approval progress => NOT ALLOWS EDIT
         $previewFlg = ($application->status != config('const.application.status.draft')
-            && $application->status != config('const.application.status.applying')
-            && $application->status != config('const.application.status.declined'))
-            || ($application->current_step > config('const.application.step_type.application')
-                && $application->status != config('const.application.status.declined'));
+                        && $application->status != config('const.application.status.applying')
+                        && $application->status != config('const.application.status.declined'))
+                        || ($application->current_step > config('const.application.step_type.application')
+                            && $application->status != config('const.application.status.declined'))
+                        || isset($showWithAdminFlg);
 
         // disabled draft button if application was applied.
         $inProgressFlg = $application->status != config('const.application.status.draft');
@@ -374,8 +379,8 @@ class BusinesstripController extends Controller
                 ->first();
 
             // check logged user has permission to access
-            // if logged user is not owner of application and also not approval user(TO or CC).
-            if (empty($approvers) && $application->created_by !== $loggedUser->id) {
+            // if logged user is not owner of application and also not approval user(TO or CC) and also not admin role
+            if (empty($approvers) && $application->created_by !== $loggedUser->id && Gate::denies('admin-gate')) {
                 abort(403);
             }
         }
@@ -422,8 +427,8 @@ class BusinesstripController extends Controller
             ->first();
 
         // check logged user has permission to access
-        // if logged user is not owner of application and also not approval user(TO or CC).
-        if (empty($approvers) && $application->created_by !== $loggedUser->id) {
+        // if logged user is not owner of application and also not approval user(TO or CC) and also not admin role
+        if (empty($approvers) && $application->created_by !== $loggedUser->id && Gate::denies('admin-gate')) {
             abort(403);
         }
 

@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use App\Exceptions\Entertainment\NotFoundFlowSettingException;
@@ -70,35 +71,36 @@ class EntertainmentController extends Controller
 
     public function show($id)
     {
-        // check owner
         $application = Application::findOrFail($id);
-        if (Auth::user()->id !== $application->created_by) {
-            abort('403');
-        }
-
         if (empty($application->entertainment)) {
             abort(404);
         }
-
-        // get business application
-        // $model = Entertaiment::where('application_id', $id)->first();
-
-        // get companies
-        $companies = Company::all('name');
-        $companies = Arr::pluck($companies->toArray(), 'name');
+        // check valid accessing
+        if (Auth::user()->id !== $application->created_by) {
+            if (Gate::denies('admin-gate')) {
+                abort(403);
+            } else {
+                $showWithAdminFlg = true;
+            }
+        }
 
         // if application is in approval progress => NOT ALLOWS EDIT
         $previewFlg = ($application->status != config('const.application.status.draft')
-            && $application->status != config('const.application.status.applying')
-            && $application->status != config('const.application.status.declined'))
-            || ($application->current_step > config('const.application.step_type.application')
-                && $application->status != config('const.application.status.declined'));
+                        && $application->status != config('const.application.status.applying')
+                        && $application->status != config('const.application.status.declined'))
+                        || ($application->current_step > config('const.application.step_type.application')
+                            && $application->status != config('const.application.status.declined'))
+                        || isset($showWithAdminFlg);
 
         // disabled draft button if application was applied.
         $inProgressFlg = $application->status != config('const.application.status.draft');
         // if(!$previewFlg){
         //     $inProgressFlg = DB::table('history_approval')->where('application', $id)->exists();
         // }
+
+        // get companies
+        $companies = Company::all('name');
+        $companies = Arr::pluck($companies->toArray(), 'name');
 
         return view('application.entertainment.input', compact('application', 'companies', 'previewFlg', 'inProgressFlg'));
     }
@@ -466,8 +468,8 @@ class EntertainmentController extends Controller
                 ->first();
 
             // check logged user has permission to access
-            // if logged user is not owner of application and also not approval user(TO or CC).
-            if (empty($approvers) && $application->created_by !== $loggedUser->id) {
+            // if logged user is not owner of application and also not approval user(TO or CC) and also not admin role
+            if (empty($approvers) && $application->created_by !== $loggedUser->id && Gate::denies('admin-gate')) {
                 abort(403);
             }
         }
@@ -515,8 +517,8 @@ class EntertainmentController extends Controller
             ->first();
 
         // check logged user has permission to access
-        // if logged user is not owner of application and also not approval user(TO or CC).
-        if (empty($approvers) && $application->created_by !== $loggedUser->id) {
+        // if logged user is not owner of application and also not approval user(TO or CC) and also not admin role
+        if (empty($approvers) && $application->created_by !== $loggedUser->id && Gate::denies('admin-gate')) {
             abort(403);
         }
 
