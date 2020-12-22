@@ -341,6 +341,11 @@ class BusinesstripController extends Controller
         //     return Common::redirectRouteWithAlertSuccess('user.business.create');
         // }
         // back to list application
+        if (isset($inputs['apply'])) {
+            $msg = __('msg.application.success.apply_ok');
+        } elseif (isset($inputs['draft'])) {
+            $msg = __('msg.application.success.draft_ok');
+        }
         return Common::redirectRouteWithAlertSuccess('user.form.index');
     }
 

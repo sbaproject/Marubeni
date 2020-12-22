@@ -330,7 +330,7 @@ class LeaveApplicationController extends Controller
         } elseif (isset($inputs['draft'])) {
             $msg = __('msg.application.success.draft_ok');
         }
-        
+
         return Common::redirectRouteWithAlertSuccess('user.form.index', $msg);
     }
 
