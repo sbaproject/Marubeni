@@ -10,10 +10,9 @@ use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
-use App\Exceptions\Entertainment\NotFoundFlowSettingException;
-use App\Http\Controllers\ApplicationController;
+use App\Exceptions\NotFoundFlowSettingException;
+use App\Http\Controllers\Application\ApplicationController;
 
 class EntertainmentController extends ApplicationController
 {
@@ -113,108 +112,18 @@ class EntertainmentController extends ApplicationController
         DB::beginTransaction();
 
         try {
-            // get user
+            // get logged user
             $user = Auth::user();
 
-            /**-------------------------
-             * create application
-             *-------------------------*/
+            /////////////////////////////////////////////
+            // Applications table
+            /////////////////////////////////////////////
+            $applicationId = $this->saveApplicationMaster($request, $inputs, $app, $user);
 
-            // get type form of application
-            $formId = config('const.form.entertainment');
-            // get status
-            $status = $this->getActionType($inputs);
-            // get current step
-            $currentStep = $this->getCurrentStep($app);
-            // get budget type
-            $budgetType = config('const.budget.budget_type.entertainment');
-            // get budget position
-            $budgetPosition = $inputs['budget_position'];
-            // get budget comparation type
-            $budget = Budget::where([
-                'budget_type' => $budgetType,
-                'step_type' => $currentStep,
-                'position' => $budgetPosition,
-            ])->first();
+            /////////////////////////////////////////////
+            // Entertainments table
+            /////////////////////////////////////////////
 
-            // not found available flow setting
-            if (empty($budget) && isset($inputs['apply'])) {
-                throw new NotFoundFlowSettingException();
-            }
-
-            // get budget comparation type
-            $budgetTypeCompare = null;
-            if (isset($inputs['est_amount']) && !empty($budget)) {
-                if ($inputs['est_amount'] <= $budget->amount) {
-                    $budgetTypeCompare = config('const.budget.budeget_type_compare.less_equal');
-                } else {
-                    $budgetTypeCompare = config('const.budget.budeget_type_compare.greater_than');
-                }
-            }
-
-            // get group
-            $group = DB::table('groups')
-                ->select('groups.*')
-                ->join('applicants', function ($join) use ($user) {
-                    $join->on('groups.applicant_id', '=', 'applicants.id')
-                        ->where('applicants.role', '=', $user->role)
-                        ->where('applicants.location', '=', $user->location)
-                        ->where('applicants.department_id', '=', $user->department_id)
-                        ->where('applicants.deleted_at', '=', null);
-                })
-                ->join('budgets', function ($join) use ($currentStep, $budgetType, $budgetPosition) {
-                    $join->on('groups.budget_id', '=', 'budgets.id')
-                        ->where('budgets.budget_type', '=', $budgetType)
-                        ->where('budgets.step_type', '=', $currentStep)
-                        ->where('budgets.position', '=', $budgetPosition)
-                        ->where('budgets.deleted_at', '=', null);
-                })
-                ->where([
-                    'groups.budget_type_compare' => $budgetTypeCompare,
-                    'groups.deleted_at' => null,
-
-                ])
-                ->first();
-
-            // not found available flow setting
-            if (empty($group) && isset($inputs['apply'])) {
-                throw new NotFoundFlowSettingException();
-            }
-
-            // get attached file
-            $filePath = $this->uploadAttachedFile($request, $inputs, $app, $user);
-
-            // prepare data
-            $application = [
-                'form_id'           => $formId,
-                'group_id'          => $group->id ?? null,
-                'current_step'      => $currentStep,
-                'status'            => $status,
-                'subsequent'        => $inputs['subsequent'],
-                'budget_position'   => $budgetPosition,
-                'file_path'         => $filePath ?? null,
-                'updated_by'        => $user->id,
-                'updated_at'        => Carbon::now()
-            ];
-
-            // save applications
-            if (!$request->id) {
-                $application['created_by'] = $user->id;
-                $application['created_at'] = Carbon::now();
-
-                $applicationId = DB::table('applications')->insertGetId($application);
-            } else {
-                DB::table('applications')->where('id', $request->id)->update($application);
-            }
-
-            /**-------------------------
-             * create [Entertainment Application] detail
-             *-------------------------*/
-            // if ($request->id) {
-            //     $entertainment = Entertaiment::where('application_id', $request->id)->first();
-            // }
-
-            // prepare entertainment data
             $etData = [
                 'entertainment_dt'              => $inputs['entertainment_dt'],
                 'place'                         => $inputs['place'],
@@ -235,7 +144,6 @@ class EntertainmentController extends ApplicationController
                 'updated_at'                    => Carbon::now(),
             ];
 
-            // save entertainment application
             if (empty($app)) {
                 $etData['application_id'] = $applicationId;
                 $etData['created_by'] = $user->id;
@@ -246,7 +154,10 @@ class EntertainmentController extends ApplicationController
                 DB::table('entertaiments')->where('id', $app->entertainment->id)->update($etData);
                 DB::table('entertaiment_infos')->where('entertaiment_id', $app->entertainment->id)->delete();
             }
-            // save transportations
+
+            /////////////////////////////////////////////
+            // Entertaiment_infos table
+            /////////////////////////////////////////////
             if (!isset($etId)) {
                 $etId = $app->entertainment->id;
             }
@@ -271,7 +182,7 @@ class EntertainmentController extends ApplicationController
             if ($ex instanceof NotFoundFlowSettingException) {
                 $msgErr = $ex->getMessage();
             } else {
-                $msgErr = __('msg.save_fail');
+                $msgErr = $ex->getMessage();//__('msg.save_fail');
             }
         }
 
@@ -316,6 +227,32 @@ class EntertainmentController extends ApplicationController
         }
 
         return $inputs;
+    }
+
+    public function getBudgetTypeCompare($inputs, $budgetType, $currentStep, $budgetPosition)
+    {
+        // get budget comparation type
+        $budget = Budget::where([
+            'budget_type' => $budgetType,
+            'step_type' => $currentStep,
+            'position' => $budgetPosition,
+        ])->first();
+        // not found available flow setting
+        if (empty($budget) && isset($inputs['apply'])) {
+            throw new NotFoundFlowSettingException();
+        }
+
+        // get budget comparation type
+        $budgetTypeCompare = null;
+        if (isset($inputs['est_amount']) && !empty($budget)) {
+            if ($inputs['est_amount'] <= $budget->amount) {
+                $budgetTypeCompare = config('const.budget.budeget_type_compare.less_equal');
+            } else {
+                $budgetTypeCompare = config('const.budget.budeget_type_compare.greater_than');
+            }
+        }
+
+        return $budgetTypeCompare;
     }
 
     private function getListCompanyName()

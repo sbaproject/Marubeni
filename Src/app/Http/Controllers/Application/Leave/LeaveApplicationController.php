@@ -7,10 +7,9 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
-use App\Exceptions\Entertainment\NotFoundFlowSettingException;
-use App\Http\Controllers\ApplicationController;
+use App\Exceptions\NotFoundFlowSettingException;
+use App\Http\Controllers\Application\ApplicationController;
 
 class LeaveApplicationController extends ApplicationController
 {
@@ -99,68 +98,19 @@ class LeaveApplicationController extends ApplicationController
         DB::beginTransaction();
 
         try {
-            // get user
+            // get logged user
             $user = Auth::user();
 
-            /**-------------------------
-             * create application
-             *-------------------------*/
+            /////////////////////////////////////////////
+            // Applications table
+            /////////////////////////////////////////////
 
-            // get [leave form] id
-            $formId = config('const.form.leave');
-            // get status
-            $status = $this->getActionType($inputs);
-            // get current step
-            $currentStep = config('const.budget.step_type.application');
-            // get group
-            $group = DB::table('groups')
-                ->select('groups.*')
-                ->join('applicants', function ($join) use ($user) {
-                    $join->on('groups.applicant_id', '=', 'applicants.id')
-                        ->where('applicants.role', '=', $user->role)
-                        ->where('applicants.location', '=', $user->location)
-                        ->where('applicants.department_id', '=', $user->department_id)
-                        ->where('applicants.deleted_at', '=', null);
-                })
-                ->where('groups.budget_id', '=', null)
-                ->where('groups.deleted_at', '=', null)
-                ->first();
+            $applicationId = $this->saveApplicationMaster($request, $inputs, $app, $user);
 
-            if (empty($group) && isset($inputs['apply'])) {
-                throw new NotFoundFlowSettingException();
-            }
+            /////////////////////////////////////////////
+            // Leaves table
+            /////////////////////////////////////////////
 
-            $filePath = $this->uploadAttachedFile($request, $inputs, $app, $user);
-
-            // prepare data
-            $application = [
-                'form_id'       => $formId,
-                'group_id'      => $group->id ?? null,
-                'current_step'  => $currentStep,
-                'status'        => $status,
-                'subsequent'    => $inputs['subsequent'],
-                'file_path'     => $filePath ?? null,
-                'updated_by'    => $user->id,
-                'updated_at'    => Carbon::now()
-            ];
-
-            // add
-            if (!$request->id) {
-                $application['created_by'] = $user->id;
-                $application['created_at'] = Carbon::now();
-
-                $applicationId = DB::table('applications')->insertGetId($application);
-            }
-            // update
-            else {
-                DB::table('applications')->where('id', $request->id)->update($application);
-            }
-
-            /**-------------------------
-             * create [Leave Application] detail
-             *-------------------------*/
-
-            // prepare leave data
             $leaveData = [
                 'code_leave'        => $inputs['code_leave'] !== 'empty' ? $inputs['code_leave'] : null,
                 'paid_type'         => $inputs['paid_type'],
@@ -177,14 +127,14 @@ class LeaveApplicationController extends ApplicationController
                 'updated_by'        => $user->id,
                 'updated_at'        => Carbon::now(),
             ];
-            // for new
-            if (!$request->id) {
+
+            if (empty($app)) {
                 $leaveData['application_id'] = $applicationId;
                 $leaveData['created_by'] = $user->id;
                 $leaveData['created_at'] = Carbon::now();
             }
 
-            DB::table('leaves')->updateOrInsert(['application_id' => $request->id], $leaveData);
+            DB::table('leaves')->updateOrInsert(['application_id' => $applicationId], $leaveData);
 
             DB::commit();
         } catch (Exception $ex) {

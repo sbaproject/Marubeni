@@ -4,14 +4,12 @@ namespace App\Http\Controllers\Application\Business;
 
 use Exception;
 use Carbon\Carbon;
-use App\Models\Businesstrip;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
-use App\Exceptions\Entertainment\NotFoundFlowSettingException;
-use App\Http\Controllers\ApplicationController;
+use App\Exceptions\NotFoundFlowSettingException;
+use App\Http\Controllers\Application\ApplicationController;
 
 class BusinesstripController extends ApplicationController
 {
@@ -88,81 +86,19 @@ class BusinesstripController extends ApplicationController
         DB::beginTransaction();
 
         try {
-            // get user
+            // get logged user
             $user = Auth::user();
 
-            /**-------------------------
-             * create application
-             *-------------------------*/
+            /////////////////////////////////////////////
+            // Applications table
+            /////////////////////////////////////////////
 
-            // get type form of application
-            $formId = config('const.form.biz_trip');
-            // get status
-            $status = $this->getActionType($inputs);
-            // get current step
-            $currentStep = $this->getCurrentStep($app);
-            // get budget position
-            $budgetPosition = $inputs['budget_position'];
-            // get group
-            $group = DB::table('groups')
-                ->select('groups.*')
-                ->join('applicants', function ($join) use ($user) {
-                    $join->on('groups.applicant_id', '=', 'applicants.id')
-                        ->where('applicants.role', '=', $user->role)
-                        ->where('applicants.location', '=', $user->location)
-                        ->where('applicants.department_id', '=', $user->department_id)
-                        ->where('applicants.deleted_at', '=', null);
-                })
-                ->join(
-                    'budgets',
-                    function ($join) use ($currentStep, $budgetPosition) {
-                        $join->on('groups.budget_id', '=', 'budgets.id')
-                            ->where('budgets.budget_type', '=', config('const.budget.budget_type.business'))
-                            ->where('budgets.step_type', '=', $currentStep)
-                            ->where('budgets.position', '=', $budgetPosition)
-                            ->where('budgets.deleted_at', '=', null);
-                    }
-                )
-                ->where('groups.deleted_at', '=', null)
-                ->first();
+            $applicationId = $this->saveApplicationMaster($request, $inputs, $app, $user);
 
-            if (empty($group) && isset($inputs['apply'])) {
-                throw new NotFoundFlowSettingException();
-            }
+            /////////////////////////////////////////////
+            // Businesstrips table
+            /////////////////////////////////////////////
 
-            $filePath = $this->uploadAttachedFile($request, $inputs, $app, $user);
-
-            // prepare data
-            $application = [
-                'form_id'           => $formId,
-                'group_id'          => $group->id ?? null,
-                'current_step'      => $currentStep,
-                'status'            => $status,
-                'subsequent'        => $inputs['subsequent'],
-                'budget_position'   => $budgetPosition,
-                'file_path'         => $filePath ?? null,
-                'updated_by'        => $user->id,
-                'updated_at'        => Carbon::now()
-            ];
-
-            // save applications
-            if (!$request->id) {
-                $application['created_by']  = $user->id;
-                $application['created_at']  = Carbon::now();
-
-                $applicationId = DB::table('applications')->insertGetId($application);
-            } else {
-                DB::table('applications')->where('id', $request->id)->update($application);
-            }
-
-            /**-------------------------
-             * create [Business Application] detail
-             *-------------------------*/
-            if ($request->id) {
-                $biz = Businesstrip::where('application_id', $request->id)->first();
-            }
-
-            // prepare leave data
             $bizData = [
                 'destinations'  => $inputs['destinations'],
                 'trip_dt_from'  => $inputs['trip_dt_from'],
@@ -174,24 +110,24 @@ class BusinesstripController extends ApplicationController
                 'updated_by'    => $user->id,
                 'updated_at'    => Carbon::now(),
             ];
-            // for new
-            if (!$request->id) {
+
+            if (empty($app)) {
                 $bizData['application_id']  = $applicationId;
                 $bizData['created_by']      = $user->id;
                 $bizData['created_at']      = Carbon::now();
-            }
 
-            // DB::table('businesstrips')->updateOrInsert(['application_id' => $request->id], $bizData);
-            // save business application
-            if (!$request->id) {
                 $bizId = DB::table('businesstrips')->insertGetId($bizData);
             } else {
-                DB::table('businesstrips')->where('id', $biz->id)->update($bizData);
-                DB::table('transportations')->where('businesstrip_id', $biz->id)->delete();
+                DB::table('businesstrips')->where('id', $app->business->id)->update($bizData);
+                DB::table('transportations')->where('businesstrip_id', $app->business->id)->delete();
             }
-            // save transportations
+
+            /////////////////////////////////////////////
+            // Transportations table
+            /////////////////////////////////////////////
+
             if (!isset($bizId)) {
-                $bizId = $biz->id;
+                $bizId = $app->business->id;
             }
             $transportations = [];
             foreach ($inputs['trans'] as $value) {

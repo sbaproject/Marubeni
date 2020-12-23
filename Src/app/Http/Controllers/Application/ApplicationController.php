@@ -1,15 +1,18 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Application;
 
 use PDF;
+use Carbon\Carbon;
 use App\Libs\Common;
 use App\Models\Application;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
+use App\Exceptions\NotFoundFlowSettingException;
 
 class ApplicationController extends Controller
 {
@@ -261,6 +264,105 @@ class ApplicationController extends Controller
         } else {
             return config('const.budget.step_type.application');
         }
+    }
+
+    public function getGroup($user, $currentStep = null, $budgetType = null, $budgetPosition = null, $budgetTypeCompare = null)
+    {
+        $group = DB::table('groups')
+            ->select('groups.*')
+            ->join('applicants', function ($join) use ($user) {
+                $join->on('groups.applicant_id', '=', 'applicants.id')
+                    ->where('applicants.role', $user->role)
+                    ->where('applicants.location', $user->location)
+                    ->where('applicants.department_id', $user->department_id)
+                    ->whereNull('applicants.deleted_at');
+            })
+            ->when(
+                $this->formType == config('const.form.biz_trip') || $this->formType == config('const.form.entertainment'),
+                function ($query) use ($currentStep, $budgetType, $budgetPosition) {
+                    $query->join('budgets', function ($join) use ($currentStep, $budgetType, $budgetPosition) {
+                        $join->on('groups.budget_id', '=', 'budgets.id')
+                            ->where('budgets.budget_type', $budgetType)
+                            ->where('budgets.step_type', $currentStep)
+                            ->where('budgets.position', $budgetPosition)
+                            ->whereNull('budgets.deleted_at');
+                    });
+                }
+            )
+            ->when(
+                $this->formType == config('const.form.entertainment'),
+                function ($query) use ($budgetTypeCompare) {
+                    $query->where('groups.budget_type_compare', $budgetTypeCompare)
+                        ->whereNull('groups.deleted_at');
+                }
+            )
+            ->when($this->formType == config('const.form.leave'), function ($query) {
+                $query->whereNull('groups.budget_id')
+                    ->whereNull('groups.budget_type_compare');
+            })
+            ->whereNull('groups.deleted_at')
+            ->first();
+
+        return $group;
+    }
+
+    public function saveApplicationMaster($request, $inputs, $app, $user)
+    {
+        // get type form of application
+        $formId = $this->formType;
+        // get status
+        $status = $this->getActionType($inputs);
+        // get current step
+        $currentStep = $this->getCurrentStep($app);
+
+        if ($this->formType == config('const.form.leave')) {
+            $budgetType = config('const.budget.budget_type.leave');
+            $budgetPosition = null;
+            $budgetTypeCompare = null;
+        } elseif ($this->formType == config('const.form.biz_trip')) {
+            $budgetType = config('const.budget.budget_type.business');
+            $budgetPosition = $inputs['budget_position'];
+            $budgetTypeCompare = null;
+        } elseif ($this->formType == config('const.form.entertainment')) {
+            $budgetType = config('const.budget.budget_type.entertainment');
+            $budgetPosition = $inputs['budget_position'];
+            $budgetTypeCompare = $this->getBudgetTypeCompare($inputs, $budgetType, $currentStep, $budgetPosition);
+        }
+
+        // get group
+        $group = $this->getGroup($user, $currentStep, $budgetType, $budgetPosition, $budgetTypeCompare);
+        // not found available flow setting
+        if (empty($group) && isset($inputs['apply'])) {
+            throw new NotFoundFlowSettingException();
+        }
+
+        // get attached file
+        $filePath = $this->uploadAttachedFile($request, $inputs, $app, $user);
+
+        // prepare data
+        $application = [
+            'form_id'           => $formId,
+            'group_id'          => $group->id ?? null,
+            'current_step'      => $currentStep,
+            'status'            => $status,
+            'subsequent'        => $inputs['subsequent'],
+            'budget_position'   => $budgetPosition,
+            'file_path'         => $filePath ?? null,
+            'updated_by'        => $user->id,
+            'updated_at'        => Carbon::now()
+        ];
+
+        // save applications
+        if (empty($app)) {
+            $application['created_by'] = $user->id;
+            $application['created_at'] = Carbon::now();
+
+            $applicationId = DB::table('applications')->insertGetId($application);
+        } else {
+            DB::table('applications')->where('id', $app->id)->update($application);
+        }
+
+        return $applicationId ?? $app->id;
     }
 
     public function uploadAttachedFile($request, $inputs, $application, $loggedUser)

@@ -1,5 +1,5 @@
 <?php
-namespace App\Exceptions\Entertainment;
+namespace App\Exceptions;
 
 use Exception;
 
