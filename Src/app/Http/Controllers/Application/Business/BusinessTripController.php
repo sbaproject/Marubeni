@@ -2,145 +2,54 @@
 
 namespace App\Http\Controllers\Application\Business;
 
-use PDF;
 use Exception;
 use Carbon\Carbon;
-use App\Libs\Common;
-use App\Models\Application;
-use Illuminate\Support\Arr;
 use App\Models\Businesstrip;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use App\Exceptions\Entertainment\NotFoundFlowSettingException;
+use App\Http\Controllers\ApplicationController;
 
-class BusinesstripController extends Controller
+class BusinesstripController extends ApplicationController
 {
-    public function index()
+    public function __construct()
     {
+        $this->formType = config('const.form.biz_trip');
+
+        parent::__construct();
     }
 
-    public function create()
+    protected function create()
     {
-        $previewFlg = false;
-        $inProgressFlg = false;
+        parent::create();
 
-        return view('application.business.input', compact('previewFlg', 'inProgressFlg'));
+        return view($this->viewInputName, $this->currentCompatData);
     }
 
-    public function store(Request $request)
+    protected function show($id)
     {
-        // get input data
-        $inputs = $this->getInputs($request);
+        parent::show($id);
 
-        // check post method
-        if (isset($inputs['apply']) || isset($inputs['draft']) || isset($inputs['pdf'])) {
-            // export pdf
-            if (isset($inputs['pdf'])) {
-                return $this->pdf($request, $inputs);
-            }
-        } else {
-            abort(404);
-        }
-
-        // validate
-        $validator = $this->doValidate($request, $inputs);
-        if (!empty($validator)) {
-            return redirect()->back()->with('inputs', $inputs)->withErrors($validator);
-        }
-
-        // save
-        $msgErr = $this->doSaveData($request, $inputs);
-        if (!empty($msgErr)) {
-            return Common::redirectBackWithAlertFail($msgErr)->with('inputs', $inputs);
-        }
-
-        // redirect atfer save
-        return $this->doRedirect($inputs);
+        return view($this->viewInputName, $this->currentCompatData);
     }
 
-    public function show($id)
+    protected function checkEmptyApplication($application)
     {
-        $application = Application::findOrFail($id);
         if (empty($application->business)) {
             abort(404);
         }
-        // check valid accessing
-        if (Auth::user()->id !== $application->created_by) {
-            if (Gate::denies('admin-gate')) {
-                abort(403);
-            } else {
-                $showWithAdminFlg = true;
-            }
-        }
-
-        // if application is in approval progress => NOT ALLOWS EDIT
-        $previewFlg = ($application->status != config('const.application.status.draft')
-                        && $application->status != config('const.application.status.applying')
-                        && $application->status != config('const.application.status.declined'))
-                        || ($application->current_step > config('const.application.step_type.application')
-                            && $application->status != config('const.application.status.declined'))
-                        || isset($showWithAdminFlg);
-
-        // disabled draft button if application was applied.
-        $inProgressFlg = $application->status != config('const.application.status.draft');
-        // if(!$previewFlg){
-        //     $inProgressFlg = DB::table('history_approval')->where('application', $id)->exists();
-        // }
-
-        // get business application
-        // $model = Businesstrip::where('application_id', $id)->first();
-
-        return view('application.business.input', compact('application', 'previewFlg', 'inProgressFlg'));
     }
 
-    public function update(Request $request, $id)
-    {
-        $application = Application::findOrFail($id);
-
-        // get inputs
-        $inputs = $this->getInputs($request);
-
-        // check post method
-        if (isset($inputs['apply']) || isset($inputs['draft']) || isset($inputs['pdf'])) {
-            // export pdf
-            if (isset($inputs['pdf'])) {
-                return $this->pdf($request, $inputs, $application);
-            }
-            if (Auth::user()->id !== $application->created_by) {
-                abort('403');
-            }
-        } else {
-            abort(404);
-        }
-
-        // validate
-        $validator = $this->doValidate($request, $inputs);
-        if (!empty($validator)) {
-            return redirect()->back()->with('inputs', $inputs)->withErrors($validator);
-        }
-
-        // save
-        $msgErr = $this->doSaveData($request, $inputs, $application);
-        if (!empty($msgErr)) {
-            return Common::redirectBackWithAlertFail($msgErr)->with('inputs', $inputs);
-        }
-
-        // redirect atfer save
-        return $this->doRedirect($inputs);
-    }
-
-    public function doValidate($request, &$inputs)
+    protected function doValidate($request, &$inputs)
     {
         if (isset($inputs['apply']) || isset($inputs['draft'])) {
             $rules = [];
             // attached file
             if ($request->file('input_file')) {
-                $rules['input_file'] = 'mimes:txt,pdf,jpg,jpeg,png|max:200';
+                $rules['input_file'] = config('const.rules.attached_file');
             }
             if (isset($inputs['apply'])) {
                 $rules['budget_position']   = 'required_select';
@@ -172,7 +81,7 @@ class BusinesstripController extends Controller
         }
     }
 
-    public function doSaveData($request, &$inputs, $app = null)
+    protected function doSaveData($request, &$inputs, $app = null)
     {
         $msgErr = '';
 
@@ -189,17 +98,9 @@ class BusinesstripController extends Controller
             // get type form of application
             $formId = config('const.form.biz_trip');
             // get status
-            if (isset($inputs['apply'])) {
-                $status = config('const.application.status.applying');
-            } else if (isset($inputs['draft'])) {
-                $status = config('const.application.status.draft');
-            }
+            $status = $this->getActionType($inputs);
             // get current step
-            if (!empty($app)) {
-                $currentStep = $app->current_step;
-            } else {
-                $currentStep = config('const.budget.step_type.application');
-            }
+            $currentStep = $this->getCurrentStep($app);
             // get budget position
             $budgetPosition = $inputs['budget_position'];
             // get group
@@ -229,26 +130,7 @@ class BusinesstripController extends Controller
                 throw new NotFoundFlowSettingException();
             }
 
-            // delete old file
-            if (!empty($app)) {
-                $filePath = $app->file_path;
-                // attchached file was changed
-                if ($inputs['file_path'] != $filePath) {
-                    if (!empty($app->file_path)) {
-                        if (Storage::exists($app->file_path)) {
-                            Storage::delete($app->file_path);
-                        }
-                    }
-                    $filePath = null;
-                }
-            }
-            // upload new attached file
-            if ($request->file('input_file')) {
-                $extension = '.' . $request->file('input_file')->extension();
-                // $fileName = time() . $user->id . '_' . $request->file('input_file')->getClientOriginalName();
-                $fileName = time() . $user->id . $extension;
-                $filePath = $request->file('input_file')->storeAs('uploads/application/', $fileName);
-            }
+            $filePath = $this->uploadAttachedFile($request, $inputs, $app, $user);
 
             // prepare data
             $application = [
@@ -265,8 +147,8 @@ class BusinesstripController extends Controller
 
             // save applications
             if (!$request->id) {
-                $application['created_by']      = $user->id;
-                $application['created_at']      = Carbon::now();
+                $application['created_by']  = $user->id;
+                $application['created_at']  = Carbon::now();
 
                 $applicationId = DB::table('applications')->insertGetId($application);
             } else {
@@ -289,7 +171,6 @@ class BusinesstripController extends Controller
                 'accompany'     => $inputs['accompany'],
                 'borne_by'      => $inputs['borne_by'],
                 'comment'       => $inputs['comment'],
-                // 'file_path' => isset($filePath) ? $filePath : null,
                 'updated_by'    => $user->id,
                 'updated_at'    => Carbon::now(),
             ];
@@ -339,116 +220,14 @@ class BusinesstripController extends Controller
         return $msgErr;
     }
 
-    public function doRedirect($inputs)
+    protected function preview(Request $request, $id)
     {
-        // continue create new application after save success
-        // if (isset($inputs['subsequent']) && $inputs['subsequent'] == true) {
-        //     return Common::redirectRouteWithAlertSuccess('user.business.create');
-        // }
-        // back to list application
-        if (isset($inputs['apply'])) {
-            $msg = __('msg.application.success.apply_ok');
-        } elseif (isset($inputs['draft'])) {
-            $msg = __('msg.application.success.draft_ok');
-        }
-        return Common::redirectRouteWithAlertSuccess('user.form.index', $msg);
+        parent::preview($request, $id);
+
+        return view($this->viewInputName, $this->currentCompatData);
     }
 
-    public function pdf($request, $inputs, $application = null)
-    {
-        if ($application != null) {
-
-            $loggedUser = Auth::user();
-            // get list of approver (include TO & CC)
-            $approvers = DB::table('steps')
-                ->select('steps.approver_id')
-                ->where('steps.flow_id', function ($query) use ($request, $loggedUser) {
-                    $query->select('steps.flow_id')
-                        ->from('applications')
-                        ->join(
-                            'steps',
-                            'steps.group_id',
-                            'applications.group_id'
-                        )
-                        ->where('steps.approver_id', '=', $loggedUser->id)
-                        ->where('applications.id', $request->id)
-                        ->where('applications.deleted_at', '=', null)
-                        ->limit(1);
-                })
-                ->where('steps.step_type', $application->current_step)
-                ->first();
-
-            // check logged user has permission to access
-            // if logged user is not owner of application and also not approval user(TO or CC) and also not admin role
-            if (empty($approvers) && $application->created_by !== $loggedUser->id && Gate::denies('admin-gate')) {
-                abort(403);
-            }
-        }
-
-        if (empty($application)) {
-            $inputs['applicant'] = Auth::user();
-        } else {
-            $inputs['applicant'] = $application->applicant;
-        }
-
-        // PDF::setOptions(['defaultFont' => 'Roboto-Black']);
-        $pdf = PDF::loadView('application.business.pdf', compact('application', 'inputs'));
-
-        // preview pdf
-        return $pdf->stream('Business_Application.pdf');
-        // download
-        // return $pdf->download('Leave_Application.pdf');
-    }
-
-    public function preview(Request $request, $id)
-    {
-        $application = Application::findOrFail($id);
-        $previewFlg = true;
-
-        if (empty($application->business)) {
-            abort(404);
-        }
-
-        $loggedUser = Auth::user();
-
-        // get list of approver (include TO & CC)
-        $approvers = DB::table('steps')
-            ->select('steps.approver_id')
-            ->where('steps.flow_id', function ($query) use ($id, $loggedUser) {
-                $query->select('steps.flow_id')
-                    ->from('applications')
-                    ->join('steps', 'steps.group_id', 'applications.group_id')
-                    ->where('steps.approver_id', '=', $loggedUser->id)
-                    ->where('applications.id', $id)
-                    ->where('applications.deleted_at', '=', null)
-                    ->limit(1);
-            })
-            ->where('steps.step_type', $application->current_step)
-            ->first();
-
-        // check logged user has permission to access
-        // if logged user is not owner of application and also not approval user(TO or CC) and also not admin role
-        if (empty($approvers) && $application->created_by !== $loggedUser->id && Gate::denies('admin-gate')) {
-            abort(403);
-        }
-
-        return view('application.business.input', compact('application', 'previewFlg'));
-    }
-
-    public function previewPdf(Request $request, $id)
-    {
-        $application = Application::findOrFail($id);
-
-        $inputs = $request->input();
-
-        if (isset($inputs['pdf'])) {
-            return $this->pdf($request, $inputs, $application);
-        } else {
-            abort(404);
-        }
-    }
-
-    public function getInputs($request)
+    protected function getInputs($request)
     {
         $inputs = $request->all();
 

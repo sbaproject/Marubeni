@@ -200,4 +200,10 @@ return [
      * Annual leave days per year
      */
     'annual_leave_days_per_year' => 12,
+    /**
+     * Validation Rules
+     */
+    'rules' => [
+        'attached_file' => 'mimes:txt,pdf,jpg,jpeg,png|max:200',
+    ],
 ];

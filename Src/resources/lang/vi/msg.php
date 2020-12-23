@@ -19,6 +19,7 @@ return [
             '403' => 'Bạn không có quyền để truy cập đơn này !',
             'unvalid_action' => 'Trạng thái của đơn không còn phù hợp cho hành động xét duyệt này !',
             'flow_not_found' => 'Không tìm thấy quy trình duyệt đơn phù hợp !',
+            'inprogress_not_allow_edit' => 'Bạn không thể chỉnh sửa đơn vì đang trong quá trình phê duyệt !',
         ],
         'success' => [
             'approve_ok' => 'Đơn vừa được phê duyệt thành công !',

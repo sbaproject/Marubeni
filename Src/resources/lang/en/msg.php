@@ -19,6 +19,7 @@ return [
             '403' => 'You do not have permission access to this application !',
             'unvalid_action' => 'Status of this form is no longer valid with your action !',
             'flow_not_found' => 'Not found available flow setting for this application !',
+            'inprogress_not_allow_edit' => 'Application is no longer editable, it is in approval progressing !',
         ],
         'success' => [
             'approve_ok' => 'Application has been approved successfully !',
