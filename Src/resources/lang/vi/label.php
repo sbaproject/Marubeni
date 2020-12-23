@@ -355,6 +355,7 @@ return [
         'approver_required' => 'Vui lòng chọn người phê duyệt',
         'destination_invalid_begin' => 'Nơi đơn chuyển tới phải bắt đầu là TO',
         'destination_invalid_end' => 'Nơi đơn chuyển tới phải kết thúc là TO',
+        'can_not_update' => 'Quy Trình Phê Duyệt đã được sử dụng. Bạn không thể cập nhật.',
     ],
     /**
      * Login

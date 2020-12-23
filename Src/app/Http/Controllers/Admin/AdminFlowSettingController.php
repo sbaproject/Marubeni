@@ -216,6 +216,22 @@ class AdminFlowSettingController extends Controller
             ->orderBy('steps.id', 'asc')
             ->get();
 
+        $form_id = $flow->form_id;
+        $groupList = array();
+        foreach ($steps as $step) {
+            $group_id = $step->group_id;
+            if (empty($groupList) || !in_array($group_id, $groupList)){
+                $groupList[] = $group_id;
+            }
+        }
+
+        $application = DB::table('applications')
+            ->where('applications.form_id', $form_id)->whereIn('applications.group_id', $groupList)->whereNull('applications.deleted_at')->first();
+        $canEdit = true;
+        if (!empty($application)){
+            $canEdit = false;
+        }
+
         $forms =  Form::all();
         $users =  DB::table('users')->where('approval', 1)->whereNull('deleted_at')->get();
         $applicants = DB::table('applicants')
@@ -239,7 +255,7 @@ class AdminFlowSettingController extends Controller
             $data['name'] = strtoupper(array_search($applicant->location, $locations)) . ' - ' . $applicant->name . ' - ' . array_search($applicant->role, $roles);
             $applicantRoles[] = $data;
         }
-        return view('admin.flow.edit', compact('flow', 'steps', 'forms', 'users', 'applicantRoles', 'budgets', 'budgetPO', 'budgetNotPO'));
+        return view('admin.flow.edit', compact('flow', 'steps', 'forms', 'users', 'applicantRoles', 'budgets', 'budgetPO', 'budgetNotPO', 'canEdit'));
     }
 
     /**
@@ -256,6 +272,7 @@ class AdminFlowSettingController extends Controller
         $data = $request->input();
        
         $user = Auth::user();
+        $rs = true;
         // delete
         if (count($data) === 1){
             $flow = Flow::find($id);
@@ -264,7 +281,7 @@ class AdminFlowSettingController extends Controller
             $flow->save();
             return Common::redirectBackWithAlertSuccess(__('msg.delete_success'));
         }else{
-            DB::transaction(function () use ($data, $id) {
+            DB::transaction(function () use ($data, $id, &$rs) {
                 $flowId = $id;
                 $user = Auth::user();
                 $flowName = $data['approval_flow_name'];
@@ -275,19 +292,10 @@ class AdminFlowSettingController extends Controller
                 $groupId = 0;
                 $budgetId = 0;
 
-                $dataFlow = array();
-                $dataFlow['flow_name']  = $flowName;
-                $dataFlow['form_id']    = $formId;
-                $dataFlow['updated_by'] = $user->id;
-                $dataFlow['updated_at'] = Carbon::now();
-                // update flow
-                DB::table('flows')->where('id', $flowId)->update($dataFlow);
-
-                DB::table('steps')->where('flow_id', '=', $flowId)->delete();
-
                 $destinationList = $data['destination'];
                 $approverList = $data['approver'];
                 $dataStepList = array();
+                $groupList = array();
                 foreach ($destinationList as $key => $destinationSteps) {
                     $stepType = $key;
                     $order = 0;
@@ -360,11 +368,35 @@ class AdminFlowSettingController extends Controller
                         $dataStep['created_by']     = $user->id;
                         $dataStep['created_at']     = Carbon::now();
                         $dataStepList[] = $dataStep;
+                        if (empty($groupList) || !in_array($groupId, $groupList)){
+                            $groupList[] = $groupId;
+                        }
                     }
                 }
-                DB::table('steps')->insert($dataStepList);
+
+                // check flow setting used
+                $application = DB::table('applications')
+                    ->where('applications.form_id', $formId)->whereIn('applications.group_id', $groupList)->whereNull('applications.deleted_at')->first();                
+                if (!empty($application)){
+                    $rs = false;
+                }else{
+                    $dataFlow = array();
+                    $dataFlow['flow_name']  = $flowName;
+                    $dataFlow['form_id']    = $formId;
+                    $dataFlow['updated_by'] = $user->id;
+                    $dataFlow['updated_at'] = Carbon::now();
+                    // update flow
+                    DB::table('flows')->where('id', $flowId)->update($dataFlow);
+                    DB::table('steps')->where('flow_id', '=', $flowId)->delete();
+                    DB::table('steps')->insert($dataStepList);
+                }
             });
-            return Common::redirectRouteWithAlertSuccess('admin.flow.index');
+            if ($rs){
+               return Common::redirectRouteWithAlertSuccess('admin.flow.index');
+            }else{
+               return redirect()->route('admin.flow.edit', ['id' => $id]);
+            }    
+            
         }
     }
 

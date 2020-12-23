@@ -359,6 +359,7 @@ return [
         'approver_required' => 'Please select a approver',
         'destination_invalid_begin' => 'The destination must start with the TO',
         'destination_invalid_end' => 'The destination must end with the TO',
+        'can_not_update' => 'Approval Flow has been used. You can not update.',
     ],
     /**
      * Login

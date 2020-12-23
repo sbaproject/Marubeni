@@ -13,6 +13,12 @@
 <script src="js/admin/flow-setting.js"></script>
 @endsection
 @section('content')
+  @if(!$canEdit)
+  <div class="alert alert-danger alert-dismissible fade show">
+        <h6 class="alert-msg"><i class="icon fas fa-ban"></i>{{ __('label.flow.can_not_update') }}</h6>
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+  </div>
+  @endif
   <!-- Content Header (Page header) -->
     <section class="content-header mb-2">
       <h1>{{ __('label.flow.approval_flow_setting') }}</h1>
@@ -33,13 +39,13 @@
             <div class="form-group row">
                 <label class="col-lg-3 col-form-label text-center">{{ __('label.flow.approval_flow_name') }}</label>
                 <div class="col-lg-9 block-item">
-                <input type="text" class="form-control" value="{{ $flow->flow_name }}" name="approval_flow_name" placeholder="{{ __('label.flow.approval_flow_name') }}">
+                <input type="text" class="form-control" value="{{ $flow->flow_name }}" @if(!$canEdit) disabled="disabled" @endif name="approval_flow_name" placeholder="{{ __('label.flow.approval_flow_name') }}">
                 </div>
             </div>
             <div class="form-group row">
               <label class="col-lg-3 col-form-label text-center">{{ __('label.flow.application_form') }}</label>
               <div class="col-lg-9 block-item">
-              <select id="cbxForm" class="form-control select2" name="application_form">
+              <select id="cbxForm" class="form-control select2" name="application_form" @if(!$canEdit) disabled="disabled" @endif>
                 <option value='' selected>{{ __('label.select') }}</option>
                 @foreach ($forms as $item)
                 <option value=" {{ $item->id }}" @if(strval($flow->form_id) === strval($item->id)) selected @endif>{{ __('label.form.'.$item->id) }}</option>              
@@ -50,21 +56,21 @@
             <div class="form-group row form-trip" @if(strval($flow->form_id) !== '2') style="display: none" @endif> 
               <label class="col-lg-3 col-form-label text-center">{{ __('label.flow.type') }}</label>
               <div class="col-lg-9">
-                <div class="form-check-inline"><label class="form-check-label"><input type="radio" value="3" name="trip" @if(strval($flow->position) === '3') checked="checked" @endif>{{ __('label.budget.economy_class') }}</label></div>
-                <div class="form-check-inline"><label class="form-check-label"><input type="radio" value="4"  name="trip" @if(strval($flow->position) === '4') checked="checked" @endif>{{ __('label.budget.business_class') }}</label></div>
+                <div class="form-check-inline"><label class="form-check-label"><input type="radio" value="3" @if(!$canEdit) disabled="disabled" @endif name="trip" @if(strval($flow->position) === '3') checked="checked" @endif>{{ __('label.budget.economy_class') }}</label></div>
+                <div class="form-check-inline"><label class="form-check-label"><input type="radio" value="4" @if(!$canEdit) disabled="disabled" @endif  name="trip" @if(strval($flow->position) === '4') checked="checked" @endif>{{ __('label.budget.business_class') }}</label></div>
               </div>
             </div>
             <div class="form-group row form-entertaiment" @if(strval($flow->form_id) !== '3') style="display: none" @endif>
               <label class="col-lg-3 col-form-label text-center">{{ __('label.flow.type') }}</label>
               <div class="col-lg-9">
-                <div class="form-check-inline"><label class="form-check-label"><input class="typePosition" id="positionPO" type="radio" value="1" @if(strval($flow->position) === '1') checked="checked" @endif name="PO">{{ __('label.budget.po') }}</label></div>
-                <div class="form-check-inline"><label class="form-check-label"><input class="typePosition" id="positionNotPO" type="radio" value="2" name="PO" @if(strval($flow->position) === '2') checked="checked" @endif>{{ __('label.budget.not_po') }}</label></div>
+                <div class="form-check-inline"><label class="form-check-label"><input @if(!$canEdit) disabled="disabled" @endif class="typePosition" id="positionPO" type="radio" value="1" @if(strval($flow->position) === '1') checked="checked" @endif name="PO">{{ __('label.budget.po') }}</label></div>
+                <div class="form-check-inline"><label class="form-check-label"><input @if(!$canEdit) disabled="disabled" @endif class="typePosition" id="positionNotPO" type="radio" value="2" name="PO" @if(strval($flow->position) === '2') checked="checked" @endif>{{ __('label.budget.not_po') }}</label></div>
               </div>
             </div> 
             <div class="form-group row form-entertaiment form-po" @if(strval($flow->form_id) !== '3' || strval($flow->position) === '2') style="display: none" @endif>
               <label class="col-lg-3 col-form-label text-center">{{ __('label.flow.budget_for_per_person') }}</label>
               <div class="col-lg-9">
-              <select id="cbxBudgetTypePO" name="budget_type_po" class="form-control select2">
+              <select id="cbxBudgetTypePO" name="budget_type_po" class="form-control select2" @if(!$canEdit) disabled="disabled" @endif>
                  <option value="0" @if(strval($flow->budget_type_compare) === '0') selected @endif>{{ __('label.flow.less_or_equal_than') }} {{ $budgetPO }}</option>
                  <option value="1" @if(strval($flow->budget_type_compare) === '1') selected @endif>{{ __('label.flow.greater_than') }} {{ $budgetPO }}</option>
               </select>
@@ -73,7 +79,7 @@
             <div class="form-group row form-entertaiment form-not-po" @if(strval($flow->form_id) !== '3' || strval($flow->position) === '1') style="display: none" @endif>
               <label class="col-lg-3 col-form-label text-center">{{ __('label.flow.budget_for_per_person') }}</label>
               <div class="col-lg-9">
-              <select id="cbxBudgetTypeNotPO" name="budget_type_not_po" class="form-control select2">
+              <select id="cbxBudgetTypeNotPO" name="budget_type_not_po" class="form-control select2" @if(!$canEdit) disabled="disabled" @endif>
                  <option value="0" @if(strval($flow->budget_type_compare) === '0') selected @endif>{{ __('label.flow.less_or_equal_than') }} {{ $budgetNotPO }}</option>
                  <option value="1" @if(strval($flow->budget_type_compare) === '1') selected @endif>{{ __('label.flow.greater_than') }} {{ $budgetNotPO }}</option>
               </select>
@@ -82,7 +88,7 @@
             <div class="form-group row">
               <label class="col-lg-3 col-form-label text-center">{{ __('label.flow.applicant_role') }}</label>
               <div class="col-lg-9 block-item">
-              <select id="cbxApplicantRole" name="applicant" class="form-control select2">
+              <select id="cbxApplicantRole" name="applicant" class="form-control select2" @if(!$canEdit) disabled="disabled" @endif>
                 <option value='' selected>{{ __('label.select') }}</option>
                  @foreach ($applicantRoles as $item)
                  <option value=" {{ $item['id'] }}" @if(strval($flow->applicant_id) === strval($item['id'])) selected @endif> {{ $item['name'] }}</option>
@@ -109,13 +115,13 @@
             <div class="border border-secondary p-3 wrap-step-1 section-step-{{ $step->step_type }}">
                     @else                      
                     <div class="block-add-approver-{{ $start_step }}">
-                          <button type="button" data-step="{{ $start_step }}" data-index="{{$step_index + 1}}" class="btn-add-approver btn btn-outline-dark pt-0 pb-0 pl-3 pr-3">+ {{ __('label.flow.add') }}</button>
+                          <button @if(!$canEdit) disabled="disabled" @endif type="button" data-step="{{ $start_step }}" data-index="{{$step_index + 1}}" class="btn-add-approver btn btn-outline-dark pt-0 pb-0 pl-3 pr-3">+ {{ __('label.flow.add') }}</button>
                     </div>
                     </div>
                     <div class="section-step section-step-{{ $step->step_type }}">
                       <div class="d-flex justify-between mt-5">
                         <h5>{{ __('label.flow.step') }} <span class="title-step">{{$step->step_type}}</span></h5>
-                        <div><button type="button" data-step="'+step+'" class="btn-del-step btn btn-danger pt-1 pb-1 pl-3 pr-3 mb-1">{{ __('label.flow.delete') }}</button></div>
+                        <div><button @if(!$canEdit) disabled="disabled" @endif type="button" data-step="'+step+'" class="btn-del-step btn btn-danger pt-1 pb-1 pl-3 pr-3 mb-1">{{ __('label.flow.delete') }}</button></div>
                       </div>
                       <div class="approver-{{ $step->step_type }}-{{$step_index + 1}}">
                         <div class="border border-secondary p-3 wrap-step-1">
@@ -129,7 +135,7 @@
                   <div class="d-flex justify-between">
                     <div class="text-muted">{{ __('label.flow.approver') }} <span class="title-approver">{{ $step_index + 1}}</span></div>
                     <div>
-                      <button type="button" data-step="{{ $step->step_type }}" data-index="{{$step_index + 1}}" class="btn-del-approver btn btn-danger btn-sm pt-0 pb-0 pl-3 pr-3 mb-1">{{ __('label.flow.delete') }}</button>
+                      <button @if(!$canEdit) disabled="disabled" @endif type="button" data-step="{{ $step->step_type }}" data-index="{{$step_index + 1}}" class="btn-del-approver btn btn-danger btn-sm pt-0 pb-0 pl-3 pr-3 mb-1">{{ __('label.flow.delete') }}</button>
                     </div>
                          
                   </div>
@@ -142,12 +148,12 @@
                           <td class="text-left">
                               <div class="form-check-inline">
                                   <label class="form-check-label">
-                                    <input type="radio" value="0" name="destination[{{ $step->step_type }}][{{ $step_index }}]" @if(strval($step->approver_type) === '0') checked="checked" @endif>To
+                                    <input @if(!$canEdit) disabled="disabled" @endif type="radio" value="0" name="destination[{{ $step->step_type }}][{{ $step_index }}]" @if(strval($step->approver_type) === '0') checked="checked" @endif>To
                                   </label>
                               </div>
                               <div class="form-check-inline">
                                   <label class="form-check-label">
-                                    <input type="radio" value="1" name="destination[{{ $step->step_type }}][{{ $step_index }}]" @if(strval($step->approver_type) === '1') checked="checked" @endif>CC
+                                    <input @if(!$canEdit) disabled="disabled" @endif type="radio" value="1" name="destination[{{ $step->step_type }}][{{ $step_index }}]" @if(strval($step->approver_type) === '1') checked="checked" @endif>CC
                                   </label>
                               </div>
                               <div>
@@ -164,7 +170,7 @@
                       <tr>
                           <td class="align-middle">{{ __('label.flow.approver') }}</td>
                           <td class="p-0 text-left block-item">
-                            <select id="cbxApprover-{{ $step_index }}" name="approver[{{ $step->step_type }}][{{ $step_index }}]" class="form-control select2 cbx-approver">
+                            <select id="cbxApprover-{{ $step_index }}" name="approver[{{ $step->step_type }}][{{ $step_index }}]" class="form-control select2 cbx-approver" @if(!$canEdit) disabled="disabled" @endif>
                               <option value='' selected>{{ __('label.select') }}</option>
                                @foreach ($users as $item)  
                                <option value=" {{ $item->id }}" @if(strval($step->approver_id) === strval($item->id)) selected @endif> {{ $item->name }} ({{ $item->email }})</option>
@@ -183,16 +189,16 @@
             @endphp
             @endforeach   
               <div class="block-add-approver-{{ $start_step }}">
-                    <button type="button" data-step="{{  $start_step }}" data-index="{{ $step_index }}" class="btn-add-approver btn btn-outline-dark pt-0 pb-0 pl-3 pr-3">+ {{ __('label.flow.add') }}</button>
+                    <button @if(!$canEdit) disabled="disabled" @endif type="button" data-step="{{  $start_step }}" data-index="{{ $step_index }}" class="btn-add-approver btn btn-outline-dark pt-0 pb-0 pl-3 pr-3">+ {{ __('label.flow.add') }}</button>
               </div>
             </div>
             </div>
             </div>
-            <div class="mt-3 block-add-step" style="display: none"><button type="button" data-step="1" data-index="0" class="btn-add-step btn btn-outline-dark pt-1 pb-1 pl-3 pr-3">+ {{ __('label.flow.step') }}</button></div>
+            <div class="mt-3 block-add-step" style="display: none"><button @if(!$canEdit) disabled="disabled" @endif type="button" data-step="1" data-index="0" class="btn-add-step btn btn-outline-dark pt-1 pb-1 pl-3 pr-3">+ {{ __('label.flow.step') }}</button></div>
 
 
             <div class="mt-5 mb-5 text-center">
-                <button type="button" class="btn-submit-flow btn btn-danger pt-1 pb-1 mr-4 col-5 col-sm-2 col-md-4 col-lg-2"><i class="nav-icon far fa-check-circle"></i> {{ __('label.flow.update') }}</button>
+                <button @if(!$canEdit) disabled="disabled" @endif type="button" class="btn-submit-flow btn btn-danger pt-1 pb-1 mr-4 col-5 col-sm-2 col-md-4 col-lg-2"><i class="nav-icon far fa-check-circle"></i> {{ __('label.flow.update') }}</button>
                 <a href="{{ route('admin.flow.index') }}" class="btn btn-outline-dark pt-1 pb-1 col-5 col-sm-2 col-md-4 col-lg-2"><i class="nav-icon far fa-times-circle"></i> {{ __('label.flow.cancel') }}</a>
             </div>
         </div>
