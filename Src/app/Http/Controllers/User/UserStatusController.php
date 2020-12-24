@@ -97,7 +97,7 @@ class UserStatusController extends Controller
             //OrderBy
             ->orderBy($sortable->s, $sortable->d)
             ->whereNull('applications.deleted_at')
-            ->paginate(5);
+            ->paginate(config('const.paginator.items'));
 
         // Type Application
         $intstatus = (int)$status;

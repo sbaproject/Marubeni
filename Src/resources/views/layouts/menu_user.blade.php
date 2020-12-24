@@ -4,7 +4,7 @@
         <li class="nav-item">
             <a href="" class="nav-link">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
-                <p>{{ Str::upper(__('label.menu.dashboard')) }}</p>
+                <p>{{ __('label.menu.dashboard') }}</p>
             </a>
         </li>
         <li class="nav-item">

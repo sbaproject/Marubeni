@@ -2,16 +2,16 @@
 @section('title')
 {{ __('label.menu.draft') }}
 @endsection
+
+@section('content-header')
+{{ __('label.menu.draft') }}
+@endsection
+
+@section('content-breadcrumb')
+<li class="breadcrumb-item active">{{ __('label.menu.draft') }}</li>
+@endsection
+
 @section('content')
-    <section class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h4 style="font-weight: 600;">{{ Str::upper(__('label.draft.list')) }}</h4>
-                </div>
-            </div>
-        </div>
-    </section>
     <section class="content">
         <div class="invoice p-3 mb-3">
             {{-- <x-alert /> --}}

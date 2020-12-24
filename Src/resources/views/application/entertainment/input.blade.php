@@ -41,6 +41,15 @@
 </script>
 @endsection
 
+@section('content-header')
+{{ __('label.form.entertainment') }}
+@endsection
+
+@section('content-breadcrumb')
+<li class="breadcrumb-item"><a href="{{ route('user.form.index') }}">{{ __('label.application_list') }}</a></li>
+<li class="breadcrumb-item active">{{ __('label.form.entertainment') }}</li>
+@endsection
+
 @section('content')
 @php
 
@@ -80,15 +89,15 @@
         action="{{ $actionUrl }}"
         enctype="multipart/form-data">
         @csrf
-        <div class="main-top">
-            <h4 class="main-header-text">{{ Str::upper(__('label.form.entertainment')) }}</h4>
-            <button type="submit" name="pdf" value="pdf" class="btn bg-gradient-danger" href="#">
-                <i class="fas fa-external-link-alt" style="margin-right: 5px; color: #fff;"></i>
-                {{ __('label.button.export') }}
-            </button>
-        </div>
-        <div class="invoice p-3 mb-3">
+        <div class="invoice mb-3">
             <div class="card-body">
+                <div class="form-group row float-right">
+                    <button type="submit" name="pdf" value="pdf" class="btn bg-gradient-danger" href="#">
+                        <i class="fas fa-external-link-alt" style="margin-right: 5px; color: #fff;"></i>
+                        {{ __('label.button.export') }}
+                    </button>
+                </div>
+                <div class="clearfix"></div>
                 @if (isset($application))
                 <div class="form-group row">
                     <div class="col-sm-2 text-left">

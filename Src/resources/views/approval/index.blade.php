@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('title')
-{{ Str::upper(__('label.pending_approval')) }}
+{{ __('label.title.approval.list') }}
 @endsection
 @section('css')
 <link rel="stylesheet" href="css/user/08_waiting_approval_list.css">
@@ -8,16 +8,18 @@
 @section('js')
 
 @endsection
+
+@section('content-header')
+{{ __('label.title.approval.list') }}
+@endsection
+
+@section('content-breadcrumb')
+<li class="breadcrumb-item active">{{ __('label.title.approval.list') }}</li>
+@endsection
+
 @section('content')
-<section class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h4 style="font-weight: 600;">{{ Str::upper(__('label.title.approval.list')) }}</h4>
-            </div>
-        </div>
-    </div>
-    <div class="row">
+<section class="content">
+    <div class="row mb-3">
         <div class="col-xl-8 col-lg-10">
             <div class="invoice">
                 <div class="card-header">
@@ -76,8 +78,8 @@
 
 <!-- Main content -->
 <section class="content">
-    <h4 class="mb-2" style="font-weight: 600;"><i class="nav-icon fas fa-file-alt" aria-hidden="true"
-            style="margin-right: 5px;"></i>{{ Str::upper(__('label.pending_approval')) }}</h4>
+    {{-- <h4 class="mb-2" style="font-weight: 600;"><i class="nav-icon fas fa-file-alt" aria-hidden="true"
+            style="margin-right: 5px;"></i>{{ Str::upper(__('label.pending_approval')) }}</h4> --}}
     <div class="invoice p-3 mb-3">
         <div class="card-body p-0 card-list-items">
             <table class="table table-bordered table-hover">

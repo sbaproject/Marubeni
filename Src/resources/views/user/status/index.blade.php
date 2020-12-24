@@ -14,6 +14,20 @@
     <script src="js/bootstrap-datetimepicker.js"></script>
     <script src="js/user/status.js"></script>
 @endsection
+
+@php
+    $title = $intstatus == config('const.application.status.applying') ? __('label.status.list_of_applying_documents') : ($intstatus == config('const.application.status.approvel_un') ? __('label.status.list_of_approval_un_documents') : ($intstatus == config('const.application.status.approvel_in') ? __('label.status.list_of_approval_in_documents') : ($intstatus == config('const.application.status.declined') ? __('label.status.list_of_declined_documents') : ($intstatus == config('const.application.status.reject') ? __('label.status.list_of_reject_documents') : ($intstatus == config('const.application.status.completed') ? __('label.status.list_of_completed_documents') : '')))));
+@endphp
+
+@section('content-header')
+{{-- {{ $title }} --}}
+@endsection
+
+@section('content-breadcrumb')
+<li class="breadcrumb-item active">{{ __('label.menu.status') }}</li>
+<li class="breadcrumb-item active">{{ $title }}</li>
+@endsection
+
 @section('content')
     <section class="invoice p-3 mb-3">
         <form method="get" id="formSearch" action="">
@@ -58,7 +72,8 @@
     <section class="invoice p-3 mb-3">
         <h4 class="mb-2" style="border-bottom: 1px solid #000;font-weight: bold;"><i class="nav-icon fas fa-file-alt"
                 aria-hidden="true"
-                style="margin-right: 5px;margin-bottom: 5px;"></i>{{ $intstatus == config('const.application.status.applying') ? __('label.status.list_of_applying_documents') : ($intstatus == config('const.application.status.approvel_un') ? __('label.status.list_of_approval_un_documents') : ($intstatus == config('const.application.status.approvel_in') ? __('label.status.list_of_approval_in_documents') : ($intstatus == config('const.application.status.declined') ? __('label.status.list_of_declined_documents') : ($intstatus == config('const.application.status.reject') ? __('label.status.list_of_reject_documents') : ($intstatus == config('const.application.status.completed') ? __('label.status.list_of_completed_documents') : ''))))) }}
+                style="margin-right: 5px;margin-bottom: 5px;"></i>
+                {{ $title }}
         </h4>
         <div class="card">
             <div class="card-body p-0 card-list-items">

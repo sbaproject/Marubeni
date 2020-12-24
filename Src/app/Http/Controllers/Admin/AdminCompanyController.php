@@ -39,10 +39,10 @@ class AdminCompanyController extends Controller
                 });
             }
 
-            $list_company = $list_company->orderBy('id', 'DESC')->paginate(5);
+            $list_company = $list_company->orderBy('id', 'DESC')->paginate(config('const.paginator.items'));
         } else {
 
-            $list_company = Company::orderBy('id', 'DESC')->paginate(5);
+            $list_company = Company::orderBy('id', 'DESC')->paginate(config('const.paginator.items'));
         }
 
         return view('admin.company.index', compact('list_company', 'req_arr'));

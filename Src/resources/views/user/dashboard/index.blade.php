@@ -14,9 +14,18 @@
     <script src="js/bootstrap-datetimepicker.js"></script>
     <script src="js/user/dashboard.js"></script>
 @endsection
+
+@section('content-header')
+    {{ __('label.menu.dashboard') }}
+@endsection
+
+@section('content-breadcrumb')
+{{-- <li class="breadcrumb-item active">{{ __('label.menu.dashboard') }}</li> --}}
+@endsection
+
 @section('content')
     <form method="get" id="formSearch" action="">
-        <section class="invoice p-3 mb-3 content-header">
+        <section class="invoice content-header">
             @csrf
             <div class="row">
                 <div class="col-md-4 col-sm-4">
@@ -51,7 +60,6 @@
                             <i class="fa fa-search" style="margin-right:5px;"></i>{{ __('label.button.search') }}</button>
                     </div>
                 </div>
-
         </section>
 
         <input type="hidden" id="typeApply" name="typeApply">

@@ -4,14 +4,23 @@
 
 @endsection
 
+@section('content-header')
+{{ __('label.change_pass') }}
+@endsection
+
+@section('content-breadcrumb')
+<li class="breadcrumb-item active">{{ __('label.menu.settings') }}</li>
+<li class="breadcrumb-item active">{{ __('label.change_pass') }}</li>
+@endsection
+
 @section('content')
 <section class="content">
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-lg-12">
-				<div class="main-top">
+				{{-- <div class="main-top">
 					<h4 class="main-header-text" style="font-weight: 500;">{{ __('label.change_pass') }}</h4>
-				</div>
+				</div> --}}
 				<form method="POST" action="{{ route('changepass.update') }}">
 					<div class="invoice p-3 mb-3 card-company">
 						<div class="card-body">

@@ -5,13 +5,24 @@
 @section('css')
     <link rel="stylesheet" href="css/user/10_company_registration.css">
 @endsection
+
+@section('content-header')
+{{ __('label.menu.company_registration') }}
+@endsection
+
+@section('content-breadcrumb')
+<li class="breadcrumb-item active">{{ __('label.menu.settings') }}</li>
+<li class="breadcrumb-item active">{{ __('label.menu.company_list') }}</li>
+<li class="breadcrumb-item active">{{ __('label.menu.company_registration') }}</li>
+@endsection
+
 @section('content')
     <section class="content">
-        <div class="container-fluid">
+        <div class="">
             <div class="row">
                 <div class="col-sm-12">
-                    <h4 class="mb-2" style="font-weight: 600;">{{ __('label.company.company_registration') }}</h4>
-                    <div class="invoice p-3 mb-3">
+                    {{-- <h4 class="mb-2" style="font-weight: 600;">{{ __('label.company.company_registration') }}</h4> --}}
+                    <div class="invoice">
                         <div class="card-body">
                             <form id="frmCompany" name="frmCompany" method="POST">
                                 @csrf

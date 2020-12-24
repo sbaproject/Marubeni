@@ -3,7 +3,17 @@
 {{ __('label.menu.budget_setting') }}
 @endsection
 @section('content')
-<section class="content-header">
+
+@section('content-header')
+{{ __('label.menu.budget_setting') }}
+@endsection
+
+@section('content-breadcrumb')
+<li class="breadcrumb-item active">{{ __('label.menu.settings') }}</li>
+<li class="breadcrumb-item active">{{ __('label.menu.budget_setting') }}</li>
+@endsection
+
+{{-- <section class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-lg-6">
@@ -11,10 +21,10 @@
             </div>
         </div>
     </div>
-</section>
+</section> --}}
     <div class="row">
         <div class="col-lg-9">
-            <div class="invoice p-3 mb-3">
+            <div class="invoice">
                 <div class="card-body">
                     {{-- <x-alert /> --}}
                     <div class="search-content">

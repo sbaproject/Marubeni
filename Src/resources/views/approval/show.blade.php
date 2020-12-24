@@ -8,6 +8,16 @@
 @section('js')
 
 @endsection
+
+@section('content-header')
+{{ __('label.application_info') }}
+@endsection
+
+@section('content-breadcrumb')
+<li class="breadcrumb-item"><a href="{{ route('user.approval.index') }}">{{ __('label.title.approval.list') }}</a></li>
+<li class="breadcrumb-item active">{{ __('label.application_info') }}</li>
+@endsection
+
 @section('content')
 @php
     $app_comment = Session::has('inputs') ? Session::get('inputs')['comment'] : (isset($app) ? $app->comment : null);
@@ -23,9 +33,9 @@
 <section class="content">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-9 col-md-12">
-                <h4 class="mb-2" style="font-weight: 600;">{{ Str::upper(__('label.application_info')) }}</h4>
-                <div class="invoice p-3 mb-3 card-app">
+            <div class="col-lg-12 col-md-12 invoice p-3 mb-3">
+                {{-- <h4 class="mb-2" style="font-weight: 600;">{{ Str::upper(__('label.application_info')) }}</h4> --}}
+                <div class="col-lg-9 card-app" style="margin:0 auto">
                     {{-- <x-alert/> --}}
                     <div class="card-body p-0">
                         <div class="appcation_info">

@@ -1,17 +1,21 @@
 @extends('layouts.master')
+
 @section('title')
 {{ __('label.menu.company_list') }}
 @endsection
+
+@section('content-header')
+{{ __('label.menu.company_list') }}
+@endsection
+
+@section('content-breadcrumb')
+<li class="breadcrumb-item active">{{ __('label.menu.settings') }}</li>
+<li class="breadcrumb-item active">{{ __('label.menu.company_list') }}</li>
+@endsection
+
 @section('content')
     <!-- Content Header (Page header) -->
-    <section class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-lg-6">
-                    <h1>{{ __('label.menu.company_list') }}</h1>
-                </div>
-            </div>
-        </div>
+    <section class="content mb-3">
         <form method="get" id="formSearch" action="">
             @csrf
             <div class="row">
@@ -26,8 +30,8 @@
                                     <div class="col-xl-8 col-lg-9">
                                         <div class="form-group row">
                                             <label for="inputCompanyName"
-                                                class="col-lg-3 col-form-label text-center font-weight-normal">{{ __('label.company.company_name') }}</label>
-                                            <div class="col-lg-9">
+                                                class="col-lg-4 col-form-label text-center font-weight-normal">{{ __('label.company.company_name') }}</label>
+                                            <div class="col-lg-8">
                                                 <input type="text" name="company_name"
                                                     value="{{ !empty($req_arr['company_name']) ? $req_arr['company_name'] : '' }}"
                                                     class="form-control" id="inputCompanyName" placeholder="{{ __('label.company.company_name') }}">
@@ -35,8 +39,8 @@
                                         </div>
                                         <div class="form-group row">
                                             <label for="inputAttendantsName"
-                                                class="col-lg-3 col-form-label text-center font-weight-normal">{{ __('label.company.att_name') }}</label>
-                                            <div class="col-lg-9">
+                                                class="col-lg-4 col-form-label text-center font-weight-normal">{{ __('label.company.att_name') }}</label>
+                                            <div class="col-lg-8">
                                                 <input type="text" name="company_att_name"
                                                     value="{{ !empty($req_arr['company_att_name']) ? $req_arr['company_att_name'] : '' }}"
                                                     class="form-control" id="inputAttendantsName"
@@ -49,8 +53,8 @@
                                     <div class="col-xl-8 col-lg-9">
                                         <div class="form-group row">
                                             <label for="inputKeyword"
-                                                class="col-lg-3 col-form-label text-center font-weight-normal">{{ __('label.company.keyword') }}</label>
-                                            <div class="col-lg-9">
+                                                class="col-lg-4 col-form-label text-center font-weight-normal">{{ __('label.company.keyword') }}</label>
+                                            <div class="col-lg-8">
                                                 <input type="text" class="form-control"
                                                     value="{{ !empty($req_arr['company_keyword']) ? $req_arr['company_keyword'] : '' }}"
                                                     name="company_keyword" id="inputKeyword" placeholder="{{ __('label.company.keyword') }}">
@@ -80,7 +84,7 @@
                 <i class="nav-icon fa fa-plus-circle" style="margin-right:5px;"></i>{{ __('label.button.addnew') }}</a>
         </div>
         {{-- <x-alert /> --}}
-        <div class="invoice p-3 mb-3">
+        <div class="invoice p-3">
             <div class="card-body p-0 card-list-items">
                 <div class="wrap_tbl_ad">
                     <table class="table table-bordered table-hover" style="min-width: 500px;">

@@ -1,21 +1,25 @@
 @extends('layouts.master')
 
-@section('css')
+@section('title')
+{{ __('label.title.user.edit') }}
+@endsection
 
+@section('css')
+@endsection
+
+@section('content-header')
+{{ __('label.title.user.edit') }}
+@endsection
+
+@section('content-breadcrumb')
+{{-- <li class="breadcrumb-item active">{{ __('label.menu.settings') }}</li> --}}
+<li class="breadcrumb-item"><a href="{{ route('admin.user.index') }}">{{ __('label.menu.employee_setting') }}</a></li>
+<li class="breadcrumb-item active">{{ __('label.title.user.edit') }}</li>
 @endsection
 
 @section('content')
-<section class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-lg-6">
-                <h1>{{ __('label.title.user.edit') }}</h1>
-            </div>
-        </div>
-    </div>
-</section>
-<div class="col-lg-9">
-    <div class="invoice p-3 mb-3">
+<div class="col-lg-9" style="padding: 0">
+    <div class="invoice p-3">
         <div class="card-body">
             <div class="search-content">
                 {{-- <x-alert/> --}}

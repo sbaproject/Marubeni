@@ -1,21 +1,33 @@
 @extends('layouts.master')
 
-@section('css')
+@section('title')
+{{ __('label.menu.employee_setting') }}
+@endsection
 
+@section('css')
+@endsection
+
+@section('content-header')
+{{ __('label.menu.employee_setting') }}
+@endsection
+
+@section('content-breadcrumb')
+<li class="breadcrumb-item active">{{ __('label.menu.settings') }}</li>
+<li class="breadcrumb-item active">{{ __('label.menu.employee_setting') }}</li>
 @endsection
 
 @section('content')
 {{-- <x-popup-confirm /> --}}
 
 <!-- Content Header (Page header) -->
-<section class="content-header">
-    <div class="container-fluid">
+<section class="content mb-3">
+    {{-- <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-lg-6">
                 <h1>{{ __('label.menu.employee_setting') }}</h1>
             </div>
         </div>
-    </div>
+    </div> --}}
     <div class="row">
         <div class="col-xl-8 col-lg-10">
             <div class="invoice">
@@ -118,7 +130,7 @@
             {{ __('label.button.addnew') }}
         </a>
     </div>
-    <div class="invoice p-3 mb-3">
+    <div class="invoice p-3">
         {{-- paginator --}}
         <div class="card-body p-0 card-list-items">
             {{-- List Users --}}

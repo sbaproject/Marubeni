@@ -14,9 +14,18 @@
     <script src="js/bootstrap-datetimepicker.js"></script>
     <script src="js/admin/dashboard.js"></script>
 @endsection
+
+@section('content-header')
+{{ __('label.menu.dashboard') }}
+@endsection
+
+@section('content-breadcrumb')
+
+@endsection
+
 @section('content')
     <form method="get" id="formSearch" action="">
-        <section class="invoice p-3 mb-3 content-header">
+        <section class="invoice mb-3 content-header">
             @csrf
             <div class="row">
                 <div class="col-md-4 col-sm-4">

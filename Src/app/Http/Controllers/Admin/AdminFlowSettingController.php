@@ -28,7 +28,7 @@ class AdminFlowSettingController extends Controller
             ->orderBy('flows.id', 'desc')
             ->whereNull('flows.deleted_at')
             ->where('steps.order', '99')
-            ->paginate(5);
+            ->paginate(config('const.paginator.items'));
 
         return view('admin.flow.index', compact('list_flows'));
     }
