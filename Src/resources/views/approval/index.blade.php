@@ -13,13 +13,16 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h4 style="font-weight: 600;">{{ Str::upper(__('label.button.search')) }}</h4>
+                <h4 style="font-weight: 600;">{{ Str::upper(__('label.title.approval.list')) }}</h4>
             </div>
         </div>
     </div>
     <div class="row">
         <div class="col-xl-8 col-lg-10">
-            <div class="invoice p-3 mb-3">
+            <div class="invoice">
+                <div class="card-header">
+                    <h3 class="card-title">{{ __('label.button.search') }}</h3>
+                </div>
                 <div class="card-body">
                     <div class="search-content">
                         <form action="{{ route('user.approval.index') }}" method="GET">
@@ -28,7 +31,7 @@
                                 <div class="col-xl-8 col-lg-9">
                                     <div class="form-group row">
                                         <label for="shourui"
-                                            class="col-sm-4 col-form-label text-center font-weight-bold">{{ __('label.status.application_type') }}</label>
+                                            class="col-sm-4 col-form-label text-center font-weight-normal">{{ __('label.status.application_type') }}</label>
                                         <div class="col-sm-8">
                                             <select id="application_type" name="application_type" class="form-control">
                                                 <option value="" selected>{{ __('label.select') }}</option>
@@ -46,7 +49,7 @@
                                 <div class="col-xl-8 col-lg-9">
                                     <div class="form-group row">
                                         <label for="inputKeyword"
-                                            class="col-sm-4 col-form-label text-center font-weight-bold">{{ __('label.keyword') }}</label>
+                                            class="col-sm-4 col-form-label text-center font-weight-normal">{{ __('label.keyword') }}</label>
                                         <div class="col-sm-8">
                                             <input type="text" id="keyword" name="keyword" class="form-control" autocomplete="off"
                                                 value="{{ isset($inputs['keyword']) ? $inputs['keyword'] : '' }}"

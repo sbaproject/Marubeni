@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('title')
-{{ __('label.menu.company_registration') }}
+{{ __('label.menu.company_list') }}
 @endsection
 @section('content')
     <!-- Content Header (Page header) -->
@@ -8,7 +8,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-lg-6">
-                    <h1>{{ __('label.button.search') }}</h1>
+                    <h1>{{ __('label.menu.company_list') }}</h1>
                 </div>
             </div>
         </div>
@@ -16,7 +16,10 @@
             @csrf
             <div class="row">
                 <div class="col-xl-8 col-lg-10">
-                    <div class="invoice p-3 mb-3">
+                    <div class="invoice">
+                        <div class="card-header">
+                            <h3 class="card-title">{{ __('label.button.search') }}</h3>
+                        </div>
                         <div class="card-body">
                             <div class="search-content">
                                 <div class="row">

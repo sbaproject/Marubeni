@@ -62,6 +62,9 @@ return [
             'edit' => 'Chỉnh sửa nhân viên',
             'add' => 'Thêm nhân viên'
         ],
+        'approval' => [
+            'list' => 'Danh sách đơn chờ duyệt',
+        ],
     ],
     /**
      * Paginator
@@ -96,6 +99,7 @@ return [
      * Menu
      */
     'menu' => [
+        'dashboard' => 'Trang chủ',
         'application' => 'LOẠI ĐƠN XIN',
         'application_list' => 'TRẠNG THÁI',
         'draft' => 'LƯU NHÁP',

@@ -2,13 +2,10 @@
 
 namespace App\Http\Controllers\Application\Leave;
 
-use Exception;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
-use App\Exceptions\NotFoundFlowSettingException;
 use App\Http\Controllers\Application\ApplicationController;
 
 class LeaveApplicationController extends ApplicationController
@@ -41,113 +38,81 @@ class LeaveApplicationController extends ApplicationController
         }
     }
 
-    protected function doValidate($request, &$inputs)
+    public function makeValidate($request, &$inputs)
     {
-        if (isset($inputs['apply']) || isset($inputs['draft'])) {
-            $rules = [];
-            // attached file
-            if ($request->file('input_file')) {
-                $rules['input_file'] = config('const.rules.attached_file');
-            }
-            if (isset($inputs['apply'])) {
+        $rules = [];
 
-                $rules['code_leave'] = 'required_select';
-                $rules['reason_leave'] = 'required';
+        // attached file
+        if ($request->file('input_file')) {
+            $rules['input_file'] = config('const.rules.attached_file');
+        }
+        if (isset($inputs['apply'])) {
 
-                if ($inputs['code_leave'] !== null && $inputs['code_leave'] != "empty") {
-                    if ($inputs['code_leave'] == config('const.code_leave.ML')) {
-                        $rules['maternity_from'] = 'required';
-                        $rules['maternity_to'] = 'required';
-                    } else {
-                        $rules['date_from'] = 'required';
-                        $rules['date_to'] = 'required';
-                        if (
-                            $inputs['code_leave'] == config('const.code_leave.AL')
-                            || $inputs['paid_type'] == config('const.paid_type.AL')
-                        ) {
-                            $rules['days_use'] = 'required';
-                        }
-                        if ($inputs['code_leave'] == config('const.code_leave.SL')) {
-                            $rules['paid_type'] = 'required_select';
-                        }
+            $rules['code_leave'] = 'required_select';
+            $rules['reason_leave'] = 'required';
+
+            if ($inputs['code_leave'] !== null && $inputs['code_leave'] != "empty") {
+                if ($inputs['code_leave'] == config('const.code_leave.ML')) {
+                    $rules['maternity_from'] = 'required';
+                    $rules['maternity_to'] = 'required';
+                } else {
+                    $rules['date_from'] = 'required';
+                    $rules['date_to'] = 'required';
+                    if (
+                        $inputs['code_leave'] == config('const.code_leave.AL')
+                        || $inputs['paid_type'] == config('const.paid_type.AL')
+                    ) {
+                        $rules['days_use'] = 'required';
+                    }
+                    if ($inputs['code_leave'] == config('const.code_leave.SL')) {
+                        $rules['paid_type'] = 'required_select';
                     }
                 }
             }
-
-            $customAttributes = [
-                'reason_leave'      => __('label.leave.caption.reason_leave'),
-                'date_from'         => __('label.leave.caption.date_from'),
-                'date_to'           => __('label.leave.caption.date_to'),
-                'maternity_from'    => __('label.leave.caption.maternity_from'),
-                'maternity_to'      => __('label.leave.caption.maternity_to'),
-                'days_use'          => __('label.leave.caption.days_use'),
-            ];
-
-            $validator = Validator::make($inputs, $rules, [], $customAttributes);
-            if ($validator->fails()) {
-                unset($inputs['input_file']);
-                return $validator;
-            }
         }
+
+        $customAttributes = [
+            'reason_leave'      => __('label.leave.caption.reason_leave'),
+            'date_from'         => __('label.leave.caption.date_from'),
+            'date_to'           => __('label.leave.caption.date_to'),
+            'maternity_from'    => __('label.leave.caption.maternity_from'),
+            'maternity_to'      => __('label.leave.caption.maternity_to'),
+            'days_use'          => __('label.leave.caption.days_use'),
+        ];
+
+        return Validator::make($inputs, $rules, [], $customAttributes);
     }
 
-    protected function doSaveData($request, &$inputs, $app = null)
+    public function saveApplicationDetail($request, &$inputs, $application, $applicationId, $loggedUser)
     {
-        $msgErr = '';
+        /////////////////////////////////////////////
+        // Leaves table
+        /////////////////////////////////////////////
 
-        DB::beginTransaction();
+        $leaveData = [
+            'code_leave'        => $inputs['code_leave'] !== 'empty' ? $inputs['code_leave'] : null,
+            'paid_type'         => $inputs['paid_type'],
+            'reason_leave'      => $inputs['reason_leave'],
+            'date_from'         => $inputs['date_from'],
+            'date_to'           => $inputs['date_to'],
+            'time_day'          => $inputs['time_day'],
+            'time_from'         => $inputs['time_from'],
+            'time_to'           => $inputs['time_to'],
+            'maternity_from'    => $inputs['maternity_from'],
+            'maternity_to'      => $inputs['maternity_to'],
+            'days_use'          => $inputs['days_use'],
+            'times_use'         => $inputs['times_use'],
+            'updated_by'        => $loggedUser->id,
+            'updated_at'        => Carbon::now(),
+        ];
 
-        try {
-            // get logged user
-            $user = Auth::user();
-
-            /////////////////////////////////////////////
-            // Applications table
-            /////////////////////////////////////////////
-
-            $applicationId = $this->saveApplicationMaster($request, $inputs, $app, $user);
-
-            /////////////////////////////////////////////
-            // Leaves table
-            /////////////////////////////////////////////
-
-            $leaveData = [
-                'code_leave'        => $inputs['code_leave'] !== 'empty' ? $inputs['code_leave'] : null,
-                'paid_type'         => $inputs['paid_type'],
-                'reason_leave'      => $inputs['reason_leave'],
-                'date_from'         => $inputs['date_from'],
-                'date_to'           => $inputs['date_to'],
-                'time_day'          => $inputs['time_day'],
-                'time_from'         => $inputs['time_from'],
-                'time_to'           => $inputs['time_to'],
-                'maternity_from'    => $inputs['maternity_from'],
-                'maternity_to'      => $inputs['maternity_to'],
-                'days_use'          => $inputs['days_use'],
-                'times_use'         => $inputs['times_use'],
-                'updated_by'        => $user->id,
-                'updated_at'        => Carbon::now(),
-            ];
-
-            if (empty($app)) {
-                $leaveData['application_id'] = $applicationId;
-                $leaveData['created_by'] = $user->id;
-                $leaveData['created_at'] = Carbon::now();
-            }
-
-            DB::table('leaves')->updateOrInsert(['application_id' => $applicationId], $leaveData);
-
-            DB::commit();
-        } catch (Exception $ex) {
-            DB::rollBack();
-            unset($inputs['input_file']);
-            if ($ex instanceof NotFoundFlowSettingException) {
-                $msgErr = $ex->getMessage();
-            } else {
-                $msgErr = __('msg.save_fail');
-            }
+        if (empty($application)) {
+            $leaveData['application_id'] = $applicationId;
+            $leaveData['created_by'] = $loggedUser->id;
+            $leaveData['created_at'] = Carbon::now();
         }
 
-        return $msgErr;
+        DB::table('leaves')->updateOrInsert(['application_id' => $applicationId], $leaveData);
     }
 
     protected function preview(Request $request, $id)

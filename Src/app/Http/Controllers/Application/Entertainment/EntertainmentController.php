@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers\Application\Entertainment;
 
-use Exception;
 use Carbon\Carbon;
 use App\Models\Budget;
 use App\Models\Company;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use App\Exceptions\NotFoundFlowSettingException;
 use App\Http\Controllers\Application\ApplicationController;
@@ -44,149 +42,121 @@ class EntertainmentController extends ApplicationController
         }
     }
 
-    protected function doValidate($request, &$inputs)
+    public function makeValidate($request, &$inputs)
     {
-        if (isset($inputs['apply']) || isset($inputs['draft'])) {
-            $rules = [];
-            // attached file
-            if ($request->file('input_file')) {
-                $rules['input_file'] = config('const.rules.attached_file');
-            }
-            if (isset($inputs['apply'])) {
+        $rules = [];
 
-                $rules['entertainment_dt']          = 'required';
-                $rules['place']                     = 'required';
-                $rules['during_trip']               = 'required_select';
-                $rules['budget_position']           = 'required_select';
-                $rules['check_row']                 = 'required_select';
-                $rules['has_entertainment_times']   = 'required_select';
-                $rules['existence_projects']        = 'required_select';
-                $rules['includes_family']           = 'required_select';
-                $rules['entertainment_reason']      = 'required_select';
-                $rules['entertainment_person']      = 'required|numeric';
-                $rules['est_amount']                = 'required|numeric';
-                $rules['infos.*.cp_name']           = 'required';
-                $rules['infos.*.title']             = 'required';
-                $rules['infos.*.name_attendants']   = 'required';
-                $rules['infos.*.details_dutles']    = 'required';
+        // attached file
+        if ($request->file('input_file')) {
+            $rules['input_file'] = config('const.rules.attached_file');
+        }
 
-                if ($inputs['has_entertainment_times'] == true) {
-                    $rules['entertainment_times'] = 'required|numeric';
-                }
-                // entertainment reason is [Other = 10] option
-                if ($inputs['entertainment_reason'] == config('const.entertainment.reason.other')) {
-                    $rules['entertainment_reason_other'] = 'required';
-                }
+        if (isset($inputs['apply'])) {
+
+            $rules['entertainment_dt']          = 'required';
+            $rules['place']                     = 'required';
+            $rules['during_trip']               = 'required_select';
+            $rules['budget_position']           = 'required_select';
+            $rules['check_row']                 = 'required_select';
+            $rules['has_entertainment_times']   = 'required_select';
+            $rules['existence_projects']        = 'required_select';
+            $rules['includes_family']           = 'required_select';
+            $rules['entertainment_reason']      = 'required_select';
+            $rules['entertainment_person']      = 'required|numeric';
+            $rules['est_amount']                = 'required|numeric';
+            $rules['infos.*.cp_name']           = 'required';
+            $rules['infos.*.title']             = 'required';
+            $rules['infos.*.name_attendants']   = 'required';
+            $rules['infos.*.details_dutles']    = 'required';
+
+            if ($inputs['has_entertainment_times'] == true) {
+                $rules['entertainment_times'] = 'required|numeric';
             }
-            $customAttributes = [
-                'entertainment_dt'              => __('label.entertainment.entertainment_dt'),
-                'place'                         => __('label.entertainment.place'),
-                'during_trip'                   => __('label.entertainment.during_trip'),
-                'budget_position'               => __('label.entertainment.budget_position'),
-                'check_row'                     => __('label.entertainment.check_row'),
-                'has_entertainment_times'       => __('label.entertainment.entertainment_times'),
-                'entertainment_reason'          => __('label.entertainment.entertainment_reason'),
-                'entertainment_reason_other'    => __('label.entertainment.entertainment_reason_other'),
-                'entertainment_times'           => __('label.entertainment.entertainment_times'),
-                'existence_projects'            => __('label.entertainment.existence_projects'),
-                'includes_family'               => __('label.entertainment.includes_family'),
-                'entertainment_person'          => __('label.entertainment.entertainment_person'),
-                'est_amount'                    => __('label.entertainment.est_amount'),
-                'infos.*.cp_name'               => __('label.entertainment.cp_name'),
-                'infos.*.title'                 => __('label.entertainment.title'),
-                'infos.*.name_attendants'       => __('label.entertainment.name_attendants'),
-                'infos.*.details_dutles'        => __('label.entertainment.details_dutles'),
-            ];
-            $validator = Validator::make($inputs, $rules, [], $customAttributes);
-            if ($validator->fails()) {
-                unset($inputs['input_file']);
-                return $validator;
+            // entertainment reason [Other] option
+            if ($inputs['entertainment_reason'] == config('const.entertainment.reason.other')) {
+                $rules['entertainment_reason_other'] = 'required';
             }
         }
+        $customAttributes = [
+            'entertainment_dt'              => __('label.entertainment.entertainment_dt'),
+            'place'                         => __('label.entertainment.place'),
+            'during_trip'                   => __('label.entertainment.during_trip'),
+            'budget_position'               => __('label.entertainment.budget_position'),
+            'check_row'                     => __('label.entertainment.check_row'),
+            'has_entertainment_times'       => __('label.entertainment.entertainment_times'),
+            'entertainment_reason'          => __('label.entertainment.entertainment_reason'),
+            'entertainment_reason_other'    => __('label.entertainment.entertainment_reason_other'),
+            'entertainment_times'           => __('label.entertainment.entertainment_times'),
+            'existence_projects'            => __('label.entertainment.existence_projects'),
+            'includes_family'               => __('label.entertainment.includes_family'),
+            'entertainment_person'          => __('label.entertainment.entertainment_person'),
+            'est_amount'                    => __('label.entertainment.est_amount'),
+            'infos.*.cp_name'               => __('label.entertainment.cp_name'),
+            'infos.*.title'                 => __('label.entertainment.title'),
+            'infos.*.name_attendants'       => __('label.entertainment.name_attendants'),
+            'infos.*.details_dutles'        => __('label.entertainment.details_dutles'),
+        ];
+
+        return Validator::make($inputs, $rules, [], $customAttributes);
     }
 
-    protected function doSaveData($request, &$inputs, $app = null)
+    public function saveApplicationDetail($request, &$inputs, $application, $applicationId, $loggedUser)
     {
-        $msgErr = '';
+        /////////////////////////////////////////////
+        // Entertainments table
+        /////////////////////////////////////////////
 
-        DB::beginTransaction();
+        $etData = [
+            'entertainment_dt'              => $inputs['entertainment_dt'],
+            'place'                         => $inputs['place'],
+            'during_trip'                   => $inputs['during_trip'],
+            'check_row'                     => $inputs['check_row'],
+            'has_entertainment_times'       => $inputs['has_entertainment_times'],
+            'entertainment_times'           => $inputs['has_entertainment_times'] == config('const.check.off') ? null : $inputs['entertainment_times'],
+            'existence_projects'            => $inputs['existence_projects'],
+            'includes_family'               => $inputs['includes_family'],
+            'project_name'                  => $inputs['project_name'],
+            'entertainment_reason'          => $inputs['entertainment_reason'] != 'empty' ? $inputs['entertainment_reason'] : null,
+            'entertainment_reason_other'    => $inputs['entertainment_reason'] == config('const.entertainment.reason.other') ? $inputs['entertainment_reason_other'] : null,
+            'entertainment_person'          => $inputs['entertainment_person'],
+            'est_amount'                    => $inputs['est_amount'],
+            'reason_budget_over'            => $inputs['reason_budget_over'],
+            'updated_by'                    => $loggedUser->id,
+            'updated_at'                    => Carbon::now(),
+        ];
 
-        try {
-            // get logged user
-            $user = Auth::user();
+        if (empty($application)) {
+            $etData['application_id'] = $applicationId;
+            $etData['created_by'] = $loggedUser->id;
+            $etData['created_at'] = Carbon::now();
 
-            /////////////////////////////////////////////
-            // Applications table
-            /////////////////////////////////////////////
-            $applicationId = $this->saveApplicationMaster($request, $inputs, $app, $user);
-
-            /////////////////////////////////////////////
-            // Entertainments table
-            /////////////////////////////////////////////
-
-            $etData = [
-                'entertainment_dt'              => $inputs['entertainment_dt'],
-                'place'                         => $inputs['place'],
-                'during_trip'                   => $inputs['during_trip'],
-                'check_row'                     => $inputs['check_row'],
-                'has_entertainment_times'       => $inputs['has_entertainment_times'],
-                'entertainment_times'           => $inputs['has_entertainment_times'] == config('const.check.off') ? null : $inputs['entertainment_times'],
-                'existence_projects'            => $inputs['existence_projects'],
-                'includes_family'               => $inputs['includes_family'],
-                'project_name'                  => $inputs['project_name'],
-                'entertainment_reason'          => $inputs['entertainment_reason'] != 'empty' ? $inputs['entertainment_reason'] : null,
-                'entertainment_reason_other'    => $inputs['entertainment_reason'] == config('const.entertainment.reason.other') ? $inputs['entertainment_reason_other'] : null,
-                'entertainment_person'          => $inputs['entertainment_person'],
-                'est_amount'                    => $inputs['est_amount'],
-                'reason_budget_over'            => $inputs['reason_budget_over'],
-                'file_path'                     => isset($filePath) ? $filePath : null,
-                'updated_by'                    => $user->id,
-                'updated_at'                    => Carbon::now(),
-            ];
-
-            if (empty($app)) {
-                $etData['application_id'] = $applicationId;
-                $etData['created_by'] = $user->id;
-                $etData['created_at'] = Carbon::now();
-
-                $etId = DB::table('entertaiments')->insertGetId($etData);
-            } else {
-                DB::table('entertaiments')->where('id', $app->entertainment->id)->update($etData);
-                DB::table('entertaiment_infos')->where('entertaiment_id', $app->entertainment->id)->delete();
-            }
-
-            /////////////////////////////////////////////
-            // Entertaiment_infos table
-            /////////////////////////////////////////////
-            if (!isset($etId)) {
-                $etId = $app->entertainment->id;
-            }
-            $entertaimentInfos = [];
-            foreach ($inputs['infos'] as $value) {
-                $item['entertaiment_id']    = $etId;
-                $item['cp_name']            = $value['cp_name'];
-                $item['title']              = $value['title'];
-                $item['name_attendants']    = $value['name_attendants'];
-                $item['details_dutles']     = $value['details_dutles'];
-                $item['created_at']         = Carbon::now();
-                $item['updated_at']         = Carbon::now();
-
-                $entertaimentInfos[] = $item;
-            }
-            DB::table('entertaiment_infos')->insert($entertaimentInfos);
-
-            DB::commit();
-        } catch (Exception $ex) {
-            DB::rollBack();
-            unset($inputs['input_file']);
-            if ($ex instanceof NotFoundFlowSettingException) {
-                $msgErr = $ex->getMessage();
-            } else {
-                $msgErr = $ex->getMessage();//__('msg.save_fail');
-            }
+            $etId = DB::table('entertaiments')->insertGetId($etData);
+        } else {
+            DB::table('entertaiments')->where('id', $application->entertainment->id)->update($etData);
+            DB::table('entertaiment_infos')->where('entertaiment_id', $application->entertainment->id)->delete();
         }
 
-        return $msgErr;
+        /////////////////////////////////////////////
+        // Entertaiment_infos table
+        /////////////////////////////////////////////
+
+        if (!isset($etId)) {
+            $etId = $application->entertainment->id;
+        }
+        $entertaimentInfos = [];
+        foreach ($inputs['infos'] as $value) {
+            $item['entertaiment_id']    = $etId;
+            $item['cp_name']            = $value['cp_name'];
+            $item['title']              = $value['title'];
+            $item['name_attendants']    = $value['name_attendants'];
+            $item['details_dutles']     = $value['details_dutles'];
+            $item['created_at']         = Carbon::now();
+            $item['updated_at']         = Carbon::now();
+
+            $entertaimentInfos[] = $item;
+        }
+
+        DB::table('entertaiment_infos')->insert($entertaimentInfos);
     }
 
     protected function preview(Request $request, $id)

@@ -18,7 +18,10 @@
     </div>
     <div class="row">
         <div class="col-xl-8 col-lg-10">
-            <div class="invoice p-3 mb-3">
+            <div class="invoice">
+                <div class="card-header">
+                    <h3 class="card-title">{{ __('label.button.search') }}</h3>
+                </div>
                 <div class="card-body">
                     <div class="search-content">
                         {{-- <x-alert /> --}}
@@ -28,7 +31,7 @@
                                     {{-- Location --}}
                                     <div class="form-group row">
                                         <label for="location"
-                                            class="col-lg-3 col-form-label text-center font-weight-bold">{{ __('validation.attributes.location') }}</label>
+                                            class="col-lg-3 col-form-label text-center font-weight-normal">{{ __('validation.attributes.location') }}</label>
                                         <div class="col-lg-9">
                                             <select id="location" name="location" class="form-control">
                                                 <option value='' selected>{{ __('label.select') }}</option>
@@ -44,7 +47,7 @@
                                     {{-- Employee No --}}
                                     <div class="form-group row">
                                         <label for="user_no"
-                                            class="col-lg-3 col-form-label text-center font-weight-bold">
+                                            class="col-lg-3 col-form-label text-center font-weight-normal">
                                             {{ __('validation.attributes.user_no') }}
                                         </label>
                                         <div class="col-lg-9">
@@ -55,7 +58,7 @@
                                     {{-- Department --}}
                                     <div class="form-group row">
                                         <label for="department"
-                                            class="col-lg-3 col-form-label text-center font-weight-bold">
+                                            class="col-lg-3 col-form-label text-center font-weight-normal">
                                             {{ __('validation.attributes.department') }}
                                         </label>
                                         <div class="col-lg-9">
@@ -77,7 +80,7 @@
                                     {{-- Name --}}
                                     <div class="form-group row">
                                         <label for="name"
-                                            class="col-lg-3 col-form-label text-center font-weight-bold">
+                                            class="col-lg-3 col-form-label text-center font-weight-normal">
                                             {{ __('validation.attributes.user.name') }}
                                         </label>
                                         <div class="col-lg-9">

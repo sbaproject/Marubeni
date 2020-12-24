@@ -2,9 +2,15 @@
     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
         <!-- Add icons to the links using the .nav-icon class
                            with font-awesome or any other icon font library -->
+        <li class="nav-item">
+            <a href="" class="nav-link">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>{{ Str::upper(__('label.menu.dashboard')) }}</p>
+            </a>
+        </li>
         <li class="nav-item has-treeview">
             <a href="" class="nav-link">
-                <i class="nav-icon fas fa-list-alt"></i>
+                <i class="nav-icon fas fa-filter"></i>
                 <p>
                     {{ __('label.menu.application_list') }}
                     <i class="fas fa-angle-down right"></i>
@@ -73,6 +79,14 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a href="{{ route('admin.company.index') }}" class="nav-link">
+                        <i class="fas fa-angle-right nav-icon"></i>
+                        <p>
+                            {{ __('label.menu.company_list') }}
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="{{ route('admin.budget.show') }}" class="nav-link">
                         <i class="fas fa-angle-right nav-icon"></i>
                         <p>{{ __('label.menu.budget_setting') }}</p>
@@ -91,14 +105,6 @@
                     </a>
                 </li>
             </ul>
-        </li>
-        <li class="nav-item">
-            <a href="{{ route('admin.company.index') }}" class="nav-link">
-                <i class="nav-icon far fa-building"></i>
-                <p>
-                    {{ __('label.menu.company_registration') }}
-                </p>
-            </a>
         </li>
     </ul>
 </nav>

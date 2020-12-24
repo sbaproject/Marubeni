@@ -67,6 +67,9 @@ return [
             'edit' => 'Employee Edit',
             'add' => 'Employee Add',
         ],
+        'approval' => [
+            'list' => 'Pending approval list',
+        ],
     ],
     /**
      * Paginator
@@ -101,6 +104,7 @@ return [
      * Menu
      */
     'menu' => [
+        'dashboard' => 'Dashboard',
         'application' => 'APPLICATION',
         'application_list' => 'Application List',
         'draft' => 'DRAFT',

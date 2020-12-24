@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Application;
 
 use PDF;
+use Exception;
 use Carbon\Carbon;
 use App\Libs\Common;
 use App\Models\Application;
@@ -105,39 +106,6 @@ class ApplicationController extends Controller
     {
     }
 
-    protected function preview(Request $request, $id)
-    {
-        $application = Application::findOrFail($id);
-
-        $this->checkEmptyApplication($application);
-
-        $loggedUser = Auth::user();
-        $previewFlg = true;
-
-        // check logged user has permission to access
-        // if logged user is not owner of application and also not approval user(TO or CC) and also not admin role
-        if ($application->created_by !== $loggedUser->id && Gate::denies('admin-gate')) {
-            if (!$this->checkValidApproverOfApplication($request, $application, $loggedUser)) {
-                abort(403);
-            }
-        }
-
-        $this->currentCompatData = compact('application', 'previewFlg');
-    }
-
-    protected function previewPdf(Request $request, $id)
-    {
-        $application = Application::findOrFail($id);
-
-        $inputs = $request->input();
-
-        if (isset($inputs['pdf'])) {
-            return $this->pdf($request, $inputs, $application);
-        } else {
-            abort(404);
-        }
-    }
-
     private function updateData($request, $application)
     {
         // get inputs
@@ -181,132 +149,51 @@ class ApplicationController extends Controller
         return $this->doRedirectSaveOk($inputs);
     }
 
-    private function pdf($request, $inputs, $application = null)
+    private function doValidate($request, &$inputs)
     {
-        if (!empty($application)) {
-            $loggedUser = Auth::user();
-            // check logged user has permission to access
-            // if logged user is not owner of application and also not approval user(TO or CC) and also not admin role
-            if ($application->created_by !== $loggedUser->id && Gate::denies('admin-gate')) {
-                if (!$this->checkValidApproverOfApplication($request, $application, $loggedUser)) {
-                    abort(403);
-                }
+        if (isset($inputs['apply']) || isset($inputs['draft'])) {
+
+            $validator = $this->makeValidate($request, $inputs);
+
+            if ($validator->fails()) {
+                unset($inputs['input_file']);
+                return $validator;
             }
-            $inputs['applicant'] = $application->applicant;
-        } else {
-            $inputs['applicant'] = Auth::user();
-        }
-
-        // PDF::setOptions(['defaultFont' => 'Roboto-Black']);
-        $pdf = PDF::loadView("application.{$this->formTypeName}.pdf", compact('application', 'inputs'));
-
-        // preview pdf
-        $fileName = "{$this->formTypeName}.pdf";
-        return $pdf->stream($fileName);
-        // download
-        // return $pdf->download($fileName);
-    }
-
-    private function checkValidApproverOfApplication($request, $application, $loggedUser)
-    {
-        $approver = DB::table('steps')
-            ->select('steps.approver_id')
-            ->where('steps.flow_id', function ($query) use ($request, $loggedUser) {
-                $query->select('steps.flow_id')
-                    ->from('applications')
-                    ->join(
-                        'steps',
-                        'steps.group_id',
-                        'applications.group_id'
-                    )
-                    ->where('steps.approver_id', '=', $loggedUser->id)
-                    ->where('applications.id', $request->id)
-                    ->where('applications.deleted_at', '=', null)
-                    ->limit(1);
-            })
-            ->where('steps.step_type', $application->current_step)
-            ->first();
-
-        return !empty($approver);
-    }
-
-    private function checkEditableApplication($application)
-    {
-        return ($application->status == config('const.application.status.draft')
-            ||  ($application->status == config('const.application.status.applying') && $application->current_step == config('const.application.step_type.application'))
-            ||  $application->status == config('const.application.status.declined'));
-    }
-
-    private function getFormTypeName()
-    {
-        if ($this->formType == config('const.form.leave')) {
-            return 'leave';
-        } elseif ($this->formType == config('const.form.biz_trip')) {
-            return 'business';
-        } elseif ($this->formType == config('const.form.entertainment')) {
-            return 'entertainment';
         }
     }
 
-    public function getActionType($inputs)
+    private function doSaveData($request, &$inputs, $app = null)
     {
-        if (isset($inputs['apply'])) {
-            return config('const.application.status.applying');
-        } else if (isset($inputs['draft'])) {
-            return config('const.application.status.draft');
+        $msgErr = '';
+
+        DB::beginTransaction();
+
+        try {
+            // get logged user
+            $user = Auth::user();
+
+            // Applications table
+            $applicationId = $this->saveApplicationMaster($request, $inputs, $app, $user);
+
+            // Application Detail table
+            $this->saveApplicationDetail($request, $inputs, $app, $applicationId, $user);
+
+            // Commit DB
+            DB::commit();
+        } catch (Exception $ex) {
+            DB::rollBack();
+            unset($inputs['input_file']);
+            if ($ex instanceof NotFoundFlowSettingException) {
+                $msgErr = $ex->getMessage();
+            } else {
+                $msgErr = __('msg.save_fail');
+            }
         }
+
+        return $msgErr;
     }
 
-    public function getCurrentStep($application)
-    {
-        if (!empty($application)) {
-            return $application->current_step;
-        } else {
-            return config('const.budget.step_type.application');
-        }
-    }
-
-    public function getGroup($user, $currentStep = null, $budgetType = null, $budgetPosition = null, $budgetTypeCompare = null)
-    {
-        $group = DB::table('groups')
-            ->select('groups.*')
-            ->join('applicants', function ($join) use ($user) {
-                $join->on('groups.applicant_id', '=', 'applicants.id')
-                    ->where('applicants.role', $user->role)
-                    ->where('applicants.location', $user->location)
-                    ->where('applicants.department_id', $user->department_id)
-                    ->whereNull('applicants.deleted_at');
-            })
-            ->when(
-                $this->formType == config('const.form.biz_trip') || $this->formType == config('const.form.entertainment'),
-                function ($query) use ($currentStep, $budgetType, $budgetPosition) {
-                    $query->join('budgets', function ($join) use ($currentStep, $budgetType, $budgetPosition) {
-                        $join->on('groups.budget_id', '=', 'budgets.id')
-                            ->where('budgets.budget_type', $budgetType)
-                            ->where('budgets.step_type', $currentStep)
-                            ->where('budgets.position', $budgetPosition)
-                            ->whereNull('budgets.deleted_at');
-                    });
-                }
-            )
-            ->when(
-                $this->formType == config('const.form.entertainment'),
-                function ($query) use ($budgetTypeCompare) {
-                    $query->where('groups.budget_type_compare', $budgetTypeCompare)
-                        ->whereNull('groups.deleted_at');
-                }
-            )
-            ->when($this->formType == config('const.form.leave'), function ($query) {
-                $query->whereNull('groups.budget_id')
-                    ->whereNull('groups.budget_type_compare');
-            })
-            ->whereNull('groups.deleted_at')
-            ->first();
-
-        return $group;
-    }
-
-    public function saveApplicationMaster($request, $inputs, $app, $user)
+    private function saveApplicationMaster($request, $inputs, $app, $user)
     {
         // get type form of application
         $formId = $this->formType;
@@ -365,7 +252,109 @@ class ApplicationController extends Controller
         return $applicationId ?? $app->id;
     }
 
-    public function uploadAttachedFile($request, $inputs, $application, $loggedUser)
+    private function checkValidApproverOfApplication($request, $application, $loggedUser)
+    {
+        $approver = DB::table('steps')
+            ->select('steps.approver_id')
+            ->where('steps.flow_id', function ($query) use ($request, $loggedUser) {
+                $query->select('steps.flow_id')
+                    ->from('applications')
+                    ->join(
+                        'steps',
+                        'steps.group_id',
+                        'applications.group_id'
+                    )
+                    ->where('steps.approver_id', '=', $loggedUser->id)
+                    ->where('applications.id', $request->id)
+                    ->where('applications.deleted_at', '=', null)
+                    ->limit(1);
+            })
+            ->where('steps.step_type', $application->current_step)
+            ->first();
+
+        return !empty($approver);
+    }
+
+    private function checkEditableApplication($application)
+    {
+        return ($application->status == config('const.application.status.draft')
+            ||  ($application->status == config('const.application.status.applying') && $application->current_step == config('const.application.step_type.application'))
+            ||  $application->status == config('const.application.status.declined'));
+    }
+
+    private function getFormTypeName()
+    {
+        if ($this->formType == config('const.form.leave')) {
+            return 'leave';
+        } elseif ($this->formType == config('const.form.biz_trip')) {
+            return 'business';
+        } elseif ($this->formType == config('const.form.entertainment')) {
+            return 'entertainment';
+        }
+    }
+
+    private function getActionType($inputs)
+    {
+        if (isset($inputs['apply'])) {
+            return config('const.application.status.applying');
+        } else if (isset($inputs['draft'])) {
+            return config('const.application.status.draft');
+        }
+    }
+
+    private function getCurrentStep($application)
+    {
+        if (!empty($application)) {
+            return $application->current_step;
+        } else {
+            return config('const.budget.step_type.application');
+        }
+    }
+
+    private function getGroup($user, $currentStep = null, $budgetType = null, $budgetPosition = null, $budgetTypeCompare = null)
+    {
+        $group = DB::table('groups')
+            ->select('groups.*')
+            ->join(
+                'applicants',
+                function ($join) use ($user) {
+                    $join->on('groups.applicant_id', '=', 'applicants.id')
+                        ->where('applicants.role', $user->role)
+                        ->where('applicants.location', $user->location)
+                        ->where('applicants.department_id', $user->department_id)
+                        ->whereNull('applicants.deleted_at');
+                }
+            )
+            ->when(
+                $this->formType == config('const.form.biz_trip') || $this->formType == config('const.form.entertainment'),
+                function ($query) use ($currentStep, $budgetType, $budgetPosition) {
+                    $query->join('budgets', function ($join) use ($currentStep, $budgetType, $budgetPosition) {
+                        $join->on('groups.budget_id', '=', 'budgets.id')
+                            ->where('budgets.budget_type', $budgetType)
+                            ->where('budgets.step_type', $currentStep)
+                            ->where('budgets.position', $budgetPosition)
+                            ->whereNull('budgets.deleted_at');
+                    });
+                }
+            )
+            ->when(
+                $this->formType == config('const.form.entertainment'),
+                function ($query) use ($budgetTypeCompare) {
+                    $query->where('groups.budget_type_compare', $budgetTypeCompare)
+                        ->whereNull('groups.deleted_at');
+                }
+            )
+            ->when($this->formType == config('const.form.leave'), function ($query) {
+                $query->whereNull('groups.budget_id')
+                    ->whereNull('groups.budget_type_compare');
+            })
+            ->whereNull('groups.deleted_at')
+            ->first();
+
+        return $group;
+    }
+
+    private function uploadAttachedFile($request, $inputs, $application, $loggedUser)
     {
         // delete old file
         if (!empty($application)) {
@@ -390,5 +379,64 @@ class ApplicationController extends Controller
         }
 
         return $filePath ?? null;
+    }
+
+    protected function preview(Request $request, $id)
+    {
+        $application = Application::findOrFail($id);
+
+        $this->checkEmptyApplication($application);
+
+        $loggedUser = Auth::user();
+        $previewFlg = true;
+
+        // check logged user has permission to access
+        // if logged user is not owner of application and also not approval user(TO or CC) and also not admin role
+        if ($application->created_by !== $loggedUser->id && Gate::denies('admin-gate')) {
+            if (!$this->checkValidApproverOfApplication($request, $application, $loggedUser)) {
+                abort(403);
+            }
+        }
+
+        $this->currentCompatData = compact('application', 'previewFlg');
+    }
+
+    protected function previewPdf(Request $request, $id)
+    {
+        $application = Application::findOrFail($id);
+
+        $inputs = $request->input();
+
+        if (isset($inputs['pdf'])) {
+            return $this->pdf($request, $inputs, $application);
+        } else {
+            abort(404);
+        }
+    }
+
+    private function pdf($request, $inputs, $application = null)
+    {
+        if (!empty($application)) {
+            $loggedUser = Auth::user();
+            // check logged user has permission to access
+            // if logged user is not owner of application and also not approval user(TO or CC) and also not admin role
+            if ($application->created_by !== $loggedUser->id && Gate::denies('admin-gate')) {
+                if (!$this->checkValidApproverOfApplication($request, $application, $loggedUser)) {
+                    abort(403);
+                }
+            }
+            $inputs['applicant'] = $application->applicant;
+        } else {
+            $inputs['applicant'] = Auth::user();
+        }
+
+        // PDF::setOptions(['defaultFont' => 'Roboto-Black']);
+        $pdf = PDF::loadView("application.{$this->formTypeName}.pdf", compact('application', 'inputs'));
+
+        // preview pdf
+        $fileName = "{$this->formTypeName}.pdf";
+        return $pdf->stream($fileName);
+        // download
+        // return $pdf->download($fileName);
     }
 }
