@@ -20,12 +20,12 @@
 
 @section('content')
 @php
-    $app_comment = Session::has('inputs') ? Session::get('inputs')['comment'] : (isset($app) ? $app->comment : null);
+    $app_comment = Session::has('inputs') ? Session::get('inputs')['comment'] : (isset($application) ? $application->comment : null);
     $isAbleToAction = false;
-    if($app->status >= config('const.application.status.applying') && $app->status < config('const.application.status.completed')){
-        if($app->approver_id === Auth::user()->id
-            && $app->approver_type === config('const.approver_type.to')
-            && $app->created_by !== Auth::user()->id) {
+    if($application->status >= config('const.application.status.applying') && $application->status < config('const.application.status.completed')){
+        if($application->approver_id === Auth::user()->id
+            && $application->approver_type === config('const.approver_type.to')
+            && $application->created_by !== Auth::user()->id) {
             $isAbleToAction = true;
         }
     }
@@ -33,7 +33,7 @@
 <section class="content">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-12 col-md-12 invoice p-3 mb-3">
+            <div class="col-lg-12 col-md-12 invoice p-3">
                 {{-- <h4 class="mb-2" style="font-weight: 600;">{{ Str::upper(__('label.application_info')) }}</h4> --}}
                 <div class="col-lg-9 card-app" style="margin:0 auto">
                     {{-- <x-alert/> --}}
@@ -45,8 +45,8 @@
                                 </div>
                                 <div class="col-sm-9 pl-sm-0">
                                     <div class="app_info">
-                                        {{ $app->application_no }}
-                                        @if ($app->subsequent == config('const.check.on'))
+                                        {{ $application->application_no }}
+                                        @if ($application->subsequent == config('const.check.on'))
                                             <span style="color: red">Subsequent</span>
                                         @endif
                                     </div>
@@ -57,7 +57,7 @@
                                     <div class="app_title">{{ __('label.status.application_type') }}</div>
                                 </div>
                                 <div class="col-sm-9 pl-sm-0">
-                                    <div class="app_info">{{ __('label.form.'.$app->form_id) }}</div>
+                                    <div class="app_info">{{ __('label.form.'.$application->form_id) }}</div>
                                 </div>
                             </div>
                             <div class="row">
@@ -65,7 +65,7 @@
                                     <div class="app_title">{{ __('label.applicant') }}</div>
                                 </div>
                                 <div class="col-sm-9 pl-sm-0 ">
-                                    <div class="app_info">{{ $app->applicant }}</div>
+                                    <div class="app_info">{{ $application->applicant }}</div>
                                 </div>
                             </div>
                             <div class="row">
@@ -75,8 +75,8 @@
                                 <div class="col-sm-9 pl-sm-0">
                                     <div class="app_info">
                                         @php
-                                            // $dt = Carbon\Carbon::parse($app->created_at)->locale('vi');
-                                            $dt = Carbon\Carbon::parse($app->created_at);
+                                            // $dt = Carbon\Carbon::parse($application->created_at)->locale('vi');
+                                            $dt = Carbon\Carbon::parse($application->created_at);
                                             if(config('app.locale') == 'vi'){
                                                 echo 'Ngày ' . $dt->day . ' Tháng '. $dt->month . ' Năm '. $dt->year;
                                             } else {
@@ -92,9 +92,9 @@
                                 </div>
                                 <div class="col-sm-9 pl-sm-0">
                                     <div class="app_info last_item">
-                                        @if (!empty($app->file_path))
-                                            <a href="{{ Storage::url($app->file_path) }}" target="_blank">
-                                                {{ basename($app->file_path) }}
+                                        @if (!empty($application->file_path))
+                                            <a href="{{ Storage::url($application->file_path) }}" target="_blank">
+                                                {{ basename($application->file_path) }}
                                             </a>
                                         @else
                                             {{ __('label.no_attached_file') }}
@@ -105,17 +105,17 @@
                         </div>
                     </div>
                     <!-- /.card-body -->
-                    <form action="{{ route('user.approval.update', $app->id) }}" method="POST" class="mt-1">
+                    <form action="{{ route('user.approval.update', $application->id) }}" method="POST" class="mt-1">
                         @csrf
                         <div class="row">
                             <div class="col-12">
-                                <a href="{{ Common::getRoutePreviewApplication($app->id, $app->form_id) }}"
+                                <a href="{{ Common::getRoutePreviewApplication($application->id, $application->form_id) }}"
                                     class="btn btn-outline-secondary" target="_blank">
                                     {{ __('label.button.preview') }}
                                 </a>
                             </div>
                         </div>
-                        <div class="row wrap_comment">
+                        {{-- <div class="row wrap_comment">
                             <div class="col-md-3 col-xl-2 ">
                                 <span class="comment_title">{{ __('label.comment') }}</span>
                             </div>
@@ -123,7 +123,63 @@
                                 <textarea class="form-control comment_area" id="app_comment" name="comment" rows="4" @if (!$isAbleToAction)
                                     readonly @endif placeholder="{{ __('label.comment') }}">{{ $app_comment }}</textarea>
                             </div>
+                        </div> --}}
+
+                        {{-- comments --}}
+                        <div class="col-md-12 p-0">
+                            <!-- DIRECT CHAT DANGER -->
+                            <div class="card card-danger direct-chat direct-chat-danger">
+                                <div class="card-header">
+                                    <h3 class="card-title">{{ __('label.comment') }}</h3>
+                                    <div class="card-tools">
+                                        <span data-toggle="tooltip" title="{{ count($comments).' '. __('label.comment') }}"
+                                            class="badge">{{ count($comments) }}</span>
+                                        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <!-- /.card-header -->
+                                <div class="card-body">
+                                    <!-- Conversations are loaded here -->
+                                    <div class="direct-chat-messages">
+                                        <!-- Message. Default to the left -->
+                                        <div class="direct-chat-msg">
+                                            <div class="direct-chat-infos clearfix">
+                                                <span class="direct-chat-name float-left">Alexander Pierce</span>
+                                                <span class="direct-chat-timestamp float-right">23 Jan 2:00 pm</span>
+                                            </div>
+                                            <!-- /.direct-chat-infos -->
+                                            {{-- <img class="direct-chat-img" src="" alt="Message User Image"> --}}
+                                            <!-- /.direct-chat-img -->
+                                            @foreach ($comments as $item)
+                                                <div class="direct-chat-text" style="white-space: pre-wrap;">
+                                                    {{ $item->comment }}
+                                                </div>
+                                            @endforeach
+                                            
+                                            <!-- /.direct-chat-text -->
+                                        </div>
+                                        <!-- /.direct-chat-msg -->
+                                    </div>
+                                    <!--/.direct-chat-messages-->
+                                </div>
+                                <!-- /.card-body -->
+                                <div class="card-footer">
+                                    <form action="#" method="post">
+                                        <div class="input-group">
+                                            <textarea class="form-control comment_area" id="app_comment" name="comment" rows="4" @if(!$isAbleToAction) readonly @endif
+                                                placeholder="{{ __('label.comment') }}">{{ $app_comment }}</textarea>
+                                            {{-- <span class="input-group-append">
+                                                                    <button type="submit" class="btn btn-danger">Send</button>
+                                                                </span> --}}
+                                        </div>
+                                    </form>
+                                </div>
+                                <!-- /.card-footer-->
+                            </div>
+                            <!--/.direct-chat -->
                         </div>
+
                         <div class="row text-center">
                             <div class="col-12">
                                 @if ($isAbleToAction)
@@ -145,10 +201,12 @@
                                 </a>
                             </div>
                         </div>
-                        <input type="hidden" name="form_id" value="{{ $app->form_id }}">
+                        <input type="hidden" name="form_id" value="{{ $application->form_id }}">
+                        <input type="hidden" name="last_updated_at" value="{{ $application->updated_at }}">
                     </form>
+
+                    
                 </div>
-                
             </div>
         </div>
     </div>

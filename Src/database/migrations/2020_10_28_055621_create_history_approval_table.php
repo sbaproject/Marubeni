@@ -18,6 +18,8 @@ class CreateHistoryApprovalTable extends Migration
             $table->unsignedBigInteger('approved_by');
             $table->unsignedInteger('application_id');
             $table->tinyInteger('status')->comment('0:applying, -1:declined, -2:reject, -3:draft, 1->5:approved, 99:completed');
+            $table->unsignedTinyInteger('step')->nullable();
+            $table->text('comment')->nullable();
             $table->timestamps();
 
             $table->foreign('approved_by')->references('id')->on('users');

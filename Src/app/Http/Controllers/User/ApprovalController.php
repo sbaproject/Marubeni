@@ -7,9 +7,7 @@ use Carbon\Carbon;
 use App\Libs\Common;
 use App\Models\User;
 use App\Models\Leave;
-use App\Models\Application;
 use Illuminate\Support\Arr;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -25,24 +23,29 @@ class ApprovalController extends Controller
         $fillZero = config('const.num_fillzero');
 
         // search conditions
-        $formIdCondition = "";
-        $keywordCondition = "";
-        $params = [
-            'userId' => Auth::user()->id,
-            'completed1' => config('const.application.status.completed'),
-            'completed2' => config('const.application.status.completed'),
-            'approver_type_to_1' => config('const.approver_type.to'),
-            'approver_type_to_2' => config('const.approver_type.to'),
-            'approver_type_cc' => config('const.approver_type.cc'),
+        $conditions = [
+            'form_id' => '',
+            'keyword' => '',
         ];
+        $params = [
+            'userId'                => Auth::user()->id,
+            'completed1'            => config('const.application.status.completed'),
+            'completed2'            => config('const.application.status.completed'),
+            'approver_type_to_1'    => config('const.approver_type.to'),
+            'approver_type_to_2'    => config('const.approver_type.to'),
+            'approver_type_cc'      => config('const.approver_type.cc'),
+        ];
+
         if (isset($request->application_type)) {
-            $formIdCondition = " AND a.form_id = :formId";
+            $conditions['form_id'] = " and a.form_id = :formId";
             $params['formId'] = $request->application_type;
         }
+
         if (isset($request->keyword)) {
-            $applicantNameCondition = " us.name LIKE :applicantName";
-            $appNoCondition = "CONCAT(CONCAT(fo.prefix,'-'),LPAD(a.id, " . $fillZero . ", '0')) LIKE :applicationNo";
-            $keywordCondition = " AND (" . $appNoCondition . " OR " . $applicantNameCondition . ")";
+            $likeApplicantName = " us.name like :applicantName";
+            $likeApplicationNo = "concat(concat(fo.prefix,'-'),lpad(a.id, " . $fillZero . ", '0')) like :applicationNo";
+
+            $conditions['keyword'] = " and (" . $likeApplicationNo . " or " . $likeApplicantName . ")";
             $params['applicantName'] = '%' . $request->keyword . '%';
             $params['applicationNo'] = '%' . $request->keyword . '%';
         }
@@ -58,63 +61,7 @@ class ApprovalController extends Controller
         $sortable = Common::getSortable($request, $sortColNames, 2, 1, true);
 
         // get data
-        $sql = "SELECT
-                 CONCAT(CONCAT(fo.prefix,'-'),LPAD(a.id, " . $fillZero . ", '0')) AS application_no
-                ,a.id             AS application_id
-                ,a.current_step
-                ,a.status
-                ,a.subsequent
-                ,a.created_at     AS apply_date
-                ,a.form_id
-                ,s.group_id
-                ,s.id             AS step_id
-                ,s.approver_id
-                ,s.step_type
-                ,s.approver_type
-                ,u.name           AS approver_name
-                ,us.name          AS applicant_name
-                ,fo.name          AS application_type
-                ,CASE WHEN s.approver_type = :approver_type_to_1
-                    THEN (
-                        SELECT  us.name
-                        FROM    steps
-                                INNER JOIN users us
-                                    ON us.id = approver_id
-                        WHERE   flow_id = s.flow_id
-                        AND     approver_type = s.approver_type
-                        AND     (
-                                    (step_type = s.step_type AND s.order <> :completed1 AND select_order = s.order)
-                                    OR
-                                    (s.order = :completed2 AND (step_type = (s.step_type + 1) AND select_order = 0))
-                                )
-                    ) ELSE (
-                        SELECT  us.name
-                        FROM    steps
-                                INNER JOIN users us
-                                    ON us.id = steps.approver_id
-                        WHERE	steps.group_id = a.group_id
-                        AND 	steps.select_order = a.status
-                        AND 	steps.step_type = a.current_step
-                        AND 	steps.approver_type = 0
-                        AND 	a.status BETWEEN 0 AND 98
-                    ) END  AS next_approver
-            FROM    applications a
-                    INNER JOIN forms fo 
-                        ON a.form_id = fo.id " . $formIdCondition . "
-                    INNER JOIN groups g
-                        ON a.group_id = g.id
-                    INNER JOIN steps s
-                        ON s.group_id = g.id 
-                        AND ((s.approver_type = :approver_type_to_2 AND a.status = s.select_order) OR (s.approver_type = :approver_type_cc))
-                        AND s.step_type = a.current_step
-                    INNER JOIN users u
-                        ON u.id = s.approver_id
-                        AND s.approver_id = :userId
-                    INNER JOIN users us
-                        ON us.id = a.created_by
-            WHERE   a.status BETWEEN 0 AND 98 " . $keywordCondition . "
-            ORDER BY " . $sortable->order_by;
-
+        $sql = $this->getSqlIndex($conditions, $sortable, $fillZero);
         $data = DB::select($sql, $params);
 
         // paginator
@@ -135,17 +82,17 @@ class ApprovalController extends Controller
     public function show(Request $request, $id)
     {
         // get detail of application
-        $app = DB::table('applications')
+        $application = DB::table('applications')
             ->select(
                 'applications.*',
-                DB::raw("CONCAT(CONCAT(forms.prefix,'-'),LPAD(applications.id, " . config('const.num_fillzero') . ", '0')) AS application_no"),
+                DB::raw("concat(concat(forms.prefix,'-'),lpad(applications.id, " . config('const.num_fillzero') . ", '0')) as application_no"),
                 'steps.flow_id',
                 'steps.approver_id',
                 'steps.approver_type',
                 'steps.order',
                 'steps.select_order',
-                DB::raw('us.name AS applicant'),
-                DB::raw('(SELECT MAX(step_type) FROM steps WHERE flow_id = flows.id) AS step_count')
+                DB::raw('us.name as applicant'),
+                DB::raw('(select MAX(step_type) from steps where flow_id = flows.id) as step_count')
             )
             ->join('groups', 'groups.id', 'applications.group_id')
             ->leftJoin('steps', function ($join) {
@@ -156,13 +103,13 @@ class ApprovalController extends Controller
             ->leftJoin('flows', 'flows.id', '=', 'steps.flow_id')
             ->join('forms', 'forms.id', '=', 'applications.form_id')
             ->leftJoin('users', 'users.id', '=', 'steps.approver_id')
-            ->join('users AS us', 'us.id', '=', 'applications.created_by')
+            ->join('users as us', 'us.id', '=', 'applications.created_by')
             ->where('applications.id', '=', $id)
             ->where('applications.status', '<>', config('const.application.status.draft'))
             ->where('applications.deleted_at', '=', null)
             ->first();
 
-        if (empty($app)) {
+        if (empty($application)) {
             return $this->redirectError(__('msg.application.error.404'));
         }
 
@@ -177,17 +124,24 @@ class ApprovalController extends Controller
                     ->where('applications.deleted_at', '=', null)
                     ->limit(1);
             })
-            ->where('steps.step_type', $app->current_step)
+            ->where('steps.step_type', $application->current_step)
             ->get()
             ->toArray();
 
         // check logged user has permission to access
         $approvers = Arr::pluck($approvers, 'approver_id');
-        if (!in_array(Auth::user()->id, $approvers) && $app->created_by !== Auth::user()->id) {
+        if (!in_array(Auth::user()->id, $approvers) && $application->created_by !== Auth::user()->id) {
             return $this->redirectError(__('msg.application.error.403'));
         }
 
-        return view('approval.show', compact('app'));
+        // get comments of application
+        $comments = DB::table('history_approval')
+            ->where('application_id', $application->id)
+            ->orderBy('updated_at')
+            ->get()
+            ->toArray();
+
+        return view('approval.show', compact('application', 'comments'));
     }
 
     public function update(Request $request, $id)
@@ -199,15 +153,16 @@ class ApprovalController extends Controller
 
             //check logged user has approval permission
             if (!$user->approval) {
-                return Common::redirectRouteWithAlertFail('user.approval.index');
+                return $this->redirectError(__('msg.application.error.403'));
             }
 
-            // get application detail
+            // select columns
             $cols = [
                 'applications.*',
                 'steps.flow_id',
                 'steps.approver_id',
                 'steps.approver_type',
+                'steps.step_type',
                 'steps.order',
                 'steps.select_order',
                 'groups.applicant_id        as group_applicant_id',
@@ -217,11 +172,13 @@ class ApprovalController extends Controller
                 'users.department_id        as approver_department',
                 DB::raw('(select max(step_type) from steps where flow_id = flows.id) as step_count')
             ];
+
             $isLeaveApplication = $inputs['form_id'] == config('const.form.leave');
             if (!$isLeaveApplication) {
                 $cols[] = 'budgets.budget_type';
             }
-            $appDetail = DB::table('applications')
+
+            $application = DB::table('applications')
                 ->select($cols)
                 ->join('groups', 'groups.id', 'applications.group_id')
                 ->when(!$isLeaveApplication, function ($query) {
@@ -236,48 +193,49 @@ class ApprovalController extends Controller
                 ->join('users', 'users.id', '=', 'steps.approver_id')
                 ->where('applications.id', '=', $id)
                 ->where('applications.deleted_at', '=', null)
-                // ->whereRaw('applications.status between 0 and 98')
                 ->first();
 
             // not found application
-            if (empty($appDetail)) {
+            if (empty($application)) {
                 return $this->redirectError(__('msg.application.error.404'));
             }
             // check available status application
-            if ($appDetail->status < 0 || $appDetail->status > 98) {
-                // return Common::redirectBackWithAlertFail('Thao tac khong hop le doi voi don nay.')->with('inputs', $inputs);
+            if ($application->status < 0 || $application->status > 98) {
                 return $this->redirectError(__('msg.application.error.unvalid_action'));
             }
             // check available next approval
-            if ($appDetail->approver_id != $user->id) {
-                // return Common::redirectBackWithAlertFail('Ban khong co quyen de thao tac')->with('inputs', $inputs);
+            if ($application->approver_id != $user->id) {
                 return $this->redirectError(__('msg.application.error.403'));
+            }
+            // check application has modified before approve
+            if ($application->updated_at !== $inputs['last_updated_at']) {
+                return $this->redirectError(__('msg.application.error.review_before_approve'));
             }
 
             DB::beginTransaction();
             try {
                 if (isset($request->approve)) {
-                    $data['status'] = $appDetail->order;
+                    $data['status'] = $application->order;
                     // make application next to step of approval flow (with Leave Application just have one step)
-                    if ($appDetail->order == config('const.application.status.completed')) {
-                        if ($appDetail->form_id == config('const.form.biz_trip') || $appDetail->form_id == config('const.form.entertainment')) {
+                    if ($application->order == config('const.application.status.completed')) {
+                        if ($application->form_id == config('const.form.biz_trip') || $application->form_id == config('const.form.entertainment')) {
                             // setup for next step ortherwise application is completed
-                            if ($appDetail->current_step < $appDetail->step_count) {
+                            if ($application->current_step < $application->step_count) {
                                 // get next step of approval flow
-                                $nextStep = $appDetail->current_step + 1;
+                                $nextStep = $application->current_step + 1;
                                 // get group for next step
                                 $group = DB::table('groups')
                                     ->select('groups.*')
-                                    ->join('budgets', function ($join) use ($nextStep, $appDetail) {
+                                    ->join('budgets', function ($join) use ($nextStep, $application) {
                                         $join->on('groups.budget_id', '=', 'budgets.id')
-                                            ->where('budgets.budget_type', '=', $appDetail->budget_type)
+                                            ->where('budgets.budget_type', '=', $application->budget_type)
                                             ->where('budgets.step_type', '=', $nextStep)
-                                            ->where('budgets.position', '=', $appDetail->budget_position)
+                                            ->where('budgets.position', '=', $application->budget_position)
                                             ->where('budgets.deleted_at', '=', null);
                                     })
                                     ->where([
-                                        'groups.applicant_id' => $appDetail->group_applicant_id,
-                                        'groups.budget_type_compare' => $appDetail->budget_type_compare,
+                                        'groups.applicant_id' => $application->group_applicant_id,
+                                        'groups.budget_type_compare' => $application->budget_type_compare,
                                         'groups.deleted_at' => null,
                                     ])
                                     ->first();
@@ -291,16 +249,16 @@ class ApprovalController extends Controller
                                 $data['group_id']       = $group->id;
                                 $data['status']         = config('const.application.status.applying');
                             }
-                        } elseif ($appDetail->form_id == config('const.form.leave')) {
+                        } elseif ($application->form_id == config('const.form.leave')) {
                             // for leave application
-                            $leave = Leave::where('application_id', $appDetail->id)->first();
+                            $leave = Leave::where('application_id', $application->id)->first();
                             if (!empty($leave)) {
                                 // if leave_code is AL or SL (with paid_type = AL)
                                 if (
                                     $leave->code_leave == config('const.code_leave.AL')
                                     || ($leave->code_leave == config('const.code_leave.SL') && $leave->paid_type == config('const.paid_type.AL'))
                                 ) {
-                                    $applicant = User::find($appDetail->created_by);
+                                    $applicant = User::find($application->created_by);
                                     if (!empty($applicant)) {
 
                                         //--------------------------------------------------
@@ -340,8 +298,10 @@ class ApprovalController extends Controller
                 // create approval history
                 $historyData = [
                     'approved_by'       => $user->id,
-                    'application_id'    => $user->id,
-                    'status'            => $data['status'],
+                    'application_id'    => $application->id,
+                    'status'            => $application->order,
+                    'step'              => $application->step_type,
+                    'comment'           => $data['comment'],
                     'created_at'        => Carbon::now(),
                     'updated_at'        => Carbon::now(),
                 ];
@@ -363,7 +323,67 @@ class ApprovalController extends Controller
         }
     }
 
-    public function redirectError($msg)
+    private function getSqlIndex($conditions, $sortable, $fillZero)
+    {
+        return "select
+                 concat(concat(fo.prefix,'-'),lpad(a.id, " . $fillZero . ", '0')) as application_no
+                ,a.id             as application_id
+                ,a.current_step
+                ,a.status
+                ,a.subsequent
+                ,a.created_at     as apply_date
+                ,a.form_id
+                ,s.group_id
+                ,s.id             as step_id
+                ,s.approver_id
+                ,s.step_type
+                ,s.approver_type
+                ,u.name           as approver_name
+                ,us.name          as applicant_name
+                ,fo.name          as application_type
+                ,case when s.approver_type = :approver_type_to_1
+                    then (
+                        select  us.name
+                        from    steps
+                                inner join users us
+                                    on us.id = approver_id
+                        where   flow_id = s.flow_id
+                        and     approver_type = s.approver_type
+                        and     (
+                                    (step_type = s.step_type and s.order <> :completed1 and select_order = s.order)
+                                    or
+                                    (s.order = :completed2 and (step_type = (s.step_type + 1) and select_order = 0))
+                                )
+                    ) else (
+                        select  us.name
+                        from    steps
+                                inner join users us
+                                    on us.id = steps.approver_id
+                        where	steps.group_id = a.group_id
+                        and 	steps.select_order = a.status
+                        and 	steps.step_type = a.current_step
+                        and 	steps.approver_type = 0
+                        and 	a.status between 0 and 98
+                    ) END  as next_approver
+            from    applications a
+                    inner join forms fo 
+                        on a.form_id = fo.id " . $conditions['form_id'] . "
+                    inner join groups g
+                        on a.group_id = g.id
+                    inner join steps s
+                        on s.group_id = g.id 
+                        and ((s.approver_type = :approver_type_to_2 and a.status = s.select_order) or (s.approver_type = :approver_type_cc))
+                        and s.step_type = a.current_step
+                    inner join users u
+                        on u.id = s.approver_id
+                        and s.approver_id = :userId
+                    inner join users us
+                        on us.id = a.created_by
+            where   a.status between 0 and 98 " . $conditions['keyword'] . "
+            order by " . $sortable->order_by;
+    }
+
+    private function redirectError($msg)
     {
         return Common::redirectRouteWithAlertFail('user.approval.index', $msg);
     }
