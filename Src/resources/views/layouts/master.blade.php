@@ -122,15 +122,21 @@
             <section class="content-header">
                 <div class="container-fluid">
                     <div class="row mb-2">
+                        {{-- form header --}}
                         <div class="col-sm-6">
                             <h1>@yield('content-header')</h1>
                         </div>
+                        {{-- breadcrumb --}}
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
-                                {{-- @if (!Route::current()->getName()'user.dashboard')) --}}
-                                    <li class="breadcrumb-item"><a href="">{{ __('label.menu.dashboard') }}</a></li>
-                                {{-- @endif --}}
-                                @yield('content-breadcrumb')
+                                @if (Route::currentRouteName() !== 'user.dashboard' && Route::currentRouteName() !== 'admin.dashboard')
+                                    @if (Gate::allows('admin-gate'))
+                                    <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">{{ __('label.menu.dashboard') }}</a></li>
+                                    @else
+                                    <li class="breadcrumb-item"><a href="{{ route('user.dashboard') }}">{{ __('label.menu.dashboard') }}</a></li>
+                                    @endif
+                                    @yield('content-breadcrumb')
+                                @endif
                             </ol>
                         </div>
                     </div>

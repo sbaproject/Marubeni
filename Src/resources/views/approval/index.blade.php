@@ -80,7 +80,7 @@
 <section class="content">
     {{-- <h4 class="mb-2" style="font-weight: 600;"><i class="nav-icon fas fa-file-alt" aria-hidden="true"
             style="margin-right: 5px;"></i>{{ Str::upper(__('label.pending_approval')) }}</h4> --}}
-    <div class="invoice p-3 mb-3">
+    <div class="invoice p-3">
         <div class="card-body p-0 card-list-items">
             <table class="table table-bordered table-hover">
                 <thead>

@@ -12,11 +12,21 @@
 <script src="js/admin/const_{{ config('app.locale') }}.js"></script>
 <script src="js/admin/flow-setting.js"></script>
 @endsection
+
+@section('content-header')
+{{ __('label.flow.approval_flow_setting') }}
+@endsection
+
+@section('content-breadcrumb')
+<li class="breadcrumb-item"><a href="{{ route('admin.flow.index') }}">{{ __('label.flow.approval_flow_list') }}</a></li>
+<li class="breadcrumb-item active">{{ __('label.flow.approval_flow_setting') }}</li>
+@endsection
+
 @section('content')
   <!-- Content Header (Page header) -->
-    <section class="content-header mb-2">
+    {{-- <section class="content-header mb-2">
       <h1>{{ __('label.flow.approval_flow_setting') }}</h1>
-  </section>
+  </section> --}}
 
   <!-- Main content -->
   <section class="content">

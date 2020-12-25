@@ -12,6 +12,16 @@
 <script src="js/admin/const_{{ config('app.locale') }}.js"></script>
 <script src="js/admin/flow-setting.js"></script>
 @endsection
+
+@section('content-header')
+{{ __('label.flow.approval_flow_setting') }}
+@endsection
+
+@section('content-breadcrumb')
+<li class="breadcrumb-item"><a href="{{ route('admin.flow.index') }}">{{ __('label.flow.approval_flow_list') }}</a></li>
+<li class="breadcrumb-item active">{{ __('label.flow.approval_flow_setting') }}</li>
+@endsection
+
 @section('content')
   @if(!$canEdit)
   <div class="alert alert-danger alert-dismissible fade show">
@@ -19,11 +29,6 @@
         <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   @endif
-  <!-- Content Header (Page header) -->
-    <section class="content-header mb-2">
-      <h1>{{ __('label.flow.approval_flow_setting') }}</h1>
-  </section>
-
   <!-- Main content -->
   <section class="content">
   <form id="frmFlowSetting" class="frm-flow-setting" name="frmFlowSetting" method="POST" action="{{ route('admin.flow.update', $flow->id) }}"> 

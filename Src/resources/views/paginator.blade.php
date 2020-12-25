@@ -97,7 +97,7 @@
 @else
 @if ($paginator->total() === 0)
 <div class="clearfix p-0 text-center pb-3">
-    <div class="pager-wrap">
+    <div class="pager-wrap" style="margin-top: 1rem">
         {{ __('msg.no_data') }}
     </div>
 </div>
