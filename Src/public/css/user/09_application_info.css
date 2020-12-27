@@ -54,5 +54,10 @@
 }
 .bt_border:hover{color: #ffffff;}
 .comment_area{
-    border:1px solid #3D3D3D;
+    /* border:1px solid #3D3D3D; */
+}
+
+.direct-chat-messages{
+    max-height: 250px;
+    height: auto;
 }

@@ -51,6 +51,8 @@ return [
     'application_info' => 'Thông tin đơn',
     'no_attached_file' => 'Không có tập tin đính kèm',
     'comment' => 'Chú thích',
+    'comments' => 'Chú thích',
+    'comment_here' => 'Nhập chú thích của bạn tại đây...',
     'applicant' => 'Người đề nghị',
     'confirming_title' => 'Xác nhận',
     'times' => 'Số lần',

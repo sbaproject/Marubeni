@@ -20,7 +20,7 @@
 
 @section('content')
 @php
-    $app_comment = Session::has('inputs') ? Session::get('inputs')['comment'] : (isset($application) ? $application->comment : null);
+    $app_comment = old('comment');
     $isAbleToAction = false;
     if($application->status >= config('const.application.status.applying') && $application->status < config('const.application.status.completed')){
         if($application->approver_id === Auth::user()->id
@@ -107,7 +107,7 @@
                     <!-- /.card-body -->
                     <form action="{{ route('user.approval.update', $application->id) }}" method="POST" class="mt-1">
                         @csrf
-                        <div class="row">
+                        <div class="row mt-3 mb-3">
                             <div class="col-12">
                                 <a href="{{ Common::getRoutePreviewApplication($application->id, $application->form_id) }}"
                                     class="btn btn-outline-secondary" target="_blank">
@@ -115,69 +115,42 @@
                                 </a>
                             </div>
                         </div>
-                        {{-- <div class="row wrap_comment">
-                            <div class="col-md-3 col-xl-2 ">
-                                <span class="comment_title">{{ __('label.comment') }}</span>
-                            </div>
-                            <div class="col-md-9 col-xl-10">
-                                <textarea class="form-control comment_area" id="app_comment" name="comment" rows="4" @if (!$isAbleToAction)
-                                    readonly @endif placeholder="{{ __('label.comment') }}">{{ $app_comment }}</textarea>
-                            </div>
-                        </div> --}}
 
                         {{-- comments --}}
                         <div class="col-md-12 p-0">
-                            <!-- DIRECT CHAT DANGER -->
-                            <div class="card card-danger direct-chat direct-chat-danger">
+                            <div class="invoice direct-chat direct-chat-danger mb-3">
                                 <div class="card-header">
-                                    <h3 class="card-title">{{ __('label.comment') }}</h3>
-                                    <div class="card-tools">
-                                        <span data-toggle="tooltip" title="{{ count($comments).' '. __('label.comment') }}"
-                                            class="badge">{{ count($comments) }}</span>
-                                        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
-                                        </button>
-                                    </div>
+                                    <h3 class="card-title">{{ __('label.comments') }}  ({{ count($comments) }})</h3>
                                 </div>
-                                <!-- /.card-header -->
                                 <div class="card-body">
-                                    <!-- Conversations are loaded here -->
                                     <div class="direct-chat-messages">
-                                        <!-- Message. Default to the left -->
-                                        <div class="direct-chat-msg">
-                                            <div class="direct-chat-infos clearfix">
-                                                <span class="direct-chat-name float-left">Alexander Pierce</span>
-                                                <span class="direct-chat-timestamp float-right">23 Jan 2:00 pm</span>
-                                            </div>
-                                            <!-- /.direct-chat-infos -->
-                                            {{-- <img class="direct-chat-img" src="" alt="Message User Image"> --}}
-                                            <!-- /.direct-chat-img -->
+                                        @if (count($comments) > 0)
                                             @foreach ($comments as $item)
-                                                <div class="direct-chat-text" style="white-space: pre-wrap;">
-                                                    {{ $item->comment }}
+                                            <div class="direct-chat-msg">
+                                                <div class="direct-chat-infos clearfix">
+                                                    <span class="direct-chat-name float-left">{{ $item->user_name }}</span>
+                                                    <span class="direct-chat-timestamp float-right">
+                                                        {{ \Carbon\Carbon::parse($item->created_at)->format('d/m/Y H:i:s') }}
+                                                    </span>
                                                 </div>
+                                                <img class="direct-chat-img" src="/images/no-photo.jpg" alt="Message User Image">
+                                                <div class="direct-chat-text">
+                                                    <div style="white-space: pre-wrap;">{{ $item->content }}</div>
+                                                </div>
+                                            </div>
                                             @endforeach
-                                            
-                                            <!-- /.direct-chat-text -->
-                                        </div>
-                                        <!-- /.direct-chat-msg -->
+                                        @else
+                                            <div class="text-center">{{ __('msg.no_comments') }}</div>
+                                        @endif
                                     </div>
-                                    <!--/.direct-chat-messages-->
                                 </div>
-                                <!-- /.card-body -->
                                 <div class="card-footer">
-                                    <form action="#" method="post">
                                         <div class="input-group">
                                             <textarea class="form-control comment_area" id="app_comment" name="comment" rows="4" @if(!$isAbleToAction) readonly @endif
-                                                placeholder="{{ __('label.comment') }}">{{ $app_comment }}</textarea>
-                                            {{-- <span class="input-group-append">
-                                                                    <button type="submit" class="btn btn-danger">Send</button>
-                                                                </span> --}}
+                                                placeholder="{{ __('label.comment_here') }}">{{ $app_comment }}</textarea>
                                         </div>
-                                    </form>
                                 </div>
-                                <!-- /.card-footer-->
                             </div>
-                            <!--/.direct-chat -->
                         </div>
 
                         <div class="row text-center">
@@ -204,8 +177,6 @@
                         <input type="hidden" name="form_id" value="{{ $application->form_id }}">
                         <input type="hidden" name="last_updated_at" value="{{ $application->updated_at }}">
                     </form>
-
-                    
                 </div>
             </div>
         </div>

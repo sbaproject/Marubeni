@@ -9,6 +9,7 @@ return [
     'save_fail' => 'Lưu dữ liệu không thành công !',
     'delete_fail' => 'Xóa dữ liệu không thành công !',
     'no_data' => 'Không tìm thấy dữ liệu.',
+    'no_comments' => 'Chưa có chú thích nào.',
     'sure_to_continue' => 'Bạn vẫn muốn tiếp tục xử lý ?',
     /**
      * Application

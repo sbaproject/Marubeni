@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Pagination\LengthAwarePaginator;
-use App\Exceptions\Entertainment\NotFoundFlowSettingException;
+use App\Exceptions\NotFoundFlowSettingException;
 
 class ApprovalController extends Controller
 {
@@ -136,8 +136,14 @@ class ApprovalController extends Controller
 
         // get comments of application
         $comments = DB::table('history_approval')
-            ->where('application_id', $application->id)
-            ->orderBy('updated_at')
+            ->select(
+                'history_approval.comment as content',
+                'history_approval.created_at',
+                'users.name as user_name'
+            )
+            ->join('users', 'users.id', 'history_approval.approved_by')
+            ->where('history_approval.application_id', $application->id)
+            ->orderBy('history_approval.updated_at')
             ->get()
             ->toArray();
 
@@ -316,7 +322,7 @@ class ApprovalController extends Controller
                 if ($ex instanceof NotFoundFlowSettingException) {
                     $msgErr = $ex->getMessage();
                 }
-                return Common::redirectBackWithAlertFail($msgErr);
+                return Common::redirectBackWithAlertFail($msgErr)->withInput();
             }
         } else {
             return $this->redirect404();

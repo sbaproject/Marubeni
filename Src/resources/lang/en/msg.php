@@ -9,6 +9,7 @@ return [
     'save_fail' => 'Data has not been saved !',
     'delete_fail' => 'Data has not been deleted !',
     'no_data' => 'No data found.',
+    'no_comments' => 'No comments.',
     'sure_to_continue' => 'Are you sure to continue ?',
     /**
      * Application

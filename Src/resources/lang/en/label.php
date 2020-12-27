@@ -56,6 +56,8 @@ return [
     'application_info' => 'Application Information',
     'no_attached_file' => 'No attached file',
     'comment' => 'Comment',
+    'comments' => 'Comments',
+    'comment_here' => 'Type your comment here...',
     'applicant' => 'Applicant',
     'confirming_title' => 'Confirm',
     'times' => 'Times',
