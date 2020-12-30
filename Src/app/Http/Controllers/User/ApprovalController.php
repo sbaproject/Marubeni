@@ -162,7 +162,7 @@ class ApprovalController extends Controller
                 return $this->redirectError(__('msg.application.error.403'));
             }
 
-            // select columns
+            // selection columns
             $cols = [
                 'applications.*',
                 'steps.flow_id',
@@ -313,14 +313,23 @@ class ApprovalController extends Controller
                 ];
                 DB::table('history_approval')->insert($historyData);
 
+                // commit db
                 DB::commit();
 
                 return Common::redirectRouteWithAlertSuccess('user.approval.index', __('msg.application.success.approve_ok'));
             } catch (Exception $ex) {
+                
+                // rollback db
                 DB::rollBack();
-                $msgErr = null;
+
+                // log stacktrace
+                report($ex);
+
+                // get msg error to show to client
                 if ($ex instanceof NotFoundFlowSettingException) {
                     $msgErr = $ex->getMessage();
+                } else {
+                    $msgErr = __('msg.save_fail');
                 }
                 return Common::redirectBackWithAlertFail($msgErr)->withInput();
             }

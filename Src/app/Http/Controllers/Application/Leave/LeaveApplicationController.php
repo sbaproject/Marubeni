@@ -83,7 +83,7 @@ class LeaveApplicationController extends ApplicationController
         return Validator::make($inputs, $rules, [], $customAttributes);
     }
 
-    public function saveApplicationDetail($request, &$inputs, $application, $applicationId, $loggedUser)
+    public function saveApplicationDetail($request, &$inputs, $application, $applicationId, $loginUser)
     {
         /////////////////////////////////////////////
         // Leaves table
@@ -102,13 +102,13 @@ class LeaveApplicationController extends ApplicationController
             'maternity_to'      => $inputs['maternity_to'],
             'days_use'          => $inputs['days_use'],
             'times_use'         => $inputs['times_use'],
-            'updated_by'        => $loggedUser->id,
+            'updated_by'        => $loginUser->id,
             'updated_at'        => Carbon::now(),
         ];
 
         if (empty($application)) {
             $leaveData['application_id'] = $applicationId;
-            $leaveData['created_by'] = $loggedUser->id;
+            $leaveData['created_by'] = $loginUser->id;
             $leaveData['created_at'] = Carbon::now();
         }
 

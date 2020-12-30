@@ -100,7 +100,7 @@ class EntertainmentController extends ApplicationController
         return Validator::make($inputs, $rules, [], $customAttributes);
     }
 
-    public function saveApplicationDetail($request, &$inputs, $application, $applicationId, $loggedUser)
+    public function saveApplicationDetail($request, &$inputs, $application, $applicationId, $loginUser)
     {
         /////////////////////////////////////////////
         // Entertainments table
@@ -121,13 +121,13 @@ class EntertainmentController extends ApplicationController
             'entertainment_person'          => $inputs['entertainment_person'],
             'est_amount'                    => $inputs['est_amount'],
             'reason_budget_over'            => $inputs['reason_budget_over'],
-            'updated_by'                    => $loggedUser->id,
+            'updated_by'                    => $loginUser->id,
             'updated_at'                    => Carbon::now(),
         ];
 
         if (empty($application)) {
             $etData['application_id'] = $applicationId;
-            $etData['created_by'] = $loggedUser->id;
+            $etData['created_by'] = $loginUser->id;
             $etData['created_at'] = Carbon::now();
 
             $etId = DB::table('entertaiments')->insertGetId($etData);

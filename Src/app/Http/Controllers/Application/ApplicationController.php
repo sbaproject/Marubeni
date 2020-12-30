@@ -9,6 +9,7 @@ use App\Libs\Common;
 use App\Models\Application;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -17,6 +18,12 @@ use App\Exceptions\NotFoundFlowSettingException;
 
 class ApplicationController extends Controller
 {
+    // channel logging
+    protected const LOG_CHANNEL = 'application';
+
+    // flag logging
+    protected const LOG_FLG = 'post_application';
+
     // type of application
     protected $formType;
 
@@ -111,6 +118,8 @@ class ApplicationController extends Controller
         // get inputs
         $inputs = $this->getInputs($request);
 
+        // dd($inputs);
+
         // check post method
         if (isset($inputs['apply']) || isset($inputs['draft']) || isset($inputs['pdf'])) {
             // export pdf
@@ -140,7 +149,7 @@ class ApplicationController extends Controller
             return redirect()->back()->with('inputs', $inputs)->withErrors($validator);
         }
 
-        // save db
+        // save data
         $msgErr = $this->doSaveData($request, $inputs, $application);
         if (!empty($msgErr)) {
             return Common::redirectBackWithAlertFail($msgErr)->with('inputs', $inputs);
@@ -162,7 +171,7 @@ class ApplicationController extends Controller
         }
     }
 
-    private function doSaveData($request, &$inputs, $app = null)
+    private function doSaveData($request, &$inputs, $application = null)
     {
         $msgErr = '';
 
@@ -173,16 +182,21 @@ class ApplicationController extends Controller
             $user = Auth::user();
 
             // Applications table
-            $applicationId = $this->saveApplicationMaster($request, $inputs, $app, $user);
+            $applicationId = $this->saveApplicationMaster($request, $inputs, $application, $user);
 
             // Application Detail table
-            $this->saveApplicationDetail($request, $inputs, $app, $applicationId, $user);
+            $this->saveApplicationDetail($request, $inputs, $application, $applicationId, $user);
 
             // Commit DB
             DB::commit();
         } catch (Exception $ex) {
+
             DB::rollBack();
             unset($inputs['input_file']);
+
+            // log stacktrace
+            report($ex);
+
             if ($ex instanceof NotFoundFlowSettingException) {
                 $msgErr = $ex->getMessage();
             } else {
@@ -252,11 +266,11 @@ class ApplicationController extends Controller
         return $applicationId ?? $app->id;
     }
 
-    private function checkValidApproverOfApplication($request, $application, $loggedUser)
+    private function checkValidApproverOfApplication($request, $application, $loginUser)
     {
         $approver = DB::table('steps')
             ->select('steps.approver_id')
-            ->where('steps.flow_id', function ($query) use ($request, $loggedUser) {
+            ->where('steps.flow_id', function ($query) use ($request, $loginUser) {
                 $query->select('steps.flow_id')
                     ->from('applications')
                     ->join(
@@ -264,7 +278,7 @@ class ApplicationController extends Controller
                         'steps.group_id',
                         'applications.group_id'
                     )
-                    ->where('steps.approver_id', '=', $loggedUser->id)
+                    ->where('steps.approver_id', '=', $loginUser->id)
                     ->where('applications.id', $request->id)
                     ->where('applications.deleted_at', '=', null)
                     ->limit(1);
@@ -354,7 +368,7 @@ class ApplicationController extends Controller
         return $group;
     }
 
-    private function uploadAttachedFile($request, $inputs, $application, $loggedUser)
+    private function uploadAttachedFile($request, $inputs, $application, $loginUser)
     {
         // delete old file
         if (!empty($application)) {
@@ -374,7 +388,7 @@ class ApplicationController extends Controller
         if ($request->file('input_file')) {
             $extension = '.' . $request->file('input_file')->extension();
             // $fileName = time() . $user->id . '_' . $request->file('input_file')->getClientOriginalName();
-            $fileName = time() . $loggedUser->id . $extension;
+            $fileName = time() . $loginUser->id . $extension;
             $filePath = $request->file('input_file')->storeAs('uploads/application/', $fileName);
         }
 
@@ -387,13 +401,13 @@ class ApplicationController extends Controller
 
         $this->checkEmptyApplication($application);
 
-        $loggedUser = Auth::user();
+        $loginUser = Auth::user();
         $previewFlg = true;
 
         // check logged user has permission to access
         // if logged user is not owner of application and also not approval user(TO or CC) and also not admin role
-        if ($application->created_by !== $loggedUser->id && Gate::denies('admin-gate')) {
-            if (!$this->checkValidApproverOfApplication($request, $application, $loggedUser)) {
+        if ($application->created_by !== $loginUser->id && Gate::denies('admin-gate')) {
+            if (!$this->checkValidApproverOfApplication($request, $application, $loginUser)) {
                 abort(403);
             }
         }
@@ -417,11 +431,11 @@ class ApplicationController extends Controller
     private function pdf($request, $inputs, $application = null)
     {
         if (!empty($application)) {
-            $loggedUser = Auth::user();
+            $loginUser = Auth::user();
             // check logged user has permission to access
             // if logged user is not owner of application and also not approval user(TO or CC) and also not admin role
-            if ($application->created_by !== $loggedUser->id && Gate::denies('admin-gate')) {
-                if (!$this->checkValidApproverOfApplication($request, $application, $loggedUser)) {
+            if ($application->created_by !== $loginUser->id && Gate::denies('admin-gate')) {
+                if (!$this->checkValidApproverOfApplication($request, $application, $loginUser)) {
                     abort(403);
                 }
             }
@@ -435,8 +449,8 @@ class ApplicationController extends Controller
 
         // preview pdf
         $fileName = "{$this->formTypeName}.pdf";
-        return $pdf->stream($fileName);
+        // return $pdf->stream($fileName);
         // download
-        // return $pdf->download($fileName);
+        return $pdf->download($fileName);
     }
 }

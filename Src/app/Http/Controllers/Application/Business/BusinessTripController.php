@@ -73,7 +73,7 @@ class BusinesstripController extends ApplicationController
         return Validator::make($inputs, $rules, [], $customAttributes);
     }
 
-    public function saveApplicationDetail($request, &$inputs, $application, $applicationId, $loggedUser)
+    public function saveApplicationDetail($request, &$inputs, $application, $applicationId, $loginUser)
     {
         /////////////////////////////////////////////
         // Businesstrips table
@@ -87,13 +87,13 @@ class BusinesstripController extends ApplicationController
             'accompany'     => $inputs['accompany'],
             'borne_by'      => $inputs['borne_by'],
             'comment'       => $inputs['comment'],
-            'updated_by'    => $loggedUser->id,
+            'updated_by'    => $loginUser->id,
             'updated_at'    => Carbon::now(),
         ];
 
         if (empty($application)) {
             $bizData['application_id']  = $applicationId;
-            $bizData['created_by']      = $loggedUser->id;
+            $bizData['created_by']      = $loginUser->id;
             $bizData['created_at']      = Carbon::now();
 
             $bizId = DB::table('businesstrips')->insertGetId($bizData);

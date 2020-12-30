@@ -12,11 +12,17 @@
 // Show loading icon while page is loading
 //=======================================
 
+var showLoadingFlg = true;
+
 $("#popup-loading").modal('show');
 $(window).on('load', function () {
 	$("#popup-loading").modal('hide');
 });
 $(window).on('beforeunload', function () {
+	if (!showLoadingFlg) {
+		showLoadingFlg = true;
+		return;
+	}
 	if (!($("#popup-confirm").data('bs.modal') || {})._isShown) {
 		$("#popup-loading").modal('show');
 	}

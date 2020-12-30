@@ -141,4 +141,22 @@ $(document).ready(function () {
             $('#btnAdd').removeClass('d-none');
         }
     }
+
+    //=======================================
+    // Print PDF
+    //=======================================
+
+    $('[name="pdf"]').on('click', function (e) {
+
+        e.preventDefault();
+
+        // not show loading icon
+        showLoadingFlg = false;
+
+        let form = e.currentTarget.form;
+        let buttonName = $(this).attr('name');
+        let hidSubmit = '<input type="hidden" name="' + buttonName + '" value="' + buttonName + '" />';
+        $(form).append(hidSubmit);
+        form.submit();
+    });
 });

@@ -5,6 +5,7 @@ namespace App\Libs;
 use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use function PHPUnit\Framework\isEmpty;
