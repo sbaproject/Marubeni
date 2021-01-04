@@ -146,7 +146,7 @@ $(document).ready(function () {
     // Print PDF
     //=======================================
 
-    $('[name="pdf"]').on('click', function (e) {
+    $('#btnPdf').on('click', function (e) {
 
         e.preventDefault();
 
@@ -154,9 +154,11 @@ $(document).ready(function () {
         showLoadingFlg = false;
 
         let form = e.currentTarget.form;
-        let buttonName = $(this).attr('name');
+        let buttonName = $(this).val();
         let hidSubmit = '<input type="hidden" name="' + buttonName + '" value="' + buttonName + '" />';
+        
         $(form).append(hidSubmit);
         form.submit();
+        $('[name="pdf"]').remove();
     });
 });

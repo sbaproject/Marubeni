@@ -118,8 +118,6 @@ class ApplicationController extends Controller
         // get inputs
         $inputs = $this->getInputs($request);
 
-        // dd($inputs);
-
         // check post method
         if (isset($inputs['apply']) || isset($inputs['draft']) || isset($inputs['pdf'])) {
             // export pdf
