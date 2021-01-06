@@ -8,10 +8,12 @@ use Illuminate\Support\Facades\Validator;
 
 class MediaController extends Controller
 {
-    public function test(){
+    public function test()
+    {
         return view('media.test');
     }
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         // $path = storage_path('/uploads/tmps');
 
         // if (!file_exists($path)) {
@@ -19,13 +21,16 @@ class MediaController extends Controller
         // }
 
         $rules = array(
-            'file' => 'image|max:50',
+            'file' => 'mimes:image,pdf,zip|max:50',
         );
 
-        $validation = Validator::make($request->input(), $rules);
+        $validation = Validator::make($request->all(), $rules);
 
         if ($validation->fails()) {
-            return Response::make($validation->errors->first(), 400);
+            return response()->json([
+                'status'=> 400,
+                'msg' => $validation->errors()->first(),
+            ]);
         }
 
         $file = $request->file('file');
@@ -37,6 +42,8 @@ class MediaController extends Controller
         $file->storeAs('uploads/tmp/', $name);
 
         return response()->json([
+            'status'        => 200,
+            'msg'           => 'success',
             'name'          => $name,
             'original_name' => $file->getClientOriginalName(),
         ]);

@@ -38,48 +38,97 @@ test media
 <script>
     var uploadedDocumentMap = {};
 
-    Dropzone.options.documentDropzone = {
-    url: '{{ route('media.store') }}',
-    maxFilesize: 1, // MB
+  var myDropzone = new Dropzone("#document-dropzone", 
+    {
+    url: "{{ route('media.store') }}",
+    maxFilesize: 23, // MB
     maxFiles: 3,
-    acceptedFiles: 'image/*,pdf',
+    // acceptedFiles: 'image/*',
     //============translate============//
     dictFileTooBig: "{{ __('msg.dropzone.dictFileTooBig') }}",
     //============translate============//
     addRemoveLinks: true,
     headers: {
-      'X-CSRF-TOKEN': "{{ csrf_token() }}"
+        'X-CSRF-TOKEN': "{{ csrf_token() }}"
     },
     success: function (file, response) {
-      $('form').append('<input type="hidden" name="document[]" value="' + response.name + '">')
-      uploadedDocumentMap[file.name] = response.name
-    },
-    error: function (file, response) {
-        console.log(response);
+        if(response.status != 200) {
+            myDropzone.removeFile(file);
+            return;
+        }
+        $('form').append('<input type="hidden" name="document[]" value="' + response.name + '">')
+            uploadedDocumentMap[file.name] = response.name
+        },
+    error: function (file, rs) {
+        myDropzone.removeFile(file);
     },
     removedfile: function (file) {
-      file.previewElement.remove()
-      var name = ''
-      if (typeof file.file_name !== 'undefined') {
-        name = file.file_name
-      } else {
-        name = uploadedDocumentMap[file.name]
-      }
-      $('form').find('input[name="document[]"][value="' + name + '"]').remove()
+        file.previewElement.remove();
+        var name = '';
+        if (typeof file.file_name !== 'undefined') {
+            name = file.file_name;
+        } else {
+            name = uploadedDocumentMap[file.name];
+        }
+        $('form').find('input[name="document[]"][value="' + name + '"]').remove();
     },
     // init: function () {
-    //   @if(isset($project) && $project->document)
-    //     var files =
-    //       {!! json_encode($project->document) !!}
-    //     for (var i in files) {
-    //       var file = files[i]
-    //       this.options.addedfile.call(this, file)
-    //       file.previewElement.classList.add('dz-complete')
-    //       $('form').append('<input type="hidden" name="document[]" value="' + file.file_name + '">')
-    //     }
-    //   @endif
+    // @if(isset($project) && $project->document)
+    // var files =
+    // {!! json_encode($project->document) !!}
+    // for (var i in files) {
+    // var file = files[i]
+    // this.options.addedfile.call(this, file)
+    // file.previewElement.classList.add('dz-complete')
+    // $('form').append('<input type="hidden" name="document[]" value="' + file.file_name + '">')
     // }
-  }
+    // @endif
+    // }
+    }
+  );
+  //   Dropzone.options.documentDropzone = {
+  //   url: "{{ route('media.store') }}",
+  //   maxFilesize: 23, // MB
+  //   maxFiles: 3,
+  //   // acceptedFiles: 'image/*',
+  //   //============translate============//
+  //   dictFileTooBig: "{{ __('msg.dropzone.dictFileTooBig') }}",
+  //   //============translate============//
+  //   addRemoveLinks: true,
+  //   headers: {
+  //     'X-CSRF-TOKEN': "{{ csrf_token() }}"
+  //   },
+  //   success: function (file, response) {
+  //     $('form').append('<input type="hidden" name="document[]" value="' + response.name + '">')
+  //     uploadedDocumentMap[file.name] = response.name
+  //   },
+  //   error: function (file, rs) {
+  //     console.log(rs);
+  //     file.previewElement.remove();
+  //   },
+  //   removedfile: function (file) {
+  //     file.previewElement.remove();
+  //     var name = '';
+  //     if (typeof file.file_name !== 'undefined') {
+  //       name = file.file_name;
+  //     } else {
+  //       name = uploadedDocumentMap[file.name];
+  //     }
+  //     $('form').find('input[name="document[]"][value="' + name + '"]').remove();
+  //   },
+  //   // init: function () {
+  //   //   @if(isset($project) && $project->document)
+  //   //     var files =
+  //   //       {!! json_encode($project->document) !!}
+  //   //     for (var i in files) {
+  //   //       var file = files[i]
+  //   //       this.options.addedfile.call(this, file)
+  //   //       file.previewElement.classList.add('dz-complete')
+  //   //       $('form').append('<input type="hidden" name="document[]" value="' + file.file_name + '">')
+  //   //     }
+  //   //   @endif
+  //   // }
+  // }
 </script>
 
 @endsection
