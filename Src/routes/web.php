@@ -25,6 +25,7 @@ use App\Http\Controllers\Application\FormListController;
 use App\Http\Controllers\Application\Business\BusinessTripController;
 use App\Http\Controllers\Application\Leave\LeaveApplicationController;
 use App\Http\Controllers\Application\Entertainment\EntertainmentController;
+use App\Http\Controllers\MediaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -185,4 +186,10 @@ Route::middleware('auth')->group(function () {
     // Change pass
     Route::get('/changepass', [UserChangePassController::class, 'show'])->name('changepass.show');
     Route::post('/changepass', [UserChangePassController::class, 'update'])->name('changepass.update');
+
+    /**----------------------------------------*
+     * Media Routes
+     *-----------------------------------------*/
+    Route::get('/media/test', [MediaController::class, 'test'])->name('media.test');
+    Route::post('/media', [MediaController::class, 'store'])->name('media.store');
 });

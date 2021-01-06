@@ -36,4 +36,11 @@ return [
         '403' => 'Bạn không đủ quyền để truy cập trang.',
         'go_home' => 'Về trang chủ',
     ],
+
+    /**
+     * Dropzone
+     */
+    'dropzone' => [
+        'dictFileTooBig' => 'Kích cỡ tập tin hiện tại({{filesize}}MB) vượt quá giới hạn là {{maxFilesize}}MB.',
+    ]
 ];
