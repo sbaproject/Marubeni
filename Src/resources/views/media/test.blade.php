@@ -40,7 +40,7 @@ test media
 
   var myDropzone = new Dropzone("#document-dropzone", 
     {
-    url: "{{ route('media.store') }}",
+    url: "{{ route('media.store.tmp') }}",
     maxFilesize: 23, // MB
     maxFiles: 3,
     // acceptedFiles: 'image/*',
@@ -57,10 +57,11 @@ test media
             return;
         }
         $('form').append('<input type="hidden" name="document[]" value="' + response.name + '">')
-            uploadedDocumentMap[file.name] = response.name
+            uploadedDocumentMap[file.name] = response.name;
         },
     error: function (file, rs) {
-        myDropzone.removeFile(file);
+        console.log(rs);
+        // myDropzone.removeFile(file);
     },
     removedfile: function (file) {
         file.previewElement.remove();
@@ -87,7 +88,7 @@ test media
     }
   );
   //   Dropzone.options.documentDropzone = {
-  //   url: "{{ route('media.store') }}",
+  //   url: "{{ route('media.store.tmp') }}",
   //   maxFilesize: 23, // MB
   //   maxFiles: 3,
   //   // acceptedFiles: 'image/*',

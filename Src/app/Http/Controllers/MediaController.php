@@ -12,7 +12,7 @@ class MediaController extends Controller
     {
         return view('media.test');
     }
-    public function store(Request $request)
+    public function storeTmp(Request $request)
     {
         // $path = storage_path('/uploads/tmps');
 
@@ -21,7 +21,7 @@ class MediaController extends Controller
         // }
 
         $rules = array(
-            'file' => 'mimes:image,pdf,zip|max:50',
+            'file' => config('const.rules.attached_file'),
         );
 
         $validation = Validator::make($request->all(), $rules);

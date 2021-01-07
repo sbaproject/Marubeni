@@ -191,5 +191,5 @@ Route::middleware('auth')->group(function () {
      * Media Routes
      *-----------------------------------------*/
     Route::get('/media/test', [MediaController::class, 'test'])->name('media.test');
-    Route::post('/media', [MediaController::class, 'store'])->name('media.store');
+    Route::post('/media/tmp', [MediaController::class, 'storeTmp'])->name('media.store.tmp');
 });
