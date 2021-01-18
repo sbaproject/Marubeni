@@ -41,7 +41,7 @@ test media
   var myDropzone = new Dropzone("#document-dropzone", 
     {
     url: "{{ route('media.store.tmp') }}",
-    maxFilesize: 23, // MB
+    maxFilesize: 20, // MB
     maxFiles: 3,
     // acceptedFiles: 'image/*',
     //============translate============//
@@ -56,13 +56,27 @@ test media
             myDropzone.removeFile(file);
             return;
         }
-        $('form').append('<input type="hidden" name="document[]" value="' + response.name + '">')
+        $('form').append('<input type="hidden" name="document[]" value="' + response.name + '">');
             uploadedDocumentMap[file.name] = response.name;
-        },
-    error: function (file, rs) {
-        console.log(rs);
-        // myDropzone.removeFile(file);
     },
+    error: function (file, msg, xhr) {
+        // console.log(rs);
+        // myDropzone.removeFile(file);
+        // myDropzone.options.addedfile.call(this, file);
+        file.previewElement.classList.add('dz-error');
+        if(xhr === undefined){
+            $(file.previewElement).find('.dz-error-message').text(msg);
+        } else {
+            $(file.previewElement).find('.dz-error-message').text(msg.message);
+        }
+    },
+    // failed:function(file,message,xhr){
+    // let response = xhr.response;
+    // let parse = JSON.parse(response, (key, value)=>{
+    // return value;
+    // });
+    // $('.dz-error-message span').text(parse.message);
+    // },
     removedfile: function (file) {
         file.previewElement.remove();
         var name = '';
