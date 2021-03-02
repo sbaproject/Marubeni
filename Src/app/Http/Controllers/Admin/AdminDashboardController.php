@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Libs\Common;
+use Illuminate\Support\Facades\Cache;
 
 class AdminDashboardController extends Controller
 {
@@ -67,18 +68,41 @@ class AdminDashboardController extends Controller
         $sortable = Common::getSortable($request, $sortColNames, 0, 0, true);
 
         //Get Applications By Condition
-        $list_application = $this->list_application($sta, $end, $stepStr, $stepEnd, $str_date, $end_date, $sortable);
+
+        $list_application = Cache::remember('list_application', 60 * 2, function () use ($sta, $end, $stepStr, $stepEnd, $str_date, $end_date, $sortable) {
+            return $this->list_application($sta, $end, $stepStr, $stepEnd, $str_date, $end_date, $sortable);
+        });
 
         //Count Applications By Condition
-        $count_applying  = $this->list_application_count(0, 98, 1, 1, $str_date, $end_date)->count();
+        $count_applying = Cache::remember('count_applying', 60 * 2, function () use ($str_date, $end_date) {
+            return
+                $this->list_application_count(0, 98, 1, 1, $str_date, $end_date)->count();
+        });
 
-        $count_approval  = $this->list_application_count(0, 98, 2, 2, $str_date, $end_date)->count();
+        $list_application_count = Cache::remember('list_application_count', 60 * 2, function () use ($str_date, $end_date) {
+            return
+                $this->list_application_count(0, 98, 1, 1, $str_date, $end_date)->count();
+        });
 
-        $count_declined  = $this->list_application_count(-1, -1, 1, 2, $str_date, $end_date)->count();
+        $count_approval = Cache::remember('count_approval', 60 * 2, function () use ($str_date, $end_date) {
+            return
+                $this->list_application_count(0, 98, 2, 2, $str_date, $end_date)->count();
+        });
 
-        $count_reject  = $this->list_application_count(-2, -2, 1, 2, $str_date, $end_date)->count();
+        $count_declined = Cache::remember('count_declined', 60 * 2, function () use ($str_date, $end_date) {
+            return
+                $this->list_application_count(-1, -1, 1, 2, $str_date, $end_date)->count();
+        });
 
-        $count_completed  = $this->list_application_count(99, 99, 1, 2, $str_date, $end_date)->count();
+        $count_reject = Cache::remember('count_reject', 60 * 2, function () use ($str_date, $end_date) {
+            return
+                $this->list_application_count(-2, -2, 1, 2, $str_date, $end_date)->count();
+        });
+
+        $count_completed = Cache::remember('count_completed', 60 * 2, function () use ($str_date, $end_date) {
+            return
+                $this->list_application_count(99, 99, 1, 2, $str_date, $end_date)->count();
+        });
 
         return view('admin.dashboard.index', compact('list_application', 'count_applying', 'count_approval', 'count_declined', 'count_reject', 'count_completed', 'str_date', 'end_date', 'intstatus', 'sortable'));
     }
