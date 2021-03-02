@@ -53,7 +53,9 @@ test media
     },
     success: function (file, response) {
         if(response.status != 200) {
-            myDropzone.removeFile(file);
+            // myDropzone.removeFile(file);
+            file.previewElement.classList.add('dz-error');
+            $(file.previewElement).find('.dz-error-message').text(response.msg);
             return;
         }
         $('form').append('<input type="hidden" name="document[]" value="' + response.name + '">');
