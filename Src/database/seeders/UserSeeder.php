@@ -74,7 +74,7 @@ class UserSeeder extends Seeder
             'updated_by' => $firstId
         ]);
 
-        for ($i = 3; $i < 100; $i++) {
+        for ($i = 3; $i < 2000; $i++) {
             $role = Arr::random(config('const.role'));
             $approval = $role == 1 ? config('const.approval.off') : Arr::random(config('const.approval'));
             DB::table('users')->insert([
@@ -90,7 +90,8 @@ class UserSeeder extends Seeder
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
                 'created_by' => $firstId,
-                'updated_by' => $firstId
+                'updated_by' => $firstId,
+                'idx' => $i
             ]);
         }
     }

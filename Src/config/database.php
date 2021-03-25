@@ -123,7 +123,7 @@ return [
 
         'options' => [
             'cluster' => env('REDIS_CLUSTER', 'redis'),
-            'prefix' => env('REDIS_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_').'_database_'),
+            // 'prefix' => env('REDIS_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_').'_database_'),
         ],
 
         'default' => [
@@ -140,10 +140,11 @@ return [
             // 'password' => env('REDIS_PASSWORD', null),
             // 'port' => env('REDIS_PORT', '6379'),
             // 'database' => env('REDIS_CACHE_DB', '1'),
-            'scheme'   => 'unix',
-            'path'     => '/home/resazipc/redis/redis.sock',
-            // 'host'     => '45.252.251.10',
-            // 'port'     => 6379,
+            // 'scheme'   => 'unix',
+            // 'scheme'   => 'tcp',
+            // 'path'     => '/home/resazipc/redis/redis.sock',
+            'host'     => '192.168.2.133',
+            'port'     => 6379,
             'database' => 1
         ],
 

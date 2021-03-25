@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Libs\Common;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Libs\Common;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Redis;
 
 class AdminDashboardController extends Controller
 {
@@ -103,6 +104,9 @@ class AdminDashboardController extends Controller
             return
                 $this->list_application_count(99, 99, 1, 2, $str_date, $end_date)->count();
         });
+
+        $redis = Redis::connection('cache');
+        $redis->set('key_c', 789);
 
         return view('admin.dashboard.index', compact('list_application', 'count_applying', 'count_approval', 'count_declined', 'count_reject', 'count_completed', 'str_date', 'end_date', 'intstatus', 'sortable'));
     }
