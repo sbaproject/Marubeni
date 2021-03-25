@@ -46,9 +46,15 @@ class Handler extends ExceptionHandler
         if($this->isHttpException($e)){
             switch ($e->getStatusCode()) {
                 case 404:
+                    if(!empty($e->getMessage())){
+                        return redirect()->route('404')->with('msg-abort',$e->getMessage());
+                    }
                     return redirect()->route('404');
                     break;
                 case 403:
+                    if (!empty($e->getMessage())) {
+                        return redirect()->route('403')->with('msg-abort', $e->getMessage());
+                    }
                     return redirect()->route('403');
                     break;
             }

@@ -63,6 +63,8 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-        'checkip' => \App\Http\Middleware\CheckIp::class
+        // 'checkip' => \App\Http\Middleware\CheckIp::class,
+        'justdesktop' => \App\Http\Middleware\TrustDesktop::class,
+        'just_desktop_and_mobile_edge_browser' => \App\Http\Middleware\TrustDesktopOrMobileIsMSEdgeBrowser::class,
     ];
 }

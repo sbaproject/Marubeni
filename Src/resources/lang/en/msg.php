@@ -36,5 +36,6 @@ return [
         '404' => 'Page not found.',
         '403' => 'You do not have permission to access this action.',
         'go_home' => 'Go to home page',
+        'only_desktop' => 'Allows desktop device only ! Your device is mobile.',
     ],
 ];
