@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use Illuminate\Session\TokenMismatchException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -43,12 +44,24 @@ class Handler extends ExceptionHandler
             return redirect()->route('login');
         }
 
+        // method is not supported for this route
+        if ($e instanceof MethodNotAllowedHttpException) {
+            return redirect()->route('login');
+        } 
+
+        // 404 - 403
         if($this->isHttpException($e)){
             switch ($e->getStatusCode()) {
                 case 404:
+                    if(!empty($e->getMessage())){
+                        return redirect()->route('404')->with('msg-abort',$e->getMessage());
+                    }
                     return redirect()->route('404');
                     break;
                 case 403:
+                    if (!empty($e->getMessage())) {
+                        return redirect()->route('403')->with('msg-abort', $e->getMessage());
+                    }
                     return redirect()->route('403');
                     break;
             }

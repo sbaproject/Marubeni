@@ -158,8 +158,10 @@ class ApprovalController extends Controller
             $inputs = $request->input();
 
             //check logged user has approval permission
-            if (!$user->approval) {
-                return $this->redirectError(__('msg.application.error.403'));
+            if (isset($request->approve) || isset($request->reject)){
+                if (!$user->approval) {
+                    return $this->redirectError(__('msg.application.error.403'));
+                }
             }
 
             // selection columns

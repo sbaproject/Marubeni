@@ -35,5 +35,6 @@ return [
         '404' => 'Chúng tôi không tìm thấy trang mà bạn yêu cầu.',
         '403' => 'Bạn không đủ quyền để truy cập trang.',
         'go_home' => 'Về trang chủ',
+        'only_desktop' => 'Chỉ chấp nhận thiết bị desktop! Bạn đang sử dụng mobile để truy cập.',
     ],
 ];

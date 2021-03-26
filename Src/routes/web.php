@@ -37,40 +37,44 @@ use App\Http\Controllers\Application\Entertainment\EntertainmentController;
 |
 */
 
+Route::get('/checkdv', function () {
+    return Common::detectEdgeBrowser() . $_SERVER['HTTP_USER_AGENT'];
+});
+
 Route::get('/', function () {
     return Common::redirectHome();
 });
 
-/**
- * All routes of authentication
- */
-Auth::routes([
-    'verify' => false, // turn off
-    'confirm' => false, // turn off
-    'register' => false
-]);
-
-// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// error page
+Route::get('404', [ErrorPageController::class, 'notfound'])->name('404');
+Route::get('403', [ErrorPageController::class, 'forbidden'])->name('403');
 
 // set locale
 Route::get('locale/{locale}', LocaleController::class)->where('locale', "(vi|en)")->name('locale');
 
-// error page
-Route::get('404',[ErrorPageController::class, 'notfound'])->name('404');
-Route::get('403', [ErrorPageController::class, 'forbidden'])->name('403');
+Route::middleware('just_desktop_and_mobile_edge_browser')->group(function(){
 
-/**
- * Authenticated user
- */
-Route::middleware('auth')->group(function () {
+    /**
+     * All routes of authentication
+     */
+    Auth::routes([
+        'verify' => false, // turn off
+        'confirm' => false, // turn off
+        'register' => false
+    ]);
 
-    /**----------------------------------------*
-     * Admin routes (for Admin role)
-     *-----------------------------------------*/
-    Route::get('checkip', [CheckipController::class, 'index'])->name('checkip');
-    Route::post('checkip', [CheckipController::class, 'confirm'])->name('confirm');
+    /**
+     * Authenticated user
+     */
+    Route::middleware('auth')->group(function () {
 
-    // Route::middleware('checkip')->group(function () {
+        /**----------------------------------------*
+         * Admin routes (for Admin role)
+         *-----------------------------------------*/
+        // Route::get('checkip', [CheckipController::class, 'index'])->name('checkip');
+        // Route::post('checkip', [CheckipController::class, 'confirm'])->name('confirm');
+
+        // Route::middleware('checkip')->group(function () {
 
         Route::middleware('can:admin-gate')->group(function () {
             Route::prefix('admin')->name('admin.')->group(function () {
@@ -128,61 +132,73 @@ Route::middleware('auth')->group(function () {
              * Only user role
              *-----------------------------------------*/
             // Route::middleware('can:user-gate')->group(function () {
-                // Dashboard
-                Route::get('dashboard', [UserDashboardController::class, 'index'])->name('dashboard');
-                // Confirm
-                Route::get('confirm', [ConfirmController::class, 'index'])->name('confirm');
+            // Dashboard
+            Route::get('dashboard', [UserDashboardController::class, 'index'])->name('dashboard');
+            // Confirm
+            Route::get('confirm', [ConfirmController::class, 'index'])->name('confirm');
+            // Status
+            Route::get('status/{status}', [UserStatusController::class, 'index'])->name('status');
+            // Create Company
+            Route::get('company/add', [UserCompanyController::class, 'create'])->name('company.create');
+            Route::post('company/add', [UserCompanyController::class, 'store'])->name('company.store');
+
+            // just desktop device to access
+            Route::middleware('justdesktop')->group(function () {
                 // DRAFT
                 Route::get('draft', [UserDraftController::class, 'index'])->name('draft');
                 Route::post('draft/{id}', [UserDraftController::class, 'delete'])->name('draft.delete');
-                // Status
-                Route::get('status/{status}', [UserStatusController::class, 'index'])->name('status');
-                // Create Company
-                Route::get('company/add', [UserCompanyController::class, 'create'])->name('company.create');
-                Route::post('company/add', [UserCompanyController::class, 'store'])->name('company.store');
                 // Form list
                 Route::get('form', [FormListController::class, 'index'])->name('form.index');
-                // Leave Application
-                Route::prefix('leave')->name('leave.')->group(function () {
+            });
+            // Leave Application
+            Route::prefix('leave')->name('leave.')->group(function () {
+                Route::middleware('justdesktop')->group(function () {
                     Route::get('add', [LeaveApplicationController::class, 'create'])->name('create');
                     Route::post('add', [LeaveApplicationController::class, 'store'])->name('store');
                     Route::get('edit/{id}', [LeaveApplicationController::class, 'show'])->name('show');
                     Route::post('edit/{id}', [LeaveApplicationController::class, 'update'])->name('update');
-                    Route::get('preview/{id}', [LeaveApplicationController::class, 'preview'])->name('preview');
-                    Route::post('preview/{id}', [LeaveApplicationController::class, 'previewPdf'])->name('preview.pdf');
                 });
-                // Business Trip Application
-                Route::prefix('business')->name('business.')->group(function () {
+                Route::get('preview/{id}', [LeaveApplicationController::class, 'preview'])->name('preview');
+                Route::post('preview/{id}', [LeaveApplicationController::class, 'previewPdf'])->name('preview.pdf');
+            });
+            // Business Trip Application
+            Route::prefix('business')->name('business.')->group(function () {
+                Route::middleware('justdesktop')->group(function () {
                     Route::get('add', [BusinessTripController::class, 'create'])->name('create');
                     Route::post('add', [BusinessTripController::class, 'store'])->name('store');
                     Route::get('edit/{id}', [BusinessTripController::class, 'show'])->name('show');
                     Route::post('edit/{id}', [BusinessTripController::class, 'update'])->name('update');
-                    Route::get('preview/{id}', [BusinessTripController::class, 'preview'])->name('preview');
-                    Route::post('preview/{id}', [BusinessTripController::class, 'previewPdf'])->name('preview.pdf');
                 });
-                // Entertainment Application
-                Route::prefix('entertainment')->name('entertainment.')->group(function () {
+                Route::get('preview/{id}', [BusinessTripController::class, 'preview'])->name('preview');
+                Route::post('preview/{id}', [BusinessTripController::class, 'previewPdf'])->name('preview.pdf');
+            });
+            // Entertainment Application
+            Route::prefix('entertainment')->name('entertainment.')->group(function () {
+                Route::middleware('justdesktop')->group(function () {
                     Route::get('add', [EntertainmentController::class, 'create'])->name('create');
                     Route::post('add', [EntertainmentController::class, 'store'])->name('store');
                     Route::get('edit/{id}', [EntertainmentController::class, 'show'])->name('show');
                     Route::post('edit/{id}', [EntertainmentController::class, 'update'])->name('update');
-                    Route::get('preview/{id}', [EntertainmentController::class, 'preview'])->name('preview');
-                    Route::post('preview/{id}', [EntertainmentController::class, 'previewPdf'])->name('preview.pdf');
                 });
-                // Approval
-                Route::prefix('approval')->name('approval.')->group(function() {
-                    Route::get('list', [ApprovalController::class, 'index'])->name('index');
-                    Route::get('detail/{id}', [ApprovalController::class, 'show'])->name('show');
-                    Route::post('detail/{id}', [ApprovalController::class, 'update'])->name('update');
-                });
+                Route::get('preview/{id}', [EntertainmentController::class, 'preview'])->name('preview');
+                Route::post('preview/{id}', [EntertainmentController::class, 'previewPdf'])->name('preview.pdf');
+            });
+
+            // Approval
+            Route::prefix('approval')->name('approval.')->group(function () {
+                Route::get('list', [ApprovalController::class, 'index'])->name('index');
+                Route::get('detail/{id}', [ApprovalController::class, 'show'])->name('show');
+                Route::post('detail/{id}', [ApprovalController::class, 'update'])->name('update');
+            });
             // });
         });
-    // });
+        // });
 
-    /**----------------------------------------*
-     * Common Routes
-     *-----------------------------------------*/
-    // Change pass
-    Route::get('/changepass', [UserChangePassController::class, 'show'])->name('changepass.show');
-    Route::post('/changepass', [UserChangePassController::class, 'update'])->name('changepass.update');
+        /**----------------------------------------*
+         * Common Routes
+         *-----------------------------------------*/
+        // Change pass
+        Route::get('/changepass', [UserChangePassController::class, 'show'])->name('changepass.show');
+        Route::post('/changepass', [UserChangePassController::class, 'update'])->name('changepass.update');
+    });
 });

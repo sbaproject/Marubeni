@@ -7,18 +7,20 @@
                 <p>{{ __('label.menu.dashboard') }}</p>
             </a>
         </li>
-        <li class="nav-item">
-            <a href="{{ route('user.form.index') }}" class="nav-link">
-                <i class="nav-icon fas fa-file-alt"></i>
-                <p>{{ __('label.menu.application') }}</p>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a href="{{ route('user.draft')}}" class="nav-link">
-                <i class="nav-icon fas fa-edit"></i>
-                <p>{{ __('label.menu.draft') }}</p>
-            </a>
-        </li>
+        @if (!Common::detectMobile())
+            <li class="nav-item">
+                <a href="{{ route('user.form.index') }}" class="nav-link">
+                    <i class="nav-icon fas fa-file-alt"></i>
+                    <p>{{ __('label.menu.application') }}</p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('user.draft')}}" class="nav-link">
+                    <i class="nav-icon fas fa-edit"></i>
+                    <p>{{ __('label.menu.draft') }}</p>
+                </a>
+            </li>
+        @endif
         <li class="nav-item has-treeview">
             <a href="" class="nav-link">
                 <!--<i class="nav-icon fas fa-list-alt"></i>-->
