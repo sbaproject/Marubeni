@@ -155,9 +155,9 @@ Route::middleware('just_desktop_and_mobile_edge_browser')->group(function(){
                 Route::middleware('justdesktop')->group(function () {
                     Route::get('add', [LeaveApplicationController::class, 'create'])->name('create');
                     Route::post('add', [LeaveApplicationController::class, 'store'])->name('store');
-                    Route::get('edit/{id}', [LeaveApplicationController::class, 'show'])->name('show');
-                    Route::post('edit/{id}', [LeaveApplicationController::class, 'update'])->name('update');
                 });
+                Route::get('edit/{id}', [LeaveApplicationController::class, 'show'])->name('show');
+                Route::post('edit/{id}', [LeaveApplicationController::class, 'update'])->name('update');
                 Route::get('preview/{id}', [LeaveApplicationController::class, 'preview'])->name('preview');
                 Route::post('preview/{id}', [LeaveApplicationController::class, 'previewPdf'])->name('preview.pdf');
             });
@@ -166,9 +166,9 @@ Route::middleware('just_desktop_and_mobile_edge_browser')->group(function(){
                 Route::middleware('justdesktop')->group(function () {
                     Route::get('add', [BusinessTripController::class, 'create'])->name('create');
                     Route::post('add', [BusinessTripController::class, 'store'])->name('store');
-                    Route::get('edit/{id}', [BusinessTripController::class, 'show'])->name('show');
-                    Route::post('edit/{id}', [BusinessTripController::class, 'update'])->name('update');
                 });
+                Route::get('edit/{id}', [BusinessTripController::class, 'show'])->name('show');
+                Route::post('edit/{id}', [BusinessTripController::class, 'update'])->name('update');
                 Route::get('preview/{id}', [BusinessTripController::class, 'preview'])->name('preview');
                 Route::post('preview/{id}', [BusinessTripController::class, 'previewPdf'])->name('preview.pdf');
             });
@@ -177,9 +177,9 @@ Route::middleware('just_desktop_and_mobile_edge_browser')->group(function(){
                 Route::middleware('justdesktop')->group(function () {
                     Route::get('add', [EntertainmentController::class, 'create'])->name('create');
                     Route::post('add', [EntertainmentController::class, 'store'])->name('store');
-                    Route::get('edit/{id}', [EntertainmentController::class, 'show'])->name('show');
-                    Route::post('edit/{id}', [EntertainmentController::class, 'update'])->name('update');
                 });
+                Route::get('edit/{id}', [EntertainmentController::class, 'show'])->name('show');
+                Route::post('edit/{id}', [EntertainmentController::class, 'update'])->name('update');
                 Route::get('preview/{id}', [EntertainmentController::class, 'preview'])->name('preview');
                 Route::post('preview/{id}', [EntertainmentController::class, 'previewPdf'])->name('preview.pdf');
             });

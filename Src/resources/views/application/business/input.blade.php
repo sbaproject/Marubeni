@@ -489,13 +489,13 @@
         <div class="text-center">
             @if (!$previewFlg)
                 <button type="button" name="apply" value="apply" class="btn bg-gradient-success btn-form" data-toggle="modal"
-                    data-target="#popup-confirm">
+                    data-target="#popup-confirm" @if(Common::detectMobile()) disabled @endif>
                     <i class="far fa-check-circle" style="margin-right: 5px;"></i>
                     {{ __('label.button.apply') }}
                 </button>
                 @if (!$inProgressFlg)
                     <button type="button" name="draft" value="draft" class="btn btn bg-gradient-info btn-form" data-toggle="modal"
-                        data-target="#popup-confirm">
+                        data-target="#popup-confirm" @if(Common::detectMobile()) disabled @endif>
                         <i class="nav-icon fas fa-edit" style="margin-right: 5px;"></i>
                         {{ __('label.button.draft') }}
                     </button>

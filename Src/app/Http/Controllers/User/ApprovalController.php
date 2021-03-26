@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\Leave;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
+use App\Models\HistoryApproval;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -76,7 +77,12 @@ class ApprovalController extends Controller
             ['path' => route('user.approval.index')]
         );
 
-        return view('approval.index', compact('data', 'inputs', 'sortable'));
+        $compacts = [
+            'data',
+            'inputs',
+            'sortable',
+        ];
+        return view('approval.index', compact($compacts));
     }
 
     public function show(Request $request, $id)
@@ -114,229 +120,224 @@ class ApprovalController extends Controller
         }
 
         // get list of approver (include TO & CC)
-        $approvers = DB::table('steps')
-            ->select('steps.approver_id')
-            ->where('steps.flow_id', function ($query) use ($id) {
-                $query->select('steps.flow_id')
-                    ->from('applications')
-                    ->join('steps', 'steps.group_id', 'applications.group_id')
-                    ->where('applications.id', $id)
-                    ->where('applications.deleted_at', '=', null)
-                    ->limit(1);
-            })
-            ->where('steps.step_type', $application->current_step)
-            ->get()
-            ->toArray();
+        $approvers = $this->getAvailableApprovers($id, $application->current_step);
 
         // check logged user has permission to access
-        $approvers = Arr::pluck($approvers, 'approver_id');
-        if (!in_array(Auth::user()->id, $approvers) && $application->created_by !== Auth::user()->id) {
+        $approverIds = Arr::pluck($approvers, 'approver_id');
+        if (!in_array(Auth::user()->id, $approverIds) && $application->created_by !== Auth::user()->id) {
             return $this->redirectError(__('msg.application.error.403'));
         }
 
-        // get comments of application
-        $comments = DB::table('history_approval')
-            ->select(
-                'history_approval.comment as content',
-                'history_approval.created_at',
-                'users.name as user_name'
-            )
-            ->join('users', 'users.id', 'history_approval.approved_by')
-            ->where('history_approval.application_id', $application->id)
-            ->orderBy('history_approval.updated_at')
-            ->get()
-            ->toArray();
+        // detect current logged user is TO or CC approve_type
+        $this->detectApproverType($application, $approvers, $flgUserTO, $flgUserCC);
 
-        return view('approval.show', compact('application', 'comments'));
+        // get comments of application
+        $comments = HistoryApproval::getApplicationComments($id);
+
+        $compacts = [
+            'application',
+            'approvers',
+            'flgUserTO',
+            'flgUserCC',
+            'comments',
+        ];
+        return view('approval.show', compact($compacts));
     }
 
     public function update(Request $request, $id)
     {
-        if (isset($request->approve) || isset($request->reject) || isset($request->declined)) {
+        if (!isset($request->approve) && !isset($request->reject) && !isset($request->declined)) {
+            abort(404);
+        }
 
-            $user = Auth::user();
-            $inputs = $request->input();
+        $user = Auth::user();
+        $inputs = $request->input();
 
-            //check logged user has approval permission
-            if (isset($request->approve) || isset($request->reject)){
-                if (!$user->approval) {
-                    return $this->redirectError(__('msg.application.error.403'));
-                }
+        //check logged user has approval permission
+        if (!$user->approval) {
+            return $this->redirectError(__('msg.application.error.403'));
+        }
+
+        // selection columns
+        $cols = [
+            'applications.*',
+            'steps.flow_id',
+            'steps.approver_id',
+            'steps.approver_type',
+            'steps.step_type',
+            'steps.order',
+            'steps.select_order',
+            'groups.applicant_id        as group_applicant_id',
+            'groups.budget_type_compare',
+            'users.role                 as approver_role',
+            'users.location             as approver_location',
+            'users.department_id        as approver_department',
+            DB::raw('(select max(step_type) from steps where flow_id = flows.id) as step_count')
+        ];
+
+        $isLeaveApplication = $inputs['form_id'] == config('const.form.leave');
+        if (!$isLeaveApplication) {
+            $cols[] = 'budgets.budget_type';
+        }
+
+        $application = DB::table('applications')
+        ->select($cols)
+            ->join('groups', 'groups.id', 'applications.group_id')
+            ->when(!$isLeaveApplication, function ($query) {
+                $query->join('budgets', 'budgets.id', 'groups.budget_id');
+            })
+            ->join('steps', function ($join) {
+                $join->on('steps.group_id', '=', 'groups.id')
+                ->whereRaw('steps.select_order = applications.status')
+                ->whereRaw('steps.step_type = applications.current_step');
+            })
+            ->join('flows', 'flows.id', '=', 'steps.flow_id')
+            ->join('users', 'users.id', '=', 'steps.approver_id')
+            ->where('applications.id', '=', $id)
+            ->where('applications.deleted_at', '=', null)
+            ->first();
+
+        // not found application
+        if (empty($application)) {
+            return $this->redirectError(__('msg.application.error.404'));
+        }
+        // check available status application
+        if ($application->status < 0 || $application->status > 98) {
+            return $this->redirectError(__('msg.application.error.unvalid_action'));
+        }
+        // check available approval for current user
+        // if logged user is approver TO (able to Approve|Decline|Reject)
+        if ($application->approver_id != $user->id) {
+            // approver CC able to DECLINE only.
+            if (isset($request->declined)){
+                $approvers = $this->getAvailableApprovers($id, $application->current_step);
+                $flgApproverCC = $this->isApproverCC($approvers);
             }
-
-            // selection columns
-            $cols = [
-                'applications.*',
-                'steps.flow_id',
-                'steps.approver_id',
-                'steps.approver_type',
-                'steps.step_type',
-                'steps.order',
-                'steps.select_order',
-                'groups.applicant_id        as group_applicant_id',
-                'groups.budget_type_compare',
-                'users.role                 as approver_role',
-                'users.location             as approver_location',
-                'users.department_id        as approver_department',
-                DB::raw('(select max(step_type) from steps where flow_id = flows.id) as step_count')
-            ];
-
-            $isLeaveApplication = $inputs['form_id'] == config('const.form.leave');
-            if (!$isLeaveApplication) {
-                $cols[] = 'budgets.budget_type';
-            }
-
-            $application = DB::table('applications')
-                ->select($cols)
-                ->join('groups', 'groups.id', 'applications.group_id')
-                ->when(!$isLeaveApplication, function ($query) {
-                    $query->join('budgets', 'budgets.id', 'groups.budget_id');
-                })
-                ->join('steps', function ($join) {
-                    $join->on('steps.group_id', '=', 'groups.id')
-                        ->whereRaw('steps.select_order = applications.status')
-                        ->whereRaw('steps.step_type = applications.current_step');
-                })
-                ->join('flows', 'flows.id', '=', 'steps.flow_id')
-                ->join('users', 'users.id', '=', 'steps.approver_id')
-                ->where('applications.id', '=', $id)
-                ->where('applications.deleted_at', '=', null)
-                ->first();
-
-            // not found application
-            if (empty($application)) {
-                return $this->redirectError(__('msg.application.error.404'));
-            }
-            // check available status application
-            if ($application->status < 0 || $application->status > 98) {
-                return $this->redirectError(__('msg.application.error.unvalid_action'));
-            }
-            // check available next approval
-            if ($application->approver_id != $user->id) {
+            if(!$flgApproverCC){
                 return $this->redirectError(__('msg.application.error.403'));
             }
-            // check application has modified before approve
-            if ($application->updated_at !== $inputs['last_updated_at']) {
-                return $this->redirectError(__('msg.application.error.review_before_approve'));
-            }
+        }
+        // check application has modified before approve
+        if ($application->updated_at !== $inputs['last_updated_at']) {
+            return $this->redirectError(__('msg.application.error.review_before_approve'));
+        }
 
-            DB::beginTransaction();
-            try {
-                if (isset($request->approve)) {
-                    $data['status'] = $application->order;
-                    // make application next to step of approval flow (with Leave Application just have one step)
-                    if ($application->order == config('const.application.status.completed')) {
-                        if ($application->form_id == config('const.form.biz_trip') || $application->form_id == config('const.form.entertainment')) {
-                            // setup for next step ortherwise application is completed
-                            if ($application->current_step < $application->step_count) {
-                                // get next step of approval flow
-                                $nextStep = $application->current_step + 1;
-                                // get group for next step
-                                $group = DB::table('groups')
-                                    ->select('groups.*')
-                                    ->join('budgets', function ($join) use ($nextStep, $application) {
-                                        $join->on('groups.budget_id', '=', 'budgets.id')
-                                            ->where('budgets.budget_type', '=', $application->budget_type)
-                                            ->where('budgets.step_type', '=', $nextStep)
-                                            ->where('budgets.position', '=', $application->budget_position)
-                                            ->where('budgets.deleted_at', '=', null);
-                                    })
-                                    ->where([
-                                        'groups.applicant_id' => $application->group_applicant_id,
-                                        'groups.budget_type_compare' => $application->budget_type_compare,
-                                        'groups.deleted_at' => null,
-                                    ])
-                                    ->first();
+        DB::beginTransaction();
+        try {
+            if (isset($request->approve)) {
+                $data['status'] = $application->order;
+                // make application next to step of approval flow (with Leave Application just have one step)
+                if ($application->order == config('const.application.status.completed')) {
+                    if ($application->form_id == config('const.form.biz_trip') || $application->form_id == config('const.form.entertainment')) {
+                        // setup for next step ortherwise application is completed
+                        if ($application->current_step < $application->step_count) {
+                            // get next step of approval flow
+                            $nextStep = $application->current_step + 1;
+                            // get group for next step
+                            $group = DB::table('groups')
+                                ->select('groups.*')
+                                ->join('budgets', function ($join) use ($nextStep, $application) {
+                                    $join->on('groups.budget_id', '=', 'budgets.id')
+                                    ->where('budgets.budget_type', '=', $application->budget_type)
+                                        ->where('budgets.step_type', '=', $nextStep)
+                                        ->where('budgets.position', '=', $application->budget_position)
+                                        ->where('budgets.deleted_at', '=', null);
+                                })
+                                ->where([
+                                    'groups.applicant_id' => $application->group_applicant_id,
+                                    'groups.budget_type_compare' => $application->budget_type_compare,
+                                    'groups.deleted_at' => null,
+                                ])
+                                ->first();
 
-                                // not found available flow setting
-                                if (empty($group)) {
-                                    throw new NotFoundFlowSettingException();
-                                }
-
-                                $data['current_step']   = $nextStep;
-                                $data['group_id']       = $group->id;
-                                $data['status']         = config('const.application.status.applying');
+                            // not found available flow setting
+                            if (empty($group)) {
+                                throw new NotFoundFlowSettingException();
                             }
-                        } elseif ($application->form_id == config('const.form.leave')) {
-                            // for leave application
-                            $leave = Leave::where('application_id', $application->id)->first();
-                            if (!empty($leave)) {
-                                // if leave_code is AL or SL (with paid_type = AL)
-                                if (
-                                    $leave->code_leave == config('const.code_leave.AL')
-                                    || ($leave->code_leave == config('const.code_leave.SL') && $leave->paid_type == config('const.paid_type.AL'))
-                                ) {
-                                    $applicant = User::find($application->created_by);
-                                    if (!empty($applicant)) {
 
-                                        //--------------------------------------------------
-                                        // calculating total annual remaining time of applicant (only for annual leave)
-                                        //--------------------------------------------------
-                                        $dayUse = empty($leave->days_use) ? 0 : $leave->days_use;
-                                        $timeUse = empty($leave->times_use) ? 0 : $leave->times_use;
-                                        // working hours per day
-                                        $workingHourPerDay = config('const.working_hours_per_day');
-                                        // get total remaining time (by hours)
-                                        $remainingHours = ($applicant->leave_remaining_days * $workingHourPerDay) + $applicant->leave_remaining_time;
-                                        // total hours take this time
-                                        $totalHourUse = $remainingHours - (($dayUse * $workingHourPerDay) + $timeUse);
-                                        // update annual leave remaining time of applicant
-                                        $applicant->leave_remaining_days = intval($totalHourUse / $workingHourPerDay);
-                                        $applicant->leave_remaining_time = (($totalHourUse % $workingHourPerDay) / $workingHourPerDay) * $workingHourPerDay;
+                            $data['current_step']   = $nextStep;
+                            $data['group_id']       = $group->id;
+                            $data['status']         = config('const.application.status.applying');
+                        }
+                    } elseif ($application->form_id == config('const.form.leave')) {
+                        // for leave application
+                        $leave = Leave::where('application_id', $application->id)->first();
+                        if (!empty($leave)) {
+                            // if leave_code is AL or SL (with paid_type = AL)
+                            if (
+                                $leave->code_leave == config('const.code_leave.AL')
+                                || ($leave->code_leave == config('const.code_leave.SL') && $leave->paid_type == config('const.paid_type.AL'))
+                            ) {
+                                $applicant = User::find($application->created_by);
+                                if (!empty($applicant)) {
 
-                                        $applicant->updated_by = $user->id;
-                                        $applicant->save();
-                                    }
+                                    //--------------------------------------------------
+                                    // calculating total annual remaining time of applicant (only for annual leave)
+                                    //--------------------------------------------------
+                                    $dayUse = empty($leave->days_use) ? 0 : $leave->days_use;
+                                    $timeUse = empty($leave->times_use) ? 0 : $leave->times_use;
+                                    // working hours per day
+                                    $workingHourPerDay = config('const.working_hours_per_day');
+                                    // get total remaining time (by hours)
+                                    $remainingHours = ($applicant->leave_remaining_days * $workingHourPerDay) + $applicant->leave_remaining_time;
+                                    // total hours take this time
+                                    $totalHourUse = $remainingHours - (($dayUse * $workingHourPerDay) + $timeUse);
+                                    // update annual leave remaining time of applicant
+                                    $applicant->leave_remaining_days = intval($totalHourUse / $workingHourPerDay);
+                                    $applicant->leave_remaining_time = (($totalHourUse % $workingHourPerDay) / $workingHourPerDay) * $workingHourPerDay;
+
+                                    $applicant->updated_by = $user->id;
+                                    $applicant->save();
                                 }
                             }
                         }
                     }
-                } elseif (isset($request->reject)) {
-                    $data['status'] = config('const.application.status.reject');
-                } elseif (isset($request->declined)) {
-                    $data['status'] = config('const.application.status.declined');
                 }
-
-                $data['comment']    = $inputs['comment'];
-                $data['updated_by'] = $user->id;
-                $data['updated_at'] = Carbon::now();
-
-                DB::table('applications')->where('id', $id)->update($data);
-
-                // create approval history
-                $historyData = [
-                    'approved_by'       => $user->id,
-                    'application_id'    => $application->id,
-                    'status'            => $application->order,
-                    'step'              => $application->step_type,
-                    'comment'           => $data['comment'],
-                    'created_at'        => Carbon::now(),
-                    'updated_at'        => Carbon::now(),
-                ];
-                DB::table('history_approval')->insert($historyData);
-
-                // commit db
-                DB::commit();
-
-                return Common::redirectRouteWithAlertSuccess('user.approval.index', __('msg.application.success.approve_ok'));
-            } catch (Exception $ex) {
-                
-                // rollback db
-                DB::rollBack();
-
-                // log stacktrace
-                report($ex);
-
-                // get msg error to show to client
-                if ($ex instanceof NotFoundFlowSettingException) {
-                    $msgErr = $ex->getMessage();
-                } else {
-                    $msgErr = __('msg.save_fail');
-                }
-                return Common::redirectBackWithAlertFail($msgErr)->withInput();
+            } elseif (isset($request->reject)) {
+                $data['status'] = config('const.application.status.reject');
+                $application->order = $data['status'];
+            } elseif (isset($request->declined)) {
+                $data['status'] = config('const.application.status.declined');
+                $application->order = $data['status'];
             }
-        } else {
-            return $this->redirect404();
+
+            $data['comment']    = $inputs['comment'];
+            $data['updated_by'] = $user->id;
+            $data['updated_at'] = Carbon::now();
+
+            DB::table('applications')->where('id', $id)->update($data);
+
+            // create approval history
+            $historyData = [
+                'approved_by'       => $user->id,
+                'application_id'    => $application->id,
+                'status'            => $application->order,
+                'step'              => $application->step_type,
+                'comment'           => $data['comment'],
+                'created_at'        => Carbon::now(),
+                'updated_at'        => Carbon::now(),
+            ];
+            DB::table('history_approval')->insert($historyData);
+
+            // commit db
+            DB::commit();
+
+            return Common::redirectRouteWithAlertSuccess('user.approval.index', __('msg.application.success.approve_ok'));
+        } catch (Exception $ex) {
+
+            // rollback db
+            DB::rollBack();
+
+            // log stacktrace
+            report($ex);
+
+            // get msg error to show to client
+            if ($ex instanceof NotFoundFlowSettingException) {
+                $msgErr = $ex->getMessage();
+            } else {
+                $msgErr = __('msg.save_fail');
+            }
+            return Common::redirectBackWithAlertFail($msgErr)->withInput();
         }
     }
 
@@ -398,6 +399,75 @@ class ApprovalController extends Controller
                         on us.id = a.created_by
             where   a.status between 0 and 98 " . $conditions['keyword'] . "
             order by " . $sortable->order_by;
+    }
+
+    /**
+     * Get list of approver (include TO & CC)
+     * @param int $applicationId : Appplication ID
+     * @param int $currentStep : Current step in approval flow of application
+     * @return \Illuminate\Support\Collection
+     */
+    private function getAvailableApprovers($applicationId, $currentStep){
+        $approvers = DB::table('steps')
+            ->select(
+                [
+                    'steps.approver_id',
+                    'steps.approver_type',
+                ]
+            )
+            ->where('steps.flow_id', function ($query) use ($applicationId) {
+                $query->select('steps.flow_id')
+                    ->from('applications')
+                    ->join('steps', 'steps.group_id', 'applications.group_id')
+                    ->where('applications.id', $applicationId)
+                    ->where('applications.deleted_at', '=', null)
+                    ->limit(1);
+            })
+            ->where('steps.step_type', $currentStep)
+            ->get()
+            ->toArray();
+        
+        return $approvers;
+    }
+
+    /**
+     * Detect if current logged user is approver CC
+     * @param array $approvers List of available approvers (including TO & CC)
+     * @return boolean True if is CC
+     */
+    private function isApproverCC($approvers){
+
+        $approverCCs = array_filter((array)$approvers, function ($element) {
+            return $element->approver_type == config('const.approver_type.cc');
+        });
+
+        $flgUserCC = in_array(Auth::user()->id, Arr::pluck($approverCCs, 'approver_id'));
+
+        return $flgUserCC;
+    }
+
+    /**
+     * Detect current logged user is TO or CC approve_type
+     * @param object $application Application
+     * @param array $approvers List of approvers (include TO & CC)
+     * @param boolean $flgUserTO Reference flg TO
+     * @param boolean $flgUserCC Reference flg CC
+     */
+    private function detectApproverType($application, $approvers, &$flgUserTO = false, &$flgUserCC = false){
+        if (
+            $application->status >= config('const.application.status.applying')
+            && $application->status < config('const.application.status.completed')
+            && $application->created_by !== Auth::user()->id
+        ) {
+            // available TO approver for this step
+            if ($application->approver_id === Auth::user()->id) {
+                $flgUserTO = true;
+            }
+            // available CC approver for this step
+            else {
+                $flgUserCC = $this->isApproverCC($approvers);
+            }
+        }
     }
 
     private function redirectError($msg)

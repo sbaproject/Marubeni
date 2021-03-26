@@ -19,17 +19,6 @@
 @endsection
 
 @section('content')
-@php
-    $app_comment = old('comment');
-    $isAbleToAction = false;
-    if($application->status >= config('const.application.status.applying') && $application->status < config('const.application.status.completed')){
-        if($application->approver_id === Auth::user()->id
-            && $application->approver_type === config('const.approver_type.to')
-            && $application->created_by !== Auth::user()->id) {
-            $isAbleToAction = true;
-        }
-    }
-@endphp
 <section class="content">
     <div class="container-fluid">
         <div class="row">
@@ -146,8 +135,9 @@
                                 </div>
                                 <div class="card-footer">
                                         <div class="input-group">
-                                            <textarea class="form-control comment_area" id="app_comment" name="comment" rows="4" @if(!$isAbleToAction) readonly @endif
-                                                placeholder="{{ __('label.comment_here') }}">{{ $app_comment }}</textarea>
+                                            <textarea class="form-control comment_area" id="app_comment" name="comment" rows="4"
+                                                @if(!$flgUserTO && !$flgUserCC) readonly @endif
+                                                placeholder="{{ __('label.comment_here') }}">{{ old('comment') }}</textarea>
                                         </div>
                                 </div>
                             </div>
@@ -155,7 +145,7 @@
 
                         <div class="row text-center">
                             <div class="col-12">
-                                @if ($isAbleToAction)
+                                @if ($flgUserTO)
                                 <button type="button" name="approve" value="approve" class="btn bg-gradient-success" data-toggle="modal"
                                     data-target="#popup-confirm">
                                     {{ __('label.button.approval') }}
@@ -164,10 +154,12 @@
                                     data-target="#popup-confirm">
                                     {{ __('label.button.reject') }}
                                 </button>
-                                <button type="button" name="declined" value="declined" class="btn bg-gradient-warning" data-toggle="modal"
-                                    data-target="#popup-confirm">
-                                    {{ __('label.button.declined') }}
-                                </button>
+                                @endif
+                                @if ($flgUserTO || $flgUserCC)
+                                    <button type="button" name="declined" value="declined" class="btn bg-gradient-warning" data-toggle="modal"
+                                        data-target="#popup-confirm">
+                                        {{ __('label.button.declined') }}
+                                    </button>
                                 @endif
                                 <a href="{{ route('user.approval.index') }}" class="btn bg-gradient-secondary">
                                     {{ __('label.button.cancel') }}
