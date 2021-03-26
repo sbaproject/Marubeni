@@ -324,6 +324,6 @@ class Common
 	 */
 	public static function detectEdgeBrowser(){
 		$user_agent = $_SERVER['HTTP_USER_AGENT'];
-		return preg_match('/Edge/i', $user_agent) || preg_match('/Edga/i', $user_agent);
+		return preg_match('/Edge/i', $user_agent) || preg_match('/Edga/i', $user_agent)  || preg_match('/Edgi/i', $user_agent);
 	}
 }
