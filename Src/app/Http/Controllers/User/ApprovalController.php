@@ -132,7 +132,7 @@ class ApprovalController extends Controller
         $this->detectApproverType($application, $approvers, $flgUserTO, $flgUserCC);
 
         // get comments of application
-        $comments = HistoryApproval::getApplicationComments($id);
+        $comments = HistoryApproval::getByApplicationId($id);
 
         $compacts = [
             'application',

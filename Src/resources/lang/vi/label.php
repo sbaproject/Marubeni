@@ -5,6 +5,7 @@
      */
 
 
+
 return [
 
     'button' => [
@@ -122,6 +123,15 @@ return [
         'employee_setting' => 'Danh Mục Nhân Viên',
         'budget_setting' => 'Ngân Sách',
         'approval_flow_setting' => 'Quy Trình Phê Duyệt',
+    ],
+    /**
+     * Approval acion
+     */
+    'approval_action' => [
+        'approval' => 'Duyệt',
+        'reject' => 'Khước từ',
+        'decline' => 'Trả về',
+        'complete' => 'Hoàn tất'
     ],
     /**
      * Application

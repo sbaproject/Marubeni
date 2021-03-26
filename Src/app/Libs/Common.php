@@ -311,6 +311,31 @@ class Common
 		return $statusBadgeHtml;
 	}
 
+	public static function generateBadgeByApprovalStatus($status, $step)
+	{
+
+		if ($status >= 0 && $status <= 98 && $step == config('const.application.step_type.application')) {
+			$statusName = __('label.approval_action.approval');
+			$statusBadgeCss = 'badge-success';
+		} elseif ($status == config('const.application.status.completed') && $step == config('const.application.step_type.settlement')) {
+			$statusName = __('label.approval_action.complete');
+			$statusBadgeCss = 'badge-primary';
+		} elseif ($status == config('const.application.status.declined')) {
+			$statusName = __('label.approval_action.decline');
+			$statusBadgeCss = 'badge-warning';
+		} elseif ($status == config('const.application.status.reject')) {
+			$statusName = __('label.approval_action.reject');
+			$statusBadgeCss = 'badge-danger';
+		} else {
+			$statusName = __('label.approval_action.approval');
+			$statusBadgeCss = 'badge-success';
+		}
+
+		$statusBadgeHtml = "<span class='badge {$statusBadgeCss}'>{$statusName}</span>";
+
+		return $statusBadgeHtml;
+	}
+
 	/**
 	 * Detect mobile device
 	 */
@@ -325,5 +350,12 @@ class Common
 	public static function detectEdgeBrowser(){
 		$user_agent = $_SERVER['HTTP_USER_AGENT'];
 		return preg_match('/Edge/i', $user_agent) || preg_match('/Edga/i', $user_agent)  || preg_match('/Edgi/i', $user_agent);
+	}
+
+	/**
+	 * Detect client is accsessing by mobile device (with MS Edge Browser only).
+	 */
+	public static function isMobileWithMSEdgeBrowser() {
+		return Common::detectMobile() && Common::detectEdgeBrowser();
 	}
 }

@@ -129,6 +129,15 @@ return [
         'approval_flow_setting' => 'Approval Flows',
     ],
     /**
+     * Approval acion
+     */
+    'approval_action' => [
+        'approval' => 'Approved',
+        'reject' => 'Rejected',
+        'decline' => 'Declined',
+        'complete' => 'Completed'
+    ],
+    /**
      * Application
      */
     'application' => [

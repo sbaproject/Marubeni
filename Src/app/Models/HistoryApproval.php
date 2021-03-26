@@ -18,11 +18,13 @@ class HistoryApproval extends Model
      * @param int $applicationId Application ID
      * @return \Illuminate\Support\Collection
      */
-    public static function getApplicationComments($applicationId)
+    public static function getByApplicationId($applicationId)
     {
         $cols = [
             'history_approval.comment as content',
             'history_approval.created_at',
+            'history_approval.status',
+            'history_approval.step',
             'users.name as user_name'
         ];
         return HistoryApproval::select($cols)

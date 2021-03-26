@@ -11,9 +11,9 @@
         @else
             <div>{{ __('msg.page_error.404') }}</div>
         @endif
-        <div>
+        {{-- <div>
             <a href="{{ Common::getHomeUrl() }}">{{ __('msg.page_error.go_home') }}</a>
-        </div>
+        </div> --}}
     </p>
 </div>
 @endsection

@@ -80,7 +80,7 @@ class ApplicationController extends Controller
         }
 
         // not allows editing
-        $previewFlg = !$this->checkEditableApplication($application) || isset($showWithAdminFlg);
+        $previewFlg = !$this->checkEditableApplication($application) || isset($showWithAdminFlg) || Common::detectMobile();
 
         // disabled draft button if application was applied.
         $inProgressFlg = $application->status != config('const.application.status.draft');

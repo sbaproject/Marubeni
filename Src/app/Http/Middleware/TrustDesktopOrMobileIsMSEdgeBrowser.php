@@ -18,7 +18,7 @@ class TrustDesktopOrMobileIsMSEdgeBrowser
     public function handle(Request $request, Closure $next)
     {
         // allow desktop or mobile with Edge browser.
-        if(Common::detectMobile() && !Common::detectEdgeBrowser()){
+        if(!Common::isMobileWithMSEdgeBrowser()){
             abort(404);
         }
         return $next($request);
