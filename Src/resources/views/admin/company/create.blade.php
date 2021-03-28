@@ -31,15 +31,15 @@
                                         <div class="com_block">{{ __('label.company.company_information') }}</div>
                                     </div>
                                     <div class="col-sm-10 info_block">
-                                        <div class="form-group row ">
-                                            <label for="com_id"
-                                                class="col-sm-2 col-form-label com_title">{{ __('label.company.company_id') }}</label>
-                                            <div class="col-sm-10">
-                                                <input maxlength="255" type="text" class="form-control" id="com_id"
-                                                    value="{{ $idcompany }}"
-                                                    placeholder="{{ __('label.company.company_id') }}" readonly>
+                                        @isset($idcompany)
+                                            <div class="form-group row ">
+                                                <label for="com_id" class="col-sm-2 col-form-label com_title">{{ __('label.company.company_id') }}</label>
+                                                <div class="col-sm-10">
+                                                    <input maxlength="255" type="text" class="form-control" id="com_id" value="{{ $idcompany }}"
+                                                        placeholder="{{ __('label.company.company_id') }}" readonly>
+                                                </div>
                                             </div>
-                                        </div>
+                                        @endisset
                                         <div class="form-group row ">
                                             <label for="name"
                                                 class="col-sm-2 col-form-label com_title">{{ __('label.company.company_name') }}</label>

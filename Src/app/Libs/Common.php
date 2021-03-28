@@ -5,10 +5,8 @@ namespace App\Libs;
 use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
-use function PHPUnit\Framework\isEmpty;
 use Illuminate\Support\Facades\Session;
 
 class Common
@@ -357,5 +355,19 @@ class Common
 	 */
 	public static function isMobileWithMSEdgeBrowser() {
 		return Common::detectMobile() && Common::detectEdgeBrowser();
+	}
+
+	/**
+	 * Get auto-increment id of table
+	 * @param string $schemaName Name of schema (database name)
+	 * @param string $tableName Table wants to get auto-increment id
+	 * @return int Auto-increment id
+	 */
+	public static function getAutoIncrementId($schemaName, $tableName){
+		return \Illuminate\Support\Facades\DB::table('INFORMATION_SCHEMA.TABLES')
+				->select('AUTO_INCREMENT')
+				->where('table_schema', $schemaName)
+				->where('table_name', $tableName)
+				->first()->AUTO_INCREMENT;
 	}
 }

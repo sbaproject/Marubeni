@@ -23,7 +23,10 @@ class UserListCotroller extends Controller
         $conditions = $request->input();
 
         // search conditions
-        $where = [];
+        $where = [
+            // not show super admin account
+            'users.super_admin_flg' => config('const.check.off'),
+        ];
         if (isset($conditions['location'])) {
             $where[] = ['users.location', '=', $conditions['location']];
         }
@@ -37,20 +40,20 @@ class UserListCotroller extends Controller
             $fillZero = config('const.num_fillzero');
             $where[] = [DB::raw("LPAD(users.id,{$fillZero}, '0')"), "LIKE",  '%' . $conditions['user_no'] . '%'];
         }
+        
 
         // sorting columns
         $sortableCols = [
-            'user_number'       => __('label._no_'),
+            'user_no'           => __('label._no_'),
             'department_name'   => __('validation.attributes.department'),
             'user_name'         => __('validation.attributes.user.name'),
         ];
         $sortable = Common::getSortable($request, $sortableCols, 0, 0, true);
 
         // selection columns
-        $userNo = "LPAD(users.id, " . config('const.num_fillzero') . ", '0')";
         $selectCols = [
             'users.id           as user_id',
-            DB::raw($userNo . " as user_number"),
+            'users.user_no',
             'users.name         as user_name',
             'departments.name   as department_name',
         ];
@@ -71,10 +74,17 @@ class UserListCotroller extends Controller
     public function delete(User $user)
     {
         $loggedUser = Auth::user();
+
         // do not delete your self
         if ($user->id === $loggedUser->id) {
             return Common::redirectBackWithAlertFail(__('msg.delete_fail'));
         }
+
+        // super admin account do not delete
+        if($user->super_admin_flg == config('const.check.on')){
+            return Common::redirectBackWithAlertFail(__('msg.delete_fail'));
+        }
+
         $user = User::find($user->id);
         $user->updated_by = $loggedUser->id;
         $user->deleted_at = Carbon::now();

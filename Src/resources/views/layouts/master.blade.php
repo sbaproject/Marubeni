@@ -80,7 +80,11 @@
                 @if (Auth::check())
                 <li class="nav-item user-panel-custom">
                     <div class="info">
-                        <a href="{{ Common::getHomeUrl() }}" class="text-name">{{ Auth::user()->name }}</a>
+                        @if (Gate::allows('admin-gate'))
+                            <a href="{{ route('admin.user.show', auth()->user()->id) }}" class="text-name">{{ Auth::user()->name }}</a>
+                        @else
+                            <span class="text-name">{{ Auth::user()->name }}</span>
+                        @endif
                         /
                         <a href="{{ route('logout') }}" class="text-name" onclick="event.preventDefault();
                                 document.getElementById('logout-form').submit();">

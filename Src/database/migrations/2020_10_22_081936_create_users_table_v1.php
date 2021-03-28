@@ -15,12 +15,13 @@ class CreateUsersTableV1 extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
+            $table->string('user_no', 10);
             $table->string('name');
             $table->string('email')->unique();
             // $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('phone')->nullable();
             $table->unsignedTinyInteger('role')->comment('99:Admin, 1:Staff , 2:GM, 3:PIC, 4:DGD, 5:GD');
+            $table->string('phone')->nullable();
             $table->unsignedTinyInteger('location')->default(0)->comment('0: Ha Noi, 1: Ho Chi minh');
             $table->unsignedInteger('department_id');
             $table->unsignedTinyInteger('approval')->comment('0: OFF, 1: ON');

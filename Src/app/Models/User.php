@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\ExtendModel;
 use Illuminate\Support\Arr;
 use Illuminate\Validation\Rule;
 use Illuminate\Notifications\Notifiable;
@@ -13,7 +14,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable, SoftDeletes;
+    use HasFactory, Notifiable, SoftDeletes, ExtendModel;
 
     /**
      * The attributes that are mass assignable.
@@ -25,6 +26,7 @@ class User extends Authenticatable
         'email',
         'password',
         'phone',
+        'super_admin_flg',
         'role',
         'department_id',
         'location',
@@ -54,12 +56,16 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    protected $appends = ['user_no'];
+    // protected $appends = ['user_no'];
 
-    public function getUserNoAttribute()
-    {
-        $user_no = str_pad($this->id, config('const.num_fillzero'), "0", STR_PAD_LEFT);
-        return $user_no;
+    // public function getUserNoAttribute()
+    // {
+    //     $user_no = str_pad($this->id, config('const.num_fillzero'), "0", STR_PAD_LEFT);
+    //     return $user_no;
+    // }
+
+    public static function makeUserNoByAutoIncrementId(){
+        return str_pad(static::getAutoIncrement(), config('const.num_fillzero'), "0", STR_PAD_LEFT);
     }
 
     public function department()

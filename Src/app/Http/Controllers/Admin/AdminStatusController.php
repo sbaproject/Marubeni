@@ -58,7 +58,14 @@ class AdminStatusController extends Controller
 
         //Get List
         $list_applications_status = DB::table('applications')
-            ->select(DB::raw("CONCAT(CONCAT(forms.prefix,'-'),LPAD(applications.`id`, " . $fillZero . ", '0')) AS application_no"), 'forms.name As nameapp', 'applications.created_at as datecreate', 'users.name as nameuser', 'applications.form_id', 'applications.id')
+            ->select(
+                'application_no',
+                'forms.name As nameapp',
+                'applications.created_at as datecreate',
+                'users.name as nameuser',
+                'applications.form_id',
+                'applications.id'
+            )
 
             //Join
             ->join('forms', 'applications.form_id', '=', 'forms.id')

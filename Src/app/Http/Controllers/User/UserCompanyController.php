@@ -18,9 +18,9 @@ class UserCompanyController extends Controller
 
     public function create()
     {
-        $idcompany = DB::table('INFORMATION_SCHEMA.TABLES')->select('AUTO_INCREMENT')->where('TABLE_NAME', 'companies')->get()[0]->AUTO_INCREMENT;
+        // $idcompany = DB::table('INFORMATION_SCHEMA.TABLES')->select('AUTO_INCREMENT')->where('TABLE_NAME', 'companies')->get()[0]->AUTO_INCREMENT;
 
-        return view('user.company.create', compact('idcompany'));
+        return view('user.company.create');
     }
 
     public function store(Request $request)
@@ -29,13 +29,13 @@ class UserCompanyController extends Controller
         $data = $request->input();
 
         $validator = Validator::make($data, [
-            'name'   => 'required|unique:companies',
-            'country'   => 'required',
-            'phone'   => 'required|numeric',
-            'address'   => 'required',
-            'attendants_name'   => 'required',
-            'attendants_department'   => 'required',
-            'email' => 'required|email:rfc,dns',
+            'name'                  => 'required|unique:companies',
+            'country'               => 'required',
+            'phone'                 => 'required|numeric',
+            'address'               => 'required',
+            'attendants_name'       => 'required',
+            'attendants_department' => 'required',
+            'email'                 => 'required|email:rfc,dns',
         ],);
 
         $validator->validate();

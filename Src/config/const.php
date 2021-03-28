@@ -55,7 +55,7 @@ return [
     /**
 	 * Employee NO : length of fillzero -- ex: 00001
 	 */
-    'num_fillzero' => 5,
+    'num_fillzero' => 10,
     /**
 	 * Code of Leave
 	 */

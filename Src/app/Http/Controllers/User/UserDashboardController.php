@@ -88,13 +88,12 @@ class UserDashboardController extends Controller
     //Get List Application by Condition
     private function list_application($sta, $end, $stepStr, $stepEnd, $str_date, $end_date, $sortable)
     {
-        $fillZero = config('const.num_fillzero');
         $userId = Auth::user()->id;
 
         //List
         $list_application =  DB::table('applications')
             ->select(
-                DB::raw("CONCAT(CONCAT(forms.prefix,'-'),LPAD(applications.`id`, " . $fillZero . ", '0')) AS application_no"),
+                'application_no',
                 'forms.name As form_name',
                 'applications.created_at As created_at',
                 DB::raw('(CASE WHEN (applications.status >= 0 AND applications.status <= 98 AND applications.current_step = 1) THEN "' . __('label.dashboard.applying') . '" ELSE (CASE WHEN (applications.status = "' . config('const.application.status.declined') . '") THEN "' . __('label.dashboard.declined') . '" ELSE (CASE WHEN (applications.status = "' . config('const.application.status.reject') . '") THEN "' . __('label.dashboard.reject') . '" ELSE (CASE WHEN (applications.status = "' . config('const.application.status.completed') . '") THEN "' . __('label.dashboard.completed') . '" ELSE ("' . __('label.dashboard.approval') . '") END ) END) END) END) AS status'),
@@ -127,12 +126,20 @@ class UserDashboardController extends Controller
     //Get Count
     private function list_application_count($sta, $end, $stepStr, $stepEnd, $str_date, $end_date)
     {
-        $fillZero = config('const.num_fillzero');
         $userId = Auth::user()->id;
 
         //List
         $list_application =  DB::table('applications')
-            ->select(DB::raw("CONCAT(CONCAT(forms.prefix,'-'),LPAD(applications.`id`, " . $fillZero . ", '0')) AS application_no"), 'forms.name As form_name', 'applications.created_at As created_at', 'applications.status As status', 'applications.current_step As current_step', 'applications.form_id As form_id', 'applications.id As id')
+        // ->select(DB::raw("CONCAT(CONCAT(forms.prefix,'-'),LPAD(applications.`id`, " . $fillZero . ", '0')) AS application_no"), 'forms.name As form_name', 'applications.created_at As created_at', 'applications.status As status', 'applications.current_step As current_step', 'applications.form_id As form_id', 'applications.id As id')
+            ->select(
+                'application_no',
+                'forms.name As form_name',
+                'applications.created_at As created_at',
+                'applications.status As status',
+                'applications.current_step As current_step',
+                'applications.form_id As form_id',
+                'applications.id As id'
+            )
 
             //Join
             ->join('forms', 'applications.form_id', '=', 'forms.id')

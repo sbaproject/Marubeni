@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\User;
+use App\Traits\ExtendModel;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -10,7 +11,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Application extends Model
 {
-    use HasFactory, Notifiable, SoftDeletes;
+    use HasFactory, Notifiable, SoftDeletes, ExtendModel;
 
     /**
      * The attributes that are mass assignable.
@@ -30,13 +31,18 @@ class Application extends Model
         'updated_at',
     ];
 
-    protected $appends = ['application_no'];
+    // protected $appends = ['application_no'];
 
-    public function getApplicationNoAttribute()
-    {
-        // $prefix = config('const.form_prefix.'.$this->form_id);
-        $application_no = $this->form->prefix.'-'.str_pad($this->id, config('const.num_fillzero'), "0", STR_PAD_LEFT);
-        return $application_no;
+    // public function getApplicationNoAttribute()
+    // {
+    //     // $prefix = config('const.form_prefix.'.$this->form_id);
+    //     $application_no = $this->form->prefix.'-'.str_pad($this->id, config('const.num_fillzero'), "0", STR_PAD_LEFT);
+    //     return $application_no;
+    // }
+
+    public static function makeApplicationNoByAutoIncrementId($formId){
+        $autoIncrementId = static::getAutoIncrement();
+        return config('const.form_prefix')[$formId] . '-' . str_pad($autoIncrementId, config('const.num_fillzero'), "0", STR_PAD_LEFT);
     }
 
     public function Form(){

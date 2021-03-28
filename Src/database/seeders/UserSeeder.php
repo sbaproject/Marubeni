@@ -2,8 +2,9 @@
 
 namespace Database\Seeders;
 
-use App\Models\Department;
 use Carbon\Carbon;
+use App\Models\User;
+use App\Models\Department;
 use Illuminate\Support\Arr;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -27,7 +28,10 @@ class UserSeeder extends Seeder
         /**
          * users
          */
+
+        //===============Super Admin Of System===============//
         DB::table('users')->insert([
+            'user_no' => User::makeUserNoByAutoIncrementId(),
             'name' => 'admin',
             'email' => 'admin@gmail.com',
             'password' => Hash::make('123'),
@@ -37,13 +41,17 @@ class UserSeeder extends Seeder
             'approval' => 0, // OFF
             'leave_days' => config('const.annual_leave_days_per_year'),
             'leave_remaining_days' => config('const.annual_leave_days_per_year'),
+            'super_admin_flg' => 1,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
         ]);
 
+
+        //===============Fake users===============//
         $firstId = DB::table('users')->first('id')->id;
 
         DB::table('users')->insert([
+            'user_no' => User::makeUserNoByAutoIncrementId(),
             'name' => 'user1',
             'email' => 'user1@gmail.com',
             'password' => Hash::make('123'),
@@ -59,6 +67,7 @@ class UserSeeder extends Seeder
             'updated_by' => $firstId
         ]);
         DB::table('users')->insert([
+            'user_no' => User::makeUserNoByAutoIncrementId(),
             'name' => 'user2',
             'email' => 'user2@gmail.com',
             'password' => Hash::make('123'),
@@ -78,6 +87,7 @@ class UserSeeder extends Seeder
             $role = Arr::random(config('const.role'));
             $approval = $role == 1 ? config('const.approval.off') : Arr::random(config('const.approval'));
             DB::table('users')->insert([
+                'user_no' => User::makeUserNoByAutoIncrementId(),
                 'name' => 'user'.$i,
                 'email' => 'user' . $i.'@gmail.com',
                 'password' => Hash::make('123'),

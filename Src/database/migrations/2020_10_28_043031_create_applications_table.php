@@ -15,6 +15,7 @@ class CreateApplicationsTable extends Migration
     {
         Schema::create('applications', function (Blueprint $table) {
             $table->unsignedInteger('id', true);
+            $table->string('application_no', 20);
             $table->unsignedInteger('form_id');
             $table->unsignedInteger('group_id');
             $table->unsignedTinyInteger('current_step')->comment('Normaly we have 2 steps (Step 1,2) per application, this field used to determined current step of application. But with [Leave] application only have default value is [2] (one step)');

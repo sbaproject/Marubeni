@@ -253,8 +253,9 @@ class ApplicationController extends Controller
 
         // save applications
         if (empty($app)) {
-            $application['created_by'] = $user->id;
-            $application['created_at'] = Carbon::now();
+            $application['application_no']  = Application::makeApplicationNoByAutoIncrementId($formId);
+            $application['created_by']      = $user->id;
+            $application['created_at']      = Carbon::now();
 
             $applicationId = DB::table('applications')->insertGetId($application);
         } else {

@@ -44,7 +44,7 @@ class ApprovalController extends Controller
 
         if (isset($request->keyword)) {
             $likeApplicantName = " us.name like :applicantName";
-            $likeApplicationNo = "concat(concat(fo.prefix,'-'),lpad(a.id, " . $fillZero . ", '0')) like :applicationNo";
+            $likeApplicationNo = "application_no like :applicationNo";
 
             $conditions['keyword'] = " and (" . $likeApplicationNo . " or " . $likeApplicantName . ")";
             $params['applicantName'] = '%' . $request->keyword . '%';
@@ -91,7 +91,7 @@ class ApprovalController extends Controller
         $application = DB::table('applications')
             ->select(
                 'applications.*',
-                DB::raw("concat(concat(forms.prefix,'-'),lpad(applications.id, " . config('const.num_fillzero') . ", '0')) as application_no"),
+ 
                 'steps.flow_id',
                 'steps.approver_id',
                 'steps.approver_type',
@@ -344,8 +344,8 @@ class ApprovalController extends Controller
     private function getSqlIndex($conditions, $sortable, $fillZero)
     {
         return "select
-                 concat(concat(fo.prefix,'-'),lpad(a.id, " . $fillZero . ", '0')) as application_no
-                ,a.id             as application_id
+                 a.id             as application_id
+                ,a.application_no
                 ,a.current_step
                 ,a.status
                 ,a.subsequent

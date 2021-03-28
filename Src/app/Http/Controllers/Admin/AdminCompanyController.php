@@ -50,9 +50,9 @@ class AdminCompanyController extends Controller
 
     public function create()
     {
-        $idcompany = DB::table('INFORMATION_SCHEMA.TABLES')->select('AUTO_INCREMENT')->where('TABLE_NAME', 'companies')->get()[0]->AUTO_INCREMENT;
+        // $idcompany = DB::table('INFORMATION_SCHEMA.TABLES')->select('AUTO_INCREMENT')->where('TABLE_NAME', 'companies')->get()[0]->AUTO_INCREMENT;
 
-        return view('admin.company.create', compact('idcompany'));
+        return view('admin.company.create');
     }
 
     public function store(Request $request)

@@ -137,9 +137,9 @@
             <table class="table table-bordered table-hover " style="min-width: 500px;">
                 <thead>
                     <tr>
-                        <th style="width: 100px" class="sortable {{ $sortable->headers['user_number']->activeCls }}">
+                        <th style="width: 100px" class="sortable {{ $sortable->headers['user_no']->activeCls }}">
                             {{-- {{ __('label._no_') }} --}}
-                            {!! $sortable->headers['user_number']->title !!}
+                            {!! $sortable->headers['user_no']->title !!}
                         </th>
                         <th class="sortable {{ $sortable->headers['department_name']->activeCls }}">
                             {{-- {{ __('validation.attributes.department') }} --}}
@@ -155,7 +155,7 @@
                 <tbody>
                     @foreach($users as $user)
                     <tr>
-                        <td>{{ $user->user_number }}</td>
+                        <td>{{ $user->user_no }}</td>
                         <td>{{ $user->department_name }}</td>
                         <td>{{ $user->user_name }}</td>
                         <td>

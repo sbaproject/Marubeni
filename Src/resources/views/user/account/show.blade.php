@@ -96,9 +96,12 @@
                             class="col-lg-3 col-form-label text-center">{{ __('validation.attributes.role') }}</label>
                         <div class="col-lg-9">
                             <select id="role" name="role" class="form-control @error('role') is-invalid @enderror">
-                                <option value='' selected>{{ __('label.select') }}</option>
+                                <option value='' selected @if (auth()->user()->super_admin_flg == config('const.check.on')) disabled @endif>
+                                    {{ __('label.select') }}
+                                </option>
                                 @foreach ($data['roles'] as $key => $value)
-                                <option value="{{ $value }}" {{ $data['user']->role == $value ? 'selected' : '' }}>
+                                <option value="{{ $value }}" {{ $data['user']->role == $value ? 'selected' : '' }}
+                                    @if (auth()->user()->super_admin_flg == config('const.check.on')) disabled @endif>
                                     {{ $key }}
                                 </option>
                                 @endforeach

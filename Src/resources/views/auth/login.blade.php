@@ -10,13 +10,13 @@
                 @csrf
                 <div class="form-group">
                     <label for="email">{{ __('label.login.email_address') }}</label>
-                    <input id="email" name="email" class="form-control @error('email') is-invalid @enderror" autofocus
-                        autocomplete="off" value="{{ old('email') }}">
-                    @error('email')
+                    <input id="email" name="email" autofocus autocomplete="off" value="{{ old('email') }}"
+                        class="form-control  @if($errors->has('email') || $errors->has('username')) is-invalid @endif">
+                    @if($errors->has('email') || $errors->has('username'))
                         <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
+                            <strong>{{$errors->first('email') }} {{ $errors->first('username')}}</strong>
                         </span>
-                    @enderror
+                    @endif
                 </div> <!-- form-group// -->
                 <div class="form-group">
                     <label for="password">{{ __('label.login.password') }}</label>
