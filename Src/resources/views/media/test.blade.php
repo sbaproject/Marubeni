@@ -81,6 +81,7 @@ test media
     // },
     removedfile: function (file) {
         file.previewElement.remove();
+        debugger;
         var name = '';
         if (typeof file.file_name !== 'undefined') {
             name = file.file_name;
@@ -89,18 +90,22 @@ test media
         }
         $('form').find('input[name="document[]"][value="' + name + '"]').remove();
     },
-    // init: function () {
-    // @if(isset($project) && $project->document)
-    // var files =
-    // {!! json_encode($project->document) !!}
-    // for (var i in files) {
-    // var file = files[i]
-    // this.options.addedfile.call(this, file)
-    // file.previewElement.classList.add('dz-complete')
-    // $('form').append('<input type="hidden" name="document[]" value="' + file.file_name + '">')
-    // }
-    // @endif
-    // }
+    init: function () {
+        @if(isset($files) && count($files) > 0)
+        var files =
+        {!! json_encode($files) !!}
+        debugger;
+        for (var i in files) {
+            var file = files[i];
+            this.emit('addedfile', file);
+            this.options.thumbnail.call(this, file, file.path);
+            this.emit("complete", file);
+            // this.options.addedfile.call(this, file);
+            // file.previewElement.classList.add('dz-complete');
+            $('form').append('<input type="hidden" name="document[]" value="' + file.file_name + '">');
+        }
+        @endif
+        }
     }
   );
   //   Dropzone.options.documentDropzone = {

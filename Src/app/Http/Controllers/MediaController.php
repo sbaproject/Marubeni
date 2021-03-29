@@ -10,7 +10,13 @@ class MediaController extends Controller
 {
     public function test()
     {
-        return view('media.test');
+        // dd(storage_path('uploads\\application'));
+        $files = [
+            ['name' => '16046290712.png','size' => 200, 'path' => '/storage/uploads/application/16046290712.png'],
+            ['name' => '16046290712.png', 'size' => 200, 'path' => '/storage/uploads/application/16046290712.png'],
+        ];
+        $files = [];
+        return view('media.test', compact('files'));
     }
     public function storeTmp(Request $request)
     {
