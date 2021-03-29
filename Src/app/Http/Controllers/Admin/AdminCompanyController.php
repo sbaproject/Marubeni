@@ -45,14 +45,14 @@ class AdminCompanyController extends Controller
             $list_company = Company::orderBy('id', 'DESC')->paginate(config('const.paginator.items'));
         }
 
-        return view('admin.company.index', compact('list_company', 'req_arr'));
+        return view('admin_company_index', compact('list_company', 'req_arr'));
     }
 
     public function create()
     {
         // $idcompany = DB::table('INFORMATION_SCHEMA.TABLES')->select('AUTO_INCREMENT')->where('TABLE_NAME', 'companies')->get()[0]->AUTO_INCREMENT;
 
-        return view('admin.company.create');
+        return view('admin_company_create');
     }
 
     public function store(Request $request)
@@ -77,14 +77,14 @@ class AdminCompanyController extends Controller
         $company->created_by = Auth::user()->id;
         $company->fill($data)->save();
 
-        return Common::redirectRouteWithAlertSuccess('admin.company.index');
+        return Common::redirectRouteWithAlertSuccess('admin_company_index');
     }
 
     public function show(Company $company)
     {
         $idcompany = $company->id;
 
-        return view('admin.company.show', compact('company', 'idcompany'));
+        return view('admin_company_show', compact('company', 'idcompany'));
     }
 
     public function update($id, Request $request)
@@ -115,7 +115,7 @@ class AdminCompanyController extends Controller
         $company->updated_by = Auth::user()->id;
         $company->save();
 
-        return Common::redirectRouteWithAlertSuccess('admin.company.index');
+        return Common::redirectRouteWithAlertSuccess('admin_company_index');
     }
 
     public function delete($id)

@@ -80,7 +80,7 @@ class AdminDashboardController extends Controller
 
         $count_completed  = $this->list_application_count(99, 99, 1, 2, $str_date, $end_date)->count();
 
-        return view('admin.dashboard.index', compact('list_application', 'count_applying', 'count_approval', 'count_declined', 'count_reject', 'count_completed', 'str_date', 'end_date', 'intstatus', 'sortable'));
+        return view('admin_dashboard_index', compact('list_application', 'count_applying', 'count_approval', 'count_declined', 'count_reject', 'count_completed', 'str_date', 'end_date', 'intstatus', 'sortable'));
     }
 
     //Get List Application by Condition

@@ -16,7 +16,7 @@ class UserChangePassController extends Controller
      *  Method - GET
      */
     public function show(Request $request){
-        return view('user.account.changepass');
+        return view('account_changepass');
     }
 
     /** Update new password

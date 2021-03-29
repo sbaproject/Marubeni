@@ -43,7 +43,7 @@ class ApplicationController extends Controller
     {
         $this->formTypeName = $this->getFormTypeName();
 
-        $this->viewInputName = "application.{$this->formTypeName}.input";
+        $this->viewInputName = "application_{$this->formTypeName}_input";
     }
 
     protected function create()
@@ -444,7 +444,7 @@ class ApplicationController extends Controller
         }
 
         // PDF::setOptions(['defaultFont' => 'Roboto-Black']);
-        $pdf = PDF::loadView("application.{$this->formTypeName}.pdf", compact('application', 'inputs'));
+        $pdf = PDF::loadView("application_{$this->formTypeName}_pdf", compact('application', 'inputs'));
 
         // preview pdf
         $fileName = "{$this->formTypeName}.pdf";

@@ -9,6 +9,6 @@ class FormListController extends Controller
 {
     public function index()
     {
-        return view('application.formlist');
+        return view('application_formlist');
     }
 }

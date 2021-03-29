@@ -109,6 +109,6 @@ class UserStatusController extends Controller
         // Type Application
         $intstatus = (int)$status;
 
-        return view('user.status.index', compact('list_applications_status', 'intstatus', 'str_date', 'end_date', 'sortable'));
+        return view('user_status_index', compact('list_applications_status', 'intstatus', 'str_date', 'end_date', 'sortable'));
     }
 }

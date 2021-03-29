@@ -106,6 +106,6 @@ class AdminStatusController extends Controller
         // Type Application
         $intstatus = (int)$status;
 
-        return view('admin.status.index', compact('list_applications_status', 'intstatus', 'str_date', 'end_date', 'sortable'));
+        return view('admin_status_index', compact('list_applications_status', 'intstatus', 'str_date', 'end_date', 'sortable'));
     }
 }

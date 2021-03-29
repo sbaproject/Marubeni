@@ -18,7 +18,7 @@ class UserEditController extends Controller
         // prepare compact data for view
         $data = User::getCompactData($user);
 
-        return view('user.account.show', compact('data'));
+        return view('account_show', compact('data'));
     }
 
     /** Update user info

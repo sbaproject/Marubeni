@@ -82,7 +82,7 @@ class ApprovalController extends Controller
             'inputs',
             'sortable',
         ];
-        return view('approval.index', compact($compacts));
+        return view('approval_index', compact($compacts));
     }
 
     public function show(Request $request, $id)
@@ -141,7 +141,7 @@ class ApprovalController extends Controller
             'flgUserCC',
             'comments',
         ];
-        return view('approval.show', compact($compacts));
+        return view('approval_show', compact($compacts));
     }
 
     public function update(Request $request, $id)

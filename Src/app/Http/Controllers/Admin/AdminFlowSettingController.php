@@ -30,7 +30,7 @@ class AdminFlowSettingController extends Controller
             ->where('steps.order', '99')
             ->paginate(config('const.paginator.items'));
 
-        return view('admin.flow.index', compact('list_flows'));
+        return view('admin_flow_index', compact('list_flows'));
     }
 
     /**
@@ -68,7 +68,7 @@ class AdminFlowSettingController extends Controller
             $data['name'] = strtoupper(array_search($applicant->location, $locations)) . ' - ' . $applicant->name . ' - ' . array_search($applicant->role, $roles);
             $applicantRoles[] = $data;
         }
-        return view('admin.flow.create', compact('flowNo', 'forms', 'users', 'applicantRoles', 'budgets', 'budgetPO', 'budgetNotPO'));
+        return view('admin_flow_create', compact('flowNo', 'forms', 'users', 'applicantRoles', 'budgets', 'budgetPO', 'budgetNotPO'));
     }
 
     /**
@@ -255,7 +255,7 @@ class AdminFlowSettingController extends Controller
             $data['name'] = strtoupper(array_search($applicant->location, $locations)) . ' - ' . $applicant->name . ' - ' . array_search($applicant->role, $roles);
             $applicantRoles[] = $data;
         }
-        return view('admin.flow.edit', compact('flow', 'steps', 'forms', 'users', 'applicantRoles', 'budgets', 'budgetPO', 'budgetNotPO', 'canEdit'));
+        return view('admin_flow_edit', compact('flow', 'steps', 'forms', 'users', 'applicantRoles', 'budgets', 'budgetPO', 'budgetNotPO', 'canEdit'));
     }
 
     /**

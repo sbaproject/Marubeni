@@ -68,7 +68,7 @@ class UserListCotroller extends Controller
         ->select($selectCols)
         ->paginate(config('const.paginator.items'));
 
-        return view('user.account.index', compact('conditions', 'locations', 'departments', 'users', 'sortable'));
+        return view('account_index', compact('conditions', 'locations', 'departments', 'users', 'sortable'));
     }
 
     public function delete(User $user)

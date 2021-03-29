@@ -20,7 +20,7 @@ class UserCompanyController extends Controller
     {
         // $idcompany = DB::table('INFORMATION_SCHEMA.TABLES')->select('AUTO_INCREMENT')->where('TABLE_NAME', 'companies')->get()[0]->AUTO_INCREMENT;
 
-        return view('user.company.create');
+        return view('user_company_create');
     }
 
     public function store(Request $request)

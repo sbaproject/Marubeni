@@ -15,7 +15,7 @@ class UserRegisterController extends Controller
     {
         $data = User::getCompactData();
 
-        return view('user.account.create', compact('data'));
+        return view('account_create', compact('data'));
     }
 
     public function store(Request $request)
