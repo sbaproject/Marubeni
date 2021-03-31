@@ -20,6 +20,12 @@ class MediaController extends Controller
     }
     public function storeTmp(Request $request)
     {
+
+        // dd($_FILES["myfile"]["tmp_name"], $_FILES['myfile']['name']);
+
+        dd($request);
+        // move_uploaded_file($_FILES["myfile"]["tmp_name"],'storage/uploads/application/'. $_FILES['myfile']['name']);
+
         // $path = storage_path('/uploads/tmps');
 
         // if (!file_exists($path)) {
@@ -52,6 +58,7 @@ class MediaController extends Controller
             'msg'           => 'success',
             'name'          => $name,
             'original_name' => $file->getClientOriginalName(),
+            'path' => '/storage/uploads/application/16046290712.png',
         ]);
     }
 }

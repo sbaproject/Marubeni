@@ -22,13 +22,16 @@ test media
 
 @section('content')
 
-<form action="" method="POST" enctype="multipart/form-data">
+<form action="{{ route('media.store.tmp') }}" method="POST" enctype="multipart/form-data">
     @csrf
     <div class="form-group">
         <label for="document">Documents</label>
         <div class="needsclick dropzone" id="document-dropzone">
 
         </div>
+    </div>
+    <div>
+        <input type="file" name="myfile" id="myfile" onchange="this.form.submit();">
     </div>
     <div>
         <input class="btn btn-danger" type="submit">
@@ -51,6 +54,7 @@ test media
     headers: {
         'X-CSRF-TOKEN': "{{ csrf_token() }}"
     },
+    autoDiscover: false,
     success: function (file, response) {
         if(response.status != 200) {
             // myDropzone.removeFile(file);
@@ -59,7 +63,14 @@ test media
             return;
         }
         $('form').append('<input type="hidden" name="document[]" value="' + response.name + '">');
-            uploadedDocumentMap[file.name] = response.name;
+        uploadedDocumentMap[file.name] = response.name;
+
+        // create file download link
+        var anchorEl = document.createElement('a');
+        anchorEl.setAttribute('href',response.path);
+        anchorEl.setAttribute('target','_blank');
+        anchorEl.innerHTML = "<br>Download";
+        file.previewTemplate.appendChild(anchorEl);
     },
     error: function (file, msg, xhr) {
         // console.log(rs);
