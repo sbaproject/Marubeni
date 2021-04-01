@@ -28,6 +28,11 @@
                     <button type="submit" class="btn btn-block bg-gradient-danger">{{ __('label.login.btn_send_pass') }}</button>
                 </div> <!-- form-group// -->
             </form>
+            <p class="mb-1" style="text-align: center;">
+                <a href="http://localhost:2020/password/reset" class="link-underline">
+                    {{ __('label.login.link_login') }}
+                </a>
+            </p>
         </div>
         <!-- /.login-card-body -->
     </div>

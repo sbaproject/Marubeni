@@ -6,6 +6,7 @@ return [
      */
     'save_success' => 'Data has been saved successfully !',
     'delete_success' => 'Data has been deleted successfully !',
+    'restore_success' => 'Data has been restored successfully !',
     'save_fail' => 'Data has not been saved !',
     'delete_fail' => 'Data has not been deleted !',
     'no_data' => 'No data found.',

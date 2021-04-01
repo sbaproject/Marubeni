@@ -111,6 +111,9 @@ class User extends Authenticatable
         $ruleMail = ['required', 'email'];
         if ($isIgnoreUniqueEmail) {
             $ruleMail[] = Rule::unique('users')->ignore($user->id, 'id');
+            // $ruleMail[] = Rule::unique('users')->where(function($query) use($user){
+            //     return $query->where('deleted_at', NULL)->where('id','<>', $user->id);
+            // });
         } else {
             $ruleMail[] = 'unique:users';
         }

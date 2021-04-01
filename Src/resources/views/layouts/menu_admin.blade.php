@@ -104,6 +104,14 @@
                         <p>{{ __('label.menu.change_password') }}</p>
                     </a>
                 </li>
+                @if (Gate::allows('admin-gate'))
+                    <li class="nav-item">
+                        <a href="{{ route('admin.user.show', auth()->user()->id) }}" class="nav-link">
+                            <i class="fas fa-angle-right nav-icon"></i>
+                            <p>{{ __('label.menu.user_info') }}</p>
+                        </a>
+                    </li>
+                @endif
             </ul>
         </li>
     </ul>

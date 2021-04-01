@@ -92,6 +92,8 @@ Route::middleware('just_desktop_and_mobile_edge_browser')->group(function(){
                     Route::post('edit/{user}', [UserEditController::class, 'update'])->name('update');
                     // Delete user
                     Route::post('delete/{user}', [UserListCotroller::class, 'delete'])->name('delete');
+                    // Restore user
+                    Route::post('restore/{id}', [UserListCotroller::class, 'restore'])->name('restore');
                 });
                 //Approval Flow Setting
                 Route::prefix('flow-setting')->name('flow.')->group(function () {

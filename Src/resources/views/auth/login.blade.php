@@ -40,8 +40,9 @@
                     <button type="submit" class="btn btn-block bg-gradient-danger">{{ __('label.login.btn_login') }}</button>
                 </div> <!-- form-group// -->
                 <p class="mb-1" style="text-align: center;">
-                    <a href="{{ route('password.request') }}"
-                        style="border-bottom: 1px solid #010ECC; color: #010ECC;">{{ __('label.login.link_forgot_pass') }}</a>
+                    <a href="{{ route('password.request') }}" class="link-underline">
+                        {{ __('label.login.link_forgot_pass') }}
+                    </a>
                 </p>
             </form>
         </div>

@@ -20,27 +20,7 @@ class UserListCotroller extends Controller
         $departments = Department::all();
 
         // get parameter query string
-        $conditions = $request->input();
-
-        // search conditions
-        $where = [
-            // not show super admin account
-            'users.super_admin_flg' => config('const.check.off'),
-        ];
-        if (isset($conditions['location'])) {
-            $where[] = ['users.location', '=', $conditions['location']];
-        }
-        if (isset($conditions['department'])) {
-            $where[] = ['users.department_id', '=', $conditions['department']];
-        }
-        if (isset($conditions['name'])) {
-            $where[] = ['users.name', 'LIKE', '%' . trim($conditions['name']) . '%'];
-        }
-        if (isset($conditions['user_no'])) {
-            $fillZero = config('const.num_fillzero');
-            $where[] = [DB::raw("LPAD(users.id,{$fillZero}, '0')"), "LIKE",  '%' . $conditions['user_no'] . '%'];
-        }
-        
+        $conditions = $request->only(['user_no', 'department', 'name', 'show_del_user']);
 
         // sorting columns
         $sortableCols = [
@@ -60,13 +40,33 @@ class UserListCotroller extends Controller
 
         // get results
         $users = User::join('departments', function ($join) {
-            $join->on('users.department_id', '=', 'departments.id')
-                ->where('departments.deleted_at', null);
+            $join->on('users.department_id', '=', 'departments.id');
         })
-        ->where($where)
-        ->orderByRaw($sortable->order_by)
         ->select($selectCols)
-        ->paginate(config('const.paginator.items'));
+        ->where('users.super_admin_flg', config('const.check.off')) // not show super admin account
+        ->when(isset($conditions['location']), function ($q) use ($conditions) {
+            return $q->where('users.location', '=', $conditions['location']);
+        })
+        ->when(isset($conditions['department']), function ($q) use ($conditions) {
+            return $q->where('users.department_id', '=', $conditions['department']);
+        })
+        ->when(isset($conditions['name']), function ($q) use ($conditions) {
+            return $q->where('users.name', 'LIKE', '%' . trim($conditions['name']) . '%');
+        })
+        ->when(isset($conditions['user_no']), function ($q) use ($conditions) {
+            return $q->where("users.user_no", "LIKE",  '%' . $conditions['user_no'] . '%');
+        })
+        ->when(isset($conditions['show_del_user']) && $conditions['show_del_user'] == "on", function ($q) {
+            return $q->where('users.deleted_at', "<>", NULL);
+        })
+        ->orderByRaw($sortable->order_by);
+
+        // allow trashed user
+        if (isset($conditions['show_del_user']) && $conditions['show_del_user'] == "on") {
+            $users = $users->withTrashed();
+        }
+
+        $users = $users->paginate(config('const.paginator.items'));
 
         return view('account_index', compact('conditions', 'locations', 'departments', 'users', 'sortable'));
     }
@@ -81,7 +81,7 @@ class UserListCotroller extends Controller
         }
 
         // super admin account do not delete
-        if($user->super_admin_flg == config('const.check.on')){
+        if ($user->super_admin_flg == config('const.check.on')) {
             return Common::redirectBackWithAlertFail(__('msg.delete_fail'));
         }
 
@@ -91,5 +91,27 @@ class UserListCotroller extends Controller
         $user->save();
 
         return Common::redirectBackWithAlertSuccess(__('msg.delete_success'));
+    }
+
+    public function restore($id)
+    {
+        $restoreUser = User::where('id', $id)->withTrashed()->first();
+
+        // not found user
+        if (empty($restoreUser)) {
+            abort(404);
+        }
+
+        // restore
+        User::withTrashed()
+            ->where('id', $id)
+            ->update(
+                [
+                    'deleted_at' => null,
+                    'updated_by' => Auth::user()->id
+                ]
+            );
+
+        return Common::redirectBackWithAlertSuccess(__('msg.restore_success'));
     }
 }

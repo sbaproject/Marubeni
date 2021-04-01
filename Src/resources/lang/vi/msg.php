@@ -6,6 +6,7 @@ return [
      */
     'save_success' => 'Dữ liệu đã được lưu thành công !',
     'delete_success' => 'Dữ liệu đã được xóa thành công !',
+    'restore_success' => 'Dữ liệu đã được khôi phục thành công !',
     'save_fail' => 'Lưu dữ liệu không thành công !',
     'delete_fail' => 'Xóa dữ liệu không thành công !',
     'no_data' => 'Không tìm thấy dữ liệu.',

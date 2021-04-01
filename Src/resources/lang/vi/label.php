@@ -15,6 +15,7 @@ return [
         'addnew' => 'Thêm',
         'edit' => 'Sửa',
         'delete' => 'Xóa',
+        'restore' => 'Khôi phục',
         'cancel' => 'Hủy',
         'accept' => 'Chấp nhận',
         'search' => 'Tìm kiếm',
@@ -69,6 +70,7 @@ return [
             'list' => 'Danh sách đơn chờ duyệt',
         ],
     ],
+    'only_show_deleted_users' => 'Chỉ hiển thị tài khoản đã xóa',
     /**
      * Paginator
      */
@@ -123,6 +125,7 @@ return [
         'employee_setting' => 'Danh Mục Nhân Viên',
         'budget_setting' => 'Ngân Sách',
         'approval_flow_setting' => 'Quy Trình Phê Duyệt',
+        'user_info' => 'Thông tin tài khoản',
     ],
     /**
      * Approval acion
@@ -384,6 +387,7 @@ return [
         'remember' => 'Nhớ đăng nhập',
         'btn_login' => 'Đăng nhập',
         'link_forgot_pass' => 'Quên mật khẩu?',
+        'link_login' => 'Quay lại đăng nhập',
         //form fogot password
         'title_reset_pass' => 'ĐẶT LẠI MẬT KHẨU',
         'btn_send_pass' => 'Xác nhận',

@@ -85,26 +85,34 @@
                                         </select>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-10 col-xl-9">
                                     {{-- Name --}}
                                     <div class="form-group row">
-                                        <label for="name"
-                                            class="col-lg-3 col-form-label text-center font-weight-normal">
+                                        <label for="name" class="col-lg-3 col-form-label text-center font-weight-normal">
                                             {{ __('validation.attributes.user.name') }}
                                         </label>
                                         <div class="col-lg-9">
-                                            <input id="name" name="name" type="text" class="form-control" placeholder="{{ __('validation.attributes.user.name') }}"
+                                            <input id="name" name="name" type="text" class="form-control"
+                                                placeholder="{{ __('validation.attributes.user.name') }}"
                                                 value="@isset($conditions['name']){{ $conditions['name'] }}@endisset">
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-lg-2 col-xl-3">
-                                    {{-- Submit --}}
+                                    {{-- Only show deleted user list --}}
                                     <div class="form-group row">
-                                        <div class="col-lg-10">
+                                        <label for="show_del_user" class="col-lg-3 col-form-label text-center font-weight-normal">
+                                            {{ __('label.only_show_deleted_users') }}
+                                        </label>
+                                        <div class="col-lg-9" style="padding-top: 10px">
+                                            <input type="checkbox" id="show_del_user" name="show_del_user"
+                                                @if(isset($conditions['show_del_user']) && $conditions['show_del_user'] == "on") checked @endif>
+                                            <label class="form-check-label" for="show_del_user">{{ __('label.on') }}</label>
+                                        </div>
+                                    </div>
+                                    {{-- Search button --}}
+                                    <div class="form-group row">
+                                        <label for="show_del_user" class="col-lg-3 col-form-label text-center font-weight-normal">
+                                            {{-- {{ __('validation.attributes.user.name') }} --}}
+                                        </label>
+                                        <div class="col-lg-9">
                                             <button type="submit" class="btn bg-gradient-primary">
                                                 <i class="nav-icon fas fa-search"></i>
                                                 {{ __('label.button.search') }}
@@ -149,7 +157,9 @@
                             {{-- {{ __('validation.attributes.user.name') }} --}}
                             {!! $sortable->headers['user_name']->title !!}
                         </th>
-                        <th style="width: 150px">{{ __('label.action') }}</th>
+                        <th style="width: 150px">
+                            {{-- {{ __('label.action') }} --}}
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -160,16 +170,36 @@
                         <td>{{ $user->user_name }}</td>
                         <td>
                             {{-- using action component with if stament --}}
+                            {{-- Edit & Delete --}}
                             <x-action>
-                                <x-slot name="editUrl">
-                                    {{ route('admin.user.show', $user->user_id) }}
-                                </x-slot>
+                                @if(!isset($conditions['show_del_user']) || $conditions['show_del_user'] != "on")
+                                    <x-slot name="editUrl">
+                                        {{ route('admin.user.show', $user->user_id) }}
+                                    </x-slot>
+                                @endif
                                 @if ($user->user_id !== Auth::user()->id)
-                                <x-slot name="deleteUrl">
-                                    {{ route('admin.user.delete', $user->user_id) }}
-                                </x-slot>
+                                    @if(!isset($conditions['show_del_user']) || $conditions['show_del_user'] != "on")
+                                        <x-slot name="deleteUrl">
+                                            {{ route('admin.user.delete', $user->user_id) }}
+                                        </x-slot>
+                                    @endif
                                 @endif
                             </x-action>
+                            {{-- Restore --}}
+                            @if(isset($conditions['show_del_user']) && $conditions['show_del_user'] == "on")
+                                <ul class="list-inline m-0">
+                                    <li class="list-inline-item">
+                                        <form action="{{ route('admin.user.restore', $user->user_id) }}" method="POST">
+                                            @csrf
+                                            <button type="button" class="btn bg-gradient-primary btn-sm"
+                                                data-toggle="tooltip" title="{{ __('label.button.restore') }}"
+                                                data-toggle="modal" data-target="#popup-confirm">
+                                                <i class="fa fa-undo"></i>
+                                            </button>
+                                        </form>
+                                    </li>
+                                </ul>
+                            @endif
                             {{-- using action component with sort tag --}}
                             {{-- <x-action
                                     edit-url="{{ route('admin.user.show', $user->id) }}"

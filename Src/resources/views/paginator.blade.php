@@ -1,4 +1,4 @@
-@if ($paginator->total() > 0)
+@if ($paginator->total() > 0 && $paginator->currentPage() <= $paginator->lastPage())
 <div class="clearfix text-center" style="margin-top: 1rem;margin-bottom: 1rem">
     @php
         $total = $paginator->total();
@@ -10,6 +10,12 @@
         }
     @endphp
     {{ __('label.paginator.show_result_label',['total' => $total, 'from' => $from, 'to' => $to]) }}
+    </div>
+@else
+    <div class="clearfix p-0 text-center pb-3">
+        <div class="pager-wrap" style="margin-top: 1rem">
+            {{ __('msg.no_data') }}
+        </div>
     </div>
 @endif
 
@@ -95,11 +101,11 @@
     </div>
 </div>
 @else
-@if ($paginator->total() === 0)
+{{-- @if ($paginator->total() === 0)
 <div class="clearfix p-0 text-center pb-3">
     <div class="pager-wrap" style="margin-top: 1rem">
         {{ __('msg.no_data') }}
     </div>
 </div>
-@endif
+@endif --}}
 @endif

@@ -16,6 +16,7 @@ return [
         'addnew' => 'Add',
         'edit' => 'Edit',
         'delete' => 'Delete',
+        'restore' => 'Restore',
         'cancel' => 'Cancel',
         'accept' => 'Accept',
         'search' => 'Search',
@@ -73,6 +74,7 @@ return [
             'list' => 'Pending approval list',
         ],
     ],
+    'only_show_deleted_users' => 'Show deleted users only',
     /**
      * Paginator
      */
@@ -127,6 +129,7 @@ return [
         'employee_setting' => 'Employees',
         'budget_setting' => 'Budgets',
         'approval_flow_setting' => 'Approval Flows',
+        'user_info' => 'Account Information',
     ],
     /**
      * Approval acion
@@ -387,6 +390,7 @@ return [
         'remember' => 'Remember me',
         'btn_login' => 'Login',
         'link_forgot_pass' => 'Forgot Password?',
+        'link_login' => 'Login Page',
         //form fogot password
         'title_reset_pass' => 'RESET PASSWORD',
         'btn_send_pass' => 'Confirm',
