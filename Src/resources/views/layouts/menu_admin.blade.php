@@ -5,14 +5,14 @@
         <li class="nav-item">
             <a href="{{ route('admin.dashboard') }}" class="nav-link">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
-                <p>{{ __('label.menu.dashboard') }}</p>
+                <p>{{ __('label.menu_dashboard') }}</p>
             </a>
         </li>
         <li class="nav-item has-treeview">
             <a href="" class="nav-link">
                 <i class="nav-icon fas fa-filter"></i>
                 <p>
-                    {{ __('label.menu.application_list') }}
+                    {{ __('label.menu_application_list') }}
                     <i class="fas fa-angle-down right"></i>
                 </p>
             </a>
@@ -20,37 +20,37 @@
                 <li class="nav-item">
                     <a href="{{ route('admin.status',config('const.application.status.applying'))}}" class="nav-link">
                         <i class="fas fa-angle-right nav-icon"></i>
-                        <p>{{ __('label.menu.applying') }}</p>
+                        <p>{{ __('label.menu_applying') }}</p>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="{{ route('admin.status',config('const.application.status.approvel_un'))}}" class="nav-link">
                         <i class="fas fa-angle-right nav-icon"></i>
-                        <p>{{ __('label.menu.approved_un') }}<br>{{ __('label.menu.approved_un2') }}</p>
+                        <p>{{ __('label.menu_approved_un') }}<br>{{ __('label.menu_approved_un2') }}</p>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="{{ route('admin.status',config('const.application.status.approvel_in'))}}" class="nav-link">
                         <i class="fas fa-angle-right nav-icon"></i>
-                        <p>{{ __('label.menu.approved_in') }}<br>{{ __('label.menu.approved_in2') }}</p>
+                        <p>{{ __('label.menu_approved_in') }}<br>{{ __('label.menu_approved_in2') }}</p>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="{{ route('admin.status',config('const.application.status.declined'))}}" class="nav-link">
                         <i class="fas fa-angle-right nav-icon"></i>
-                        <p>{{ __('label.menu.declined') }}</p>
+                        <p>{{ __('label.menu_declined') }}</p>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="{{ route('admin.status',config('const.application.status.reject'))}}" class="nav-link">
                         <i class="fas fa-angle-right nav-icon"></i>
-                        <p>{{ __('label.menu.reject') }}</p>
+                        <p>{{ __('label.menu_reject') }}</p>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="{{ route('admin.status',config('const.application.status.completed'))}}" class="nav-link">
                         <i class="fas fa-angle-right nav-icon"></i>
-                        <p>{{ __('label.menu.completed') }}</p>
+                        <p>{{ __('label.menu_completed') }}</p>
                     </a>
                 </li>
             </ul>
@@ -59,7 +59,7 @@
         <li class="nav-item">
             <a href="{{ route('user.approval.index') }}" class="nav-link">
                 <i class="nav-icon fa fa-check-square"></i>
-                <p>{{ __('label.menu.approval') }}</p>
+                <p>{{ __('label.menu_approval') }}</p>
             </a>
         </li>
         @endif
@@ -67,7 +67,7 @@
             <a href="" class="nav-link">
                 <i class="nav-icon fas fa-cog"></i>
                 <p>
-                    {{ __('label.menu.settings') }}
+                    {{ __('label.menu_settings') }}
                     <i class="right fas fa-angle-down"></i>
                 </p>
             </a>
@@ -75,40 +75,40 @@
                 <li class="nav-item">
                     <a href="{{ route('admin.user.index') }}" class="nav-link">
                         <i class="fas fa-angle-right nav-icon"></i>
-                        <p>{{ __('label.title.user.list') }}</p>
+                        <p>{{ __('label.title_user_list') }}</p>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="{{ route('admin.company.index') }}" class="nav-link">
                         <i class="fas fa-angle-right nav-icon"></i>
                         <p>
-                            {{ __('label.menu.company_list') }}
+                            {{ __('label.menu_company_list') }}
                         </p>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="{{ route('admin.budget.show') }}" class="nav-link">
                         <i class="fas fa-angle-right nav-icon"></i>
-                        <p>{{ __('label.menu.budget_setting') }}</p>
+                        <p>{{ __('label.menu_budget_setting') }}</p>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="{{ route('admin.flow.index') }}" class="nav-link">
                         <i class="fas fa-angle-right nav-icon"></i>
-                        <p>{{ __('label.menu.approval_flow_setting') }}</p>
+                        <p>{{ __('label.menu_approval_flow_setting') }}</p>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="{{ route('changepass.show') }}" class="nav-link">
                         <i class="fas fa-angle-right nav-icon"></i>
-                        <p>{{ __('label.menu.change_password') }}</p>
+                        <p>{{ __('label.menu_change_password') }}</p>
                     </a>
                 </li>
                 @if (Gate::allows('admin-gate'))
                     <li class="nav-item">
                         <a href="{{ route('admin.user.show', auth()->user()->id) }}" class="nav-link">
                             <i class="fas fa-angle-right nav-icon"></i>
-                            <p>{{ __('label.menu.user_info') }}</p>
+                            <p>{{ __('label.menu_user_info') }}</p>
                         </a>
                     </li>
                 @endif

@@ -1,13 +1,13 @@
 @extends('layouts.master')
-@section('title', __('label.flow.approval_flow_list'))
+@section('title', __('label.flow_approval_flow_list'))
 
 @section('content-header')
-{{ __('label.flow.approval_flow_list') }}
+{{ __('label.flow_approval_flow_list') }}
 @endsection
 
 @section('content-breadcrumb')
-<li class="breadcrumb-item active">{{ __('label.menu.settings') }}</li>
-<li class="breadcrumb-item active">{{ __('label.flow.approval_flow_list') }}</li>
+<li class="breadcrumb-item active">{{ __('label.menu_settings') }}</li>
+<li class="breadcrumb-item active">{{ __('label.flow_approval_flow_list') }}</li>
 @endsection
 
 @section('content')
@@ -15,7 +15,7 @@
     <section class="content">
         <div class="button_wrap">
             <a href="{{ route('admin.flow.create') }}" class="btn bg-gradient-danger">
-                <i class="nav-icon fa fa-plus-circle" style="margin-right: 5px"></i>{{ __('label.button.addnew') }}</a>
+                <i class="nav-icon fa fa-plus-circle" style="margin-right: 5px"></i>{{ __('label.button_addnew') }}</a>
         </div>
         <div class="invoice p-3">
             <div class="card-body p-0 ">
@@ -24,11 +24,11 @@
                         <table class="table table-bordered table-hover" style="min-width: 500px;">
                             <thead>
                                 <tr>
-                                    <th style="width: 10px;">{{ __('label.flow.no') }}</th>
-                                    <th>{{ __('label.flow.flow_name') }}</th>
-                                    <th>{{ __('label.flow.step') }}</th>
-                                    <th>{{ __('label.flow.final_approver') }}</th>
-                                    <th style="width: 150px;">{{ __('label.flow.Actions') }}</th>
+                                    <th style="width: 10px;">{{ __('label.flow_no') }}</th>
+                                    <th>{{ __('label.flow_flow_name') }}</th>
+                                    <th>{{ __('label.flow_step') }}</th>
+                                    <th>{{ __('label.flow_final_approver') }}</th>
+                                    <th style="width: 150px;">{{ __('label.flow_actions') }}</th>
                                 </tr>
                             </thead>
                             <tbody>

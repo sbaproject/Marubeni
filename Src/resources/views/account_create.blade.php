@@ -1,20 +1,20 @@
 @extends('layouts.master')
 
 @section('title')
-{{ __('label.title.user.add') }}
+{{ __('label.title_user_add') }}
 @endsection
 
 @section('css')
 @endsection
 
 @section('content-header')
-{{ __('label.title.user.add') }}
+{{ __('label.title_user_add') }}
 @endsection
 
 @section('content-breadcrumb')
-{{-- <li class="breadcrumb-item active">{{ __('label.menu.settings') }}</li> --}}
-<li class="breadcrumb-item"><a href="{{ route('admin.user.index') }}">{{ __('label.menu.employee_setting') }}</a></li>
-<li class="breadcrumb-item active">{{ __('label.title.user.add') }}</li>
+{{-- <li class="breadcrumb-item active">{{ __('label.menu_settings') }}</li> --}}
+<li class="breadcrumb-item"><a href="{{ route('admin.user.index') }}">{{ __('label.menu_employee_setting') }}</a></li>
+<li class="breadcrumb-item active">{{ __('label.title_user_add') }}</li>
 @endsection
 
 @section('content')
@@ -172,11 +172,11 @@
 					<div class="mt-5 mb-5 text-center">
 						{{-- Submit --}}
 						<button type="submit" class="btn bg-gradient-success">
-							<i class="nav-icon far fa-check-circle"></i> {{ __('label.button.register') }}</button>
+							<i class="nav-icon far fa-check-circle"></i> {{ __('label.button_register') }}</button>
 						{{-- Cancel --}}
 						<a class="btn bg-gradient-secondary"
 							href="{{ route('admin.user.index') }}">
-							<i class="nav-icon far fa-times-circle"></i> {{__('label.button.cancel')}}</a>
+							<i class="nav-icon far fa-times-circle"></i> {{__('label.button_cancel')}}</a>
 					</div>
 			</div>
 

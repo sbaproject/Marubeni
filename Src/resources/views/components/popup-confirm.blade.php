@@ -16,7 +16,7 @@
                 <button type="button" id="popup_btn_ok" class="btn bg-gradient-success">{{ $accept }}</button>
                 <button type="button" id="popup_btn_ok_processing" class="btn bg-gradient-success" disabled style="display: none">
                     <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                    {{ __('label.button.processing') }}
+                    {{ __('label.button_processing') }}
                 </button>
             </div>
         </div>

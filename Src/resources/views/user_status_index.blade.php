@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('title')
-    {{ $intstatus == config('const.application.status.applying') ? __('label.status.list_of_applying_documents') : ($intstatus == config('const.application.status.approvel_un') ? __('label.status.list_of_approval_un_documents') : ($intstatus == config('const.application.status.approvel_in') ? __('label.status.list_of_approval_in_documents') : ($intstatus == config('const.application.status.declined') ? __('label.status.list_of_declined_documents') : ($intstatus == config('const.application.status.reject') ? __('label.status.list_of_reject_documents') : ($intstatus == config('const.application.status.completed') ? __('label.status.list_of_completed_documents') : ''))))) }}
+    {{ $intstatus == config('const.application.status.applying') ? __('label.status_list_of_applying_documents') : ($intstatus == config('const.application.status.approvel_un') ? __('label.status_list_of_approval_un_documents') : ($intstatus == config('const.application.status.approvel_in') ? __('label.status_list_of_approval_in_documents') : ($intstatus == config('const.application.status.declined') ? __('label.status_list_of_declined_documents') : ($intstatus == config('const.application.status.reject') ? __('label.status_list_of_reject_documents') : ($intstatus == config('const.application.status.completed') ? __('label.status_list_of_completed_documents') : ''))))) }}
 @endsection
 @section('css')
     <link rel="stylesheet" href="css/user/02_status.css">
@@ -16,7 +16,7 @@
 @endsection
 
 @php
-    $title = $intstatus == config('const.application.status.applying') ? __('label.status.list_of_applying_documents') : ($intstatus == config('const.application.status.approvel_un') ? __('label.status.list_of_approval_un_documents') : ($intstatus == config('const.application.status.approvel_in') ? __('label.status.list_of_approval_in_documents') : ($intstatus == config('const.application.status.declined') ? __('label.status.list_of_declined_documents') : ($intstatus == config('const.application.status.reject') ? __('label.status.list_of_reject_documents') : ($intstatus == config('const.application.status.completed') ? __('label.status.list_of_completed_documents') : '')))));
+    $title = $intstatus == config('const.application.status.applying') ? __('label.status_list_of_applying_documents') : ($intstatus == config('const.application.status.approvel_un') ? __('label.status_list_of_approval_un_documents') : ($intstatus == config('const.application.status.approvel_in') ? __('label.status_list_of_approval_in_documents') : ($intstatus == config('const.application.status.declined') ? __('label.status_list_of_declined_documents') : ($intstatus == config('const.application.status.reject') ? __('label.status_list_of_reject_documents') : ($intstatus == config('const.application.status.completed') ? __('label.status_list_of_completed_documents') : '')))));
 @endphp
 
 @section('content-header')
@@ -24,7 +24,7 @@
 @endsection
 
 @section('content-breadcrumb')
-<li class="breadcrumb-item active">{{ __('label.menu.status') }}</li>
+<li class="breadcrumb-item active">{{ __('label.menu_status') }}</li>
 <li class="breadcrumb-item active">{{ $title }}</li>
 @endsection
 
@@ -62,7 +62,7 @@
                 <div class="col-xl-2 col-lg-3 col-md-3 col-sm-3">
                     <div class="btn-search">
                         <button class="btn bg-gradient-primary" type="submit"><i class="fa fa-search"
-                                style="margin-right:5px;"></i>{{ __('label.button.search') }}</button>
+                                style="margin-right:5px;"></i>{{ __('label.button_search') }}</button>
                     </div>
                 </div>
         </form>
@@ -108,7 +108,7 @@
                                     </td>
                                     <td>
                                         <a class="btn bg-gradient-info" href="{{ Common::getRouteEditApplication($application_status->id, $application_status->form_id) }}">
-                                            {{ __('label.status.view_details') }}
+                                            {{ __('label.status_view_details') }}
                                             <i class="fas fa-angle-right" style="margin-left: 5px;"></i>
                                         </a>
                                     </td>

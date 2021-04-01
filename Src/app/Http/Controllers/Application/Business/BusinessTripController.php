@@ -60,14 +60,14 @@ class BusinesstripController extends ApplicationController
             $rules['trans.*.method']    = 'required';
         }
         $customAttributes = [
-            'budget_position'   => __('label.business.budget_position'),
-            'destinations'      => __('label.business.trip_destination'),
-            'accommodation'     => __('label.business.accommodation'),
-            'accompany'         => __('label.business.accompany'),
-            'borne_by'          => __('label.business.borne_by'),
-            'trans.*.departure' => __('label.business.departure'),
-            'trans.*.arrive'    => __('label.business.arrival'),
-            'trans.*.method'    => __('label.business.method'),
+            'budget_position'   => __('label.business_budget_position'),
+            'destinations'      => __('label.business_trip_destination'),
+            'accommodation'     => __('label.business_accommodation'),
+            'accompany'         => __('label.business_accompany'),
+            'borne_by'          => __('label.business_borne_by'),
+            'trans.*.departure' => __('label.business_departure'),
+            'trans.*.arrive'    => __('label.business_arrival'),
+            'trans.*.method'    => __('label.business_method'),
         ];
 
         return Validator::make($inputs, $rules, [], $customAttributes);

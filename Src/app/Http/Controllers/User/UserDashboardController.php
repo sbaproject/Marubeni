@@ -60,10 +60,10 @@ class UserDashboardController extends Controller
 
         // sorting columns
         $sortColNames = [
-            'application_no'    => __('label.dashboard.application_no'),
-            'form_name'  => __('label.dashboard.application_name'),
-            'status'        => __('label.dashboard.status'),
-            'created_at'     => __('label.dashboard.apply_date'),
+            'application_no'    => __('label.dashboard_application_no'),
+            'form_name'  => __('label.dashboard_application_name'),
+            'status'        => __('label.dashboard_status'),
+            'created_at'     => __('label.dashboard_apply_date'),
         ];
         $sortable = Common::getSortable($request, $sortColNames, 0, 0, true);
 
@@ -96,7 +96,7 @@ class UserDashboardController extends Controller
                 'application_no',
                 'forms.name As form_name',
                 'applications.created_at As created_at',
-                DB::raw('(CASE WHEN (applications.status >= 0 AND applications.status <= 98 AND applications.current_step = 1) THEN "' . __('label.dashboard.applying') . '" ELSE (CASE WHEN (applications.status = "' . config('const.application.status.declined') . '") THEN "' . __('label.dashboard.declined') . '" ELSE (CASE WHEN (applications.status = "' . config('const.application.status.reject') . '") THEN "' . __('label.dashboard.reject') . '" ELSE (CASE WHEN (applications.status = "' . config('const.application.status.completed') . '") THEN "' . __('label.dashboard.completed') . '" ELSE ("' . __('label.dashboard.approval') . '") END ) END) END) END) AS status'),
+                DB::raw('(CASE WHEN (applications.status >= 0 AND applications.status <= 98 AND applications.current_step = 1) THEN "' . __('label.dashboard_applying') . '" ELSE (CASE WHEN (applications.status = "' . config('const.application.status.declined') . '") THEN "' . __('label.dashboard_declined') . '" ELSE (CASE WHEN (applications.status = "' . config('const.application.status.reject') . '") THEN "' . __('label.dashboard_reject') . '" ELSE (CASE WHEN (applications.status = "' . config('const.application.status.completed') . '") THEN "' . __('label.dashboard_completed') . '" ELSE ("' . __('label.dashboard_approval') . '") END ) END) END) END) AS status'),
                 'applications.status As status_css',
                 'applications.current_step As current_step',
                 'applications.form_id As form_id',

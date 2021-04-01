@@ -27,12 +27,12 @@
 @endsection
 
 @section('content-header')
-{{ __('label.form.biz_trip') }}
+{{ __('label.form_biz_trip') }}
 @endsection
 
 @section('content-breadcrumb')
 <li class="breadcrumb-item"><a href="{{ route('user.form.index') }}">{{ __('label.application_list') }}</a></li>
-<li class="breadcrumb-item active">{{ __('label.form.biz_trip') }}</li>
+<li class="breadcrumb-item active">{{ __('label.form_biz_trip') }}</li>
 @endsection
 
 @section('content')
@@ -73,7 +73,7 @@
                 <div class="form-group row float-right">
                     <button type="submit" id="btnPdf" value="pdf" class="btn bg-gradient-danger" href="#">
                         <i class="fas fa-external-link-alt" style="margin-right: 5px; color: #fff;"></i>
-                        {{ __('label.button.export') }}
+                        {{ __('label.button_export') }}
                     </button>
                 </div>
                 <div class="clearfix"></div>
@@ -91,7 +91,7 @@
                 @if (isset($application))
                     <div class="form-group row">
                         <div class="col-sm-2 text-left">
-                            <label>{{ __('label.business.application_no') }}</label>
+                            <label>{{ __('label.business_application_no') }}</label>
                         </div>
                         <div class="col-sm-10">
                             {{ $application->application_no }}
@@ -101,7 +101,7 @@
                 @endif
                 <div class="form-group row">
                     <div class="col-sm-2 text-left">
-                        <label>{{ __('label.business.trip_destination') }}<span class="text-danger required"> (*)</span></label>
+                        <label>{{ __('label.business_trip_destination') }}<span class="text-danger required"> (*)</span></label>
                     </div>
                     <div class="col-sm-10">
                         <input type="text" id="destinations" name="destinations" class="form-control @error('destinations') is-invalid @enderror"
@@ -116,7 +116,7 @@
                 <hr>
                 <div class="form-group row">
                     <div class="col-sm-2 text-left">
-                        <label>{{ __('label.business.date_trip') }}<span class="text-danger required"> (*)</span></label>
+                        <label>{{ __('label.business_date_trip') }}<span class="text-danger required"> (*)</span></label>
                     </div>
                     <div class="col-sm-10">
                         <div class="col-sm-6 pl-0 pr-0">
@@ -170,7 +170,7 @@
                 <hr>
                 <div class="form-group row">
                     <div class="col-sm-2 text-left">
-                        <label>{{ __('label.business.transportation') }}<span class="text-danger required"> (*)</span></label>
+                        <label>{{ __('label.business_transportation') }}<span class="text-danger required"> (*)</span></label>
                     </div>
                     <div class="col-sm-10">
                         <div id="transport_block">
@@ -180,14 +180,14 @@
                                     @if(!$previewFlg)
                                     <div class="d-delete d-flex justify-content-end @if(count($trans) === 1 && $key === 0) d-none @endif">
                                         <button class="btnDelete btn bg-gradient-danger btn-sm pt-0 pb-0 pl-3 pr-3 mb-1">
-                                            {{ __('label.button.delete') }}
+                                            {{ __('label.button_delete') }}
                                         </button>
                                     </div>
                                     @endif
                                     <div class="form-group row">
                                         <div class="col-sm-6">
                                             <div class="row mb-2">
-                                                <span class="col-md-3">{{ __('label.business.departure') }}<span class="text-danger required"> (*)</span></span>
+                                                <span class="col-md-3">{{ __('label.business_departure') }}<span class="text-danger required"> (*)</span></span>
                                                 <div class="col-md-9">
                                                     <input type="text" class="form-control departure @error('trans.'.$key.'.departure') is-invalid @enderror"
                                                         name="trans[{{ $key }}][departure]" value="{{ $trans[$key]['departure'] }}" autocomplete="off"
@@ -200,7 +200,7 @@
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <span class="col-md-3">{{ __('label.business.arrival') }}<span class="text-danger required"> (*)</span></span>
+                                                <span class="col-md-3">{{ __('label.business_arrival') }}<span class="text-danger required"> (*)</span></span>
                                                 <div class="col-md-9">
                                                     <input type="text" class="form-control arrive @error('trans.'.$key.'.arrive') is-invalid @enderror"
                                                         name="trans[{{ $key }}][arrive]" value="{{ $trans[$key]['arrive'] }}" autocomplete="off"
@@ -215,7 +215,7 @@
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="row">
-                                                <span class="col-md-3">{{ __('label.business.method') }}<span class="text-danger required"> (*)</span></span>
+                                                <span class="col-md-3">{{ __('label.business_method') }}<span class="text-danger required"> (*)</span></span>
                                                 <div class="col-md-9">
                                                     <input type="text" class="form-control method @error('trans.'.$key.'.method') is-invalid @enderror"
                                                         name="trans[{{ $key }}][method]" value="{{ $trans[$key]['method'] }}" autocomplete="off"
@@ -235,20 +235,20 @@
                                 <div class="card card-body card-itinerary-transport">
                                     <div class="d-delete d-flex justify-content-end d-none">
                                         <button class="btnDelete btn bg-gradient-danger btn-sm pt-0 pb-0 pl-3 pr-3 mb-1">
-                                            {{ __('label.button.delete') }}
+                                            {{ __('label.button_delete') }}
                                         </button>
                                     </div>
                                     <div class="form-group row">
                                         <div class="col-sm-6">
                                             <div class="row mb-2">
-                                                <span class="col-md-3">{{ __('label.business.departure') }}<span class="text-danger required"> (*)</span></span>
+                                                <span class="col-md-3">{{ __('label.business_departure') }}<span class="text-danger required"> (*)</span></span>
                                                 <div class="col-md-9">
                                                     <input type="text" class="form-control departure" name="trans[0][departure]"
                                                         autocomplete="off" @if($previewFlg) readonly @endif>
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <span class="col-md-3">{{ __('label.business.arrival') }}<span class="text-danger required"> (*)</span></span>
+                                                <span class="col-md-3">{{ __('label.business_arrival') }}<span class="text-danger required"> (*)</span></span>
                                                 <div class="col-md-9">
                                                     <input type="text" class="form-control arrive" name="trans[0][arrive]"
                                                         autocomplete="off" @if($previewFlg) readonly @endif>
@@ -257,7 +257,7 @@
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="row">
-                                                <span class="col-md-3">{{ __('label.business.method') }}<span class="text-danger required"> (*)</span></span>
+                                                <span class="col-md-3">{{ __('label.business_method') }}<span class="text-danger required"> (*)</span></span>
                                                 <div class="col-md-9">
                                                     <input type="text" class="form-control method" name="trans[0][method]"
                                                         autocomplete="off" @if($previewFlg) readonly @endif>
@@ -270,20 +270,20 @@
                             <div class="card card-body card-itinerary-transport copy d-none">
                                 <div class="d-delete d-flex justify-content-end">
                                     <button class="btnDelete btn bg-gradient-danger btn-sm pt-0 pb-0 pl-3 pr-3 mb-1">
-                                        {{ __('label.button.delete') }}
+                                        {{ __('label.button_delete') }}
                                     </button>
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-sm-6">
                                         <div class="row mb-2">
-                                            <span class="col-md-3">{{ __('label.business.departure') }}<span class="text-danger required"> (*)</span></span>
+                                            <span class="col-md-3">{{ __('label.business_departure') }}<span class="text-danger required"> (*)</span></span>
                                             <div class="col-md-9">
                                                 <input type="text" class="form-control departure" autocomplete="off"
                                                     @if($previewFlg) readonly @endif>
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <span class="col-md-3">{{ __('label.business.arrival') }}<span class="text-danger required"> (*)</span></span>
+                                            <span class="col-md-3">{{ __('label.business_arrival') }}<span class="text-danger required"> (*)</span></span>
                                             <div class="col-md-9">
                                                 <input type="text" class="form-control arrive" autocomplete="off"
                                                     @if($previewFlg) readonly @endif>
@@ -292,7 +292,7 @@
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="row">
-                                            <span class="col-md-3">{{ __('label.business.method') }}<span class="text-danger required"> (*)</span></span>
+                                            <span class="col-md-3">{{ __('label.business_method') }}<span class="text-danger required"> (*)</span></span>
                                             <div class="col-md-9">
                                                 <input type="text" class="form-control method" autocomplete="off"
                                                     @if($previewFlg) readonly @endif>
@@ -304,7 +304,7 @@
                         </div>
                         @if(!$previewFlg)
                         <button id="btnAdd" class="btn bg-gradient-danger @if(!empty($trans) && count($trans) >= 4) d-none @endif">
-                            + {{ __('label.button.addnew') }}
+                            + {{ __('label.button_addnew') }}
                         </button>
                         @endif
                     </div>
@@ -312,7 +312,7 @@
                 <hr>
                 <div class="form-group row ">
                     <label class="col-lg-2 col-form-label text-left">
-                        {{ __('label.entertainment.budget_position') }}<span class="text-danger required"> (*)</span>
+                        {{ __('label.entertainment_budget_position') }}<span class="text-danger required"> (*)</span>
                     </label>
                     <div class="col-lg-10 text-lg-left text-left">
                         <fieldset class="@error('budget_position') form-control is-invalid @enderror">
@@ -324,7 +324,7 @@
                                 <input type="radio" name="rd_budget_position" value="{{ $val }}"
                                     @if($budget_position !==null && $budget_position==$val) checked @endif
                                     @if($previewFlg) disabled @endif>
-                                {{ __('label.budget.'. $key) }}
+                                {{ __('label.budget_'. $key) }}
                             </label>
                             <label class="radio-inline com_title col-form-label">
                                 @php
@@ -334,7 +334,7 @@
                                 <input type="radio" name="rd_budget_position" value="{{ $val }}"
                                     @if($budget_position !==null && $budget_position==$val) checked @endif
                                     @if($previewFlg) disabled @endif>
-                                {{ __('label.budget.'. $key) }}
+                                {{ __('label.budget_'. $key) }}
                             </label>
                         </fieldset>
                         <input type="hidden" id="budget_position" name="budget_position" value="{{ $budget_position }}">
@@ -348,7 +348,7 @@
                 <hr>
                 <div class="form-group row">
                     <div class="col-sm-2 text-left">
-                        <label>{{ __('label.business.accommodation') }}<span class="text-danger required"> (*)</span></label>
+                        <label>{{ __('label.business_accommodation') }}<span class="text-danger required"> (*)</span></label>
                     </div>
                     <div class="col-sm-10">
                         <input type="text" id="accommodation" name="accommodation" class="form-control @error('accommodation') is-invalid @enderror"
@@ -363,7 +363,7 @@
                 <hr>
                 <div class="form-group row">
                     <div class="col-sm-2 text-left">
-                        <label>{{ __('label.business.accompany') }}<span class="text-danger required"> (*)</span></label>
+                        <label>{{ __('label.business_accompany') }}<span class="text-danger required"> (*)</span></label>
                     </div>
                     <div class="col-sm-10">
                         <input type="text" id="accompany" name="accompany" class="form-control @error('accompany') is-invalid @enderror"
@@ -378,7 +378,7 @@
                 <hr>
                 <div class="form-group row">
                     <div class="col-sm-2 text-left">
-                        <label>{{ __('label.business.borne_by') }}<span class="text-danger required"> (*)</span></label>
+                        <label>{{ __('label.business_borne_by') }}<span class="text-danger required"> (*)</span></label>
                     </div>
                     <div class="col-sm-10">
                         <input type="text" id="borne_by" name="borne_by" class="form-control @error('borne_by') is-invalid @enderror"
@@ -393,7 +393,7 @@
                 <hr>
                 <div class="form-group row">
                     <div class="col-sm-2 text-left">
-                        <label>{{ __('label.business.comment') }}</label>
+                        <label>{{ __('label.business_comment') }}</label>
                     </div>
                     <div class="col-sm-10">
                         <textarea class="form-control" id="comment" name="comment" rows="2" style="width: 100%;"
@@ -403,7 +403,7 @@
                 <hr>
                 <div class="form-group row">
                     <div class="col-sm-2 text-left">
-                        <label for="myfile">{{ __('label.leave.caption.file_path') }}</label>
+                        <label for="myfile">{{ __('label.leave.caption_file_path') }}</label>
                     </div>
                     <div class="col-sm-5">
                         @if($previewFlg)
@@ -471,7 +471,7 @@
                 <hr>
                 <div class="form-group row">
                     <div class="col-sm-2 text-left">
-                        <label style="color: red;">{{ __('label.leave.caption.subsequent') }}</label>
+                        <label style="color: red;">{{ __('label.leave.caption_subsequent') }}</label>
                     </div>
                     <div class="col-sm-10">
                         <div class="form-check">
@@ -491,19 +491,19 @@
                 <button type="button" name="apply" value="apply" class="btn bg-gradient-success btn-form" data-toggle="modal"
                     data-target="#popup-confirm" @if(Common::detectMobile()) disabled @endif>
                     <i class="far fa-check-circle" style="margin-right: 5px;"></i>
-                    {{ __('label.button.apply') }}
+                    {{ __('label.button_apply') }}
                 </button>
                 @if (!$inProgressFlg)
                     <button type="button" name="draft" value="draft" class="btn btn bg-gradient-info btn-form" data-toggle="modal"
                         data-target="#popup-confirm" @if(Common::detectMobile()) disabled @endif>
                         <i class="nav-icon fas fa-edit" style="margin-right: 5px;"></i>
-                        {{ __('label.button.draft') }}
+                        {{ __('label.button_draft') }}
                     </button>
                 @endif
             @endif
             <a href="{{ route('user.form.index') }}" class="btn btn bg-gradient-secondary btn-form btn-cancel">
                 <i class="fa fa-ban" aria-hidden="true" style="margin-right: 5px;"></i>
-                {{ __('label.button.cancel') }}
+                {{ __('label.button_cancel') }}
             </a>
         </div>
         <br>

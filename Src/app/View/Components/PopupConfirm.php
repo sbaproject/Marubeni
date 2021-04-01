@@ -19,10 +19,10 @@ class PopupConfirm extends Component
     public function __construct($title = null, $body = null, $close = null, $accept = null)
     {
         if(empty($close)){
-            $close = __('label.button.cancel');
+            $close = __('label.button_cancel');
         }
         if (empty($accept)) {
-            $accept = __('label.button.accept');
+            $accept = __('label.button_accept');
         }
         if (empty($title)) {
             $title = __('label.confirming_title');

@@ -72,12 +72,12 @@ class LeaveApplicationController extends ApplicationController
         }
 
         $customAttributes = [
-            'reason_leave'      => __('label.leave.caption.reason_leave'),
-            'date_from'         => __('label.leave.caption.date_from'),
-            'date_to'           => __('label.leave.caption.date_to'),
-            'maternity_from'    => __('label.leave.caption.maternity_from'),
-            'maternity_to'      => __('label.leave.caption.maternity_to'),
-            'days_use'          => __('label.leave.caption.days_use'),
+            'reason_leave'      => __('label.leave.caption_reason_leave'),
+            'date_from'         => __('label.leave.caption_date_from'),
+            'date_to'           => __('label.leave.caption_date_to'),
+            'maternity_from'    => __('label.leave.caption_maternity_from'),
+            'maternity_to'      => __('label.leave.caption_maternity_to'),
+            'days_use'          => __('label.leave.caption_days_use'),
         ];
 
         return Validator::make($inputs, $rules, [], $customAttributes);

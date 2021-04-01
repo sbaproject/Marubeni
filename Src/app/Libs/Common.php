@@ -285,22 +285,22 @@ class Common
 	{
 
 		if ($status >= 0 && $status <= 98 && $currentStep == config('const.application.step_type.application')) {
-			$statusName = __('label.application.status.applying');
+			$statusName = __('label.application_status_applying');
 			$statusBadgeCss = 'badge-success';
 		} elseif ($status == config('const.application.status.declined')) {
-			$statusName = __('label.application.status.decline');
+			$statusName = __('label.application_status_decline');
 			$statusBadgeCss = 'badge-warning';
 		} elseif ($status == config('const.application.status.reject')) {
-			$statusName = __('label.application.status.reject');
+			$statusName = __('label.application_status_reject');
 			$statusBadgeCss = 'badge-secondary';
 		} elseif ($status == config('const.application.status.completed')) {
-			$statusName = __('label.application.status.complete');
+			$statusName = __('label.application_status_complete');
 			$statusBadgeCss = 'badge-primary';
 		} elseif ($status == config('const.application.status.draft')) {
-			$statusName = __('label.application.status.draft');
+			$statusName = __('label.application_status_draft');
 			$statusBadgeCss = 'badge-info';
 		} else {
-			$statusName = __('label.application.status.approval');
+			$statusName = __('label.application_status_approval');
 			$statusBadgeCss = 'badge-danger';
 		}
 
@@ -313,19 +313,19 @@ class Common
 	{
 
 		if ($status >= 0 && $status <= 98 && $step == config('const.application.step_type.application')) {
-			$statusName = __('label.approval_action.approval');
+			$statusName = __('label.approval_action_approval');
 			$statusBadgeCss = 'badge-success';
 		} elseif ($status == config('const.application.status.completed') && $step == config('const.application.step_type.settlement')) {
-			$statusName = __('label.approval_action.complete');
+			$statusName = __('label.approval_action_complete');
 			$statusBadgeCss = 'badge-primary';
 		} elseif ($status == config('const.application.status.declined')) {
-			$statusName = __('label.approval_action.decline');
+			$statusName = __('label.approval_action_decline');
 			$statusBadgeCss = 'badge-warning';
 		} elseif ($status == config('const.application.status.reject')) {
-			$statusName = __('label.approval_action.reject');
+			$statusName = __('label.approval_action_reject');
 			$statusBadgeCss = 'badge-danger';
 		} else {
-			$statusName = __('label.approval_action.approval');
+			$statusName = __('label.approval_action_approval');
 			$statusBadgeCss = 'badge-success';
 		}
 

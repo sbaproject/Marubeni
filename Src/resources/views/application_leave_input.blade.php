@@ -31,12 +31,12 @@
 @endsection
 
 @section('content-header')
-{{ __('label.form.leave') }}
+{{ __('label.form_leave') }}
 @endsection
 
 @section('content-breadcrumb')
 <li class="breadcrumb-item"><a href="{{ route('user.form.index') }}">{{ __('label.application_list') }}</a></li>
-<li class="breadcrumb-item active">{{ __('label.form.leave') }}</li>
+<li class="breadcrumb-item active">{{ __('label.form_leave') }}</li>
 @endsection
 
 @section('content')
@@ -78,7 +78,7 @@
                 <div class="form-group row float-right">
                     <button type="submit" id="btnPdf" value="pdf" class="btn bg-gradient-danger" href="#">
                         <i class="fas fa-external-link-alt" style="margin-right: 5px; color: #fff;"></i>
-                        {{ __('label.button.export') }}
+                        {{ __('label.button_export') }}
                     </button>
                 </div>
                 <div class="clearfix"></div>
@@ -96,7 +96,7 @@
                 @if (isset($application))
                 <div class="form-group row">
                     <div class="col-sm-2 text-left">
-                        <label>{{ __('label.business.application_no') }}</label>
+                        <label>{{ __('label.business_application_no') }}</label>
                     </div>
                     <div class="col-sm-10">
                         {{ $application->application_no }}
@@ -106,7 +106,7 @@
                 @endif
                 <div class="form-group row">
                     <div class="col-sm-2 text-left">
-                        <label>{{ __('label.leave.caption.code_leave') }}<span class="text-danger required"> (*)</span></label>
+                        <label>{{ __('label.leave.caption_code_leave') }}<span class="text-danger required"> (*)</span></label>
                     </div>
                     <div class="col-sm-10">
                         <select name="rd_code_leave" style="width: auto;"
@@ -132,12 +132,12 @@
                 <hr class="line-bottom">
                 <div class="form-group row">
                     <div class="col-sm-2 text-left">
-                        <label>{{ __('label.leave.caption.reason_leave') }}<span class="text-danger required"> (*)</span></label>
+                        <label>{{ __('label.leave.caption_reason_leave') }}<span class="text-danger required"> (*)</span></label>
                     </div>
                     <div class="col-sm-10">
                         <textarea name="reason_leave" id="reason_leave" rows="3" class="form-control @error('reason_leave') is-invalid @enderror"
                             style="width: 100%;" @if($previewFlg) readonly @endif
-                            placeholder="{{ __('label.leave.caption.reason_leave') }}">{{ $reason_leave }}</textarea>
+                            placeholder="{{ __('label.leave.caption_reason_leave') }}">{{ $reason_leave }}</textarea>
                         @error('reason_leave')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -148,7 +148,7 @@
                 <hr class="line-bottom">
                 <div class="form-group row">
                     <div class="col-sm-2 text-left">
-                        <label>{{ __('label.leave.caption.paid_type') }}<span id="rq_paid_type" class="text-danger required"> (*)</span></label>
+                        <label>{{ __('label.leave.caption_paid_type') }}<span id="rq_paid_type" class="text-danger required"> (*)</span></label>
                     </div>
                     <div class="col-sm-10">
                         @php
@@ -179,7 +179,7 @@
                 <hr class="line-bottom">
                 <div class="form-group row">
                     <div class="col-sm-2 text-left">
-                        <label>{{ __('label.leave.caption.date_leave') }}<span id="rq_date_leave" class="text-danger required"> (*)</span></label>
+                        <label>{{ __('label.leave.caption_date_leave') }}<span id="rq_date_leave" class="text-danger required"> (*)</span></label>
                     </div>
                     <div class="col-sm-10">
                         <div class="row mb-2">
@@ -233,7 +233,7 @@
                 <hr class="line-bottom">
                 <div class="form-group row">
                     <div class="col-sm-2 text-left">
-                        <label>{{ __('label.leave.caption.time_leave') }}</label>
+                        <label>{{ __('label.leave.caption_time_leave') }}</label>
                     </div>
                     <div class="col-sm-10">
                         <div class="row">
@@ -287,7 +287,7 @@
                 <hr class="line-bottom">
                 <div class="form-group row">
                     <div class="col-sm-2 text-left">
-                        <label>{{ __('label.leave.caption.maternity_leave') }}<span id="rq_maternity_leave" class="text-danger required"> (*)</span></label>
+                        <label>{{ __('label.leave.caption_maternity_leave') }}<span id="rq_maternity_leave" class="text-danger required"> (*)</span></label>
                     </div>
                     <div class="col-sm-10">
                         <div class="row mb-2">
@@ -343,16 +343,16 @@
                 <hr class="line-bottom">
                 <div class="form-group row">
                     <div class="col-sm-2 text-left">
-                        <label>{{ __('label.leave.caption.annual_leave') }}</label>
+                        <label>{{ __('label.leave.caption_annual_leave') }}</label>
                     </div>
                     <div class="col-sm-10">
                         <div class="row mb-2">
-                            <span class="col-md-2">{{ __('label.leave.caption.entitled_year') }}</span>
+                            <span class="col-md-2">{{ __('label.leave.caption_entitled_year') }}</span>
                             <div class="col-md-10">
                                 <input type="text" id="entitled" name="entitled_days" class="form-control input-custom-2"
                                     value="{{ $applicant->leave_days }}" readonly>
                                 &nbsp;&nbsp;
-                                <span>{{ __('label.leave.caption.days') }}</span>
+                                <span>{{ __('label.leave.caption_days') }}</span>
                             </div>
                         </div>
                         @php
@@ -368,22 +368,22 @@
                             $usedHours = (($totalUsedHours % $workingHourPerDay) / $workingHourPerDay) * $workingHourPerDay;
                         @endphp
                         <div class="row mb-2">
-                            <span class="col-md-2">{{ __('label.leave.caption.used_this_year') }}</span>
+                            <span class="col-md-2">{{ __('label.leave.caption_used_this_year') }}</span>
                             <div class="col-md-10">
                                 <input type="text" class="form-control input-custom-2" id="used_days" name="used_days"
                                     value="{{ $usedDays }}" readonly>
                                 &nbsp;&nbsp;
-                                <span>{{ __('label.leave.caption.days') }}</span>
+                                <span>{{ __('label.leave.caption_days') }}</span>
                                 &nbsp;&nbsp;&nbsp;&nbsp;
                                 <input type="text" class="form-control input-custom-2" id="used_time" name="used_hours"
                                     value="{{ $usedHours }}" readonly>
                                 &nbsp;&nbsp;
-                                <span>{{ __('label.leave.caption.hours') }}</span>
+                                <span>{{ __('label.leave.caption_hours') }}</span>
 
                             </div>
                         </div>
                         <div class="row mb-2">
-                            <span class="col-md-2">{{ __('label.leave.caption.take_this_time') }} <span id="rq_take_this_time" class="text-danger required"> (*)</span></span>
+                            <span class="col-md-2">{{ __('label.leave.caption_take_this_time') }} <span id="rq_take_this_time" class="text-danger required"> (*)</span></span>
                             <div class="col-md-10">
                                 @php
                                     if($previewFlg
@@ -397,14 +397,14 @@
                                     @if(isset($daysUsedReadFlg)) readonly @endif>
                                     <input type="hidden" name="days_use" value="{{ $days_use }}">
                                 &nbsp;&nbsp;
-                                <span>{{ __('label.leave.caption.days') }}</span>
+                                <span>{{ __('label.leave.caption_days') }}</span>
                                 &nbsp;&nbsp;&nbsp;&nbsp;
                                 <input type="text" id="txt_times_use" name="times_use" class="form-control input-custom-2 times_use"
                                     value="{{ $times_use }}" autocomplete="off" max-number="2" max-value="24"
                                     @if(isset($daysUsedReadFlg)) readonly @endif>
                                     <input type="hidden" name="times_use" value="{{ $times_use }}">
                                 &nbsp;&nbsp;
-                                <span>{{ __('label.leave.caption.hours') }}</span>
+                                <span>{{ __('label.leave.caption_hours') }}</span>
                                 @error('days_use')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -413,17 +413,17 @@
                             </div>
                         </div>
                         <div class="row">
-                            <span class="col-md-2">{{ __('label.leave.caption.remaining') }}</span>
+                            <span class="col-md-2">{{ __('label.leave.caption_remaining') }}</span>
                             <div class="col-md-10">
                                 <input type="text" class="form-control input-custom-2" id="remaining_days"
                                     name="remaining_days" value="{{ $applicant->leave_remaining_days }}" readonly>
                                 &nbsp;&nbsp;
-                                <span>{{ __('label.leave.caption.days') }}</span>
+                                <span>{{ __('label.leave.caption_days') }}</span>
                                 &nbsp;&nbsp;&nbsp;&nbsp;
                                 <input type="text" class="form-control input-custom-2" id="remaining_hours"
                                     name="remaining_hours" value="{{ $applicant->leave_remaining_time }}" readonly>
                                 &nbsp;&nbsp;
-                                <span>{{ __('label.leave.caption.hours') }}</span>
+                                <span>{{ __('label.leave.caption_hours') }}</span>
                             </div>
                         </div>
                     </div>
@@ -431,7 +431,7 @@
                 <hr class="line-bottom">
                 <div class="form-group row">
                     <div class="col-sm-2 text-left">
-                        <label for="myfile">{{ __('label.leave.caption.file_path') }}</label>
+                        <label for="myfile">{{ __('label.leave.caption_file_path') }}</label>
                     </div>
                     <div class="col-sm-5">
                         @if($previewFlg)
@@ -499,7 +499,7 @@
                 <hr class="line-bottom">
                 <div class="form-group row">
                     <div class="col-sm-2 text-left">
-                        <label style="color: red;">{{ __('label.leave.caption.subsequent') }}</label>
+                        <label style="color: red;">{{ __('label.leave.caption_subsequent') }}</label>
                     </div>
                     <div class="col-sm-10">
                         <div class="form-check">
@@ -520,19 +520,19 @@
                 <button type="button" name="apply" value="apply" class="btn bg-gradient-success btn-form"
                     data-toggle="modal" data-target="#popup-confirm" @if(Common::detectMobile()) disabled @endif>
                     <i class="far fa-check-circle" style="margin-right: 5px;"></i>
-                    {{ __('label.button.apply') }}
+                    {{ __('label.button_apply') }}
                 </button>
                 @if (!$inProgressFlg)
                     <button type="button" name="draft" value="draft" class="btn btn bg-gradient-info btn-form" data-toggle="modal"
                         data-target="#popup-confirm" @if(Common::detectMobile()) disabled @endif>
                         <i class="nav-icon fas fa-edit" style="margin-right: 5px;"></i>
-                        {{ __('label.button.draft') }}
+                        {{ __('label.button_draft') }}
                     </button>
                 @endif
             @endif
             <a href="{{ route('user.form.index') }}" class="btn btn bg-gradient-secondary btn-form btn-cancel">
                 <i class="fa fa-ban" aria-hidden="true" style="margin-right: 5px;"></i>
-                {{ __('label.button.cancel') }}
+                {{ __('label.button_cancel') }}
             </a>
         </div>
         <br>

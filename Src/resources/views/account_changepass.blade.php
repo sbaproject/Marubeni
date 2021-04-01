@@ -9,7 +9,7 @@
 @endsection
 
 @section('content-breadcrumb')
-<li class="breadcrumb-item active">{{ __('label.menu.settings') }}</li>
+<li class="breadcrumb-item active">{{ __('label.menu_settings') }}</li>
 <li class="breadcrumb-item active">{{ __('label.change_pass') }}</li>
 @endsection
 
@@ -72,7 +72,7 @@
 										<br>
 									<button type="submit" class="btn bg-gradient-success">
 										<i class="nav-icon far fa-check-circle"></i>
-										{{ __('label.button.change') }}
+										{{ __('label.button_change') }}
 									</button>
 								</div>
 							</div>
@@ -86,7 +86,7 @@
 							<button type="submit"
 								class="btn bg-gradient-success">
 								<i class="nav-icon far fa-check-circle"></i>
-								{{ __('label.button.change') }}
+								{{ __('label.button_change') }}
 							</button>
 						</div>
 					</div>

@@ -9,7 +9,7 @@
             $to = $total;
         }
     @endphp
-    {{ __('label.paginator.show_result_label',['total' => $total, 'from' => $from, 'to' => $to]) }}
+    {{ __('label.paginator_show_result_label',['total' => $total, 'from' => $from, 'to' => $to]) }}
     </div>
 @else
     <div class="clearfix p-0 text-center pb-3">
@@ -26,16 +26,16 @@
         <ul class="pagination pagination-sm pager_custom ">
             @if ($paginator->onFirstPage())
             {{-- First --}}
-            <li class="page-item disabled" aria-disabled="true" title="{{ __('label.paginator.first') }}">
+            <li class="page-item disabled" aria-disabled="true" title="{{ __('label.paginator_first') }}">
                 <span class="page-link" aria-hidden="true">«</span>
             </li>
             {{-- Prev --}}
-            <li class="page-item disabled" aria-disabled="true" title="{{ __('label.paginator.prev') }}">
+            <li class="page-item disabled" aria-disabled="true" title="{{ __('label.paginator_prev') }}">
                 <span class="page-link" aria-hidden="true">‹</span>
             </li>
             @else
-            <li class="page-item" title="{{ __('label.paginator.first') }}"><a class="page-link" href="{{ $paginator->url(1) }}">«</a></li>
-            <li class="page-item" title="{{ __('label.paginator.prev') }}"><a class="page-link" href="{{ $paginator->previousPageUrl() }}">‹</a></li>
+            <li class="page-item" title="{{ __('label.paginator_first') }}"><a class="page-link" href="{{ $paginator->url(1) }}">«</a></li>
+            <li class="page-item" title="{{ __('label.paginator_prev') }}"><a class="page-link" href="{{ $paginator->previousPageUrl() }}">‹</a></li>
             @endif
 
             @foreach ($elements as $element)
@@ -59,13 +59,13 @@
 
             {{-- Last --}}
             @if ($paginator->hasMorePages())
-            <li class="page-item" title="{{ __('label.paginator.next') }}"><a class="page-link" href="{{ $paginator->nextPageUrl() }}">›</a></li>
-            <li class="page-item" title="{{ __('label.paginator.last') }}"><a class="page-link" href="{{ $paginator->url($paginator->lastPage()) }}">»</a></li>
+            <li class="page-item" title="{{ __('label.paginator_next') }}"><a class="page-link" href="{{ $paginator->nextPageUrl() }}">›</a></li>
+            <li class="page-item" title="{{ __('label.paginator_last') }}"><a class="page-link" href="{{ $paginator->url($paginator->lastPage()) }}">»</a></li>
             @else
-            <li class="page-item disabled" aria-disabled="true" title="{{ __('label.paginator.next') }}">
+            <li class="page-item disabled" aria-disabled="true" title="{{ __('label.paginator_next') }}">
                 <span class="page-link" aria-hidden="true">›</span>
             </li>
-            <li class="page-item disabled" aria-disabled="true" title="{{ __('label.paginator.last') }}">
+            <li class="page-item disabled" aria-disabled="true" title="{{ __('label.paginator_last') }}">
                 <span class="page-link" aria-hidden="true">»</span>
             </li>
             @endif
@@ -77,23 +77,23 @@
             {{-- @if ($paginator->onFirstPage()) --}}
             {{-- <a href="{{ $paginator->previousPageUrl() }}" class="bt_left float-left btn disabled">
                 <i class="nav-icon fa fa-long-arrow-alt-left"></i>
-                {{ __('label.paginator.prev') }}
+                {{ __('label.paginator_prev') }}
             </a> --}}
             {{-- @else --}}
             {{-- <a href="{{ $paginator->previousPageUrl() }}" class="bt_left float-left btn">
                 <i class="nav-icon fa fa-long-arrow-alt-left"></i>
-                {{ __('label.paginator.prev') }}
+                {{ __('label.paginator_prev') }}
             </a> --}}
             {{-- @endif --}}
             {{-- Next --}}
             {{-- @if ($paginator->hasMorePages()) --}}
             {{-- <a href="{{ $paginator->nextPageUrl() }}" class="bt_right float-right btn">
-                {{ __('label.paginator.next') }}
+                {{ __('label.paginator_next') }}
                 <i class="nav-icon fas fa-long-arrow-alt-right"></i>
             </a> --}}
             {{-- @else --}}
             {{-- <a href="{{ $paginator->nextPageUrl() }}" class="bt_right float-right btn disabled">
-                {{ __('label.paginator.next') }}
+                {{ __('label.paginator_next') }}
                 <i class="nav-icon fas fa-long-arrow-alt-right"></i>
             </a> --}}
             {{-- @endif --}}

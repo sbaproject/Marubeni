@@ -1,19 +1,19 @@
 @extends('layouts.master')
 
 @section('title')
-{{ __('label.menu.employee_setting') }}
+{{ __('label.menu_employee_setting') }}
 @endsection
 
 @section('css')
 @endsection
 
 @section('content-header')
-{{ __('label.menu.employee_setting') }}
+{{ __('label.menu_employee_setting') }}
 @endsection
 
 @section('content-breadcrumb')
-<li class="breadcrumb-item active">{{ __('label.menu.settings') }}</li>
-<li class="breadcrumb-item active">{{ __('label.menu.employee_setting') }}</li>
+<li class="breadcrumb-item active">{{ __('label.menu_settings') }}</li>
+<li class="breadcrumb-item active">{{ __('label.menu_employee_setting') }}</li>
 @endsection
 
 @section('content')
@@ -24,7 +24,7 @@
     {{-- <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-lg-6">
-                <h1>{{ __('label.menu.employee_setting') }}</h1>
+                <h1>{{ __('label.menu_employee_setting') }}</h1>
             </div>
         </div>
     </div> --}}
@@ -32,7 +32,7 @@
         <div class="col-xl-8 col-lg-10">
             <div class="invoice">
                 <div class="card-header">
-                    <h3 class="card-title">{{ __('label.button.search') }}</h3>
+                    <h3 class="card-title">{{ __('label.button_search') }}</h3>
                 </div>
                 <div class="card-body">
                     <div class="search-content">
@@ -115,7 +115,7 @@
                                         <div class="col-lg-9">
                                             <button type="submit" class="btn bg-gradient-primary">
                                                 <i class="nav-icon fas fa-search"></i>
-                                                {{ __('label.button.search') }}
+                                                {{ __('label.button_search') }}
                                             </button>
                                         </div>
                                     </div>
@@ -135,7 +135,7 @@
         <a class="btn bg-gradient-danger"
             href="{{ route('admin.user.create') }}">
             <i class="nav-icon fa fa-plus-circle"></i>
-            {{ __('label.button.addnew') }}
+            {{ __('label.button_addnew') }}
         </a>
     </div>
     <div class="invoice p-3">
@@ -192,7 +192,7 @@
                                         <form action="{{ route('admin.user.restore', $user->user_id) }}" method="POST">
                                             @csrf
                                             <button type="button" class="btn bg-gradient-primary btn-sm"
-                                                data-toggle="tooltip" title="{{ __('label.button.restore') }}"
+                                                data-toggle="tooltip" title="{{ __('label.button_restore') }}"
                                                 data-toggle="modal" data-target="#popup-confirm">
                                                 <i class="fa fa-undo"></i>
                                             </button>

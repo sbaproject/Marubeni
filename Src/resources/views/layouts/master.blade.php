@@ -88,7 +88,7 @@
                         /
                         <a href="{{ route('logout') }}" class="text-name" onclick="event.preventDefault();
                                 document.getElementById('logout-form').submit();">
-                            {{ __('label.button.logout') }}
+                            {{ __('label.button_logout') }}
                         </a>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                             @csrf
@@ -135,9 +135,9 @@
                             <ol class="breadcrumb float-sm-right">
                                 @if (Route::currentRouteName() !== 'user.dashboard' && Route::currentRouteName() !== 'admin.dashboard')
                                     @if (Gate::allows('admin-gate'))
-                                    <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">{{ __('label.menu.dashboard') }}</a></li>
+                                    <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">{{ __('label.menu_dashboard') }}</a></li>
                                     @else
-                                    <li class="breadcrumb-item"><a href="{{ route('user.dashboard') }}">{{ __('label.menu.dashboard') }}</a></li>
+                                    <li class="breadcrumb-item"><a href="{{ route('user.dashboard') }}">{{ __('label.menu_dashboard') }}</a></li>
                                     @endif
                                     @yield('content-breadcrumb')
                                 @endif

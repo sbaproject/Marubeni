@@ -1,20 +1,20 @@
 @extends('layouts.master')
 
 @section('title')
-{{ __('label.title.user.edit') }}
+{{ __('label.title_user_edit') }}
 @endsection
 
 @section('css')
 @endsection
 
 @section('content-header')
-{{ __('label.title.user.edit') }}
+{{ __('label.title_user_edit') }}
 @endsection
 
 @section('content-breadcrumb')
-{{-- <li class="breadcrumb-item active">{{ __('label.menu.settings') }}</li> --}}
-<li class="breadcrumb-item"><a href="{{ route('admin.user.index') }}">{{ __('label.menu.employee_setting') }}</a></li>
-<li class="breadcrumb-item active">{{ __('label.title.user.edit') }}</li>
+{{-- <li class="breadcrumb-item active">{{ __('label.menu_settings') }}</li> --}}
+<li class="breadcrumb-item"><a href="{{ route('admin.user.index') }}">{{ __('label.menu_employee_setting') }}</a></li>
+<li class="breadcrumb-item active">{{ __('label.title_user_edit') }}</li>
 @endsection
 
 @section('content')
@@ -184,13 +184,13 @@
                         {{-- Submit --}}
                         <button type="submit" class="btn bg-gradient-success">
                             <i class="nav-icon far fa-check-circle"></i>
-                            {{ __('label.button.update') }}
+                            {{ __('label.button_update') }}
                         </button>
                         {{-- Cancel --}}
                         <a href="{{ route('admin.user.index') }}"
                             class="btn bg-gradient-secondary">
                             <i class="nav-icon far fa-times-circle"></i>
-                            {{__('label.button.cancel')}}
+                            {{__('label.button_cancel')}}
                         </a>
                     </div>
                 </form>

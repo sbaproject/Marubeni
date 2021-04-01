@@ -102,9 +102,9 @@ class ApplicationController extends Controller
     {
         // back to list application
         if (isset($inputs['apply'])) {
-            $msg = __('msg.application.success.apply_ok');
+            $msg = __('msg.application_success_apply_ok');
         } elseif (isset($inputs['draft'])) {
-            $msg = __('msg.application.success.draft_ok');
+            $msg = __('msg.application_success_draft_ok');
         }
         return Common::redirectRouteWithAlertSuccess($this->routeNameRedirectAfterSave, $msg);
     }
@@ -133,7 +133,7 @@ class ApplicationController extends Controller
                 if (!$this->checkEditableApplication($application)) {
                     return Common::redirectRouteWithAlertFail(
                         $this->routeNameRedirectAfterSave,
-                        __('msg.application.error.inprogress_not_allow_edit')
+                        __('msg.application_error_inprogress_not_allow_edit')
                     );
                 }
             }

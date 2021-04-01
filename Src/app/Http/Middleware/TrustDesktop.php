@@ -19,7 +19,7 @@ class TrustDesktop
     {
         // allows only desktop client
         if(Common::detectMobile()){
-            abort(403, __('msg.page_error.only_desktop'));
+            abort(403, __('msg.page_error_only_desktop'));
         }
         return $next($request);
     }

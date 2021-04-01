@@ -30,8 +30,8 @@ class CheckipController extends Controller
 
             //Send Code Mail
             $message = [
-                'type' =>  __('label.checkip.mail_content'),
-                'task' =>  __('label.checkip.mail_the_code_is'),
+                'type' =>  __('label.checkip_mail_content'),
+                'task' =>  __('label.checkip_mail_the_code_is'),
                 'content' => $num,
             ];
             SendEmail::dispatch($message)->delay(now()->addMinute(1));
@@ -56,10 +56,10 @@ class CheckipController extends Controller
         //Check Code
         $validator->after(function ($validator) use ($data, $request) {
             if (!Hash::check(trim($data['code']), Auth::user()->otp_token) && !empty($request->cookie('code'))) {
-                $validator->errors()->add('code', __('label.checkip.valid_not_compare'));
+                $validator->errors()->add('code', __('label.checkip_valid_not_compare'));
             }
             if (!(trim($data['code']) == $request->cookie('code'))) {
-                $validator->errors()->add('code', __('label.checkip.valid_expired'));
+                $validator->errors()->add('code', __('label.checkip_valid_expired'));
             }
         });
 

@@ -54,9 +54,9 @@ class ApprovalController extends Controller
         // sorting columns
         $sortColNames = [
             'application_no'    => __('label.application_no'),
-            'application_type'  => __('label.status.application_type'),
-            'apply_date'        => __('label.status.apply_date'),
-            'next_approver'     => __('label.status.next_approver'),
+            'application_type'  => __('label.status_application_type'),
+            'apply_date'        => __('label.status_apply_date'),
+            'next_approver'     => __('label.status_next_approver'),
             'step_type'         => __('label.step'),
         ];
         $sortable = Common::getSortable($request, $sortColNames, 2, 1, true);
@@ -116,7 +116,7 @@ class ApprovalController extends Controller
             ->first();
 
         if (empty($application)) {
-            return $this->redirectError(__('msg.application.error.404'));
+            return $this->redirectError(__('msg.application_error_404'));
         }
 
         // get list of approver (include TO & CC)
@@ -125,7 +125,7 @@ class ApprovalController extends Controller
         // check logged user has permission to access
         $approverIds = Arr::pluck($approvers, 'approver_id');
         if (!in_array(Auth::user()->id, $approverIds) && $application->created_by !== Auth::user()->id) {
-            return $this->redirectError(__('msg.application.error.403'));
+            return $this->redirectError(__('msg.application_error_403'));
         }
 
         // detect current logged user is TO or CC approve_type
@@ -155,7 +155,7 @@ class ApprovalController extends Controller
 
         //check logged user has approval permission
         if (!$user->approval) {
-            return $this->redirectError(__('msg.application.error.403'));
+            return $this->redirectError(__('msg.application_error_403'));
         }
 
         // selection columns
@@ -199,11 +199,11 @@ class ApprovalController extends Controller
 
         // not found application
         if (empty($application)) {
-            return $this->redirectError(__('msg.application.error.404'));
+            return $this->redirectError(__('msg.application_error_404'));
         }
         // check available status application
         if ($application->status < 0 || $application->status > 98) {
-            return $this->redirectError(__('msg.application.error.unvalid_action'));
+            return $this->redirectError(__('msg.application_error_unvalid_action'));
         }
         // check available approval for current user
         // if logged user is approver TO (able to Approve|Decline|Reject)
@@ -214,12 +214,12 @@ class ApprovalController extends Controller
                 $flgApproverCC = $this->isApproverCC($approvers);
             }
             if(!$flgApproverCC){
-                return $this->redirectError(__('msg.application.error.403'));
+                return $this->redirectError(__('msg.application_error_403'));
             }
         }
         // check application has modified before approve
         if ($application->updated_at !== $inputs['last_updated_at']) {
-            return $this->redirectError(__('msg.application.error.review_before_approve'));
+            return $this->redirectError(__('msg.application_error_review_before_approve'));
         }
 
         DB::beginTransaction();
@@ -322,7 +322,7 @@ class ApprovalController extends Controller
             // commit db
             DB::commit();
 
-            return Common::redirectRouteWithAlertSuccess('user.approval.index', __('msg.application.success.approve_ok'));
+            return Common::redirectRouteWithAlertSuccess('user.approval.index', __('msg.application_success_approve_ok'));
         } catch (Exception $ex) {
 
             // rollback db

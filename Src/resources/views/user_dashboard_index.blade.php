@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('title')
-    {{ $intstatus == config('const.application.status.applying') ? __('label.status.list_of_applying_documents') : ($intstatus == config('const.application.status.approvel') ? __('label.status.list_of_approval_documents') : ($intstatus == config('const.application.status.declined') ? __('label.status.list_of_declined_documents') : ($intstatus == config('const.application.status.reject') ? __('label.status.list_of_reject_documents') : ($intstatus == config('const.application.status.completed') ? __('label.status.list_of_completed_documents') : __('label.dashboard.list_application'))))) }}
+    {{ $intstatus == config('const.application.status.applying') ? __('label.status_list_of_applying_documents') : ($intstatus == config('const.application.status.approvel') ? __('label.status_list_of_approval_documents') : ($intstatus == config('const.application.status.declined') ? __('label.status_list_of_declined_documents') : ($intstatus == config('const.application.status.reject') ? __('label.status_list_of_reject_documents') : ($intstatus == config('const.application.status.completed') ? __('label.status_list_of_completed_documents') : __('label.dashboard_list_application'))))) }}
 @endsection
 @section('css')
     <link rel="stylesheet" href="css/user/01_dashboard.css">
@@ -16,11 +16,11 @@
 @endsection
 
 @section('content-header')
-    {{ __('label.menu.dashboard') }}
+    {{ __('label.menu_dashboard') }}
 @endsection
 
 @section('content-breadcrumb')
-{{-- <li class="breadcrumb-item active">{{ __('label.menu.dashboard') }}</li> --}}
+{{-- <li class="breadcrumb-item active">{{ __('label.menu_dashboard') }}</li> --}}
 @endsection
 
 @section('content')
@@ -57,7 +57,7 @@
                 <div class="col-xl-2 col-lg-3 col-md-3 col-sm-3">
                     <div class="btn-search">
                         <button type="submit" class="btn bg-gradient-primary">
-                            <i class="fa fa-search" style="margin-right:5px;"></i>{{ __('label.button.search') }}</button>
+                            <i class="fa fa-search" style="margin-right:5px;"></i>{{ __('label.button_search') }}</button>
                     </div>
                 </div>
         </section>
@@ -69,7 +69,7 @@
                 <div class="col-xs-5ths">
                     <div class="">
                         <div class="btn btn-block bg-gradient-success btn-status" id="applying">
-                            <span>{{ __('label.dashboard.applying') }}</span>
+                            <span>{{ __('label.dashboard_applying') }}</span>
                             <div class="right-number">({{ $count_applying }})</div>
                         </div>
                     </div>
@@ -78,7 +78,7 @@
                 <div class="col-xs-5ths col-set">
                     <div class="">
                         <div class="btn btn-block bg-gradient-danger btn-status" id="approval">
-                            <span>{{ __('label.dashboard.approval') }}</span>
+                            <span>{{ __('label.dashboard_approval') }}</span>
                             <div class="right-number">({{ $count_approval }})</div>
                         </div>
                     </div>
@@ -86,7 +86,7 @@
                 <div class="col-xs-5ths col-set">
                     <div class="">
                         <div class="btn btn-block bg-gradient-warning btn-status" id="declined">
-                            <span>{{ __('label.dashboard.declined') }}</span>
+                            <span>{{ __('label.dashboard_declined') }}</span>
                             <div class="right-number">({{ $count_declined }})</div>
                         </div>
                     </div>
@@ -94,7 +94,7 @@
                 <div class="col-xs-5ths col-set">
                     <div class="">
                         <div class="btn btn-block bg-gradient-secondary btn-status" id="reject">
-                            <span>{{ __('label.dashboard.reject') }}</span>
+                            <span>{{ __('label.dashboard_reject') }}</span>
                             <div class="right-number">({{ $count_reject }})</div>
                         </div>
                     </div>
@@ -102,7 +102,7 @@
                 <div class="col-xs-5ths col-set">
                     <div class="">
                         <div class="btn btn-block bg-gradient-primary btn-status" id="completed">
-                            <span>{{ __('label.dashboard.completed') }}</span>
+                            <span>{{ __('label.dashboard_completed') }}</span>
                             <div class="right-number">({{ $count_completed }})</div>
                         </div>
                     </div>
@@ -110,7 +110,7 @@
             </div>
             <h4 class="mb-2" style="border-bottom: 1px solid #000;font-weight: bold;margin-top: 25px;"><i
                     class="nav-icon fas fa-file-alt" aria-hidden="true"
-                    style="margin-right: 5px;margin-bottom: 5px;"></i>{{ $intstatus == config('const.application.status.applying') ? __('label.status.list_of_applying_documents') : ($intstatus == config('const.application.status.approvel') ? __('label.status.list_of_approval_documents') : ($intstatus == config('const.application.status.declined') ? __('label.status.list_of_declined_documents') : ($intstatus == config('const.application.status.reject') ? __('label.status.list_of_reject_documents') : ($intstatus == config('const.application.status.completed') ? __('label.status.list_of_completed_documents') : __('label.dashboard.list_application'))))) }}
+                    style="margin-right: 5px;margin-bottom: 5px;"></i>{{ $intstatus == config('const.application.status.applying') ? __('label.status_list_of_applying_documents') : ($intstatus == config('const.application.status.approvel') ? __('label.status_list_of_approval_documents') : ($intstatus == config('const.application.status.declined') ? __('label.status_list_of_declined_documents') : ($intstatus == config('const.application.status.reject') ? __('label.status_list_of_reject_documents') : ($intstatus == config('const.application.status.completed') ? __('label.status_list_of_completed_documents') : __('label.dashboard_list_application'))))) }}
             </h4>
             <div class="card">
                 <div class="card-body p-0 card-list-items">
@@ -152,7 +152,7 @@
                                         <td>
                                             <a class="btn bg-gradient-info"
                                                 href="{{ Common::getRouteEditApplication($application->id, $application->form_id) }}">
-                                                {{ __('label.dashboard.view_details') }}
+                                                {{ __('label.dashboard_view_details') }}
                                                 <i class="fas fa-angle-right" style="margin-left: 5px;"></i>
                                             </a>
                                         </td>

@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('title')
-{{ __('label.title.approval.list') }}
+{{ __('label.title_approval_list') }}
 @endsection
 @section('css')
 <link rel="stylesheet" href="css/user/08_waiting_approval_list.css">
@@ -10,11 +10,11 @@
 @endsection
 
 @section('content-header')
-{{ __('label.title.approval.list') }}
+{{ __('label.title_approval_list') }}
 @endsection
 
 @section('content-breadcrumb')
-<li class="breadcrumb-item active">{{ __('label.title.approval.list') }}</li>
+<li class="breadcrumb-item active">{{ __('label.title_approval_list') }}</li>
 @endsection
 
 @section('content')
@@ -23,7 +23,7 @@
         <div class="col-xl-8 col-lg-10">
             <div class="invoice">
                 <div class="card-header">
-                    <h3 class="card-title">{{ __('label.button.search') }}</h3>
+                    <h3 class="card-title">{{ __('label.button_search') }}</h3>
                 </div>
                 <div class="card-body">
                     <div class="search-content">
@@ -33,13 +33,13 @@
                                 <div class="col-xl-8 col-lg-9">
                                     <div class="form-group row">
                                         <label for="shourui"
-                                            class="col-sm-4 col-form-label text-center font-weight-normal">{{ __('label.status.application_type') }}</label>
+                                            class="col-sm-4 col-form-label text-center font-weight-normal">{{ __('label.status_application_type') }}</label>
                                         <div class="col-sm-8">
                                             <select id="application_type" name="application_type" class="form-control">
                                                 <option value="" selected>{{ __('label.select') }}</option>
                                                 @foreach (config('const.form') as $key => $value)
                                                     <option value={{ $value }} @if(isset($inputs['application_type']) && $inputs['application_type'] == $value) selected @endif>
-                                                        {{ __('label.form.'.$key) }}
+                                                        {{ __('label.form_'.$key) }}
                                                     </option>
                                                 @endforeach
                                             </select>
@@ -63,7 +63,7 @@
                                     <div class="">
                                         <button class="btn btn-block bg-gradient-primary" type="submit">
                                             <i class="fa fa-search" style="margin-right:5px;"></i>
-                                            {{ __('label.button.search') }}
+                                            {{ __('label.button_search') }}
                                         </button>
                                     </div>
                                 </div>
@@ -95,15 +95,15 @@
                             {!! $sortable->headers['application_no']->title !!}
                         </th>
                         <th class="sortable {{ $sortable->headers['application_type']->activeCls }}">
-                            {{-- {{ __('label.status.application_type') }} --}}
+                            {{-- {{ __('label.status_application_type') }} --}}
                             {!! $sortable->headers['application_type']->title !!}
                         </th>
                         <th class="sortable {{ $sortable->headers['apply_date']->activeCls }}">
-                            {{-- {{ __('label.status.apply_date') }} --}}
+                            {{-- {{ __('label.status_apply_date') }} --}}
                             {!! $sortable->headers['apply_date']->title !!}
                         </th>
                         <th class="sortable {{ $sortable->headers['next_approver']->activeCls }}">
-                            {{-- {{ __('label.status.next_approver') }} --}}
+                            {{-- {{ __('label.status_next_approver') }} --}}
                             {!! $sortable->headers['next_approver']->title !!}
                         </th>
                         <th></th>
@@ -134,7 +134,7 @@
                         <td>{{ $item->next_approver }}</td>
                         <td>
                             <a class="btn bg-gradient-info" href="{{ route('user.approval.show',$item->application_id) }}">
-                                {{ __('label.status.view_details') }}
+                                {{ __('label.status_view_details') }}
                                 <i class="fas fa-angle-right" style="margin-left: 5px;"></i>
                             </a>
                         </td>

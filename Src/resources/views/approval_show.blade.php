@@ -14,7 +14,7 @@
 @endsection
 
 @section('content-breadcrumb')
-<li class="breadcrumb-item"><a href="{{ route('user.approval.index') }}">{{ __('label.title.approval.list') }}</a></li>
+<li class="breadcrumb-item"><a href="{{ route('user.approval.index') }}">{{ __('label.title_approval_list') }}</a></li>
 <li class="breadcrumb-item active">{{ __('label.application_info') }}</li>
 @endsection
 
@@ -43,7 +43,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-sm-3 pr-sm-0">
-                                    <div class="app_title">{{ __('label.status.application_type') }}</div>
+                                    <div class="app_title">{{ __('label.status_application_type') }}</div>
                                 </div>
                                 <div class="col-sm-9 pl-sm-0">
                                     <div class="app_info">{{ __('label.form.'.$application->form_id) }}</div>
@@ -100,7 +100,7 @@
                             <div class="col-12">
                                 <a href="{{ Common::getRoutePreviewApplication($application->id, $application->form_id) }}"
                                     class="btn btn-outline-secondary" target="_blank">
-                                    {{ __('label.button.preview') }}
+                                    {{ __('label.button_preview') }}
                                 </a>
                             </div>
                         </div>
@@ -149,21 +149,21 @@
                                 @if ($flgUserTO)
                                 <button type="button" name="approve" value="approve" class="btn bg-gradient-success" data-toggle="modal"
                                     data-target="#popup-confirm">
-                                    {{ __('label.button.approval') }}
+                                    {{ __('label.button_approval') }}
                                 </button>
                                 <button type="button" name="reject" value="reject" class="btn bg-gradient-danger" data-toggle="modal"
                                     data-target="#popup-confirm">
-                                    {{ __('label.button.reject') }}
+                                    {{ __('label.button_reject') }}
                                 </button>
                                 @endif
                                 @if ($flgUserTO || $flgUserCC)
                                     <button type="button" name="declined" value="declined" class="btn bg-gradient-warning" data-toggle="modal"
                                         data-target="#popup-confirm">
-                                        {{ __('label.button.declined') }}
+                                        {{ __('label.button_declined') }}
                                     </button>
                                 @endif
                                 <a href="{{ route('user.approval.index') }}" class="btn bg-gradient-secondary">
-                                    {{ __('label.button.cancel') }}
+                                    {{ __('label.button_cancel') }}
                                 </a>
                             </div>
                         </div>

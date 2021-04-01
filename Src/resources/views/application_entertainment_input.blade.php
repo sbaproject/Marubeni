@@ -42,12 +42,12 @@
 @endsection
 
 @section('content-header')
-{{ __('label.form.entertainment') }}
+{{ __('label.form_entertainment') }}
 @endsection
 
 @section('content-breadcrumb')
 <li class="breadcrumb-item"><a href="{{ route('user.form.index') }}">{{ __('label.application_list') }}</a></li>
-<li class="breadcrumb-item active">{{ __('label.form.entertainment') }}</li>
+<li class="breadcrumb-item active">{{ __('label.form_entertainment') }}</li>
 @endsection
 
 @section('content')
@@ -94,7 +94,7 @@
                 <div class="form-group row float-right">
                     <button type="submit" id="btnPdf" value="pdf" class="btn bg-gradient-danger" href="#">
                         <i class="fas fa-external-link-alt" style="margin-right: 5px; color: #fff;"></i>
-                        {{ __('label.button.export') }}
+                        {{ __('label.button_export') }}
                     </button>
                 </div>
                 <div class="clearfix"></div>
@@ -112,7 +112,7 @@
                 @if (isset($application))
                 <div class="form-group row">
                     <div class="col-sm-2 text-left">
-                        <label>{{ __('label.entertainment.application_no') }}</label>
+                        <label>{{ __('label.entertainment_application_no') }}</label>
                     </div>
                     <div class="col-sm-10">
                         {{ $application->application_no }}
@@ -122,7 +122,7 @@
                 @endif
                 <div class="form-group row ">
                     <label class="col-lg-2 col-form-label text-left">
-                        {{ __('label.entertainment.entertainment_dt') }}<span class="text-danger required"> (*)</span>
+                        {{ __('label.entertainment_entertainment_dt') }}<span class="text-danger required"> (*)</span>
                     </label>
                     <div class="col-lg-4">
                         <div class="form-group">
@@ -148,7 +148,7 @@
                 <hr>
                 <div class="form-group row ">
                     <label class="col-lg-2 col-form-label text-left">
-                        {{ __('label.entertainment.place') }}<span class="text-danger required"> (*)</span>
+                        {{ __('label.entertainment_place') }}<span class="text-danger required"> (*)</span>
                     </label>
                     <div class="col-lg-10">
                         <input type="text" name="place" class="form-control @error('place') is-invalid @enderror" value="{{ $place }}"
@@ -163,7 +163,7 @@
                 <hr>
                 <div class="form-group row ">
                     <label class="col-lg-2 col-form-label text-left">
-                        {{ __('label.entertainment.during_trip') }}<span class="text-danger required"> (*)</span>
+                        {{ __('label.entertainment_during_trip') }}<span class="text-danger required"> (*)</span>
                     </label>
                     <div class="col-lg-10 text-lg-left text-left">
                         <fieldset class="@error('during_trip') form-control is-invalid @enderror">
@@ -186,7 +186,7 @@
                 <hr>
                 <div class="form-group row">
                     <label class="col-lg-2 col-form-label text-left">
-                        {{ __('label.entertainment.entrainment_infomation') }}<span class="text-danger required"> (*)</span>
+                        {{ __('label.entertainment_entrainment_infomation') }}<span class="text-danger required"> (*)</span>
                     </label>
                     <div class="col-lg-10">
                         <div id="infos_block">
@@ -196,13 +196,13 @@
                                 @if(!$previewFlg)
                                 <div class="d-delete d-flex justify-content-end @if(count($infos) === 1 && $key === 0) d-none @endif">
                                     <button class="btnDelete btn bg-gradient-danger btn-sm pt-0 pb-0 pl-3 pr-3 mb-1">
-                                        {{ __('label.button.delete') }}
+                                        {{ __('label.button_delete') }}
                                     </button>
                                 </div>
                                 @endif
                                 <div class="form-group row">
                                     <label class="col-lg-3 col-form-label com_title text-left">
-                                        {{ __('label.entertainment.cp_name') }}<span class="text-danger required"> (*)</span>
+                                        {{ __('label.entertainment_cp_name') }}<span class="text-danger required"> (*)</span>
                                     </label>
                                     <div class="col-lg-9">
                                         <div id="scrollable-dropdown-menu">
@@ -219,7 +219,7 @@
                                 </div>
                                 <div class="form-group row ">
                                     <label class="col-lg-3 col-form-label com_title text-left">
-                                        {{ __('label.entertainment.title') }}<span class="text-danger required"> (*)</span>
+                                        {{ __('label.entertainment_title') }}<span class="text-danger required"> (*)</span>
                                     </label>
                                     <div class="col-lg-9">
                                         <input type="text" class="form-control title @error('infos.'.$key.'.title') is-invalid @enderror"
@@ -235,7 +235,7 @@
                                 </div>
                                 <div class="form-group row ">
                                     <label class="col-lg-3 col-form-label com_title text-left">
-                                        {{ __('label.entertainment.name_attendants') }}<span class="text-danger required"> (*)</span>
+                                        {{ __('label.entertainment_name_attendants') }}<span class="text-danger required"> (*)</span>
                                     </label>
                                     <div class="col-lg-9">
                                         <input type="text" class="form-control name_attendants @error('infos.'.$key.'.name_attendants') is-invalid @enderror"
@@ -251,7 +251,7 @@
                                 </div>
                                 <div class="form-group row ">
                                     <label class="col-lg-3 col-form-label com_title text-left">
-                                        {{ __('label.entertainment.details_dutles') }}<span class="text-danger required"> (*)</span>
+                                        {{ __('label.entertainment_details_dutles') }}<span class="text-danger required"> (*)</span>
                                     </label>
                                     <div class="col-lg-9">
                                         <input type="text" class="form-control details_dutles @error('infos.'.$key.'.details_dutles') is-invalid @enderror"
@@ -271,12 +271,12 @@
                             <div class="card card-body card-company">
                                 <div class="d-delete d-flex justify-content-end d-none">
                                     <button class="btnDelete btn bg-gradient-danger btn-sm pt-0 pb-0 pl-3 pr-3 mb-1">
-                                        {{ __('label.button.delete') }}
+                                        {{ __('label.button_delete') }}
                                     </button>
                                 </div>
                                 <div class="form-group row ">
                                     <label class="col-lg-3 col-form-label com_title text-left">
-                                        {{ __('label.entertainment.cp_name') }}<span class="text-danger required"> (*)</span>
+                                        {{ __('label.entertainment_cp_name') }}<span class="text-danger required"> (*)</span>
                                     </label>
                                     <div class="col-lg-9">
                                         <div id="scrollable-dropdown-menu">
@@ -287,7 +287,7 @@
                                 </div>
                                 <div class="form-group row ">
                                     <label class="col-lg-3 col-form-label com_title text-left">
-                                        {{ __('label.entertainment.title') }}<span class="text-danger required"> (*)</span>
+                                        {{ __('label.entertainment_title') }}<span class="text-danger required"> (*)</span>
                                     </label>
                                     <div class="col-lg-9">
                                         <input type="text" class="form-control title" name="infos[0][title]" autocomplete="off"
@@ -296,7 +296,7 @@
                                 </div>
                                 <div class="form-group row ">
                                     <label class="col-lg-3 col-form-label com_title text-left">
-                                        {{ __('label.entertainment.name_attendants') }}<span class="text-danger required"> (*)</span>
+                                        {{ __('label.entertainment_name_attendants') }}<span class="text-danger required"> (*)</span>
                                     </label>
                                     <div class="col-lg-9">
                                         <input type="text" class="form-control name_attendants" name="infos[0][name_attendants]" autocomplete="off"
@@ -305,7 +305,7 @@
                                 </div>
                                 <div class="form-group row ">
                                     <label class="col-lg-3 col-form-label com_title text-left">
-                                        {{ __('label.entertainment.details_dutles') }}<span class="text-danger required"> (*)</span>
+                                        {{ __('label.entertainment_details_dutles') }}<span class="text-danger required"> (*)</span>
                                     </label>
                                     <div class="col-lg-9">
                                         <input type="text" class="form-control details_dutles" name="infos[0][details_dutles]" autocomplete="off"
@@ -319,12 +319,12 @@
                         <div class="card card-body card-company copy d-none">
                             <div class="d-delete d-flex justify-content-end">
                                 <button class="btnDelete btn bg-gradient-danger btn-sm pt-0 pb-0 pl-3 pr-3 mb-1">
-                                    {{ __('label.button.delete') }}
+                                    {{ __('label.button_delete') }}
                                 </button>
                             </div>
                             <div class="form-group row ">
                                 <label class="col-lg-3 col-form-label com_title text-left">
-                                    {{ __('label.entertainment.cp_name') }}<span class="text-danger required"> (*)</span>
+                                    {{ __('label.entertainment_cp_name') }}<span class="text-danger required"> (*)</span>
                                 </label>
                                 <div class="col-lg-9">
                                     <div id="scrollable-dropdown-menu">
@@ -334,7 +334,7 @@
                             </div>
                             <div class="form-group row ">
                                 <label class="col-lg-3 col-form-label com_title text-left">
-                                    {{ __('label.entertainment.title') }}<span class="text-danger required"> (*)</span>
+                                    {{ __('label.entertainment_title') }}<span class="text-danger required"> (*)</span>
                                 </label>
                                 <div class="col-lg-9">
                                     <input type="text" class="form-control title" autocomplete="off" @if($previewFlg) readonly @endif>
@@ -342,7 +342,7 @@
                             </div>
                             <div class="form-group row ">
                                 <label class="col-lg-3 col-form-label com_title text-left">
-                                    {{ __('label.entertainment.name_attendants') }}<span class="text-danger required"> (*)</span>
+                                    {{ __('label.entertainment_name_attendants') }}<span class="text-danger required"> (*)</span>
                                 </label>
                                 <div class="col-lg-9">
                                     <input type="text" class="form-control name_attendants" autocomplete="off" @if($previewFlg) readonly @endif>
@@ -350,7 +350,7 @@
                             </div>
                             <div class="form-group row ">
                                 <label class="col-lg-3 col-form-label com_title text-left">
-                                    {{ __('label.entertainment.details_dutles') }}<span class="text-danger required"> (*)</span>
+                                    {{ __('label.entertainment_details_dutles') }}<span class="text-danger required"> (*)</span>
                                 </label>
                                 <div class="col-lg-9">
                                     <input type="text" class="form-control details_dutles" autocomplete="off" @if($previewFlg) readonly @endif>
@@ -359,7 +359,7 @@
                         </div>
                         @if(!$previewFlg)
                         <button id="btnAdd" class="btn bg-gradient-danger @if(!empty($infos) && count($infos) >= 4) d-none @endif">
-                            + {{ __('label.button.addnew') }}
+                            + {{ __('label.button_addnew') }}
                         </button>
                         @endif
                         <!-- ./form chil -->
@@ -368,7 +368,7 @@
                 <hr>
                 <div class="form-group row ">
                     <label class="col-lg-2 col-form-label text-left">
-                        {{ __('label.entertainment.budget_position') }}<span class="text-danger required"> (*)</span>
+                        {{ __('label.entertainment_budget_position') }}<span class="text-danger required"> (*)</span>
                     </label>
                     <div class="col-lg-10 text-lg-left text-left">
                         <fieldset class="@error('budget_position') form-control is-invalid @enderror">
@@ -380,7 +380,7 @@
                                 <input type="radio" name="rd_budget_position" value="{{ $val }}"
                                     @if($budget_position !==null && $budget_position==$val) checked @endif
                                     @if($previewFlg) disabled @endif>
-                                {{ __('label.budget.'. $key) }}
+                                {{ __('label.budget_'. $key) }}
                             </label>
                             <label class="radio-inline com_title col-form-label">
                                 @php
@@ -390,7 +390,7 @@
                                 <input type="radio" name="rd_budget_position" value="{{ $val }}"
                                     @if($budget_position !==null && $budget_position==$val) checked @endif
                                     @if($previewFlg) disabled @endif>
-                                {{ __('label.budget.'. $key) }}
+                                {{ __('label.budget_'. $key) }}
                             </label>
                         </fieldset>
                         <input type="hidden" id="budget_position" name="budget_position" value="{{ $budget_position }}">
@@ -404,7 +404,7 @@
                 <hr>
                 <div class="form-group row ">
                     <label class="col-lg-2 col-form-label text-left">
-                        {{ __('label.entertainment.check_row') }}<span class="text-danger required"> (*)</span>
+                        {{ __('label.entertainment_check_row') }}<span class="text-danger required"> (*)</span>
                     </label>
                     <div class="col-lg-10 text-lg-left text-left">
                         <fieldset class="@error('check_row') form-control is-invalid @enderror">
@@ -427,7 +427,7 @@
                 <hr>
                 <div class="form-group row">
                     <label class="col-lg-2 col-form-label text-left">
-                        {{ __('label.entertainment.entertainment_times') }}<span class="text-danger required"> (*)</span>
+                        {{ __('label.entertainment_entertainment_times') }}<span class="text-danger required"> (*)</span>
                     </label>
                     <div class="col-lg-10 text-lg-left text-left">
                         <fieldset class="@error('has_entertainment_times') form-control is-invalid @enderror">
@@ -449,7 +449,7 @@
                             <div style="padding-left: 0px" class="col-md-4">
                                 <input type="text" id="txt_entertainment_times"
                                     class="form-control entertainment_times @error('entertainment_times') is-invalid @enderror"
-                                    value="{{ $et_times }}" placeholder="{{ __('label.entertainment.entertainment_times') }}" @if($previewFlg
+                                    value="{{ $et_times }}" placeholder="{{ __('label.entertainment_entertainment_times') }}" @if($previewFlg
                                     || (empty($has_et_times) || ($has_et_times !==null &&
                                     $has_et_times==config('const.entertainment.has_et_times.no')))) readonly @endif>
                                 <input type="hidden" name="entertainment_times" value="{{ $et_times }}">
@@ -469,7 +469,7 @@
                 <hr>
                 <div class="form-group row">
                     <label class="col-lg-2 col-form-label text-left">
-                        {{ __('label.entertainment.existence_projects') }}<span class="text-danger required"> (*)</span>
+                        {{ __('label.entertainment_existence_projects') }}<span class="text-danger required"> (*)</span>
                     </label>
                     <div class="col-lg-10 text-lg-left text-left">
                         <fieldset class="@error('existence_projects') form-control is-invalid @enderror">
@@ -493,7 +493,7 @@
                 <hr>
                 <div class="form-group row ">
                     <label class="col-lg-2 col-form-label text-left">
-                        {{ __('label.entertainment.includes_family') }}<span class="text-danger required"> (*)</span>
+                        {{ __('label.entertainment_includes_family') }}<span class="text-danger required"> (*)</span>
                     </label>
                     <div class="col-lg-10 text-lg-left text-left">
                         <fieldset class="@error('includes_family') form-control is-invalid @enderror">
@@ -517,9 +517,9 @@
                 <hr>
                 <div class="form-group row">
                     <label class="col-lg-2 col-form-label text-left">
-                        {{ __('label.entertainment.project_name') }}</br>
+                        {{ __('label.entertainment_project_name') }}</br>
                         <i class="fa fa-asterisk" aria-hidden="true" style="font-size: small;color: #df2333f1;"></i>
-                        <label style="color: #df2333f1;">{{ __('label.entertainment.if_need') }}</label>
+                        <label style="color: #df2333f1;">{{ __('label.entertainment_if_need') }}</label>
                     </label>
                     <div class="col-lg-10">
                         <textarea id="project_name" name="project_name" class="form-control" rows="2"
@@ -529,7 +529,7 @@
                 <hr>
                 <div class="form-group row ">
                     <label class="col-lg-2 col-form-label text-left">
-                        {{ __('label.entertainment.entertainment_reason') }}<span class="text-danger required"> (*)</span>
+                        {{ __('label.entertainment_entertainment_reason') }}<span class="text-danger required"> (*)</span>
                     </label>
                     <div class="col-lg-10">
                         <select name="rd_entertainment_reason" style="width: auto;" class="form-control @error('entertainment_reason') is-invalid @enderror"
@@ -553,7 +553,7 @@
                         <div style="margin-top: 10px">
                             <textarea id="entertainment_reason_other" name="entertainment_reason_other"
                                 class="form-control @error('entertainment_reason_other') is-invalid @enderror"
-                                rows="3" placeholder="{{ __('label.entertainment.entertainment_reason_other') }}"
+                                rows="3" placeholder="{{ __('label.entertainment_entertainment_reason_other') }}"
                                 @if($previewFlg) readonly @endif>{{ $entertainment_reason_other }}</textarea>
                             @error('entertainment_reason_other')
                             <span class="invalid-feedback" role="alert">
@@ -566,7 +566,7 @@
                 <hr>
                 <div class="form-group row ">
                     <label class="col-lg-2 col-form-label text-left">
-                        {{ __('label.entertainment.entertainment_person') }}<span class="text-danger required"> (*)</span>
+                        {{ __('label.entertainment_entertainment_person') }}<span class="text-danger required"> (*)</span>
                     </label>
                     <div class="col-lg-10">
                         <div class="form-group row ">
@@ -575,7 +575,7 @@
                                     value="{{ $entertainment_person }}" @if($previewFlg) readonly @endif>
                                     <input type="hidden" name="entertainment_person" value="{{ $entertainment_person }}">
                             </div>
-                            <label class="col-lg-8 col-form-label com_title text-lg-left text-left">{{ __('label.entertainment.persons') }}</label>
+                            <label class="col-lg-8 col-form-label com_title text-lg-left text-left">{{ __('label.entertainment_persons') }}</label>
                         </div>
                         @error('entertainment_person')
                         <span class="invalid-feedback" role="alert">
@@ -587,7 +587,7 @@
                 <hr>
                 <div class="form-group row ">
                     <label class="col-lg-2 col-form-label text-left">
-                        {{ __('label.entertainment.est_amount') }}<span class="text-danger required"> (*)</span>
+                        {{ __('label.entertainment_est_amount') }}<span class="text-danger required"> (*)</span>
                     </label>
                     <div class="col-lg-10 text-lg-left text-left">
                         <div class="form-group row ">
@@ -597,7 +597,7 @@
                                 <input type="hidden" name="est_amount" value="{{ $est_amount }}">
                             </div>
                             <label class="col-lg-8 col-form-label com_title text-lg-left text-left">
-                                {{ __('label.entertainment.per_person_excluding_vnd') }}
+                                {{ __('label.entertainment_per_person_excluding_vnd') }}
                             </label>
                         </div>
                         @error('est_amount')
@@ -611,7 +611,7 @@
                 <div class="form-group row ">
                     <label
                         class="col-lg-2 col-form-label text-left text-danger d-flex align-items-left justify-content-left">
-                        {{ __('label.entertainment.reason_budget_over') }}
+                        {{ __('label.entertainment_reason_budget_over') }}
                     </label>
                     <div class="col-lg-10">
                         <textarea id="reason_budget_over" name="reason_budget_over" class="form-control" rows="3"
@@ -621,7 +621,7 @@
                 <hr>
                 <div class="form-group row">
                     <div class="col-sm-2 text-left">
-                        <label for="myfile">{{ __('label.leave.caption.file_path') }}</label>
+                        <label for="myfile">{{ __('label.leave.caption_file_path') }}</label>
                     </div>
                     <div class="col-sm-5">
                         @if($previewFlg)
@@ -689,7 +689,7 @@
                 <hr>
                 <div class="form-group row">
                     <div class="col-sm-2 text-left">
-                        <label style="color: red;">{{ __('label.leave.caption.subsequent') }}</label>
+                        <label style="color: red;">{{ __('label.leave.caption_subsequent') }}</label>
                     </div>
                     <div class="col-sm-10">
                         <div class="form-check">
@@ -709,19 +709,19 @@
                 <button type="button" name="apply" value="apply" class="btn bg-gradient-success btn-form" data-toggle="modal"
                     data-target="#popup-confirm" @if(Common::detectMobile()) disabled @endif>
                     <i class="far fa-check-circle" style="margin-right: 5px;"></i>
-                    {{ __('label.button.apply') }}
+                    {{ __('label.button_apply') }}
                 </button>
                 @if (!$inProgressFlg)
                 <button type="button" name="draft" value="draft" class="btn btn bg-gradient-info btn-form" data-toggle="modal"
                     data-target="#popup-confirm" @if(Common::detectMobile()) disabled @endif>
                     <i class="nav-icon fas fa-edit" style="margin-right: 5px;"></i>
-                    {{ __('label.button.draft') }}
+                    {{ __('label.button_draft') }}
                 </button>
                 @endif
             @endif
             <a href="{{ route('user.form.index') }}" class="btn btn bg-gradient-secondary btn-form btn-cancel">
                 <i class="fa fa-ban" aria-hidden="true" style="margin-right: 5px;"></i>
-                {{ __('label.button.cancel') }}
+                {{ __('label.button_cancel') }}
             </a>
         </div>
         <br>

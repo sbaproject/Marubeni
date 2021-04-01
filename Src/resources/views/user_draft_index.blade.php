@@ -1,14 +1,14 @@
 @extends('layouts.master')
 @section('title')
-{{ __('label.menu.draft') }}
+{{ __('label.menu_draft') }}
 @endsection
 
 @section('content-header')
-{{ __('label.menu.draft') }}
+{{ __('label.menu_draft') }}
 @endsection
 
 @section('content-breadcrumb')
-<li class="breadcrumb-item active">{{ __('label.menu.draft') }}</li>
+<li class="breadcrumb-item active">{{ __('label.menu_draft') }}</li>
 @endsection
 
 @section('content')
@@ -20,10 +20,10 @@
                     <table class="table table-bordered table-hover" style="min-width: 500px;">
                         <thead>
                             <tr>
-                                <th style="width: 170px">{{ __('label.draft.no') }}</th>
-                                <th>{{ __('label.draft.application_name') }}</th>
-                                <th>{{ __('label.draft.date_create') }}</th>
-                                <th style="width: 150px">{{ __('label.draft.action') }}</th>
+                                <th style="width: 170px">{{ __('label.draft_no') }}</th>
+                                <th>{{ __('label.draft_application_name') }}</th>
+                                <th>{{ __('label.draft_date_create') }}</th>
+                                <th style="width: 150px">{{ __('label.draft_action') }}</th>
                             </tr>
                         </thead>
                         <tbody>

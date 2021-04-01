@@ -31,6 +31,6 @@ class MailNotify extends Mailable
    public function build()
    {
        return $this->view('mails.mail-notify')
-           ->subject(config('app.name').' | '. __('label.checkip.mail_subject'));
+           ->subject(config('app.name').' | '. __('label.checkip_mail_subject'));
    }
 }
