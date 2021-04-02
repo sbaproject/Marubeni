@@ -476,5 +476,9 @@
 			<td style="width: 20%;height:50px"></td>
 		</tr>
 	</table>
+	@isset($inputs['lastApproval'])
+	<div>Approved by : {{ $inputs['lastApproval']->user_name }}</div>
+	<div>Approved at : {{ date('d/m/Y H:i', strtotime($inputs['lastApproval']->created_at)) }}</div>
+	@endisset
 </body>
 </html>

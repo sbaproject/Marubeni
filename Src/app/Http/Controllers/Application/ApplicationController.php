@@ -8,13 +8,17 @@ use Carbon\Carbon;
 use App\Libs\Common;
 use App\Models\Application;
 use Illuminate\Http\Request;
+use App\Models\HistoryApproval;
+use App\Jobs\SendMailBackGround;
 use Illuminate\Support\Facades\DB;
+use App\Mail\ApplicationNoticeMail;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use App\Exceptions\NotFoundFlowSettingException;
+use App\Models\Step;
 
 class ApplicationController extends Controller
 {
@@ -180,13 +184,39 @@ class ApplicationController extends Controller
             $user = Auth::user();
 
             // Applications table
-            $applicationId = $this->saveApplicationMaster($request, $inputs, $application, $user);
+            $newApplication = $this->saveApplicationMaster($request, $inputs, $application, $user);
 
             // Application Detail table
-            $this->saveApplicationDetail($request, $inputs, $application, $applicationId, $user);
+            $this->saveApplicationDetail($request, $inputs, $application, $newApplication['id'], $user);
 
             // Commit DB
             DB::commit();
+
+            // send mail to first approver (TO) & CC
+            if (isset($inputs['apply'])) {
+
+                $nextApprovers = Step::getApproversToSendApplicationNoticeMail($newApplication['group_id']);
+
+                foreach($nextApprovers as $item){
+                    // just get next first approver(TO)
+                    if ($item->approver_type == config('const.approver_type.to') && !isset($sendTo)) {
+                        $sendTo[] = $item->approver_mail;
+                    }
+                    // approvers (CC) can take multi
+                    else {
+                        $sendCc[] = $item->approver_mail;
+                    }
+                }
+            }
+
+            Common::sendApplicationNoticeMail(
+                'New application is waiting you approve !',
+                $sendTo,
+                $sendCc,
+                []
+            );
+            
+            
         } catch (Exception $ex) {
 
             DB::rollBack();
@@ -262,7 +292,9 @@ class ApplicationController extends Controller
             DB::table('applications')->where('id', $app->id)->update($application);
         }
 
-        return $applicationId ?? $app->id;
+        $application['id'] = $applicationId ?? $app->id;
+
+        return $application;
     }
 
     private function checkValidApproverOfApplication($request, $application, $loginUser)
@@ -438,7 +470,22 @@ class ApplicationController extends Controller
                     abort(403);
                 }
             }
+
+            // get applicant info
             $inputs['applicant'] = $application->applicant;
+            
+            // get last approval of complete application
+            if($application->status == config('const.application.status.completed')){
+                $conditions = [
+                    'application_id' => $application->id,
+                    'step' => $application->current_step,
+                    'status' => config('const.application.status.completed'),
+                ];
+                $lastApproval = HistoryApproval::getHistory($conditions)->first();
+                if (!empty($lastApproval)) {
+                    $inputs['lastApproval'] = $lastApproval;
+                }
+            }
         } else {
             $inputs['applicant'] = Auth::user();
         }
@@ -448,8 +495,8 @@ class ApplicationController extends Controller
 
         // preview pdf
         $fileName = "{$this->formTypeName}.pdf";
-        // return $pdf->stream($fileName);
+        return $pdf->stream($fileName);
         // download
-        return $pdf->download($fileName);
+        // return $pdf->download($fileName);
     }
 }

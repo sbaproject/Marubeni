@@ -4,6 +4,8 @@ namespace App\Libs;
 
 use App\Models\User;
 use Illuminate\Support\Str;
+use App\Jobs\SendMailBackGround;
+use App\Mail\ApplicationNoticeMail;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -283,7 +285,6 @@ class Common
 	 */
 	public static function getStatusApplicationBadge($status, $currentStep)
 	{
-
 		if ($status >= 0 && $status <= 98 && $currentStep == config('const.application.step_type.application')) {
 			$statusName = __('label.application_status_applying');
 			$statusBadgeCss = 'badge-success';
@@ -369,5 +370,11 @@ class Common
 				->where('table_schema', $schemaName)
 				->where('table_name', $tableName)
 				->first()->AUTO_INCREMENT;
+	}
+
+	public static function sendApplicationNoticeMail($title, $to, $cc, $msgParams){
+
+		$mailable = new ApplicationNoticeMail('mails.mail_application_notice', $title, $msgParams);
+		SendMailBackGround::dispatch($mailable, $to, $cc);
 	}
 }

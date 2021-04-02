@@ -501,7 +501,7 @@
                     </button>
                 @endif
             @endif
-            <a href="{{ route('user.form.index') }}" class="btn btn bg-gradient-secondary btn-form btn-cancel">
+            <a href="{{ Common::getHomeUrl() }}" class="btn btn bg-gradient-secondary btn-form btn-cancel">
                 <i class="fa fa-ban" aria-hidden="true" style="margin-right: 5px;"></i>
                 {{ __('label.button_cancel') }}
             </a>

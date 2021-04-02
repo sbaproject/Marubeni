@@ -131,8 +131,11 @@ class ApprovalController extends Controller
         // detect current logged user is TO or CC approve_type
         $this->detectApproverType($application, $approvers, $flgUserTO, $flgUserCC);
 
-        // get comments of application
-        $comments = HistoryApproval::getByApplicationId($id);
+        // get history approval of application
+        $conditions = [
+            'application_id' => $application->id,
+        ];
+        $comments = HistoryApproval::getHistory($conditions)->get();
 
         $compacts = [
             'application',

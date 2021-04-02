@@ -206,4 +206,14 @@ return [
     'rules' => [
         'attached_file' => 'mimes:txt,pdf,jpg,jpeg,png|max:200',
     ],
+
+    // available ip to access (exception)
+    'available_ip' => [
+        '192.168.2.129',
+    ],
+    
+    // used to check same network (CLASS network different)
+    'available_class_network' => [
+        '192.168.2',
+    ],
 ];

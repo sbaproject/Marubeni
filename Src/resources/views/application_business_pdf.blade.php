@@ -309,5 +309,9 @@
 			<td style="text-align: center;width:24% ;">Applicant/ Người đề nghị</td>
 		</tr>
 	</table>
+	@isset($inputs['lastApproval'])
+	<div>Approved by : {{ $inputs['lastApproval']->user_name }}</div>
+	<div>Approved at : {{ date('d/m/Y H:i', strtotime($inputs['lastApproval']->created_at)) }}</div>
+	@endisset
 </body>
 </html>
