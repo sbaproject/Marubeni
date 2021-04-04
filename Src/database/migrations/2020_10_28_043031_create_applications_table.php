@@ -19,7 +19,7 @@ class CreateApplicationsTable extends Migration
             $table->unsignedInteger('form_id');
             $table->unsignedInteger('group_id');
             $table->unsignedTinyInteger('current_step')->comment('Normaly we have 2 steps (Step 1,2) per application, this field used to determined current step of application. But with [Leave] application only have default value is [2] (one step)');
-            $table->tinyInteger('status')->default(0)->comment('0:applying, -1:declined, -2:reject, -3:draft, 1->5:approved, 99:completed');
+            $table->tinyInteger('status')->default(0)->comment('0:applying, -1:declined, -2:reject, -3:draft, 1->98:approved, 99:completed');
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->timestamps();

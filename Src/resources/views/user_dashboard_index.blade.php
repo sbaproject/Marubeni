@@ -145,7 +145,7 @@
                                                 {{ !empty($application->status) ? $application->status : '' }}
                                                 
                                             </div> --}}
-                                            {!! Common::getStatusApplicationBadge($application->status_css, $application->current_step) !!}
+                                            {!! Common::generateStatusApplicationBadgeStyle($application->status_css, $application->current_step) !!}
                                         </td>
                                         <td>{{ !empty($application->created_at) ? \Carbon\Carbon::parse($application->created_at)->format('d/m/Y') : '' }}
                                         </td>

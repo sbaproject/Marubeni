@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Libs\Common;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -18,6 +19,11 @@ class CheckIp
      */
     public function handle(Request $request, Closure $next)
     {
+        // SmartPhone do not need check network
+        if (Common::detectMobile()){
+            return $next($request);
+        }
+
         $serverIp = $request->server('SERVER_ADDR');
         $remoteIp = $request->server('REMOTE_ADDR');
 

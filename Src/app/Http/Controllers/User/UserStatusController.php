@@ -52,9 +52,9 @@ class UserStatusController extends Controller
         // sorting columns
         $sortColNames = [
             'application_no'    => __('label.status_no'),
-            'nameapp'           => __('label.status_application_type'),
+            'form_name'         => __('label.status_application_type'),
             'datecreate'        => __('label.status_apply_date'),
-            'nameuser'          => __('label.status_next_approver'),
+            'next_approver'     => __('label.status_next_approver'),
         ];
         $sortable = Common::getSortable($request, $sortColNames, 0, 0, true);
 
@@ -65,8 +65,8 @@ class UserStatusController extends Controller
                 'applications.application_no',
                 'applications.form_id',
                 'applications.created_at    as datecreate',
-                'forms.name                 as nameapp',
-                'users.name                 as nameuser',
+                'forms.name                 as form_name',
+                'users.name                 as next_approver',
             )
 
             //Join

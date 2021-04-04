@@ -104,7 +104,7 @@
                         <label>{{ __('label.status_caption') }}</label>
                     </div>
                     <div class="col-sm-10">
-                        {!! Common::getStatusApplicationBadge($application->status, $application->current_step) !!}
+                        {!! Common::generateStatusApplicationBadgeStyle($application->status, $application->current_step) !!}
                     </div>
                 </div>
                 <hr>

@@ -20,9 +20,9 @@ class ApplicationNoticeMail extends Mailable
      *
      * @return void
      */
-    public function __construct($mailTpl, $title, array $msgParams)
+    public function __construct($mailTemplate, $title, array $msgParams)
     {
-        $this->mailTpl = $mailTpl;
+        $this->mailTpl = $mailTemplate;
         $this->title = $title;
         $this->msgParams = $msgParams;
     }
@@ -34,7 +34,7 @@ class ApplicationNoticeMail extends Mailable
      */
     public function build()
     {
-        return $this->text($this->mailTpl)
+        return $this->view($this->mailTpl)
             ->subject($this->title)
             ->with($this->msgParams);
     }

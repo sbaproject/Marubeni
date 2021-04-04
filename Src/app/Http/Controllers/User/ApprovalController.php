@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use Exception;
 use Carbon\Carbon;
 use App\Libs\Common;
+use App\Models\Step;
 use App\Models\User;
 use App\Models\Leave;
 use Illuminate\Support\Arr;
@@ -91,7 +92,6 @@ class ApprovalController extends Controller
         $application = DB::table('applications')
             ->select(
                 'applications.*',
- 
                 'steps.flow_id',
                 'steps.approver_id',
                 'steps.approver_type',
@@ -129,7 +129,7 @@ class ApprovalController extends Controller
         }
 
         // detect current logged user is TO or CC approve_type
-        $this->detectApproverType($application, $approvers, $flgUserTO, $flgUserCC);
+        $this->determineApproverType($application, $approvers, $flgUserTO, $flgUserCC);
 
         // get history approval of application
         $conditions = [
@@ -170,11 +170,13 @@ class ApprovalController extends Controller
             'steps.step_type',
             'steps.order',
             'steps.select_order',
-            'groups.applicant_id        as group_applicant_id',
+            'groups.applicant_id           as group_applicant_id',
             'groups.budget_type_compare',
-            'users.role                 as approver_role',
-            'users.location             as approver_location',
-            'users.department_id        as approver_department',
+            'approver.email                as approver_mail',
+            'approver.role                 as approver_role',
+            'approver.location             as approver_location',
+            'approver.department_id        as approver_department',
+            'applicant.email               as applicant_mail',
             DB::raw('(select max(step_type) from steps where flow_id = flows.id) as step_count')
         ];
 
@@ -184,18 +186,19 @@ class ApprovalController extends Controller
         }
 
         $application = DB::table('applications')
-        ->select($cols)
+            ->select($cols)
             ->join('groups', 'groups.id', 'applications.group_id')
             ->when(!$isLeaveApplication, function ($query) {
                 $query->join('budgets', 'budgets.id', 'groups.budget_id');
             })
             ->join('steps', function ($join) {
                 $join->on('steps.group_id', '=', 'groups.id')
-                ->whereRaw('steps.select_order = applications.status')
-                ->whereRaw('steps.step_type = applications.current_step');
+                    ->whereRaw('steps.select_order = applications.status')
+                    ->whereRaw('steps.step_type = applications.current_step');
             })
             ->join('flows', 'flows.id', '=', 'steps.flow_id')
-            ->join('users', 'users.id', '=', 'steps.approver_id')
+            ->join('users as approver', 'approver.id', '=', 'steps.approver_id')
+            ->join('users as applicant', 'applicant.id', '=', 'applications.created_by')
             ->where('applications.id', '=', $id)
             ->where('applications.deleted_at', '=', null)
             ->first();
@@ -212,11 +215,11 @@ class ApprovalController extends Controller
         // if logged user is approver TO (able to Approve|Decline|Reject)
         if ($application->approver_id != $user->id) {
             // approver CC able to DECLINE only.
-            if (isset($request->declined)){
+            if (isset($request->declined)) {
                 $approvers = $this->getAvailableApprovers($id, $application->current_step);
                 $flgApproverCC = $this->isApproverCC($approvers);
             }
-            if(!$flgApproverCC){
+            if (!$flgApproverCC) {
                 return $this->redirectError(__('msg.application_error_403'));
             }
         }
@@ -228,7 +231,7 @@ class ApprovalController extends Controller
         DB::beginTransaction();
         try {
             if (isset($request->approve)) {
-                $data['status'] = $application->order;
+                $newApplication['status'] = $application->order;
                 // make application next to step of approval flow (with Leave Application just have one step)
                 if ($application->order == config('const.application.status.completed')) {
                     if ($application->form_id == config('const.form.biz_trip') || $application->form_id == config('const.form.entertainment')) {
@@ -241,7 +244,7 @@ class ApprovalController extends Controller
                                 ->select('groups.*')
                                 ->join('budgets', function ($join) use ($nextStep, $application) {
                                     $join->on('groups.budget_id', '=', 'budgets.id')
-                                    ->where('budgets.budget_type', '=', $application->budget_type)
+                                        ->where('budgets.budget_type', '=', $application->budget_type)
                                         ->where('budgets.step_type', '=', $nextStep)
                                         ->where('budgets.position', '=', $application->budget_position)
                                         ->where('budgets.deleted_at', '=', null);
@@ -258,9 +261,9 @@ class ApprovalController extends Controller
                                 throw new NotFoundFlowSettingException();
                             }
 
-                            $data['current_step']   = $nextStep;
-                            $data['group_id']       = $group->id;
-                            $data['status']         = config('const.application.status.applying');
+                            $newApplication['current_step']   = $nextStep;
+                            $newApplication['group_id']       = $group->id;
+                            $newApplication['status']         = config('const.application.status.applying');
                         }
                     } elseif ($application->form_id == config('const.form.leave')) {
                         // for leave application
@@ -297,18 +300,18 @@ class ApprovalController extends Controller
                     }
                 }
             } elseif (isset($request->reject)) {
-                $data['status'] = config('const.application.status.reject');
-                $application->order = $data['status'];
+                $newApplication['status'] = config('const.application.status.reject');
+                $application->order = $newApplication['status'];
             } elseif (isset($request->declined)) {
-                $data['status'] = config('const.application.status.declined');
-                $application->order = $data['status'];
+                $newApplication['status'] = config('const.application.status.declined');
+                $application->order = $newApplication['status'];
             }
 
-            $data['comment']    = $inputs['comment'];
-            $data['updated_by'] = $user->id;
-            $data['updated_at'] = Carbon::now();
+            $newApplication['comment']    = $inputs['comment'];
+            $newApplication['updated_by'] = $user->id;
+            $newApplication['updated_at'] = Carbon::now();
 
-            DB::table('applications')->where('id', $id)->update($data);
+            DB::table('applications')->where('id', $id)->update($newApplication);
 
             // create approval history
             $historyData = [
@@ -316,7 +319,7 @@ class ApprovalController extends Controller
                 'application_id'    => $application->id,
                 'status'            => $application->order,
                 'step'              => $application->step_type,
-                'comment'           => $data['comment'],
+                'comment'           => $newApplication['comment'],
                 'created_at'        => Carbon::now(),
                 'updated_at'        => Carbon::now(),
             ];
@@ -324,6 +327,9 @@ class ApprovalController extends Controller
 
             // commit db
             DB::commit();
+
+            // send notice mail
+            $this->sendMail($request, $application, $newApplication);
 
             return Common::redirectRouteWithAlertSuccess('user.approval.index', __('msg.application_success_approve_ok'));
         } catch (Exception $ex) {
@@ -410,7 +416,8 @@ class ApprovalController extends Controller
      * @param int $currentStep : Current step in approval flow of application
      * @return \Illuminate\Support\Collection
      */
-    private function getAvailableApprovers($applicationId, $currentStep){
+    private function getAvailableApprovers($applicationId, $currentStep)
+    {
         $approvers = DB::table('steps')
             ->select(
                 [
@@ -429,7 +436,7 @@ class ApprovalController extends Controller
             ->where('steps.step_type', $currentStep)
             ->get()
             ->toArray();
-        
+
         return $approvers;
     }
 
@@ -438,7 +445,8 @@ class ApprovalController extends Controller
      * @param array $approvers List of available approvers (including TO & CC)
      * @return boolean True if is CC
      */
-    private function isApproverCC($approvers){
+    private function isApproverCC($approvers)
+    {
 
         $approverCCs = array_filter((array)$approvers, function ($element) {
             return $element->approver_type == config('const.approver_type.cc');
@@ -450,13 +458,14 @@ class ApprovalController extends Controller
     }
 
     /**
-     * Detect current logged user is TO or CC approve_type
+     * Determine current logged user is TO or CC approve_type
      * @param object $application Application
      * @param array $approvers List of approvers (include TO & CC)
      * @param boolean $flgUserTO Reference flg TO
      * @param boolean $flgUserCC Reference flg CC
      */
-    private function detectApproverType($application, $approvers, &$flgUserTO = false, &$flgUserCC = false){
+    private function determineApproverType($application, $approvers, &$flgUserTO = false, &$flgUserCC = false)
+    {
         if (
             $application->status >= config('const.application.status.applying')
             && $application->status < config('const.application.status.completed')
@@ -471,6 +480,65 @@ class ApprovalController extends Controller
                 $flgUserCC = $this->isApproverCC($approvers);
             }
         }
+    }
+
+    private function sendMail($request, $currentApplication, $newApplication)
+    {
+        if (isset($request->approve) && isset($request->reject) && isset($request->declined)) {
+            return;
+        }
+
+        $sendTo = [];
+        $sendCc = [];
+
+        if (isset($request->approve)) {
+
+            // application is completed
+            if ($newApplication['status'] == config('const.application.status.completed')) {
+                // notify to applicant
+                $sendTo[] = $currentApplication->applicant_mail;
+            }
+            // still in progress of approval
+            else {
+                $nextGroupId = $newApplication['group_id'] ?? $currentApplication->group_id;
+                // next group_id was changed mean is application go to next step
+                // when next step need send mail to first TO && all CC of next step
+                if ($nextGroupId != $currentApplication->group_id) {
+
+                    $nextApprovers = Step::getApproversByGroupId($nextGroupId);
+
+                    foreach ($nextApprovers as $item) {
+                        // just get next first approver(TO)
+                        if ($item->approver_type == config('const.approver_type.to') && empty($sendTo)) {
+                            $sendTo[] = $item->approver_mail;
+                        }
+                        // approvers (CC) can take multi
+                        elseif ($item->approver_type == config('const.approver_type.cc')) {
+                            $sendCc[] = $item->approver_mail;
+                        }
+                    }
+                }
+                // application still on current step
+                // so only to send mail to next approver CC
+                else {
+                    // next approver of step
+                    $nextApprover = Step::getNextApproverCurrentStep($currentApplication->group_id, $currentApplication->order);
+                    if (!empty($nextApprover)) {
+                        $sendTo = $nextApprover->approver_mail;
+                    }
+                }
+            }
+        } elseif (isset($request->reject) || isset($request->declined)) {
+            // notify to applicant
+            $sendTo[] = $currentApplication->applicant_mail;
+        }
+
+        Common::sendApplicationNoticeMail(
+            'Approval : ' . $request->approve ?? $request->reject ?? $request->declined,
+            $sendTo,
+            $sendCc,
+            []
+        );
     }
 
     private function redirectError($msg)

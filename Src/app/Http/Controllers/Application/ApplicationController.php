@@ -181,42 +181,20 @@ class ApplicationController extends Controller
 
         try {
             // get logged user
-            $user = Auth::user();
+            $loginUser = Auth::user();
 
             // Applications table
-            $newApplication = $this->saveApplicationMaster($request, $inputs, $application, $user);
+            $newApplication = $this->saveApplicationMaster($request, $inputs, $application, $loginUser);
 
             // Application Detail table
-            $this->saveApplicationDetail($request, $inputs, $application, $newApplication['id'], $user);
+            $this->saveApplicationDetail($request, $inputs, $application, $newApplication['id'], $loginUser);
 
-            // Commit DB
+            // commit DB
             DB::commit();
 
-            // send mail to first approver (TO) & CC
-            if (isset($inputs['apply'])) {
+            // send mail to first approver (TO) & CC of each step
+            $this->sendNoticeMail($inputs, $newApplication);
 
-                $nextApprovers = Step::getApproversToSendApplicationNoticeMail($newApplication['group_id']);
-
-                foreach($nextApprovers as $item){
-                    // just get next first approver(TO)
-                    if ($item->approver_type == config('const.approver_type.to') && !isset($sendTo)) {
-                        $sendTo[] = $item->approver_mail;
-                    }
-                    // approvers (CC) can take multi
-                    else {
-                        $sendCc[] = $item->approver_mail;
-                    }
-                }
-            }
-
-            Common::sendApplicationNoticeMail(
-                'New application is waiting you approve !',
-                $sendTo,
-                $sendCc,
-                []
-            );
-            
-            
         } catch (Exception $ex) {
 
             DB::rollBack();
@@ -235,7 +213,7 @@ class ApplicationController extends Controller
         return $msgErr;
     }
 
-    private function saveApplicationMaster($request, $inputs, $app, $user)
+    private function saveApplicationMaster($request, $inputs, $app, $loginUser)
     {
         // get type form of application
         $formId = $this->formType;
@@ -259,14 +237,14 @@ class ApplicationController extends Controller
         }
 
         // get group
-        $group = $this->getGroup($user, $currentStep, $budgetType, $budgetPosition, $budgetTypeCompare);
+        $group = $this->getGroup($loginUser, $currentStep, $budgetType, $budgetPosition, $budgetTypeCompare);
         // not found available flow setting
         if (empty($group) && isset($inputs['apply'])) {
             throw new NotFoundFlowSettingException();
         }
 
         // get attached file
-        $filePath = $this->uploadAttachedFile($request, $inputs, $app, $user);
+        $filePath = $this->uploadAttachedFile($request, $inputs, $app, $loginUser);
 
         // prepare data
         $application = [
@@ -277,14 +255,14 @@ class ApplicationController extends Controller
             'subsequent'        => $inputs['subsequent'],
             'budget_position'   => $budgetPosition,
             'file_path'         => $filePath ?? null,
-            'updated_by'        => $user->id,
+            'updated_by'        => $loginUser->id,
             'updated_at'        => Carbon::now()
         ];
 
-        // save applications
+        // save application
         if (empty($app)) {
             $application['application_no']  = Application::makeApplicationNoByAutoIncrementId($formId);
-            $application['created_by']      = $user->id;
+            $application['created_by']      = $loginUser->id;
             $application['created_at']      = Carbon::now();
 
             $applicationId = DB::table('applications')->insertGetId($application);
@@ -426,6 +404,34 @@ class ApplicationController extends Controller
         return $filePath ?? null;
     }
 
+    private function sendNoticeMail($inputs, $application){
+
+        if (!isset($inputs['apply'])) {
+            return;
+        }
+
+        // get approvers(TO && CC) for application depends on current step of application
+        $nextApprovers = Step::getApproversByGroupId($application['group_id']);
+
+        foreach ($nextApprovers as $item) {
+            // just get next first approver(TO)
+            if ($item->approver_type == config('const.approver_type.to') && !isset($sendTo)) {
+                $sendTo[] = $item->approver_mail;
+            }
+            // approvers (CC) can take multi
+            elseif ($item->approver_type == config('const.approver_type.cc')) {
+                $sendCc[] = $item->approver_mail;
+            }
+        }
+
+        Common::sendApplicationNoticeMail(
+            'New application is waiting you approve !',
+            $sendTo,
+            $sendCc,
+            []
+        );
+    }
+
     protected function preview(Request $request, $id)
     {
         $application = Application::findOrFail($id);
@@ -473,9 +479,9 @@ class ApplicationController extends Controller
 
             // get applicant info
             $inputs['applicant'] = $application->applicant;
-            
+
             // get last approval of complete application
-            if($application->status == config('const.application.status.completed')){
+            if ($application->status == config('const.application.status.completed')) {
                 $conditions = [
                     'application_id' => $application->id,
                     'step' => $application->current_step,

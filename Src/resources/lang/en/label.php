@@ -15,6 +15,7 @@ return [
     'button_edit'       => 'Edit',
     'button_delete'     => 'Delete',
     'button_restore'    => 'Restore',
+    'button_skip'       => 'Skip approver',
     'button_cancel'     => 'Cancel',
     'button_accept'     => 'Accept',
     'button_search'     => 'Search',

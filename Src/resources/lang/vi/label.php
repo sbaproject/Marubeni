@@ -14,6 +14,7 @@ return [
     'button_edit'       => 'Sửa',
     'button_delete'     => 'Xóa',
     'button_restore'    => 'Khôi phục',
+    'button_skip'       => 'Bỏ qua người duyệt này',
     'button_cancel'     => 'Hủy',
     'button_accept'     => 'Chấp nhận',
     'button_search'     => 'Tìm kiếm',

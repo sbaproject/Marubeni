@@ -283,7 +283,7 @@ class Common
 	 * @param int $currentStep Current step of application
 	 * @return string status badge html
 	 */
-	public static function getStatusApplicationBadge($status, $currentStep)
+	public static function generateStatusApplicationBadgeStyle($status, $currentStep)
 	{
 		if ($status >= 0 && $status <= 98 && $currentStep == config('const.application.step_type.application')) {
 			$statusName = __('label.application_status_applying');
@@ -365,6 +365,7 @@ class Common
 	 * @return int Auto-increment id
 	 */
 	public static function getAutoIncrementId($schemaName, $tableName){
+
 		return \Illuminate\Support\Facades\DB::table('INFORMATION_SCHEMA.TABLES')
 				->select('AUTO_INCREMENT')
 				->where('table_schema', $schemaName)
@@ -374,7 +375,9 @@ class Common
 
 	public static function sendApplicationNoticeMail($title, $to, $cc, $msgParams){
 
-		$mailable = new ApplicationNoticeMail('mails.mail_application_notice', $title, $msgParams);
+		$mailTpl = 'mails.mail_application_notice';
+		$mailable = new ApplicationNoticeMail($mailTpl, $title, $msgParams);
+		
 		SendMailBackGround::dispatch($mailable, $to, $cc);
 	}
 }

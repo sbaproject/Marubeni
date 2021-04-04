@@ -83,14 +83,14 @@
                             <th class="sortable {{ $sortable->headers['application_no']->activeCls }}">
                                 {!! $sortable->headers['application_no']->title !!}
                             </th>
-                            <th class="sortable {{ $sortable->headers['nameapp']->activeCls }}">
-                                {!! $sortable->headers['nameapp']->title !!}
+                            <th class="sortable {{ $sortable->headers['form_name']->activeCls }}">
+                                {!! $sortable->headers['form_name']->title !!}
                             </th>
                             <th class="sortable {{ $sortable->headers['datecreate']->activeCls }}">
                                 {!! $sortable->headers['datecreate']->title !!}
                             </th>
-                            <th class="sortable {{ $sortable->headers['nameuser']->activeCls }}">
-                                {!! $sortable->headers['nameuser']->title !!}
+                            <th class="sortable {{ $sortable->headers['next_approver']->activeCls }}">
+                                {!! $sortable->headers['next_approver']->title !!}
                             </th>
                             <th></th>
                         </tr>
@@ -98,18 +98,28 @@
                     <tbody>
                         @if (isset($list_applications_status))
                             @foreach ($list_applications_status as $application_status)
+                                @php
+                                    $completedFlg = $intstatus == config('const.application.status.completed');
+                                @endphp
                                 <tr class="">
                                     <td>{{ !empty($application_status->application_no) ? $application_status->application_no : '' }}
                                     </td>
-                                    <td>{{ !empty($application_status->nameapp) ? $application_status->nameapp : '' }}</td>
+                                    <td>{{ !empty($application_status->form_name) ? $application_status->form_name : '' }}</td>
                                     <td>{{ !empty($application_status->datecreate) ? \Carbon\Carbon::parse($application_status->datecreate)->format('d/m/Y') : '' }}
                                     </td>
-                                    <td>{{ !empty($application_status->nameuser) && $intstatus != config('const.application.status.completed') ? $application_status->nameuser : '' }}
+                                    <td>
+                                        @if (!empty($application_status->next_approver))
+                                            {{ $application_status->next_approver }}
+                                        @endif
                                     </td>
                                     <td>
-                                        <a class="btn bg-gradient-info" href="{{ Common::getRouteEditApplication($application_status->id, $application_status->form_id) }}">
-                                            {{ __('label.status_view_details') }}
-                                            <i class="fas fa-angle-right" style="margin-left: 5px;"></i>
+                                        <button type="button" class="btn bg-gradient-warning btn-sm" data-toggle="tooltip"
+                                            title="{{ __('label.button_skip') }}" data-toggle="modal" data-target="#popup-confirm">
+                                            <i class="fa fa-fast-forward"></i>
+                                        </button>
+                                        <a class="btn bg-gradient-info btn-sm" href="{{ Common::getRouteEditApplication($application_status->id, $application_status->form_id) }}"
+                                                title="{{ __('label.status_view_details') }}">
+                                            <i class="fas fa-eye"></i>
                                         </a>
                                     </td>
                                 </tr>
@@ -129,4 +139,34 @@
         <div id='end_date' value='{{ $end_date }}'>
         </div>
     </section>
+    {{-- Skip Modal --}}
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="recipient-name" class="col-form-label">Recipient:</label>
+                            <input type="text" class="form-control" id="recipient-name">
+                        </div>
+                        <div class="form-group">
+                            <label for="message-text" class="col-form-label">Message:</label>
+                            <textarea class="form-control" id="message-text"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Send message</button>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
