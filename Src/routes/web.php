@@ -200,6 +200,7 @@ Route::middleware('checkip')->group(function () {
                     Route::get('list', [ApprovalController::class, 'index'])->name('index');
                     Route::get('detail/{id}', [ApprovalController::class, 'show'])->name('show');
                     Route::post('detail/{id}', [ApprovalController::class, 'update'])->name('update');
+                    Route::post('skip/{id}', [ApprovalController::class, 'skip'])->name('skip');
                 });
                 // });
             });

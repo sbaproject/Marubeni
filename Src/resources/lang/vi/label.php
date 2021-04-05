@@ -130,6 +130,7 @@ return [
     'approval_action_reject'        => 'Khước từ',
     'approval_action_decline'       => 'Trả về',
     'approval_action_complete'      => 'Hoàn tất',
+    'approval_action_skipped'       => 'Đã bị bỏ qua',
 
     /**
      * Application

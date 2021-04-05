@@ -134,6 +134,7 @@ return [
     'approval_action_reject'    => 'Rejected',
     'approval_action_decline'   => 'Declined',
     'approval_action_complete'  => 'Completed',
+    'approval_action_skipped'   => 'Skipped',
 
     /**
      * Application

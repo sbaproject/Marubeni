@@ -100,6 +100,7 @@
                             @foreach ($list_applications_status as $application_status)
                                 @php
                                     $completedFlg = $intstatus == config('const.application.status.completed');
+                                    $finalApproverFlg = $application_status->final_approver_id == $application_status->next_approver_id;
                                 @endphp
                                 <tr class="">
                                     <td>{{ !empty($application_status->application_no) ? $application_status->application_no : '' }}
@@ -108,18 +109,25 @@
                                     <td>{{ !empty($application_status->datecreate) ? \Carbon\Carbon::parse($application_status->datecreate)->format('d/m/Y') : '' }}
                                     </td>
                                     <td>
-                                        @if (!empty($application_status->next_approver))
+                                        @if (!$completedFlg && !empty($application_status->next_approver))
                                             {{ $application_status->next_approver }}
                                         @endif
                                     </td>
                                     <td>
-                                        <button type="button" class="btn bg-gradient-warning btn-sm" data-toggle="tooltip"
-                                            title="{{ __('label.button_skip') }}" data-toggle="modal" data-target="#popup-confirm">
-                                            <i class="fa fa-fast-forward"></i>
-                                        </button>
+                                        @if (!$completedFlg && !$finalApproverFlg)
+                                            <button type="button" name="btnSkip" class="btn bg-gradient-warning btn-sm" title="{{ __('label.button_skip') }}"
+                                                data-toggle="modal" data-target="#modal-skip"
+                                                data-skip-who-id="{{ $application_status->next_approver_id }}"
+                                                data-skip-who-name="{{ $application_status->next_approver }}"
+                                                data-skip-form-id="{{ $application_status->form_id }}"
+                                                data-skip-url="{{ route('user.approval.skip', $application_status->id) }}"
+                                                data-last-updated-at="{{ $application_status->updated_at }}">
+                                                <i class="fa fa-fast-forward"></i>
+                                            </button>
+                                        @endif
                                         <a class="btn bg-gradient-info btn-sm" href="{{ Common::getRouteEditApplication($application_status->id, $application_status->form_id) }}"
                                                 title="{{ __('label.status_view_details') }}">
-                                            <i class="fas fa-eye"></i>
+                                            <i class="fas fa-search"></i>
                                         </a>
                                     </td>
                                 </tr>
@@ -140,33 +148,90 @@
         </div>
     </section>
     {{-- Skip Modal --}}
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    <div class="modal fade" id="modal-skip" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
+                <form id="form-skip" action="" method="POST">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">New message</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                        Bạn muốn bỏ qua người duyệt: <span id="skip-who-name"></span>
+                    </h5>
+                    <button type="button" id="btn-skip-close" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form>
-                        <div class="form-group">
-                            <label for="recipient-name" class="col-form-label">Recipient:</label>
-                            <input type="text" class="form-control" id="recipient-name">
-                        </div>
-                        <div class="form-group">
-                            <label for="message-text" class="col-form-label">Message:</label>
-                            <textarea class="form-control" id="message-text"></textarea>
-                        </div>
-                    </form>
+                    @csrf
+                    <div class="form-group">
+                        <label for="message-text" class="col-form-label">Lý do:</label>
+                        <textarea class="form-control" id="skip_comment" name="skip_comment" rows="5"></textarea>
+                        <input type="hidden" id="skip_group_id" name="skip_group_id">
+                        <input type="hidden" id="skip_step_id" name="skip_step_id">
+                        <input type="hidden" id="skip_form_id" name="skip_form_id">
+                        <input type="hidden" id="skip_who_id" name="skip_who_id">
+                        <input type="hidden" id="skip_last_updated_at" name="skip_last_updated_at">
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Send message</button>
+                    <button type="button" id="btn-skip-cancel" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" id="btn-skip-submit" class="btn btn-warning">Accept</button>
+                    <button type="button" id="btn-skip-submit-processing" class="btn btn-warning d-none" disabled>
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        Accept
+                    </button>
                 </div>
+                </form>
             </div>
         </div>
     </div>
+    <script>
+        $(function(){
+
+            $('#btnSkip').on('click', function(){
+                $($(this).data('data-target')).modal('show', $(this));
+            });
+
+            $('#modal-skip').on('show.bs.modal', function (event) {
+                // button trigger this modal
+                var button = $(event.relatedTarget);
+                // data
+                var skipWhoId = button.data('skip-who-id');
+                var skipWhoName = button.data('skip-who-name');
+                var skipFormId = button.data('skip-form-id');
+                var actionUrl = button.data('skip-url');
+                var lastUpdatedAt = button.data('last-updated-at');
+                // get modal
+                var modal = $(this);
+                // form post
+                var formPost = modal.find('#form-skip');
+                //
+                modal.find('#skip-who-name').text(skipWhoName);
+                modal.find('#skip_who_id').val(skipWhoId);
+                modal.find('#skip_form_id').val(skipFormId);
+                modal.find('#skip_comment').val('');
+                modal.find('#skip_last_updated_at').val(lastUpdatedAt);
+                modal.find('#form-skip').attr('action', actionUrl);
+            });
+
+            $('#btn-skip-submit').on('click', function(){
+                if($('#skip_comment').val().trim() == ''){
+                    alert('Vui lòng nhập lý do');
+                    return;
+                }
+                // not show loading dialog while processing
+                showLoadingFlg = false;
+                // get form post
+                let form = this.form;
+                // lock screen
+                $(this).hide();
+                $('#btn-skip-cancel').attr('disabled','disabled');
+                $('#btn-skip-close').attr('disabled','disabled');
+                $('#btn-skip-submit-processing').removeClass('d-none');
+                $('#modal-skip').data('bs.modal')._config.backdrop = 'static';
+                //submit
+                form.submit();
+            });
+        })
+    </script>
 @endsection

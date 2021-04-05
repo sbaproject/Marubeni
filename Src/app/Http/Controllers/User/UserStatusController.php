@@ -15,6 +15,7 @@ class UserStatusController extends Controller
         $userId = Auth::user()->id;
         $data = $request->input();
         $fillZero = config('const.num_fillzero');
+        $completedStatus = config('const.application.status.completed');
 
         //Set case in Status is Approvel
         if (intval($status) == config('const.application.status.applying')) {
@@ -64,9 +65,24 @@ class UserStatusController extends Controller
                 'applications.id',
                 'applications.application_no',
                 'applications.form_id',
+                'applications.group_id',
+                'applications.current_step',
                 'applications.created_at    as datecreate',
+                'applications.updated_at    as updated_at',
                 'forms.name                 as form_name',
+                'forms.id                   as form_id',
                 'users.name                 as next_approver',
+                'users.id                   as next_approver_id',
+                // get final approver
+                DB::raw("
+                    (
+                        select  approver_id
+                        from    steps as st
+                        where   flow_id = steps.flow_id
+                                and `order` = {$completedStatus}
+                        order by step_type desc limit 1
+                    ) as final_approver_id
+                "),
             )
 
             //Join

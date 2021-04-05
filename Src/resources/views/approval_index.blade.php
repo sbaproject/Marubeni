@@ -133,9 +133,11 @@
                         </td>
                         <td>{{ $item->next_approver }}</td>
                         <td>
-                            <a class="btn bg-gradient-info" href="{{ route('user.approval.show',$item->application_id) }}">
-                                {{ __('label.status_view_details') }}
-                                <i class="fas fa-angle-right" style="margin-left: 5px;"></i>
+                            <a class="btn bg-gradient-info" href="{{ route('user.approval.show',$item->application_id) }}"
+                                title="{{ __('label.status_view_details') }}">
+                                <i class="fas fa-search"></i>
+                                {{-- {{ __('label.status_view_details') }}
+                                <i class="fas fa-angle-right" style="margin-left: 5px;"></i> --}}
                             </a>
                         </td>
                     </tr>

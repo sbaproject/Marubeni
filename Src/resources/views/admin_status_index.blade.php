@@ -107,9 +107,11 @@
                                     <td>{{ (!empty($application_status->nameuser) && $intstatus != config('const.application.status.completed')) ? $application_status->nameuser : '' }}
                                     </td>
                                     <td>
-                                        <a class="btn bg-gradient-info" href="{{ Common::getRouteEditApplication($application_status->id, $application_status->form_id) }}">
-                                            {{ __('label.status_view_details') }}
-                                            <i class="fas fa-angle-right" style="margin-left: 5px;"></i>
+                                        <a class="btn bg-gradient-info" href="{{ Common::getRouteEditApplication($application_status->id, $application_status->form_id) }}"
+                                            title="{{ __('label.status_view_details') }}">
+                                            <i class="fas fa-search"></i>
+                                            {{-- {{ __('label.status_view_details') }}
+                                            <i class="fas fa-angle-right" style="margin-left: 5px;"></i> --}}
                                         </a>
                                     </td>
                                 </tr>

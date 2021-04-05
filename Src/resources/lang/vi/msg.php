@@ -25,6 +25,7 @@ return [
     'application_error_flow_not_found' => 'Không tìm thấy quy trình duyệt đơn phù hợp !',
     'application_error_inprogress_not_allow_edit' => 'Bạn không thể chỉnh sửa đơn vì đang trong quá trình phê duyệt !',
     'application_error_review_before_approve' => 'Đơn này có thay đổi thông tin, vui lòng tải lại trang để xem được thông tin mới nhất trước khi duyệt đơn !',
+    'application_error_skip_final_approver' => 'Đơn đang chờ người duyệt cuối, bạn không thể bỏ qua người duyệt này !',
 
     /**
      * Page error

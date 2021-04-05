@@ -149,10 +149,11 @@
                                         <td>{{ !empty($application->created_at) ? \Carbon\Carbon::parse($application->created_at)->format('d/m/Y') : '' }}
                                         </td>
                                         <td>
-                                            <a class="btn bg-gradient-info"
+                                            <a class="btn bg-gradient-info" title="{{ __('label.dashboard_view_details') }}"
                                                 href="{{ Common::getRouteEditApplication($application->id, $application->form_id) }}">
-                                                {{ __('label.dashboard_view_details') }}
-                                                <i class="fas fa-angle-right" style="margin-left: 5px;"></i>
+                                                {{-- {{ __('label.dashboard_view_details') }}
+                                                <i class="fas fa-angle-right" style="margin-left: 5px;"></i> --}}
+                                                <i class="fas fa-search"></i>
                                             </a>
                                         </td>
                                     </tr>

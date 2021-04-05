@@ -25,6 +25,7 @@ return [
     'application_error_flow_not_found' => 'Not found available flow setting for this application !',
     'application_error_inprogress_not_allow_edit' => 'Application is no longer editable, it is in approval progressing !',
     'application_error_review_before_approve' => 'Application information has been modified. Please review before approve !',
+    'application_error_skip_final_approver' => 'This application is waiting to final approver so you can not skip to this approver !',
 
     /**
      * Page Error

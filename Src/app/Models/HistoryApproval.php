@@ -16,10 +16,7 @@ class HistoryApproval extends Model
     public static function scopeSelectAllColumn($query)
     {
         $cols = [
-            'history_approval.comment as content',
-            'history_approval.created_at',
-            'history_approval.status',
-            'history_approval.step',
+            'history_approval.*',
             'users.name as user_name',
         ];
 

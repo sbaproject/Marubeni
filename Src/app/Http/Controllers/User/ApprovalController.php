@@ -8,6 +8,7 @@ use App\Libs\Common;
 use App\Models\Step;
 use App\Models\User;
 use App\Models\Leave;
+use App\Models\Application;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use App\Models\HistoryApproval;
@@ -348,6 +349,174 @@ class ApprovalController extends Controller
             }
             return Common::redirectBackWithAlertFail($msgErr)->withInput();
         }
+    }
+
+    public function skip(Request $request, $id)
+    {
+        $completedStatus = config('const.application.status.completed');
+
+        // login user
+        $loginUser = Auth::user();
+
+        // get application
+        $cols = [
+            'applications.*',
+            'steps.flow_id',
+            'steps.approver_id',
+            'steps.approver_type',
+            'steps.step_type',
+            'steps.order',
+            'steps.select_order',
+            'groups.applicant_id           as group_applicant_id',
+            'groups.budget_type_compare',
+            'approver.email                as approver_mail',
+            'approver.role                 as approver_role',
+            'approver.location             as approver_location',
+            'approver.department_id        as approver_department',
+            'applicant.email               as applicant_mail',
+            DB::raw('(select max(step_type) from steps where flow_id = flows.id) as step_count'),
+            // get final approver
+            DB::raw("
+                    (
+                        select  approver_id
+                        from    steps as st
+                        where   flow_id = steps.flow_id
+                                and `order` = {$completedStatus}
+                        order by step_type desc limit 1
+                    ) as final_approver_id
+                "),
+        ];
+
+        $isLeaveApplication = $request->skip_form_id == config('const.form.leave');
+        if (!$isLeaveApplication) {
+            $cols[] = 'budgets.budget_type';
+        }
+
+        $application = DB::table('applications')
+            ->select($cols)
+            ->join('groups', 'groups.id', 'applications.group_id')
+            ->when(!$isLeaveApplication, function ($query) {
+                $query->join('budgets', 'budgets.id', 'groups.budget_id');
+            })
+            ->join('steps', function ($join) {
+                $join->on('steps.group_id', '=', 'groups.id')
+                    ->whereRaw('steps.select_order = applications.status')
+                    ->whereRaw('steps.step_type = applications.current_step');
+            })
+            ->join('flows', 'flows.id', '=', 'steps.flow_id')
+            ->join('users as approver', 'approver.id', '=', 'steps.approver_id')
+            ->join('users as applicant', 'applicant.id', '=', 'applications.created_by')
+            ->where('applications.id', '=', $id)
+            ->where('applications.deleted_at', '=', null)
+            ->first();
+
+        // not found application
+        if (empty($application)) {
+            return Common::redirectBackWithAlertFail(__('msg.application_error_404'));
+        }
+
+        // check owner of application
+        if ($application->created_by != $loginUser->id) {
+            abort(403);
+        }
+
+        // check data was not modified before skip
+        if ($request->skip_last_updated_at != $application->updated_at) {
+            return Common::redirectBackWithAlertFail(__('msg.application_error_review_before_approve'));
+        }
+
+        // check status application is applying
+        if (!($application->status >= 0 && $application->status <= 98)) {
+            return Common::redirectBackWithAlertFail(__('msg.application_error_unvalid_action'));
+        }
+
+        // check do not skip final approver
+        if ($application->final_approver_id == $application->approver_id) {
+            return Common::redirectBackWithAlertFail(__('msg.application_error_skip_final_approver'));
+        }
+
+        DB::beginTransaction();
+        try {
+            $newApplication['status'] = $application->order;
+            // make application next to step of approval flow (with Leave Application just have one step)
+            if ($application->order == config('const.application.status.completed')) {
+                if ($application->form_id == config('const.form.biz_trip') || $application->form_id == config('const.form.entertainment')) {
+                    // setup for next step ortherwise application is completed
+                    if ($application->current_step < $application->step_count) {
+                        // get next step of approval flow
+                        $nextStep = $application->current_step + 1;
+                        // get group for next step
+                        $group = DB::table('groups')
+                            ->select('groups.*')
+                            ->join('budgets', function ($join) use ($nextStep, $application) {
+                                $join->on('groups.budget_id', '=', 'budgets.id')
+                                    ->where('budgets.budget_type', '=', $application->budget_type)
+                                    ->where('budgets.step_type', '=', $nextStep)
+                                    ->where('budgets.position', '=', $application->budget_position)
+                                    ->where('budgets.deleted_at', '=', null);
+                            })
+                            ->where([
+                                'groups.applicant_id' => $application->group_applicant_id,
+                                'groups.budget_type_compare' => $application->budget_type_compare,
+                                'groups.deleted_at' => null,
+                            ])
+                            ->first();
+
+                        // not found available flow setting
+                        if (empty($group)) {
+                            throw new NotFoundFlowSettingException();
+                        }
+
+                        $newApplication['current_step']   = $nextStep;
+                        $newApplication['group_id']       = $group->id;
+                        $newApplication['status']         = config('const.application.status.applying');
+                    }
+                }
+            }
+
+            $newApplication['updated_by'] = $loginUser->id;
+            $newApplication['updated_at'] = Carbon::now();
+
+            DB::table('applications')->where('id', $id)->update($newApplication);
+
+            // create approval history
+            $historyData = [
+                'application_id'    => $application->id,
+                'status'            => $application->order,
+                'step'              => $application->step_type,
+                'approved_by'       => $application->approver_id,
+                'comment'           => $request->skip_comment,
+                'skiped_by'         => $loginUser->id, // only applicant can skip
+                'created_at'        => Carbon::now(),
+                'updated_at'        => Carbon::now(),
+            ];
+            DB::table('history_approval')->insert($historyData);
+
+            // commit db
+            DB::commit();
+
+            // send notice mail
+            $this->sendMail($request, $application, $newApplication);
+
+            return Common::redirectBackWithAlertSuccess(__('msg.application_success_approve_ok'));
+        } catch (Exception $ex) {
+
+            // rollback db
+            DB::rollBack();
+
+            // log stacktrace
+            report($ex);
+
+            // get msg error to show to client
+            if ($ex instanceof NotFoundFlowSettingException) {
+                $msgErr = $ex->getMessage();
+            } else {
+                $msgErr = __('msg.save_fail');
+            }
+            return Common::redirectBackWithAlertFail($msgErr)->withInput();
+        }
+
+        return back();
     }
 
     private function getSqlIndex($conditions, $sortable, $fillZero)
