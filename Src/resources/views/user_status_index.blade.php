@@ -122,7 +122,11 @@
                                                 data-skip-form-id="{{ $application_status->form_id }}"
                                                 data-skip-url="{{ route('user.approval.skip', $application_status->id) }}"
                                                 data-last-updated-at="{{ $application_status->updated_at }}">
-                                                <i class="fa fa-fast-forward"></i>
+                                                <i class="fa fa-step-forward"></i>
+                                            </button>
+                                        @else
+                                            <button class="btn bg-gradient-warning btn-sm" title="{{ __('label.button_skip') }}" disabled>
+                                                <i class="fa fa-step-forward"></i>
                                             </button>
                                         @endif
                                         <a class="btn bg-gradient-info btn-sm" href="{{ Common::getRouteEditApplication($application_status->id, $application_status->form_id) }}"
@@ -155,7 +159,7 @@
                 <form id="form-skip" action="" method="POST">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">
-                        Bạn muốn bỏ qua người duyệt: <span id="skip-who-name"></span>
+                        {{ __('label.popup_title_skip_approver') }} <span id="skip-who-name"></span> ?
                     </h5>
                     <button type="button" id="btn-skip-close" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -164,21 +168,22 @@
                 <div class="modal-body">
                     @csrf
                     <div class="form-group">
-                        <label for="message-text" class="col-form-label">Lý do:</label>
+                        <label for="message-text" class="col-form-label">{{ __('label.reason') }}</label>
                         <textarea class="form-control" id="skip_comment" name="skip_comment" rows="5"></textarea>
-                        <input type="hidden" id="skip_group_id" name="skip_group_id">
-                        <input type="hidden" id="skip_step_id" name="skip_step_id">
+                        <span id="skip_comment_err" class="invalid-feedback d-none" role="alert">
+                            <strong>{{ __('validation.required', ['attribute' => __('label.reason')]) }}</strong>
+                        </span>
                         <input type="hidden" id="skip_form_id" name="skip_form_id">
                         <input type="hidden" id="skip_who_id" name="skip_who_id">
                         <input type="hidden" id="skip_last_updated_at" name="skip_last_updated_at">
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" id="btn-skip-cancel" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" id="btn-skip-submit" class="btn btn-warning">Accept</button>
+                    <button type="button" id="btn-skip-cancel" class="btn btn-secondary" data-dismiss="modal">{{ __('label.button_cancel') }}</button>
+                    <button type="button" id="btn-skip-submit" class="btn btn-warning">{{ __('label.button_accept') }}</button>
                     <button type="button" id="btn-skip-submit-processing" class="btn btn-warning d-none" disabled>
                         <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                        Accept
+                        {{ __('label.button_accept') }}
                     </button>
                 </div>
                 </form>
@@ -193,6 +198,9 @@
             });
 
             $('#modal-skip').on('show.bs.modal', function (event) {
+                // clear error
+                $('#skip_comment').removeClass('is-invalid');
+                $('#skip_comment_err').addClass('d-none');
                 // button trigger this modal
                 var button = $(event.relatedTarget);
                 // data
@@ -205,7 +213,7 @@
                 var modal = $(this);
                 // form post
                 var formPost = modal.find('#form-skip');
-                //
+                // fill data
                 modal.find('#skip-who-name').text(skipWhoName);
                 modal.find('#skip_who_id').val(skipWhoId);
                 modal.find('#skip_form_id').val(skipFormId);
@@ -216,7 +224,8 @@
 
             $('#btn-skip-submit').on('click', function(){
                 if($('#skip_comment').val().trim() == ''){
-                    alert('Vui lòng nhập lý do');
+                    $('#skip_comment').addClass('is-invalid');
+                    $('#skip_comment_err').removeClass('d-none');
                     return;
                 }
                 // not show loading dialog while processing

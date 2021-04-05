@@ -124,8 +124,10 @@
                                                 </div>
                                                 <img class="direct-chat-img" src="/images/no-photo.jpg" alt="Message User Image">
                                                 <div class="direct-chat-text">
+                                                    {{-- was skipped --}}
                                                     @if (!empty($item->skiped_by))
-                                                        <span class='badge badge-warning'>{{ __('label.approval_action_skipped') }}</span>
+                                                        <span class='badge badge-dark'>{{ __('label.approval_action_skipped') }}</span>
+                                                    {{-- approval action --}}
                                                     @else
                                                         {!! Common::generateBadgeByApprovalStatus($item->status, $item->step) !!}
                                                     @endif

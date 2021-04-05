@@ -30,7 +30,8 @@ class Step extends Model
         $cols = [
             'steps.approver_id',
             'steps.approver_type',
-            'users.email as approver_mail'
+            'users.email as approver_mail',
+            'users.name as approver_name'
         ];
         return Step::select($cols)
             ->join('users', 'users.id', 'steps.approver_id')

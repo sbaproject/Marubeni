@@ -370,6 +370,7 @@ class ApprovalController extends Controller
             'groups.applicant_id           as group_applicant_id',
             'groups.budget_type_compare',
             'approver.email                as approver_mail',
+            'approver.name                as approver_name',
             'approver.role                 as approver_role',
             'approver.location             as approver_location',
             'approver.department_id        as approver_department',
@@ -495,10 +496,27 @@ class ApprovalController extends Controller
             // commit db
             DB::commit();
 
-            // send notice mail
-            $this->sendMail($request, $application, $newApplication);
+            // send notice mail to skipped approver
+            Common::sendApplicationNoticeMail(
+                'Skip : '. $application->approver_name,
+                $application->approver_mail,
+                [],
+                []
+            );
+            // send notice mail to next approver TO (after skipped)
+            $nextGroupId = $newApplication['group_id'] ?? $application->group_id;
+            $nextOrder = $newApplication['status'] ?? $application->order;
+            $nextApprover = Step::getNextApproverCurrentStep($nextGroupId, $nextOrder);
+            if (!empty($nextApprover)) {
+                Common::sendApplicationNoticeMail(
+                    'Skip - Next to : '. $nextApprover->approver_name,
+                    $nextApprover->approver_mail,
+                    [],
+                    []
+                );
+            }
 
-            return Common::redirectBackWithAlertSuccess(__('msg.application_success_approve_ok'));
+            return Common::redirectBackWithAlertSuccess(__('msg.save_success'));
         } catch (Exception $ex) {
 
             // rollback db
@@ -688,7 +706,7 @@ class ApprovalController extends Controller
                     }
                 }
                 // application still on current step
-                // so only to send mail to next approver CC
+                // so only to send mail to next approver TO
                 else {
                     // next approver of step
                     $nextApprover = Step::getNextApproverCurrentStep($currentApplication->group_id, $currentApplication->order);

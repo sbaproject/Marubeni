@@ -58,7 +58,10 @@ return [
     'times'             => 'Số lần',
     'step'              => 'Bước',
     'status_caption'    => 'Trạng thái',
+    'reason'            => 'Lý do',
     'search_by_app_no_applicant' => 'Tìm theo mã số đơn hoặc tên người đề nghị',
+
+    'popup_title_skip_approver' => 'Bỏ qua sự xét duyệt của',
     
     'title_user_list'           => 'Danh mục nhân viên',
     'title_user_edit'           => 'Chỉnh sửa nhân viên',
