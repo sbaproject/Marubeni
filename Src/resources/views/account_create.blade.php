@@ -7,6 +7,13 @@
 @section('css')
 @endsection
 
+@section('js')
+{{-- cleave js --}}
+<script src="js/cleave/cleave.min.js"></script>
+{{-- private js --}}
+<script src="js/admin/account_input.js"></script>
+@endsection
+
 @section('content-header')
 {{ __('label.title_user_add') }}
 @endsection
@@ -123,8 +130,64 @@
 							<input id="email" type="text" class="form-control @error('email') is-invalid @enderror"
 								name="email" value="{{ old('email') }}" autofocus
 									placeholder="{{ __('validation.attributes.email') }}" autocomplete="off">
-
 							@error('email')
+							<span class="invalid-feedback" role="alert">
+								<strong>{{ $message }}</strong>
+							</span>
+							@enderror
+						</div>
+					</div>
+					{{-- Entitled this year --}}
+					<div class="form-group row">
+						<label for="leave_days" class="col-lg-3 col-form-label text-center">
+							{{ __('validation.attributes.leave_days') }}
+						</label>
+						<div class="col-lg-9">
+							<input id="txt_leave_days" type="text" autofocus
+								class="form-control leave_days @error('leave_days') is-invalid @enderror"
+								style="width:20%;display: inline-block; text-align: right" value="{{ old('leave_days') ?? 0 }}"
+								placeholder="{{ __('validation.attributes.leave_days') }}" autocomplete="off">
+							<span>{{ __('label.leave.caption_days') }}</span>
+							<input type="hidden" name="leave_days" value="{{ old('leave_days') ?? 0 }}">
+							@error('leave_days')
+							<span class="invalid-feedback" role="alert">
+								<strong>{{ $message }}</strong>
+							</span>
+							@enderror
+						</div>
+					</div>
+					{{-- Remaining days --}}
+					<div class="form-group row">
+						<label for="txt_leave_remaining_days" class="col-lg-3 col-form-label text-center">
+							{{ __('validation.attributes.leave_remaining_days') }}
+						</label>
+						<div class="col-lg-9">
+							<input id="txt_leave_remaining_days" type="text" autofocus
+								class="form-control leave_remaining_days @error('leave_remaining_days') is-invalid @enderror"
+								style="width:20%;display: inline-block; text-align: right" value="{{ old('leave_remaining_days') ?? 0 }}"
+								placeholder="{{ __('validation.attributes.leave_remaining_days') }}" autocomplete="off">
+							<span>{{ __('label.leave.caption_days') }}</span>
+							<input type="hidden" name="leave_remaining_days" value="{{ old('leave_remaining_days') ?? 0 }}">
+							@error('leave_remaining_days')
+							<span class="invalid-feedback" role="alert">
+								<strong>{{ $message }}</strong>
+							</span>
+							@enderror
+						</div>
+					</div>
+					{{-- Remaining time --}}
+					<div class="form-group row">
+						<label for="txt_leave_remaining_time" class="col-lg-3 col-form-label text-center">
+							{{ __('validation.attributes.leave_remaining_time') }}
+						</label>
+						<div class="col-lg-9">
+							<input id="txt_leave_remaining_time" type="text" autofocus
+								class="form-control leave_remaining_time @error('leave_remaining_time') is-invalid @enderror"
+								style="width:20%;display: inline-block; text-align: right" value="{{ old('leave_remaining_time') ?? 0 }}"
+								placeholder="{{ __('validation.attributes.leave_remaining_time') }}" autocomplete="off">
+							<span>{{ __('label.leave.caption_hours') }}</span>
+							<input type="hidden" name="leave_remaining_time" value="{{ old('leave_remaining_time') ?? 0 }}">
+							@error('leave_remaining_time')
 							<span class="invalid-feedback" role="alert">
 								<strong>{{ $message }}</strong>
 							</span>
@@ -179,7 +242,6 @@
 							<i class="nav-icon far fa-times-circle"></i> {{__('label.button_cancel')}}</a>
 					</div>
 			</div>
-
 			</form>
 		</div>
 	</div>

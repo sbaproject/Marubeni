@@ -197,9 +197,9 @@ return [
         'trip_dt_from' => 'Trip from',
         'trip_dt_to' => 'Trip to',
 
-        'leave_days' => 'Số ngày phép được nghỉ',
-        'leave_remaining_days' => 'Số ngày phép còn lại',
-        'leave_remaining_time' => 'Số giờ phép còn lại',
+        'leave_days' => 'Entitled this year',
+        'leave_remaining_days' => 'Remaining days',
+        'leave_remaining_time' => 'Remaining hours',
     ],
 
 ];

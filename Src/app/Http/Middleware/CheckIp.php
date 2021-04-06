@@ -20,10 +20,6 @@ class CheckIp
      */
     public function handle(Request $request, Closure $next)
     {
-        if ($request->server('REMOTE_ADDR') == '192.168.2.17'){
-            Config::set('database.default', 'mysql_bk');
-        }
-        
         // SmartPhone do not need check network
         if (Common::detectMobile()){
             return $next($request);
