@@ -216,4 +216,6 @@ return [
     'available_class_network' => [
         '192.168.2',
     ],
+
+    'queue_application_notice_mail_name' => 'application_notice_mail',
 ];

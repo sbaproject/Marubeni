@@ -378,6 +378,12 @@ class Common
 		$mailTpl = 'mails.mail_application_notice';
 		$mailable = new ApplicationNoticeMail($mailTpl, $title, $msgParams);
 		
-		SendMailBackGround::dispatch($mailable, $to, $cc);
+		// send to queue
+		// if using queue, must to run command: php aritsan queue:listen --queue=[queue_name_here]
+		// SendMailBackGround::dispatch($mailable, $to, $cc)->onQueue(config('const.queue_application_notice_mail_name'));
+		
+		// run job immediately (not send to job)
+		// run with current response so it take long time
+		SendMailBackGround::dispatchNow($mailable, $to, $cc);
 	}
 }

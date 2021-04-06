@@ -28,7 +28,7 @@ return [
     'button_preview'    => 'Preview',
     'button_reject'     => 'Reject',
     'button_declined'   => 'Decline',
-    'button_processing' => 'Processing',
+    'button_processing' => 'Processing...',
 
     'rememberme'        => 'Remember me',
     'forgotpassword'    => 'Forgot your password ?',
@@ -343,7 +343,7 @@ return [
     'flow_flow_name'                => 'Flow Name',
     'flow_step'                     => 'Step',
     'flow_final_approver'           => 'Final Approver',
-    'flow_Actions'                  => 'Actions',
+    'flow_actions'                  => 'Actions',
     'flow_approval_flow_setting'    => 'Approval Flow Setting',
     'flow_approval_no'              => 'Approval No',
     'flow_approval_flow_name'       => 'Approval Flow Name',

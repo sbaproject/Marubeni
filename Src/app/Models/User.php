@@ -33,8 +33,8 @@ class User extends Authenticatable
         'approval',
         'memo',
         'leave_days',
-        'leave_lemaining_days',
-        'leave_lemaining_time',
+        'leave_remaining_days',
+        'leave_remaining_time',
     ];
 
     /**
@@ -131,6 +131,9 @@ class User extends Authenticatable
             'email' => $ruleMail,
             'phone' => 'nullable|phone_number',
             'approval' => ['required_select', Rule::in($compactData['approvals'])],
+            'leave_days' => 'required|numeric',
+            'leave_remaining_days' => 'required|numeric',
+            'leave_remaining_time' => 'required|numeric',
         ], [], $customAttributes);
 
         return $validator;

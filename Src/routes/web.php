@@ -1,5 +1,6 @@
 <?php
 
+use Carbon\Carbon;
 use App\Libs\Common;
 use Illuminate\Http\Request;
 use App\Jobs\SendMailBackGround;
@@ -41,6 +42,12 @@ use App\Http\Controllers\Application\Entertainment\EntertainmentController;
 */
 
 Route::get('/checkdv', function () {
+    Common::sendApplicationNoticeMail(
+        'test mai' . Carbon::now(),
+        ['sbatestmobile2@gmail.com'],
+        [],
+        []
+    );
     return Common::detectEdgeBrowser() . $_SERVER['HTTP_USER_AGENT'];
 });
 

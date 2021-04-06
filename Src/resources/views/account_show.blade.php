@@ -7,6 +7,11 @@
 @section('css')
 @endsection
 
+@section('js')
+{{-- cleave js --}}
+<script src="js/cleave/cleave.min.js"></script>
+@endsection
+
 @section('content-header')
 {{ __('label.title_user_edit') }}
 @endsection
@@ -143,6 +148,63 @@
                             @enderror
                         </div>
                     </div>
+                    {{-- Entitled this year --}}
+                    <div class="form-group row">
+                        <label for="leave_days" class="col-lg-3 col-form-label text-center">
+                            Entitled this year
+                        </label>
+                        <div class="col-lg-9">
+                            <input id="txt_leave_days" type="text" autofocus
+                                class="form-control leave_days @error('leave_days') is-invalid @enderror"
+                                style="width:20%;display: inline-block" value="{{ $data['user']->leave_days }}"
+                                placeholder="{{ __('validation.attributes.leave_days') }}" autocomplete="off">
+                            <span>Days</span>
+                            <input type="hidden" name="leave_days" value="{{ $data['user']->leave_days }}">
+                            @error('leave_days')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>
+                    </div>
+                    {{-- Remaining days --}}
+                    <div class="form-group row">
+                        <label for="txt_leave_remaining_days" class="col-lg-3 col-form-label text-center">
+                            Remaining days
+                        </label>
+                        <div class="col-lg-9">
+                            <input id="txt_leave_remaining_days" type="text" autofocus
+                                class="form-control leave_remaining_days @error('leave_remaining_days') is-invalid @enderror"
+                                style="width:20%;display: inline-block" value="{{ $data['user']->leave_remaining_days }}"
+                                placeholder="{{ __('validation.attributes.leave_remaining_days') }}" autocomplete="off">
+                            <span>Days</span>
+                            <input type="hidden" name="leave_remaining_days" value="{{ $data['user']->leave_remaining_days }}">
+                            @error('leave_remaining_days')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>
+                    </div>
+                    {{-- Remaining time --}}
+                    <div class="form-group row">
+                        <label for="txt_leave_remaining_time" class="col-lg-3 col-form-label text-center">
+                            Remaining hours
+                        </label>
+                        <div class="col-lg-9">
+                            <input id="txt_leave_remaining_time" type="text" autofocus
+                                class="form-control leave_remaining_time @error('leave_remaining_time') is-invalid @enderror"
+                                style="width:20%;display: inline-block" value="{{ $data['user']->leave_remaining_time }}"
+                                placeholder="{{ __('validation.attributes.leave_remaining_time') }}" autocomplete="off">
+                            <span>Hours</span>
+                            <input type="hidden" name="leave_remaining_time" value="{{ $data['user']->leave_remaining_time }}">
+                            @error('leave_remaining_time')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>
+                    </div>
                     {{-- Approval --}}
                     <div class="form-group row">
                         <label for="approval"
@@ -198,4 +260,56 @@
         </div>
     </div>
 </div>
+<script>
+    $(function(){
+        //=======================================
+        // Cleave input (formatting inputs)
+        //=======================================
+        
+        new Cleave('#txt_leave_days', {
+            numeral: true,
+            numeralDecimalScale: 0,
+            numeralPositiveOnly: false,
+            stripLeadingZeroes: true,
+            onValueChanged: function (e) {
+                let rawValue = e.target.rawValue;
+                if(e.target.rawValue == ''){
+                    this.setRawValue(0);
+                    rawValue = 0;
+                }
+                $('[name="leave_days"]').val(rawValue);
+            }
+        });
+
+        new Cleave('#txt_leave_remaining_days', {
+            numeral: true,
+            numeralDecimalScale: 0,
+            numeralPositiveOnly: false,
+            stripLeadingZeroes: true,
+            onValueChanged: function (e) {
+                let rawValue = e.target.rawValue;
+                if(e.target.rawValue == ''){
+                    this.setRawValue(0);
+                    rawValue = 0;
+                }
+                $('[name="leave_remaining_days"]').val(rawValue);
+            }
+        });
+
+        new Cleave('#txt_leave_remaining_time', {
+            numeral: true,
+            numeralDecimalScale: 0,
+            numeralPositiveOnly: false,
+            stripLeadingZeroes: true,
+            onValueChanged: function (e) {
+                let rawValue = e.target.rawValue;
+                if(e.target.rawValue == ''){
+                    this.setRawValue(0);
+                    rawValue = 0;
+                }
+                $('[name="leave_remaining_time"]').val(e.target.rawValue);
+            }
+        });
+    });
+</script>
 @endsection

@@ -27,7 +27,7 @@ return [
     'button_preview'    => 'Xem chi tiết',
     'button_reject'     => 'Khước từ',
     'button_declined'   => 'Trả về',
-    'button_processing' => 'Đang xử lý',
+    'button_processing' => 'Đang xử lý...',
 
     'rememberme'        => 'Nhớ đăng nhập',
     'forgotpassword'    => 'Quên mật khẩu ?',

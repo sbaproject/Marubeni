@@ -183,7 +183,7 @@
                     <button type="button" id="btn-skip-submit" class="btn btn-warning">{{ __('label.button_accept') }}</button>
                     <button type="button" id="btn-skip-submit-processing" class="btn btn-warning d-none" disabled>
                         <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                        {{ __('label.button_accept') }}
+                        {{ __('label.button_processing') }}
                     </button>
                 </div>
                 </form>
@@ -223,9 +223,14 @@
             });
 
             $('#btn-skip-submit').on('click', function(){
+                // validate
                 if($('#skip_comment').val().trim() == ''){
                     $('#skip_comment').addClass('is-invalid');
                     $('#skip_comment_err').removeClass('d-none');
+                    return;
+                }
+                // confirm
+                if (!confirm("{{__('msg.sure_to_continue')}}")){
                     return;
                 }
                 // not show loading dialog while processing
@@ -241,6 +246,6 @@
                 //submit
                 form.submit();
             });
-        })
+        });
     </script>
 @endsection
