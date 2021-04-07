@@ -6,6 +6,8 @@ use PDF;
 use Exception;
 use Carbon\Carbon;
 use App\Libs\Common;
+use App\Models\Step;
+use App\Models\User;
 use App\Models\Application;
 use Illuminate\Http\Request;
 use App\Models\HistoryApproval;
@@ -18,7 +20,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use App\Exceptions\NotFoundFlowSettingException;
-use App\Models\Step;
 
 class ApplicationController extends Controller
 {
@@ -189,12 +190,12 @@ class ApplicationController extends Controller
             // Application Detail table
             $this->saveApplicationDetail($request, $inputs, $application, $newApplication['id'], $loginUser);
 
+
             // commit DB
             DB::commit();
 
             // send mail to first approver (TO) & CC of each step
             $this->sendNoticeMail($inputs, $newApplication);
-
         } catch (Exception $ex) {
 
             DB::rollBack();
@@ -404,8 +405,8 @@ class ApplicationController extends Controller
         return $filePath ?? null;
     }
 
-    private function sendNoticeMail($inputs, $application){
-
+    private function sendNoticeMail($inputs, $application)
+    {
         if (!isset($inputs['apply'])) {
             return;
         }
@@ -415,21 +416,33 @@ class ApplicationController extends Controller
 
         foreach ($nextApprovers as $item) {
             // just get next first approver(TO)
-            if ($item->approver_type == config('const.approver_type.to') && !isset($sendTo)) {
-                $sendTo[] = $item->approver_mail;
+            if ($item->approver_type == config('const.approver_type.to')) {
+                if (isset($firstToFlg)) {
+                    continue;
+                }
+                $firstToFlg = true;
             }
-            // approvers (CC) can take multi
-            elseif ($item->approver_type == config('const.approver_type.cc')) {
-                $sendCc[] = $item->approver_mail;
-            }
+            // CC is multi
+            $formType = trans("label.form.{$application['form_id']}", [], 'en');
+            $stepName = trans("label.step_type.{$application['current_step']}", [], 'en');
+            $title = "New {$formType} Application has been applied for {$stepName} Step!";
+            $msgParams = [
+                'approver_type' => $item->approver_type,
+                'form_type' => $formType,
+                'step_name' => $stepName,
+                'applicant_name' => Auth::user()->name,
+                'applicant_location' => Auth::user()->location,
+                'department_name' => Auth::user()->department->name,
+                'url' => route('user.approval.show', $application['id']),
+            ];
+            Common::sendApplicationNoticeMail(
+                'mails.application_first_to_all_cc_by_step',
+                $title,
+                $item->approver_mail,
+                [],
+                $msgParams
+            );
         }
-
-        Common::sendApplicationNoticeMail(
-            'New application is waiting you approve !',
-            $sendTo,
-            $sendCc,
-            []
-        );
     }
 
     protected function preview(Request $request, $id)

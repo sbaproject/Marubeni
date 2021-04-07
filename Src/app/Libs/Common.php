@@ -373,9 +373,9 @@ class Common
 				->first()->AUTO_INCREMENT;
 	}
 
-	public static function sendApplicationNoticeMail($title, $to, $cc, $msgParams){
+	public static function sendApplicationNoticeMail($mailTpl, $title, $to, $cc, $msgParams){
 
-		$mailTpl = 'mails.mail_application_notice';
+		// $mailTpl = 'mails.mail_application_notice';
 		$mailable = new ApplicationNoticeMail($mailTpl, $title, $msgParams);
 		
 		// send to queue

@@ -8,8 +8,10 @@ use App\Libs\Common;
 use App\Models\Step;
 use App\Models\User;
 use App\Models\Leave;
+use App\Models\Department;
 use App\Models\Application;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\HistoryApproval;
 use Illuminate\Support\Facades\DB;
@@ -178,6 +180,10 @@ class ApprovalController extends Controller
             'approver.location             as approver_location',
             'approver.department_id        as approver_department',
             'applicant.email               as applicant_mail',
+            'applicant.name                as applicant_name',
+            'applicant.location            as applicant_location',
+            'applicant.department_id       as applicant_department_id',
+            'departments.name              as applicant_department_name',
             DB::raw('(select max(step_type) from steps where flow_id = flows.id) as step_count')
         ];
 
@@ -200,6 +206,9 @@ class ApprovalController extends Controller
             ->join('flows', 'flows.id', '=', 'steps.flow_id')
             ->join('users as approver', 'approver.id', '=', 'steps.approver_id')
             ->join('users as applicant', 'applicant.id', '=', 'applications.created_by')
+            ->join('departments', function ($join) {
+                $join->on('departments.id', '=', 'applicant.department_id');
+            })
             ->where('applications.id', '=', $id)
             ->where('applications.deleted_at', '=', null)
             ->first();
@@ -370,11 +379,14 @@ class ApprovalController extends Controller
             'groups.applicant_id           as group_applicant_id',
             'groups.budget_type_compare',
             'approver.email                as approver_mail',
-            'approver.name                as approver_name',
+            'approver.name                 as approver_name',
             'approver.role                 as approver_role',
             'approver.location             as approver_location',
             'approver.department_id        as approver_department',
             'applicant.email               as applicant_mail',
+            'applicant.name                as applicant_name',
+            'applicant.location            as applicant_location',
+            'departments.name              as applicant_department_name',
             DB::raw('(select max(step_type) from steps where flow_id = flows.id) as step_count'),
             // get final approver
             DB::raw("
@@ -407,6 +419,9 @@ class ApprovalController extends Controller
             ->join('flows', 'flows.id', '=', 'steps.flow_id')
             ->join('users as approver', 'approver.id', '=', 'steps.approver_id')
             ->join('users as applicant', 'applicant.id', '=', 'applications.created_by')
+            ->join('departments', function ($join) {
+                $join->on('departments.id', '=', 'applicant.department_id');
+            })
             ->where('applications.id', '=', $id)
             ->where('applications.deleted_at', '=', null)
             ->first();
@@ -496,23 +511,44 @@ class ApprovalController extends Controller
             // commit db
             DB::commit();
 
-            // send notice mail to skipped approver
+            // send notice mail to approver who was skipped
+            $formType = trans("label.form.{$application->form_id}", [], 'en');
+            $title = "{$formType} Application has been skipped your approval !";
+            $msgParams = [
+                'form_type' => $formType,
+                'skipped_by' => Auth::user()->name,
+                'comment' => $request->skip_comment,
+                'url' => route('user.approval.show', $application->id),
+            ];
             Common::sendApplicationNoticeMail(
-                'Skip : '. $application->approver_name,
+                'mails.application_skip_approver',
+                $title,
                 $application->approver_mail,
                 [],
-                []
+                $msgParams
             );
+
             // send notice mail to next approver TO (after skipped)
             $nextGroupId = $newApplication['group_id'] ?? $application->group_id;
             $nextOrder = $newApplication['status'] ?? $application->order;
             $nextApprover = Step::getNextApproverCurrentStep($nextGroupId, $nextOrder);
+
             if (!empty($nextApprover)) {
+                $formType = trans("label.form.{$application->form_id}", [], 'en');
+                $title = "New {$formType} Application has been applied !";
+                $msgParams = [
+                    'form_type' => $formType,
+                    'applicant_name' => $application->applicant_name,
+                    'applicant_location' => $application->applicant_location,
+                    'department_name' => $application->applicant_department_name,
+                    'url' => route('user.approval.show', $application->id),
+                ];
                 Common::sendApplicationNoticeMail(
-                    'Skip - Next to : '. $nextApprover->approver_name,
+                    'mails.application_approve_next_to',
+                    $title,
                     $nextApprover->approver_mail,
                     [],
-                    []
+                    $msgParams
                 );
             }
 
@@ -683,7 +719,23 @@ class ApprovalController extends Controller
             // application is completed
             if ($newApplication['status'] == config('const.application.status.completed')) {
                 // notify to applicant
-                $sendTo[] = $currentApplication->applicant_mail;
+                $status = 'Final approved';
+                $formType = trans("label.form.{$currentApplication->form_id}", [], 'en');
+                $title = sprintf('Your %s Application has been %s !', $formType, Str::lower($status));
+                $msgParams = [
+                    'form_type' => $formType,
+                    'status' => $status,
+                    'approver' => Auth::user()->name,
+                    'comment' => $newApplication['comment'],
+                    'url' => Common::getRouteEditApplication($currentApplication->id, $currentApplication->form_id),
+                ];
+                Common::sendApplicationNoticeMail(
+                    'mails.application_approve_to_applicant',
+                    $title,
+                    $currentApplication->applicant_mail,
+                    [],
+                    $msgParams
+                );
             }
             // still in progress of approval
             else {
@@ -696,13 +748,32 @@ class ApprovalController extends Controller
 
                     foreach ($nextApprovers as $item) {
                         // just get next first approver(TO)
-                        if ($item->approver_type == config('const.approver_type.to') && empty($sendTo)) {
-                            $sendTo[] = $item->approver_mail;
+                        if ($item->approver_type == config('const.approver_type.to')) {
+                            if (isset($firstToFlg)) {
+                                continue;
+                            }
+                            $firstToFlg = true;
                         }
-                        // approvers (CC) can take multi
-                        elseif ($item->approver_type == config('const.approver_type.cc')) {
-                            $sendCc[] = $item->approver_mail;
-                        }
+                        // CC is multi
+                        $formType = trans("label.form.{$currentApplication->form_id}", [], 'en');
+                        $stepName = trans("label.step_type.{$newApplication['current_step']}", [], 'en');
+                        $title = "New {$formType} Application has been applied for {$stepName} Step!";
+                        $msgParams = [
+                            'approver_type' => $item->approver_type,
+                            'form_type' => $formType,
+                            'step_name' => $stepName,
+                            'applicant_name' => $currentApplication->applicant_name,
+                            'applicant_location' => $currentApplication->applicant_location,
+                            'department_name' => $currentApplication->applicant_department_name,
+                            'url' => route('user.approval.show', $currentApplication->id),
+                        ];
+                        Common::sendApplicationNoticeMail(
+                            'mails.application_first_to_all_cc_by_step',
+                            $title,
+                            $item->approver_mail,
+                            [],
+                            $msgParams
+                        );
                     }
                 }
                 // application still on current step
@@ -711,21 +782,50 @@ class ApprovalController extends Controller
                     // next approver of step
                     $nextApprover = Step::getNextApproverCurrentStep($currentApplication->group_id, $currentApplication->order);
                     if (!empty($nextApprover)) {
-                        $sendTo = $nextApprover->approver_mail;
+                        $formType = trans("label.form.{$currentApplication->form_id}", [], 'en');
+                        $title = "New {$formType} Application has been applied !";
+                        $msgParams = [
+                            'form_type' => $formType,
+                            'applicant_name' => $currentApplication->applicant_name,
+                            'applicant_location' => $currentApplication->applicant_location,
+                            'department_name' => $currentApplication->applicant_department_name,
+                            'url' => route('user.approval.show', $currentApplication->id),
+                        ];
+                        Common::sendApplicationNoticeMail(
+                            'mails.application_approve_next_to',
+                            $title,
+                            $nextApprover->approver_mail,
+                            [],
+                            $msgParams
+                        );
                     }
                 }
             }
         } elseif (isset($request->reject) || isset($request->declined)) {
             // notify to applicant
-            $sendTo[] = $currentApplication->applicant_mail;
+            if(isset($request->reject)){
+                $status = 'Rejected';
+            }
+            if (isset($request->declined)) {
+                $status = 'Declined';
+            }
+            $formType = trans("label.form.{$currentApplication->form_id}", [], 'en');
+            $title = sprintf('Your %s Application has been %s !', $formType, Str::lower($status));
+            $msgParams = [
+                'form_type' => $formType,
+                'status' => $status,
+                'approver' => Auth::user()->name,
+                'comment' => $newApplication['comment'],
+                'url' => Common::getRouteEditApplication($currentApplication->id, $currentApplication->form_id),
+            ];
+            Common::sendApplicationNoticeMail(
+                'mails.application_approve_to_applicant',
+                $title,
+                $currentApplication->applicant_mail,
+                [],
+                $msgParams
+            );
         }
-
-        Common::sendApplicationNoticeMail(
-            'Approval : ' . $request->approve ?? $request->reject ?? $request->declined,
-            $sendTo,
-            $sendCc,
-            []
-        );
     }
 
     private function redirectError($msg)

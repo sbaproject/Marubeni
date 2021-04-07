@@ -13,7 +13,7 @@ class ApplicationNoticeMail extends Mailable
 
     protected $mailTpl;
     protected $title;
-    protected array $msgParams;
+    protected array $params;
 
     /**
      * Create a new message instance.
@@ -24,7 +24,7 @@ class ApplicationNoticeMail extends Mailable
     {
         $this->mailTpl = $mailTemplate;
         $this->title = $title;
-        $this->msgParams = $msgParams;
+        $this->params = $msgParams;
     }
 
     /**
@@ -36,6 +36,6 @@ class ApplicationNoticeMail extends Mailable
     {
         return $this->view($this->mailTpl)
             ->subject($this->title)
-            ->with($this->msgParams);
+            ->with($this->params);
     }
 }
