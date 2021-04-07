@@ -6,6 +6,7 @@ use App\Libs\Common;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Providers\RouteServiceProvider;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class LoginController extends Controller
@@ -62,7 +63,9 @@ class LoginController extends Controller
      */
     protected function authenticated($request, $user)
     {
-        // return redirect('/');
+        if(Session::has('url.intended')){
+            return redirect(Session::get('url.intended'));
+        }
         return Common::redirectHome();
     }
 
