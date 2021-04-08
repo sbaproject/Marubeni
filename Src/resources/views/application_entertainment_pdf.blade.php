@@ -477,8 +477,25 @@
 		</tr>
 	</table>
 	@isset($inputs['lastApproval'])
-	<div>Approved by : {{ $inputs['lastApproval']->user_name }}</div>
-	<div>Approved at : {{ date('d/m/Y H:i', strtotime($inputs['lastApproval']->created_at)) }}</div>
+	<div style="margin-top:10px">
+		<div style="display: inline-block;vertical-align: middle;">
+			<div>Approved by : {{ $inputs['lastApproval']->user_name }}</div>
+			<div>Approved at : {{ date('d/m/Y H:i', strtotime($inputs['lastApproval']->created_at)) }}</div>
+		</div>
+		<div style="
+				    display: inline-block;
+				    border: 2px solid red;
+					border-radius:10px;
+				    vertical-align: middle;
+				    padding: 10px;
+					margin-top:1px;
+				    color: red;
+				    height: inherit;
+				    font-weight: bold;
+				">
+			APPROVED
+		</div>
+	</div>
 	@endisset
 </body>
 </html>
