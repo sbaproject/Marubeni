@@ -65,7 +65,7 @@ return [
     'reason'            => 'Reason',
     'search_by_app_no_applicant' => 'Search by Application No or Applicant name',
 
-    'popup_title_skip_approver' => 'Skip approval of ?',
+    'popup_title_skip_approver' => 'Skip approval of',
 
     'title_user_list'           => 'Employees',
     'title_user_edit'           => 'Employee Edit',

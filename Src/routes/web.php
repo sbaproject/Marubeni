@@ -42,12 +42,13 @@ use App\Http\Controllers\Application\Entertainment\EntertainmentController;
 */
 
 Route::get('/checkdv', function () {
-    // Common::sendApplicationNoticeMail(
-    //     'test mai' . Carbon::now(),
-    //     ['sbatestmobile2@gmail.com'],
-    //     [],
-    //     []
-    // );
+    Common::sendApplicationNoticeMail(
+        'mails.mail-test',
+        'test mai' . Carbon::now(),
+        ['sbatestmobile2@gmail.com'],
+        [],
+        []
+    );
     
     return Common::detectEdgeBrowser() . $_SERVER['HTTP_USER_AGENT'];
 });

@@ -309,9 +309,29 @@
 			<td style="text-align: center;width:24% ;">Applicant/ Người đề nghị</td>
 		</tr>
 	</table>
-	@isset($inputs['lastApproval'])
+	<table>
+		<tr>
+			<td style="width: 30%">
+				<div>Approved by: phan van duc phanc</div>
+				<div>Approved by: 12/11/21</div>
+			</td>
+			<td style="width: ">
+				<div style="width:100px;padding:10px;color:red;border: 1px solid red;text-align: center">
+					APPROVED
+				</div>
+			</td>
+		</tr>
+	</table>
+	{{-- <div style="display: inline-block;border:1px solid">
+		<div>Approved by: phan van duc</div>
+		<div>Approved by: 12/11/21</div>
+	</div>
+	<div style="margin-top:20px;display: inline-block;padding: 10px;color:red;border: 1px solid red">
+		APPROVED
+	</div> --}}
+	{{-- @isset($inputs['lastApproval'])
 	<div>Approved by : {{ $inputs['lastApproval']->user_name }}</div>
 	<div>Approved at : {{ date('d/m/Y H:i', strtotime($inputs['lastApproval']->created_at)) }}</div>
-	@endisset
+	@endisset --}}
 </body>
 </html>
