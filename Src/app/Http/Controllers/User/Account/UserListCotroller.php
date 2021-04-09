@@ -20,7 +20,7 @@ class UserListCotroller extends Controller
         $departments = Department::all();
 
         // get parameter query string
-        $conditions = $request->only(['user_no', 'department', 'name', 'show_del_user']);
+        $conditions = $request->only(['location','user_no', 'department', 'name', 'show_del_user']);
 
         // sorting columns
         $sortableCols = [
