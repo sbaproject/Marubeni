@@ -54,7 +54,11 @@
                                     <div class="app_title">{{ __('label.applicant') }}</div>
                                 </div>
                                 <div class="col-sm-9 pl-sm-0 ">
-                                    <div class="app_info">{{ $application->applicant }}</div>
+                                    <div class="app_info">
+                                        {{ $application->applicant_name }}
+                                        /
+                                        {{$application->applicant_department_name}}
+                                    </div>
                                 </div>
                             </div>
                             <div class="row">

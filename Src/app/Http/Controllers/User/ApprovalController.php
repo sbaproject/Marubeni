@@ -100,7 +100,8 @@ class ApprovalController extends Controller
                 'steps.approver_type',
                 'steps.order',
                 'steps.select_order',
-                DB::raw('us.name as applicant'),
+                'applicant.name as applicant_name',
+                'departments.name as applicant_department_name',
                 DB::raw('(select MAX(step_type) from steps where flow_id = flows.id) as step_count')
             )
             ->join('groups', 'groups.id', 'applications.group_id')
@@ -112,7 +113,8 @@ class ApprovalController extends Controller
             ->leftJoin('flows', 'flows.id', '=', 'steps.flow_id')
             ->join('forms', 'forms.id', '=', 'applications.form_id')
             ->leftJoin('users', 'users.id', '=', 'steps.approver_id')
-            ->join('users as us', 'us.id', '=', 'applications.created_by')
+            ->join('users as applicant', 'applicant.id', '=', 'applications.created_by')
+            ->join('departments', 'applicant.department_id', '=', 'departments.id')
             ->where('applications.id', '=', $id)
             ->where('applications.status', '<>', config('const.application.status.draft'))
             ->where('applications.deleted_at', '=', null)

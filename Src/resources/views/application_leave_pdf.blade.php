@@ -184,6 +184,12 @@
 	<div id="info-header">
 		<table>
 			<tr>
+				<td>Application No/ Mã đơn:</td>
+				<td class="jp">
+					@if(!empty($application)) {{ $application->application_no }} @endif
+				</td>
+			</tr>
+			<tr>
 				<td>Applied Date/ Ngày:</td>
 				<td>
 					@if (empty($application))

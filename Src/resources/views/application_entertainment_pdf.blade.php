@@ -169,6 +169,12 @@
 		<div class="vi">ĐƠN ĐỀ NGHỊ CHẤP THUẬN TRƯỚC & THANH TOÁN CHI PHÍ TIẾP KHÁCH</div>
 	</div>
 
+	@if(!empty($application))
+		<div style="text-align: left">
+			Application No/ Mã đơn: <span style="border-bottom:1px solid">{{ $application->application_no }}</span>
+		</div>
+	@endif
+
 	<table id="tb-0">
 		<tr>
 			<td class="bold" style="width: 30%;font-size:12px">

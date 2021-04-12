@@ -50,7 +50,8 @@ class CheckIp
 
         // src located in server (server & client ip are different)
         // need to assign [IP_INTERNAL] env to determine available IP (temp called is LAN)
-        if ($remoteIp == env('IP_INTERNAL')) {
+        $internalIps = explode(',', env('IP_INTERNAL'));
+        if (in_array($remoteIp, $internalIps)) {
             return $next($request);
         }
 
