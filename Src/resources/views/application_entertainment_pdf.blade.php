@@ -352,9 +352,9 @@
 				<div>Reason for the Entertainment</div>
 				<div>Lý do tiếp khách</div>
 			</td>
-			<td>
+			<td class="jp">
 				@if($inputs['entertainment_reason'] != 'empty')
-					{{ $inputs['entertainment_reason'] }}
+					{{ __('label.entertainment.reason.'.$inputs['entertainment_reason']) }}
 				@endif
 			</td>
 		</tr>
