@@ -35,9 +35,20 @@
 			font-style: normal;
 		}
 
+		@font-face {
+			font-family: 'japanese';
+			src: url({{ storage_path('fonts\SawarabiGothic-Regular.ttf')}}) format("truetype");
+			font-weight: 400;
+			font-style: normal;
+		}
+
 		body {
 			font-family: "notosans-regular, notosans-bold, notosans-bolditalic,notosans-italic";
 			font-size: 10px;
+		}
+
+		.jp {
+			font-family: 'japanese';
 		}
 
 		table {
@@ -178,7 +189,7 @@
 			</tr>
 			<tr>
 				<td>Full Name/ Họ tên:</td>
-				<td>{{ $inputs['applicant']->name }}</td>
+				<td class="jp">{{ $inputs['applicant']->name }}</td>
 			</tr>
 			<tr>
 				<td>Sec Code/ Mã bộ phận:</td>
@@ -194,7 +205,7 @@
 					<div>Trip Destination</div>
 					<div>Nơi công tác</div>
 				</td>
-				<td colspan="4" class="data">
+				<td colspan="4" class="data jp">
 					{{ $inputs['destinations'] }}
 				</td>
 			</tr>
@@ -203,7 +214,7 @@
 					<div>Subject</div>
 					<div>Nội dung công tác</div>
 				</td>
-				<td colspan="4" class="data">
+				<td colspan="4" class="data jp">
 					{{ $inputs['comment'] }}
 				</td>
 			</tr>
@@ -248,7 +259,7 @@
 			</tr>
 			@foreach ($inputs['trans'] as $item)
 			<tr>
-				<td colspan="2" class="data" style="height: 40px">
+				<td colspan="2" class="data jp" style="height: 40px">
 					{{-- at least one empty row --}}
 					@if (empty($item['departure']) && empty($item['arrive']) && empty($item['method']))
 					<div style="height: 20px"></div>
@@ -266,7 +277,7 @@
 					<div>Accommodation</div>
 					<div>Chỗ ở</div>
 				</td>
-				<td colspan="4" class="data">
+				<td colspan="4" class="data jp">
 					{{ $inputs['accommodation'] }}
 				</td>
 			</tr>
@@ -275,7 +286,7 @@
 					<div>Accompany</div>
 					<div>Người đi cùng</div>
 				</td>
-				<td colspan="4" class="data">
+				<td colspan="4" class="data jp">
 					{{ $inputs['accompany'] }}
 				</td>
 			</tr>
@@ -284,7 +295,7 @@
 					<div>Expenses to be borne by</div>
 					<div>Chi phí chịu bởi</div>
 				</td>
-				<td colspan="4" class="data">
+				<td colspan="4" class="data jp">
 					{{ $inputs['borne_by'] }}
 				</td>
 			</tr>

@@ -5,6 +5,12 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+	{{-- <link rel="preconnect" href="https://fonts.gstatic.com"> --}}
+
+	{{-- <link
+		href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400&family=Noto+Serif+JP&display=swap"
+		rel="stylesheet"> --}}
+
 	<title>Document</title>
 	<style type="text/css">
 		@font-face {
@@ -35,9 +41,20 @@
 			font-style: normal;
 		}
 
+		@font-face {
+			font-family: 'japanese';
+			src: url({{ storage_path('fonts\SawarabiGothic-Regular.ttf')}}) format("truetype");
+			font-weight: 400;
+			font-style: normal;
+		}
+
 		body {
 			font-family: "notosans-regular, notosans-bold, notosans-bolditalic,notosans-italic";
 			font-size: 10px;
+		}
+
+		.jp {
+			font-family: 'japanese';
 		}
 
 		table {
@@ -178,7 +195,7 @@
 			</tr>
 			<tr>
 				<td>Full Name/ Họ tên:</td>
-				<td>{{ $inputs['applicant']->name }}</td>
+				<td class="jp">{{ $inputs['applicant']->name }}</td>
 			</tr>
 			<tr>
 				<td>Sec Code/ Mã bộ phận:</td>
@@ -208,7 +225,9 @@
 					<div>Reason for leave</div>
 					<div>Lý do xin nghỉ phép</div>
 				</td>
-				<td colspan="6" class="data" style="word-wrap: break-word;">{{ $inputs['reason_leave'] }}</td>
+				<td colspan="6" class="data jp" style="word-wrap: break-word;">
+					{{ $inputs['reason_leave'] }}
+				</td>
 			</tr>
 			<tr>
 				<td class="f">

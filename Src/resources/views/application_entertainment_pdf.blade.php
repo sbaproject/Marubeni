@@ -41,6 +41,14 @@
 		font-weight: 400;
 		font-style: normal;
 		}
+
+		@font-face {
+		font-family: 'japanese';
+		src: url({{ storage_path('fonts\SawarabiGothic-Regular.ttf')}}) format("truetype");
+		font-weight: 400;
+		font-style: normal;
+		}
+
 		/* margin page */
 		@page{
 			margin: 5px;
@@ -48,6 +56,10 @@
 		body {
 			font-family: "notosans-regular, notosans-bold, notosans-bolditalic,notosans-italic";
 			font-size: 10px;
+		}
+
+		.jp {
+			font-family: 'japanese';
 		}
 		table {
 			border-collapse: collapse;
@@ -109,7 +121,7 @@
 		#tb-0 td {
 			border:0px;
 		}
-		.start{
+		.star{
 			font-family: 'sawarabiGothic-regular';
 			font-weight: 400 !important;
 		}
@@ -177,7 +189,7 @@
 			<td style="width: 6%"></td>
 			<td class="right" style="width: 15%;vertical-align: bottom">Full Name/ Họ tên:</td>
 			<td style="width: 24%;vertical-align: bottom">
-				<div style="border-bottom:1px solid;margin-top:-3px">
+				<div style="border-bottom:1px solid;margin-top:-3px" class="jp">
 					{{ $inputs['applicant']->name }}
 				</div>
 			</td>
@@ -195,7 +207,7 @@
 		</tr>
 		<tr>
 			<td class="center" style="width: 25%">Place/ Địa điểm</td>
-			<td style="width: 58%">
+			<td style="width: 58%" class="jp">
 				{{ $inputs['place'] }}
 			</td>
 			<td class="center" style="width: 12%">During biz trip</td>
@@ -221,7 +233,7 @@
 				<div>Quốc gia</div>
 			</td>
 			<td class="center bg" style="width: 10%;">
-				<div class="note">Area/City<span class="start">※</span></div>
+				<div class="note">Area/City<span class="star">※</span></div>
 				<div>Khu vực, T.Phố</div>
 			</td>
 			<td class="center" style="width: 12%">
@@ -237,7 +249,7 @@
 				<div>Thành phần tham dự</div>
 			</td>
 			<td class="center bg" style="width: 12%">
-				<div class="note">Details of duties<span class="start">※</span></div>
+				<div class="note">Details of duties<span class="star">※</span></div>
 				<div>Chi tiết nhiệm vụ</div>
 			</td>
 			<td class="center" style="width: 5%">PO</td>
@@ -247,16 +259,16 @@
 			$isEmpty = empty($item['cp_name']) && empty($item['title']) && empty($item['name_attendants']) && empty($item['details_dutles']);
 		@endphp
 			<tr>
-				<td style="@if($isEmpty) height:20px @endif">
+				<td style="word-wrap: break-word;@if($isEmpty) height:20px @endif" class="jp">
 					{{ $item['cp_name'] }}
 				</td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td>{{ $item['title'] }}</td>
-				<td>{{ $item['name_attendants'] }}</td>
-				<td>{{ $item['details_dutles'] }}</td>
-				<td></td>
+				<td style="word-wrap: break-word;"></td>
+				<td style="word-wrap: break-word;"></td>
+				<td style="word-wrap: break-word;"></td>
+				<td class="jp" style="word-wrap: break-word;">{{ $item['title'] }}</td>
+				<td class="jp" style="word-wrap: break-word;">{{ $item['name_attendants'] }}</td>
+				<td class="jp" style="word-wrap: break-word;">{{ $item['details_dutles'] }}</td>
+				<td style="word-wrap: break-word;"></td>
 			</tr>
 		@endforeach
 	</table>
@@ -264,19 +276,19 @@
 	<table id="tb-3">
 		<tr>
 			<td class="bg header center" style="width: 30%">
-				<div class="note">Confirmation of Compliance with Laws<span class="start">※</span></div>
+				<div class="note">Confirmation of Compliance with Laws<span class="star">※</span></div>
 				<div>Xác nhận việc tuân thủ luật pháp</div>
 			</td>
 			<td class="bg header center" style="width: 25%">
-				<div class="note">No. of Entertainment for past 1 year<span class="start">※</span></div>
+				<div class="note">No. of Entertainment for past 1 year<span class="star">※</span></div>
 				<div>Số lần tiếp khách trong năm vừa qua</div>
 			</td>
 			<td class="bg header center" style="width: 15%">
-				<div class="note">Existence of projects<span class="start">※</span></div>
+				<div class="note">Existence of projects<span class="star">※</span></div>
 				<div>Dự án đang tồn tại</div>
 			</td>
 			<td class="bg header center" style="width: 30%">
-				<div class="note">Attendant includes its family/friend<span class="start">※</span></div>
+				<div class="note">Attendant includes its family/friend<span class="star">※</span></div>
 				<div>Thành phần tham dự bao gồm cả gia đình/ bạn bè</div>
 			</td>
 		</tr>
@@ -322,14 +334,14 @@
 		</tr>
 		<tr>
 			<td class="bg" style="font-size: 9px">Project Name (under negotiation and/or in near future) (if any)</td>
-			<td colspan="3">
+			<td colspan="3" class="jp">
 				{{ $inputs['project_name'] }}
 			</td>
 		</tr>
 		<tr>
 			<td colspan="4" class="center bg">
-				If Public Officials (PO), fill in '<b>O</b>' in <b>PO</b> and describe in "<span class="start">※</span>" fields / Nếu chính quyền, đánh dấu 'X' vào ô PO và diễn
-				giải hợp lý vào ô "<span class="start">※</span>"
+				If Public Officials (PO), fill in '<b>O</b>' in <b>PO</b> and describe in "<span class="star">※</span>" fields / Nếu chính quyền, đánh dấu 'X' vào ô PO và diễn
+				giải hợp lý vào ô "<span class="star">※</span>"
 			</td>
 		</tr>
 	</table>
@@ -340,7 +352,11 @@
 				<div>Reason for the Entertainment</div>
 				<div>Lý do tiếp khách</div>
 			</td>
-			<td>{{ $inputs['entertainment_reason'] }}</td>
+			<td>
+				@if($inputs['entertainment_reason'] != 'empty')
+					{{ $inputs['entertainment_reason'] }}
+				@endif
+			</td>
 		</tr>
 	</table>
 
@@ -414,7 +430,7 @@
 					Diễn giải nếu số tiền cho mỗi người vượt quá ngân sách hoặc các trường hợp đặc biệt khác
 				</div>
 			</td>
-			<td colspan="3">
+			<td colspan="3" class="jp">
 				{{ $inputs['reason_budget_over'] }}
 			</td>
 		</tr>
@@ -445,7 +461,7 @@
 		<tr>
 			<td class="bold" style="width: 25%;vertical-align: top;border-bottom:0px">
 				<div style="font-size: 8px;background-color: #cccccc">
-					<span class="start">※</span>
+					<span class="star">※</span>
 					In case of "PO", it is required to get pre-approval from President.
 				</div>
 			</td>
@@ -456,7 +472,7 @@
 		<tr>
 			<td class="bold" style="width: 25%;vertical-align: top;border-top:0px;border-bottom:0px">
 				{{-- <div style="font-size: 8px;background-color: #cccccc">
-					<span class="start">※</span>
+					<span class="star">※</span>
 					In case of "PO", it is required to get pre-approval from President.
 				</div> --}}
 			</td>
