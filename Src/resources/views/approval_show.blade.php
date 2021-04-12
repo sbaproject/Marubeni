@@ -51,7 +51,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-sm-3 pr-sm-0">
-                                    <div class="app_title">{{ __('label.applicant') }}</div>
+                                    <div class="app_title">{{ __('label.applicant') }} / {{__('label.company_att_department')}}</div>
                                 </div>
                                 <div class="col-sm-9 pl-sm-0 ">
                                     <div class="app_info">
