@@ -8,7 +8,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Businesstrip extends Model
+class BusinesstripSettlement extends Model
 {
     use HasFactory, Notifiable, SoftDeletes;
 
@@ -20,26 +20,28 @@ class Businesstrip extends Model
     protected $fillable = [
         'application_id',
         'destinations',
-        'trip_dt_from',
-        'trip_dt_to',
-        'accommodation',
-        'accompany',
-        'borne_by',
-        'comment',
+        'number_of_days',
+        'total_daily_allowance',
+        'total_daily_unit',
+        'total_daily_rate',
+        'daily_allowance',
+        'daily_unit',
+        'daily_rate',
+        'other_fees',
+        'other_fees_unit',
+        'other_fees_rate',
+        'other_fees_note',
+        'charged_to',
+        'under_instruction_date',
+        'under_instruction_approval_no',
+        'other_fees_note',
+        'other_fees_note',
         'file_path',
         'created_by',
         'updated_by',
         'created_at',
         'updated_at',
     ];
-
-    // protected $appends = ['transportations'];
-
-    // public function getTransportationsAttribute()
-    // {
-    //     $trans = Transportation::where('businesstrip_id', $this->id)->get();
-    //     return $trans->toArray();
-    // }
 
     public function transportations()
     {

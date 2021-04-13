@@ -10,6 +10,7 @@ class Transportation extends Model
     use HasFactory;
 
     protected $fillable = [
+        'trans_date',
         'departure',
         'arrive',
         'method',

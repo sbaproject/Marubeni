@@ -1,4 +1,4 @@
-$(document).ready(function () {
+$(document).ready(function() {
     //=======================================
     // Datetimepicker
     //=======================================
@@ -16,7 +16,7 @@ $(document).ready(function () {
         $('#under_instruction_date').val(instructionDate.format('YYYYMMDD'));
     }
     // change
-    $("#instruction_date_picker").on("dp.change", function (e) {
+    $("#instruction_date_picker").on("dp.change", function(e) {
         if (e.date) {
             $('#under_instruction_date').val(e.date.format('YYYYMMDD'));
         } else {
@@ -24,21 +24,13 @@ $(document).ready(function () {
         }
     });
 
-    //=======================================
-    // Radio Button
-    //=======================================
-    $('[name="rd_budget_position"]').on('change', function () {
-        $('#budget_position').val($(this).val());
-    });
-    $('#budget_position').val($('[name="rd_budget_position"]:checked').val());
-
 
     //=======================================
     // Browser file
     //=======================================
 
     $('#input_file').val(null);
-    $('#input_file').on('change', function (e) {
+    $('#input_file').on('change', function(e) {
         //get the file name
         var fileName = e.target.files[0].name;
         if (fileName != '') {
@@ -47,7 +39,7 @@ $(document).ready(function () {
         }
     });
     // remove file
-    $('.file-remove').on('click', function () {
+    $('.file-remove').on('click', function() {
         $('#input_file').val(null);
         $('#file_path').val(null);
         $('.file-name').html($('.file-name').attr('place-holder'));
@@ -55,32 +47,20 @@ $(document).ready(function () {
         $('.file-block').removeClass('d-none');
     });
     // open link attached file
-    $('.file-link').on('click', function (e) {
+    $('.file-link').on('click', function(e) {
         $(this).find('a')[0].click();
     });
-
-    //=======================================
-    // Subsequen changes
-    //=======================================
-    $('[name="cb_subsequent"]').on('change', function () {
-        if ($(this).prop('checked')) {
-            $('#subsequent').val(1);
-        } else {
-            $('#subsequent').val(0);
-        }
-    });
-    $('#subsequent').val($('[name="cb_subsequent"]').prop('checked') ? 1 : 0);
 
     //=======================================
     // Itinerary & Transportation Block
     //=======================================
 
     // add new transportation element
-    $('#btnAdd').on('click', function (e) {
+    $('#btnAdd').on('click', function(e) {
 
         e.preventDefault();
 
-        var mainBlock = $('#transport_block');
+        var mainBlock = $('#itineraries_block');
         var copyElement = $('.copy').clone();
 
         copyElement.removeClass('copy');
@@ -92,28 +72,28 @@ $(document).ready(function () {
 
     });
     // remove transportation element
-    $(document).on("click", ".btnDelete", function (e) {
+    $(document).on("click", ".btnDelete", function(e) {
         e.preventDefault();
         $(this).parent().parent().remove();
         doSettingElement();
     });
 
     function doSettingElement() {
-        var transportElements = $('.card-itinerary-transport:not(.copy)');
-        transportElements.each(function (index) {
+        var itinerariesElements = $('.card-itinerary-itineraries:not(.copy)');
+        itinerariesElements.each(function(index) {
             // re-order index
-            $(this).find('.departure').attr('name', 'trans[' + index + '][departure]');
-            $(this).find('.arrive').attr('name', 'trans[' + index + '][arrive]');
-            $(this).find('.method').attr('name', 'trans[' + index + '][method]');
+            $(this).find('.departure').attr('name', 'itineraries[' + index + '][departure]');
+            $(this).find('.arrive').attr('name', 'itineraries[' + index + '][arrive]');
+            $(this).find('.method').attr('name', 'itineraries[' + index + '][method]');
             // always keep at least one element
-            if ((transportElements.length === 1 && index === 0)) {
+            if ((itinerariesElements.length === 1 && index === 0)) {
                 $(this).find('.d-delete').addClass('d-none');
             } else {
                 $(this).find('.d-delete').removeClass('d-none');
             }
         });
         // maximum is 4 blocks only
-        if (transportElements.length >= 4) {
+        if (itinerariesElements.length >= 4) {
             $('#btnAdd').addClass('d-none');
         } else {
             $('#btnAdd').removeClass('d-none');
@@ -124,7 +104,7 @@ $(document).ready(function () {
     // Print PDF
     //=======================================
 
-    $('#btnPdf').on('click', function (e) {
+    $('#btnPdf').on('click', function(e) {
 
         e.preventDefault();
 
@@ -134,7 +114,7 @@ $(document).ready(function () {
         let form = e.currentTarget.form;
         let buttonName = $(this).val();
         let hidSubmit = '<input type="hidden" name="' + buttonName + '" value="' + buttonName + '" />';
-        
+
         $(form).append(hidSubmit);
         form.submit();
         $('[name="pdf"]').remove();

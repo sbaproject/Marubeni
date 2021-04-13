@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-{{ __('label.biz_application') }}
+{{ 'SETTLEMENT FOR BUSINESS TRIP' }}
 @endsection
 
 @section('css')
@@ -30,12 +30,12 @@
 @endsection
 
 @section('content-header')
-{{ __('label.form_biz_trip') }}
+{{ 'SETTLEMENT FOR BUSINESS TRIP' }}
 @endsection
 
 @section('content-breadcrumb')
 <li class="breadcrumb-item"><a href="{{ route('user.form.index') }}">{{ __('label.application_list') }}</a></li>
-<li class="breadcrumb-item active">{{ __('label.form_biz_trip') }}</li>
+<li class="breadcrumb-item active">{{ 'SETTLEMENT FOR BUSINESS TRIP' }}</li>
 @endsection
 
 @section('content')
@@ -68,7 +68,7 @@
 <section class="content leave-application">
     {{-- <x-alert /> --}}
     <form method="POST"
-        action="{{ route('user.business2.create', $applicationId) }}"
+        action="{{ route('user.business2.create', $application->id) }}"
         enctype="multipart/form-data">
         @csrf
         <div class="invoice mb-3">
@@ -80,29 +80,17 @@
                     </button>
                 </div>
                 <div class="clearfix"></div>
-                {{-- @if (isset($application))
+
+                {{-- Application No --}}
                 <div class="form-group row">
-                    <div class="col-sm-2 text-left">
-                        <label>{{ __('label.status_caption') }}</label>
+                    <div class="col-md-2 text-left caption">
+                        <label>Application No</label>
                     </div>
-                    <div class="col-sm-10">
-                        {!! Common::generateStatusApplicationBadgeStyle($application->status, $application->current_step) !!}
+                    <div class="col-md-10">
+                        <span>BT-0000000001</span>
                     </div>
                 </div>
                 <hr>
-                @endif
-                @if (isset($application))
-                    <div class="form-group row">
-                        <div class="col-sm-2 text-left">
-                            <label>{{ __('label.business_application_no') }}</label>
-                        </div>
-                        <div class="col-sm-10">
-                            {{ $application->application_no }}
-                        </div>
-                    </div>
-                    <hr>
-                @endif --}}
-
                 {{-- Destinations --}}
                 <div class="form-group row">
                     <div class="col-md-2 text-left caption">
@@ -133,6 +121,119 @@
                             <strong>{{ $message }}</strong>
                         </span>
                         @enderror
+                    </div>
+                </div>
+                <hr>
+                {{-- Itineraries --}}
+                <div class="form-group row">
+                    <div class="col-md-2 text-left">
+                        <label>{{ __('label.business_transportation') }}<span class="text-danger required"> (*)</span></label>
+                    </div>
+                    <div class="col-md-10">
+                        <div id="itineraries_block">
+                            @if (!empty($itineraries))
+                                @foreach ($itineraries as $key => $value)
+                                <div class="card card-body card-itinerary-itineraries">
+                                    @if(!$previewFlg)
+                                    <div class="d-delete d-flex justify-content-end @if(count($itineraries) === 1 && $key === 0) d-none @endif">
+                                        <button class="btnDelete btn bg-gradient-danger btn-sm pt-0 pb-0 pl-3 pr-3 mb-1">
+                                            {{ __('label.button_delete') }}
+                                        </button>
+                                    </div>
+                                    @endif
+                                    <div class="form-row">
+                                        <div class="form-group col-md-4">
+                                            <span for="">
+                                                {{ __('label.business_departure') }}<span class="text-danger required"> (*)</span>
+                                            </span>
+                                            <input type="text" class="form-control departure @error('itineraries.'.$key.'.departure') is-invalid @enderror"
+                                                name="itineraries[{{ $key }}][departure]" value="{{ $itineraries[$key]['departure'] }}" autocomplete="off"
+                                                @if($previewFlg) readonly @endif>
+                                            @error('itineraries.'.$key.'.departure')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                            @enderror
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <span for="">
+                                                {{ __('label.business_arrival') }}<span class="text-danger required"> (*)</span>
+                                            </span>
+                                            <input type="text" class="form-control arrive @error('itineraries.'.$key.'.arrive') is-invalid @enderror"
+                                                name="itineraries[{{ $key }}][arrive]" value="{{ $itineraries[$key]['arrive'] }}" autocomplete="off"
+                                                @if($previewFlg) readonly @endif>
+                                            @error('itineraries.'.$key.'.arrive')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                            @enderror
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <span for="">
+                                                {{ __('label.business_method') }}<span class="text-danger required"> (*)</span>
+                                            </span>
+                                            <input type="text" class="form-control method @error('itineraries.'.$key.'.method') is-invalid @enderror"
+                                                name="itineraries[{{ $key }}][method]" value="{{ $itineraries[$key]['method'] }}" autocomplete="off"
+                                                @if($previewFlg) readonly @endif>
+                                            @error('itineraries.'.$key.'.method')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
+                                @endforeach
+                            @else
+                            <div class="card card-body card-itinerary-itineraries">
+                                <div class="d-delete d-flex justify-content-end d-none">
+                                    <button class="btnDelete btn bg-gradient-danger btn-sm pt-0 pb-0 pl-3 pr-3 mb-1">
+                                        {{ __('label.button_delete') }}
+                                    </button>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-4">
+                                        <span>{{ __('label.business_departure') }}<span class="text-danger required"> (*)</span></span>
+                                        <input type="text" class="form-control departure" name="itineraries[0][departure]" autocomplete="off" @if($previewFlg) readonly @endif>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <span>{{ __('label.business_arrival') }}<span class="text-danger required"> (*)</span></span>
+                                        <input type="text" class="form-control arrive" name="itineraries[0][arrive]" autocomplete="off" @if($previewFlg) readonly @endif>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <span>{{ __('label.business_method') }}<span class="text-danger required"> (*)</span></span>
+                                        <input type="text" class="form-control method" name="itineraries[0][method]" autocomplete="off" @if($previewFlg) readonly @endif>
+                                    </div>
+                                </div>
+                            </div>
+                            @endif
+                            <div class="card card-body card-itinerary-itineraries copy d-none">
+                                <div class="d-delete d-flex justify-content-end">
+                                    <button class="btnDelete btn bg-gradient-danger btn-sm pt-0 pb-0 pl-3 pr-3 mb-1">
+                                        {{ __('label.button_delete') }}
+                                    </button>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-4">
+                                        <span class="col-md-3">{{ __('label.business_departure') }}<span class="text-danger required"> (*)</span></span>
+                                        <input type="text" class="form-control departure" autocomplete="off" @if($previewFlg) readonly @endif>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <span class="col-md-3">{{ __('label.business_arrival') }}<span class="text-danger required"> (*)</span></span>
+                                        <input type="text" class="form-control arrive" autocomplete="off" @if($previewFlg) readonly @endif>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <span class="col-md-3">{{ __('label.business_method') }}<span class="text-danger required"> (*)</span></span>
+                                        <input type="text" class="form-control method" autocomplete="off" @if($previewFlg) readonly @endif>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @if(!$previewFlg)
+                        <button id="btnAdd" class="btn bg-gradient-danger @if(!empty($itineraries) && count($itineraries) >= 4) d-none @endif">
+                            + {{ __('label.button_addnew') }}
+                        </button>
+                        @endif
                     </div>
                 </div>
                 <hr>
@@ -184,6 +285,60 @@
                                     <strong>asdasdasdasdasdasdasd qwdqwd</strong>
                                 </span>
                                 {{-- @enderror --}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                {{-- Daily allowances --}}
+                <div class="form-group row">
+                    <div class="col-md-2 text-left caption">
+                        <label>Daily allowances<span class="text-danger required"> (*)</span></label>
+                    </div>
+                    <div class="col-md-10">
+                        <div class="form-row">
+                            {{-- Unit --}}
+                            <div class="form-group col-md-4 mb-1">
+                                <label class="mb-0 mr-1">Unit</label>
+                                <select name="daily_unit" style="width: 100%;"
+                                    class="form-control @error('daily_unit') is-invalid @enderror">
+                                    <option>
+                                        {{ __('label.select') }}
+                                    </option>
+                                    @foreach (config('const.units') as $value)
+                                    <option value="{{ $value }}">
+                                        {{ $value }}
+                                    </option>
+                                    @endforeach
+                                </select>
+                                @error('daily_unit')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
+                            {{-- Rate --}}
+                            <div class="form-group col-md-4 mb-1">
+                                <label class="mb-0 mr-1">Rate</label>
+                                <input type="text" id="daily_rate" name="daily_rate"
+                                    class="form-control @error('daily_rate') is-invalid @enderror" autocomplete="off" value="">
+                                @error('daily_rate')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
+                            {{-- Amount --}}
+                            <div class="form-group col-md-4 mb-1">
+                                <label class="mb-0 mr-1">Amount</label>
+                                <input type="text" id="daily_allowance" name="daily_allowance"
+                                    class="form-control @error('daily_allowance') is-invalid @enderror" autocomplete="off"
+                                    value="">
+                                @error('daily_allowance')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
                             </div>
                         </div>
                     </div>
@@ -277,6 +432,16 @@
                             <strong>{{ $message }}</strong>
                         </span>
                         @enderror
+                    </div>
+                </div>
+                {{-- Total Expenses --}}
+                <hr>
+                <div class="form-group row">
+                    <div class="col-md-2 text-left caption">
+                        <label>Total Expenses</label>
+                    </div>
+                    <div class="col-md-10">
+                        <span id="total_expenses">980,000,000</span> VND
                     </div>
                 </div>
                 <hr>
