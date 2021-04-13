@@ -218,4 +218,22 @@ return [
     ],
 
     'queue_application_notice_mail_name' => 'application_notice_mail',
+
+    'transportations' => [
+        1 => 'air',
+        2 => 'train',
+        3 => 'taxi',
+        4 => 'others',
+    ],
+
+    'communications' => [
+        5 => 'tel',
+        6 => 'others',
+    ],
+
+    'units' => [
+        'VND',
+        'USD',
+        'SGD',
+    ],
 ];
