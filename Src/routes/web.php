@@ -103,6 +103,7 @@ Route::middleware('checkip')->group(function () {
                     Route::prefix('user')->name('user.')->group(function () {
                         // List Users
                         Route::get('/', [UserListCotroller::class, 'index'])->name('index');
+                        Route::get('exportExcel', [UserListCotroller::class, 'exportExcel'])->name('user_export_excel');
                         // Register new user
                         Route::get('add', [UserRegisterController::class, 'create'])->name('create');
                         Route::post('add', [UserRegisterController::class, 'store'])->name('store');

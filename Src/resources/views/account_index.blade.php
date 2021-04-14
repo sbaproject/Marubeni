@@ -6,6 +6,9 @@
 
 @section('css')
 @endsection
+@section('js')
+    <script src="js/admin/user.js"></script>
+@endsection
 
 @section('content-header')
 {{ __('label.menu_employee_setting') }}
@@ -37,7 +40,7 @@
                 <div class="card-body">
                     <div class="search-content">
                         {{-- <x-alert /> --}}
-                        <form action="{{ route('admin.user.index') }}" method="GET">
+                        <form action="{{ route('admin.user.index') }}" id="formSearch" method="GET">
                             <div class="row">
                                 <div class="col-lg-10 col-xl-9">
                                     {{-- Location --}}
@@ -113,10 +116,14 @@
                                             {{-- {{ __('validation.attributes.user.name') }} --}}
                                         </label>
                                         <div class="col-lg-9">
-                                            <button type="submit" class="btn bg-gradient-primary">
+                                            <button type="button" id="btnSearch" class="btn bg-gradient-primary">
                                                 <i class="nav-icon fas fa-search"></i>
                                                 {{ __('label.button_search') }}
                                             </button>
+                                            <button type="button" id="btnExcel" style="margin-left: 30px" class="btn bg-gradient-success">
+                                                <i class="nav-icon fas fa-download"></i>
+                                                {{ __('label.button_excel') }}
+                                            </button>                                            
                                         </div>
                                     </div>
                                 </div>
