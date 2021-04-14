@@ -24,7 +24,6 @@ $(document).ready(function() {
         }
     });
 
-
     //=======================================
     // Browser file
     //=======================================
@@ -55,6 +54,36 @@ $(document).ready(function() {
     // Itinerary & Transportation Block
     //=======================================
 
+    // Datetimepicker of Itineraries
+    console.log(_ITINERARIES);
+
+    setTransDatePickers(_ITINERARIES);
+
+    function setTransDatePickers(items) {
+        items.forEach((item, index) => {
+            $('#trans_date_picker_' + index).datetimepicker({
+                format: 'DD/MM/YYYY',
+                defaultDate: $('#hid_trans_date_' + index).val(),
+                useCurrent: false,
+                showTodayButton: true,
+                showClear: true
+            });
+            // show
+            var datePicker = $('#trans_date_picker_' + index).data("DateTimePicker").date();
+            if (datePicker != null) {
+                $('#hid_trans_date_' + index).val(datePicker.format('YYYYMMDD'));
+            }
+            // change
+            $('#trans_date_picker_' + index).on("dp.change", function(e) {
+                if (e.date) {
+                    $('#hid_trans_date_' + index).val(e.date.format('YYYYMMDD'));
+                } else {
+                    $('#hid_trans_date_' + index).val(null);
+                }
+            });
+        });
+    }
+
     // add new transportation element
     $('#btnAdd').on('click', function(e) {
 
@@ -84,7 +113,12 @@ $(document).ready(function() {
             // re-order index
             $(this).find('.departure').attr('name', 'itineraries[' + index + '][departure]');
             $(this).find('.arrive').attr('name', 'itineraries[' + index + '][arrive]');
-            $(this).find('.method').attr('name', 'itineraries[' + index + '][method]');
+            // trans_date
+            $(this).find('.hid_trans_date').attr('name', 'itineraries[' + index + '][trans_date]');
+            $(this).find('.hid_trans_date').attr('id', 'hid_trans_date_' + index);
+            $(this).find('.trans_date_picker').attr('id', 'trans_date_picker_' + index);
+            $(this).find('.txt_trans_date_picker').attr('data-target', 'trans_date_picker_' + index);
+            $(this).find('.group_trans_date_picker').attr('data-target', 'trans_date_picker_' + index);
             // always keep at least one element
             if ((itinerariesElements.length === 1 && index === 0)) {
                 $(this).find('.d-delete').addClass('d-none');
@@ -92,6 +126,8 @@ $(document).ready(function() {
                 $(this).find('.d-delete').removeClass('d-none');
             }
         });
+        // make trans_date picker
+        setTransDatePickers(itinerariesElements.toArray());
         // maximum is 4 blocks only
         if (itinerariesElements.length >= 4) {
             $('#btnAdd').addClass('d-none');

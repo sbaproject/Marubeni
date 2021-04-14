@@ -64,6 +64,10 @@ return [
     'status_caption'    => 'Status',
     'reason'            => 'Reason',
     'search_by_app_no_applicant' => 'Search by Application No or Applicant name',
+    'unit' => 'Unit',
+    'rate' => 'Rate',
+    'amount' => 'Amount',
+    'remarks' => 'Remarks',
 
     'popup_title_skip_approver' => 'Skip approval of',
 
@@ -205,6 +209,18 @@ return [
     'business_borne_by'         => 'Expenses to be charged by',
     'business_comment'          => 'Comment',
     'business_budget_position'  => 'Budget type',
+
+    'business_itinerary'                => 'Itinerary',
+    'business_total_daily_allowance'    => 'Total daily allowances',
+    'business_daily_allowance'          => 'Daily allowances',
+    'business_itinerary_date'           => 'Date',
+    'business_charged_to'               => 'Cost to be charged to (Sec Code)',
+    'business_number_of_days'           => 'Number of days',
+    'business_other_fees'               => 'Other Fees',
+    'business_total_expenses'           => 'Total Expenses',
+    'business_instruction_by'           => 'Under Instruction by',
+    'business_approval_no'              => 'Approval No',
+    
 
     /**
      * Entertainment Application

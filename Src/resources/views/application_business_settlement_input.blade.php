@@ -1,3 +1,24 @@
+@php
+    $destinations           = Session::exists('inputs') ? Session::get('inputs')['destinations']            : (isset($flgMod) ? ($application->business2->destinations ?? null) : ($application->business->destinations ?? null));
+    $itineraries            = Session::exists('inputs') ? Session::get('inputs')['itineraries']             : (isset($flgMod) ? ($application->business2->transportations ?? null) : ($application->business->transportations ?? null));
+    $number_of_days         = Session::exists('inputs') ? Session::get('inputs')['number_of_days']          : ($application->business2->number_of_days ?? null);
+    $total_daily_allowance  = Session::exists('inputs') ? Session::get('inputs')['total_daily_allowance']   : ($application->business2->total_daily_allowance ?? null);
+    $total_daily_unit       = Session::exists('inputs') ? Session::get('inputs')['total_daily_unit']        : ($application->business2->total_daily_unit ?? null);
+    $total_daily_rate       = Session::exists('inputs') ? Session::get('inputs')['total_daily_rate']        : ($application->business2->total_daily_rate ?? null);
+    
+    $daily_allowance        = Session::exists('inputs') ? Session::get('inputs')['daily_allowance']         : ($application->business2->daily_allowance ?? null);
+    $daily_unit             = Session::exists('inputs') ? Session::get('inputs')['daily_unit']              : ($application->business2->daily_unit ?? null);
+    $daily_rate             = Session::exists('inputs') ? Session::get('inputs')['daily_rate']              : ($application->business2->daily_rate ?? null);
+
+    $other_fees             = Session::exists('inputs') ? Session::get('inputs')['other_fees']              : ($application->business2->other_fees ?? null);
+    $other_fees_unit        = Session::exists('inputs') ? Session::get('inputs')['other_fees_unit']         : ($application->business2->other_fees_unit ?? null);
+    $other_fees_rate        = Session::exists('inputs') ? Session::get('inputs')['other_fees_rate']         : ($application->business2->other_fees_rate ?? null);
+    $other_fees_note        = Session::exists('inputs') ? Session::get('inputs')['other_fees_note']         : ($application->business2->other_fees_note ?? null);
+
+    $charged_to                     = Session::exists('inputs') ? Session::get('inputs')['charged_to']                      : ($application->business2->charged_to ?? null);
+    $under_instruction_date         = Session::exists('inputs') ? Session::get('inputs')['under_instruction_date']          : ($application->business2->under_instruction_date ?? null);
+    $under_instruction_approval_no  = Session::exists('inputs') ? Session::get('inputs')['under_instruction_approval_no']   : ($application->business2->under_instruction_approval_no ?? null);
+@endphp
 @extends('layouts.master')
 
 @section('title')
@@ -17,6 +38,10 @@
     .caption{
         word-break: break-word;
     }
+    .card-itinerary-itineraries{
+        padding: 10px;
+        padding-bottom: 0px;
+    }
 </style>
 @endsection
 
@@ -27,6 +52,11 @@
 <script src="js/bootstrap-datetimepicker.js"></script>
 {{-- for this view --}}
 <script src="js/user/application/business2/input.js"></script>
+
+{{--  --}}
+<script>
+    const _ITINERARIES = @json($itineraries);
+</script>
 @endsection
 
 @section('content-header')
@@ -41,17 +71,27 @@
 @section('content')
 @php
 
-    // $trans              = Session::exists('inputs') ? Session::get('inputs')['trans']           : (isset($application) ? $application->business->transportations : null);
-    // $destinations       = Session::exists('inputs') ? Session::get('inputs')['destinations']    : (isset($application) ? $application->business->destinations : null);
-    // $trip_dt_from       = Session::exists('inputs') ? Session::get('inputs')['trip_dt_from']    : (isset($application) ? $application->business->trip_dt_from : null);
-    // $trip_dt_to         = Session::exists('inputs') ? Session::get('inputs')['trip_dt_to']      : (isset($application) ? $application->business->trip_dt_to : null);
-    // $accommodation      = Session::exists('inputs') ? Session::get('inputs')['accommodation']   : (isset($application) ? $application->business->accommodation : null);
-    // $accompany          = Session::exists('inputs') ? Session::get('inputs')['accompany']       : (isset($application) ? $application->business->accompany : null);
-    // $borne_by           = Session::exists('inputs') ? Session::get('inputs')['borne_by']        : (isset($application) ? $application->business->borne_by : null);
-    // $comment            = Session::exists('inputs') ? Session::get('inputs')['comment']         : (isset($application) ? $application->business->comment : null);
-    // $subsequent         = Session::exists('inputs') ? Session::get('inputs')['subsequent']      : (isset($application) ? $application->subsequent : null);
-    // $budget_position    = Session::exists('inputs') ? Session::get('inputs')['budget_position'] : (isset($application) ? $application->budget_position : null);
-    // $file_path          = Session::exists('inputs') ? Session::get('inputs')['file_path']       : (isset($application) ? $application->file_path : null);
+    
+    // $destinations           = Session::exists('inputs') ? Session::get('inputs')['destinations']            : (isset($flgMod) ? ($application->business2->destinations ?? null) : (isset($application) ? $application->business->destinations : null));
+    // $itineraries            = Session::exists('inputs') ? Session::get('inputs')['destinations']            : (isset($flgMod) ? ($application->business2->transportations ?? null) : (isset($application) ? $application->business->transportations : null));
+    // $number_of_days         = Session::exists('inputs') ? Session::get('inputs')['number_of_days']          : (isset($application) ? $application->business2->number_of_days : null);
+    // $total_daily_allowance  = Session::exists('inputs') ? Session::get('inputs')['total_daily_allowance']   : (isset($application) ? $application->business2->total_daily_allowance : null);
+    // $total_daily_unit       = Session::exists('inputs') ? Session::get('inputs')['total_daily_unit']        : (isset($application) ? $application->business2->total_daily_unit : null);
+    // $total_daily_rate       = Session::exists('inputs') ? Session::get('inputs')['total_daily_rate']        : (isset($application) ? $application->business2->total_daily_rate : null);
+    
+    // $daily_allowance        = Session::exists('inputs') ? Session::get('inputs')['daily_allowance']         : (isset($application) ? $application->business2->daily_allowance : null);
+    // $daily_unit             = Session::exists('inputs') ? Session::get('inputs')['daily_unit']              : (isset($application) ? $application->business2->daily_unit : null);
+    // $daily_rate             = Session::exists('inputs') ? Session::get('inputs')['daily_rate']              : (isset($application) ? $application->business2->daily_rate : null);
+
+    // $other_fees             = Session::exists('inputs') ? Session::get('inputs')['other_fees']              : (isset($application) ? $application->business2->other_fees : null);
+    // $other_fees_unit        = Session::exists('inputs') ? Session::get('inputs')['other_fees_unit']         : (isset($application) ? $application->business2->other_fees_unit : null);
+    // $other_fees_rate        = Session::exists('inputs') ? Session::get('inputs')['other_fees_rate']         : (isset($application) ? $application->business2->other_fees_rate : null);
+    // $other_fees_note        = Session::exists('inputs') ? Session::get('inputs')['other_fees_note']         : (isset($application) ? $application->business2->other_fees_note : null);
+
+    // $charged_to                     = Session::exists('inputs') ? Session::get('inputs')['charged_to'] : (isset($application) ? $application->business2->charged_to : null);
+    // $under_instruction_date         = Session::exists('inputs') ? Session::get('inputs')['under_instruction_date'] : (isset($application) ? $application->business2->under_instruction_date : null);
+    // $under_instruction_approval_no  = Session::exists('inputs') ? Session::get('inputs')['under_instruction_approval_no'] : (isset($application) ? $application->business2->under_instruction_approval_no : null);
+
 
     // get action url
     // if(isset($application)){
@@ -84,21 +124,21 @@
                 {{-- Application No --}}
                 <div class="form-group row">
                     <div class="col-md-2 text-left caption">
-                        <label>Application No</label>
+                        <label>{{ __('label.business_application_no') }}</label>
                     </div>
                     <div class="col-md-10">
-                        <span>BT-0000000001</span>
+                        <span>{{ $application->application_no }}</span>
                     </div>
                 </div>
                 <hr>
                 {{-- Destinations --}}
                 <div class="form-group row">
                     <div class="col-md-2 text-left caption">
-                        <label>Destinations<span class="text-danger required"> (*)</span></label>
+                        <label>{{ __('label.business_trip_destination') }}<span class="text-danger required"> (*)</span></label>
                     </div>
                     <div class="col-md-10">
                         <input type="text" id="destinations" name="destinations" class="form-control @error('destinations') is-invalid @enderror"
-                            autocomplete="off" value="">
+                            autocomplete="off" value="{{ $destinations }}">
                         @error('destinations')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -110,12 +150,12 @@
                 {{-- Number of days --}}
                 <div class="form-group row">
                     <div class="col-md-2 text-left caption">
-                        <label>Number of days<span class="text-danger required"> (*)</span></label>
+                        <label>{{ __('label.business_number_of_days') }}<span class="text-danger required"> (*)</span></label>
                     </div>
                     <div class="col-md-2">
                         <input type="text" id="accommnumber_of_daysodation" name="number_of_days"
                             class="form-control @error('number_of_days') is-invalid @enderror" autocomplete="off"
-                            value="">
+                            value="{{ $number_of_days }}">
                         @error('number_of_days')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -127,7 +167,7 @@
                 {{-- Itineraries --}}
                 <div class="form-group row">
                     <div class="col-md-2 text-left">
-                        <label>{{ __('label.business_transportation') }}<span class="text-danger required"> (*)</span></label>
+                        <label>{{ __('label.business_itinerary') }}<span class="text-danger required"> (*)</span></label>
                     </div>
                     <div class="col-md-10">
                         <div id="itineraries_block">
@@ -142,6 +182,28 @@
                                     </div>
                                     @endif
                                     <div class="form-row">
+                                        <div class="form-group col-md-4">
+                                            <span for="">
+                                                {{ __('label.date') }}<span class="text-danger required"> (*)</span>
+                                            </span>
+                                            <div id="trans_date_picker_{{ $key }}" data-target-input="nearest" class="input-group date trans_date_picker">
+                                                <input type="text"
+                                                    class="form-control datetimepicker-input txt_trans_date_picker @error('itineraries.'.$key.'.trans_date') is-invalid @enderror"
+                                                    data-target="#trans_date_picker_{{ $key }}" @if($previewFlg) readonly @endif/>
+                                                <div class="input-group-addon input-group-append group_trans_date_picker" data-target="#trans_date_picker_{{ $key }}"
+                                                    data-toggle="datetimepicker">
+                                                    <div class="input-group-text"><i class="fa fa-calendar-alt"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <input type="hidden" id="hid_trans_date_{{ $key }}" name="itineraries[{{ $key }}][trans_date]" class="hid_trans_date"
+                                                value="{{ $itineraries[$key]['trans_date'] }}">
+                                            @error('itineraries.'.$key.'.trans_date')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                            @enderror
+                                        </div>
                                         <div class="form-group col-md-4">
                                             <span for="">
                                                 {{ __('label.business_departure') }}<span class="text-danger required"> (*)</span>
@@ -168,19 +230,6 @@
                                             </span>
                                             @enderror
                                         </div>
-                                        <div class="form-group col-md-4">
-                                            <span for="">
-                                                {{ __('label.business_method') }}<span class="text-danger required"> (*)</span>
-                                            </span>
-                                            <input type="text" class="form-control method @error('itineraries.'.$key.'.method') is-invalid @enderror"
-                                                name="itineraries[{{ $key }}][method]" value="{{ $itineraries[$key]['method'] }}" autocomplete="off"
-                                                @if($previewFlg) readonly @endif>
-                                            @error('itineraries.'.$key.'.method')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                            @enderror
-                                        </div>
                                     </div>
                                 </div>
                                 @endforeach
@@ -193,16 +242,25 @@
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group col-md-4">
+                                        <span for="">
+                                            {{ __('label.date') }}<span class="text-danger required"> (*)</span>
+                                        </span>
+                                        <div id="trans_date_picker_0" data-target-input="nearest" class="input-group date trans_date_picker">
+                                            <input type="text" class="form-control datetimepicker-input txt_trans_date_picker" data-target="#trans_date_picker_0" @if($previewFlg)
+                                                readonly @endif />
+                                            <div class="input-group-addon input-group-append group_trans_date_picker" data-target="#trans_date_picker_0" data-toggle="datetimepicker">
+                                                <div class="input-group-text"><i class="fa fa-calendar-alt"></i></div>
+                                            </div>
+                                            <input type="hidden" id="hid_trans_date_0" name="itineraries[0][trans_date]" class="hid_trans_date">
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
                                         <span>{{ __('label.business_departure') }}<span class="text-danger required"> (*)</span></span>
                                         <input type="text" class="form-control departure" name="itineraries[0][departure]" autocomplete="off" @if($previewFlg) readonly @endif>
                                     </div>
                                     <div class="form-group col-md-4">
                                         <span>{{ __('label.business_arrival') }}<span class="text-danger required"> (*)</span></span>
                                         <input type="text" class="form-control arrive" name="itineraries[0][arrive]" autocomplete="off" @if($previewFlg) readonly @endif>
-                                    </div>
-                                    <div class="form-group col-md-4">
-                                        <span>{{ __('label.business_method') }}<span class="text-danger required"> (*)</span></span>
-                                        <input type="text" class="form-control method" name="itineraries[0][method]" autocomplete="off" @if($previewFlg) readonly @endif>
                                     </div>
                                 </div>
                             </div>
@@ -215,16 +273,24 @@
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group col-md-4">
+                                        <span for="">
+                                            {{ __('label.date') }}<span class="text-danger required"> (*)</span>
+                                        </span>
+                                        <div data-target-input="nearest" class="input-group date trans_date_picker">
+                                            <input type="text" class="form-control datetimepicker-input txt_trans_date_picker" @if($previewFlg) readonly @endif />
+                                            <div class="input-group-addon input-group-append group_trans_date_picker" data-toggle="datetimepicker">
+                                                <div class="input-group-text"><i class="fa fa-calendar-alt"></i></div>
+                                            </div>
+                                            <input type="hidden" class="hid_trans_date">
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
                                         <span class="col-md-3">{{ __('label.business_departure') }}<span class="text-danger required"> (*)</span></span>
                                         <input type="text" class="form-control departure" autocomplete="off" @if($previewFlg) readonly @endif>
                                     </div>
                                     <div class="form-group col-md-4">
                                         <span class="col-md-3">{{ __('label.business_arrival') }}<span class="text-danger required"> (*)</span></span>
                                         <input type="text" class="form-control arrive" autocomplete="off" @if($previewFlg) readonly @endif>
-                                    </div>
-                                    <div class="form-group col-md-4">
-                                        <span class="col-md-3">{{ __('label.business_method') }}<span class="text-danger required"> (*)</span></span>
-                                        <input type="text" class="form-control method" autocomplete="off" @if($previewFlg) readonly @endif>
                                     </div>
                                 </div>
                             </div>
@@ -240,51 +306,51 @@
                 {{-- Total daily allowances --}}
                 <div class="form-group row">
                     <div class="col-md-2 text-left caption">
-                        <label>Total daily allowances<span class="text-danger required"> (*)</span></label>
+                        <label>{{ __('label.business_total_daily_allowance') }}<span class="text-danger required"> (*)</span></label>
                     </div>
                     <div class="col-md-10">
                         <div class="form-row">
+                            {{-- Amount --}}
+                            <div class="form-group col-md-4 mb-1">
+                                <span class="mb-0 mr-1">{{__('label.amount')}}<span class="text-danger required"> (*)</span></span>
+                                <input type="text" id="total_daily_allowance" name="total_daily_allowance"
+                                    class="form-control @error('total_daily_allowance') is-invalid @enderror" autocomplete="off" value="{{ $total_daily_allowance }}">
+                                @error('total_daily_allowance')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
                             {{-- Unit --}}
                             <div class="form-group col-md-4 mb-1">
-                                <label class="mb-0 mr-1">Unit</label>
+                                <span class="mb-0 mr-1">{{__('label.unit')}}<span class="text-danger required"> (*)</span></span>
                                 <select name="total_daily_unit" style="width: 100%;"
                                     class="form-control @error('total_daily_unit') is-invalid @enderror">
-                                    <option>
+                                    <option value="">
                                         {{ __('label.select') }}
                                     </option>
                                     @foreach (config('const.units') as $value)
-                                    <option value="{{ $value }}">
+                                    <option value="{{ $value }}" @if($total_daily_unit == $value) selected @endif>
                                         {{ $value }}
                                     </option>
                                     @endforeach
                                 </select>
-                                {{-- @error('total_daily_unit') --}}
+                                @error('total_daily_unit')
                                 <span class="invalid-feedback" role="alert">
-                                    <strong>asdasdasdasdasdasdasd qwdqwd</strong>
+                                    <strong>{{ $message }}</strong>
                                 </span>
-                                {{-- @enderror --}}
+                                @enderror
                             </div>
                             {{-- Rate --}}
                             <div class="form-group col-md-4 mb-1">
-                                <label class="mb-0 mr-1">Rate</label>
+                                <span class="mb-0 mr-1">{{__('label.rate')}}<span class="text-danger required"> (*)</span></span>
                                 <input type="text" id="total_daily_rate" name="total_daily_rate"
-                                    class="form-control @error('total_daily_rate') is-invalid @enderror" autocomplete="off" value="">
-                                {{-- @error('total_daily_rate') --}}
+                                    class="form-control @error('total_daily_rate') is-invalid @enderror" autocomplete="off" value="{{ $total_daily_rate }}">
+                                @error('total_daily_rate')
                                 <span class="invalid-feedback" role="alert">
-                                    <strong>asdasdasdasdasdasdasd qwdqwd</strong>
+                                    <strong>{{ $message }}</strong>
                                 </span>
-                                {{-- @enderror --}}
-                            </div>
-                            {{-- Amount --}}
-                            <div class="form-group col-md-4 mb-1">
-                                <label class="mb-0 mr-1">Amount</label>
-                                <input type="text" id="total_daily_allowance" name="total_daily_allowance"
-                                    class="form-control @error('total_daily_allowance') is-invalid @enderror" autocomplete="off" value="">
-                                {{-- @error('total_daily_allowance') --}}
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>asdasdasdasdasdasdasd qwdqwd</strong>
-                                </span>
-                                {{-- @enderror --}}
+                                @enderror
                             </div>
                         </div>
                     </div>
@@ -293,20 +359,32 @@
                 {{-- Daily allowances --}}
                 <div class="form-group row">
                     <div class="col-md-2 text-left caption">
-                        <label>Daily allowances<span class="text-danger required"> (*)</span></label>
+                        <label>{{ __('label.business_daily_allowance') }}<span class="text-danger required"> (*)</span></label>
                     </div>
                     <div class="col-md-10">
                         <div class="form-row">
+                            {{-- Amount --}}
+                            <div class="form-group col-md-4 mb-1">
+                                <span class="mb-0 mr-1">{{__('label.amount')}}<span class="text-danger required"> (*)</span></span>
+                                <input type="text" id="daily_allowance" name="daily_allowance"
+                                    class="form-control @error('daily_allowance') is-invalid @enderror" autocomplete="off"
+                                    value="{{ $daily_allowance }}">
+                                @error('daily_allowance')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
                             {{-- Unit --}}
                             <div class="form-group col-md-4 mb-1">
-                                <label class="mb-0 mr-1">Unit</label>
+                                <span class="mb-0 mr-1">{{__('label.unit')}}<span class="text-danger required"> (*)</span></span>
                                 <select name="daily_unit" style="width: 100%;"
                                     class="form-control @error('daily_unit') is-invalid @enderror">
-                                    <option>
+                                    <option value="">
                                         {{ __('label.select') }}
                                     </option>
                                     @foreach (config('const.units') as $value)
-                                    <option value="{{ $value }}">
+                                    <option value="{{ $value }}" @if($daily_unit == $value) selected @endif>
                                         {{ $value }}
                                     </option>
                                     @endforeach
@@ -319,22 +397,11 @@
                             </div>
                             {{-- Rate --}}
                             <div class="form-group col-md-4 mb-1">
-                                <label class="mb-0 mr-1">Rate</label>
+                                <span class="mb-0 mr-1">{{__('label.rate')}}<span class="text-danger required"> (*)</span></span>
                                 <input type="text" id="daily_rate" name="daily_rate"
-                                    class="form-control @error('daily_rate') is-invalid @enderror" autocomplete="off" value="">
+                                    class="form-control @error('daily_rate') is-invalid @enderror" autocomplete="off"
+                                    value="{{ $daily_rate }}">
                                 @error('daily_rate')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
-                            {{-- Amount --}}
-                            <div class="form-group col-md-4 mb-1">
-                                <label class="mb-0 mr-1">Amount</label>
-                                <input type="text" id="daily_allowance" name="daily_allowance"
-                                    class="form-control @error('daily_allowance') is-invalid @enderror" autocomplete="off"
-                                    value="">
-                                @error('daily_allowance')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
@@ -347,20 +414,31 @@
                 {{-- Other Fees --}}
                 <div class="form-group row">
                     <div class="col-md-2 text-left caption">
-                        <label>Other Fees<span class="text-danger required"> (*)</span></label>
+                        <label>{{__('label.business_other_fees')}}</label>
                     </div>
                     <div class="col-md-10">
                         <div class="form-row">
+                            {{-- Amount --}}
+                            <div class="form-group col-md-4 mb-1">
+                                <span class="mb-0 mr-1">{{__('label.amount')}}</span>
+                                <input type="text" id="other_fees" name="other_fees" class="form-control @error('other_fees') is-invalid @enderror"
+                                    autocomplete="off" value="{{ $other_fees }}">
+                                @error('other_fees')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
                             {{-- Unit --}}
                             <div class="form-group col-md-4 mb-1">
-                                <label class="mb-0 mr-1">Unit</label>
+                                <span class="mb-0 mr-1">{{__('label.unit')}}</span>
                                 <select name="other_fees_unit" style="width: 100%;"
                                     class="form-control @error('other_fees_unit') is-invalid @enderror">
-                                    <option>
+                                    <option value="">
                                         {{ __('label.select') }}
                                     </option>
                                     @foreach (config('const.units') as $value)
-                                    <option value="{{ $value }}">
+                                    <option value="{{ $value }}" @if($other_fees_unit == $value) selected @endif>
                                         {{ $value }}
                                     </option>
                                     @endforeach
@@ -373,21 +451,11 @@
                             </div>
                             {{-- Rate --}}
                             <div class="form-group col-md-4 mb-1">
-                                <label class="mb-0 mr-1">Rate</label>
+                                <span class="mb-0 mr-1">{{__('label.rate')}}</span>
                                 <input type="text" id="other_fees_rate" name="other_fees_rate"
-                                    class="form-control @error('other_fees_rate') is-invalid @enderror" autocomplete="off" value="">
+                                    class="form-control @error('other_fees_rate') is-invalid @enderror" autocomplete="off"
+                                    value="{{ $other_fees_rate }}">
                                 @error('other_fees_rate')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
-                            {{-- Amount --}}
-                            <div class="form-group col-md-4 mb-1">
-                                <label class="mb-0 mr-1">Amount</label>
-                                <input type="text" id="other_fees" name="other_fees" class="form-control @error('other_fees') is-invalid @enderror"
-                                    autocomplete="off" value="">
-                                @error('other_fees')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
@@ -397,9 +465,9 @@
                         <div class="form-row">
                             <div class="form-group col-md-12">
                                 {{-- Note --}}
-                                <label class="mb-0 mr-1">Note</label>
-                                <textarea type="text" id="other_fees_note" name="other_fees_note" autocomplete="off" rows="3"
-                                    class="form-control @error('other_fees_note') is-invalid @enderror"></textarea>
+                                <span class="mb-0 mr-1">{{ __('label.remarks') }}</span>
+                                <textarea id="other_fees_note" name="other_fees_note" autocomplete="off" rows="3"
+                                    class="form-control @error('other_fees_note') is-invalid @enderror">{{ $other_fees_note }}</textarea>
                                 @error('other_fees_note')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -414,15 +482,15 @@
                 <hr>
                 <div class="form-group row">
                     <div class="col-md-2 text-left caption">
-                        <label>Cost to be charged to (Sec Code)<span class="text-danger required"> (*)</span></label>
+                        <label>{{ __('label.business_charged_to') }}<span class="text-danger required"> (*)</span></label>
                     </div>
                     <div class="col-md-10">
                         <select name="charged_to" style="width: auto;" class="form-control @error('charged_to') is-invalid @enderror">
-                            <option>
+                            <option value="">
                                 {{ __('label.select') }}
                             </option>
                             @foreach ($departments as $item)
-                            <option value="{{ $item->id }}">
+                            <option value="{{ $item->id }}" @if($charged_to == $item->id) selected @endif>
                                {{ $item->name }}
                             </option>
                             @endforeach
@@ -438,7 +506,7 @@
                 <hr>
                 <div class="form-group row">
                     <div class="col-md-2 text-left caption">
-                        <label>Total Expenses</label>
+                        <label>{{ __('label.business_total_expenses') }}</label>
                     </div>
                     <div class="col-md-10">
                         <span id="total_expenses">980,000,000</span> VND
@@ -448,12 +516,12 @@
                 {{-- Under Instruction by --}}
                 <div class="form-group row">
                     <div class="col-md-2 text-left caption">
-                        <label>Under Instruction by<span class="text-danger required"> (*)</span></label>
+                        <label>{{ __('label.business_instruction_by') }}</label>
                     </div>
                     <div class="col-md-10">
                         <div class="form-row">
                             <div class="form-group col-md-6 mb-1">
-                                <label>Date<span class="text-danger required"> (*)</span></label>
+                                <span>{{ __('label.date') }}</span>
                                 <div id="instruction_date_picker" data-target-input="nearest" class="input-group date">
                                     <input type="text" class="form-control datetimepicker-input @error('under_instruction_date') is-invalid @enderror"
                                         data-target="#instruction_date_picker" />
@@ -463,7 +531,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <input type="hidden" id="under_instruction_date" name="under_instruction_date" value="">
+                                <input type="hidden" id="under_instruction_date" name="under_instruction_date" value="{{ $under_instruction_date }}">
                                 @error('under_instruction_date')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -471,9 +539,10 @@
                                 @enderror
                             </div>
                             <div class="form-group col-md-6 mb-1">
-                                <label>Approval No<span class="text-danger required"> (*)</span></label>
+                                <span>{{ __('label.business_approval_no') }}</span>
                                 <input type="text" id="under_instruction_approval_no" name="under_instruction_approval_no"
-                                    class="form-control @error('under_instruction_approval_no') is-invalid @enderror" autocomplete="off" value="">
+                                    class="form-control @error('under_instruction_approval_no') is-invalid @enderror" autocomplete="off"
+                                    value="{{ $under_instruction_approval_no }}">
                                 @error('under_instruction_approval_no')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>

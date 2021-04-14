@@ -53,6 +53,10 @@ $(function() {
     $('form[method="POST"]').on('keyup keypress', function(e) {
         var keyCode = e.keyCode || e.which;
         if (keyCode === 13) {
+            var tagName = e.target.tagName.toLowerCase();
+            if (tagName === "textarea") {
+                return true;
+            }
             e.preventDefault();
             return false;
         }

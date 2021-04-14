@@ -60,6 +60,10 @@ return [
     'status_caption'    => 'Trạng thái',
     'reason'            => 'Lý do',
     'search_by_app_no_applicant' => 'Tìm theo mã số đơn hoặc tên người đề nghị',
+    'unit' => 'Đơn vị',
+    'rate' => 'Tỷ giá',
+    'amount' => 'Số tiền',
+    'remarks' => 'Ghi chú',
 
     'popup_title_skip_approver' => 'Bỏ qua sự xét duyệt của',
     
@@ -200,6 +204,18 @@ return [
     'business_borne_by'         => 'Chi phí chịu bởi',
     'business_comment'          => 'Nội dung công tác',
     'business_budget_position'  => 'Loại ngân sách',
+    'business_itinerary_date'   => 'Ngày',
+
+    'business_itinerary'                => 'Hành trình',
+    'business_total_daily_allowance'    => 'Tổng cộng công tác phí',
+    'business_daily_allowance'          => 'Công tác phí / Ngày',
+    'business_itinerary_date'           => 'Date',
+    'business_charged_to'               => 'Chi phí chịu bởi(Mã bộ phận)',
+    'business_number_of_days'           => 'Số ngày',
+    'business_other_fees'               => 'Chi phí khác',
+    'business_total_expenses'           => 'Tổng chi phí',
+    'business_instruction_by'           => 'Chỉ đạo bởi',
+    'business_approval_no'              => 'Số phê duyệt',
 
     /**
      * Entertainment Application
