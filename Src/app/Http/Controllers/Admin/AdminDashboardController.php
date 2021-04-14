@@ -6,12 +6,18 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Libs\Common;
+use App\Models\Department;
+use App\Models\Form;
 
 class AdminDashboardController extends Controller
 {
     public function index(Request $request)
     {
         $data = $request->input();
+
+        $locations = config('const.location');
+        $departments = Department::all();
+        $forms = Form::all();
 
         $str_date = null;
         $end_date = null;
@@ -23,6 +29,10 @@ class AdminDashboardController extends Controller
         } else {
             $str_date = config('const.init_time_search.from');
             $end_date = config('const.init_time_search.to');
+        }
+
+        if (isset($data['status'])) {
+            $data['typeApply'] = $data['status'];
         }
 
         if (!isset($data['typeApply'])) {
@@ -65,26 +75,42 @@ class AdminDashboardController extends Controller
             'created_at'     => __('label.dashboard_apply_date'),
         ];
         $sortable = Common::getSortable($request, $sortColNames, 0, 0, true);
+        $form_id = '';
+        if (!empty($data['form'])) {
+            $form_id = $data['form'];
+        }
+
+        $location_id = '';
+        if (!empty($data['location'])) {
+            $location_id = $data['location'];
+        }
+
+        $department_id = '';
+        if (!empty($data['department'])) {
+            $department_id = $data['department'];
+        }        
 
         //Get Applications By Condition
-        $list_application = $this->list_application($sta, $end, $stepStr, $stepEnd, $str_date, $end_date, $sortable);
+        $list_application = $this->list_application($sta, $end, $stepStr, $stepEnd, $str_date, $end_date, $sortable, $form_id, $location_id, $department_id);
 
         //Count Applications By Condition
-        $count_applying  = $this->list_application_count(0, 98, 1, 1, $str_date, $end_date)->count();
+        $count_applying  = $this->list_application_count(0, 98, 1, 1, $str_date, $end_date, $form_id, $location_id, $department_id)->count();
 
-        $count_approval  = $this->list_application_count(0, 98, 2, 2, $str_date, $end_date)->count();
+        $count_approval  = $this->list_application_count(0, 98, 2, 2, $str_date, $end_date, $form_id, $location_id, $department_id)->count();
 
-        $count_declined  = $this->list_application_count(-1, -1, 1, 2, $str_date, $end_date)->count();
+        $count_declined  = $this->list_application_count(-1, -1, 1, 2, $str_date, $end_date, $form_id, $location_id, $department_id)->count();
 
-        $count_reject  = $this->list_application_count(-2, -2, 1, 2, $str_date, $end_date)->count();
+        $count_reject  = $this->list_application_count(-2, -2, 1, 2, $str_date, $end_date, $form_id, $location_id, $department_id)->count();
 
-        $count_completed  = $this->list_application_count(99, 99, 1, 2, $str_date, $end_date)->count();
+        $count_completed  = $this->list_application_count(99, 99, 1, 2, $str_date, $end_date, $form_id, $location_id, $department_id)->count();
 
-        return view('admin_dashboard_index', compact('list_application', 'count_applying', 'count_approval', 'count_declined', 'count_reject', 'count_completed', 'str_date', 'end_date', 'intstatus', 'sortable'));
+        $conditions = $data;
+
+        return view('admin_dashboard_index', compact('list_application', 'count_applying', 'count_approval', 'count_declined', 'count_reject', 'count_completed', 'str_date', 'end_date', 'intstatus', 'sortable', 'locations', 'departments', 'forms', 'conditions'));
     }
 
     //Get List Application by Condition
-    private function list_application($sta, $end, $stepStr, $stepEnd, $str_date, $end_date, $sortable)
+    private function list_application($sta, $end, $stepStr, $stepEnd, $str_date, $end_date, $sortable, $form_id, $location_id, $department_id)
     {
 
         //List
@@ -110,17 +136,29 @@ class AdminDashboardController extends Controller
             ->where('applications.current_step', '<=', $stepEnd)
             ->where('applications.created_at', '>=', $str_date)
             ->where('applications.created_at', '<=', $end_date)
+            ->whereNull('applications.deleted_at');
 
-            //OrderBy
-            ->orderBy($sortable->s, $sortable->d)
-            ->whereNull('applications.deleted_at')
-            ->paginate(config('const.paginator.items'));
+        if (!empty($form_id)){
+            $list_application->where('applications.form_id', '=', $form_id);
+        } 
+
+        if (!empty($location_id) || !empty($department_id)){
+            $list_application->leftJoin('users', 'applications.created_by', '=', 'users.id');
+            if (!empty($location_id)){
+                $list_application->where('users.location', '=', $location_id);
+            }
+            if (!empty($department_id)){
+                $list_application->where('users.department_id', '=', $department_id);
+            }            
+        }                
+
+        $list_application = $list_application->orderBy($sortable->s, $sortable->d)->paginate(config('const.paginator.items'));    
 
         return  $list_application;
     }
 
     //Get Count
-    private function list_application_count($sta, $end, $stepStr, $stepEnd, $str_date, $end_date)
+    private function list_application_count($sta, $end, $stepStr, $stepEnd, $str_date, $end_date, $form_id, $location_id, $department_id)
     {
 
         //List
@@ -146,8 +184,22 @@ class AdminDashboardController extends Controller
             ->where('applications.created_at', '>=', $str_date)
             ->where('applications.created_at', '<=', $end_date)
 
-            ->whereNull('applications.deleted_at')
-            ->get();
+            ->whereNull('applications.deleted_at');
+
+        if (!empty($form_id)){
+            $list_application->where('applications.form_id', '=', $form_id);
+        } 
+
+        if (!empty($location_id) || !empty($department_id)){
+            $list_application->leftJoin('users', 'applications.created_by', '=', 'users.id');
+            if (!empty($location_id)){
+                $list_application->where('users.location', '=', $location_id);
+            }
+            if (!empty($department_id)){
+                $list_application->where('users.department_id', '=', $department_id);
+            }            
+        }
+        $list_application = $list_application->get();     
 
         return  $list_application;
     }

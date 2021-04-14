@@ -28,7 +28,7 @@
         <section class="invoice mb-3 content-header">
             @csrf
             <div class="row">
-                <div class="col-md-4 col-sm-4">
+                <div class="col-md-2 col-sm-2">
                     <label class="lbl-from">{{ __('label.date_from') }}</label>
                     <div class="form-group">
                         <div class="input-group date" id="dateFrom" data-target-input="nearest">
@@ -40,8 +40,8 @@
                         </div>
                         <input type="hidden" id="dataDateFrom" name="dataDateFrom">
                     </div>
-                </div>
-                <div class="col-md-4 col-sm-4">
+                </div>    
+                <div class="col-md-2 col-sm-2">
                     <label class="lbl-to">{{ __('label.date_to') }}</label>
                     <div class="form-group">
                         <div class="input-group date" id="dateTo" data-target-input="nearest">
@@ -55,12 +55,75 @@
                     </div>
                 </div>
                 <div class="col-md-2 col-sm-2">
+                    <label class="lbl-from">{{ __('validation.attributes.location') }}</label>
+                    <div class="form-group" style="margin: 0 20px 20px 20px;">
+                        <select id="location" name="location" class="form-control">
+                            <option value='' selected>{{ __('label.all') }}</option>
+                            @foreach ($locations as $key => $value)
+                            <option value="{{ $value }}"
+                                @isset($conditions['location']) @if ($conditions['location']==$value) selected @endif @endisset>
+                                {{ __('label.'.$key) }}
+                            </option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-2 col-sm-2">
+                    <label class="lbl-from">{{ __('validation.attributes.department') }}</label>
+                    <div class="form-group" style="margin: 0 20px 20px 20px;">
+                        <select id="department" name="department" class="form-control">
+                            <option value='' selected>{{ __('label.all') }}</option>
+                            @foreach ($departments as $item)
+                            <option value="{{ $item->id }}"
+                                @isset($conditions['department']) @if ($conditions['department'] == $item->id) selected @endif @endisset>
+                                {{ $item->name }}
+                            </option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-2 col-sm-2">
+                    <label class="lbl-from">{{ __('label.dashboard_application_name') }}</label>
+                    <div class="form-group" style="margin: 0 20px 20px 20px;">
+                        <select id="form" name="form" class="form-control">
+                            <option value='' selected>{{ __('label.all') }}</option>
+                            @foreach ($forms as $item)
+                            <option value="{{ $item->id }}" 
+                                @isset($conditions['form']) @if ($conditions['form'] == $item->id) selected @endif @endisset>
+                                {{ __('label.form.'.$item->id) }}
+                            </option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-2 col-sm-2">
+                    <label class="lbl-from">{{ __('label.dashboard_status') }}</label>
+                    <div class="form-group" style="margin: 0 20px 20px 20px;">
+                        <select id="status" name="status" class="form-control">
+                            <option value='' selected>{{ __('label.all') }}</option>
+                            <option value='0' @isset($conditions['status']) @if ($conditions['status'] == 0) selected @endif @endisset>{{ __('label.application_status_applying') }}</option>
+                            <option value='1' @isset($conditions['status']) @if ($conditions['status'] == 1) selected @endif @endisset>{{ __('label.application_status_approval') }}</option>
+                            <option value='-1' @isset($conditions['status']) @if ($conditions['status'] == -1) selected @endif @endisset>{{ __('label.application_status_decline') }}</option>
+                            <option value='-2' @isset($conditions['status']) @if ($conditions['status'] == -2) selected @endif @endisset>{{ __('label.application_status_reject') }}</option>
+                            <option value='99' @isset($conditions['status']) @if ($conditions['status'] == 99) selected @endif @endisset>{{ __('label.application_status_complete') }}</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2 col-sm-2">
                     <div class="btn-search">
                         <button class="btn bg-gradient-primary" type="submit"><i class="fa fa-search"
                                 style="margin-right:5px;"></i>{{ __('label.button_search') }}</button>
                     </div>
                 </div>
-
+                <div class="col-md-2 col-sm-2">
+                    <div class="btn-search">
+                        <button class="btn bg-gradient-success" type="button"><i class="fa fa-download"
+                                style="margin-right:5px;"></i>{{ __('label.button_excel') }}</button>
+                    </div>
+                </div>
+            </div>
         </section>
         <input type="hidden" id="typeApply" name="typeApply">
         <!-- Main content -->
