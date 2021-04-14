@@ -68,6 +68,7 @@ return [
     'rate' => 'Rate',
     'amount' => 'Amount',
     'remarks' => 'Remarks',
+    'type' => 'Type',
 
     'popup_title_skip_approver' => 'Skip approval of',
 
@@ -220,6 +221,21 @@ return [
     'business_total_expenses'           => 'Total Expenses',
     'business_instruction_by'           => 'Under Instruction by',
     'business_approval_no'              => 'Approval No',
+    'business_trans'                    => 'Transportation',
+    'business_communication'            => 'Communication',
+    'business_accommodation_fee'        => 'Accommodation',
+
+    'business_transportations' => [
+        1 => 'Air Ticket',
+        2 => 'Train/Bus Ticket',
+        3 => 'Taxi',
+        4 => 'Others',
+    ],
+
+    'business_communications' => [
+        5 => 'Telephone / Internet',
+        6 => 'Others',
+    ],
     
 
     /**

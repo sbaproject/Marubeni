@@ -64,6 +64,7 @@ return [
     'rate' => 'Tỷ giá',
     'amount' => 'Số tiền',
     'remarks' => 'Ghi chú',
+    'type' => 'Loại',
 
     'popup_title_skip_approver' => 'Bỏ qua sự xét duyệt của',
     
@@ -216,6 +217,21 @@ return [
     'business_total_expenses'           => 'Tổng chi phí',
     'business_instruction_by'           => 'Chỉ đạo bởi',
     'business_approval_no'              => 'Số phê duyệt',
+    'business_trans'                    => 'Di chuyển',
+    'business_communication'            => 'Liên lạc',
+    'business_accommodation_fee'        => 'Chi phí khách sạn',
+
+    'business_transportations' => [
+        1 => 'Vé máy bay',
+        2 => 'Vé tàu xe',
+        3 => 'Taxi',
+        4 => 'Phương tiện khác',
+    ],
+
+    'business_communications' => [
+        5 => 'Điện thoại / Internet',
+        6 => 'Khác',
+    ],
 
     /**
      * Entertainment Application

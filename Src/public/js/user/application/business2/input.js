@@ -51,7 +51,7 @@ $(document).ready(function() {
     });
 
     //=======================================
-    // Itinerary & Transportation Block
+    // Itinerary Block
     //=======================================
 
     // Datetimepicker of Itineraries
@@ -84,30 +84,30 @@ $(document).ready(function() {
         });
     }
 
-    // add new transportation element
-    $('#btnAdd').on('click', function(e) {
+    // add new Itinerary element
+    $('#itinerary-btnAdd').on('click', function(e) {
 
         e.preventDefault();
 
         var mainBlock = $('#itineraries_block');
-        var copyElement = $('.copy').clone();
+        var copyElement = mainBlock.find('.copy').clone();
 
         copyElement.removeClass('copy');
         copyElement.removeClass('d-none');
 
         mainBlock.append(copyElement);
 
-        doSettingElement();
+        doItinerariesSetting();
 
     });
-    // remove transportation element
-    $(document).on("click", ".btnDelete", function(e) {
+    // remove Itinerary element
+    $(document).on("click", ".itinerary-btnDelete", function(e) {
         e.preventDefault();
         $(this).parent().parent().remove();
-        doSettingElement();
+        doItinerariesSetting();
     });
 
-    function doSettingElement() {
+    function doItinerariesSetting() {
         var itinerariesElements = $('.card-itinerary-itineraries:not(.copy)');
         itinerariesElements.each(function(index) {
             // re-order index
@@ -130,9 +130,173 @@ $(document).ready(function() {
         setTransDatePickers(itinerariesElements.toArray());
         // maximum is 4 blocks only
         if (itinerariesElements.length >= 4) {
-            $('#btnAdd').addClass('d-none');
+            $('#itinerary-btnAdd').addClass('d-none');
         } else {
-            $('#btnAdd').removeClass('d-none');
+            $('#itinerary-btnAdd').removeClass('d-none');
+        }
+    }
+
+    //=======================================
+    // Transportation Block
+    //=======================================
+
+    // add new Itinerary element
+    $('#transportations-btnAdd').on('click', function(e) {
+
+        e.preventDefault();
+
+        var mainBlock = $('#transportations_block');
+        var copyElement = mainBlock.find('.copy').clone();
+
+        copyElement.removeClass('copy');
+        copyElement.removeClass('d-none');
+
+        mainBlock.append(copyElement);
+
+        doTransportationSettings();
+
+    });
+    // remove Itinerary element
+    $(document).on("click", ".transportations-btnDelete", function(e) {
+        e.preventDefault();
+        $(this).parent().parent().remove();
+        doTransportationSettings();
+    });
+
+    function doTransportationSettings() {
+        var transElements = $('.card-transportations:not(.copy)');
+        transElements.each(function(index) {
+            // re-order index
+            $(this).find('.transportations_method').attr('name', 'transportations[' + index + '][method]');
+            $(this).find('.transportations_amount').attr('name', 'transportations[' + index + '][amount]');
+            $(this).find('.transportations_unit').attr('name', 'transportations[' + index + '][unit]');
+            $(this).find('.transportations_rate').attr('name', 'transportations[' + index + '][exchange_rate]');
+            $(this).find('.transportations_note').attr('name', 'transportations[' + index + '][note]');
+
+            // set trans number
+            $(this).find('.sp_trans_no').text('A' + (index + 1));
+
+            // always keep at least one element
+            if ((transElements.length === 1 && index === 0)) {
+                $(this).find('.d-delete').addClass('d-none');
+            } else {
+                $(this).find('.d-delete').removeClass('d-none');
+            }
+        });
+        // maximum is 10 blocks only
+        if (transElements.length >= 10) {
+            $('#transportations-btnAdd').addClass('d-none');
+        } else {
+            $('#transportations-btnAdd').removeClass('d-none');
+        }
+    }
+
+    //=======================================
+    // Communication Block
+    //=======================================
+
+    // add new Communication element
+    $('#communications-btnAdd').on('click', function(e) {
+
+        e.preventDefault();
+
+        var mainBlock = $('#communications_block');
+        var copyElement = mainBlock.find('.copy').clone();
+
+        copyElement.removeClass('copy');
+        copyElement.removeClass('d-none');
+
+        mainBlock.append(copyElement);
+
+        doCommunicationSettings();
+
+    });
+    // remove Communication element
+    $(document).on("click", ".communications-btnDelete", function(e) {
+        e.preventDefault();
+        $(this).parent().parent().remove();
+        doCommunicationSettings();
+    });
+
+    function doCommunicationSettings() {
+        var comElements = $('.card-communications:not(.copy)');
+        comElements.each(function(index) {
+            // re-order index
+            $(this).find('.communications_method').attr('name', 'communications[' + index + '][method]');
+            $(this).find('.communications_amount').attr('name', 'communications[' + index + '][amount]');
+            $(this).find('.communications_unit').attr('name', 'communications[' + index + '][unit]');
+            $(this).find('.communications_rate').attr('name', 'communications[' + index + '][exchange_rate]');
+            $(this).find('.communications_note').attr('name', 'communications[' + index + '][note]');
+
+            // set communication number
+            $(this).find('.sp_com_no').text('C' + (index + 1));
+
+            // always keep at least one element
+            if ((comElements.length === 1 && index === 0)) {
+                $(this).find('.d-delete').addClass('d-none');
+            } else {
+                $(this).find('.d-delete').removeClass('d-none');
+            }
+        });
+        // maximum is 10 blocks only
+        if (comElements.length >= 10) {
+            $('#communications-btnAdd').addClass('d-none');
+        } else {
+            $('#communications-btnAdd').removeClass('d-none');
+        }
+    }
+
+    //=======================================
+    // Accomodation Block
+    //=======================================
+
+    // add new Accomodation element
+    $('#accomodations-btnAdd').on('click', function(e) {
+
+        e.preventDefault();
+
+        var mainBlock = $('#accomodations_block');
+        var copyElement = mainBlock.find('.copy').clone();
+
+        copyElement.removeClass('copy');
+        copyElement.removeClass('d-none');
+
+        mainBlock.append(copyElement);
+
+        doAccomodationsettings();
+
+    });
+    // remove Accomodation element
+    $(document).on("click", ".accomodations-btnDelete", function(e) {
+        e.preventDefault();
+        $(this).parent().parent().remove();
+        doAccomodationsettings();
+    });
+
+    function doAccomodationsettings() {
+        var comElements = $('.card-accomodations:not(.copy)');
+        comElements.each(function(index) {
+            // re-order index
+            $(this).find('.accomodations_amount').attr('name', 'accomodations[' + index + '][amount]');
+            $(this).find('.accomodations_unit').attr('name', 'accomodations[' + index + '][unit]');
+            $(this).find('.accomodations_rate').attr('name', 'accomodations[' + index + '][exchange_rate]');
+            $(this).find('.accomodations_note').attr('name', 'accomodations[' + index + '][note]');
+
+            // set communication number
+            $(this).find('.sp_acom_no').text('B' + (index + 1));
+
+            // always keep at least one element
+            if ((comElements.length === 1 && index === 0)) {
+                $(this).find('.d-delete').addClass('d-none');
+            } else {
+                $(this).find('.d-delete').removeClass('d-none');
+            }
+        });
+        // maximum is 10 blocks only
+        if (comElements.length >= 10) {
+            $('#accomodations-btnAdd').addClass('d-none');
+        } else {
+            $('#accomodations-btnAdd').removeClass('d-none');
         }
     }
 

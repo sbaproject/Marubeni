@@ -31,44 +31,8 @@ class BusinessTripSettlementController extends Controller
 
         $previewFlg = false;
 
-        // $data = [
-        //     'application_no' => $application->application_no,
-        //     'number_of_days' => Session::exists('inputs') ? Session::get('inputs')['destinations'] : null,
-        //     'total_daily_allowance' => Session::exists('inputs') ? Session::get('inputs')['total_daily_allowance'] : null,
-        //     'total_daily_unit' => Session::exists('inputs') ? Session::get('inputs')['total_daily_unit'] : null,
-        //     'total_daily_rate' => Session::exists('inputs') ? Session::get('inputs')['total_daily_rate'] : null,
+        
 
-        //     'daily_allowance' => Session::exists('inputs') ? Session::get('inputs')['daily_allowance'] : null,
-        //     'daily_unit' => Session::exists('inputs') ? Session::get('inputs')['daily_unit'] : null,
-        //     'daily_rate' => Session::exists('inputs') ? Session::get('inputs')['daily_rate'] : null,
-
-        //     'other_fees' => Session::exists('inputs') ? Session::get('inputs')['other_fees'] : null,
-        //     'other_fees_unit' => Session::exists('inputs') ? Session::get('inputs')['other_fees_unit'] : null,
-        //     'other_fees_rate' => Session::exists('inputs') ? Session::get('inputs')['other_fees_rate'] : null,
-        //     'other_fees_note' => Session::exists('inputs') ? Session::get('inputs')['other_fees_note'] : null,
-
-        //     'charged_to' => Session::exists('inputs') ? Session::get('inputs')['charged_to'] : null,
-
-        //     'charged_to' => Session::exists('inputs') ? Session::get('inputs')['charged_to'] : null,
-        // ];
-
-        // if (!Session::exists('inputs')){
-        //     // get Trip Destinations of bussiness application on step 1
-        //     $destinations = $application->business->destinations ?? null;
-        //     // get Itinerary of bussiness application on step 1
-        //     $itineraries = $application->business->transportations ?? [];
-        // } else {
-        //     // get Trip Destinations of bussiness application on step 1
-        //     $destinations  = Session::get('inputs')['destinations'];
-        //     // get Itinerary of bussiness application on step 1
-        //     $itineraries = Session::get('inputs')['itineraries'];
-        //     $numberOfDays = Session::get('inputs')['number_of_days'];
-        // }
-
-        // $inputs = 
-        // $destinations = Session::set();
-
-        // dd();
 
         // dd($itineraries, $application->business->transportations);
 
@@ -77,6 +41,8 @@ class BusinessTripSettlementController extends Controller
 
     public function store(Request $request, $applicationId)
     {
+        dd($applicationId, $request->input());
+        
         $departments = Department::all();
 
         $application = Application::findOrFail($applicationId);
