@@ -101,11 +101,11 @@
                     <div class="form-group" style="margin: 0 20px 20px 20px;">
                         <select id="status" name="status" class="form-control">
                             <option value='' selected>{{ __('label.all') }}</option>
-                            <option value='0' @isset($conditions['status']) @if ($conditions['status'] == 0) selected @endif @endisset>{{ __('label.application_status_applying') }}</option>
-                            <option value='1' @isset($conditions['status']) @if ($conditions['status'] == 1) selected @endif @endisset>{{ __('label.application_status_approval') }}</option>
-                            <option value='-1' @isset($conditions['status']) @if ($conditions['status'] == -1) selected @endif @endisset>{{ __('label.application_status_decline') }}</option>
-                            <option value='-2' @isset($conditions['status']) @if ($conditions['status'] == -2) selected @endif @endisset>{{ __('label.application_status_reject') }}</option>
-                            <option value='99' @isset($conditions['status']) @if ($conditions['status'] == 99) selected @endif @endisset>{{ __('label.application_status_complete') }}</option>
+                            <option value='0' @isset($conditions['typeApply']) @if ($conditions['typeApply'] == 0) selected @endif @endisset>{{ __('label.application_status_applying') }}</option>
+                            <option value='1' @isset($conditions['typeApply']) @if ($conditions['typeApply'] == 1) selected @endif @endisset>{{ __('label.application_status_approval') }}</option>
+                            <option value='-1' @isset($conditions['typeApply']) @if ($conditions['typeApply'] == -1) selected @endif @endisset>{{ __('label.application_status_decline') }}</option>
+                            <option value='-2' @isset($conditions['typeApply']) @if ($conditions['typeApply'] == -2) selected @endif @endisset>{{ __('label.application_status_reject') }}</option>
+                            <option value='99' @isset($conditions['typeApply']) @if ($conditions['typeApply'] == 99) selected @endif @endisset>{{ __('label.application_status_complete') }}</option>
                         </select>
                     </div>
                 </div>
@@ -113,13 +113,13 @@
             <div class="row">
                 <div class="col-md-2 col-sm-2">
                     <div class="btn-search">
-                        <button class="btn bg-gradient-primary" type="submit"><i class="fa fa-search"
+                        <button class="btn bg-gradient-primary" type="button" id="btnSearch"><i class="fa fa-search"
                                 style="margin-right:5px;"></i>{{ __('label.button_search') }}</button>
                     </div>
                 </div>
                 <div class="col-md-2 col-sm-2">
                     <div class="btn-search">
-                        <button class="btn bg-gradient-success" type="button"><i class="fa fa-download"
+                        <button class="btn bg-gradient-success" type="button" id="btnExcel"><i class="fa fa-download"
                                 style="margin-right:5px;"></i>{{ __('label.button_excel') }}</button>
                     </div>
                 </div>

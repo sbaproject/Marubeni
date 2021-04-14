@@ -98,6 +98,7 @@ Route::middleware('checkip')->group(function () {
                 Route::prefix('admin')->name('admin.')->group(function () {
                     // Dashboard
                     Route::get('dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
+                    Route::get('exportExcel', [AdminDashboardController::class, 'exportExcel'])->name('export_excel');
                     // User managements
                     Route::prefix('user')->name('user.')->group(function () {
                         // List Users

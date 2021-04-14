@@ -71,18 +71,37 @@ $(document).ready(function () {
 
     //Set Property for Submit Form
     $("#applying").click(function(){
+        $("#formSearch").attr('action', 'admin/dashboard');
         $('#formSearch').submit();
     });
     $("#approval").click(function(){
+        $("#formSearch").attr('action', 'admin/dashboard');
         $('#formSearch').submit();
     });
     $("#declined").click(function(){
+        $("#formSearch").attr('action', 'admin/dashboard');
         $('#formSearch').submit();
     });
     $("#reject").click(function(){
+        $("#formSearch").attr('action', 'admin/dashboard');
         $('#formSearch').submit();
     });
     $("#completed").click(function(){
+        $("#formSearch").attr('action', 'admin/dashboard');
         $('#formSearch').submit();
+    });
+
+    $("#btnSearch").click(function(){
+        $("#formSearch").attr('action', 'admin/dashboard');
+        $('#formSearch').submit();
+    });
+
+    $("#btnExcel").click(function(){
+        $("#formSearch").attr('action', 'admin/exportExcel');
+        $('#formSearch').submit();
+        setTimeout(function () {
+          $("#popup-loading").modal('hide');
+        }, 100);
+        
     });
 });
