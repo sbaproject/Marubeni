@@ -265,16 +265,11 @@ class UserListCotroller extends Controller
 
         foreach($users as $user){
 
-            // $approver =  Step::select('users.name')
-            // ->join('users', 'users.id', 'steps.approver_id')
-            // ->where('steps.group_id', $application->group_id)
-            // ->where('steps.order', 99)
-            // ->orderBy('steps.step_type', 'DESC')           
-            // ->first();
-            // $approver_name = '';
-            // if (!empty($approver)){
-            //     $approver_name = $approver->name;
-            // }
+            $use_days = (int)$user->leave_days - (int)$user->leave_remaining_days;
+            if ($use_days < 0){
+                $use_days = 0;
+            }
+
 
             $sheet->setCellValue('A'.$row, $index);
             $sheet->setCellValue('B'.$row, $user->user_no);
@@ -282,7 +277,7 @@ class UserListCotroller extends Controller
             $sheet->setCellValue('D'.$row, $user->department_name);
             $sheet->setCellValue('E'.$row, $user->user_name);
             $sheet->setCellValue('F'.$row, $user->leave_days);
-            $sheet->setCellValue('G'.$row, '');
+            $sheet->setCellValue('G'.$row, $use_days);
             $sheet->setCellValue('H'.$row, $user->leave_remaining_days);
             $sheet->setCellValue('I'.$row, $user->leave_remaining_time);         
 
