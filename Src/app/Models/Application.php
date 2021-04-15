@@ -58,6 +58,11 @@ class Application extends Model
         return $this->hasOne(Businesstrip::class);
     }
 
+    public function business2()
+    {
+        return $this->hasOne(Businesstrip2::class);
+    }
+
     public function entertainment()
     {
         return $this->hasOne(Entertaiment::class);

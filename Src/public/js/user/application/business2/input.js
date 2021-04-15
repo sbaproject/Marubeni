@@ -177,11 +177,11 @@ $(document).ready(function() {
             $(this).find('.sp_trans_no').text('A' + (index + 1));
 
             // always keep at least one element
-            if ((transElements.length === 1 && index === 0)) {
-                $(this).find('.d-delete').addClass('d-none');
-            } else {
-                $(this).find('.d-delete').removeClass('d-none');
-            }
+            // if ((transElements.length === 1 && index === 0)) {
+            //     $(this).find('.d-delete').addClass('d-none');
+            // } else {
+            //     $(this).find('.d-delete').removeClass('d-none');
+            // }
         });
         // maximum is 10 blocks only
         if (transElements.length >= 10) {
@@ -232,11 +232,11 @@ $(document).ready(function() {
             $(this).find('.sp_com_no').text('C' + (index + 1));
 
             // always keep at least one element
-            if ((comElements.length === 1 && index === 0)) {
-                $(this).find('.d-delete').addClass('d-none');
-            } else {
-                $(this).find('.d-delete').removeClass('d-none');
-            }
+            // if ((comElements.length === 1 && index === 0)) {
+            //     $(this).find('.d-delete').addClass('d-none');
+            // } else {
+            //     $(this).find('.d-delete').removeClass('d-none');
+            // }
         });
         // maximum is 10 blocks only
         if (comElements.length >= 10) {
@@ -286,11 +286,11 @@ $(document).ready(function() {
             $(this).find('.sp_acom_no').text('B' + (index + 1));
 
             // always keep at least one element
-            if ((comElements.length === 1 && index === 0)) {
-                $(this).find('.d-delete').addClass('d-none');
-            } else {
-                $(this).find('.d-delete').removeClass('d-none');
-            }
+            // if ((comElements.length === 1 && index === 0)) {
+            //     $(this).find('.d-delete').addClass('d-none');
+            // } else {
+            //     $(this).find('.d-delete').removeClass('d-none');
+            // }
         });
         // maximum is 10 blocks only
         if (comElements.length >= 10) {

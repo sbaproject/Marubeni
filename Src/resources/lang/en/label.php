@@ -64,7 +64,7 @@ return [
     'status_caption'    => 'Status',
     'reason'            => 'Reason',
     'search_by_app_no_applicant' => 'Search by Application No or Applicant name',
-    'unit' => 'Unit',
+    'unit' => 'Currency',
     'rate' => 'Rate',
     'amount' => 'Amount',
     'remarks' => 'Remarks',

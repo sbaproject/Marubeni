@@ -219,6 +219,12 @@ return [
 
     'queue_application_notice_mail_name' => 'application_notice_mail',
 
+    'trip_fee_type' => [
+        'transportation' => 'A',
+        'accomodation' => 'B',
+        'communication' => 'C',
+    ],
+
     'transportations' => [
         1 => 'air',
         2 => 'train',

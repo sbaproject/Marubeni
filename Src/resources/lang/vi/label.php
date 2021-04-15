@@ -60,7 +60,7 @@ return [
     'status_caption'    => 'Trạng thái',
     'reason'            => 'Lý do',
     'search_by_app_no_applicant' => 'Tìm theo mã số đơn hoặc tên người đề nghị',
-    'unit' => 'Đơn vị',
+    'unit' => 'Tiền tệ',
     'rate' => 'Tỷ giá',
     'amount' => 'Số tiền',
     'remarks' => 'Ghi chú',
