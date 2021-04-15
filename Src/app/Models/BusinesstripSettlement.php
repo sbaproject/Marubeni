@@ -12,6 +12,8 @@ class BusinesstripSettlement extends Model
 {
     use HasFactory, Notifiable, SoftDeletes;
 
+    protected $table = "businesstrip2s";
+
     /**
      * The attributes that are mass assignable.
      *
