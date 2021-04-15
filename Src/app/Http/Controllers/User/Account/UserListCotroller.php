@@ -125,17 +125,18 @@ class UserListCotroller extends Controller
         $sheet = $spreadsheet->getActiveSheet();
 
         $sheet->getColumnDimension('A')->setWidth('14');
-        $sheet->getColumnDimension('B')->setWidth('20');
-        $sheet->getColumnDimension('C')->setWidth('20');
-        $sheet->getColumnDimension('D')->setWidth('22');
+        $sheet->getColumnDimension('B')->setWidth('18');
+        $sheet->getColumnDimension('C')->setWidth('17');
+        $sheet->getColumnDimension('D')->setWidth('18');
         $sheet->getColumnDimension('E')->setWidth('20');
         $sheet->getColumnDimension('F')->setWidth('18');
-        $sheet->getColumnDimension('G')->setWidth('18');
-        $sheet->getColumnDimension('H')->setWidth('18');
+        $sheet->getColumnDimension('G')->setWidth('15');
+        $sheet->getColumnDimension('H')->setWidth('15');
         $sheet->getColumnDimension('I')->setWidth('18');
+        $sheet->getColumnDimension('J')->setWidth('18');
 
         $sheet->setCellValue('A1', 'Marubeni Staff Leave Management Data');
-        $sheet->mergeCells("A1:I1");
+        $sheet->mergeCells("A1:J1");
         $sheet->getStyle('A1')->getAlignment()->setHorizontal('center');
         $sheet->getStyle("A1")->getFont()->setName($font_family)->setSize(18)->setBold(true);
 
@@ -201,12 +202,13 @@ class UserListCotroller extends Controller
         $sheet->setCellValue('E7', 'Name');
         $sheet->setCellValue('F7', 'Entitled this year');
         $sheet->setCellValue('G7', 'Used days');
-        $sheet->setCellValue('H7', 'Remaining days');
-        $sheet->setCellValue('I7', 'Remaining hours');
+        $sheet->setCellValue('H7', 'Used hours');
+        $sheet->setCellValue('I7', 'Remaining days');
+        $sheet->setCellValue('J7', 'Remaining hours');
 
-        $sheet->getStyle('A7:I7')->getAlignment()->setHorizontal('left');
-        $sheet->getStyle("A7:I7")->getFont()->setName($font_family)->setSize(12)->setBold(true);
-        $sheet->getStyle('A7:I7')->getBorders()->getAllBorders()->applyFromArray($styleArray1);
+        $sheet->getStyle('A7:J7')->getAlignment()->setHorizontal('left');
+        $sheet->getStyle("A7:J7")->getFont()->setName($font_family)->setSize(12)->setBold(true);
+        $sheet->getStyle('A7:J7')->getBorders()->getAllBorders()->applyFromArray($styleArray1);
 
 
         // sorting columns
@@ -239,7 +241,8 @@ class UserListCotroller extends Controller
             'users.leave_remaining_days',
             'users.leave_remaining_time',
             'users.location',
-            DB::raw('(SELECT SUM(leaves.days_use) as days_use FROM applications LEFT JOIN leaves ON applications.id = leaves.application_id WHERE users.id = applications.created_by AND applications.status = 99 AND applications.form_id =  1 AND  applications.created_at BETWEEN "'.$startDate.'" AND "'.$endDare.'"  GROUP BY applications.created_by) as use_days')
+            DB::raw('(SELECT SUM(leaves.days_use) as days_use FROM applications LEFT JOIN leaves ON applications.id = leaves.application_id WHERE users.id = applications.created_by AND applications.status = 99 AND applications.form_id =  1 AND  applications.created_at BETWEEN "'.$startDate.'" AND "'.$endDare.'"  GROUP BY applications.created_by) as use_days'),
+            DB::raw('(SELECT SUM(leaves.times_use) as times_use FROM applications LEFT JOIN leaves ON applications.id = leaves.application_id WHERE users.id = applications.created_by AND applications.status = 99 AND applications.form_id =  1 AND  applications.created_at BETWEEN "'.$startDate.'" AND "'.$endDare.'"  GROUP BY applications.created_by) as use_hours')
         ];
 
         // get results
@@ -284,14 +287,16 @@ class UserListCotroller extends Controller
             $sheet->setCellValue('E'.$row, $user->user_name);
             $sheet->setCellValue('F'.$row, $user->leave_days);
             $sheet->setCellValue('G'.$row, empty($user->use_days) ? 0 :  $user->use_days);
-            $sheet->setCellValue('H'.$row, $user->leave_remaining_days);
-            $sheet->setCellValue('I'.$row, $user->leave_remaining_time);
+            $sheet->setCellValue('H'.$row, empty($user->use_hours) ? 0 :  $user->use_hours);
+            $sheet->setCellValue('I'.$row, $user->leave_remaining_days);
+            $sheet->setCellValue('J'.$row, $user->leave_remaining_time);
+
 
             $sheet->getStyle('B'.$row.':E'.$row)->getAlignment()->setHorizontal('left');
-            $sheet->getStyle('F'.$row.':I'.$row)->getAlignment()->setHorizontal('right');
+            $sheet->getStyle('F'.$row.':J'.$row)->getAlignment()->setHorizontal('right');
             $sheet->getStyle('A'.$row)->getAlignment()->setHorizontal('right');
-            $sheet->getStyle('A'.$row.':I'.$row)->getFont()->setName($font_family)->setSize(12);
-            $sheet->getStyle('A'.$row.':I'.$row)->getBorders()->getAllBorders()->applyFromArray($styleArray1);
+            $sheet->getStyle('A'.$row.':J'.$row)->getFont()->setName($font_family)->setSize(12);
+            $sheet->getStyle('A'.$row.':J'.$row)->getBorders()->getAllBorders()->applyFromArray($styleArray1);
 
             $index++;
             $row++;
