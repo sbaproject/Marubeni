@@ -21,10 +21,10 @@ class CreateBusinesstrip2Table extends Migration
             $table->decimal('total_daily_allowance', 11, 2)->default(0)->nullable();
             $table->string('total_daily_unit', 3)->nullable()->comment('Like USD,VND,SGD,...');
             $table->decimal('total_daily_rate', 11, 2)->default(0)->nullable();
-            $table->decimal('daily_allowance', 11, 0)->default(0)->nullable();
+            $table->decimal('daily_allowance', 11, 2)->default(0)->nullable();
             $table->string('daily_unit', 3)->nullable()->comment('Like USD,VND,SGD,...');
             $table->decimal('daily_rate', 11, 2)->default(0)->nullable();
-            $table->decimal('other_fees', 11, 0)->default(0)->nullable();
+            $table->decimal('other_fees', 11, 2)->default(0)->nullable();
             $table->string('other_fees_unit', 3)->nullable()->comment('Like USD,VND,SGD,...');
             $table->decimal('other_fees_rate', 11, 2)->default(0)->nullable();
             $table->text('other_fees_note')->nullable();

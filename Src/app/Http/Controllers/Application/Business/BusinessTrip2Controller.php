@@ -91,10 +91,8 @@ class Businesstrip2Controller extends Controller
                     $rules['total_daily_unit']      = 'required_select';
                     $rules['total_daily_rate']      = 'nullable|numeric';
 
-                    if (!empty($inputs['total_daily_allowance'])) {
-                        if (!empty($inputs['total_daily_unit']) && $inputs['total_daily_unit'] != 'VND') {
-                            $rules['total_daily_rate'] = 'required|numeric';
-                        }
+                    if (!empty($inputs['total_daily_unit']) && $inputs['total_daily_unit'] != 'VND') {
+                        $rules['total_daily_rate'] = 'required|numeric';
                     }
                 }
 
@@ -109,10 +107,8 @@ class Businesstrip2Controller extends Controller
                     $rules['daily_unit']        = 'required_select';
                     $rules['daily_rate']        = 'nullable|numeric';
 
-                    if (!empty($inputs['daily_allowance'])) {
-                        if (!empty($inputs['daily_unit']) && $inputs['daily_unit'] != 'VND') {
-                            $rules['daily_rate'] = 'required|numeric';
-                        }
+                    if (!empty($inputs['daily_unit']) && $inputs['daily_unit'] != 'VND') {
+                        $rules['daily_rate'] = 'required|numeric';
                     }
                 }
 
@@ -127,10 +123,8 @@ class Businesstrip2Controller extends Controller
                     $rules['other_fees_unit']   = 'required_select';
                     $rules['other_fees_rate']   = 'nullable|numeric';
 
-                    if (!empty($inputs['other_fees'])) {
-                        if (!empty($inputs['other_fees_unit']) && $inputs['other_fees_unit'] != 'VND') {
-                            $rules['other_fees_rate'] = 'required|numeric';
-                        }
+                    if (!empty($inputs['other_fees_unit']) && $inputs['other_fees_unit'] != 'VND') {
+                        $rules['other_fees_rate'] = 'required|numeric';
                     }
                 }
 
@@ -146,15 +140,15 @@ class Businesstrip2Controller extends Controller
                 $rules['transportations.*.exchange_rate'] = 'nullable|numeric';
 
                 // communications
-                $rules['communications.*.method']   = 'required_select';
-                $rules['communications.*.unit']     = 'required_select';
-                $rules['communications.*.amount']   = 'required|numeric';
+                $rules['communications.*.method']        = 'required_select';
+                $rules['communications.*.unit']          = 'required_select';
+                $rules['communications.*.amount']        = 'required|numeric';
                 $rules['communications.*.exchange_rate'] = 'nullable|numeric';
 
                 // accomodations
-                $rules['accomodations.*.method']    = 'required_select';
-                $rules['accomodations.*.unit']      = 'required_select';
-                $rules['accomodations.*.amount']    = 'required|numeric';
+                $rules['accomodations.*.method']        = 'required_select';
+                $rules['accomodations.*.unit']          = 'required_select';
+                $rules['accomodations.*.amount']        = 'required|numeric';
                 $rules['accomodations.*.exchange_rate'] = 'nullable|numeric';
             }
 
@@ -199,7 +193,7 @@ class Businesstrip2Controller extends Controller
 
             if ($validator->fails()) {
                 unset($inputs['input_file']);
-                Common::setAlertFail('Validation is failed !');
+                Common::setAlertFail(__('msg.validation_fail'));
                 return redirect()->back()->with('inputs', $inputs)->withErrors($validator);
             }
         }
@@ -380,10 +374,8 @@ class Businesstrip2Controller extends Controller
                     $rules['total_daily_unit']      = 'required_select';
                     $rules['total_daily_rate']      = 'nullable|numeric';
 
-                    if (!empty($inputs['total_daily_allowance'])) {
-                        if (!empty($inputs['total_daily_unit']) && $inputs['total_daily_unit'] != 'VND') {
-                            $rules['total_daily_rate'] = 'required|numeric';
-                        }
+                    if (!empty($inputs['total_daily_unit']) && $inputs['total_daily_unit'] != 'VND') {
+                        $rules['total_daily_rate'] = 'required|numeric';
                     }
                 }
 
@@ -398,10 +390,8 @@ class Businesstrip2Controller extends Controller
                     $rules['daily_unit']        = 'required_select';
                     $rules['daily_rate']        = 'nullable|numeric';
 
-                    if (!empty($inputs['daily_allowance'])) {
-                        if (!empty($inputs['daily_unit']) && $inputs['daily_unit'] != 'VND') {
-                            $rules['daily_rate'] = 'required|numeric';
-                        }
+                    if (!empty($inputs['daily_unit']) && $inputs['daily_unit'] != 'VND') {
+                        $rules['daily_rate'] = 'required|numeric';
                     }
                 }
 
@@ -416,10 +406,8 @@ class Businesstrip2Controller extends Controller
                     $rules['other_fees_unit']   = 'required_select';
                     $rules['other_fees_rate']   = 'nullable|numeric';
 
-                    if (!empty($inputs['other_fees'])) {
-                        if (!empty($inputs['other_fees_unit']) && $inputs['other_fees_unit'] != 'VND') {
-                            $rules['other_fees_rate'] = 'required|numeric';
-                        }
+                    if (!empty($inputs['other_fees_unit']) && $inputs['other_fees_unit'] != 'VND') {
+                        $rules['other_fees_rate'] = 'required|numeric';
                     }
                 }
 
@@ -488,7 +476,7 @@ class Businesstrip2Controller extends Controller
 
             if ($validator->fails()) {
                 unset($inputs['input_file']);
-                Common::setAlertFail('Validation is failed !');
+                Common::setAlertFail(__('msg.validation_fail'));
                 return redirect()->back()->with('inputs', $inputs)->withErrors($validator);
             }
         }

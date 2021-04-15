@@ -289,6 +289,7 @@
                 {{-- TripFees - Transportations --}}
                 <div class="form-group row">
                     <div class="col-md-2 text-left">
+                        <span class="sp_trans_no badge badge-success">{{ config('const.trip_fee_type.transportation') }}</span>
                         <label>{{ __('label.business_trans') }}</label>
                     </div>
                     <div class="col-md-10">
@@ -331,9 +332,10 @@
                                             {{ __('label.amount') }}<span class="text-danger required"> (*)</span>
                                         </span>
                                         <input type="text" name="transportations[{{ $trans_key }}][amount]"
-                                            class="form-control transportations_amount @error('transportations.'.$trans_key.'.amount') is-invalid @enderror"
+                                            class="form-control transportations_amount sync_total amount @error('transportations.'.$trans_key.'.amount') is-invalid @enderror"
                                             value="{{ $transportation['amount'] }}"
-                                            autocomplete="off" @if($previewFlg) readonly @endif>
+                                            autocomplete="off" @if($previewFlg) readonly @endif
+                                            data-target="transportations[{{ $trans_key }}][exchange_rate]">
                                         @error('transportations.'.$trans_key.'.amount')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -345,7 +347,8 @@
                                             {{ __('label.unit') }}<span class="text-danger required"> (*)</span>
                                         </span>
                                         <select name="transportations[{{ $trans_key }}][unit]" style="width: 100%;"
-                                            class="form-control transportations_unit @error('transportations.'.$trans_key.'.unit') is-invalid @enderror">
+                                            class="form-control transportations_unit select_unit @error('transportations.'.$trans_key.'.unit') is-invalid @enderror"
+                                            data-target="transportations[{{ $trans_key }}][exchange_rate]">
                                             <option value="">
                                                 {{ __('label.select') }}
                                             </option>
@@ -363,12 +366,13 @@
                                     </div>
                                     <div class="form-group col-md-3">
                                         <span for="">
-                                            {{ __('label.rate') }}
+                                            {{ __('label.rate') }}<span class="text-danger required d-none"> (*)</span>
                                         </span>
                                         <input type="text"
-                                            class="form-control transportations_rate @error('transportations.'.$trans_key.'.exchange_rate') is-invalid @enderror"
+                                            class="form-control transportations_rate sync_total rate @error('transportations.'.$trans_key.'.exchange_rate') is-invalid @enderror"
                                             name="transportations[{{ $trans_key }}][exchange_rate]" value="{{ $transportation['exchange_rate'] }}"
-                                            autocomplete="off" @if($previewFlg) readonly @endif>
+                                            autocomplete="off" @if($previewFlg) readonly @endif
+                                            data-target="transportations[{{ $trans_key }}][amount]">
                                         @error('transportations.'.$trans_key.'.exchange_rate')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -419,7 +423,7 @@
                                     </div>
                                     <div class="form-group col-md-3">
                                         <span for="">{{ __('label.unit') }}<span class="text-danger required"> (*)</span></span>
-                                        <select style="width: 100%;" class="form-control transportations_unit">
+                                        <select style="width: 100%;" class="form-control transportations_unit select_unit">
                                             <option value="">
                                                 {{ __('label.select') }}
                                             </option>
@@ -431,7 +435,7 @@
                                         </select>
                                     </div>
                                     <div class="form-group col-md-3">
-                                        <span for="">{{ __('label.rate') }}</span>
+                                        <span for="">{{ __('label.rate') }}<span class="text-danger required d-none"> (*)</span></span>
                                         <input type="text" class="form-control transportations_rate" autocomplete="off" @if($previewFlg) readonly @endif>
                                     </div>
                                 </div>
@@ -456,7 +460,10 @@
                 {{-- TripFees - Accomodation --}}
                 <div class="form-group row">
                     <div class="col-md-2 text-left">
-                        <label>{{ __('label.business_accommodation_fee') }}</label>
+                        <label>
+                            <span class="sp_trans_no badge badge-primary">{{ config('const.trip_fee_type.accomodation') }}</span>
+                            {{ __('label.business_accommodation_fee') }}
+                        </label>
                     </div>
                     <div class="col-md-10">
                         <div id="accomodations_block">
@@ -478,8 +485,9 @@
                                             {{ __('label.amount') }}<span class="text-danger required"> (*)</span>
                                         </span>
                                         <input type="text" name="accomodations[{{ $ac_key }}][amount]"
-                                            class="form-control accomodations_amount @error('accomodations.'.$ac_key.'.amount') is-invalid @enderror"
-                                            value="{{ $accomodation['amount'] }}" autocomplete="off" @if($previewFlg) readonly @endif>
+                                            class="form-control accomodations_amount sync_total amount @error('accomodations.'.$ac_key.'.amount') is-invalid @enderror"
+                                            value="{{ $accomodation['amount'] }}" autocomplete="off" @if($previewFlg) readonly @endif
+                                            data-target="accomodations[{{ $ac_key }}][exchange_rate]">
                                         @error('accomodations.'.$ac_key.'.amount')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -491,7 +499,8 @@
                                             {{ __('label.unit') }}<span class="text-danger required"> (*)</span>
                                         </span>
                                         <select name="accomodations[{{ $ac_key }}][unit]" style="width: 100%;"
-                                            class="form-control accomodations_unit @error('accomodations.'.$ac_key.'.unit') is-invalid @enderror">
+                                            class="form-control accomodations_unit select_unit @error('accomodations.'.$ac_key.'.unit') is-invalid @enderror"
+                                            data-target="accomodations[{{ $ac_key }}][exchange_rate]">
                                             <option value="">
                                                 {{ __('label.select') }}
                                             </option>
@@ -509,12 +518,13 @@
                                     </div>
                                     <div class="form-group col-md-4">
                                         <span for="">
-                                            {{ __('label.rate') }}
+                                            {{ __('label.rate') }}<span class="text-danger required d-none"> (*)</span>
                                         </span>
                                         <input type="text"
-                                            class="form-control accomodations_rate @error('accomodations.'.$ac_key.'.exchange_rate') is-invalid @enderror"
+                                            class="form-control accomodations_rate sync_total rate @error('accomodations.'.$ac_key.'.exchange_rate') is-invalid @enderror"
                                             name="accomodations[{{ $ac_key }}][exchange_rate]" value="{{ $accomodation['exchange_rate'] }}"
-                                            autocomplete="off" @if($previewFlg) readonly @endif>
+                                            autocomplete="off" @if($previewFlg) readonly @endif
+                                            data-target="accomodations[{{ $ac_key }}][amount]">
                                         @error('accomodations.'.$ac_key.'.exchange_rate')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -553,7 +563,7 @@
                                     </div>
                                     <div class="form-group col-md-4">
                                         <span for="">{{ __('label.unit') }}<span class="text-danger required"> (*)</span></span>
-                                        <select style="width: 100%;" class="form-control accomodations_unit">
+                                        <select style="width: 100%;" class="form-control accomodations_unit select_unit">
                                             <option value="">
                                                 {{ __('label.select') }}
                                             </option>
@@ -565,7 +575,7 @@
                                         </select>
                                     </div>
                                     <div class="form-group col-md-4">
-                                        <span for="">{{ __('label.rate') }}</span>
+                                        <span for="">{{ __('label.rate') }}<span class="text-danger required d-none"> (*)</span></span>
                                         <input type="text" class="form-control accomodations_rate" autocomplete="off" @if($previewFlg)
                                             readonly @endif>
                                     </div>
@@ -591,7 +601,10 @@
                 {{-- TripFees - Communications --}}
                 <div class="form-group row">
                     <div class="col-md-2 text-left">
-                        <label>{{ __('label.business_communication') }}</label>
+                        <label>
+                            <span class="sp_trans_no badge badge-warning">{{ config('const.trip_fee_type.communication') }}</span>
+                            {{ __('label.business_communication') }}
+                        </label>
                     </div>
                     <div class="col-md-10">
                         <div id="communications_block">
@@ -634,8 +647,9 @@
                                             {{ __('label.amount') }}<span class="text-danger required"> (*)</span>
                                         </span>
                                         <input type="text" name="communications[{{ $com_key }}][amount]"
-                                            class="form-control communications_amount @error('communications.'.$com_key.'.amount') is-invalid @enderror"
-                                            value="{{ $communication['amount'] }}" autocomplete="off" @if($previewFlg) readonly @endif>
+                                            class="form-control communications_amount sync_total amount @error('communications.'.$com_key.'.amount') is-invalid @enderror"
+                                            value="{{ $communication['amount'] }}" autocomplete="off" @if($previewFlg) readonly @endif
+                                            data-target="communications[{{ $com_key }}][exchange_rate]">
                                         @error('communications.'.$com_key.'.amount')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -647,7 +661,8 @@
                                             {{ __('label.unit') }}<span class="text-danger required"> (*)</span>
                                         </span>
                                         <select name="communications[{{ $com_key }}][unit]" style="width: 100%;"
-                                            class="form-control communications_unit @error('communications.'.$com_key.'.unit') is-invalid @enderror">
+                                            class="form-control communications_unit select_unit @error('communications.'.$com_key.'.unit') is-invalid @enderror"
+                                            data-target="communications[{{ $com_key }}][exchange_rate]">
                                             <option value="">
                                                 {{ __('label.select') }}
                                             </option>
@@ -665,12 +680,13 @@
                                     </div>
                                     <div class="form-group col-md-3">
                                         <span for="">
-                                            {{ __('label.rate') }}
+                                            {{ __('label.rate') }}<span class="text-danger required d-none"> (*)</span>
                                         </span>
                                         <input type="text"
-                                            class="form-control communications_rate @error('communications.'.$com_key.'.exchange_rate') is-invalid @enderror"
+                                            class="form-control communications_rate sync_total rate @error('communications.'.$com_key.'.exchange_rate') is-invalid @enderror"
                                             name="communications[{{ $com_key }}][exchange_rate]" value="{{ $communication['exchange_rate'] }}"
-                                            autocomplete="off" @if($previewFlg) readonly @endif>
+                                            autocomplete="off" @if($previewFlg) readonly @endif
+                                            data-target="communications[{{ $com_key }}][amount]">
                                         @error('communications.'.$com_key.'.exchange_rate')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -723,7 +739,7 @@
                                     </div>
                                     <div class="form-group col-md-3">
                                         <span for="">{{ __('label.unit') }}<span class="text-danger required"> (*)</span></span>
-                                        <select style="width: 100%;" class="form-control communications_unit">
+                                        <select style="width: 100%;" class="form-control communications_unit select_unit">
                                             <option value="">
                                                 {{ __('label.select') }}
                                             </option>
@@ -735,7 +751,7 @@
                                         </select>
                                     </div>
                                     <div class="form-group col-md-3">
-                                        <span for="">{{ __('label.rate') }}</span>
+                                        <span for="">{{ __('label.rate') }}<span class="text-danger required d-none"> (*)</span></span>
                                         <input type="text" class="form-control communications_rate" autocomplete="off" @if($previewFlg)
                                             readonly @endif>
                                     </div>
@@ -769,7 +785,8 @@
                             <div class="form-group col-md-4 mb-1">
                                 <span class="mb-0 mr-1">{{__('label.amount')}}</span>
                                 <input type="text" id="daily_allowance" name="daily_allowance"
-                                    class="form-control @error('daily_allowance') is-invalid @enderror" autocomplete="off"
+                                    class="form-control sync_total amount @error('daily_allowance') is-invalid @enderror" autocomplete="off"
+                                    data-target="daily_rate"
                                     value="{{ $daily_allowance }}">
                                 @error('daily_allowance')
                                 <span class="invalid-feedback" role="alert">
@@ -781,7 +798,8 @@
                             <div class="form-group col-md-4 mb-1">
                                 <span class="mb-0 mr-1">{{__('label.unit')}}</span>
                                 <select name="daily_unit" style="width: 100%;"
-                                    class="form-control @error('daily_unit') is-invalid @enderror">
+                                    class="form-control select_unit @error('daily_unit') is-invalid @enderror"
+                                    data-target="daily_rate">
                                     <option value="">
                                         {{ __('label.select') }}
                                     </option>
@@ -799,9 +817,10 @@
                             </div>
                             {{-- Rate --}}
                             <div class="form-group col-md-4 mb-1">
-                                <span class="mb-0 mr-1">{{__('label.rate')}}</span>
+                                <span class="mb-0 mr-1">{{__('label.rate')}}<span class="text-danger required d-none"> (*)</span></span>
                                 <input type="text" id="daily_rate" name="daily_rate"
-                                    class="form-control @error('daily_rate') is-invalid @enderror" autocomplete="off"
+                                    class="form-control sync_total rate @error('daily_rate') is-invalid @enderror" autocomplete="off"
+                                    data-target="daily_allowance"
                                     value="{{ $daily_rate }}">
                                 @error('daily_rate')
                                 <span class="invalid-feedback" role="alert">
@@ -823,7 +842,8 @@
                             <div class="form-group col-md-4 mb-1">
                                 <span class="mb-0 mr-1">{{__('label.amount')}}</span>
                                 <input type="text" id="total_daily_allowance" name="total_daily_allowance"
-                                    class="form-control @error('total_daily_allowance') is-invalid @enderror" autocomplete="off" value="{{ $total_daily_allowance }}">
+                                    class="form-control sync_total amount @error('total_daily_allowance') is-invalid @enderror" autocomplete="off" value="{{ $total_daily_allowance }}"
+                                    data-target="total_daily_rate">
                                 @error('total_daily_allowance')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -834,7 +854,8 @@
                             <div class="form-group col-md-4 mb-1">
                                 <span class="mb-0 mr-1">{{__('label.unit')}}</span>
                                 <select name="total_daily_unit" style="width: 100%;"
-                                    class="form-control @error('total_daily_unit') is-invalid @enderror">
+                                    class="form-control select_unit @error('total_daily_unit') is-invalid @enderror"
+                                    data-target="total_daily_rate">
                                     <option value="">
                                         {{ __('label.select') }}
                                     </option>
@@ -852,9 +873,10 @@
                             </div>
                             {{-- Rate --}}
                             <div class="form-group col-md-4 mb-1">
-                                <span class="mb-0 mr-1">{{__('label.rate')}}</span>
+                                <span class="mb-0 mr-1">{{__('label.rate')}}<span class="text-danger required d-none"> (*)</span></span>
                                 <input type="text" id="total_daily_rate" name="total_daily_rate"
-                                    class="form-control @error('total_daily_rate') is-invalid @enderror" autocomplete="off" value="{{ $total_daily_rate }}">
+                                    class="form-control sync_total rate @error('total_daily_rate') is-invalid @enderror" autocomplete="off" value="{{ $total_daily_rate }}"
+                                    data-target="total_daily_allowance">
                                 @error('total_daily_rate')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -875,8 +897,9 @@
                             {{-- Amount --}}
                             <div class="form-group col-md-4 mb-1">
                                 <span class="mb-0 mr-1">{{__('label.amount')}}</span>
-                                <input type="text" id="other_fees" name="other_fees" class="form-control @error('other_fees') is-invalid @enderror"
-                                    autocomplete="off" value="{{ $other_fees }}">
+                                <input type="text" id="other_fees" name="other_fees" class="form-control sync_total amount @error('other_fees') is-invalid @enderror"
+                                    autocomplete="off" value="{{ $other_fees }}"
+                                    data-target="other_fees_rate">
                                 @error('other_fees')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -887,7 +910,8 @@
                             <div class="form-group col-md-4 mb-1">
                                 <span class="mb-0 mr-1">{{__('label.unit')}}</span>
                                 <select name="other_fees_unit" style="width: 100%;"
-                                    class="form-control @error('other_fees_unit') is-invalid @enderror">
+                                    class="form-control select_unit @error('other_fees_unit') is-invalid @enderror"
+                                    data-target="other_fees_rate">
                                     <option value="">
                                         {{ __('label.select') }}
                                     </option>
@@ -905,10 +929,11 @@
                             </div>
                             {{-- Rate --}}
                             <div class="form-group col-md-4 mb-1">
-                                <span class="mb-0 mr-1">{{__('label.rate')}}</span>
+                                <span class="mb-0 mr-1">{{__('label.rate')}}<span class="text-danger required d-none"> (*)</span></span>
                                 <input type="text" id="other_fees_rate" name="other_fees_rate"
-                                    class="form-control @error('other_fees_rate') is-invalid @enderror" autocomplete="off"
-                                    value="{{ $other_fees_rate }}">
+                                    class="form-control sync_total rate @error('other_fees_rate') is-invalid @enderror" autocomplete="off"
+                                    value="{{ $other_fees_rate }}"
+                                    data-target="other_fees">
                                 @error('other_fees_rate')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -963,7 +988,10 @@
                         <label>{{ __('label.business_total_expenses') }}</label>
                     </div>
                     <div class="col-md-10">
-                        <span id="total_expenses">980,000,000</span> VND
+                        <span id="total_expenses"></span> VND
+                        <button class="btn bg-gradient-primary btn-sm" title="Calculate">
+                            <i class="fas fa-redo"></i>
+                        </button>
                     </div>
                 </div>
                 <hr>

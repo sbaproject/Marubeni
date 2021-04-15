@@ -60,6 +60,9 @@ $(document).ready(function() {
     setTransDatePickers(_ITINERARIES);
 
     function setTransDatePickers(items) {
+        if (items == null) {
+            return;
+        }
         items.forEach((item, index) => {
             $('#trans_date_picker_' + index).datetimepicker({
                 format: 'DD/MM/YYYY',
@@ -140,7 +143,7 @@ $(document).ready(function() {
     // Transportation Block
     //=======================================
 
-    // add new Itinerary element
+    // add new Transportation element
     $('#transportations-btnAdd').on('click', function(e) {
 
         e.preventDefault();
@@ -156,7 +159,7 @@ $(document).ready(function() {
         doTransportationSettings();
 
     });
-    // remove Itinerary element
+    // remove Transportation element
     $(document).on("click", ".transportations-btnDelete", function(e) {
         e.preventDefault();
         $(this).parent().parent().remove();
@@ -169,12 +172,22 @@ $(document).ready(function() {
             // re-order index
             $(this).find('.transportations_method').attr('name', 'transportations[' + index + '][method]');
             $(this).find('.transportations_amount').attr('name', 'transportations[' + index + '][amount]');
+            $(this).find('.transportations_amount').attr('data-target', 'transportations[' + index + '][exchange_rate]');
+            $(this).find('.transportations_amount').addClass('amount');
+            $(this).find('.transportations_amount').addClass('sync_total');
             $(this).find('.transportations_unit').attr('name', 'transportations[' + index + '][unit]');
+            $(this).find('.transportations_unit').attr('data-target', 'transportations[' + index + '][exchange_rate]');
+            $(this).find('.transportations_rate').addClass('sync_total');
             $(this).find('.transportations_rate').attr('name', 'transportations[' + index + '][exchange_rate]');
+            $(this).find('.transportations_rate').attr('data-target', 'transportations[' + index + '][amount]');
+            $(this).find('.transportations_rate').addClass('rate');
             $(this).find('.transportations_note').attr('name', 'transportations[' + index + '][note]');
 
             // set trans number
             $(this).find('.sp_trans_no').text('A' + (index + 1));
+
+            // Disabled / Enabled[Rate] depends on[Currency]
+            disabledRateBySelectUnit($(this).find('.transportations_unit'));
 
             // always keep at least one element
             // if ((transElements.length === 1 && index === 0)) {
@@ -183,6 +196,10 @@ $(document).ready(function() {
             //     $(this).find('.d-delete').removeClass('d-none');
             // }
         });
+
+        // re-calculate total expenses
+        calculateTotalExpenses();
+
         // maximum is 10 blocks only
         if (transElements.length >= 10) {
             $('#transportations-btnAdd').addClass('d-none');
@@ -224,12 +241,22 @@ $(document).ready(function() {
             // re-order index
             $(this).find('.communications_method').attr('name', 'communications[' + index + '][method]');
             $(this).find('.communications_amount').attr('name', 'communications[' + index + '][amount]');
+            $(this).find('.communications_amount').attr('data-target', 'communications[' + index + '][exchange_rate]');
+            $(this).find('.communications_amount').addClass('amount');
+            $(this).find('.communications_amount').addClass('sync_total');
             $(this).find('.communications_unit').attr('name', 'communications[' + index + '][unit]');
+            $(this).find('.communications_unit').attr('data-target', 'communications[' + index + '][exchange_rate]');
+            $(this).find('.communications_rate').addClass('sync_total');
             $(this).find('.communications_rate').attr('name', 'communications[' + index + '][exchange_rate]');
+            $(this).find('.communications_rate').attr('data-target', 'communications[' + index + '][amount]');
+            $(this).find('.communications_rate').addClass('rate');
             $(this).find('.communications_note').attr('name', 'communications[' + index + '][note]');
 
             // set communication number
             $(this).find('.sp_com_no').text('C' + (index + 1));
+
+            // Disabled / Enabled[Rate] depends on[Currency]
+            disabledRateBySelectUnit($(this).find('.communications_unit'));
 
             // always keep at least one element
             // if ((comElements.length === 1 && index === 0)) {
@@ -238,6 +265,10 @@ $(document).ready(function() {
             //     $(this).find('.d-delete').removeClass('d-none');
             // }
         });
+
+        // re-calculate total expenses
+        calculateTotalExpenses();
+
         // maximum is 10 blocks only
         if (comElements.length >= 10) {
             $('#communications-btnAdd').addClass('d-none');
@@ -278,12 +309,22 @@ $(document).ready(function() {
         comElements.each(function(index) {
             // re-order index
             $(this).find('.accomodations_amount').attr('name', 'accomodations[' + index + '][amount]');
+            $(this).find('.accomodations_amount').addClass('sync_total');
+            $(this).find('.accomodations_amount').attr('data-target', 'accomodations[' + index + '][exchange_rate]');
+            $(this).find('.accomodations_amount').addClass('amount');
             $(this).find('.accomodations_unit').attr('name', 'accomodations[' + index + '][unit]');
+            $(this).find('.accomodations_unit').attr('data-target', 'accomodations[' + index + '][exchange_rate]');
+            $(this).find('.accomodations_rate').addClass('sync_total');
             $(this).find('.accomodations_rate').attr('name', 'accomodations[' + index + '][exchange_rate]');
+            $(this).find('.accomodations_rate').attr('data-target', 'accomodations[' + index + '][amount]');
+            $(this).find('.accomodations_rate').addClass('rate');
             $(this).find('.accomodations_note').attr('name', 'accomodations[' + index + '][note]');
 
             // set communication number
             $(this).find('.sp_acom_no').text('B' + (index + 1));
+
+            // Disabled / Enabled[Rate] depends on[Currency]
+            disabledRateBySelectUnit($(this).find('.accomodations_unit'));
 
             // always keep at least one element
             // if ((comElements.length === 1 && index === 0)) {
@@ -292,12 +333,102 @@ $(document).ready(function() {
             //     $(this).find('.d-delete').removeClass('d-none');
             // }
         });
+
+        // re-calculate total expenses
+        calculateTotalExpenses();
+
         // maximum is 10 blocks only
         if (comElements.length >= 10) {
             $('#accomodations-btnAdd').addClass('d-none');
         } else {
             $('#accomodations-btnAdd').removeClass('d-none');
         }
+    }
+
+    //=======================================
+    // Disabled/Enabled [Rate] depends on [Currency]
+    //=======================================
+    $(document).on('change', '.select_unit', function() {
+        disabledRateBySelectUnit($(this));
+        calculateTotalExpenses();
+    });
+
+    $('.select_unit').each(function(index) {
+        disabledRateBySelectUnit($(this));
+    });
+
+    function disabledRateBySelectUnit(unitSelector) {
+
+        let rateSelector = $('[name="' + unitSelector.attr('data-target') + '"]');
+
+        if (unitSelector.val() == '' || unitSelector.val() == 'VND') {
+            rateSelector.val('');
+            rateSelector.attr('readonly', 'readonly');
+            rateSelector.parent().find('span .required').addClass('d-none');
+            return;
+        }
+
+        rateSelector.removeAttr('readonly');
+        rateSelector.parent().find('span .required').removeClass('d-none');
+    }
+
+    //=======================================
+    // Calculate Total Total Expenses
+    //=======================================
+    var totalExpenses = 0;
+
+    $(document).on('change', '.sync_total', function() {
+        calculateTotalExpenses();
+    });
+
+    // re-calculate total expenses
+    calculateTotalExpenses();
+
+    function calculateTotalExpenses() {
+
+        totalExpenses = 0;
+        let tempArr = [];
+
+        $('.sync_total').each(function(index) {
+            let amount = 0;
+            let rate = 1;
+
+            if ($(this).hasClass('amount')) {
+                let nameTarget = $(this).attr('data-target');
+                if (!tempArr.includes(nameTarget) && !tempArr.includes($(this).attr('name'))) {
+                    amount = $(this).val();
+                    rate = $('[name="' + nameTarget + '"]').val();
+                    // rate is readonly
+                    if (rate == '' && $('[name="' + nameTarget + '"]').attr('readonly') == 'readonly') {
+                        rate = 1;
+                    }
+                    tempArr.push(nameTarget);
+                    tempArr.push($(this).attr('name'));
+                }
+            }
+            if ($(this).hasClass('rate')) {
+                let nameTarget = $(this).attr('data-target');
+                if (!tempArr.includes(nameTarget) && !tempArr.includes($(this).attr('name'))) {
+                    rate = $(this).val();
+                    amount = $('[name="' + nameTarget + '"]').val();
+                    tempArr.push(nameTarget);
+                    tempArr.push(nameTarget);
+                    tempArr.push($(this).attr('name'));
+                }
+            }
+            if (isNaN(amount) || amount == '') {
+                return true;
+            }
+            if (isNaN(rate) || rate == '') {
+                return true;
+            }
+
+            let sub = amount * rate;
+
+            totalExpenses += sub;
+        });
+
+        $('#total_expenses').text(totalExpenses);
     }
 
     //=======================================

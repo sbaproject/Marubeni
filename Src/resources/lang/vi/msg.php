@@ -12,6 +12,7 @@ return [
     'no_data' => 'Không tìm thấy dữ liệu.',
     'no_comments' => 'Chưa có chú thích nào.',
     'sure_to_continue' => 'Bạn vẫn muốn tiếp tục xử lý ?',
+    'validation_fail' => 'Thông tin nhập không hợp lệ, vui lòng kiểm tra lại !',
 
     /**
      * Application

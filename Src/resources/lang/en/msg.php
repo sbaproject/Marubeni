@@ -12,6 +12,7 @@ return [
     'no_data' => 'No data found.',
     'no_comments' => 'No comments.',
     'sure_to_continue' => 'Are you sure to continue ?',
+    'validation_fail' => 'Validation is failed ! Please check again.',
 
     /**
      * Application
