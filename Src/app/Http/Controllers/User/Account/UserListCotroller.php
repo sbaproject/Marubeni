@@ -217,6 +217,18 @@ class UserListCotroller extends Controller
         ];
         $sortable = Common::getSortable($request, $sortableCols, 0, 0, true);
 
+        $monthCurr = date('n');
+        $monthYear = date('Y');
+         $monthCurr =  1;
+
+        $startDate = date('Y-04-01 00:00:00');
+        $endDare = date('Y-m-d 23:59:59');
+
+        if (in_array($monthCurr, array(1,2,3))){
+            $y =  $monthYear - 1;
+            $startDate = date($y.'-04-01 00:00:00');
+        }
+
         // selection columns
         $selectCols = [
             'users.id           as user_id',
@@ -226,7 +238,8 @@ class UserListCotroller extends Controller
             'users.leave_days',
             'users.leave_remaining_days',
             'users.leave_remaining_time',
-            'users.location'
+            'users.location',
+            DB::raw('(SELECT SUM(leaves.days_use) as days_use FROM applications LEFT JOIN leaves ON applications.id = leaves.application_id WHERE users.id = applications.created_by AND applications.status = 99 AND applications.form_id =  1 AND  applications.created_at BETWEEN "'.$startDate.'" AND "'.$endDare.'"  GROUP BY applications.created_by) as use_days')
         ];
 
         // get results
@@ -262,14 +275,7 @@ class UserListCotroller extends Controller
         $row = 8;
         $index = 1;
 
-
         foreach($users as $user){
-
-            $use_days = (int)$user->leave_days - (int)$user->leave_remaining_days;
-            if ($use_days < 0){
-                $use_days = 0;
-            }
-
 
             $sheet->setCellValue('A'.$row, $index);
             $sheet->setCellValue('B'.$row, $user->user_no);
@@ -277,9 +283,9 @@ class UserListCotroller extends Controller
             $sheet->setCellValue('D'.$row, $user->department_name);
             $sheet->setCellValue('E'.$row, $user->user_name);
             $sheet->setCellValue('F'.$row, $user->leave_days);
-            $sheet->setCellValue('G'.$row, $use_days);
+            $sheet->setCellValue('G'.$row, empty($user->use_days) ? 0 :  $user->use_days);
             $sheet->setCellValue('H'.$row, $user->leave_remaining_days);
-            $sheet->setCellValue('I'.$row, $user->leave_remaining_time);         
+            $sheet->setCellValue('I'.$row, $user->leave_remaining_time);
 
             $sheet->getStyle('B'.$row.':E'.$row)->getAlignment()->setHorizontal('left');
             $sheet->getStyle('F'.$row.':I'.$row)->getAlignment()->setHorizontal('right');
