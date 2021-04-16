@@ -15,35 +15,50 @@
 var showLoadingFlg = true;
 
 $("#popup-loading").modal('show');
-$(window).on('load', function () {
-	$("#popup-loading").modal('hide');
+$(window).on('load', function() {
+    $("#popup-loading").modal('hide');
 });
-$(window).on('beforeunload', function () {
-	if (!showLoadingFlg) {
-		showLoadingFlg = true;
-		return;
-	}
-	if (!($("#popup-confirm").data('bs.modal') || {})._isShown) {
-		$("#popup-loading").modal('show');
-	}
+$(window).on('beforeunload', function() {
+    if (!showLoadingFlg) {
+        showLoadingFlg = true;
+        return;
+    }
+    if (!($("#popup-confirm").data('bs.modal') || {})._isShown) {
+        $("#popup-loading").modal('show');
+    }
 });
-	// $('form').on('submit', function (event, force) {
-	//     if(!force){
-	//         event.preventDefault();
-	//         // $("#popup-loading").modal('show');
-	//         $(this).find('[type="submit"]').prop('disabled', true);
-	//         $(this).trigger('submit', true);
-	//     }
-	// });
+// $('form').on('submit', function (event, force) {
+//     if(!force){
+//         event.preventDefault();
+//         // $("#popup-loading").modal('show');
+//         $(this).find('[type="submit"]').prop('disabled', true);
+//         $(this).trigger('submit', true);
+//     }
+// });
 
-$(function () {
+$(function() {
 
-	//=======================================
-	// Sortable
-	//=======================================
+    //=======================================
+    // Sortable
+    //=======================================
 
-	// click on header table to make sorting data
-	$('th.sortable').on('click', function () {
-		$(this).find('a')[0].click();
-	});
+    // click on header table to make sorting data
+    $('th.sortable').on('click', function() {
+        $(this).find('a')[0].click();
+    });
+
+    //=======================================
+    // Prevent submit form when ENTER key is pressed (POST method only)
+    //=======================================
+    $('form[method="POST"]').on('keyup keypress', function(e) {
+        var keyCode = e.keyCode || e.which;
+        if (keyCode === 13) {
+            var tagName = e.target.tagName.toLowerCase();
+            if (tagName === "textarea") {
+                return true;
+            }
+            e.preventDefault();
+            return false;
+        }
+    });
 });

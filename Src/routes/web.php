@@ -27,6 +27,7 @@ use App\Http\Controllers\Admin\AdminFlowSettingController;
 use App\Http\Controllers\User\Account\UserRegisterController;
 use App\Http\Controllers\User\Account\UserChangePassController;
 use App\Http\Controllers\Application\Business\BusinessTripController;
+use App\Http\Controllers\Application\Business\BusinessTrip2Controller;
 use App\Http\Controllers\Application\Leave\LeaveApplicationController;
 use App\Http\Controllers\Application\Entertainment\EntertainmentController;
 
@@ -193,6 +194,17 @@ Route::middleware('checkip')->group(function () {
                     Route::post('edit/{id}', [BusinessTripController::class, 'update'])->name('update');
                     Route::get('preview/{id}', [BusinessTripController::class, 'preview'])->name('preview');
                     Route::post('preview/{id}', [BusinessTripController::class, 'previewPdf'])->name('preview.pdf');
+                });
+                // Business Trip Settlement Application
+                Route::prefix('business2')->name('business2.')->group(function () {
+                    // Route::middleware('justdesktop')->group(function () {
+                    //     Route::get('add/{application_id}', [BusinessTrip2Controller::class, 'create'])->name('create');
+                    //     Route::post('add/{application_id}', [BusinessTrip2Controller::class, 'store'])->name('store');
+                    // });
+                    Route::get('detail/{id}', [BusinessTrip2Controller::class, 'show'])->name('show');
+                    Route::post('detail/{id}', [BusinessTrip2Controller::class, 'update'])->name('update');
+                    // Route::get('preview/{id}', [BusinessTrip2Controller::class, 'preview'])->name('preview');
+                    // Route::post('preview/{id}', [BusinessTrip2Controller::class, 'previewPdf'])->name('preview.pdf');
                 });
                 // Entertainment Application
                 Route::prefix('entertainment')->name('entertainment.')->group(function () {

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Transportation;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -32,11 +33,16 @@ class Businesstrip extends Model
         'updated_at',
     ];
 
-    protected $appends = ['transportations'];
+    // protected $appends = ['transportations'];
 
-    public function getTransportationsAttribute()
+    // public function getTransportationsAttribute()
+    // {
+    //     $trans = Transportation::where('businesstrip_id', $this->id)->get();
+    //     return $trans->toArray();
+    // }
+
+    public function transportations()
     {
-        $trans = Transportation::where('businesstrip_id', $this->id)->get();
-        return $trans->toArray();
+        return $this->hasMany(Transportation::class);
     }
 }
