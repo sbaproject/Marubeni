@@ -239,7 +239,9 @@ return [
 
     'units' => [
         'VND',
+        'JPY',
         'USD',
+        'EUR',
         'SGD',
     ],
 ];

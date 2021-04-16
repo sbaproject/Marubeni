@@ -72,6 +72,7 @@ return [
     'remarks' => 'Remarks',
     'type' => 'Type',
     'refresh' => 'Refresh',
+    'settlement' => 'Settlement',
 
     'popup_title_skip_approver' => 'Skip approval of',
 

@@ -68,6 +68,7 @@ return [
     'remarks' => 'Ghi chú',
     'type' => 'Loại',
     'refresh' => 'Làm mới',
+    'settlement' => 'Quyết toán',
 
     'popup_title_skip_approver' => 'Bỏ qua sự xét duyệt của',
     
