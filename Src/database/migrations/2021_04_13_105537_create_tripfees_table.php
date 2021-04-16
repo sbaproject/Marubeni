@@ -28,7 +28,7 @@ class CreateTripfeesTable extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('businesstrip_id')->references('id')->on('businesstrips2');
+            $table->foreign('businesstrip_id')->references('id')->on('businesstrip2s');
         });
     }
 
