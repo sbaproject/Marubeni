@@ -65,6 +65,7 @@ return [
     'amount' => 'Số tiền',
     'remarks' => 'Ghi chú',
     'type' => 'Loại',
+    'refresh' => 'Làm mới',
 
     'popup_title_skip_approver' => 'Bỏ qua sự xét duyệt của',
     
@@ -220,6 +221,7 @@ return [
     'business_trans'                    => 'Di chuyển',
     'business_communication'            => 'Liên lạc',
     'business_accommodation_fee'        => 'Chi phí khách sạn',
+    'business_settlement'               => 'Quyết toán chi phí công tác',
 
     'business_transportations' => [
         1 => 'Vé máy bay',

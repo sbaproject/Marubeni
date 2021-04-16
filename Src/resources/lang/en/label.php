@@ -69,6 +69,7 @@ return [
     'amount' => 'Amount',
     'remarks' => 'Remarks',
     'type' => 'Type',
+    'refresh' => 'Refresh',
 
     'popup_title_skip_approver' => 'Skip approval of',
 
@@ -224,6 +225,7 @@ return [
     'business_trans'                    => 'Transportation',
     'business_communication'            => 'Communication',
     'business_accommodation_fee'        => 'Accommodation',
+    'business_settlement'               => 'Settlement Business Trip',
 
     'business_transportations' => [
         1 => 'Air Ticket',

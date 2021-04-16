@@ -61,29 +61,34 @@ $(document).ready(function() {
 
     function setTransDatePickers(items) {
         if (items == null) {
+            setDatePicker(0);
             return;
         }
         items.forEach((item, index) => {
-            $('#trans_date_picker_' + index).datetimepicker({
-                format: 'DD/MM/YYYY',
-                defaultDate: $('#hid_trans_date_' + index).val(),
-                useCurrent: false,
-                showTodayButton: true,
-                showClear: true
-            });
-            // show
-            var datePicker = $('#trans_date_picker_' + index).data("DateTimePicker").date();
-            if (datePicker != null) {
-                $('#hid_trans_date_' + index).val(datePicker.format('YYYYMMDD'));
+            setDatePicker(index);
+        });
+    }
+
+    function setDatePicker(index) {
+        $('#trans_date_picker_' + index).datetimepicker({
+            format: 'DD/MM/YYYY',
+            defaultDate: $('#hid_trans_date_' + index).val(),
+            useCurrent: false,
+            showTodayButton: true,
+            showClear: true
+        });
+        // show
+        var datePicker = $('#trans_date_picker_' + index).data("DateTimePicker").date();
+        if (datePicker != null) {
+            $('#hid_trans_date_' + index).val(datePicker.format('YYYYMMDD'));
+        }
+        // change
+        $('#trans_date_picker_' + index).on("dp.change", function(e) {
+            if (e.date) {
+                $('#hid_trans_date_' + index).val(e.date.format('YYYYMMDD'));
+            } else {
+                $('#hid_trans_date_' + index).val(null);
             }
-            // change
-            $('#trans_date_picker_' + index).on("dp.change", function(e) {
-                if (e.date) {
-                    $('#hid_trans_date_' + index).val(e.date.format('YYYYMMDD'));
-                } else {
-                    $('#hid_trans_date_' + index).val(null);
-                }
-            });
         });
     }
 
@@ -381,6 +386,11 @@ $(document).ready(function() {
         calculateTotalExpenses();
     });
 
+    $('#refresh-total').on('click', function(e) {
+        calculateTotalExpenses();
+        return false;
+    });
+
     // re-calculate total expenses
     calculateTotalExpenses();
 
@@ -394,7 +404,15 @@ $(document).ready(function() {
             let rate = 1;
 
             if ($(this).hasClass('amount')) {
+
                 let nameTarget = $(this).attr('data-target');
+                let unitSelector = $('.select_unit[data-target="' + nameTarget + '"]');
+
+                // Unit not selected item
+                if (unitSelector != undefined && unitSelector.val() == '') {
+                    return true; // continue
+                }
+
                 if (!tempArr.includes(nameTarget) && !tempArr.includes($(this).attr('name'))) {
                     amount = $(this).val();
                     rate = $('[name="' + nameTarget + '"]').val();
@@ -407,20 +425,27 @@ $(document).ready(function() {
                 }
             }
             if ($(this).hasClass('rate')) {
+
                 let nameTarget = $(this).attr('data-target');
+                let unitSelector = $('.select_unit[data-target="' + $(this).attr('name') + '"]');
+
+                // Unit not selected item
+                if (unitSelector != undefined && unitSelector.val() == '') {
+                    return true; // continue
+                }
+
                 if (!tempArr.includes(nameTarget) && !tempArr.includes($(this).attr('name'))) {
                     rate = $(this).val();
                     amount = $('[name="' + nameTarget + '"]').val();
-                    tempArr.push(nameTarget);
                     tempArr.push(nameTarget);
                     tempArr.push($(this).attr('name'));
                 }
             }
             if (isNaN(amount) || amount == '') {
-                return true;
+                return true; // continue
             }
             if (isNaN(rate) || rate == '') {
-                return true;
+                return true; // continue
             }
 
             let sub = amount * rate;
@@ -428,6 +453,7 @@ $(document).ready(function() {
             totalExpenses += sub;
         });
 
+        totalExpenses = numeral(totalExpenses).format('0,0')
         $('#total_expenses').text(totalExpenses);
     }
 

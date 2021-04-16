@@ -71,6 +71,13 @@
         <div class="invoice mb-3">
             <div class="card-body">
                 <div class="form-group row float-right">
+                    @if (isset($application))
+                        <a class="btn bg-gradient-success" href="{{ route('user.business2.show', $application->id) }}"
+                            style="margin-right: 10px">
+                            <i class="fas fa-dollar-sign" style="margin-right: 5px; color: #fff;"></i>
+                            Settlement
+                        </a>
+                    @endif
                     <button type="submit" id="btnPdf" value="pdf" class="btn bg-gradient-danger" href="#">
                         <i class="fas fa-external-link-alt" style="margin-right: 5px; color: #fff;"></i>
                         {{ __('label.button_export') }}

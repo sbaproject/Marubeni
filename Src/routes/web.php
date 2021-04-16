@@ -195,14 +195,14 @@ Route::middleware('checkip')->group(function () {
                 });
                 // Business Trip Settlement Application
                 Route::prefix('business2')->name('business2.')->group(function () {
-                    Route::middleware('justdesktop')->group(function () {
-                        Route::get('add/{application_id}', [Businesstrip2Controller::class, 'create'])->name('create');
-                        Route::post('add/{application_id}', [Businesstrip2Controller::class, 'store'])->name('store');
-                    });
-                    Route::get('edit/{id}', [Businesstrip2Controller::class, 'show'])->name('show');
-                    Route::post('edit/{id}', [Businesstrip2Controller::class, 'update'])->name('update');
-                    Route::get('preview/{id}', [Businesstrip2Controller::class, 'preview'])->name('preview');
-                    Route::post('preview/{id}', [Businesstrip2Controller::class, 'previewPdf'])->name('preview.pdf');
+                    // Route::middleware('justdesktop')->group(function () {
+                    //     Route::get('add/{application_id}', [Businesstrip2Controller::class, 'create'])->name('create');
+                    //     Route::post('add/{application_id}', [Businesstrip2Controller::class, 'store'])->name('store');
+                    // });
+                    Route::get('detail/{id}', [Businesstrip2Controller::class, 'show'])->name('show');
+                    Route::post('detail/{id}', [Businesstrip2Controller::class, 'update'])->name('update');
+                    // Route::get('preview/{id}', [Businesstrip2Controller::class, 'preview'])->name('preview');
+                    // Route::post('preview/{id}', [Businesstrip2Controller::class, 'previewPdf'])->name('preview.pdf');
                 });
                 // Entertainment Application
                 Route::prefix('entertainment')->name('entertainment.')->group(function () {

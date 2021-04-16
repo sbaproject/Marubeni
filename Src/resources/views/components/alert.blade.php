@@ -14,7 +14,7 @@
                 class: 'bg-success',
                 icon: 'icon fas fa-check',
                 autohide: true,
-                delay: 5000,
+                delay: 5000, // 5s
                 title: @json(__('label.success')),
                 // subtitle: 'Subtitle',
                 body: @json(session()->get(config('const.keymsg.success')))
@@ -34,6 +34,8 @@
                 position: 'topCenter',
                 class: 'bg-danger',
                 icon: 'icon fas fa-ban',
+                autohide: true,
+                delay: 10000, // 10s
                 title: @json(__('label.fail')),
                 // subtitle: 'Subtitle',
                 body: @json(session()->get(config('const.keymsg.error'))),

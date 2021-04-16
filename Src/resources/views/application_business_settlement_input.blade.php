@@ -1,7 +1,7 @@
 @php
 // dd(Session::exists('inputs'));
-    $destinations                   = Session::exists('inputs') ? Session::get('inputs')['destinations']                    : (isset($modFlg) ? ($application->business2->destinations ?? null) : ($application->business->destinations ?? null));
-    $itineraries                    = Session::exists('inputs') ? Session::get('inputs')['itineraries']                     : (isset($modFlg) ? ($application->business2->transportations ?? null) : ($application->business->transportations ?? null));
+    $destinations                   = Session::exists('inputs') ? Session::get('inputs')['destinations']                    : ($modFlg ? ($application->business2->destinations ?? null) : ($application->business->destinations ?? null));
+    $itineraries                    = Session::exists('inputs') ? Session::get('inputs')['itineraries']                     : ($modFlg ? ($application->business2->transportations ?? null) : ($application->business->transportations ?? null));
     $number_of_days                 = Session::exists('inputs') ? Session::get('inputs')['number_of_days']                  : ($application->business2->number_of_days ?? null);
 
     $total_daily_allowance          = Session::exists('inputs') ? Session::get('inputs')['total_daily_allowance']           : ($application->business2->total_daily_allowance ?? null);
@@ -39,7 +39,7 @@
 @extends('layouts.master')
 
 @section('title')
-{{ 'SETTLEMENT FOR BUSINESS TRIP' }}
+{{ __('label.business_settlement') }}
 @endsection
 
 @section('css')
@@ -72,6 +72,8 @@
 <script src="js/bootstrap-datetimepicker.js"></script>
 {{-- for this view --}}
 <script src="js/user/application/business2/input.js"></script>
+{{-- numeral --}}
+<script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
 
 {{--  --}}
 <script>
@@ -80,12 +82,12 @@
 @endsection
 
 @section('content-header')
-{{ 'SETTLEMENT FOR BUSINESS TRIP' }}
+{{ Str::upper(__('label.business_settlement')) }}
 @endsection
 
 @section('content-breadcrumb')
 <li class="breadcrumb-item"><a href="{{ route('user.form.index') }}">{{ __('label.application_list') }}</a></li>
-<li class="breadcrumb-item active">{{ 'SETTLEMENT FOR BUSINESS TRIP' }}</li>
+<li class="breadcrumb-item active">{{ __('label.business_settlement') }}</li>
 @endsection
 
 @section('content')
@@ -160,8 +162,9 @@
                                 <div class="card card-body card-itinerary-itineraries">
                                     @if(!$previewFlg)
                                     <div class="d-delete d-flex justify-content-end @if(count($itineraries) === 1 && $key === 0) d-none @endif">
-                                        <button class="itinerary-btnDelete btn bg-gradient-danger btn-sm pt-0 pb-0 pl-3 pr-3 mb-1">
-                                            {{ __('label.button_delete') }}
+                                        <button class="itinerary-btnDelete btn bg-gradient-danger btn-sm pt-0 pb-0 pl-3 pr-3 mb-1"
+                                            title="{{ __('label.button_delete') }}">
+                                            <i class="fas fa-times"></i>
                                         </button>
                                     </div>
                                     @endif
@@ -220,8 +223,9 @@
                             @else
                             <div class="card card-body card-itinerary-itineraries">
                                 <div class="d-delete d-flex justify-content-end d-none">
-                                    <button class="itinerary-btnDelete btn bg-gradient-danger btn-sm pt-0 pb-0 pl-3 pr-3 mb-1">
-                                        {{ __('label.button_delete') }}
+                                    <button class="itinerary-btnDelete btn bg-gradient-danger btn-sm pt-0 pb-0 pl-3 pr-3 mb-1"
+                                        title="{{ __('label.button_delete') }}">
+                                        <i class="fas fa-times"></i>
                                     </button>
                                 </div>
                                 <div class="form-row">
@@ -250,8 +254,9 @@
                             @endif
                             <div class="card card-body card-itinerary-itineraries copy d-none">
                                 <div class="d-delete d-flex justify-content-end">
-                                    <button class="itinerary-btnDelete btn bg-gradient-danger btn-sm pt-0 pb-0 pl-3 pr-3 mb-1">
-                                        {{ __('label.button_delete') }}
+                                    <button class="itinerary-btnDelete btn bg-gradient-danger btn-sm pt-0 pb-0 pl-3 pr-3 mb-1"
+                                       title="{{ __('label.button_delete') }}">
+                                        <i class="fas fa-times"></i>
                                     </button>
                                 </div>
                                 <div class="form-row">
@@ -279,8 +284,9 @@
                             </div>
                         </div>
                         @if(!$previewFlg)
-                        <button id="itinerary-btnAdd" class="btn bg-gradient-danger @if(!empty($itineraries) && count($itineraries) >= 4) d-none @endif">
-                            + {{ __('label.button_addnew') }}
+                        <button id="itinerary-btnAdd" title="{{ __('label.button_addnew') }}"
+                            class="btn bg-gradient-danger @if(!empty($itineraries) && count($itineraries) >= 4) d-none @endif">
+                            <i class="fas fa-plus"></i>
                         </button>
                         @endif
                     </div>
@@ -300,8 +306,9 @@
                                 @if(!$previewFlg)
                                 <div class="d-flex justify-content-between">
                                     <span class="sp_trans_no badge badge-success">{{ 'A'.($trans_key + 1) }}</span>
-                                    <button class="d-delete transportations-btnDelete btn bg-gradient-danger btn-sm pt-0 pb-0 pl-3 pr-3">
-                                         {{ __('label.button_delete') }}
+                                    <button class="d-delete transportations-btnDelete btn bg-gradient-success btn-sm pt-0 pb-0 pl-3 pr-3"
+                                         title="{{ __('label.button_delete') }}">
+                                        <i class="fas fa-times"></i>
                                     </button>
                                 </div>
                                 @endif
@@ -399,8 +406,9 @@
                             <div class="card card-body card-transportations copy d-none">
                                 <div class="d-flex justify-content-between ">
                                     <span class="sp_trans_no badge badge-success"></span>
-                                    <button class="d-delete transportations-btnDelete btn bg-gradient-danger btn-sm pt-0 pb-0 pl-3 pr-3">
-                                        {{ __('label.button_delete') }}
+                                    <button class="d-delete transportations-btnDelete btn bg-gradient-success btn-sm pt-0 pb-0 pl-3 pr-3"
+                                        title="{{ __('label.button_delete') }}">
+                                        <i class="fas fa-times"></i>
                                     </button>
                                 </div>
                                 <div class="form-row">
@@ -449,9 +457,9 @@
                             </div>
                         </div>
                         @if(!$previewFlg)
-                        <button id="transportations-btnAdd"
-                            class="btn bg-gradient-danger @if(!empty($tranportations) && count($tranportations) >= 10) d-none @endif">
-                            + {{ __('label.button_addnew') }}
+                        <button id="transportations-btnAdd" title="{{ __('label.button_addnew') }}"
+                            class="btn bg-gradient-success @if(!empty($tranportations) && count($tranportations) >= 10) d-none @endif">
+                            <i class="fas fa-plus"></i>
                         </button>
                         @endif
                     </div>
@@ -474,8 +482,9 @@
                                 <div class="d-flex justify-content-between">
                                     <span class="sp_acom_no badge badge-primary">{{ 'B'.($ac_key + 1) }}</span>
                                     <button
-                                        class="d-delete accomodations-btnDelete btn bg-gradient-danger btn-sm pt-0 pb-0 pl-3 pr-3">
-                                        {{ __('label.button_delete') }}
+                                        class="d-delete accomodations-btnDelete btn bg-gradient-primary btn-sm pt-0 pb-0 pl-3 pr-3"
+                                        title="{{ __('label.button_delete') }}">
+                                        <i class="fas fa-times"></i>
                                     </button>
                                 </div>
                                 @endif
@@ -551,8 +560,9 @@
                             <div class="card card-body card-accomodations copy d-none">
                                 <div class="d-flex justify-content-between ">
                                     <span class="sp_acom_no badge badge-primary"></span>
-                                    <button class="d-delete accomodations-btnDelete btn bg-gradient-danger btn-sm pt-0 pb-0 pl-3 pr-3">
-                                        {{ __('label.button_delete') }}
+                                    <button class="d-delete accomodations-btnDelete btn bg-gradient-primary btn-sm pt-0 pb-0 pl-3 pr-3"
+                                        title="{{ __('label.button_delete') }}">
+                                        <i class="fas fa-times"></i>
                                     </button>
                                 </div>
                                 <div class="form-row">
@@ -590,9 +600,9 @@
                             </div>
                         </div>
                         @if(!$previewFlg)
-                        <button id="accomodations-btnAdd"
-                            class="btn bg-gradient-danger @if(!empty($tranportations) && count($tranportations) >= 10) d-none @endif">
-                            + {{ __('label.button_addnew') }}
+                        <button id="accomodations-btnAdd" title="{{ __('label.button_addnew') }}"
+                            class="btn bg-gradient-primary @if(!empty($tranportations) && count($tranportations) >= 10) d-none @endif">
+                            <i class="fas fa-plus"></i>
                         </button>
                         @endif
                     </div>
@@ -615,8 +625,9 @@
                                 <div class="d-flex justify-content-between">
                                     <span class="sp_com_no badge badge-warning">{{ 'C'.($com_key + 1) }}</span>
                                     <button
-                                        class="d-delete communications-btnDelete btn bg-gradient-danger btn-sm pt-0 pb-0 pl-3 pr-3">
-                                        {{ __('label.button_delete') }}
+                                        class="d-delete communications-btnDelete btn bg-gradient-warning btn-sm pt-0 pb-0 pl-3 pr-3"
+                                        title="{{ __('label.button_delete') }}">
+                                        <i class="fas fa-times"></i>
                                     </button>
                                 </div>
                                 @endif
@@ -714,8 +725,9 @@
                                 <div class="d-flex justify-content-between ">
                                     <span class="sp_com_no badge badge-warning"></span>
                                     <button
-                                        class="d-delete communications-btnDelete btn bg-gradient-danger btn-sm pt-0 pb-0 pl-3 pr-3">
-                                        {{ __('label.button_delete') }}
+                                        class="d-delete communications-btnDelete btn bg-gradient-warning btn-sm pt-0 pb-0 pl-3 pr-3"
+                                        title="{{ __('label.button_delete') }}">
+                                        <i class="fas fa-times"></i>
                                     </button>
                                 </div>
                                 <div class="form-row">
@@ -766,9 +778,9 @@
                             </div>
                         </div>
                         @if(!$previewFlg)
-                        <button id="communications-btnAdd"
-                            class="btn bg-gradient-danger @if(!empty($tranportations) && count($tranportations) >= 10) d-none @endif">
-                            + {{ __('label.button_addnew') }}
+                        <button id="communications-btnAdd" title="{{ __('label.button_addnew') }}"
+                            class="btn bg-gradient-warning @if(!empty($tranportations) && count($tranportations) >= 10) d-none @endif">
+                            <i class="fas fa-plus"></i>
                         </button>
                         @endif
                     </div>
@@ -785,7 +797,7 @@
                             <div class="form-group col-md-4 mb-1">
                                 <span class="mb-0 mr-1">{{__('label.amount')}}</span>
                                 <input type="text" id="daily_allowance" name="daily_allowance"
-                                    class="form-control sync_total amount @error('daily_allowance') is-invalid @enderror" autocomplete="off"
+                                    class="form-control @error('daily_allowance') is-invalid @enderror" autocomplete="off"
                                     data-target="daily_rate"
                                     value="{{ $daily_allowance }}">
                                 @error('daily_allowance')
@@ -819,7 +831,7 @@
                             <div class="form-group col-md-4 mb-1">
                                 <span class="mb-0 mr-1">{{__('label.rate')}}<span class="text-danger required d-none"> (*)</span></span>
                                 <input type="text" id="daily_rate" name="daily_rate"
-                                    class="form-control sync_total rate @error('daily_rate') is-invalid @enderror" autocomplete="off"
+                                    class="form-control @error('daily_rate') is-invalid @enderror" autocomplete="off"
                                     data-target="daily_allowance"
                                     value="{{ $daily_rate }}">
                                 @error('daily_rate')
@@ -989,7 +1001,7 @@
                     </div>
                     <div class="col-md-10">
                         <span id="total_expenses"></span> VND
-                        <button class="btn bg-gradient-primary btn-sm" title="Calculate">
+                        <button id="refresh-total" class="btn bg-gradient-info btn-sm" title="{{ __('label.refresh') }}">
                             <i class="fas fa-redo"></i>
                         </button>
                     </div>
