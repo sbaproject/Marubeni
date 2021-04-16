@@ -25,6 +25,23 @@ $(document).ready(function() {
     });
 
     //=======================================
+    // Cleave input (formatting inputs)
+    //=======================================
+    new Cleave('.amount', {
+        numeral: true,
+        numeralThousandsGroupStyle: 'thousand',
+        // onValueChanged: function(e) {
+        //     let maxLength = $($(this)[0].element).attr('max-number');
+        //     let maxValue = $($(this)[0].element).attr('max-value');
+        //     if (e.target.rawValue.length > parseInt(maxLength) || parseInt(e.target.rawValue) > parseInt(maxValue)) {
+        //         this.setRawValue(this.lastInputValue);
+        //     } else {
+        //         $('[name="times_use"]').val(e.target.rawValue);
+        //     }
+        // }
+    });
+
+    //=======================================
     // Browser file
     //=======================================
 

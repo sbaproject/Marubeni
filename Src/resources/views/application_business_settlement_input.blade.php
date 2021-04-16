@@ -1,5 +1,4 @@
 @php
-// dd(Session::exists('inputs'));
     $destinations                   = Session::exists('inputs') ? Session::get('inputs')['destinations']                    : ($modFlg ? ($application->business2->destinations ?? null) : ($application->business->destinations ?? null));
     $itineraries                    = Session::exists('inputs') ? Session::get('inputs')['itineraries']                     : ($modFlg ? ($application->business2->transportations ?? null) : ($application->business->transportations ?? null));
     $number_of_days                 = Session::exists('inputs') ? Session::get('inputs')['number_of_days']                  : ($application->business2->number_of_days ?? null);
@@ -70,10 +69,12 @@
 <script src="js/moment/moment.min.js"></script>
 <script src="js/moment/locale/{{ config('app.locale') }}.js"></script>
 <script src="js/bootstrap-datetimepicker.js"></script>
-{{-- for this view --}}
-<script src="js/user/application/business2/input.js"></script>
+{{-- cleave js --}}
+<script src="js/cleave/cleave.min.js"></script>
 {{-- numeral --}}
 <script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
+{{-- for this view --}}
+<script src="js/user/application/business2/input.js"></script>
 
 {{--  --}}
 <script>
