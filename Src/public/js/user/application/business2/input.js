@@ -27,19 +27,24 @@ $(document).ready(function() {
     //=======================================
     // Cleave input (formatting inputs)
     //=======================================
-    new Cleave('.amount', {
-        numeral: true,
-        numeralThousandsGroupStyle: 'thousand',
-        // onValueChanged: function(e) {
-        //     let maxLength = $($(this)[0].element).attr('max-number');
-        //     let maxValue = $($(this)[0].element).attr('max-value');
-        //     if (e.target.rawValue.length > parseInt(maxLength) || parseInt(e.target.rawValue) > parseInt(maxValue)) {
-        //         this.setRawValue(this.lastInputValue);
-        //     } else {
-        //         $('[name="times_use"]').val(e.target.rawValue);
-        //     }
-        // }
-    });
+    makeCleaveInputs();
+
+    function makeCleaveInputs() {
+        // amount input
+        $('.amount').each(function(index, element) {
+            new Cleave(element, {
+                numeral: true,
+                numeralThousandsGroupStyle: 'thousand'
+            });
+        });
+        // rate input
+        $('.rate').each(function(index, element) {
+            new Cleave(element, {
+                numeral: true,
+                numeralThousandsGroupStyle: 'thousand'
+            });
+        });
+    }
 
     //=======================================
     // Browser file
@@ -219,6 +224,9 @@ $(document).ready(function() {
             // }
         });
 
+        // make cleave inputs
+        makeCleaveInputs();
+
         // re-calculate total expenses
         calculateTotalExpenses();
 
@@ -288,6 +296,9 @@ $(document).ready(function() {
             // }
         });
 
+        // make cleave inputs
+        makeCleaveInputs();
+
         // re-calculate total expenses
         calculateTotalExpenses();
 
@@ -356,6 +367,9 @@ $(document).ready(function() {
             // }
         });
 
+        // make cleave inputs
+        makeCleaveInputs();
+
         // re-calculate total expenses
         calculateTotalExpenses();
 
@@ -395,7 +409,7 @@ $(document).ready(function() {
     }
 
     //=======================================
-    // Calculate Total Total Expenses
+    // Calculate Total Expenses
     //=======================================
     var totalExpenses = 0;
 
@@ -458,6 +472,10 @@ $(document).ready(function() {
                     tempArr.push($(this).attr('name'));
                 }
             }
+
+            amount = amount.toString().replace(/,/g, '');
+            rate = rate.toString().replace(/,/g, '');
+
             if (isNaN(amount) || amount == '') {
                 return true; // continue
             }
@@ -470,7 +488,7 @@ $(document).ready(function() {
             totalExpenses += sub;
         });
 
-        totalExpenses = numeral(totalExpenses).format('0,0')
+        totalExpenses = numeral(totalExpenses).format('0,0.00')
         $('#total_expenses').text(totalExpenses);
     }
 

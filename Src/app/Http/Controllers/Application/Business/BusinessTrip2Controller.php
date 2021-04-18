@@ -64,6 +64,10 @@ class Businesstrip2Controller extends Controller
             abort(404);
         }
 
+        // make correct numeral inputs
+        $this->makeCorrectNumeralFromInput($inputs);
+        // dd($inputs);
+
         // validate
         $validator = $this->doValidate($inputs);
         if (!empty($validator)) {
@@ -90,7 +94,7 @@ class Businesstrip2Controller extends Controller
             }
             $biz2->updated_by = $loginUser->id;
             // fill data
-            $biz2->fill($request->input());
+            $biz2->fill($inputs);
             // save
             $biz2->save();
 
@@ -343,6 +347,81 @@ class Businesstrip2Controller extends Controller
                 unset($inputs['input_file']);
                 return $validator;
             }
+        }
+    }
+
+    private function makeCorrectNumeralFromInput(&$inputs)
+    {
+        // tripfees - transportations
+        $newArr = [];
+        foreach ($inputs['transportations'] as $item) {
+            // amount
+            if (!empty($item['amount'])) {
+                $item['amount'] = str_replace(',', '', $item['amount']);
+            }
+
+            // rate
+            if (!empty($item['exchange_rate'])) {
+                $item['exchange_rate'] = str_replace(',', '', $item['exchange_rate']);
+            }
+            $newArr[] = $item;
+        }
+        $inputs['transportations'] = $newArr;
+        // tripfees - accomodations
+        $newArr = [];
+        foreach ($inputs['accomodations'] as $item) {
+            // amount
+            if (!empty($item['amount'])) {
+                $item['amount'] = str_replace(',', '', $item['amount']);
+            }
+            // rate
+            if (!empty($item['exchange_rate'])) {
+                $item['exchange_rate'] = str_replace(',', '', $item['exchange_rate']);
+            }
+            $newArr[] = $item;
+        }
+        $inputs['accomodations'] = $newArr;
+        // tripfees - communications
+        $newArr = [];
+        foreach ($inputs['communications'] as $item) {
+            // amount
+            if (!empty($item['amount'])) {
+                $item['amount'] = str_replace(',', '', $item['amount']);
+            }
+            // rate
+            if (!empty($item['exchange_rate'])) {
+                $item['exchange_rate'] = str_replace(',', '', $item['exchange_rate']);
+            }
+            $newArr[] = $item;
+        }
+        $inputs['communications'] = $newArr;
+
+        // daily allowance
+        // amount
+        if (!empty($inputs['daily_allowance'])) {
+            $inputs['daily_allowance'] = str_replace(',', '', $inputs['daily_allowance']);
+        }
+        // rate
+        if (!empty($inputs['daily_rate'])) {
+            $inputs['daily_rate'] = str_replace(',', '', $inputs['daily_rate']);
+        }
+        // total daily allowance
+        // amount
+        if (!empty($inputs['total_daily_allowance'])) {
+            $inputs['total_daily_allowance'] = str_replace(',', '', $inputs['total_daily_allowance']);
+        }
+        // rate
+        if (!empty($inputs['total_daily_rate'])) {
+            $inputs['total_daily_rate'] = str_replace(',', '', $inputs['total_daily_rate']);
+        }
+        // other fees
+        // amount
+        if (!empty($inputs['other_fees'])) {
+            $inputs['other_fees'] = str_replace(',', '', $inputs['other_fees']);
+        }
+        // rate
+        if (!empty($inputs['other_fees_rate'])) {
+            $inputs['other_fees_rate'] = str_replace(',', '', $inputs['other_fees_rate']);
         }
     }
 }

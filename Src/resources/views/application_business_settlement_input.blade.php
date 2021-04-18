@@ -798,7 +798,7 @@
                             <div class="form-group col-md-4 mb-1">
                                 <span class="mb-0 mr-1">{{__('label.amount')}}</span>
                                 <input type="text" id="daily_allowance" name="daily_allowance"
-                                    class="form-control @error('daily_allowance') is-invalid @enderror" autocomplete="off"
+                                    class="form-control amount @error('daily_allowance') is-invalid @enderror" autocomplete="off"
                                     data-target="daily_rate"
                                     value="{{ $daily_allowance }}">
                                 @error('daily_allowance')
@@ -832,7 +832,7 @@
                             <div class="form-group col-md-4 mb-1">
                                 <span class="mb-0 mr-1">{{__('label.rate')}}<span class="text-danger required d-none"> (*)</span></span>
                                 <input type="text" id="daily_rate" name="daily_rate"
-                                    class="form-control @error('daily_rate') is-invalid @enderror" autocomplete="off"
+                                    class="form-control rate @error('daily_rate') is-invalid @enderror" autocomplete="off"
                                     data-target="daily_allowance"
                                     value="{{ $daily_rate }}">
                                 @error('daily_rate')
