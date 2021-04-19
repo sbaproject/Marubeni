@@ -360,7 +360,7 @@ class Businesstrip2Controller extends Controller
             foreach ($inputs['transportations'] as $item) {
                 // amount
                 if (!empty($item['amount'])) {
-                    $item['amount'] = str_replace(',', '', $item['amount']);
+                    $item['amount'] = str_replace('.00', '', str_replace(',', '', $item['amount']));
                 }
 
                 // rate
@@ -377,7 +377,7 @@ class Businesstrip2Controller extends Controller
             foreach ($inputs['accomodations'] as $item) {
                 // amount
                 if (!empty($item['amount'])) {
-                    $item['amount'] = str_replace(',', '', $item['amount']);
+                    $item['amount'] = str_replace('.00', '', str_replace(',', '', $item['amount']));
                 }
                 // rate
                 if (!empty($item['exchange_rate'])) {
@@ -393,7 +393,7 @@ class Businesstrip2Controller extends Controller
             foreach ($inputs['communications'] as $item) {
                 // amount
                 if (!empty($item['amount'])) {
-                    $item['amount'] = str_replace(',', '', $item['amount']);
+                    $item['amount'] = str_replace('.00', '', str_replace(',', '', $item['amount']));
                 }
                 // rate
                 if (!empty($item['exchange_rate'])) {
@@ -432,7 +432,8 @@ class Businesstrip2Controller extends Controller
         }
     }
 
-    public function pdf(Request $request, $application){
+    public function pdf(Request $request, $application)
+    {
 
         $inputs = $request->input();
 
@@ -441,15 +442,18 @@ class Businesstrip2Controller extends Controller
 
             // get applicant info
             $inputs['applicant'] = $application->applicant;
-
         } else {
             $inputs['applicant'] = Auth::user();
         }
+        
+        $this->makeCorrectNumeralFromInput($inputs);
 
         // dd($inputs, $application);
 
         // PDF::setOptions(['defaultFont' => 'Roboto-Black']);
+        // PDF::setOptions(['enable-javascript' => true]);
         $pdf = PDF::loadView("application_business2_pdf", compact('application', 'inputs'));
+
 
         // preview pdf
         $fileName = "business_settlement.pdf";

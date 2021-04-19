@@ -365,25 +365,25 @@
 							<div class="caption">{{ trans('label.business_transportations.'.$item['method'],[],'vi') }}</div>
 							@endisset
 						</td>
-						<td class="data item4">
-							{{ $item['amount'].' '.$item['unit'] }}
+						<td class="data item4 amount">
+							{{ str_replace('.00','',number_format($item['amount'],2,'.',',')).' '.$item['unit'] }}
 							@if (!empty($item['unit']) && $item['unit'] != 'VND')
-								{{ '(Exchange/Tỷ giá: '.$item['exchange_rate'].')' }}
+								{{ '('.number_format($item['exchange_rate']).' VND/'.$item['unit'].')' }}
 							@endif
 						</td>
 						<td class="data jp item5">
-							{{ mb_substr($item['note'], 0, 27).'...' }}
+							{{ mb_strlen($item['note']) > 27 ? mb_substr($item['note'], 0, 27).'...' : $item['note'] }}
 						</td>
 					</tr>
 				@endforeach
-			@else
+			{{-- @else
 			<tr>
 				<td class="f" style="width: 12%">
 					<div class="caption">Transportation</div>
 					<div class="caption">Di chuyển</div>
 				</td>
 				<td colspan="4">No data. / Không có dữ liệu.</td>
-			</tr>
+			</tr> --}}
 			@endif
 			{{-- TripFees - accomodations --}}
 			@if (isset($inputs['accomodations']) && count($inputs['accomodations']) > 0)
@@ -399,7 +399,7 @@
 				</td>
 				@endif
 				<td class="f item2">
-					{{ config('const.trip_fee_type.transportation').($index + 1) }}
+					{{ config('const.trip_fee_type.accomodation').($index + 1) }}
 				</td>
 				<td class="f item3">
 					@isset($item['method'])
@@ -408,24 +408,24 @@
 					@endisset
 				</td>
 				<td class="data item4">
-					{{ $item['amount'].' '.$item['unit'] }}
+					{{ str_replace('.00','',number_format($item['amount'],2,'.',',')).' '.$item['unit'] }}
 					@if (!empty($item['unit']) && $item['unit'] != 'VND')
-					{{ '(Exchange/Tỷ giá: '.$item['exchange_rate'].')' }}
+					{{ '('.number_format($item['exchange_rate']).' VND/'.$item['unit'].')' }}
 					@endif
 				</td>
 				<td class="data jp item5">
-					{{ mb_substr($item['note'], 0, 27).'...' }}
+					{{ mb_strlen($item['note']) > 27 ? mb_substr($item['note'], 0, 27).'...' : $item['note'] }}
 				</td>
 			</tr>
 			@endforeach
-			@else
+			{{-- @else
 			<tr>
 				<td class="f" style="width: 12%">
 					<div class="caption">Transportation</div>
 					<div class="caption">Di chuyển</div>
 				</td>
 				<td colspan="4">No data. / Không có dữ liệu.</td>
-			</tr>
+			</tr> --}}
 			@endif
 			{{-- TripFees - communications --}}
 			@if (isset($inputs['communications']) && count($inputs['communications']) > 0)
@@ -441,7 +441,7 @@
 				</td>
 				@endif
 				<td class="f item2">
-					{{ config('const.trip_fee_type.transportation').($index + 1) }}
+					{{ config('const.trip_fee_type.communication').($index + 1) }}
 				</td>
 				<td class="f item3">
 					@isset($item['method'])
@@ -450,24 +450,24 @@
 					@endisset
 				</td>
 				<td class="data item4">
-					{{ $item['amount'].' '.$item['unit'] }}
+					{{ str_replace('.00','',number_format($item['amount'],2,'.',',')).' '.$item['unit'] }}
 					@if (!empty($item['unit']) && $item['unit'] != 'VND')
-					{{ '(Exchange/Tỷ giá: '.$item['exchange_rate'].')' }}
+					{{ '('.number_format($item['exchange_rate']).' VND/'.$item['unit'].')' }}
 					@endif
 				</td>
 				<td class="data jp item5">
-					{{ mb_substr($item['note'], 0, 27).'...' }}
+					{{ mb_strlen($item['note']) > 27 ? mb_substr($item['note'], 0, 27).'...' : $item['note'] }}
 				</td>
 			</tr>
 			@endforeach
-			@else
+			{{-- @else
 			<tr>
 				<td class="f" style="width: 12%">
 					<div class="caption">Transportation</div>
 					<div class="caption">Di chuyển</div>
 				</td>
 				<td colspan="4">No data. / Không có dữ liệu.</td>
-			</tr>
+			</tr> --}}
 			@endif
 		</tbody>
 	</table>

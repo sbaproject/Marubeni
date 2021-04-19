@@ -48,7 +48,9 @@ $(document).ready(function() {
         $('.rate').each(function(index, element) {
             new Cleave(element, {
                 numeral: true,
-                numeralThousandsGroupStyle: 'thousand'
+                numeralDecimalScale: 0,
+                numeralThousandsGroupStyle: 'thousand',
+                numeralPositiveOnly: true,
             });
         });
     }
