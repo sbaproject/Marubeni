@@ -27,7 +27,14 @@ $(document).ready(function() {
     //=======================================
     // Cleave input (formatting inputs)
     //=======================================
+
     makeCleaveInputs();
+
+    // Number of days
+    new Cleave('.number_of_days', {
+        numericOnly: true,
+        blocks: [3]
+    });
 
     function makeCleaveInputs() {
         // amount input

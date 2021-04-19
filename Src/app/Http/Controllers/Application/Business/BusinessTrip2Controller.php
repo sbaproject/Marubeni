@@ -2,19 +2,20 @@
 
 namespace App\Http\Controllers\Application\Business;
 
+use PDF;
 use Exception;
 use Carbon\Carbon;
 use App\Libs\Common;
+use App\Models\TripFee;
 use App\Models\Department;
 use App\Models\Application;
 use App\Models\Businesstrip;
 use Illuminate\Http\Request;
+use App\Models\Businesstrip2;
 use App\Models\Transportation;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Businesstrip2;
-use App\Models\TripFee;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
@@ -54,13 +55,14 @@ class Businesstrip2Controller extends Controller
         if (isset($inputs['apply']) || isset($inputs['draft']) || isset($inputs['pdf'])) {
             // export pdf
             if (isset($inputs['pdf'])) {
-                return $this->pdf($request, $inputs, $application);
+                return $this->pdf($request, $application);
             }
             // only owner able to edit (edit mode)
             if (!empty($application) && Auth::user()->id !== $application->created_by) {
                 abort(403);
             }
         } else {
+            dd($inputs);
             abort(404);
         }
 
@@ -353,49 +355,54 @@ class Businesstrip2Controller extends Controller
     private function makeCorrectNumeralFromInput(&$inputs)
     {
         // tripfees - transportations
-        $newArr = [];
-        foreach ($inputs['transportations'] as $item) {
-            // amount
-            if (!empty($item['amount'])) {
-                $item['amount'] = str_replace(',', '', $item['amount']);
-            }
+        if (!empty($inputs['transportations'])) {
+            $newArr = [];
+            foreach ($inputs['transportations'] as $item) {
+                // amount
+                if (!empty($item['amount'])) {
+                    $item['amount'] = str_replace(',', '', $item['amount']);
+                }
 
-            // rate
-            if (!empty($item['exchange_rate'])) {
-                $item['exchange_rate'] = str_replace(',', '', $item['exchange_rate']);
+                // rate
+                if (!empty($item['exchange_rate'])) {
+                    $item['exchange_rate'] = str_replace(',', '', $item['exchange_rate']);
+                }
+                $newArr[] = $item;
             }
-            $newArr[] = $item;
+            $inputs['transportations'] = $newArr;
         }
-        $inputs['transportations'] = $newArr;
         // tripfees - accomodations
-        $newArr = [];
-        foreach ($inputs['accomodations'] as $item) {
-            // amount
-            if (!empty($item['amount'])) {
-                $item['amount'] = str_replace(',', '', $item['amount']);
+        if (!empty($inputs['accomodations'])) {
+            $newArr = [];
+            foreach ($inputs['accomodations'] as $item) {
+                // amount
+                if (!empty($item['amount'])) {
+                    $item['amount'] = str_replace(',', '', $item['amount']);
+                }
+                // rate
+                if (!empty($item['exchange_rate'])) {
+                    $item['exchange_rate'] = str_replace(',', '', $item['exchange_rate']);
+                }
+                $newArr[] = $item;
             }
-            // rate
-            if (!empty($item['exchange_rate'])) {
-                $item['exchange_rate'] = str_replace(',', '', $item['exchange_rate']);
-            }
-            $newArr[] = $item;
+            $inputs['accomodations'] = $newArr;
         }
-        $inputs['accomodations'] = $newArr;
         // tripfees - communications
-        $newArr = [];
-        foreach ($inputs['communications'] as $item) {
-            // amount
-            if (!empty($item['amount'])) {
-                $item['amount'] = str_replace(',', '', $item['amount']);
+        if (!empty($inputs['communications'])) {
+            $newArr = [];
+            foreach ($inputs['communications'] as $item) {
+                // amount
+                if (!empty($item['amount'])) {
+                    $item['amount'] = str_replace(',', '', $item['amount']);
+                }
+                // rate
+                if (!empty($item['exchange_rate'])) {
+                    $item['exchange_rate'] = str_replace(',', '', $item['exchange_rate']);
+                }
+                $newArr[] = $item;
             }
-            // rate
-            if (!empty($item['exchange_rate'])) {
-                $item['exchange_rate'] = str_replace(',', '', $item['exchange_rate']);
-            }
-            $newArr[] = $item;
+            $inputs['communications'] = $newArr;
         }
-        $inputs['communications'] = $newArr;
-
         // daily allowance
         // amount
         if (!empty($inputs['daily_allowance'])) {
@@ -423,5 +430,31 @@ class Businesstrip2Controller extends Controller
         if (!empty($inputs['other_fees_rate'])) {
             $inputs['other_fees_rate'] = str_replace(',', '', $inputs['other_fees_rate']);
         }
+    }
+
+    public function pdf(Request $request, $application){
+
+        $inputs = $request->input();
+
+        if (!empty($application)) {
+            $loginUser = Auth::user();
+
+            // get applicant info
+            $inputs['applicant'] = $application->applicant;
+
+        } else {
+            $inputs['applicant'] = Auth::user();
+        }
+
+        // dd($inputs, $application);
+
+        // PDF::setOptions(['defaultFont' => 'Roboto-Black']);
+        $pdf = PDF::loadView("application_business2_pdf", compact('application', 'inputs'));
+
+        // preview pdf
+        $fileName = "business_settlement.pdf";
+        return $pdf->stream($fileName);
+        // download
+        // return $pdf->download($fileName);
     }
 }

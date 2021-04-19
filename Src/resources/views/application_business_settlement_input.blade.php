@@ -101,10 +101,10 @@
         <div class="invoice mb-3">
             <div class="card-body">
                 <div class="form-group row float-right">
-                    {{-- <button type="submit" id="btnPdf" value="pdf" class="btn bg-gradient-danger" href="#">
+                    <button type="submit" id="btnPdf" value="pdf" class="btn bg-gradient-danger" href="#">
                         <i class="fas fa-external-link-alt" style="margin-right: 5px; color: #fff;"></i>
                         {{ __('label.button_export') }}
-                    </button> --}}
+                    </button>
                 </div>
                 <div class="clearfix"></div>
 
@@ -140,8 +140,8 @@
                         <label>{{ __('label.business_number_of_days') }}<span class="text-danger required"> (*)</span></label>
                     </div>
                     <div class="col-md-2">
-                        <input type="text" id="accommnumber_of_daysodation" name="number_of_days"
-                            class="form-control @error('number_of_days') is-invalid @enderror" autocomplete="off"
+                        <input type="text" id="number_of_days" name="number_of_days"
+                            class="form-control number_of_days @error('number_of_days') is-invalid @enderror" autocomplete="off"
                             value="{{ $number_of_days }}">
                         @error('number_of_days')
                         <span class="invalid-feedback" role="alert">
