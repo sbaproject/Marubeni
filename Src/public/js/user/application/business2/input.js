@@ -3,26 +3,26 @@ $(document).ready(function() {
     // Datetimepicker
     //=======================================
     // init
-    $('#instruction_date_picker').datetimepicker({
-        format: 'DD/MM/YYYY',
-        defaultDate: $('#under_instruction_date').val(),
-        useCurrent: false,
-        showTodayButton: true,
-        showClear: true
-    });
-    // show
-    var instructionDate = $('#instruction_date_picker').data("DateTimePicker").date();
-    if (instructionDate != null) {
-        $('#under_instruction_date').val(instructionDate.format('YYYYMMDD'));
-    }
-    // change
-    $("#instruction_date_picker").on("dp.change", function(e) {
-        if (e.date) {
-            $('#under_instruction_date').val(e.date.format('YYYYMMDD'));
-        } else {
-            $('#under_instruction_date').val(null);
-        }
-    });
+    // $('#instruction_date_picker').datetimepicker({
+    //     format: 'DD/MM/YYYY',
+    //     defaultDate: $('#under_instruction_date').val(),
+    //     useCurrent: false,
+    //     showTodayButton: true,
+    //     showClear: true
+    // });
+    // // show
+    // var instructionDate = $('#instruction_date_picker').data("DateTimePicker").date();
+    // if (instructionDate != null) {
+    //     $('#under_instruction_date').val(instructionDate.format('YYYYMMDD'));
+    // }
+    // // change
+    // $("#instruction_date_picker").on("dp.change", function(e) {
+    //     if (e.date) {
+    //         $('#under_instruction_date').val(e.date.format('YYYYMMDD'));
+    //     } else {
+    //         $('#under_instruction_date').val(null);
+    //     }
+    // });
 
     //=======================================
     // Cleave input (formatting inputs)
@@ -30,11 +30,23 @@ $(document).ready(function() {
 
     makeCleaveInputs();
 
+    makeCleavePercent();
+
     // Number of days
     new Cleave('.number_of_days', {
         numericOnly: true,
         blocks: [3]
     });
+
+    // Percent
+    function makeCleavePercent() {
+        $('.chargedbys_percent').each(function(index, element) {
+            new Cleave(element, {
+                numericOnly: true,
+                blocks: [3]
+            });
+        });
+    }
 
     function makeCleaveInputs() {
         // amount input
@@ -172,6 +184,60 @@ $(document).ready(function() {
             $('#itinerary-btnAdd').addClass('d-none');
         } else {
             $('#itinerary-btnAdd').removeClass('d-none');
+        }
+    }
+
+    //=======================================
+    // Charged Bys Block
+    //=======================================
+
+    // add new Transportation element
+    $('#chargedbys-btnAdd').on('click', function(e) {
+
+        e.preventDefault();
+
+        var mainBlock = $('#chargedbys_block');
+        var copyElement = mainBlock.find('.copy').clone();
+
+        copyElement.removeClass('copy');
+        copyElement.removeClass('d-none');
+
+        mainBlock.append(copyElement);
+
+        doChargedBySettings();
+
+    });
+    // remove Transportation element
+    $(document).on("click", ".chargedbys-btnDelete", function(e) {
+        e.preventDefault();
+        $(this).parent().parent().remove();
+        doChargedBySettings();
+    });
+
+    function doChargedBySettings() {
+        var otherFeeElements = $('.card-chargedbys:not(.copy)');
+        otherFeeElements.each(function(index) {
+            // re-order index
+            $(this).find('.chargedbys_department').attr('name', 'chargedbys[' + index + '][department]');
+            $(this).find('.chargedbys_percent').attr('name', 'chargedbys[' + index + '][percent]');
+
+            // always keep at least one element
+            if ((otherFeeElements.length === 1 && index === 0)) {
+                $(this).find('.d-delete').addClass('d-none');
+            } else {
+                $(this).find('.d-delete').removeClass('d-none');
+            }
+        });
+
+        // make cleave inputs
+        // Percent
+        makeCleavePercent();
+
+        // maximum is 3 blocks only
+        if (otherFeeElements.length >= 3) {
+            $('#chargedbys-btnAdd').addClass('d-none');
+        } else {
+            $('#chargedbys-btnAdd').removeClass('d-none');
         }
     }
 
@@ -387,6 +453,77 @@ $(document).ready(function() {
             $('#accomodations-btnAdd').addClass('d-none');
         } else {
             $('#accomodations-btnAdd').removeClass('d-none');
+        }
+    }
+
+    //=======================================
+    // OtherFees Block
+    //=======================================
+
+    // add new Accomodation element
+    $('#otherfees-btnAdd').on('click', function(e) {
+
+        e.preventDefault();
+
+        var mainBlock = $('#otherfees_block');
+        var copyElement = mainBlock.find('.copy').clone();
+
+        copyElement.removeClass('copy');
+        copyElement.removeClass('d-none');
+
+        mainBlock.append(copyElement);
+
+        doOtherfeesettings();
+
+    });
+    // remove Accomodation element
+    $(document).on("click", ".otherfees-btnDelete", function(e) {
+        e.preventDefault();
+        $(this).parent().parent().remove();
+        doOtherfeesettings();
+    });
+
+    function doOtherfeesettings() {
+        var comElements = $('.card-otherfees:not(.copy)');
+        comElements.each(function(index) {
+            // re-order index
+            $(this).find('.otherfees_amount').attr('name', 'otherfees[' + index + '][amount]');
+            $(this).find('.otherfees_amount').addClass('sync_total');
+            $(this).find('.otherfees_amount').attr('data-target', 'otherfees[' + index + '][exchange_rate]');
+            $(this).find('.otherfees_amount').addClass('amount');
+            $(this).find('.otherfees_unit').attr('name', 'otherfees[' + index + '][unit]');
+            $(this).find('.otherfees_unit').attr('data-target', 'otherfees[' + index + '][exchange_rate]');
+            $(this).find('.otherfees_rate').addClass('sync_total');
+            $(this).find('.otherfees_rate').attr('name', 'otherfees[' + index + '][exchange_rate]');
+            $(this).find('.otherfees_rate').attr('data-target', 'otherfees[' + index + '][amount]');
+            $(this).find('.otherfees_rate').addClass('rate');
+            $(this).find('.otherfees_note').attr('name', 'otherfees[' + index + '][note]');
+
+            // set communication number
+            $(this).find('.sp_acom_no').text('D' + (index + 1));
+
+            // Disabled / Enabled[Rate] depends on[Currency]
+            disabledRateBySelectUnit($(this).find('.otherfees_unit'));
+
+            // always keep at least one element
+            // if ((comElements.length === 1 && index === 0)) {
+            //     $(this).find('.d-delete').addClass('d-none');
+            // } else {
+            //     $(this).find('.d-delete').removeClass('d-none');
+            // }
+        });
+
+        // make cleave inputs
+        makeCleaveInputs();
+
+        // re-calculate total expenses
+        calculateTotalExpenses();
+
+        // maximum is 10 blocks only
+        if (comElements.length >= 10) {
+            $('#otherfees-btnAdd').addClass('d-none');
+        } else {
+            $('#otherfees-btnAdd').removeClass('d-none');
         }
     }
 

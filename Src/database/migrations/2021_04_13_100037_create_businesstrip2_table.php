@@ -28,7 +28,7 @@ class CreateBusinesstrip2Table extends Migration
             $table->string('other_fees_unit', 3)->nullable()->comment('Like USD,VND,SGD,...');
             $table->decimal('other_fees_rate', 11, 2)->default(0)->nullable();
             $table->text('other_fees_note')->nullable();
-            $table->unsignedInteger('charged_to')->comment('Cost to be charged to (Department ID)')->nullable();
+            $table->string('charged_to')->comment('Format data: [department_id_1]-[value1%],[department_id_2]-[value2%],...')->nullable();
             $table->date('under_instruction_date')->nullable();
             $table->string('under_instruction_approval_no', 20)->nullable();
             $table->text('file_path')->nullable();
@@ -37,7 +37,7 @@ class CreateBusinesstrip2Table extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('charged_to')->references('id')->on('departments');
+            // $table->foreign('charged_to')->references('id')->on('departments');
             $table->foreign('application_id')->references('id')->on('applications');
         });
     }

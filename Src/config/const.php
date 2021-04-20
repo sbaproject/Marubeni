@@ -223,6 +223,7 @@ return [
         'transportation' => 'A',
         'accomodation' => 'B',
         'communication' => 'C',
+        'otherfees' => 'D',
     ],
 
     'transportations' => [
@@ -239,9 +240,16 @@ return [
 
     'units' => [
         'VND',
-        'JPY',
         'USD',
+        'JPY',
         'EUR',
         'SGD',
+        'THB',
+        'LAK',
+        'HKD',
+        'CNY',
+        'GBP',
+        'TWD',
+        'OTHER',
     ],
 ];

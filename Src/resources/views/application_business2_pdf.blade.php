@@ -366,7 +366,7 @@
 							@endisset
 						</td>
 						<td class="data item4 amount">
-							{{ str_replace('.00','',number_format($item['amount'],2,'.',',')).' '.$item['unit'] }}
+							{{ Common::formatNumeralWithoutZeroDecimal($item['amount']).' '.$item['unit'] }}
 							@if (!empty($item['unit']) && $item['unit'] != 'VND')
 								{{ '('.number_format($item['exchange_rate']).' VND/'.$item['unit'].')' }}
 							@endif
@@ -408,7 +408,7 @@
 					@endisset
 				</td>
 				<td class="data item4">
-					{{ str_replace('.00','',number_format($item['amount'],2,'.',',')).' '.$item['unit'] }}
+					{{ Common::formatNumeralWithoutZeroDecimal($item['amount']).' '.$item['unit'] }}
 					@if (!empty($item['unit']) && $item['unit'] != 'VND')
 					{{ '('.number_format($item['exchange_rate']).' VND/'.$item['unit'].')' }}
 					@endif
@@ -450,7 +450,7 @@
 					@endisset
 				</td>
 				<td class="data item4">
-					{{ str_replace('.00','',number_format($item['amount'],2,'.',',')).' '.$item['unit'] }}
+					{{ Common::formatNumeralWithoutZeroDecimal($item['amount']).' '.$item['unit'] }}
 					@if (!empty($item['unit']) && $item['unit'] != 'VND')
 					{{ '('.number_format($item['exchange_rate']).' VND/'.$item['unit'].')' }}
 					@endif

@@ -359,6 +359,23 @@ class Common
 	}
 
 	/**
+	 * @param $val Number want to format like : 123456.00, 123456.23
+	 * @return string After formatted : 123456.00 => 123,456 or 123456.23 => 123,456.23
+	 */
+	public static function formatNumeralWithoutZeroDecimal($val){
+		return str_replace('.00', '', number_format($val, 2, '.', ','));
+	}
+
+	/**
+	 * @param $val Number want to get raw : 123,456.00, 123,456.23
+	 * @return string Raw numeric : 123,456.00 => 123456 or 123,456.23 => 123456.23
+	 */
+	public static function getRawNumeric($val)
+	{
+		return str_replace('.00', '', str_replace(',', '', $val));
+	}
+
+	/**
 	 * Get auto-increment id of table
 	 * @param string $schemaName Name of schema (database name)
 	 * @param string $tableName Table wants to get auto-increment id

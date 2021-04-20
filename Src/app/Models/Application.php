@@ -31,25 +31,32 @@ class Application extends Model
         'updated_at',
     ];
 
-    // protected $appends = ['application_no'];
+    protected $appends = ['last_approval_step_1'];
 
-    // public function getApplicationNoAttribute()
-    // {
-    //     // $prefix = config('const.form_prefix.'.$this->form_id);
-    //     $application_no = $this->form->prefix.'-'.str_pad($this->id, config('const.num_fillzero'), "0", STR_PAD_LEFT);
-    //     return $application_no;
-    // }
+    public function getLastApprovalStep1Attribute()
+    {
+        $conditions = [
+            'application_id' => $this->id,
+            'status' => config('const.application.status.completed'),
+            'step' => config('const.application.step_type.application'),
+        ];
 
-    public static function makeApplicationNoByAutoIncrementId($formId){
+        return HistoryApproval::getHistory($conditions)->first();
+    }
+
+    public static function makeApplicationNoByAutoIncrementId($formId)
+    {
         $autoIncrementId = static::getAutoIncrement();
         return config('const.form_prefix')[$formId] . '-' . str_pad($autoIncrementId, config('const.num_fillzero'), "0", STR_PAD_LEFT);
     }
 
-    public function Form(){
+    public function Form()
+    {
         return $this->belongsTo('App\Models\Form');
     }
 
-    public function leave(){
+    public function leave()
+    {
         return $this->hasOne(Leave::class);
     }
 
@@ -68,8 +75,9 @@ class Application extends Model
         return $this->hasOne(Entertaiment::class);
     }
 
-    public function applicant(){
-        return $this->belongsTo(User::class,'created_by');
+    public function applicant()
+    {
+        return $this->belongsTo(User::class, 'created_by');
     }
 
     // public function Leave(){

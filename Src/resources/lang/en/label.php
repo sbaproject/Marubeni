@@ -73,6 +73,7 @@ return [
     'type' => 'Type',
     'refresh' => 'Refresh',
     'settlement' => 'Settlement',
+    'percent' => 'Percent %',
 
     'popup_title_skip_approver' => 'Skip approval of',
 
@@ -229,6 +230,7 @@ return [
     'business_communication'            => 'Communication',
     'business_accommodation_fee'        => 'Accommodation',
     'business_settlement'               => 'Settlement Business Trip',
+    'business_department'               => 'Department',
 
     'business_transportations' => [
         1 => 'Air Ticket',

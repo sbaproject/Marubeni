@@ -49,7 +49,19 @@ class Businesstrip2 extends Model
         'tripfee_transportations',
         'tripfee_accomodations',
         'tripfee_communications',
+        'tripfee_otherfees',
+        'chargedbys',
     ];
+
+    public function getChargedBysAttribute()
+    {
+        return static::explodeChargedBys($this->charged_to);
+    }
+
+    public function setChargedBysAttribute($values)
+    {
+       $this->charged_to = static::implodeChargedBys($values);
+    }
 
     public function getTripFeeTransportationsAttribute()
     {
@@ -84,6 +96,17 @@ class Businesstrip2 extends Model
         return $arr;
     }
 
+    public function getTripFeeOtherFeesAttribute()
+    {
+        $arr = [];
+        foreach ($this->tripfees as $value) {
+            if ($value->type_trip == config('const.trip_fee_type.otherfees')) {
+                $arr[] = $value;
+            }
+        }
+        return $arr;
+    }
+
     public function transportations()
     {
         return $this->hasMany(Transportation::class);
@@ -92,5 +115,39 @@ class Businesstrip2 extends Model
     public function tripfees()
     {
         return $this->hasMany(TripFee::class, 'businesstrip_id');
+    }
+
+    // Format data: [department_id_1]-[value1%],[department_id_2]-[value2%],...
+    public static function explodeChargedBys($strVal)
+    {
+        if(empty($strVal)){
+            return [];
+        }
+
+        $arr = explode(',',$strVal);
+        $rs = [];
+        foreach ($arr as $value) {
+            $items = explode('-', $value);
+            $rs[] = [
+                'department' => $items[0],
+                'percent' => $items[1],
+            ];
+        }
+
+        return $rs;
+    }
+
+    // Format data: [department_id_1]-[value1%],[department_id_2]-[value2%],...
+    public static function implodeChargedBys($values){
+        $str = '';
+        foreach ($values as $index => $item) {
+            if ($index == 0){
+                $str .= $item['department'] . '-' . $item['percent'];
+                continue;
+            }
+            $str .= ','.$item['department'] . '-' . $item['percent'];
+        }
+
+        return $str;
     }
 }

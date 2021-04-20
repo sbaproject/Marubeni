@@ -11,18 +11,15 @@
     $daily_unit                     = Session::exists('inputs') ? Session::get('inputs')['daily_unit']                      : ($application->business2->daily_unit ?? null);
     $daily_rate                     = Session::exists('inputs') ? Session::get('inputs')['daily_rate']                      : ($application->business2->daily_rate ?? null);
 
-    $other_fees                     = Session::exists('inputs') ? Session::get('inputs')['other_fees']                      : ($application->business2->other_fees ?? null);
-    $other_fees_unit                = Session::exists('inputs') ? Session::get('inputs')['other_fees_unit']                 : ($application->business2->other_fees_unit ?? null);
-    $other_fees_rate                = Session::exists('inputs') ? Session::get('inputs')['other_fees_rate']                 : ($application->business2->other_fees_rate ?? null);
-    $other_fees_note                = Session::exists('inputs') ? Session::get('inputs')['other_fees_note']                 : ($application->business2->other_fees_note ?? null);
-
-    $charged_to                     = Session::exists('inputs') ? Session::get('inputs')['charged_to']                      : ($application->business2->charged_to ?? null);
-    $under_instruction_date         = Session::exists('inputs') ? Session::get('inputs')['under_instruction_date']          : ($application->business2->under_instruction_date ?? null);
-    $under_instruction_approval_no  = Session::exists('inputs') ? Session::get('inputs')['under_instruction_approval_no']   : ($application->business2->under_instruction_approval_no ?? null);
+    // $charged_to                     = Session::exists('inputs') ? Session::get('inputs')['charged_to']                      : ($application->business2->charged_to ?? null);
+    // $under_instruction_date         = Session::exists('inputs') ? Session::get('inputs')['under_instruction_date']          : ($application->business2->under_instruction_date ?? null);
+    // $under_instruction_approval_no  = Session::exists('inputs') ? Session::get('inputs')['under_instruction_approval_no']   : ($application->business2->under_instruction_approval_no ?? null);
 
     $transportations                = Session::exists('inputs') ? (Session::get('inputs')['transportations'] ?? [])         : ($application->business2->tripfeetransportations ?? null);
     $communications                 = Session::exists('inputs') ? (Session::get('inputs')['communications'] ?? [])          : ($application->business2->tripfeecommunications ?? null);
     $accomodations                  = Session::exists('inputs') ? (Session::get('inputs')['accomodations'] ?? [])           : ($application->business2->tripfeeaccomodations ?? null);
+    $otherfees                      = Session::exists('inputs') ? (Session::get('inputs')['otherfees'] ?? [])               : ($application->business2->tripfeeotherfees ?? null);
+    $chargedbys                     = Session::exists('inputs') ? (Session::get('inputs')['chargedbys'] ?? [])              :($application->business2->chargedbys ?? null);
 
     // get action url
     if(isset($modFlg)){
@@ -54,11 +51,11 @@
     .caption{
         word-break: break-word;
     }
-    .card-itinerary-itineraries, .card-transportations, .card-communications, .card-accomodations{
+    .card-itinerary-itineraries, .card-transportations, .card-communications, .card-accomodations,.card-otherfees,.card-chargedbys{
         padding: 10px;
         padding-bottom: 0px;
     }
-    .card-transportations .badge,.card-communications .badge,.card-accomodations .badge {
+    .card-transportations .badge,.card-communications .badge,.card-accomodations .badge,.card-otherfees .badge {
         line-height: inherit;
     }
 </style>
@@ -115,6 +112,24 @@
                     </div>
                     <div class="col-md-10">
                         <span>{{ $application->application_no }}</span>
+                    </div>
+                </div>
+                <hr>
+                {{-- Under Instruction by --}}
+                <div class="form-group row">
+                    <div class="col-md-2 text-left caption">
+                        <label>{{ __('label.business_instruction_by') }}</label>
+                    </div>
+                    <div class="col-md-10">
+                        <div>
+                            {{ __('label.date') }} :
+                            @isset($application->lastapprovalstep1)
+                            {{ \Carbon\Carbon::parse($application->lastapprovalstep1->created_at)->format('d/m/Y') }}
+                            @endisset
+                        </div>
+                        <div>
+                            {{ __('label.business_approval_no') }} : {{ $application->application_no }}
+                        </div>
                     </div>
                 </div>
                 <hr>
@@ -306,7 +321,7 @@
                             <div class="card card-body card-transportations">
                                 @if(!$previewFlg)
                                 <div class="d-flex justify-content-between">
-                                    <span class="sp_trans_no badge badge-success">{{ 'A'.($trans_key + 1) }}</span>
+                                    <span class="sp_trans_no badge badge-success">{{ config('const.trip_fee_type.transportation').($trans_key + 1) }}</span>
                                     <button class="d-delete transportations-btnDelete btn bg-gradient-success btn-sm pt-0 pb-0 pl-3 pr-3"
                                          title="{{ __('label.button_delete') }}">
                                         <i class="fas fa-times"></i>
@@ -357,9 +372,6 @@
                                         <select name="transportations[{{ $trans_key }}][unit]" style="width: 100%;"
                                             class="form-control transportations_unit select_unit @error('transportations.'.$trans_key.'.unit') is-invalid @enderror"
                                             data-target="transportations[{{ $trans_key }}][exchange_rate]">
-                                            <option value="">
-                                                {{ __('label.select') }}
-                                            </option>
                                             @foreach (config('const.units') as $key => $value)
                                             <option value="{{ $value }}" @if($transportation['unit'] == $value) selected @endif>
                                                 {{ $value }}
@@ -433,9 +445,6 @@
                                     <div class="form-group col-md-3">
                                         <span for="">{{ __('label.unit') }}<span class="text-danger required"> (*)</span></span>
                                         <select style="width: 100%;" class="form-control transportations_unit select_unit">
-                                            <option value="">
-                                                {{ __('label.select') }}
-                                            </option>
                                             @foreach (config('const.units') as $key => $value)
                                             <option value="{{ $value }}">
                                                 {{ $value }}
@@ -481,7 +490,7 @@
                             <div class="card card-body card-accomodations">
                                 @if(!$previewFlg)
                                 <div class="d-flex justify-content-between">
-                                    <span class="sp_acom_no badge badge-primary">{{ 'B'.($ac_key + 1) }}</span>
+                                    <span class="sp_acom_no badge badge-primary">{{ config('const.trip_fee_type.accomodation').($ac_key + 1) }}</span>
                                     <button
                                         class="d-delete accomodations-btnDelete btn bg-gradient-primary btn-sm pt-0 pb-0 pl-3 pr-3"
                                         title="{{ __('label.button_delete') }}">
@@ -511,9 +520,6 @@
                                         <select name="accomodations[{{ $ac_key }}][unit]" style="width: 100%;"
                                             class="form-control accomodations_unit select_unit @error('accomodations.'.$ac_key.'.unit') is-invalid @enderror"
                                             data-target="accomodations[{{ $ac_key }}][exchange_rate]">
-                                            <option value="">
-                                                {{ __('label.select') }}
-                                            </option>
                                             @foreach (config('const.units') as $key => $value)
                                             <option value="{{ $value }}" @if($accomodation['unit']==$value) selected @endif>
                                                 {{ $value }}
@@ -575,9 +581,6 @@
                                     <div class="form-group col-md-4">
                                         <span for="">{{ __('label.unit') }}<span class="text-danger required"> (*)</span></span>
                                         <select style="width: 100%;" class="form-control accomodations_unit select_unit">
-                                            <option value="">
-                                                {{ __('label.select') }}
-                                            </option>
                                             @foreach (config('const.units') as $key => $value)
                                             <option value="{{ $value }}">
                                                 {{ $value }}
@@ -602,7 +605,7 @@
                         </div>
                         @if(!$previewFlg)
                         <button id="accomodations-btnAdd" title="{{ __('label.button_addnew') }}"
-                            class="btn bg-gradient-primary @if(!empty($tranportations) && count($tranportations) >= 10) d-none @endif">
+                            class="btn bg-gradient-primary @if(!empty($accomodations) && count($accomodations) >= 10) d-none @endif">
                             <i class="fas fa-plus"></i>
                         </button>
                         @endif
@@ -624,7 +627,7 @@
                             <div class="card card-body card-communications">
                                 @if(!$previewFlg)
                                 <div class="d-flex justify-content-between">
-                                    <span class="sp_com_no badge badge-warning">{{ 'C'.($com_key + 1) }}</span>
+                                    <span class="sp_com_no badge badge-warning">{{ config('const.trip_fee_type.communication').($com_key + 1) }}</span>
                                     <button
                                         class="d-delete communications-btnDelete btn bg-gradient-warning btn-sm pt-0 pb-0 pl-3 pr-3"
                                         title="{{ __('label.button_delete') }}">
@@ -675,9 +678,6 @@
                                         <select name="communications[{{ $com_key }}][unit]" style="width: 100%;"
                                             class="form-control communications_unit select_unit @error('communications.'.$com_key.'.unit') is-invalid @enderror"
                                             data-target="communications[{{ $com_key }}][exchange_rate]">
-                                            <option value="">
-                                                {{ __('label.select') }}
-                                            </option>
                                             @foreach (config('const.units') as $key => $value)
                                             <option value="{{ $value }}" @if($communication['unit']==$value) selected @endif>
                                                 {{ $value }}
@@ -753,9 +753,6 @@
                                     <div class="form-group col-md-3">
                                         <span for="">{{ __('label.unit') }}<span class="text-danger required"> (*)</span></span>
                                         <select style="width: 100%;" class="form-control communications_unit select_unit">
-                                            <option value="">
-                                                {{ __('label.select') }}
-                                            </option>
                                             @foreach (config('const.units') as $key => $value)
                                             <option value="{{ $value }}">
                                                 {{ $value }}
@@ -780,7 +777,144 @@
                         </div>
                         @if(!$previewFlg)
                         <button id="communications-btnAdd" title="{{ __('label.button_addnew') }}"
-                            class="btn bg-gradient-warning @if(!empty($tranportations) && count($tranportations) >= 10) d-none @endif">
+                            class="btn bg-gradient-warning @if(!empty($communications) && count($communications) >= 10) d-none @endif">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                        @endif
+                    </div>
+                </div>
+                <hr>
+                {{-- TripFees - OtherFees --}}
+                <div class="form-group row">
+                    <div class="col-md-2 text-left">
+                        <label>
+                            <span class="sp_trans_no badge badge-secondary">{{ config('const.trip_fee_type.otherfees') }}</span>
+                            {{ __('label.business_other_fees') }}
+                        </label>
+                    </div>
+                    <div class="col-md-10">
+                        <div id="otherfees_block">
+                            @if (!empty($otherfees))
+                            @foreach ($otherfees as $o_key => $otherfee)
+                            <div class="card card-body card-otherfees">
+                                @if(!$previewFlg)
+                                <div class="d-flex justify-content-between">
+                                    <span
+                                        class="sp_acom_no badge badge-secondary">{{ config('const.trip_fee_type.otherfees').($o_key + 1) }}</span>
+                                    <button class="d-delete otherfees-btnDelete btn bg-gradient-secondary btn-sm pt-0 pb-0 pl-3 pr-3"
+                                        title="{{ __('label.button_delete') }}">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                                @endif
+                                <div class="form-row">
+                                    <div class="form-group col-md-4">
+                                        <span for="">
+                                            {{ __('label.amount') }}<span class="text-danger required"> (*)</span>
+                                        </span>
+                                        <input type="text" name="otherfees[{{ $o_key }}][amount]"
+                                            class="form-control otherfees_amount sync_total amount @error('otherfees.'.$o_key.'.amount') is-invalid @enderror"
+                                            value="{{ $otherfee['amount'] }}" autocomplete="off" @if($previewFlg) readonly @endif
+                                            data-target="otherfees[{{ $o_key }}][exchange_rate]">
+                                        @error('otherfees.'.$o_key.'.amount')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <span for="">
+                                            {{ __('label.unit') }}<span class="text-danger required"> (*)</span>
+                                        </span>
+                                        <select name="otherfees[{{ $o_key }}][unit]" style="width: 100%;"
+                                            class="form-control otherfees_unit select_unit @error('otherfees.'.$o_key.'.unit') is-invalid @enderror"
+                                            data-target="otherfees[{{ $o_key }}][exchange_rate]">
+                                            @foreach (config('const.units') as $key => $value)
+                                            <option value="{{ $value }}" @if($otherfee['unit']==$value) selected @endif>
+                                                {{ $value }}
+                                            </option>
+                                            @endforeach
+                                        </select>
+                                        @error('otherfees.'.$o_key.'.unit')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <span for="">
+                                            {{ __('label.rate') }}<span class="text-danger required d-none"> (*)</span>
+                                        </span>
+                                        <input type="text"
+                                            class="form-control otherfees_rate sync_total rate @error('otherfees.'.$o_key.'.exchange_rate') is-invalid @enderror"
+                                            name="otherfees[{{ $o_key }}][exchange_rate]" value="{{ $otherfee['exchange_rate'] }}"
+                                            autocomplete="off" @if($previewFlg) readonly @endif
+                                            data-target="otherfees[{{ $o_key }}][amount]">
+                                        @error('otherfees.'.$o_key.'.exchange_rate')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-12">
+                                        {{-- Note --}}
+                                        <span class="mb-0 mr-1">{{ __('label.remarks') }}</span>
+                                        <textarea name="otherfees[{{ $o_key }}][note]" autocomplete="off" rows="1"
+                                            class="form-control otherfees_note @error('otherfees.'.$o_key.'.note') is-invalid @enderror">{{ $otherfee['note'] }}</textarea>
+                                        @error('otherfees.'.$o_key.'.note')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                            @endforeach
+                            @endif
+                            <div class="card card-body card-otherfees copy d-none">
+                                <div class="d-flex justify-content-between ">
+                                    <span class="sp_acom_no badge badge-secondary"></span>
+                                    <button class="d-delete otherfees-btnDelete btn bg-gradient-secondary btn-sm pt-0 pb-0 pl-3 pr-3"
+                                        title="{{ __('label.button_delete') }}">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-4">
+                                        <span for="">{{ __('label.amount') }}<span class="text-danger required"> (*)</span></span>
+                                        <input type="text" class="form-control otherfees_amount" autocomplete="off" @if($previewFlg)
+                                            readonly @endif>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <span for="">{{ __('label.unit') }}<span class="text-danger required"> (*)</span></span>
+                                        <select style="width: 100%;" class="form-control otherfees_unit select_unit">
+                                            @foreach (config('const.units') as $key => $value)
+                                            <option value="{{ $value }}">
+                                                {{ $value }}
+                                            </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <span for="">{{ __('label.rate') }}<span class="text-danger required d-none"> (*)</span></span>
+                                        <input type="text" class="form-control otherfees_rate" autocomplete="off" @if($previewFlg)
+                                            readonly @endif>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-12">
+                                        {{-- Note --}}
+                                        <span class="mb-0 mr-1">{{ __('label.remarks') }}</span>
+                                        <textarea class="form-control otherfees_note" autocomplete="off" rows="1"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @if(!$previewFlg)
+                        <button id="otherfees-btnAdd" title="{{ __('label.button_addnew') }}"
+                            class="btn bg-gradient-secondary @if(!empty($otherfees) && count($otherfees) >= 10) d-none @endif">
                             <i class="fas fa-plus"></i>
                         </button>
                         @endif
@@ -813,9 +947,6 @@
                                 <select name="daily_unit" style="width: 100%;"
                                     class="form-control select_unit @error('daily_unit') is-invalid @enderror"
                                     data-target="daily_rate">
-                                    <option value="">
-                                        {{ __('label.select') }}
-                                    </option>
                                     @foreach (config('const.units') as $value)
                                     <option value="{{ $value }}" @if($daily_unit==$value) selected @endif>
                                         {{ $value }}
@@ -869,9 +1000,6 @@
                                 <select name="total_daily_unit" style="width: 100%;"
                                     class="form-control select_unit @error('total_daily_unit') is-invalid @enderror"
                                     data-target="total_daily_rate">
-                                    <option value="">
-                                        {{ __('label.select') }}
-                                    </option>
                                     @foreach (config('const.units') as $value)
                                     <option value="{{ $value }}" @if($total_daily_unit == $value) selected @endif>
                                         {{ $value }}
@@ -899,80 +1027,154 @@
                         </div>
                     </div>
                 </div>
-                <hr>
-                {{-- Other Fees --}}
-                <div class="form-group row">
-                    <div class="col-md-2 text-left caption">
-                        <label>{{__('label.business_other_fees')}}</label>
-                    </div>
-                    <div class="col-md-10">
-                        <div class="form-row">
-                            {{-- Amount --}}
-                            <div class="form-group col-md-4 mb-1">
-                                <span class="mb-0 mr-1">{{__('label.amount')}}</span>
-                                <input type="text" id="other_fees" name="other_fees" class="form-control sync_total amount @error('other_fees') is-invalid @enderror"
-                                    autocomplete="off" value="{{ $other_fees }}"
-                                    data-target="other_fees_rate">
-                                @error('other_fees')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
-                            {{-- Unit --}}
-                            <div class="form-group col-md-4 mb-1">
-                                <span class="mb-0 mr-1">{{__('label.unit')}}</span>
-                                <select name="other_fees_unit" style="width: 100%;"
-                                    class="form-control select_unit @error('other_fees_unit') is-invalid @enderror"
-                                    data-target="other_fees_rate">
-                                    <option value="">
-                                        {{ __('label.select') }}
-                                    </option>
-                                    @foreach (config('const.units') as $value)
-                                    <option value="{{ $value }}" @if($other_fees_unit == $value) selected @endif>
-                                        {{ $value }}
-                                    </option>
-                                    @endforeach
-                                </select>
-                                @error('other_fees_unit')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
-                            {{-- Rate --}}
-                            <div class="form-group col-md-4 mb-1">
-                                <span class="mb-0 mr-1">{{__('label.rate')}}<span class="text-danger required d-none"> (*)</span></span>
-                                <input type="text" id="other_fees_rate" name="other_fees_rate"
-                                    class="form-control sync_total rate @error('other_fees_rate') is-invalid @enderror" autocomplete="off"
-                                    value="{{ $other_fees_rate }}"
-                                    data-target="other_fees">
-                                @error('other_fees_rate')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-12">
-                                {{-- Note --}}
-                                <span class="mb-0 mr-1">{{ __('label.remarks') }}</span>
-                                <textarea id="other_fees_note" name="other_fees_note" autocomplete="off" rows="3"
-                                    class="form-control @error('other_fees_note') is-invalid @enderror">{{ $other_fees_note }}</textarea>
-                                @error('other_fees_note')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
-                        </div>
-                    </div>
-                    
-                </div>
                 {{-- Cost to be charged to (Sec Code) --}}
                 <hr>
                 <div class="form-group row">
+                    <div class="col-md-2 text-left">
+                        <label>{{ __('label.business_itinerary') }}<span class="text-danger required"> (*)</span></label>
+                    </div>
+                    <div class="col-md-10">
+                        <div id="chargedbys_block">
+                            @php
+                                // $chargedbys = [
+                                //     [
+                                //         'department' => 4,
+                                //         'percent' => 20,
+                                //     ],
+                                //     [
+                                //     'department' => 4,
+                                //     'percent' => 25,
+                                //     ],
+                                // ];
+                            @endphp
+                            @if (!empty($chargedbys))
+                            @foreach ($chargedbys as $key => $chargedby)
+                            <div class="card card-body card-chargedbys">
+                                @if(!$previewFlg)
+                                <div
+                                    class="d-delete d-flex justify-content-end @if(count($chargedbys) === 1 && $key === 0) d-none @endif">
+                                    <button class="chargedbys-btnDelete btn bg-gradient-danger btn-sm pt-0 pb-0 pl-3 pr-3"
+                                        title="{{ __('label.button_delete') }}">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                                @endif
+                                <div class="form-row">
+                                    <div class="form-group col-md-4">
+                                        <span for="">
+                                            {{ __('label.business_department') }}<span class="text-danger required"> (*)</span>
+                                        </span>
+                                        <select name="chargedbys[{{ $key }}][department]" style=""
+                                            class="form-control chargedbys_department @error('chargedbys.'.$key.'.department') is-invalid @enderror">
+                                            <option value="">
+                                                {{ __('label.select') }}
+                                            </option>
+                                            @foreach ($departments as $item)
+                                            <option value="{{ $item->id }}" @if($chargedby['department']==$item->id) selected @endif>
+                                                {{ $item->name }}
+                                            </option>
+                                            @endforeach
+                                        </select>
+                                        @error('chargedbys.'.$key.'.department')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <span for="">
+                                            {{ __('label.percent') }}<span class="text-danger required"> (*)</span>
+                                        </span>
+                                        <input type="text"
+                                            name="chargedbys[{{ $key }}][percent]"
+                                            style="width: 80px"
+                                            class="form-control chargedbys_percent @error('chargedbys.'.$key.'.percent') is-invalid @enderror"
+                                            value="{{ $chargedbys[$key]['percent'] }}"
+                                            autocomplete="off" @if($previewFlg) readonly @endif>
+                                        @error('chargedbys.'.$key.'.percent')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                            @endforeach
+                            @else
+                            <div class="card card-body card-chargedbys">
+                                <div class="d-delete d-flex justify-content-end d-none">
+                                    <button class="chargedbys-btnDelete btn bg-gradient-danger btn-sm pt-0 pb-0 pl-3 pr-3"
+                                        title="{{ __('label.button_delete') }}">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-4">
+                                        <span for="">
+                                            {{ __('label.business_department') }}<span class="text-danger required"> (*)</span>
+                                        </span>
+                                        <select name="chargedbys[0][department]" style="" class="form-control chargedbys_department">
+                                            <option value="">
+                                                {{ __('label.select') }}
+                                            </option>
+                                            @foreach ($departments as $item)
+                                            <option value="{{ $item->id }}">
+                                                {{ $item->name }}
+                                            </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <span for="">
+                                            {{ __('label.percent') }}<span class="text-danger required"> (*)</span>
+                                        </span>
+                                        <input type="text" name="chargedbys[0][percent]" style="width: 100px"
+                                            class="form-control chargedbys_percent" autocomplete="off">
+                                    </div>
+                                </div>
+                            </div>
+                            @endif
+                            <div class="card card-body card-chargedbys copy d-none">
+                                <div class="d-delete d-flex justify-content-end">
+                                    <button class="chargedbys-btnDelete btn bg-gradient-danger btn-sm pt-0 pb-0 pl-3 pr-3"
+                                        title="{{ __('label.button_delete') }}">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-4">
+                                        <span for="">
+                                            {{ __('label.business_department') }}<span class="text-danger required"> (*)</span>
+                                        </span>
+                                        <select class="form-control chargedbys_department">
+                                            <option value="">
+                                                {{ __('label.select') }}
+                                            </option>
+                                            @foreach ($departments as $item)
+                                            <option value="{{ $item->id }}">
+                                                {{ $item->name }}
+                                            </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <span for="">
+                                            {{ __('label.percent') }}<span class="text-danger required"> (*)</span>
+                                        </span>
+                                        <input type="text" class="form-control chargedbys_percent" style="width: 80px" autocomplete="off">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @if(!$previewFlg)
+                        <button id="chargedbys-btnAdd" title="{{ __('label.button_addnew') }}"
+                            class="btn bg-gradient-danger @if(!empty($chargedbys) && count($chargedbys) >= 3) d-none @endif">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                        @endif
+                    </div>
+                </div>
+                {{-- <div class="form-group row">
                     <div class="col-md-2 text-left caption">
                         <label>{{ __('label.business_charged_to') }}<span class="text-danger required"> (*)</span></label>
                     </div>
@@ -993,7 +1195,7 @@
                         </span>
                         @enderror
                     </div>
-                </div>
+                </div> --}}
                 {{-- Total Expenses --}}
                 <hr>
                 <div class="form-group row">
@@ -1005,46 +1207,6 @@
                         <button id="refresh-total" class="btn bg-gradient-info btn-sm" title="{{ __('label.refresh') }}">
                             <i class="fas fa-redo"></i>
                         </button>
-                    </div>
-                </div>
-                <hr>
-                {{-- Under Instruction by --}}
-                <div class="form-group row">
-                    <div class="col-md-2 text-left caption">
-                        <label>{{ __('label.business_instruction_by') }}</label>
-                    </div>
-                    <div class="col-md-10">
-                        <div class="form-row">
-                            <div class="form-group col-md-6 mb-1">
-                                <span>{{ __('label.date') }}</span>
-                                <div id="instruction_date_picker" data-target-input="nearest" class="input-group date">
-                                    <input type="text" class="form-control datetimepicker-input @error('under_instruction_date') is-invalid @enderror"
-                                        data-target="#instruction_date_picker" />
-                                    <div class="input-group-addon input-group-append" data-target="#instruction_date_picker"
-                                        data-toggle="datetimepicker">
-                                        <div class="input-group-text"><i class="fa fa-calendar-alt"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                                <input type="hidden" id="under_instruction_date" name="under_instruction_date" value="{{ $under_instruction_date }}">
-                                @error('under_instruction_date')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
-                            <div class="form-group col-md-6 mb-1">
-                                <span>{{ __('label.business_approval_no') }}</span>
-                                <input type="text" id="under_instruction_approval_no" name="under_instruction_approval_no"
-                                    class="form-control @error('under_instruction_approval_no') is-invalid @enderror" autocomplete="off"
-                                    value="{{ $under_instruction_approval_no }}">
-                                @error('under_instruction_approval_no')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>

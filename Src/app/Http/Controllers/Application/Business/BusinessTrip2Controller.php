@@ -68,7 +68,6 @@ class Businesstrip2Controller extends Controller
 
         // make correct numeral inputs
         $this->makeCorrectNumeralFromInput($inputs);
-        // dd($inputs);
 
         // validate
         $validator = $this->doValidate($inputs);
@@ -94,6 +93,7 @@ class Businesstrip2Controller extends Controller
                 $biz2->application_id = $applicationId;
                 $biz2->created_by = $loginUser->id;
             }
+            $biz2->chargedbys = $inputs['chargedbys'];
             $biz2->updated_by = $loginUser->id;
             // fill data
             $biz2->fill($inputs);
@@ -179,6 +179,25 @@ class Businesstrip2Controller extends Controller
             }
             TripFee::insert($communications);
 
+            //=======================================
+            // Insert TripFees - OtherFees
+            //=======================================
+            $otherfees = [];
+            if (isset($inputs['otherfees'])) {
+                foreach ($inputs['otherfees'] as $index => $item) {
+                    $item['businesstrip_id']    = $biz2->id;
+                    $item['type_trip']          = config('const.trip_fee_type.otherfees');
+                    $item['trip_no']            = $item['type_trip'] . ($index + 1);
+                    $item['created_by']         = $loginUser->id;
+                    $item['updated_by']         = $loginUser->id;
+                    $item['created_at']         = Carbon::now();
+                    $item['updated_at']         = Carbon::now();
+
+                    $otherfees[] = $item;
+                }
+            }
+            TripFee::insert($otherfees);
+
             // commit DB
             DB::commit();
 
@@ -204,7 +223,6 @@ class Businesstrip2Controller extends Controller
 
             // validate messages
             $customAttributes = [
-                'charged_to'                => __('label.business_charged_to'),
                 'destinations'              => __('label.business_trip_destination'),
                 'number_of_days'            => __('label.business_number_of_days'),
 
@@ -215,10 +233,6 @@ class Businesstrip2Controller extends Controller
                 'daily_allowance'           => __('label.amount'),
                 'daily_unit'                => __('label.unit'),
                 'daily_rate'                => __('label.rate'),
-
-                'other_fees'                => __('label.amount'),
-                'other_fees_unit'           => __('label.unit'),
-                'other_fees_rate'           => __('label.rate'),
 
                 'itineraries.*.departure'   => __('label.business_departure'),
                 'itineraries.*.arrive'      => __('label.business_arrival'),
@@ -235,6 +249,13 @@ class Businesstrip2Controller extends Controller
                 'accomodations.*.method'    => __('label.type'),
                 'accomodations.*.unit'      => __('label.unit'),
                 'accomodations.*.amount'    => __('label.amount'),
+
+                'otherfees.*.method'    => __('label.type'),
+                'otherfees.*.unit'      => __('label.unit'),
+                'otherfees.*.amount'    => __('label.amount'),
+
+                'chargedbys.*.department'    => __('label.business_department'),
+                'chargedbys.*.percent'      => __('label.percent'),
             ];
 
             // validate rules
@@ -245,7 +266,7 @@ class Businesstrip2Controller extends Controller
             //     $rules['input_file'] = config('const.rules.attached_file');
             // }
 
-            $rules['charged_to']            = 'required_select';
+            // $rules['charged_to']            = 'required_select';
             $rules['destinations']          = 'required';
             $rules['number_of_days']        = 'required|numeric';
 
@@ -278,22 +299,6 @@ class Businesstrip2Controller extends Controller
 
                 if (!empty($inputs['daily_unit']) && $inputs['daily_unit'] != 'VND') {
                     $rules['daily_rate'] = 'required|numeric';
-                }
-            }
-
-            // other fees
-            if (
-                !empty($inputs['other_fees'])
-                || !empty($inputs['other_fees_unit'])
-                || !empty($inputs['other_fees_rate'])
-            ) {
-
-                $rules['other_fees']        = 'required|numeric';
-                $rules['other_fees_unit']   = 'required_select';
-                $rules['other_fees_rate']   = 'nullable|numeric';
-
-                if (!empty($inputs['other_fees_unit']) && $inputs['other_fees_unit'] != 'VND') {
-                    $rules['other_fees_rate'] = 'required|numeric';
                 }
             }
 
@@ -344,6 +349,25 @@ class Businesstrip2Controller extends Controller
                 }
             }
 
+            // otherfees
+            $rules['otherfees.*.method']        = 'required_select';
+            $rules['otherfees.*.unit']          = 'required_select';
+            $rules['otherfees.*.amount']        = 'required|numeric';
+            if (isset($inputs['otherfees'])) {
+                foreach ($inputs['otherfees'] as $key => $item) {
+                    // exchange rate must be require if currency is not VND
+                    if (!empty($item['unit']) && $item['unit'] != 'VND'
+                    ) {
+                        $rules["otherfees.{$key}.exchange_rate"] = 'required|numeric';
+                        $customAttributes["otherfees.{$key}.exchange_rate"] = __('label.rate');
+                    }
+                }
+            }
+
+            // charged bys
+            $rules['chargedbys.*.department']   = 'required_select';
+            $rules['chargedbys.*.percent']      = 'required|numeric';
+
             $validator = Validator::make($inputs, $rules, [], $customAttributes);
             if ($validator->fails()) {
                 unset($inputs['input_file']);
@@ -360,12 +384,12 @@ class Businesstrip2Controller extends Controller
             foreach ($inputs['transportations'] as $item) {
                 // amount
                 if (!empty($item['amount'])) {
-                    $item['amount'] = str_replace('.00', '', str_replace(',', '', $item['amount']));
+                    $item['amount'] = Common::getRawNumeric($item['amount']);
                 }
 
                 // rate
                 if (!empty($item['exchange_rate'])) {
-                    $item['exchange_rate'] = str_replace(',', '', $item['exchange_rate']);
+                    $item['exchange_rate'] = Common::getRawNumeric($item['exchange_rate']);
                 }
                 $newArr[] = $item;
             }
@@ -377,11 +401,11 @@ class Businesstrip2Controller extends Controller
             foreach ($inputs['accomodations'] as $item) {
                 // amount
                 if (!empty($item['amount'])) {
-                    $item['amount'] = str_replace('.00', '', str_replace(',', '', $item['amount']));
+                    $item['amount'] = Common::getRawNumeric($item['amount']);
                 }
                 // rate
                 if (!empty($item['exchange_rate'])) {
-                    $item['exchange_rate'] = str_replace(',', '', $item['exchange_rate']);
+                    $item['exchange_rate'] = Common::getRawNumeric($item['exchange_rate']);
                 }
                 $newArr[] = $item;
             }
@@ -393,43 +417,59 @@ class Businesstrip2Controller extends Controller
             foreach ($inputs['communications'] as $item) {
                 // amount
                 if (!empty($item['amount'])) {
-                    $item['amount'] = str_replace('.00', '', str_replace(',', '', $item['amount']));
+                    $item['amount'] = Common::getRawNumeric($item['amount']);
                 }
                 // rate
                 if (!empty($item['exchange_rate'])) {
-                    $item['exchange_rate'] = str_replace(',', '', $item['exchange_rate']);
+                    $item['exchange_rate'] = Common::getRawNumeric($item['exchange_rate']);
                 }
                 $newArr[] = $item;
             }
             $inputs['communications'] = $newArr;
         }
+        // tripfees - otherfees
+        if (!empty($inputs['otherfees'])) {
+            $newArr = [];
+            foreach ($inputs['otherfees'] as $item) {
+                // amount
+                if (!empty($item['amount'])) {
+                    $item['amount'] = Common::getRawNumeric($item['amount']);
+                }
+                // rate
+                if (!empty($item['exchange_rate'])) {
+                    $item['exchange_rate'] = Common::getRawNumeric($item['exchange_rate']);
+                }
+                $newArr[] = $item;
+            }
+            $inputs['otherfees'] = $newArr;
+        }
         // daily allowance
         // amount
         if (!empty($inputs['daily_allowance'])) {
-            $inputs['daily_allowance'] = str_replace(',', '', $inputs['daily_allowance']);
+            $inputs['daily_allowance'] = Common::getRawNumeric($inputs['daily_allowance']);
         }
         // rate
         if (!empty($inputs['daily_rate'])) {
-            $inputs['daily_rate'] = str_replace(',', '', $inputs['daily_rate']);
+            $inputs['daily_rate'] = Common::getRawNumeric($inputs['daily_rate']);
         }
         // total daily allowance
         // amount
         if (!empty($inputs['total_daily_allowance'])) {
-            $inputs['total_daily_allowance'] = str_replace(',', '', $inputs['total_daily_allowance']);
+            $inputs['total_daily_allowance'] = Common::getRawNumeric($inputs['total_daily_allowance']);
         }
         // rate
         if (!empty($inputs['total_daily_rate'])) {
-            $inputs['total_daily_rate'] = str_replace(',', '', $inputs['total_daily_rate']);
+            $inputs['total_daily_rate'] = Common::getRawNumeric($inputs['total_daily_rate']);
         }
-        // other fees
-        // amount
-        if (!empty($inputs['other_fees'])) {
-            $inputs['other_fees'] = str_replace(',', '', $inputs['other_fees']);
-        }
+        // // other fees
+        // // amount
+        // if (!empty($inputs['other_fees'])) {
+        //     $inputs['other_fees'] = str_replace(',', '', $inputs['other_fees']);
+        // }
         // rate
-        if (!empty($inputs['other_fees_rate'])) {
-            $inputs['other_fees_rate'] = str_replace(',', '', $inputs['other_fees_rate']);
-        }
+        // if (!empty($inputs['other_fees_rate'])) {
+        //     $inputs['other_fees_rate'] = str_replace(',', '', $inputs['other_fees_rate']);
+        // }
     }
 
     public function pdf(Request $request, $application)
