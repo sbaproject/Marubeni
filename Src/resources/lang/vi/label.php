@@ -65,11 +65,12 @@ return [
     'unit' => 'Tiền tệ',
     'rate' => 'Tỷ giá',
     'amount' => 'Số tiền',
+    'amount_per_day' => 'Số tiền / Ngày',
     'remarks' => 'Ghi chú',
     'type' => 'Loại',
     'refresh' => 'Làm mới',
     'settlement' => 'Quyết toán',
-    'percent' => 'Phần trăm %',
+    'percent' => 'Phần trăm',
 
     'popup_title_skip_approver' => 'Bỏ qua sự xét duyệt của',
     

@@ -32,11 +32,18 @@ $(document).ready(function() {
 
     makeCleavePercent();
 
+    makeCleaveNumOfDaysInput();
+
     // Number of days
-    new Cleave('.number_of_days', {
-        numericOnly: true,
-        blocks: [3]
-    });
+    function makeCleaveNumOfDaysInput() {
+        $('.number_of_days').each(function(index, element) {
+            new Cleave(element, {
+                numericOnly: true,
+                blocks: [3]
+            });
+        })
+    }
+
 
     // Percent
     function makeCleavePercent() {
@@ -555,6 +562,48 @@ $(document).ready(function() {
     }
 
     //=======================================
+    // Calculate Total Daily Allowances
+    //=======================================
+    var totalDaily = 0;
+
+    calculateTotalDaily();
+
+    $(document).on('change', '.daily-input', function() {
+        calculateTotalDaily();
+    });
+
+    function calculateTotalDaily() {
+
+        // case: new total_daily is invalid
+        totalExpenses -= totalDaily;
+
+        // get val
+        let daily1_amount = $('#daily1_amount').val();
+        let daily1_days = $('#daily1_days').val();
+        let daily2_amount = $('#daily2_amount').val();
+        let daily2_rate = $('#daily2_rate').val();
+        let daily2_days = $('#daily2_days').val();
+        // get raw val
+        daily1_amount = daily1_amount.toString().replace(/,/g, '');
+        daily1_days = daily1_days.toString().replace(/,/g, '');
+        daily2_amount = daily2_amount.toString().replace(/,/g, '');
+        daily2_rate = daily2_rate.toString().replace(/,/g, '');
+        daily2_days = daily2_days.toString().replace(/,/g, '');
+        // check num
+        daily1_amount = (isNaN(daily1_amount) || daily1_amount == '') ? 0 : parseFloat(daily1_amount);
+        daily1_days = (isNaN(daily1_days) || daily1_days == '') ? 0 : parseFloat(daily1_days);
+        daily2_amount = (isNaN(daily2_amount) || daily2_amount == '') ? 0 : parseFloat(daily2_amount);
+        daily2_rate = (isNaN(daily2_rate) || daily2_rate == '') ? 0 : parseFloat(daily2_rate);
+        daily2_days = (isNaN(daily2_days) || daily2_days == '') ? 0 : parseFloat(daily2_days);
+        // calculate total daily
+        totalDaily = (daily1_amount * daily1_days) + (daily2_amount * daily2_rate * daily2_days);
+        $('#total_daily_allowance').text(numeral(totalDaily).format('0,0.00'));
+        // re-calculate total expenses
+        totalExpenses += totalDaily;
+        $('#total_expenses').text(numeral(totalExpenses).format('0,0.00'));
+    }
+
+    //=======================================
     // Calculate Total Expenses
     //=======================================
     var totalExpenses = 0;
@@ -629,13 +678,13 @@ $(document).ready(function() {
                 return true; // continue
             }
 
-            let sub = amount * rate;
+            let sub = parseFloat(amount) * parseFloat(rate);
 
             totalExpenses += sub;
         });
 
-        totalExpenses = numeral(totalExpenses).format('0,0.00')
-        $('#total_expenses').text(totalExpenses);
+        totalExpenses = totalExpenses + totalDaily;
+        $('#total_expenses').text(numeral(totalExpenses).format('0,0.00'));
     }
 
     //=======================================

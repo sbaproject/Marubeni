@@ -69,11 +69,12 @@ return [
     'unit' => 'Currency',
     'rate' => 'Rate',
     'amount' => 'Amount',
+    'amount_per_day' => 'Amount / Day',
     'remarks' => 'Remarks',
     'type' => 'Type',
     'refresh' => 'Refresh',
     'settlement' => 'Settlement',
-    'percent' => 'Percent %',
+    'percent' => 'Percent',
 
     'popup_title_skip_approver' => 'Skip approval of',
 

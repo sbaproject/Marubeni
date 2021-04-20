@@ -2,14 +2,13 @@
     $destinations                   = Session::exists('inputs') ? Session::get('inputs')['destinations']                    : ($modFlg ? ($application->business2->destinations ?? null) : ($application->business->destinations ?? null));
     $itineraries                    = Session::exists('inputs') ? Session::get('inputs')['itineraries']                     : ($modFlg ? ($application->business2->transportations ?? null) : ($application->business->transportations ?? null));
     $number_of_days                 = Session::exists('inputs') ? Session::get('inputs')['number_of_days']                  : ($application->business2->number_of_days ?? null);
-
-    // $total_daily_allowance          = Session::exists('inputs') ? Session::get('inputs')['total_daily_allowance']           : ($application->business2->total_daily_allowance ?? null);
-    // $total_daily_unit               = Session::exists('inputs') ? Session::get('inputs')['total_daily_unit']                : ($application->business2->total_daily_unit ?? null);
-    // $total_daily_rate               = Session::exists('inputs') ? Session::get('inputs')['total_daily_rate']                : ($application->business2->total_daily_rate ?? null);
     
-    // $daily_allowance                = Session::exists('inputs') ? Session::get('inputs')['daily_allowance']                 : ($application->business2->daily_allowance ?? null);
-    // $daily_unit                     = Session::exists('inputs') ? Session::get('inputs')['daily_unit']                      : ($application->business2->daily_unit ?? null);
-    // $daily_rate                     = Session::exists('inputs') ? Session::get('inputs')['daily_rate']                      : ($application->business2->daily_rate ?? null);
+    $daily1_amount                  = Session::exists('inputs') ? Session::get('inputs')['daily1_amount']                   : ($application->business2->daily1_amount ?? null);
+    $daily1_days                    = Session::exists('inputs') ? Session::get('inputs')['daily1_days']                     : ($application->business2->daily1_days ?? null);
+
+    $daily2_amount                  = Session::exists('inputs') ? Session::get('inputs')['daily2_amount']                   : ($application->business2->daily2_amount ?? null);
+    $daily2_rate                    = Session::exists('inputs') ? Session::get('inputs')['daily2_rate']                     : ($application->business2->daily2_rate ?? null);
+    $daily2_days                    = Session::exists('inputs') ? Session::get('inputs')['daily2_days']                     : ($application->business2->daily2_days ?? null);
 
     // $charged_to                     = Session::exists('inputs') ? Session::get('inputs')['charged_to']                      : ($application->business2->charged_to ?? null);
     // $under_instruction_date         = Session::exists('inputs') ? Session::get('inputs')['under_instruction_date']          : ($application->business2->under_instruction_date ?? null);
@@ -19,7 +18,7 @@
     $communications                 = Session::exists('inputs') ? (Session::get('inputs')['communications'] ?? [])          : ($application->business2->tripfeecommunications ?? null);
     $accomodations                  = Session::exists('inputs') ? (Session::get('inputs')['accomodations'] ?? [])           : ($application->business2->tripfeeaccomodations ?? null);
     $otherfees                      = Session::exists('inputs') ? (Session::get('inputs')['otherfees'] ?? [])               : ($application->business2->tripfeeotherfees ?? null);
-    $chargedbys                     = Session::exists('inputs') ? (Session::get('inputs')['chargedbys'] ?? [])              :($application->business2->chargedbys ?? null);
+    $chargedbys                     = Session::exists('inputs') ? (Session::get('inputs')['chargedbys'] ?? [])              : ($application->business2->chargedbys ?? null);
 
     // get action url
     if(isset($modFlg)){
@@ -28,6 +27,7 @@
         } else {
             $actionUrl = route('user.business2.update', $application->id);
         }
+        // $actionUrl = route('user.business2.update', $application->id);
     } else {
         $actionUrl = route('user.business2.store', $application->id);
     }
@@ -922,29 +922,112 @@
                 </div>
                 <hr>
                 {{-- Daily allowances --}}
-                
+                <div class="form-group row">
+                    <div class="col-md-2 text-left caption">
+                        <label>{{ __('label.business_daily_allowance') }}</label>
+                    </div>
+                    <div class="col-md-10">
+                        {{-- Daily 1 --}}
+                        <div class="form-row">
+                            {{-- Amount --}}
+                            <div class="form-group col-md-4 mb-1">
+                                <span class="mb-0 mr-1">{{__('label.amount_per_day')}}</span>
+                                <div class="input-group">
+                                    <input type="text" id="daily1_amount" name="daily1_amount"
+                                        class="form-control daily-input amount @error('daily1_amount') is-invalid @enderror" autocomplete="off"
+                                        value="{{ $daily1_amount }}">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">VND</span>
+                                    </div>
+                                </div>
+                                @error('daily1_amount')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
+                            {{-- Num of Days --}}
+                            <div class="form-group col-md-4 mb-1">
+                                <span class="mb-0 mr-1">{{__('label.business_number_of_days')}}
+                                    <span class="text-danger required d-none"> (*)</span>
+                                </span>
+                                <input type="text" id="daily1_days" name="daily1_days"
+                                    class="form-control daily-input number_of_days @error('daily1_days') is-invalid @enderror" autocomplete="off"
+                                    value="{{ $daily1_days }}">
+                                @error('daily1_days')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
+                        </div>
+                        <hr>
+                        {{-- Daily 2 --}}
+                        <div class="form-row">
+                            {{-- Amount --}}
+                            <div class="form-group col-md-4 mb-1">
+                                <span class="mb-0 mr-1">{{__('label.amount_per_day')}}</span>
+                                <div class="input-group">
+                                    <input type="text" id="daily2_amount" name="daily2_amount"
+                                        class="form-control daily-input amount @error('daily2_amount') is-invalid @enderror" autocomplete="off"
+                                        value="{{ $daily2_amount }}">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">USD</span>
+                                    </div>
+                                </div>
+                                @error('daily2_amount')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
+                            {{-- Rate --}}
+                            <div class="form-group col-md-4 mb-1">
+                                <span class="mb-0 mr-1">{{__('label.rate')}}</span>
+                                <div class="input-group">
+                                    <input type="text" id="daily2_rate" name="daily2_rate"
+                                        class="form-control daily-input rate @error('daily2_rate') is-invalid @enderror" autocomplete="off"
+                                        value="{{ $daily2_rate }}">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">USD/VND</span>
+                                    </div>
+                                </div>
+                                @error('daily2_rate')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
+                            {{-- Num of Days --}}
+                            <div class="form-group col-md-4 mb-1">
+                                <span class="mb-0 mr-1">{{__('label.business_number_of_days')}}
+                                    <span class="text-danger required d-none"> (*)</span>
+                                </span>
+                                <input type="text" id="daily2_days" name="daily2_days"
+                                    class="form-control daily-input number_of_days @error('daily2_days') is-invalid @enderror" autocomplete="off"
+                                    value="{{ $daily2_days }}">
+                                @error('daily2_days')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
+                        </div>
+                        <hr style="border-top: 1px dashed rgba(0,0,0,.1)">
+                        <strong>{{ __('label.business_total_daily_allowance') }}</strong>:
+                        <h5><span class="badge badge-info"><span id="total_daily_allowance"></span><b> VND</b></span></h5>
+                    </div>
+                </div>
                 {{-- Total daily allowances --}}
                 
                 {{-- Cost to be charged to (Sec Code) --}}
                 <hr>
                 <div class="form-group row">
                     <div class="col-md-2 text-left">
-                        <label>{{ __('label.business_itinerary') }}<span class="text-danger required"> (*)</span></label>
+                        <label>{{ __('label.business_charged_to') }}<span class="text-danger required"> (*)</span></label>
                     </div>
                     <div class="col-md-10">
                         <div id="chargedbys_block">
-                            @php
-                                // $chargedbys = [
-                                //     [
-                                //         'department' => 4,
-                                //         'percent' => 20,
-                                //     ],
-                                //     [
-                                //     'department' => 4,
-                                //     'percent' => 25,
-                                //     ],
-                                // ];
-                            @endphp
                             @if (!empty($chargedbys))
                             @foreach ($chargedbys as $key => $chargedby)
                             <div class="card card-body card-chargedbys">
@@ -983,12 +1066,14 @@
                                         <span for="">
                                             {{ __('label.percent') }}<span class="text-danger required"> (*)</span>
                                         </span>
-                                        <input type="text"
-                                            name="chargedbys[{{ $key }}][percent]"
-                                            style="width: 80px"
-                                            class="form-control chargedbys_percent @error('chargedbys.'.$key.'.percent') is-invalid @enderror"
-                                            value="{{ $chargedbys[$key]['percent'] }}"
-                                            autocomplete="off" @if($previewFlg) readonly @endif>
+                                        <div class="input-group">
+                                            <input type="text" name="chargedbys[{{ $key }}][percent]" style="width: 80px"
+                                                class="form-control chargedbys_percent @error('chargedbys.'.$key.'.percent') is-invalid @enderror"
+                                                value="{{ $chargedbys[$key]['percent'] }}" autocomplete="off" @if($previewFlg) readonly @endif>
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">%</span>
+                                            </div>
+                                        </div>
                                         @error('chargedbys.'.$key.'.percent')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -1026,8 +1111,13 @@
                                         <span for="">
                                             {{ __('label.percent') }}<span class="text-danger required"> (*)</span>
                                         </span>
-                                        <input type="text" name="chargedbys[0][percent]" style="width: 100px"
-                                            class="form-control chargedbys_percent" autocomplete="off">
+                                        <div class="input-group">
+                                            <input type="text" name="chargedbys[0][percent]" style="width: 100px" class="form-control chargedbys_percent"
+                                                autocomplete="off">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">%</span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -1059,7 +1149,12 @@
                                         <span for="">
                                             {{ __('label.percent') }}<span class="text-danger required"> (*)</span>
                                         </span>
-                                        <input type="text" class="form-control chargedbys_percent" style="width: 80px" autocomplete="off">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control chargedbys_percent" style="width: 80px" autocomplete="off">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">%</span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -1072,28 +1167,6 @@
                         @endif
                     </div>
                 </div>
-                {{-- <div class="form-group row">
-                    <div class="col-md-2 text-left caption">
-                        <label>{{ __('label.business_charged_to') }}<span class="text-danger required"> (*)</span></label>
-                    </div>
-                    <div class="col-md-10">
-                        <select name="charged_to" style="width: auto;" class="form-control @error('charged_to') is-invalid @enderror">
-                            <option value="">
-                                {{ __('label.select') }}
-                            </option>
-                            @foreach ($departments as $item)
-                            <option value="{{ $item->id }}" @if($charged_to == $item->id) selected @endif>
-                               {{ $item->name }}
-                            </option>
-                            @endforeach
-                        </select>
-                        @error('charged_to')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
-                    </div>
-                </div> --}}
                 {{-- Total Expenses --}}
                 <hr>
                 <div class="form-group row">
@@ -1101,10 +1174,10 @@
                         <label>{{ __('label.business_total_expenses') }}</label>
                     </div>
                     <div class="col-md-10">
-                        <span id="total_expenses"></span> VND
-                        <button id="refresh-total" class="btn bg-gradient-info btn-sm" title="{{ __('label.refresh') }}">
+                        <h5><span class="badge badge-primary"><span id="total_expenses"></span><b> VND</b></span></h5>
+                        {{-- <button id="refresh-total" class="btn bg-gradient-info btn-sm" title="{{ __('label.refresh') }}">
                             <i class="fas fa-redo"></i>
-                        </button>
+                        </button> --}}
                     </div>
                 </div>
             </div>

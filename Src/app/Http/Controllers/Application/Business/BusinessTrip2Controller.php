@@ -226,13 +226,12 @@ class Businesstrip2Controller extends Controller
                 'destinations'              => __('label.business_trip_destination'),
                 'number_of_days'            => __('label.business_number_of_days'),
 
-                'total_daily_allowance'     => __('label.amount'),
-                'total_daily_unit'          => __('label.unit'),
-                'total_daily_rate'          => __('label.rate'),
+                'daily1_amount'             => __('label.amount_per_day'),
+                'daily1_days'               => __('label.days'),
 
-                'daily_allowance'           => __('label.amount'),
-                'daily_unit'                => __('label.unit'),
-                'daily_rate'                => __('label.rate'),
+                'daily2_amount'             => __('label.amount_per_day'),
+                'daily2_rate'               => __('label.rate'),
+                'daily2_days'               => __('label.days'),
 
                 'itineraries.*.departure'   => __('label.business_departure'),
                 'itineraries.*.arrive'      => __('label.business_arrival'),
@@ -254,7 +253,7 @@ class Businesstrip2Controller extends Controller
                 'otherfees.*.unit'      => __('label.unit'),
                 'otherfees.*.amount'    => __('label.amount'),
 
-                'chargedbys.*.department'    => __('label.business_department'),
+                'chargedbys.*.department'   => __('label.business_department'),
                 'chargedbys.*.percent'      => __('label.percent'),
             ];
 
@@ -266,9 +265,15 @@ class Businesstrip2Controller extends Controller
             //     $rules['input_file'] = config('const.rules.attached_file');
             // }
 
-            // $rules['charged_to']            = 'required_select';
-            $rules['destinations']          = 'required';
-            $rules['number_of_days']        = 'required|numeric';
+            $rules['destinations']      = 'required';
+            $rules['number_of_days']    = 'required|numeric';
+
+            $rules['daily1_amount']     = 'nullable|numeric';
+            $rules['daily1_days']       = 'nullable|numeric';
+
+            $rules['daily2_amount']     = 'nullable|numeric';
+            $rules['daily2_rate']       = 'nullable|numeric';
+            $rules['daily2_days']       = 'nullable|numeric';
 
             // total daily allowance
             if (
@@ -461,15 +466,22 @@ class Businesstrip2Controller extends Controller
         if (!empty($inputs['total_daily_rate'])) {
             $inputs['total_daily_rate'] = Common::getRawNumeric($inputs['total_daily_rate']);
         }
-        // // other fees
-        // // amount
-        // if (!empty($inputs['other_fees'])) {
-        //     $inputs['other_fees'] = str_replace(',', '', $inputs['other_fees']);
-        // }
+
+        // daily 1
+        // amount
+        if (!empty($inputs['daily1_amount'])) {
+            $inputs['daily1_amount'] = Common::getRawNumeric($inputs['daily1_amount']);
+        }
+
+        // daily 2
+        // amount
+        if (!empty($inputs['daily2_amount'])) {
+            $inputs['daily2_amount'] = Common::getRawNumeric($inputs['daily2_amount']);
+        }
         // rate
-        // if (!empty($inputs['other_fees_rate'])) {
-        //     $inputs['other_fees_rate'] = str_replace(',', '', $inputs['other_fees_rate']);
-        // }
+        if (!empty($inputs['daily2_rate'])) {
+            $inputs['daily2_rate'] = Common::getRawNumeric($inputs['daily2_rate']);
+        }
     }
 
     public function pdf(Request $request, $application)

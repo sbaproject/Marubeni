@@ -24,6 +24,13 @@ class Businesstrip2 extends Model
         'destinations',
         'number_of_days',
         'charged_to',
+
+        'daily1_amount',
+        'daily1_days',
+        'daily2_amount',
+        'daily2_rate',
+        'daily2_days',
+
         'file_path',
         'created_by',
         'updated_by',
