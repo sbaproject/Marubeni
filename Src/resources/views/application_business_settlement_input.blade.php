@@ -3,13 +3,13 @@
     $itineraries                    = Session::exists('inputs') ? Session::get('inputs')['itineraries']                     : ($modFlg ? ($application->business2->transportations ?? null) : ($application->business->transportations ?? null));
     $number_of_days                 = Session::exists('inputs') ? Session::get('inputs')['number_of_days']                  : ($application->business2->number_of_days ?? null);
 
-    $total_daily_allowance          = Session::exists('inputs') ? Session::get('inputs')['total_daily_allowance']           : ($application->business2->total_daily_allowance ?? null);
-    $total_daily_unit               = Session::exists('inputs') ? Session::get('inputs')['total_daily_unit']                : ($application->business2->total_daily_unit ?? null);
-    $total_daily_rate               = Session::exists('inputs') ? Session::get('inputs')['total_daily_rate']                : ($application->business2->total_daily_rate ?? null);
+    // $total_daily_allowance          = Session::exists('inputs') ? Session::get('inputs')['total_daily_allowance']           : ($application->business2->total_daily_allowance ?? null);
+    // $total_daily_unit               = Session::exists('inputs') ? Session::get('inputs')['total_daily_unit']                : ($application->business2->total_daily_unit ?? null);
+    // $total_daily_rate               = Session::exists('inputs') ? Session::get('inputs')['total_daily_rate']                : ($application->business2->total_daily_rate ?? null);
     
-    $daily_allowance                = Session::exists('inputs') ? Session::get('inputs')['daily_allowance']                 : ($application->business2->daily_allowance ?? null);
-    $daily_unit                     = Session::exists('inputs') ? Session::get('inputs')['daily_unit']                      : ($application->business2->daily_unit ?? null);
-    $daily_rate                     = Session::exists('inputs') ? Session::get('inputs')['daily_rate']                      : ($application->business2->daily_rate ?? null);
+    // $daily_allowance                = Session::exists('inputs') ? Session::get('inputs')['daily_allowance']                 : ($application->business2->daily_allowance ?? null);
+    // $daily_unit                     = Session::exists('inputs') ? Session::get('inputs')['daily_unit']                      : ($application->business2->daily_unit ?? null);
+    // $daily_rate                     = Session::exists('inputs') ? Session::get('inputs')['daily_rate']                      : ($application->business2->daily_rate ?? null);
 
     // $charged_to                     = Session::exists('inputs') ? Session::get('inputs')['charged_to']                      : ($application->business2->charged_to ?? null);
     // $under_instruction_date         = Session::exists('inputs') ? Session::get('inputs')['under_instruction_date']          : ($application->business2->under_instruction_date ?? null);
@@ -922,111 +922,9 @@
                 </div>
                 <hr>
                 {{-- Daily allowances --}}
-                <div class="form-group row">
-                    <div class="col-md-2 text-left caption">
-                        <label>{{ __('label.business_daily_allowance') }}</label>
-                    </div>
-                    <div class="col-md-10">
-                        <div class="form-row">
-                            {{-- Amount --}}
-                            <div class="form-group col-md-4 mb-1">
-                                <span class="mb-0 mr-1">{{__('label.amount')}}</span>
-                                <input type="text" id="daily_allowance" name="daily_allowance"
-                                    class="form-control amount @error('daily_allowance') is-invalid @enderror" autocomplete="off"
-                                    data-target="daily_rate"
-                                    value="{{ $daily_allowance }}">
-                                @error('daily_allowance')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
-                            {{-- Unit --}}
-                            <div class="form-group col-md-4 mb-1">
-                                <span class="mb-0 mr-1">{{__('label.unit')}}</span>
-                                <select name="daily_unit" style="width: 100%;"
-                                    class="form-control select_unit @error('daily_unit') is-invalid @enderror"
-                                    data-target="daily_rate">
-                                    @foreach (config('const.units') as $value)
-                                    <option value="{{ $value }}" @if($daily_unit==$value) selected @endif>
-                                        {{ $value }}
-                                    </option>
-                                    @endforeach
-                                </select>
-                                @error('daily_unit')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
-                            {{-- Rate --}}
-                            <div class="form-group col-md-4 mb-1">
-                                <span class="mb-0 mr-1">{{__('label.rate')}}<span class="text-danger required d-none"> (*)</span></span>
-                                <input type="text" id="daily_rate" name="daily_rate"
-                                    class="form-control rate @error('daily_rate') is-invalid @enderror" autocomplete="off"
-                                    data-target="daily_allowance"
-                                    value="{{ $daily_rate }}">
-                                @error('daily_rate')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                
                 {{-- Total daily allowances --}}
-                <div class="form-group row">
-                    <div class="col-md-2 text-left caption">
-                        <label>{{ __('label.business_total_daily_allowance') }}</label>
-                    </div>
-                    <div class="col-md-10">
-                        <div class="form-row">
-                            {{-- Amount --}}
-                            <div class="form-group col-md-4 mb-1">
-                                <span class="mb-0 mr-1">{{__('label.amount')}}</span>
-                                <input type="text" id="total_daily_allowance" name="total_daily_allowance"
-                                    class="form-control sync_total amount @error('total_daily_allowance') is-invalid @enderror" autocomplete="off" value="{{ $total_daily_allowance }}"
-                                    data-target="total_daily_rate">
-                                @error('total_daily_allowance')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
-                            {{-- Unit --}}
-                            <div class="form-group col-md-4 mb-1">
-                                <span class="mb-0 mr-1">{{__('label.unit')}}</span>
-                                <select name="total_daily_unit" style="width: 100%;"
-                                    class="form-control select_unit @error('total_daily_unit') is-invalid @enderror"
-                                    data-target="total_daily_rate">
-                                    @foreach (config('const.units') as $value)
-                                    <option value="{{ $value }}" @if($total_daily_unit == $value) selected @endif>
-                                        {{ $value }}
-                                    </option>
-                                    @endforeach
-                                </select>
-                                @error('total_daily_unit')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
-                            {{-- Rate --}}
-                            <div class="form-group col-md-4 mb-1">
-                                <span class="mb-0 mr-1">{{__('label.rate')}}<span class="text-danger required d-none"> (*)</span></span>
-                                <input type="text" id="total_daily_rate" name="total_daily_rate"
-                                    class="form-control sync_total rate @error('total_daily_rate') is-invalid @enderror" autocomplete="off" value="{{ $total_daily_rate }}"
-                                    data-target="total_daily_allowance">
-                                @error('total_daily_rate')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                
                 {{-- Cost to be charged to (Sec Code) --}}
                 <hr>
                 <div class="form-group row">
