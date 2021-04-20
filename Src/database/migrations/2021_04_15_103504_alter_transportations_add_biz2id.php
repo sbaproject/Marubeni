@@ -20,7 +20,7 @@ class AlterTransportationsAddBiz2id extends Migration
             $table->unsignedBigInteger('businesstrip_id')->nullable()->change();
             $table->unsignedBigInteger('businesstrip2_id')->after('businesstrip_id')->nullable();
 
-            $table->foreign('businesstrip2_id')->references('id')->on('businesstrips');
+            $table->foreign('businesstrip2_id')->references('id')->on('businesstrip2s');
         });
     }
 
