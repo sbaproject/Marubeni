@@ -55,14 +55,15 @@ class Businesstrip2Controller extends Controller
         if (isset($inputs['apply']) || isset($inputs['draft']) || isset($inputs['pdf'])) {
             // export pdf
             if (isset($inputs['pdf'])) {
-                return $this->pdf($request, $application);
+                session()->flash('pdf_url', route('user.business2.pdf', $application->id));
+                session()->put('inputs', $inputs);
+                return redirect()->route('user.business2.show', $application->id);
             }
             // only owner able to edit (edit mode)
             if (!empty($application) && Auth::user()->id !== $application->created_by) {
                 abort(403);
             }
         } else {
-            dd($inputs);
             abort(404);
         }
 
@@ -201,7 +202,12 @@ class Businesstrip2Controller extends Controller
             // commit DB
             DB::commit();
 
+            // success alert
             Common::setAlertSuccess();
+
+            // save success then will open pdf in new tab
+            session()->flash('pdf_url',route('user.business2.pdf', $application->id));
+
             return redirect()->route('user.business2.show', $application->id);
         } catch (Exception $ex) {
 
@@ -484,11 +490,29 @@ class Businesstrip2Controller extends Controller
         }
     }
 
-    public function pdf(Request $request, $application)
+    public function pdf(Request $request, $applicationId){
+
+        $application = Application::findOrFail($applicationId);
+
+        // get directly data from inputs on form screen
+        if($request->has('m')){
+            if(!session()->has('inputs')){
+                abort(404, 'Your PDF file has expired !');
+            }
+            $inputs = session()->get('inputs');
+            session()->forget('inputs');
+        }
+        // get data from db
+        else {
+            $inputs = $application->business2->toArray();
+            $inputs['itineraries'] = $application->business2->itineraries;
+        }
+
+        return $this->openPdf($request, $application, $inputs);
+    }
+
+    private function openPdf(Request $request, $application, $inputs)
     {
-
-        $inputs = $request->input();
-
         if (!empty($application)) {
             $loginUser = Auth::user();
 
@@ -500,12 +524,9 @@ class Businesstrip2Controller extends Controller
         
         $this->makeCorrectNumeralFromInput($inputs);
 
-        // dd($inputs, $application);
-
         // PDF::setOptions(['defaultFont' => 'Roboto-Black']);
         // PDF::setOptions(['enable-javascript' => true]);
         $pdf = PDF::loadView("application_business2_pdf", compact('application', 'inputs'));
-
 
         // preview pdf
         $fileName = "business_settlement.pdf";

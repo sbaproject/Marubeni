@@ -48,6 +48,10 @@
 			font-style: normal;
 		}
 
+		@page{
+		margin: 5px;
+		}
+
 		body {
 			font-family: "notosans-regular, notosans-bold, notosans-bolditalic,notosans-italic";
 			font-size: 10px;

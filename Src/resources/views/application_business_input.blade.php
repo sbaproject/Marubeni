@@ -38,7 +38,7 @@
 @section('content')
 @php
 
-    $trans              = Session::exists('inputs') ? Session::get('inputs')['trans']           : (isset($application) ? $application->business->transportations : null);
+    $itineraries        = Session::exists('inputs') ? Session::get('inputs')['trans']           : (isset($application) ? $application->business->itineraries : null);
     $destinations       = Session::exists('inputs') ? Session::get('inputs')['destinations']    : (isset($application) ? $application->business->destinations : null);
     $trip_dt_from       = Session::exists('inputs') ? Session::get('inputs')['trip_dt_from']    : (isset($application) ? $application->business->trip_dt_from : null);
     $trip_dt_to         = Session::exists('inputs') ? Session::get('inputs')['trip_dt_to']      : (isset($application) ? $application->business->trip_dt_to : null);
@@ -183,11 +183,11 @@
                     </div>
                     <div class="col-sm-10">
                         <div id="transport_block">
-                            @if (!empty($trans))
-                                @foreach ($trans as $key => $value)
+                            @if (!empty($itineraries))
+                                @foreach ($itineraries as $key => $value)
                                 <div class="card card-body card-itinerary-transport">
                                     @if(!$previewFlg)
-                                    <div class="d-delete d-flex justify-content-end @if(count($trans) === 1 && $key === 0) d-none @endif">
+                                    <div class="d-delete d-flex justify-content-end @if(count($itineraries) === 1 && $key === 0) d-none @endif">
                                         <button class="btnDelete btn bg-gradient-danger btn-sm pt-0 pb-0 pl-3 pr-3 mb-1">
                                             {{ __('label.button_delete') }}
                                         </button>
@@ -199,7 +199,7 @@
                                                 <span class="col-md-3">{{ __('label.business_departure') }}<span class="text-danger required"> (*)</span></span>
                                                 <div class="col-md-9">
                                                     <input type="text" class="form-control departure @error('trans.'.$key.'.departure') is-invalid @enderror"
-                                                        name="trans[{{ $key }}][departure]" value="{{ $trans[$key]['departure'] }}" autocomplete="off"
+                                                        name="trans[{{ $key }}][departure]" value="{{ $itineraries[$key]['departure'] }}" autocomplete="off"
                                                         @if($previewFlg) readonly @endif>
                                                     @error('trans.'.$key.'.departure')
                                                     <span class="invalid-feedback" role="alert">
@@ -212,7 +212,7 @@
                                                 <span class="col-md-3">{{ __('label.business_arrival') }}<span class="text-danger required"> (*)</span></span>
                                                 <div class="col-md-9">
                                                     <input type="text" class="form-control arrive @error('trans.'.$key.'.arrive') is-invalid @enderror"
-                                                        name="trans[{{ $key }}][arrive]" value="{{ $trans[$key]['arrive'] }}" autocomplete="off"
+                                                        name="trans[{{ $key }}][arrive]" value="{{ $itineraries[$key]['arrive'] }}" autocomplete="off"
                                                         @if($previewFlg) readonly @endif>
                                                     @error('trans.'.$key.'.arrive')
                                                     <span class="invalid-feedback" role="alert">
@@ -227,7 +227,7 @@
                                                 <span class="col-md-3">{{ __('label.business_method') }}<span class="text-danger required"> (*)</span></span>
                                                 <div class="col-md-9">
                                                     <input type="text" class="form-control method @error('trans.'.$key.'.method') is-invalid @enderror"
-                                                        name="trans[{{ $key }}][method]" value="{{ $trans[$key]['method'] }}" autocomplete="off"
+                                                        name="trans[{{ $key }}][method]" value="{{ $itineraries[$key]['method'] }}" autocomplete="off"
                                                         @if($previewFlg) readonly @endif>
                                                     @error('trans.'.$key.'.method')
                                                     <span class="invalid-feedback" role="alert">
@@ -312,7 +312,7 @@
                             </div>
                         </div>
                         @if(!$previewFlg)
-                        <button id="btnAdd" class="btn bg-gradient-danger @if(!empty($trans) && count($trans) >= 4) d-none @endif">
+                        <button id="btnAdd" class="btn bg-gradient-danger @if(!empty($itineraries) && count($itineraries) >= 4) d-none @endif">
                             + {{ __('label.button_addnew') }}
                         </button>
                         @endif

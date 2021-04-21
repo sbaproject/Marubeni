@@ -41,7 +41,7 @@ class Businesstrip extends Model
     //     return $trans->toArray();
     // }
 
-    public function transportations()
+    public function itineraries()
     {
         return $this->hasMany(Transportation::class);
     }

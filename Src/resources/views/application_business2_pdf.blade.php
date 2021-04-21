@@ -42,6 +42,10 @@
 			font-style: normal;
 		}
 
+		@page{
+			margin: 5px;
+		}
+
 		body {
 			font-family: "notosans-regular, notosans-bold, notosans-bolditalic,notosans-italic";
 			font-size: 10px;
@@ -313,8 +317,8 @@
 					{{ date('d/m/Y', strtotime($inputs['itineraries'][2]['trans_date'] ?? null)) }}
 					@endisset
 				</td>
-				<td class="data jp">{{ $inputs['itineraries'][3]['departure'] ?? '' }}</td>
-				<td class="data jp">{{ $inputs['itineraries'][3]['departure'] ?? '' }}</td>
+				<td class="data jp">{{ $inputs['itineraries'][2]['departure'] ?? '' }}</td>
+				<td class="data jp">{{ $inputs['itineraries'][2]['departure'] ?? '' }}</td>
 				<td class="data jp">
 					@isset($inputs['itineraries'][3]['trans_date'])
 					{{ date('d/m/Y', strtotime($inputs['itineraries'][3]['trans_date'] ?? null)) }}

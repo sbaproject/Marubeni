@@ -203,6 +203,7 @@ Route::middleware('checkip')->group(function () {
                     // });
                     Route::get('detail/{id}', [BusinessTrip2Controller::class, 'show'])->name('show');
                     Route::post('detail/{id}', [BusinessTrip2Controller::class, 'update'])->name('update');
+                    Route::get('pdf/{id}', [BusinessTrip2Controller::class, 'pdf'])->name('pdf');
                     // Route::get('preview/{id}', [BusinessTrip2Controller::class, 'preview'])->name('preview');
                     // Route::post('preview/{id}', [BusinessTrip2Controller::class, 'previewPdf'])->name('preview.pdf');
                 });

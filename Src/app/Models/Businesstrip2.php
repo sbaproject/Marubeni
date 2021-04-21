@@ -39,10 +39,10 @@ class Businesstrip2 extends Model
     ];
 
     protected $appends = [
-        'tripfee_transportations',
-        'tripfee_accomodations',
-        'tripfee_communications',
-        'tripfee_otherfees',
+        'transportations',
+        'accomodations',
+        'communications',
+        'otherfees',
         'chargedbys',
     ];
 
@@ -56,51 +56,51 @@ class Businesstrip2 extends Model
        $this->charged_to = static::implodeChargedBys($values);
     }
 
-    public function getTripFeeTransportationsAttribute()
+    public function getTransportationsAttribute()
     {
         $arr = [];
         foreach ($this->tripfees as $value) {
             if ($value->type_trip == config('const.trip_fee_type.transportation')){
-                $arr[] = $value;
+                $arr[] = $value->toArray();
             }
         }
         return $arr;
     }
 
-    public function getTripFeeAccomodationsAttribute()
+    public function getAccomodationsAttribute()
     {
         $arr = [];
         foreach ($this->tripfees as $value) {
             if ($value->type_trip == config('const.trip_fee_type.accomodation')) {
-                $arr[] = $value;
+                $arr[] = $value->toArray();
             }
         }
         return $arr;
     }
 
-    public function getTripFeeCommunicationsAttribute()
+    public function getCommunicationsAttribute()
     {
         $arr = [];
         foreach ($this->tripfees as $value) {
             if ($value->type_trip == config('const.trip_fee_type.communication')) {
-                $arr[] = $value;
+                $arr[] = $value->toArray();
             }
         }
         return $arr;
     }
 
-    public function getTripFeeOtherFeesAttribute()
+    public function getOtherFeesAttribute()
     {
         $arr = [];
         foreach ($this->tripfees as $value) {
             if ($value->type_trip == config('const.trip_fee_type.otherfees')) {
-                $arr[] = $value;
+                $arr[] = $value->toArray();
             }
         }
         return $arr;
     }
 
-    public function transportations()
+    public function itineraries()
     {
         return $this->hasMany(Transportation::class);
     }

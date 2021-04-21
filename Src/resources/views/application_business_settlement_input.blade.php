@@ -1,6 +1,6 @@
 @php
     $destinations                   = Session::exists('inputs') ? Session::get('inputs')['destinations']                    : ($modFlg ? ($application->business2->destinations ?? null) : ($application->business->destinations ?? null));
-    $itineraries                    = Session::exists('inputs') ? Session::get('inputs')['itineraries']                     : ($modFlg ? ($application->business2->transportations ?? null) : ($application->business->transportations ?? null));
+    $itineraries                    = Session::exists('inputs') ? Session::get('inputs')['itineraries']                     : ($modFlg ? ($application->business2->itineraries ?? null) : ($application->business->itineraries ?? null));
     $number_of_days                 = Session::exists('inputs') ? Session::get('inputs')['number_of_days']                  : ($application->business2->number_of_days ?? null);
     
     $daily1_amount                  = Session::exists('inputs') ? Session::get('inputs')['daily1_amount']                   : ($application->business2->daily1_amount ?? null);
@@ -10,14 +10,10 @@
     $daily2_rate                    = Session::exists('inputs') ? Session::get('inputs')['daily2_rate']                     : ($application->business2->daily2_rate ?? null);
     $daily2_days                    = Session::exists('inputs') ? Session::get('inputs')['daily2_days']                     : ($application->business2->daily2_days ?? null);
 
-    // $charged_to                     = Session::exists('inputs') ? Session::get('inputs')['charged_to']                      : ($application->business2->charged_to ?? null);
-    // $under_instruction_date         = Session::exists('inputs') ? Session::get('inputs')['under_instruction_date']          : ($application->business2->under_instruction_date ?? null);
-    // $under_instruction_approval_no  = Session::exists('inputs') ? Session::get('inputs')['under_instruction_approval_no']   : ($application->business2->under_instruction_approval_no ?? null);
-
-    $transportations                = Session::exists('inputs') ? (Session::get('inputs')['transportations'] ?? [])         : ($application->business2->tripfeetransportations ?? null);
-    $communications                 = Session::exists('inputs') ? (Session::get('inputs')['communications'] ?? [])          : ($application->business2->tripfeecommunications ?? null);
-    $accomodations                  = Session::exists('inputs') ? (Session::get('inputs')['accomodations'] ?? [])           : ($application->business2->tripfeeaccomodations ?? null);
-    $otherfees                      = Session::exists('inputs') ? (Session::get('inputs')['otherfees'] ?? [])               : ($application->business2->tripfeeotherfees ?? null);
+    $transportations                = Session::exists('inputs') ? (Session::get('inputs')['transportations'] ?? [])         : ($application->business2->transportations ?? null);
+    $communications                 = Session::exists('inputs') ? (Session::get('inputs')['communications'] ?? [])          : ($application->business2->communications ?? null);
+    $accomodations                  = Session::exists('inputs') ? (Session::get('inputs')['accomodations'] ?? [])           : ($application->business2->accomodations ?? null);
+    $otherfees                      = Session::exists('inputs') ? (Session::get('inputs')['otherfees'] ?? [])               : ($application->business2->otherfees ?? null);
     $chargedbys                     = Session::exists('inputs') ? (Session::get('inputs')['chargedbys'] ?? [])              : ($application->business2->chargedbys ?? null);
 
     // get action url
@@ -90,7 +86,19 @@
 
 @section('content')
 <section class="content leave-application">
-    {{-- <x-alert /> --}}
+
+    {{-- auto open pdf in new tab --}}
+    <script type="text/javascript"> 
+        @if(session()->has('pdf_url'))
+            $(function(){
+                var link = $("<a>");
+                    link.attr("href", "{{ session()->get('pdf_url') }}{{ session()->has('inputs') ? '?m=true' : '' }}");
+                    link.attr("target", "_blank");
+                link[0].click();
+            });
+        @endif
+    </script>
+    
     <form method="POST"
         action="{{ $actionUrl }}"
         enctype="multipart/form-data">

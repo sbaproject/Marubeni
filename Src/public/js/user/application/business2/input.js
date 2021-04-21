@@ -110,7 +110,7 @@ $(document).ready(function() {
     setTransDatePickers(_ITINERARIES);
 
     function setTransDatePickers(items) {
-        if (items == null) {
+        if (items == null || items.length == 0) {
             setDatePicker(0);
             return;
         }
