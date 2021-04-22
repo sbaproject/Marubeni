@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
-class Businesstrip2Controller extends Controller
+class BusinessTrip2Controller extends Controller
 {
     public function index()
     {
