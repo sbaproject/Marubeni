@@ -622,21 +622,32 @@
 			</tbody>
 		</table>
 	@endisset
-	{{-- Under instruction by
+	{{-- Under instruction by --}}
 	<div class="br"></div>
 	<table style="clear: both;">
 		<tbody>
 			<tr>
-				<td rowspan="2" class="f">
+				<td rowspan="2" class="f" style="width: 15%;">
 					<div class="caption">Under instruction by</div>
-					<div class="caption">chỉ đạo bởi</div>
+					<div class="caption">Chỉ đạo bởi</div>
 				</td>
-				<td>Date/Ngày</td>
-				<td>20/20/2021</td>
+				<td style="width:16%">Date/Ngày</td>
+				<td>
+					@isset($application->lastapprovalstep1)
+						{{ \Carbon\Carbon::parse($application->lastapprovalstep1->created_at)->format('d/m/Y') }}
+					@endisset
+				</td>
+			</tr>
+			<tr>
+				<td class="f">
+					<div class="caption">Approval No</div>
+					<div class="caption">Số phê duyệt</div>
+				</td>
+				<td>{{ $application->application_no }}</td>
 			</tr>
 		</tbody>
 	</table>
-	<p></p> --}}
+	<p></p>
 <table>
 		<tr>
 			<td class="f" rowspan="2" style="vertical-align: top;text-align: center;height: 140px;width:26%">
