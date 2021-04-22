@@ -55,10 +55,10 @@ class Businesstrip2Controller extends Controller
         if (isset($inputs['apply']) || isset($inputs['draft']) || isset($inputs['pdf'])) {
             // export pdf
             if (isset($inputs['pdf'])) {
-                // session()->flash('pdf_url', route('user.business2.pdf', $application->id));
-                // session()->put('inputs', $inputs);
-                // return redirect()->route('user.business2.show', $application->id);
-                $this->openPdf($request, $application, $inputs);
+                session()->flash('pdf_url', route('user.business2.pdf', $application->id));
+                session()->put('inputs', $inputs);
+                return redirect()->route('user.business2.show', $application->id);
+                // return $this->openPdf($request, $application, $inputs);
             }
             // only owner able to edit (edit mode)
             if (!empty($application) && Auth::user()->id !== $application->created_by) {
@@ -455,24 +455,6 @@ class Businesstrip2Controller extends Controller
                 $newArr[] = $item;
             }
             $inputs['otherfees'] = $newArr;
-        }
-        // daily allowance
-        // amount
-        if (!empty($inputs['daily_allowance'])) {
-            $inputs['daily_allowance'] = Common::getRawNumeric($inputs['daily_allowance']);
-        }
-        // rate
-        if (!empty($inputs['daily_rate'])) {
-            $inputs['daily_rate'] = Common::getRawNumeric($inputs['daily_rate']);
-        }
-        // total daily allowance
-        // amount
-        if (!empty($inputs['total_daily_allowance'])) {
-            $inputs['total_daily_allowance'] = Common::getRawNumeric($inputs['total_daily_allowance']);
-        }
-        // rate
-        if (!empty($inputs['total_daily_rate'])) {
-            $inputs['total_daily_rate'] = Common::getRawNumeric($inputs['total_daily_rate']);
         }
 
         // daily 1

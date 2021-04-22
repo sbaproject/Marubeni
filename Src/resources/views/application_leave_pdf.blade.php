@@ -170,7 +170,7 @@
 		<tr>
 			<td class="logo">
 				<div class="main">Marubeni</div>
-				<div class="sub">Marubeni Vietname Company Limited</div>
+				<div class="sub">Marubeni Vietnam Company Limited</div>
 			</td>
 			<td style="text-align: right;text-decoration: underline;">
 				Ver. MVN-160

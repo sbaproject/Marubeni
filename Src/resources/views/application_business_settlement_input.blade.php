@@ -89,19 +89,17 @@
 
     {{-- auto open pdf in new tab --}}
     <script type="text/javascript">
-        // var win = null;
-        // @if(session()->has('pdf_url'))
-        //     $(function(){
-        //         // var link = $("<a>");
-        //         //     link.attr("href", "{{ session()->get('pdf_url') }}{{ session()->has('inputs') ? '?m=true' : '' }}");
-        //         //     link.attr("target", "_blank");
-        //         // link[0].click();
-        //         // $("#link_pdf").attr('href',"{{ session()->get('pdf_url') }}{{ session()->has('inputs') ? '?m=true' : '' }}");
-        //         // $("#link_pdf")[0].click();
-        //     });
-        // @endif
+        @if(session()->has('pdf_url'))
+            $(function(){
+                var link = $("<a>");
+                    link.attr("href", "{{ session()->get('pdf_url') }}{{ session()->has('inputs') ? '?m=true' : '' }}");
+                    link.attr("target", "_blank");
+                link[0].click();
+                // $("#link_pdf").attr('href',"{{ session()->get('pdf_url') }}{{ session()->has('inputs') ? '?m=true' : '' }}");
+                // $("#link_pdf")[0].click();
+            });
+        @endif
     </script>
-    {{-- <button id="link_pdf">asd</button> --}}
     <form method="POST"
         action="{{ $actionUrl }}"
         enctype="multipart/form-data">
