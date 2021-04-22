@@ -74,7 +74,7 @@ return [
     'type' => 'Type',
     'refresh' => 'Refresh',
     'settlement' => 'Settlement',
-    'percent' => 'Percent',
+    'percent' => 'Percentage',
 
     'popup_title_skip_approver' => 'Skip approval of',
 

@@ -42,6 +42,10 @@
 			font-style: normal;
 		}
 
+		@page{
+			margin: 5px;
+		}
+
 		body {
 			font-family: "notosans-regular, notosans-bold, notosans-bolditalic,notosans-italic";
 			font-size: 10px;
@@ -179,6 +183,10 @@
 		.item5{
 			width: 39%;
 		}
+
+		.br {
+			margin-top: 3px;
+		}
 	</style>
 </head>
 
@@ -188,7 +196,7 @@
 		<tr>
 			<td class="logo">
 				<div class="main">Marubeni</div>
-				<div class="sub">Marubeni Vietname Company Limited</div>
+				<div class="sub">Marubeni Vietnam Company Limited</div>
 			</td>
 			<td style="text-align: right;text-decoration: underline;">
 				Ver. MVN-1601
@@ -293,7 +301,9 @@
 					@if (empty($inputs['itineraries']))
 						<div style="height: 20px"></div>
 					@else
-						{{ date('d/m/Y', strtotime($inputs['itineraries'][0]['trans_date'])) ?? '' }}
+						@isset($inputs['itineraries'][1]['trans_date'])
+							{{ date('d/m/Y', strtotime($inputs['itineraries'][0]['trans_date'])) ?? '' }}
+						@endisset
 					@endif
 				</td>
 				<td class="data jp">{{ $inputs['itineraries'][0]['departure'] ?? '' }}</td>
@@ -313,8 +323,8 @@
 					{{ date('d/m/Y', strtotime($inputs['itineraries'][2]['trans_date'] ?? null)) }}
 					@endisset
 				</td>
-				<td class="data jp">{{ $inputs['itineraries'][3]['departure'] ?? '' }}</td>
-				<td class="data jp">{{ $inputs['itineraries'][3]['departure'] ?? '' }}</td>
+				<td class="data jp">{{ $inputs['itineraries'][2]['departure'] ?? '' }}</td>
+				<td class="data jp">{{ $inputs['itineraries'][2]['departure'] ?? '' }}</td>
 				<td class="data jp">
 					@isset($inputs['itineraries'][3]['trans_date'])
 					{{ date('d/m/Y', strtotime($inputs['itineraries'][3]['trans_date'] ?? null)) }}
@@ -326,19 +336,28 @@
 			@endif
 		</tbody>
 	</table>
-	<p></p>
+	<div class="br"></div>
 	<table style="clear: both;">
+		@php
+			if((!isset($inputs['transportations']) || count($inputs['transportations']) == 0)
+				&& (!isset($inputs['accomodations']) || count($inputs['accomodations']) == 0)
+				&& (!isset($inputs['communications']) || count($inputs['communications']) == 0)
+				&& (!isset($inputs['otherfees']) || count($inputs['otherfees']) == 0)
+				){
+					$noTripFees = true;
+				}
+		@endphp
 		<tbody>
 			<tr>
-				<td colspan="3" class="f" style="text-align: center">
+				<td colspan="3" class="f" style="text-align: center; @isset($noTripFees) width:31% @endisset">
 					<div class="caption">Item</div>
 					<div class="caption">Hạng mục</div>
 				</td>
-				<td class="f" style="text-align: center">
+				<td class="f" style="text-align: center; @isset($noTripFees) width:30% @endisset">
 					<div class="caption">Amount</div>
 					<div class="caption">Số tiền</div>
 				</td>
-				<td class="f" style="text-align: center">
+				<td class="f" style="text-align: center; @isset($noTripFees) width:39% @endisset">
 					<div class="caption">Remarks</div>
 					<div class="caption">Ghi chú</div>
 				</td>
@@ -376,118 +395,264 @@
 						</td>
 					</tr>
 				@endforeach
-			{{-- @else
-			<tr>
-				<td class="f" style="width: 12%">
-					<div class="caption">Transportation</div>
-					<div class="caption">Di chuyển</div>
-				</td>
-				<td colspan="4">No data. / Không có dữ liệu.</td>
-			</tr> --}}
+			@else
+				<tr>
+					<td @isset($noTripFees) colspan="3" @endisset class="f">
+						<div class="caption">{{ trans('label.business_trans',[],'en') }}</div>
+						<div class="caption">{{ trans('label.business_trans',[],'vi') }}</div>
+					</td>
+					<td colspan="4">No data. / Không có dữ liệu.</td>
+				</tr>
 			@endif
 			{{-- TripFees - accomodations --}}
 			@if (isset($inputs['accomodations']) && count($inputs['accomodations']) > 0)
-			@php
-			$rowsSpan = count($inputs['accomodations']);
-			@endphp
-			@foreach ($inputs['accomodations'] as $index => $item)
-			<tr>
-				@if ($index == 0)
-				<td rowspan="{{ $rowsSpan }}" class="f item1">
-					<div class="caption">{{ trans('label.business_accommodation_fee',[],'en') }}</div>
-					<div class="caption">{{ trans('label.business_accommodation_fee',[],'vi') }}</div>
-				</td>
-				@endif
-				<td class="f item2">
-					{{ config('const.trip_fee_type.accomodation').($index + 1) }}
-				</td>
-				<td class="f item3">
-					@isset($item['method'])
-					<div class="caption">{{ trans('label.business_accomodations.'.$item['method'],[],'en') }}</div>
-					<div class="caption">{{ trans('label.business_accomodations.'.$item['method'],[],'vi') }}</div>
-					@endisset
-				</td>
-				<td class="data item4">
-					{{ Common::formatNumeralWithoutZeroDecimal($item['amount']).' '.$item['unit'] }}
-					@if (!empty($item['unit']) && $item['unit'] != 'VND')
-					{{ '('.number_format($item['exchange_rate']).' VND/'.$item['unit'].')' }}
-					@endif
-				</td>
-				<td class="data jp item5">
-					{{ mb_strlen($item['note']) > 27 ? mb_substr($item['note'], 0, 27).'...' : $item['note'] }}
-				</td>
-			</tr>
-			@endforeach
-			{{-- @else
-			<tr>
-				<td class="f" style="width: 12%">
-					<div class="caption">Transportation</div>
-					<div class="caption">Di chuyển</div>
-				</td>
-				<td colspan="4">No data. / Không có dữ liệu.</td>
-			</tr> --}}
+				@php
+					$rowsSpan = count($inputs['accomodations']);
+				@endphp
+				@foreach ($inputs['accomodations'] as $index => $item)
+					<tr>
+						@if ($index == 0)
+						<td rowspan="{{ $rowsSpan }}" class="f item1">
+							<div class="caption">{{ trans('label.business_accommodation_fee',[],'en') }}</div>
+							<div class="caption">{{ trans('label.business_accommodation_fee',[],'vi') }}</div>
+						</td>
+						@endif
+						<td class="f item2">
+							{{ config('const.trip_fee_type.accomodation').($index + 1) }}
+						</td>
+						<td class="f item3">
+							@isset($item['method'])
+							<div class="caption">{{ trans('label.business_accomodations.'.$item['method'],[],'en') }}</div>
+							<div class="caption">{{ trans('label.business_accomodations.'.$item['method'],[],'vi') }}</div>
+							@endisset
+						</td>
+						<td class="data item4">
+							{{ Common::formatNumeralWithoutZeroDecimal($item['amount']).' '.$item['unit'] }}
+							@if (!empty($item['unit']) && $item['unit'] != 'VND')
+							{{ '('.number_format($item['exchange_rate']).' VND/'.$item['unit'].')' }}
+							@endif
+						</td>
+						<td class="data jp item5">
+							{{ mb_strlen($item['note']) > 27 ? mb_substr($item['note'], 0, 27).'...' : $item['note'] }}
+						</td>
+					</tr>
+				@endforeach
+			@else
+				<tr>
+					<td @isset($noTripFees) colspan="3" @endisset class="f">
+						<div class="caption">{{ trans('label.business_accommodation_fee',[],'en') }}</div>
+						<div class="caption">{{ trans('label.business_accommodation_fee',[],'vi') }}</div>
+					</td>
+					<td colspan="4">No data. / Không có dữ liệu.</td>
+				</tr>
 			@endif
 			{{-- TripFees - communications --}}
 			@if (isset($inputs['communications']) && count($inputs['communications']) > 0)
-			@php
-			$rowsSpan = count($inputs['communications']);
-			@endphp
-			@foreach ($inputs['communications'] as $index => $item)
-			<tr>
-				@if ($index == 0)
-				<td rowspan="{{ $rowsSpan }}" class="f item1">
-					<div class="caption">{{ trans('label.business_communication',[],'en') }}</div>
-					<div class="caption">{{ trans('label.business_communication',[],'vi') }}</div>
-				</td>
-				@endif
-				<td class="f item2">
-					{{ config('const.trip_fee_type.communication').($index + 1) }}
-				</td>
-				<td class="f item3">
-					@isset($item['method'])
-					<div class="caption">{{ trans('label.business_communications.'.$item['method'],[],'en') }}</div>
-					<div class="caption">{{ trans('label.business_communications.'.$item['method'],[],'vi') }}</div>
-					@endisset
-				</td>
-				<td class="data item4">
-					{{ Common::formatNumeralWithoutZeroDecimal($item['amount']).' '.$item['unit'] }}
-					@if (!empty($item['unit']) && $item['unit'] != 'VND')
-					{{ '('.number_format($item['exchange_rate']).' VND/'.$item['unit'].')' }}
-					@endif
-				</td>
-				<td class="data jp item5">
-					{{ mb_strlen($item['note']) > 27 ? mb_substr($item['note'], 0, 27).'...' : $item['note'] }}
-				</td>
-			</tr>
-			@endforeach
-			{{-- @else
-			<tr>
-				<td class="f" style="width: 12%">
-					<div class="caption">Transportation</div>
-					<div class="caption">Di chuyển</div>
-				</td>
-				<td colspan="4">No data. / Không có dữ liệu.</td>
-			</tr> --}}
+				@php
+					$rowsSpan = count($inputs['communications']);
+				@endphp
+				@foreach ($inputs['communications'] as $index => $item)
+					<tr>
+						@if ($index == 0)
+						<td rowspan="{{ $rowsSpan }}" class="f item1">
+							<div class="caption">{{ trans('label.business_communication',[],'en') }}</div>
+							<div class="caption">{{ trans('label.business_communication',[],'vi') }}</div>
+						</td>
+						@endif
+						<td class="f item2">
+							{{ config('const.trip_fee_type.communication').($index + 1) }}
+						</td>
+						<td class="f item3">
+							@isset($item['method'])
+							<div class="caption">{{ trans('label.business_communications.'.$item['method'],[],'en') }}</div>
+							<div class="caption">{{ trans('label.business_communications.'.$item['method'],[],'vi') }}</div>
+							@endisset
+						</td>
+						<td class="data item4">
+							{{ Common::formatNumeralWithoutZeroDecimal($item['amount']).' '.$item['unit'] }}
+							@if (!empty($item['unit']) && $item['unit'] != 'VND')
+							{{ '('.number_format($item['exchange_rate']).' VND/'.$item['unit'].')' }}
+							@endif
+						</td>
+						<td class="data jp item5">
+							{{ mb_strlen($item['note']) > 27 ? mb_substr($item['note'], 0, 27).'...' : $item['note'] }}
+						</td>
+					</tr>
+				@endforeach
+			@else
+				<tr>
+					<td @isset($noTripFees) colspan="3" @endisset class="f">
+						<div class="caption">{{ trans('label.business_communication',[],'en') }}</div>
+						<div class="caption">{{ trans('label.business_communication',[],'vi') }}</div>
+					</td>
+					<td colspan="4">No data. / Không có dữ liệu.</td>
+				</tr>
+			@endif
+			{{-- TripFees - otherfees --}}
+			@if (isset($inputs['otherfees']) && count($inputs['otherfees']) > 0)
+				@php
+					$rowsSpan = count($inputs['otherfees']);
+				@endphp
+				@foreach ($inputs['otherfees'] as $index => $item)
+					<tr>
+						@if ($index == 0)
+						<td rowspan="{{ $rowsSpan }}" class="f item1">
+							<div class="caption">{{ trans('label.business_other_fees',[],'en') }}</div>
+							<div class="caption">{{ trans('label.business_other_fees',[],'vi') }}</div>
+						</td>
+						@endif
+						<td class="f item2">
+							{{ config('const.trip_fee_type.otherfees').($index + 1) }}
+						</td>
+						<td class="f item3">
+							
+						</td>
+						<td class="data item4">
+							{{ Common::formatNumeralWithoutZeroDecimal($item['amount']).' '.$item['unit'] }}
+							@if (!empty($item['unit']) && $item['unit'] != 'VND')
+							{{ '('.number_format($item['exchange_rate']).' VND/'.$item['unit'].')' }}
+							@endif
+						</td>
+						<td class="data jp item5">
+							{{ mb_strlen($item['note']) > 27 ? mb_substr($item['note'], 0, 27).'...' : $item['note'] }}
+						</td>
+					</tr>
+				@endforeach
+			@else
+				<tr>
+					<td @isset($noTripFees) colspan="3" @endisset class="f">
+						<div class="caption">{{ trans('label.business_other_fees',[],'en') }}</div>
+						<div class="caption">{{ trans('label.business_other_fees',[],'vi') }}</div>
+					</td>
+					<td colspan="4">No data. / Không có dữ liệu.</td>
+				</tr>
 			@endif
 		</tbody>
 	</table>
-	<p></p>
-	<table>
+	<div class="br"></div>
+	{{-- Daily allowances --}}
+	<table style="clear: both;">
+		<tbody>
+			<tr>
+				<td rowspan="3" class="f" style="width: 31%">
+					<div class="caption">{{ trans('label.business_daily_allowance',[],'en') }}</div>
+					<div class="caption">{{ trans('label.business_daily_allowance',[],'vi') }}</div>
+				</td>
+				<td class="data" style="width: 30%">
+					{{ Common::formatNumeralWithoutZeroDecimal($inputs['daily1_amount']).' VND' }}
+				</td>
+				<td rowspan="2" class="f" style="width: 20%">
+					{{ trans('label.business_number_of_days',[],'en') }}
+					 / 
+					{{ trans('label.business_number_of_days',[],'vi') }}
+				</td>
+				<td>{{ $inputs['daily1_days'] }}</td>
+			</tr>
+			<tr>
+				<td class="data">
+					{{ Common::formatNumeralWithoutZeroDecimal($inputs['daily2_amount']).' USD' }}
+					{{ '('.Common::formatNumeralWithoutZeroDecimal($inputs['daily2_rate']).' VND/USD)' }}
+				</td>
+				<td>{{ $inputs['daily2_days'] }}</td>
+			</tr>
+			<tr>
+				<td colspan="3" class="data">
+					@php
+						$daily1 = 0;
+						$daily2 = 0;
+						if(isset($inputs['daily1_amount']) && isset($inputs['daily1_days'])){
+							$daily1 = $inputs['daily1_amount'] * $inputs['daily1_days'];
+						}
+						if(isset($inputs['daily2_amount']) && isset($inputs['daily2_rate']) && isset($inputs['daily2_days'])){
+							$daily2 = $inputs['daily2_amount'] * $inputs['daily2_rate'] * $inputs['daily2_days'];
+						}
+						$totalDaily = $daily1 + $daily2;
+					@endphp
+					{{ Common::formatNumeralWithoutZeroDecimal($totalDaily).' VND' }}
+				</td>
+			</tr>
+			<tr>
+				<td class="f">
+					<div class="caption">{{ trans('label.business_total_expenses',[],'en') }}</div>
+					<div class="caption">{{ trans('label.business_total_expenses',[],'vi') }}</div>
+				</td>
+				<td class="data" style="font-weight: bold;vertical-align: middle">
+					@php
+						$totalExpenses = \App\Models\BusinessTrip2::calculateTotalExpenses($inputs);
+					@endphp
+					{{ Common::formatNumeralWithoutZeroDecimal($totalExpenses).' VND' }}
+				</td>
+				<td colspan="2" class="f">
+					<div class="caption" style="line-height: 5px">Please attach invoices, receipts or any evidence to each expense listed above.</div>
+					<div class="caption">Các chi phí liệt kê phải đính kèm hóa đơn, chứng từ.</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	{{-- Cost to be charged --}}
+	@isset($inputs['chargedbys'])
+		<div class="br"></div>
+		<table style="clear: both;">
+			<tbody>
+				@php
+				$rowSpan = count($inputs['chargedbys']);
+				@endphp
+				@foreach ($inputs['chargedbys'] as $index => $item)
+				<tr>
+					@if ($index == 0)
+					<td rowspan="{{ $rowSpan }}" class="f" style="width: 31%">
+						<div class="caption">{{ trans('label.business_charged_to',[],'en') }}</div>
+						<div class="caption">{{ trans('label.business_charged_to',[],'vi') }}</div>
+					</td>
+					@endif
+					<td style="width: 30%">
+						@php
+						$department = App\Models\Department::find($item['department']);
+						@endphp
+						@isset($department)
+						{{ $department->name }}
+						@endisset
+					</td>
+					<td style="width: 20%">{{ $item['percent'] }}</td>
+					@if ($index == 0)
+					<td rowspan="{{ $rowSpan }}" class="f" style="text-align: center">%</td>
+					@endif
+				</tr>
+				@endforeach
+			</tbody>
+		</table>
+	@endisset
+	{{-- Under instruction by
+	<div class="br"></div>
+	<table style="clear: both;">
+		<tbody>
+			<tr>
+				<td rowspan="2" class="f">
+					<div class="caption">Under instruction by</div>
+					<div class="caption">chỉ đạo bởi</div>
+				</td>
+				<td>Date/Ngày</td>
+				<td>20/20/2021</td>
+			</tr>
+		</tbody>
+	</table>
+	<p></p> --}}
+<table>
 		<tr>
-			<td class="f" rowspan="2" style="vertical-align: top;text-align: center;height: 160px;">
-				<div>President or Executive VP</div>
-				<div>TGD hay PTGD</div>
+			<td class="f" rowspan="2" style="vertical-align: top;text-align: center;height: 140px;width:26%">
+				<div class="caption">President or Executive VP</div>
+				<div class="caption">TGD hay PTGD</div>
 			</td>
-			<td style="text-align: center; vertical-align: middle;width:8% ;">BA</td>
-			<td style="text-align: center;width:24% ;">GM/ Giám đốc</td>
-			<td style="text-align: center;width:24% ;">Manager/ Trưởng phòng</td>
-			<td style="text-align: center;width:24% ;">ADMI. IC/ NV Hành chính</td>
+			<td style="text-align: center; vertical-align: middle;width:5% ;">BA</td>
+			<td style="text-align: center;width:23% ;">GM/ Giám đốc</td>
+			<td style="text-align: center;width:23% ;">Manager/ Trưởng phòng</td>
+			<td style="text-align: center;width:23% ;">ADMI. IC/ NV Hành chính</td>
 		</tr>
 		<tr>
-			<td style="text-align: center; vertical-align: middle;width:8%;">Dept.</td>
-			<td style="text-align: center;width:24% ;">GM/ Giám đốc</td>
-			<td style="text-align: center;width:24% ;">Manager/ Trưởng phòng</td>
-			<td style="text-align: center;width:24% ;">Applicant/ Người đề nghị</td>
+			<td style="text-align: center; vertical-align: middle;width:5%;">Dept.</td>
+			<td style="text-align: center;width:23% ;">GM/ Giám đốc</td>
+			<td style="text-align: center;width:23% ;">Manager/ Trưởng phòng</td>
+			<td style="text-align: center;width:23% ;">Applicant/ Người đề nghị</td>
 		</tr>
 	</table>
 	@isset($inputs['lastApproval'])

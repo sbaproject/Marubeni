@@ -48,6 +48,10 @@
 			font-style: normal;
 		}
 
+		@page{
+		margin: 5px;
+		}
+
 		body {
 			font-family: "notosans-regular, notosans-bold, notosans-bolditalic,notosans-italic";
 			font-size: 10px;
@@ -166,7 +170,7 @@
 		<tr>
 			<td class="logo">
 				<div class="main">Marubeni</div>
-				<div class="sub">Marubeni Vietname Company Limited</div>
+				<div class="sub">Marubeni Vietnam Company Limited</div>
 			</td>
 			<td style="text-align: right;text-decoration: underline;">
 				Ver. MVN-160

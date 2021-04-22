@@ -39,10 +39,10 @@ class Businesstrip2 extends Model
     ];
 
     protected $appends = [
-        'tripfee_transportations',
-        'tripfee_accomodations',
-        'tripfee_communications',
-        'tripfee_otherfees',
+        'transportations',
+        'accomodations',
+        'communications',
+        'otherfees',
         'chargedbys',
     ];
 
@@ -53,54 +53,54 @@ class Businesstrip2 extends Model
 
     public function setChargedBysAttribute($values)
     {
-       $this->charged_to = static::implodeChargedBys($values);
+        $this->charged_to = static::implodeChargedBys($values);
     }
 
-    public function getTripFeeTransportationsAttribute()
+    public function getTransportationsAttribute()
     {
         $arr = [];
         foreach ($this->tripfees as $value) {
-            if ($value->type_trip == config('const.trip_fee_type.transportation')){
-                $arr[] = $value;
+            if ($value->type_trip == config('const.trip_fee_type.transportation')) {
+                $arr[] = $value->toArray();
             }
         }
         return $arr;
     }
 
-    public function getTripFeeAccomodationsAttribute()
+    public function getAccomodationsAttribute()
     {
         $arr = [];
         foreach ($this->tripfees as $value) {
             if ($value->type_trip == config('const.trip_fee_type.accomodation')) {
-                $arr[] = $value;
+                $arr[] = $value->toArray();
             }
         }
         return $arr;
     }
 
-    public function getTripFeeCommunicationsAttribute()
+    public function getCommunicationsAttribute()
     {
         $arr = [];
         foreach ($this->tripfees as $value) {
             if ($value->type_trip == config('const.trip_fee_type.communication')) {
-                $arr[] = $value;
+                $arr[] = $value->toArray();
             }
         }
         return $arr;
     }
 
-    public function getTripFeeOtherFeesAttribute()
+    public function getOtherFeesAttribute()
     {
         $arr = [];
         foreach ($this->tripfees as $value) {
             if ($value->type_trip == config('const.trip_fee_type.otherfees')) {
-                $arr[] = $value;
+                $arr[] = $value->toArray();
             }
         }
         return $arr;
     }
 
-    public function transportations()
+    public function itineraries()
     {
         return $this->hasMany(Transportation::class);
     }
@@ -113,11 +113,11 @@ class Businesstrip2 extends Model
     // Format data: [department_id_1]-[value1%],[department_id_2]-[value2%],...
     public static function explodeChargedBys($strVal)
     {
-        if(empty($strVal)){
+        if (empty($strVal)) {
             return [];
         }
 
-        $arr = explode(',',$strVal);
+        $arr = explode(',', $strVal);
         $rs = [];
         foreach ($arr as $value) {
             $items = explode('-', $value);
@@ -131,16 +131,70 @@ class Businesstrip2 extends Model
     }
 
     // Format data: [department_id_1]-[value1%],[department_id_2]-[value2%],...
-    public static function implodeChargedBys($values){
+    public static function implodeChargedBys($values)
+    {
         $str = '';
         foreach ($values as $index => $item) {
-            if ($index == 0){
+            if ($index == 0) {
                 $str .= $item['department'] . '-' . $item['percent'];
                 continue;
             }
-            $str .= ','.$item['department'] . '-' . $item['percent'];
+            $str .= ',' . $item['department'] . '-' . $item['percent'];
         }
 
         return $str;
+    }
+
+    public static function calculateTotalExpenses($inputs)
+    {
+        $total = 0;
+
+        // tripfees - transportations
+        if (!empty($inputs['transportations'])) {
+            foreach ($inputs['transportations'] as $item) {
+                $amount = $item['amount'] ?? 0;
+                $rate = $item['unit'] == 'VND' ? 1 : ($item['exchange_rate'] ?? 0);
+
+                $total += ($amount * $rate);
+            }
+        }
+        // tripfees - accomodations
+        if (!empty($inputs['accomodations'])) {
+            foreach ($inputs['accomodations'] as $item) {
+                $amount = $item['amount'] ?? 0;
+                $rate = $item['unit'] == 'VND' ? 1 : ($item['exchange_rate'] ?? 0);
+
+                $total += ($amount * $rate);
+            }
+        }
+        // tripfees - communications
+        if (!empty($inputs['communications'])) {
+            foreach ($inputs['communications'] as $item) {
+                $amount = $item['amount'] ?? 0;
+                $rate = $item['unit'] == 'VND' ? 1 : ($item['exchange_rate'] ?? 0);
+
+                $total += ($amount * $rate);
+            }
+        }
+        // tripfees - otherfees
+        if (!empty($inputs['otherfees'])) {
+            foreach ($inputs['otherfees'] as $item) {
+                $amount = $item['amount'] ?? 0;
+                $rate = $item['unit'] == 'VND' ? 1 : ($item['exchange_rate'] ?? 0);
+
+                $total += ($amount * $rate);
+            }
+        }
+        // daily 1
+        if (!empty($inputs['daily1_amount']) && !empty($inputs['daily1_days'])) {
+            $total += ($inputs['daily1_amount'] * $inputs['daily1_days']);
+        }
+
+        // daily 2
+        if (!empty($inputs['daily2_amount']) && !empty($inputs['daily2_rate']) && !empty($inputs['daily2_days'])) {
+            $total += ($inputs['daily2_amount'] * $inputs['daily2_rate'] * $inputs['daily2_days']);
+        }
+
+        return $total;
     }
 }
