@@ -50,6 +50,8 @@ Route::get('/checkdv', function () {
     //     [],
     //     []
     // );
+
+    return response()->json('ok');
     
     return Common::detectEdgeBrowser() . $_SERVER['HTTP_USER_AGENT'];
 });

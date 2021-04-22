@@ -55,9 +55,10 @@ class Businesstrip2Controller extends Controller
         if (isset($inputs['apply']) || isset($inputs['draft']) || isset($inputs['pdf'])) {
             // export pdf
             if (isset($inputs['pdf'])) {
-                session()->flash('pdf_url', route('user.business2.pdf', $application->id));
-                session()->put('inputs', $inputs);
-                return redirect()->route('user.business2.show', $application->id);
+                // session()->flash('pdf_url', route('user.business2.pdf', $application->id));
+                // session()->put('inputs', $inputs);
+                // return redirect()->route('user.business2.show', $application->id);
+                $this->openPdf($request, $application, $inputs);
             }
             // only owner able to edit (edit mode)
             if (!empty($application) && Auth::user()->id !== $application->created_by) {
@@ -206,7 +207,7 @@ class Businesstrip2Controller extends Controller
             Common::setAlertSuccess();
 
             // save success then will open pdf in new tab
-            session()->flash('pdf_url',route('user.business2.pdf', $application->id));
+            session()->flash('pdf_url', route('user.business2.pdf', $application->id));
 
             return redirect()->route('user.business2.show', $application->id);
         } catch (Exception $ex) {
@@ -367,7 +368,8 @@ class Businesstrip2Controller extends Controller
             if (isset($inputs['otherfees'])) {
                 foreach ($inputs['otherfees'] as $key => $item) {
                     // exchange rate must be require if currency is not VND
-                    if (!empty($item['unit']) && $item['unit'] != 'VND'
+                    if (
+                        !empty($item['unit']) && $item['unit'] != 'VND'
                     ) {
                         $rules["otherfees.{$key}.exchange_rate"] = 'required|numeric';
                         $customAttributes["otherfees.{$key}.exchange_rate"] = __('label.rate');
@@ -490,13 +492,14 @@ class Businesstrip2Controller extends Controller
         }
     }
 
-    public function pdf(Request $request, $applicationId){
+    public function pdf(Request $request, $applicationId)
+    {
 
         $application = Application::findOrFail($applicationId);
 
         // get directly data from inputs on form screen
-        if($request->has('m')){
-            if(!session()->has('inputs')){
+        if ($request->has('m')) {
+            if (!session()->has('inputs')) {
                 abort(404, 'Your PDF file has expired !');
             }
             $inputs = session()->get('inputs');
@@ -521,7 +524,7 @@ class Businesstrip2Controller extends Controller
         } else {
             $inputs['applicant'] = Auth::user();
         }
-        
+
         $this->makeCorrectNumeralFromInput($inputs);
 
         // PDF::setOptions(['defaultFont' => 'Roboto-Black']);
