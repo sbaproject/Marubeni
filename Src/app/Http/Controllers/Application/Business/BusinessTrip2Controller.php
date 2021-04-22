@@ -62,7 +62,6 @@ class Businesstrip2Controller extends Controller
                 abort(403);
             }
         } else {
-            dd($inputs);
             abort(404);
         }
 
