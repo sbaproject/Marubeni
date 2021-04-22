@@ -8,7 +8,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Businesstrip2 extends Model
+class BusinessTrip2 extends Model
 {
     use HasFactory, Notifiable, SoftDeletes;
 

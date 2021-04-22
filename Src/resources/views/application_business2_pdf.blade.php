@@ -578,7 +578,7 @@
 				</td>
 				<td class="data" style="font-weight: bold;vertical-align: middle">
 					@php
-						$totalExpenses = App\Models\Businesstrip2::calculateTotalExpenses($inputs);
+						$totalExpenses = App\Models\BusinessTrip2::calculateTotalExpenses($inputs);
 					@endphp
 					{{ Common::formatNumeralWithoutZeroDecimal($totalExpenses).' VND' }}
 				</td>
