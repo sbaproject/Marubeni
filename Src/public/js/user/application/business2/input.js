@@ -695,15 +695,37 @@ $(document).ready(function() {
 
         e.preventDefault();
 
-        // not show loading icon
-        showLoadingFlg = false;
+        var data = $('#post-form').serialize();
+        var pdf_url = $('#pdf_url').val();
 
-        let form = e.currentTarget.form;
-        let buttonName = $(this).val();
-        let hidSubmit = '<input type="hidden" name="' + buttonName + '" value="' + buttonName + '" />';
+        $("#popup-loading").modal('show');
 
-        $(form).append(hidSubmit);
-        form.submit();
-        $('[name="pdf"]').remove();
+        $.ajax({
+            url: pdf_url,
+            type: "GET",
+            data: data,
+            success: function(response, xhr) {
+                $("#popup-loading").modal('hide');
+                // window.open(pdf_url, '_blank', 'location=no,toolbar=no,menubar=no,scrollbars=yes,resizable=yes');
+                window.open(pdf_url);
+            },
+            error: function(err) {
+                $("#popup-loading").modal('hide');
+                alert('Error to show PDF !');
+            }
+        });
+
+        return false;
+
+        // // not show loading icon
+        // showLoadingFlg = false;
+
+        // let form = e.currentTarget.form;
+        // let buttonName = $(this).val();
+        // let hidSubmit = '<input type="hidden" name="' + buttonName + '" value="' + buttonName + '" />';
+
+        // $(form).append(hidSubmit);
+        // form.submit();
+        // $('[name="pdf"]').remove();
     });
 });

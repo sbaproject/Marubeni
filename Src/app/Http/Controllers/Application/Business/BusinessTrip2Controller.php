@@ -51,6 +51,8 @@ class BusinessTrip2Controller extends Controller
         // get request inputs
         $inputs = $request->input();
 
+        dd($inputs);
+
         // check post action
         if (isset($inputs['apply']) || isset($inputs['draft']) || isset($inputs['pdf'])) {
             // export pdf
@@ -476,16 +478,22 @@ class BusinessTrip2Controller extends Controller
 
     public function pdf(Request $request, $applicationId)
     {
+        // use ajax to prepair inputs on current form, if it ok then will open new tab (avoid popup-blocker case)
+        if ($request->ajax()) {
+            session()->forget('pdf_inputs');
+            session()->put('pdf_inputs', $request->input());
+            return response()->json('ok');
+        }
 
         $application = Application::findOrFail($applicationId);
 
         // get directly data from inputs on form screen
         if ($request->has('m')) {
-            if (!session()->has('inputs')) {
+            if (!session()->has('pdf_inputs')) {
                 abort(404, 'Your PDF file has expired !');
             }
-            $inputs = session()->get('inputs');
-            session()->forget('inputs');
+            $inputs = session()->get('pdf_inputs');
+            session()->forget('pdf_inputs');
         }
         // get data from db
         else {

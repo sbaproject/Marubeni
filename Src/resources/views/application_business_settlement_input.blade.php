@@ -100,10 +100,13 @@
             });
         @endif
     </script>
-    <form method="POST"
+    <form
+        id="post-form"
+        method="POST"
         action="{{ $actionUrl }}"
         enctype="multipart/form-data">
         @csrf
+        <input type="hidden" id="pdf_url" value="{{ route('user.business2.pdf', $application->id).'?m=true' }}">
         <div class="invoice mb-3">
             <div class="card-body">
                 <div class="form-group row float-right">
