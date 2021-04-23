@@ -30,6 +30,7 @@ return [
     'button_reject'     => 'Reject',
     'button_declined'   => 'Decline',
     'button_processing' => 'Processing...',
+    'button_open_pdf'   => 'Open PDF',
 
     'rememberme'        => 'Remember me',
     'forgotpassword'    => 'Forgot your password ?',

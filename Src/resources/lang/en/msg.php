@@ -13,6 +13,7 @@ return [
     'no_comments' => 'No comments.',
     'sure_to_continue' => 'Are you sure to continue ?',
     'validation_fail' => 'Validation is failed ! Please check again.',
+    'sure_open_pdf' => 'Would you like to open PDF ?',
 
     /**
      * Application

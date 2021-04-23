@@ -51,8 +51,6 @@ class BusinessTrip2Controller extends Controller
         // get request inputs
         $inputs = $request->input();
 
-        dd($inputs);
-
         // check post action
         if (isset($inputs['apply']) || isset($inputs['draft']) || isset($inputs['pdf'])) {
             // export pdf

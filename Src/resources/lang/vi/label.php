@@ -29,6 +29,7 @@ return [
     'button_reject'     => 'Khước từ',
     'button_declined'   => 'Trả về',
     'button_processing' => 'Đang xử lý...',
+    'button_open_pdf'   => 'Mở PDF',
 
     'rememberme'        => 'Nhớ đăng nhập',
     'forgotpassword'    => 'Quên mật khẩu ?',

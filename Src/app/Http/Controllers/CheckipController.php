@@ -36,7 +36,6 @@ class CheckipController extends Controller
             ];
             SendEmail::dispatch($message)->delay(now()->addMinute(1));
 
-            //dd(1);
             return response()->view('auth.checkip')->withCookie($code);
         } else {
 

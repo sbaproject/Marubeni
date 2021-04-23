@@ -88,7 +88,7 @@
 <section class="content leave-application">
 
     {{-- auto open pdf in new tab --}}
-    <script type="text/javascript">
+    {{-- <script type="text/javascript">
         @if(session()->has('pdf_url'))
             $(function(){
                 var link = $("<a>");
@@ -99,7 +99,7 @@
                 // $("#link_pdf")[0].click();
             });
         @endif
-    </script>
+    </script> --}}
     <form
         id="post-form"
         method="POST"
@@ -1223,5 +1223,40 @@
         <br>
         <br>
     </form>
+    
+    {{-- open PDF in new tab after saved --}}
+    @if(session()->has('pdf_url'))
+        <div class="modal fade" id="popup-pdf" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">
+                            {{ __('msg.save_success') }}
+                            {{ __('msg.sure_open_pdf') }}
+                        </h5>
+                        <button type="button" id="popup_btn_close" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="popup_btn_cancel" class="btn bg-gradient-secondary"
+                            data-dismiss="modal">{{ __('label.button_cancel') }}</button>
+                        <button type="button" id="open_pdf" pdf-url="{{ session()->get('pdf_url') }}"
+                             class="btn bg-gradient-success">{{ __('label.button_open_pdf') }}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            $("#popup-pdf").modal('show');
+            $("#open_pdf").on('click', function(){
+                $("#popup-pdf").modal('hide');
+                window.open($(this).attr('pdf-url'));
+            });
+        </script>
+    @endif
+
 </section>
 @endsection
