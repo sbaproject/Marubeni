@@ -220,6 +220,12 @@ Route::middleware('checkip')->group(function () {
                     Route::get('preview/{id}', [EntertainmentController::class, 'preview'])->name('preview');
                     Route::post('preview/{id}', [EntertainmentController::class, 'previewPdf'])->name('preview.pdf');
                 });
+                // Entertainment Settlement Application
+                Route::prefix('entertainment')->name('entertainment2.')->group(function () {
+                    Route::get('detail/{id}', [BusinessTrip2Controller::class, 'show'])->name('show');
+                    Route::post('detail/{id}', [BusinessTrip2Controller::class, 'update'])->name('update');
+                    Route::get('pdf/{id}', [BusinessTrip2Controller::class, 'pdf'])->name('pdf');
+                });
 
                 // Approval
                 Route::prefix('approval')->name('approval.')->group(function () {

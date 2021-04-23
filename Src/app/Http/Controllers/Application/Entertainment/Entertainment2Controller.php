@@ -20,9 +20,9 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
 /**
- * BusinessTrip Settlement (Step 2)
+ * Entertainment Settlement (Step 2)
  */
-class BusinessTrip2Controller extends Controller
+class Entertainment2Controller extends Controller
 {
     public function index()
     {
@@ -35,7 +35,7 @@ class BusinessTrip2Controller extends Controller
         $application = Application::findOrFail($applicationId);
 
         // must be business application
-        if ($application->form_id != config('const.form.biz_trip')) {
+        if ($application->form_id != config('const.form.entertainment')) {
             abort(404);
         }
 
