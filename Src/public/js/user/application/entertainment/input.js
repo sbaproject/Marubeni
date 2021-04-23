@@ -118,11 +118,12 @@ $(document).ready(function() {
         } else {
             $('#txt_entertainment_times').attr('readonly', 'readonly').val('');
             $('#rq_et_times').addClass('d-none');
-            $('input[type=number][name="entertainment_times"]').val('');
+            $('[name="entertainment_times"]').val('');
         }
 
         if ($(this).prop('checked') == false) {
             $('#has_entertainment_times').val(null);
+            $('[name="entertainment_times"]').val(null);
             return;
         }
         $('#has_entertainment_times').val($(this).val());
@@ -247,7 +248,7 @@ $(document).ready(function() {
         } else {
             $('#txt_entertainment_times').attr('readonly', 'readonly');
             $('#rq_et_times').addClass('d-none');
-            $('input[type=number][name="entertainment_times"]').val('');
+            $('[name="entertainment_times"]').val('');
         }
 
         readonlyByBudgetType();
