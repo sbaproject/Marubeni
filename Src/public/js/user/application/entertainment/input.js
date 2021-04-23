@@ -1,7 +1,7 @@
-$(document).ready(function () {
+$(document).ready(function() {
 
     formLoad();
-    
+
     //=======================================
     // Datetimepicker
     //=======================================
@@ -17,7 +17,7 @@ $(document).ready(function () {
         sbaDayOnly: false
     });
     // change
-    $("#datetime").on("dp.change", function (e) {
+    $("#datetime").on("dp.change", function(e) {
         if (e.date) {
             $('#entertainment_dt').val(e.date.format('YYYY/MM/DD HH:mm'));
         } else {
@@ -39,12 +39,13 @@ $(document).ready(function () {
         numeralThousandsGroupStyle: 'thousand',
         numeralPositiveOnly: true,
         stripLeadingZeroes: true,
-        onValueChanged: function (e) {
+        onValueChanged: function(e) {
             let maxLength = $($(this)[0].element).attr('max-number');
             if (e.target.rawValue.length > maxLength) {
                 this.setRawValue(this.lastInputValue);
             } else {
                 $('[name="est_amount"]').val(e.target.rawValue);
+                calculateTotalEstimate();
             }
         }
     });
@@ -52,15 +53,16 @@ $(document).ready(function () {
     new Cleave('.entertainment_person', {
         numericOnly: true,
         blocks: [3],
-        onValueChanged: function (e) {
+        onValueChanged: function(e) {
             $('[name="entertainment_person"]').val(e.target.rawValue);
+            calculateTotalEstimate();
         }
     });
 
     new Cleave('.entertainment_times', {
         numericOnly: true,
         blocks: [3],
-        onValueChanged: function (e) {
+        onValueChanged: function(e) {
             $('[name="entertainment_times"]').val(e.target.rawValue);
         }
     });
@@ -70,7 +72,7 @@ $(document).ready(function () {
     //=======================================
 
     $('#input_file').val(null);
-    $('#input_file').on('change', function (e) {
+    $('#input_file').on('change', function(e) {
         //get the file name
         var fileName = e.target.files[0].name;
         if (fileName != '') {
@@ -79,7 +81,7 @@ $(document).ready(function () {
         }
     });
     // remove file
-    $('.file-remove').on('click', function () {
+    $('.file-remove').on('click', function() {
         $('#input_file').val(null);
         $('#file_path').val(null);
         $('.file-name').html($('.file-name').attr('place-holder'));
@@ -87,49 +89,68 @@ $(document).ready(function () {
         $('.file-block').removeClass('d-none');
     });
     // open link attached file
-    $('.file-link').on('click', function () {
+    $('.file-link').on('click', function() {
         $(this).find('a')[0].click();
     });
 
     //=======================================
     // Radio Button & Checkbox Changes
     //=======================================
-    $('[name="rd_during_trip"]').on('change', function () {
+    $('[name="rd_during_trip"]').on('change', function() {
         $('#during_trip').val($(this).val());
     });
-    $('[name="rd_budget_position"]').on('change', function () {
+    $('[name="rd_budget_position"]').on('change', function() {
         $('#budget_position').val($(this).val());
+        readonlyByBudgetType();
     });
-    $('[name="rd_check_row"]').on('change', function () {
+    $('[name="rd_check_row"]').on('change', function() {
+        if ($(this).prop('checked') == false) {
+            $('#check_row').val(null);
+            return;
+        }
         $('#check_row').val($(this).val());
     });
-    $('[name="rd_has_entertainment_times"]').on('change', function () {
-        $('#has_entertainment_times').val($(this).val());
+    $('[name="rd_has_entertainment_times"]').on('change', function() {
+
         if ($(this).val() == true) {
             $('#txt_entertainment_times').removeAttr('readonly');
             $('#rq_et_times').removeClass('d-none');
         } else {
-            $('#txt_entertainment_times').attr('readonly', 'readonly');
+            $('#txt_entertainment_times').attr('readonly', 'readonly').val('');
             $('#rq_et_times').addClass('d-none');
             $('input[type=number][name="entertainment_times"]').val('');
         }
+
+        if ($(this).prop('checked') == false) {
+            $('#has_entertainment_times').val(null);
+            return;
+        }
+        $('#has_entertainment_times').val($(this).val());
     });
-    $('[name="rd_existence_projects"]').on('change', function () {
+    $('[name="rd_existence_projects"]').on('change', function() {
+        if ($(this).prop('checked') == false) {
+            $('#existence_projects').val(null);
+            return;
+        }
         $('#existence_projects').val($(this).val());
     });
-    $('[name="rd_includes_family"]').on('change', function () {
+    $('[name="rd_includes_family"]').on('change', function() {
+        if ($(this).prop('checked') == false) {
+            $('#includes_family').val(null);
+            return;
+        }
         $('#includes_family').val($(this).val());
     });
-    $('[name="cb_subsequent"]').on('change', function () {
+    $('[name="cb_subsequent"]').on('change', function() {
         if ($(this).prop('checked')) {
             $('#subsequent').val(1);
         } else {
             $('#subsequent').val(0);
         }
     });
-    $('[name="rd_entertainment_reason"]').on('change', function () {
+    $('[name="rd_entertainment_reason"]').on('change', function() {
         $('#entertainment_reason').val($(this).val());
-        if ($(this).val() == _REASON_OTHER) { // Other
+        if ($(this).val() != '' && $(this).val() != 'empty') {
             $('#entertainment_reason_other').removeAttr('readonly');
             $('#entertainment_reason_other').removeClass('d-none');
         } else {
@@ -146,13 +167,70 @@ $(document).ready(function () {
     $('#includes_family').val($('[name="rd_includes_family"]:checked').val());
     $('#subsequent').val($('[name="cb_subsequent"]').prop('checked') ? 1 : 0);
 
+    function readonlyByBudgetType() {
+
+        let val = $('[name="rd_budget_position"]:checked').val();
+
+        if (val == _BUDGET_TYPE.po) {
+            $('[name="rd_check_row"]').removeAttr('disabled');
+            $('[name="rd_has_entertainment_times"]').removeAttr('disabled');
+            $('[name="rd_existence_projects"]').removeAttr('disabled');
+            $('[name="rd_includes_family"]').removeAttr('disabled');
+            $('[name="project_name"]').removeAttr('readonly');
+
+            $('#rq-check-row').removeClass('d-none');
+            $('#rq-has-et_times').removeClass('d-none');
+            $('#rq-exist-project').removeClass('d-none');
+            $('#rq-include-family').removeClass('d-none');
+            $('#rq-project-name').removeClass('d-none');
+
+        } else {
+
+            $('#rq-check-row').addClass('d-none');
+            $('#rq-has-et_times').addClass('d-none');
+            $('#rq-exist-project').addClass('d-none');
+            $('#rq-include-family').addClass('d-none');
+            $('#rq-project-name').addClass('d-none');
+
+            $('[name="rd_check_row"]').attr('disabled', 'disabled');
+            $('[name="rd_has_entertainment_times"]').attr('disabled', 'disabled');
+            $('[name="rd_existence_projects"]').attr('disabled', 'disabled');
+            $('[name="rd_includes_family"]').attr('disabled', 'disabled');
+            $('[name="project_name"]').attr('readonly', 'readonly').val('');
+
+            $('[name="rd_check_row"]').prop('checked', false).change();
+            $('[name="rd_has_entertainment_times"]').prop('checked', false).change();
+            $('[name="rd_existence_projects"]').prop('checked', false).change();
+            $('[name="rd_includes_family"]').prop('checked', false).change();
+        }
+    }
+
+    function calculateTotalEstimate() {
+
+        let numPersons = $('[name="entertainment_person"]').val();
+        let amountPerPerson = $('[name="est_amount"]').val();
+
+        if (numPersons == '' || isNaN(numPersons)) {
+            numPersons = 0;
+        }
+
+        if (amountPerPerson == '' || isNaN(amountPerPerson)) {
+            amountPerPerson = 0;
+        }
+
+        let total = numPersons * amountPerPerson;
+
+        $('#total').text(numeral(total).format('0,0'));
+    }
+
     //=======================================
     // Form load
     //=======================================
     function formLoad() {
         // entertainment reason
-        $('#entertainment_reason').val($('[name="rd_entertainment_reason"]').val());
-        if ($('[name="rd_entertainment_reason"]').val() == _REASON_OTHER) { // Other
+        let rd_entertainment_reason_val = $('[name="rd_entertainment_reason"]').val();
+        $('#entertainment_reason').val(rd_entertainment_reason_val);
+        if (rd_entertainment_reason_val != '' && rd_entertainment_reason_val != 'empty') {
             if (!_PREVIEW_FLG) {
                 $('#entertainment_reason_other').removeAttr('readonly');
             }
@@ -171,12 +249,16 @@ $(document).ready(function () {
             $('#rq_et_times').addClass('d-none');
             $('input[type=number][name="entertainment_times"]').val('');
         }
+
+        readonlyByBudgetType();
+
+        calculateTotalEstimate();
     }
 
     //=======================================
     // Auto complete (typehead.js)
     //=======================================
-    var substringMatcher = function (strs) {
+    var substringMatcher = function(strs) {
         return function findMatches(q, cb) {
             var matches, substringRegex;
 
@@ -188,7 +270,7 @@ $(document).ready(function () {
 
             // iterate through the pool of strings and for any string that
             // contains the substring `q`, add it to the `matches` array
-            $.each(strs, function (i, str) {
+            $.each(strs, function(i, str) {
                 if (substrRegex.test(str)) {
                     matches.push(str);
                 }
@@ -197,18 +279,16 @@ $(document).ready(function () {
             cb(matches);
         };
     };
+
     function applyAutoComplete(selector) {
-        selector.typeahead(
-            {
-                hint: false,
-                highlight: true,
-                minLength: 1
-            },
-            {
-                limit: 999,
-                source: substringMatcher(_COMPANIES)
-            }
-        );
+        selector.typeahead({
+            hint: false,
+            highlight: true,
+            minLength: 1
+        }, {
+            limit: 999,
+            source: substringMatcher(_COMPANIES)
+        });
     }
 
     //=======================================
@@ -220,7 +300,7 @@ $(document).ready(function () {
     // Entertainment Infos Block
     //=======================================
     // add new entertainment info element
-    $('#btnAdd').on("click", function (e) {
+    $('#btnAdd').on("click", function(e) {
 
         e.preventDefault();
 
@@ -238,7 +318,7 @@ $(document).ready(function () {
 
     });
     // remove transportation element
-    $(document).on("click", ".btnDelete", function (e) {
+    $(document).on("click", ".btnDelete", function(e) {
         e.preventDefault();
         $(this).parent().parent().remove();
         doSettingElement();
@@ -246,7 +326,7 @@ $(document).ready(function () {
 
     function doSettingElement() {
         var infosElements = $('.card-company:not(.copy)');
-        infosElements.each(function (index) {
+        infosElements.each(function(index) {
             // re-order index
             $(this).find('.cp_name').attr('name', 'infos[' + index + '][cp_name]');
             $(this).find('.title').attr('name', 'infos[' + index + '][title]');
@@ -271,7 +351,7 @@ $(document).ready(function () {
     // Print PDF
     //=======================================
 
-    $('#btnPdf').on('click', function (e) {
+    $('#btnPdf').on('click', function(e) {
 
         e.preventDefault();
 

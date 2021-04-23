@@ -258,8 +258,8 @@ return [
     'entertainment_existence_projects'          => 'Existence of projects',
     'entertainment_includes_family'             => 'Including Family/Friend',
     'entertainment_project_name'                => 'Project Name',
-    'entertainment_entertainment_reason'        => 'Reason for the Entertainment',
-    'entertainment_entertainment_reason_other'  => 'Other reason for the Entertainment',
+    'entertainment_entertainment_reason'        => 'Type of Entertainment',
+    'entertainment_entertainment_reason_other'  => 'Reason for the Entertainment',
     'entertainment_entertainment_person'        => 'Total Number of Person',
     'entertainment_est_amount'                  => 'Estimated Amount',
     'entertainment_reason_budget_over'          => 'Describe if the amount per person exceeds 4mil VND (PO:2mil VND)',
@@ -272,6 +272,8 @@ return [
     'entertainment_per_person_excluding_vnd'    => 'Per Person(Excluding VAT)',
     'entertainment_entrainment_infomation'      => 'Entertainment Infomation',
     'entertainment_budget_position'             => 'Budget type',
+    'entertainment_describe'                    => 'Estimated amount is over 4,000,000 so Describe',
+    'entertainment_total_estimated'             => 'Estimated total',
     'entertainment' => [
         'reason' => [
             1   => 'Dinner (private sector)',

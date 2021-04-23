@@ -31,6 +31,8 @@
 <script src="js/typehead/typeahead.bundle.min.js"></script>
 {{-- cleave js --}}
 <script src="js/cleave/cleave.min.js"></script>
+{{-- numeral --}}
+<script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
 {{-- for this view --}}
 <script src="js/user/application/entertainment/input.js"></script>
 
@@ -38,6 +40,7 @@
     const _COMPANIES    = @json($companies);
     const _REASON_OTHER = @json(config('const.entertainment.reason.other'));
     const _PREVIEW_FLG  = @json($previewFlg);
+    const _BUDGET_TYPE  = @json(config('const.budget.position'));
 </script>
 @endsection
 
@@ -404,7 +407,7 @@
                 <hr>
                 <div class="form-group row ">
                     <label class="col-lg-2 col-form-label text-left">
-                        {{ __('label.entertainment_check_row') }}<span class="text-danger required"> (*)</span>
+                        {{ __('label.entertainment_check_row') }}<span id="rq-check-row" class="text-danger required"> (*)</span>
                     </label>
                     <div class="col-lg-10 text-lg-left text-left">
                         <fieldset class="@error('check_row') form-control is-invalid @enderror">
@@ -427,7 +430,7 @@
                 <hr>
                 <div class="form-group row">
                     <label class="col-lg-2 col-form-label text-left">
-                        {{ __('label.entertainment_entertainment_times') }}<span class="text-danger required"> (*)</span>
+                        {{ __('label.entertainment_entertainment_times') }}<span id="rq-has-et_times" class="text-danger required"> (*)</span>
                     </label>
                     <div class="col-lg-10 text-lg-left text-left">
                         <fieldset class="@error('has_entertainment_times') form-control is-invalid @enderror">
@@ -469,7 +472,7 @@
                 <hr>
                 <div class="form-group row">
                     <label class="col-lg-2 col-form-label text-left">
-                        {{ __('label.entertainment_existence_projects') }}<span class="text-danger required"> (*)</span>
+                        {{ __('label.entertainment_existence_projects') }}<span id="rq-exist-project" class="text-danger required"> (*)</span>
                     </label>
                     <div class="col-lg-10 text-lg-left text-left">
                         <fieldset class="@error('existence_projects') form-control is-invalid @enderror">
@@ -493,7 +496,7 @@
                 <hr>
                 <div class="form-group row ">
                     <label class="col-lg-2 col-form-label text-left">
-                        {{ __('label.entertainment_includes_family') }}<span class="text-danger required"> (*)</span>
+                        {{ __('label.entertainment_includes_family') }}<span id="rq-include-family" class="text-danger required"> (*)</span>
                     </label>
                     <div class="col-lg-10 text-lg-left text-left">
                         <fieldset class="@error('includes_family') form-control is-invalid @enderror">
@@ -520,10 +523,16 @@
                         {{ __('label.entertainment_project_name') }}</br>
                         <i class="fa fa-asterisk" aria-hidden="true" style="font-size: small;color: #df2333f1;"></i>
                         <label style="color: #df2333f1;">{{ __('label.entertainment_if_need') }}</label>
+                        <span id="rq-project-name" class="text-danger required"> (*)</span>
                     </label>
                     <div class="col-lg-10">
-                        <textarea id="project_name" name="project_name" class="form-control" rows="2"
+                        <textarea id="project_name" name="project_name" class="form-control @error('project_name') is-invalid @enderror" rows="2"
                             @if($previewFlg) readonly @endif>{{ $project_name }}</textarea>
+                        @error('project_name')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
                     </div>
                 </div>
                 <hr>
@@ -553,7 +562,7 @@
                         <div style="margin-top: 10px">
                             <textarea id="entertainment_reason_other" name="entertainment_reason_other"
                                 class="form-control @error('entertainment_reason_other') is-invalid @enderror"
-                                rows="3" placeholder="{{ __('label.entertainment_entertainment_reason_other') }}"
+                                rows="2" placeholder="{{ __('label.entertainment_entertainment_reason_other') }}"
                                 @if($previewFlg) readonly @endif>{{ $entertainment_reason_other }}</textarea>
                             @error('entertainment_reason_other')
                             <span class="invalid-feedback" role="alert">
@@ -584,7 +593,6 @@
                         @enderror
                     </div>
                 </div>
-                <hr>
                 <div class="form-group row ">
                     <label class="col-lg-2 col-form-label text-left">
                         {{ __('label.entertainment_est_amount') }}<span class="text-danger required"> (*)</span>
@@ -605,17 +613,25 @@
                             <strong>{{ $message }}</strong>
                         </span>
                         @enderror
+                        <hr style="border: 1px dashed rgba(0,0,0,.1)">
+                        <div style="margin-top: 10px">
+                            <b>{{ __('label.entertainment_total_estimated') }} : <span id="total"></span> VND</b>
+                        </div>
                     </div>
                 </div>
-                <hr>
                 <div class="form-group row ">
                     <label
                         class="col-lg-2 col-form-label text-left text-danger d-flex align-items-left justify-content-left">
                         {{ __('label.entertainment_reason_budget_over') }}
                     </label>
                     <div class="col-lg-10">
-                        <textarea id="reason_budget_over" name="reason_budget_over" class="form-control" rows="3"
+                        <textarea id="reason_budget_over" name="reason_budget_over" class="form-control @error('reason_budget_over') is-invalid @enderror" rows="2"
                             @if($previewFlg) readonly @endif>{{ $reason_budget_over }}</textarea>
+                        @error('reason_budget_over')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
                     </div>
                 </div>
                 <hr>

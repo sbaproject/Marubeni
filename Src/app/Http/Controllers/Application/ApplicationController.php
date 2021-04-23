@@ -150,6 +150,7 @@ class ApplicationController extends Controller
         // validate
         $validator = $this->doValidate($request, $inputs);
         if (!empty($validator)) {
+            Common::setAlertFail(__('msg.validation_fail'));
             return redirect()->back()->with('inputs', $inputs)->withErrors($validator);
         }
 

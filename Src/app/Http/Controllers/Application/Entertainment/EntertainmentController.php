@@ -57,10 +57,15 @@ class EntertainmentController extends ApplicationController
             $rules['place']                     = 'required';
             $rules['during_trip']               = 'required_select';
             $rules['budget_position']           = 'required_select';
-            $rules['check_row']                 = 'required_select';
-            $rules['has_entertainment_times']   = 'required_select';
-            $rules['existence_projects']        = 'required_select';
-            $rules['includes_family']           = 'required_select';
+
+            if ($inputs['budget_position'] == config('const.budget.position.po')){
+                $rules['check_row']                 = 'required_select';
+                $rules['has_entertainment_times']   = 'required_select';
+                $rules['existence_projects']        = 'required_select';
+                $rules['includes_family']           = 'required_select';
+                $rules['project_name']              = 'required';
+            }
+
             $rules['entertainment_reason']      = 'required_select';
             $rules['entertainment_person']      = 'required|numeric';
             $rules['est_amount']                = 'required|numeric';
@@ -72,9 +77,13 @@ class EntertainmentController extends ApplicationController
             if ($inputs['has_entertainment_times'] == true) {
                 $rules['entertainment_times'] = 'required|numeric';
             }
-            // entertainment reason [Other] option
-            if ($inputs['entertainment_reason'] == config('const.entertainment.reason.other')) {
+            
+            if (!empty($inputs['entertainment_reason']) && $inputs['entertainment_reason'] != 'empty') {
                 $rules['entertainment_reason_other'] = 'required';
+            }
+
+            if (!empty($inputs['est_amount']) && floatval($inputs['est_amount']) > 4000000){
+                $rules['reason_budget_over'] = 'required';
             }
         }
         $customAttributes = [
@@ -89,6 +98,8 @@ class EntertainmentController extends ApplicationController
             'entertainment_times'           => __('label.entertainment_entertainment_times'),
             'existence_projects'            => __('label.entertainment_existence_projects'),
             'includes_family'               => __('label.entertainment_includes_family'),
+            'project_name'                  => __('label.entertainment_project_name'),
+            'reason_budget_over'            => __('label.entertainment_describe'),
             'entertainment_person'          => __('label.entertainment_entertainment_person'),
             'est_amount'                    => __('label.entertainment_est_amount'),
             'infos.*.cp_name'               => __('label.entertainment_cp_name'),
@@ -117,7 +128,7 @@ class EntertainmentController extends ApplicationController
             'includes_family'               => $inputs['includes_family'],
             'project_name'                  => $inputs['project_name'],
             'entertainment_reason'          => $inputs['entertainment_reason'] != 'empty' ? $inputs['entertainment_reason'] : null,
-            'entertainment_reason_other'    => $inputs['entertainment_reason'] == config('const.entertainment.reason.other') ? $inputs['entertainment_reason_other'] : null,
+            'entertainment_reason_other'    => $inputs['entertainment_reason'] != 'empty' ? $inputs['entertainment_reason_other'] : null,
             'entertainment_person'          => $inputs['entertainment_person'],
             'est_amount'                    => $inputs['est_amount'],
             'reason_budget_over'            => $inputs['reason_budget_over'],

@@ -253,8 +253,8 @@ return [
     'entertainment_existence_projects'          => 'Dự án đang tồn tại',
     'entertainment_includes_family'             => 'Thành phần tham dự bao gồm cả gia đình/ bạn bè',
     'entertainment_project_name'                => 'Tên dự án',
-    'entertainment_entertainment_reason'        => 'Lý do tiếp khách',
-    'entertainment_entertainment_reason_other'  => 'Lý do khác cho tiếp khách',
+    'entertainment_entertainment_reason'        => 'Loại tiếp khách',
+    'entertainment_entertainment_reason_other'  => 'Lý do tiếp khách',
     'entertainment_entertainment_person'        => 'Tổng số người tham gia dự tính',
     'entertainment_est_amount'                  => 'Chi phí dự tính',
     'entertainment_reason_budget_over'          => 'Mô tả nếu số tiền mỗi người vượt quá 4 triệu đồng (PO: 2 triệu đồng)',
@@ -267,6 +267,8 @@ return [
     'entertainment_per_person_excluding_vnd'    => 'Trên mỗi người(Không bao gồm VAT)',
     'entertainment_entrainment_infomation'      => 'Thông tin giải trí',
     'entertainment_budget_position'             => 'Loại ngân sách',
+    'entertainment_describe'                    => 'Mô tả vì chi phí dự tính đã vượt quá 4,000,000',
+    'entertainment_total_estimated'             => 'Tổng chi phí dự tính',
     'entertainment' => [
         'reason' => [
             1    => '会食(民間)',
