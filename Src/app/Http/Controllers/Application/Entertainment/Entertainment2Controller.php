@@ -49,8 +49,6 @@ class Entertainment2Controller extends Controller
 
         $modFlg = !empty($application->entertainment2);
 
-        // dd($application->entertainment2->entertainmentinfos);
-
         return view('application_entertainment2_input', compact('departments', 'companies', 'application', 'previewFlg', 'modFlg'));
     }
 
@@ -234,14 +232,14 @@ class Entertainment2Controller extends Controller
             $inputs['applicant'] = Auth::user();
         }
 
-        $this->makeCorrectNumeralFromInput($inputs);
+        // $this->makeCorrectNumeralFromInput($inputs);
 
         // PDF::setOptions(['defaultFont' => 'Roboto-Black']);
         // PDF::setOptions(['enable-javascript' => true]);
         $pdf = PDF::loadView("application_entertainment2_pdf", compact('application', 'inputs'));
 
         // preview pdf
-        $fileName = "business_settlement.pdf";
+        $fileName = "entertainment_settlement.pdf";
         return $pdf->stream($fileName);
         // download
         // return $pdf->download($fileName);

@@ -79,20 +79,6 @@
 
 @section('content')
 <section class="content leave-application">
-
-    {{-- auto open pdf in new tab --}}
-    {{-- <script type="text/javascript">
-        @if(session()->has('pdf_url'))
-            $(function(){
-                var link = $("<a>");
-                    link.attr("href", "{{ session()->get('pdf_url') }}{{ session()->has('inputs') ? '?m=true' : '' }}");
-                    link.attr("target", "_blank");
-                link[0].click();
-                // $("#link_pdf").attr('href',"{{ session()->get('pdf_url') }}{{ session()->has('inputs') ? '?m=true' : '' }}");
-                // $("#link_pdf")[0].click();
-            });
-        @endif
-    </script> --}}
     <form
         id="post-form"
         method="POST"
@@ -166,7 +152,7 @@
                             @foreach ($application->entertainment->entertainmentinfos as $key => $item)
                             <div class="card card-body card-entertainment-infos">
                                 <div class="form-group row">
-                                    <label class="col-md-3 col-form-label text-right">
+                                    <label class="col-md-3 col-form-label text-left">
                                         Company Name
                                     </label>
                                     <div class="col-md-9">
@@ -174,7 +160,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-md-3 col-form-label text-right">
+                                    <label class="col-md-3 col-form-label text-left">
                                         Title
                                     </label>
                                     <div class="col-md-9">
@@ -182,7 +168,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-md-3 col-form-label text-right">
+                                    <label class="col-md-3 col-form-label text-left">
                                         Name Of Attendants
                                     </label>
                                     <div class="col-md-9">
