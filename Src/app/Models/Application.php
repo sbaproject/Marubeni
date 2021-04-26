@@ -75,6 +75,10 @@ class Application extends Model
         return $this->hasOne(Entertaiment::class);
     }
 
+    public function entertainment2(){
+        return $this->hasOne(Entertainment2::class);
+    }
+
     public function applicant()
     {
         return $this->belongsTo(User::class, 'created_by');

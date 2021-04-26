@@ -19,5 +19,9 @@ class EntertainmentInfos extends Model
         'title',
         'name_attendants',
         'details_dutles',
+        'created_at',
+        'updated_at',
     ];
+
+    
 }

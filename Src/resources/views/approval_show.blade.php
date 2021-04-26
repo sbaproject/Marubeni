@@ -121,7 +121,7 @@
                                             @foreach ($comments as $item)
                                             <div class="direct-chat-msg">
                                                 <div class="direct-chat-infos clearfix">
-                                                    <span class="direct-chat-name float-left">{{ $item->user_name }}</span>
+                                                    <span class="direct-chat-name float-left">{{ $item->approver_name }}</span>
                                                     <span class="direct-chat-timestamp float-right">
                                                         {{ \Carbon\Carbon::parse($item->created_at)->format('d/m/Y H:i:s') }}
                                                     </span>

@@ -17,7 +17,7 @@ class HistoryApproval extends Model
     {
         $cols = [
             'history_approval.*',
-            'users.name as user_name',
+            'users.name as approver_name',
         ];
 
         return $query->select($cols);

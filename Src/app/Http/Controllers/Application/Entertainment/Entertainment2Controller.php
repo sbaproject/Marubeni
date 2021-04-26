@@ -1,20 +1,23 @@
 <?php
 
-namespace App\Http\Controllers\Application\Business;
+namespace App\Http\Controllers\Application\Entertainment;
 
 use PDF;
 use Exception;
 use Carbon\Carbon;
 use App\Libs\Common;
+use App\Models\Company;
 use App\Models\TripFee;
 use App\Models\Department;
 use App\Models\Application;
-use App\Models\Businesstrip;
+use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use App\Models\Businesstrip2;
 use App\Models\Transportation;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\Entertainment2;
+use App\Models\EntertainmentInfos;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
@@ -32,18 +35,23 @@ class Entertainment2Controller extends Controller
     {
         $departments = Department::all();
 
+        // get companies
+        $companies = $this->getListCompanyName();
+
         $application = Application::findOrFail($applicationId);
 
-        // must be business application
+        // must be entertainment application
         if ($application->form_id != config('const.form.entertainment')) {
             abort(404);
         }
 
         $previewFlg = false;
 
-        $modFlg = !empty($application->business2);
+        $modFlg = !empty($application->entertainment2);
 
-        return view('application_business_settlement_input', compact('departments', 'application', 'previewFlg', 'modFlg'));
+        // dd($application->entertainment2->entertainmentinfos);
+
+        return view('application_entertainment2_input', compact('departments', 'companies', 'application', 'previewFlg', 'modFlg'));
     }
 
     public function update(Request $request, $applicationId)
@@ -58,9 +66,9 @@ class Entertainment2Controller extends Controller
         if (isset($inputs['apply']) || isset($inputs['draft']) || isset($inputs['pdf'])) {
             // export pdf
             if (isset($inputs['pdf'])) {
-                session()->flash('pdf_url', route('user.business2.pdf', $application->id));
-                session()->put('inputs', $inputs);
-                return redirect()->route('user.business2.show', $application->id);
+                // session()->flash('pdf_url', route('user.entertainment2.pdf', $application->id));
+                // session()->put('inputs', $inputs);
+                // return redirect()->route('user.entertainment2.show', $application->id);
                 // return $this->openPdf($request, $application, $inputs);
             }
             // only owner able to edit (edit mode)
@@ -72,7 +80,7 @@ class Entertainment2Controller extends Controller
         }
 
         // make correct numeral inputs
-        $this->makeCorrectNumeralFromInput($inputs);
+        // $this->makeCorrectNumeralFromInput($inputs);
 
         // validate
         $validator = $this->doValidate($inputs);
@@ -89,119 +97,39 @@ class Entertainment2Controller extends Controller
             $loginUser = Auth::user();
 
             //=======================================
-            // Insert business2
+            // Insert entertainment2
             //=======================================
-            $biz2 = $application->business2;
+            $entertainment2 = $application->entertainment2;
             // new biz2
-            if (empty($biz2)) {
-                $biz2 = new Businesstrip2();
-                $biz2->application_id = $applicationId;
-                $biz2->created_by = $loginUser->id;
+            if (empty($entertainment2)) {
+                $entertainment2 = new Entertainment2();
+                $entertainment2->application_id = $applicationId;
+                $entertainment2->created_by = $loginUser->id;
             }
-            $biz2->chargedbys = $inputs['chargedbys'];
-            $biz2->updated_by = $loginUser->id;
+            $entertainment2->chargedbys = $inputs['chargedbys'];
+            $entertainment2->updated_by = $loginUser->id;
             // fill data
-            $biz2->fill($inputs);
+            $entertainment2->fill($inputs);
             // save
-            $biz2->save();
+            $entertainment2->save();
 
             //=======================================
-            // Insert Itineraries
+            // Insert Entertainment Infos
             //=======================================
-            // remove old itineraries
-            Transportation::where('businesstrip2_id', $biz2->id)->delete();
-            // add new itineraries
-            $itineraries = [];
-            if (isset($inputs['itineraries'])) {
-                foreach ($inputs['itineraries'] as $item) {
-                    $item['businesstrip2_id']   = $biz2->id;
+            // remove old
+            EntertainmentInfos::where('entertainment2_id', $entertainment2->id)->delete();
+            // add new
+            $entertainmentinfos = [];
+            if (isset($inputs['entertainmentinfos'])) {
+                foreach ($inputs['entertainmentinfos'] as $item) {
+                    $item['entertainment2_id']  = $entertainment2->id;
                     $item['created_at']         = Carbon::now();
                     $item['updated_at']         = Carbon::now();
 
-                    $itineraries[] = $item;
+                    $entertainmentinfos[] = $item;
                 }
             }
-            Transportation::insert($itineraries);
-
-            //=======================================
-            // Insert TripFees - Transportations
-            //=======================================
-            // remove old TripFees
-            TripFee::where('businesstrip_id', $biz2->id)->delete();
-
-            // add new TripFees - Transportations
-            $transportations = [];
-            if (isset($inputs['transportations'])) {
-                foreach ($inputs['transportations'] as $index => $item) {
-                    $item['businesstrip_id']    = $biz2->id;
-                    $item['type_trip']          = config('const.trip_fee_type.transportation');
-                    $item['trip_no']            = $item['type_trip'] . ($index + 1);
-                    $item['created_by']         = $loginUser->id;
-                    $item['updated_by']         = $loginUser->id;
-                    $item['created_at']         = Carbon::now();
-                    $item['updated_at']         = Carbon::now();
-
-                    $transportations[] = $item;
-                }
-            }
-            TripFee::insert($transportations);
-
-            //=======================================
-            // Insert TripFees - Accommodation
-            //=======================================
-            $accomodations = [];
-            if (isset($inputs['accomodations'])) {
-                foreach ($inputs['accomodations'] as $index => $item) {
-                    $item['businesstrip_id']    = $biz2->id;
-                    $item['type_trip']          = config('const.trip_fee_type.accomodation');
-                    $item['trip_no']            = $item['type_trip'] . ($index + 1);
-                    $item['created_by']         = $loginUser->id;
-                    $item['updated_by']         = $loginUser->id;
-                    $item['created_at']         = Carbon::now();
-                    $item['updated_at']         = Carbon::now();
-
-                    $accomodations[] = $item;
-                }
-            }
-            TripFee::insert($accomodations);
-
-            //=======================================
-            // Insert TripFees - Communication
-            //=======================================
-            $communications = [];
-            if (isset($inputs['communications'])) {
-                foreach ($inputs['communications'] as $index => $item) {
-                    $item['businesstrip_id']    = $biz2->id;
-                    $item['type_trip']          = config('const.trip_fee_type.communication');
-                    $item['trip_no']            = $item['type_trip'] . ($index + 1);
-                    $item['created_by']         = $loginUser->id;
-                    $item['updated_by']         = $loginUser->id;
-                    $item['created_at']         = Carbon::now();
-                    $item['updated_at']         = Carbon::now();
-
-                    $communications[] = $item;
-                }
-            }
-            TripFee::insert($communications);
-
-            //=======================================
-            // Insert TripFees - OtherFees
-            //=======================================
-            $otherfees = [];
-            if (isset($inputs['otherfees'])) {
-                foreach ($inputs['otherfees'] as $index => $item) {
-                    $item['businesstrip_id']    = $biz2->id;
-                    $item['type_trip']          = config('const.trip_fee_type.otherfees');
-                    $item['trip_no']            = $item['type_trip'] . ($index + 1);
-                    $item['created_by']         = $loginUser->id;
-                    $item['updated_by']         = $loginUser->id;
-                    $item['created_at']         = Carbon::now();
-                    $item['updated_at']         = Carbon::now();
-
-                    $otherfees[] = $item;
-                }
-            }
-            TripFee::insert($otherfees);
+            EntertainmentInfos::insert($entertainmentinfos);
 
             // commit DB
             DB::commit();
@@ -210,9 +138,9 @@ class Entertainment2Controller extends Controller
             Common::setAlertSuccess();
 
             // save success then will open pdf in new tab
-            session()->flash('pdf_url', route('user.business2.pdf', $application->id));
+            // session()->flash('pdf_url', route('user.entertainment2.pdf', $application->id));
 
-            return redirect()->route('user.business2.show', $application->id);
+            return redirect()->route('user.entertainment2.show', $application->id);
         } catch (Exception $ex) {
 
             DB::rollBack();
@@ -233,153 +161,28 @@ class Entertainment2Controller extends Controller
 
             // validate messages
             $customAttributes = [
-                'destinations'              => __('label.business_trip_destination'),
-                'number_of_days'            => __('label.business_number_of_days'),
-
-                'daily1_amount'             => __('label.amount_per_day'),
-                'daily1_days'               => __('label.days'),
-
-                'daily2_amount'             => __('label.amount_per_day'),
-                'daily2_rate'               => __('label.rate'),
-                'daily2_days'               => __('label.days'),
-
-                'itineraries.*.departure'   => __('label.business_departure'),
-                'itineraries.*.arrive'      => __('label.business_arrival'),
-                'itineraries.*.trans_date'  => __('label.date'),
-
-                'transportations.*.method'  => __('label.type'),
-                'transportations.*.unit'    => __('label.unit'),
-                'transportations.*.amount'  => __('label.amount'),
-
-                'communications.*.method'   => __('label.type'),
-                'communications.*.unit'     => __('label.unit'),
-                'communications.*.amount'   => __('label.amount'),
-
-                'accomodations.*.method'    => __('label.type'),
-                'accomodations.*.unit'      => __('label.unit'),
-                'accomodations.*.amount'    => __('label.amount'),
-
-                'otherfees.*.method'    => __('label.type'),
-                'otherfees.*.unit'      => __('label.unit'),
-                'otherfees.*.amount'    => __('label.amount'),
+                'entertainment_dt'          => __('label.entertainment_entertainment_dt'),
+                'est_amount'                => __('label.entertainment_est_amount'),
+                'pay_info'                  => __('label.entertainment_entertainment_dt'),
 
                 'chargedbys.*.department'   => __('label.business_department'),
                 'chargedbys.*.percent'      => __('label.percent'),
+
+                'entertainmentinfos.*.cp_name'           => __('label.entertainment_cp_name'),
+                'entertainmentinfos.*.title'             => __('label.entertainment_title'),
+                'entertainmentinfos.*.name_attendants'   => __('label.entertainment_name_attendants'),
             ];
 
             // validate rules
             $rules = [];
 
-            // attached file
-            // if ($request->file('input_file')) {
-            //     $rules['input_file'] = config('const.rules.attached_file');
-            // }
-
-            $rules['destinations']      = 'required';
-            $rules['number_of_days']    = 'required|numeric';
-
-            $rules['daily1_amount']     = 'nullable|numeric';
-            $rules['daily1_days']       = 'nullable|numeric';
-
-            $rules['daily2_amount']     = 'nullable|numeric';
-            $rules['daily2_rate']       = 'nullable|numeric';
-            $rules['daily2_days']       = 'nullable|numeric';
-
-            // total daily allowance
-            if (
-                !empty($inputs['total_daily_allowance'])
-                || !empty($inputs['total_daily_unit'])
-                || !empty($inputs['total_daily_rate'])
-            ) {
-
-                $rules['total_daily_allowance'] = 'required|numeric';
-                $rules['total_daily_unit']      = 'required_select';
-                $rules['total_daily_rate']      = 'nullable|numeric';
-
-                if (!empty($inputs['total_daily_unit']) && $inputs['total_daily_unit'] != 'VND') {
-                    $rules['total_daily_rate'] = 'required|numeric';
-                }
-            }
-
-            // daily allowance
-            if (
-                !empty($inputs['daily_allowance'])
-                || !empty($inputs['daily_unit'])
-                || !empty($inputs['daily_rate'])
-            ) {
-
-                $rules['daily_allowance']   = 'required|numeric';
-                $rules['daily_unit']        = 'required_select';
-                $rules['daily_rate']        = 'nullable|numeric';
-
-                if (!empty($inputs['daily_unit']) && $inputs['daily_unit'] != 'VND') {
-                    $rules['daily_rate'] = 'required|numeric';
-                }
-            }
-
-            // itineraries
-            $rules['itineraries.*.departure']   = 'required';
-            $rules['itineraries.*.arrive']      = 'required';
-            $rules['itineraries.*.trans_date']  = 'required';
-
-            // transportations
-            $rules['transportations.*.method']  = 'required_select';
-            $rules['transportations.*.unit']    = 'required_select';
-            $rules['transportations.*.amount']  = 'required|numeric';
-            if (isset($inputs['transportations'])) {
-                foreach ($inputs['transportations'] as $key => $item) {
-                    // exchange rate must be require if currency is not VND
-                    if (!empty($item['unit']) && $item['unit'] != 'VND') {
-                        $rules["transportations.{$key}.exchange_rate"] = 'required|numeric';
-                        $customAttributes["transportations.{$key}.exchange_rate"] = __('label.rate');
-                    }
-                }
-            }
-
-            // communications
-            $rules['communications.*.method']        = 'required_select';
-            $rules['communications.*.unit']          = 'required_select';
-            $rules['communications.*.amount']        = 'required|numeric';
-            if (isset($inputs['communications'])) {
-                foreach ($inputs['communications'] as $key => $item) {
-                    // exchange rate must be require if currency is not VND
-                    if (!empty($item['unit']) && $item['unit'] != 'VND') {
-                        $rules["communications.{$key}.exchange_rate"] = 'required|numeric';
-                        $customAttributes["communications.{$key}.exchange_rate"] = __('label.rate');
-                    }
-                }
-            }
-
-            // accomodations
-            $rules['accomodations.*.method']        = 'required_select';
-            $rules['accomodations.*.unit']          = 'required_select';
-            $rules['accomodations.*.amount']        = 'required|numeric';
-            if (isset($inputs['accomodations'])) {
-                foreach ($inputs['accomodations'] as $key => $item) {
-                    // exchange rate must be require if currency is not VND
-                    if (!empty($item['unit']) && $item['unit'] != 'VND') {
-                        $rules["accomodations.{$key}.exchange_rate"] = 'required|numeric';
-                        $customAttributes["accomodations.{$key}.exchange_rate"] = __('label.rate');
-                    }
-                }
-            }
-
-            // otherfees
-            $rules['otherfees.*.method']        = 'required_select';
-            $rules['otherfees.*.unit']          = 'required_select';
-            $rules['otherfees.*.amount']        = 'required|numeric';
-            if (isset($inputs['otherfees'])) {
-                foreach ($inputs['otherfees'] as $key => $item) {
-                    // exchange rate must be require if currency is not VND
-                    if (
-                        !empty($item['unit']) && $item['unit'] != 'VND'
-                    ) {
-                        $rules["otherfees.{$key}.exchange_rate"] = 'required|numeric';
-                        $customAttributes["otherfees.{$key}.exchange_rate"] = __('label.rate');
-                    }
-                }
-            }
-
+            $rules['entertainment_dt']          = 'required';
+            $rules['pay_info']                  = 'required';
+            $rules['est_amount']                = 'required|numeric';
+            // entertainment infos
+            $rules['entertainmentinfos.*.cp_name']           = 'required';
+            $rules['entertainmentinfos.*.title']             = 'required';
+            $rules['entertainmentinfos.*.name_attendants']   = 'required';
             // charged bys
             $rules['chargedbys.*.department']   = 'required_select';
             $rules['chargedbys.*.percent']      = 'required|numeric';
@@ -389,91 +192,6 @@ class Entertainment2Controller extends Controller
                 unset($inputs['input_file']);
                 return $validator;
             }
-        }
-    }
-
-    private function makeCorrectNumeralFromInput(&$inputs)
-    {
-        // tripfees - transportations
-        if (!empty($inputs['transportations'])) {
-            $newArr = [];
-            foreach ($inputs['transportations'] as $item) {
-                // amount
-                if (!empty($item['amount'])) {
-                    $item['amount'] = Common::getRawNumeric($item['amount']);
-                }
-
-                // rate
-                if (!empty($item['exchange_rate'])) {
-                    $item['exchange_rate'] = Common::getRawNumeric($item['exchange_rate']);
-                }
-                $newArr[] = $item;
-            }
-            $inputs['transportations'] = $newArr;
-        }
-        // tripfees - accomodations
-        if (!empty($inputs['accomodations'])) {
-            $newArr = [];
-            foreach ($inputs['accomodations'] as $item) {
-                // amount
-                if (!empty($item['amount'])) {
-                    $item['amount'] = Common::getRawNumeric($item['amount']);
-                }
-                // rate
-                if (!empty($item['exchange_rate'])) {
-                    $item['exchange_rate'] = Common::getRawNumeric($item['exchange_rate']);
-                }
-                $newArr[] = $item;
-            }
-            $inputs['accomodations'] = $newArr;
-        }
-        // tripfees - communications
-        if (!empty($inputs['communications'])) {
-            $newArr = [];
-            foreach ($inputs['communications'] as $item) {
-                // amount
-                if (!empty($item['amount'])) {
-                    $item['amount'] = Common::getRawNumeric($item['amount']);
-                }
-                // rate
-                if (!empty($item['exchange_rate'])) {
-                    $item['exchange_rate'] = Common::getRawNumeric($item['exchange_rate']);
-                }
-                $newArr[] = $item;
-            }
-            $inputs['communications'] = $newArr;
-        }
-        // tripfees - otherfees
-        if (!empty($inputs['otherfees'])) {
-            $newArr = [];
-            foreach ($inputs['otherfees'] as $item) {
-                // amount
-                if (!empty($item['amount'])) {
-                    $item['amount'] = Common::getRawNumeric($item['amount']);
-                }
-                // rate
-                if (!empty($item['exchange_rate'])) {
-                    $item['exchange_rate'] = Common::getRawNumeric($item['exchange_rate']);
-                }
-                $newArr[] = $item;
-            }
-            $inputs['otherfees'] = $newArr;
-        }
-
-        // daily 1
-        // amount
-        if (!empty($inputs['daily1_amount'])) {
-            $inputs['daily1_amount'] = Common::getRawNumeric($inputs['daily1_amount']);
-        }
-
-        // daily 2
-        // amount
-        if (!empty($inputs['daily2_amount'])) {
-            $inputs['daily2_amount'] = Common::getRawNumeric($inputs['daily2_amount']);
-        }
-        // rate
-        if (!empty($inputs['daily2_rate'])) {
-            $inputs['daily2_rate'] = Common::getRawNumeric($inputs['daily2_rate']);
         }
     }
 
@@ -498,8 +216,8 @@ class Entertainment2Controller extends Controller
         }
         // get data from db
         else {
-            $inputs = $application->business2->toArray();
-            $inputs['itineraries'] = $application->business2->itineraries;
+            $inputs = $application->entertainment2->toArray();
+            $inputs['entertainmentinfos'] = $application->entertainment2->entertainmentinfos;
         }
 
         return $this->openPdf($request, $application, $inputs);
@@ -520,12 +238,20 @@ class Entertainment2Controller extends Controller
 
         // PDF::setOptions(['defaultFont' => 'Roboto-Black']);
         // PDF::setOptions(['enable-javascript' => true]);
-        $pdf = PDF::loadView("application_business2_pdf", compact('application', 'inputs'));
+        $pdf = PDF::loadView("application_entertainment2_pdf", compact('application', 'inputs'));
 
         // preview pdf
         $fileName = "business_settlement.pdf";
         return $pdf->stream($fileName);
         // download
         // return $pdf->download($fileName);
+    }
+
+    private function getListCompanyName()
+    {
+        $companies = Company::all('name');
+        $companies = Arr::pluck($companies->toArray(), 'name');
+
+        return $companies;
     }
 }

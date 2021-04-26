@@ -32,18 +32,23 @@ class Entertainment2 extends Model
         'updated_at',
     ];
 
-    // protected $appends = [
-    //     'transportations',
-    //     'accomodations',
-    //     'communications',
-    //     'otherfees',
-    //     'chargedbys',
-    // ];
+    protected $appends = [
+        'chargedbys',
+    ];
 
-    // public function getChargedBysAttribute()
-    // {
-    //     return static::explodeChargedBys($this->charged_to);
-    // }
+    public function getChargedBysAttribute()
+    {
+        return static::explodeChargedBys($this->charged_to);
+    }
+
+    public function setChargedBysAttribute($values)
+    {
+        $this->charged_to = static::implodeChargedBys($values);
+    }
+
+    public function entertainmentinfos(){
+        return $this->hasMany(EntertainmentInfos::class);
+    }
 
     // Format data: [department_id_1]-[value1%],[department_id_2]-[value2%],...
     public static function explodeChargedBys($strVal)

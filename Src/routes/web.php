@@ -28,6 +28,7 @@ use App\Http\Controllers\User\Account\UserRegisterController;
 use App\Http\Controllers\User\Account\UserChangePassController;
 use App\Http\Controllers\Application\Business\BusinessTripController;
 use App\Http\Controllers\Application\Business\BusinessTrip2Controller;
+use App\Http\Controllers\Application\Entertainment\Entertainment2Controller;
 use App\Http\Controllers\Application\Leave\LeaveApplicationController;
 use App\Http\Controllers\Application\Entertainment\EntertainmentController;
 
@@ -221,10 +222,10 @@ Route::middleware('checkip')->group(function () {
                     Route::post('preview/{id}', [EntertainmentController::class, 'previewPdf'])->name('preview.pdf');
                 });
                 // Entertainment Settlement Application
-                Route::prefix('entertainment')->name('entertainment2.')->group(function () {
-                    Route::get('detail/{id}', [BusinessTrip2Controller::class, 'show'])->name('show');
-                    Route::post('detail/{id}', [BusinessTrip2Controller::class, 'update'])->name('update');
-                    Route::get('pdf/{id}', [BusinessTrip2Controller::class, 'pdf'])->name('pdf');
+                Route::prefix('entertainment2')->name('entertainment2.')->group(function () {
+                    Route::get('detail/{id}', [Entertainment2Controller::class, 'show'])->name('show');
+                    Route::post('detail/{id}', [Entertainment2Controller::class, 'update'])->name('update');
+                    Route::get('pdf/{id}', [Entertainment2Controller::class, 'pdf'])->name('pdf');
                 });
 
                 // Approval

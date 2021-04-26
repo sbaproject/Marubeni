@@ -669,7 +669,7 @@
 	@isset($inputs['lastApproval'])
 	<div style="margin-top:10px">
 			<div style="display: inline-block;vertical-align: middle;">
-				<div>Approved by : {{ $inputs['lastApproval']->user_name }}</div>
+				<div>Approved by : {{ $inputs['lastApproval']->approver_name }}</div>
 				<div>Approved at : {{ date('d/m/Y H:i', strtotime($inputs['lastApproval']->created_at)) }}</div>
 			</div>
 			<div style="
