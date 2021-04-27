@@ -58,6 +58,10 @@ class BusinesstripController extends ApplicationController
             $rules['trans.*.departure'] = 'required';
             $rules['trans.*.arrive']    = 'required';
             $rules['trans.*.method']    = 'required';
+
+            if ($inputs['subsequent']) {
+                $rules['subsequent_reason'] = 'required';
+            }
         }
         $customAttributes = [
             'budget_position'   => __('label.business_budget_position'),
@@ -65,6 +69,7 @@ class BusinesstripController extends ApplicationController
             'accommodation'     => __('label.business_accommodation'),
             'accompany'         => __('label.business_accompany'),
             'borne_by'          => __('label.business_borne_by'),
+            'subsequent_reason' => __('label.application_subsequent_reason'),
             'trans.*.departure' => __('label.business_departure'),
             'trans.*.arrive'    => __('label.business_arrival'),
             'trans.*.method'    => __('label.business_method'),

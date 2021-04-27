@@ -22,6 +22,7 @@ class Entertainment2 extends Model
     protected $fillable = [
         'application_id',
         'entertainment_dt',
+        'entertainment_person',
         'est_amount',
         'charged_to',
         'pay_info',

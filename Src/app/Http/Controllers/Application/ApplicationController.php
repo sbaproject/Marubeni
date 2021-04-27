@@ -256,6 +256,7 @@ class ApplicationController extends Controller
             'current_step'      => $currentStep,
             'status'            => $status,
             'subsequent'        => $inputs['subsequent'],
+            'subsequent_reason' => $inputs['subsequent_reason'],
             'budget_position'   => $budgetPosition,
             'file_path'         => $filePath ?? null,
             'updated_by'        => $loginUser->id,

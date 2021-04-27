@@ -37,6 +37,16 @@ $(document).ready(function() {
         stripLeadingZeroes: true,
         onValueChanged: function(e) {
             $('[name="est_amount"]').val(e.target.rawValue);
+            calculateTotalEstimate();
+        }
+    });
+
+    new Cleave('.entertainment_person', {
+        numericOnly: true,
+        blocks: [3],
+        onValueChanged: function(e) {
+            $('[name="entertainment_person"]').val(e.target.rawValue);
+            calculateTotalEstimate();
         }
     });
 
@@ -82,6 +92,8 @@ $(document).ready(function() {
     function formLoad() {
 
         makeCleavePercent();
+
+        calculateTotalEstimate();
     }
 
     applyAutoComplete($('.cp_name'));
@@ -199,6 +211,24 @@ $(document).ready(function() {
                 blocks: [3]
             });
         });
+    }
+
+    function calculateTotalEstimate() {
+
+        let numPersons = $('[name="entertainment_person"]').val();
+        let amountPerPerson = $('[name="est_amount"]').val();
+
+        if (numPersons == '' || isNaN(numPersons)) {
+            numPersons = 0;
+        }
+
+        if (amountPerPerson == '' || isNaN(amountPerPerson)) {
+            amountPerPerson = 0;
+        }
+
+        let total = numPersons * amountPerPerson;
+
+        $('#total').text(numeral(total).format('0,0'));
     }
 
     //=======================================

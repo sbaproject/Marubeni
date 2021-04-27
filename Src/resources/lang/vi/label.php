@@ -72,6 +72,9 @@ return [
     'refresh' => 'Làm mới',
     'settlement' => 'Quyết toán',
     'percent' => 'Phần trăm',
+    'application_information' => 'Thông tin chấp thuận trước',
+    'day' => 'Ngày',
+    'total_percentage' => 'Tổng phần trăm',
 
     'popup_title_skip_approver' => 'Bỏ qua sự xét duyệt của',
     
@@ -156,6 +159,7 @@ return [
     'application_status_decline'    => 'Đơn trả về',
     'application_status_complete'   => 'Đơn hoàn tất',
     'application_status_draft'      => 'Bản nháp',
+    'application_subsequent_reason' => 'Reason for Subsequent',
 
     /**
      * Leave application
@@ -270,6 +274,15 @@ return [
     'entertainment_budget_position'             => 'Loại ngân sách',
     'entertainment_describe'                    => 'Mô tả vì chi phí dự tính đã vượt quá 4,000,000',
     'entertainment_total_estimated'             => 'Tổng chi phí dự tính',
+    'entertainment_settlement'                  => 'Quyết toán tiếp khách',
+    'entertainment_applydate'                   => 'Ngày nộp đơn',
+    'entertainment_approver_date'               => 'Người duyệt / Ngày',
+    'entertainment_expected_date'               => 'Ngày dự kiến tiếp khách',
+    'entertainment_applicant_date'              => 'Người đề nghị / Ngày',
+    'entertainment_date'                        => 'Ngày tiếp khách',
+    'entertainment_cost_charged'                => 'Phòng ban chịu phí',
+    'entertainment_payment_info'                => 'Thông tin thanh toán',
+
     'entertainment' => [
         'reason' => [
             1    => '会食(民間)',
@@ -279,7 +292,7 @@ return [
             5    => 'ゴルフ(PO)',
             6    => '贈答(社長以上)',
             7    => '贈答(特定取締役or執行役員)',
-            8    => '贈答(その他取締役or執行役員)',
+            // 8    => '贈答(その他取締役or執行役員)',
             9    => '贈答(部長or担当者)',
             10    => 'その他',
         ],

@@ -185,7 +185,7 @@
 				<div class="sub">Marubeni Vietnam Company Limited</div>
 			</td>
 			<td style="text-align: right;text-decoration: underline;">
-				Ver. MVN-1601
+				
 			</td>
 		</tr>
 	</table>

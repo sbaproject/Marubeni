@@ -38,17 +38,18 @@
 @section('content')
 @php
 
-    $itineraries        = Session::exists('inputs') ? Session::get('inputs')['trans']           : (isset($application) ? $application->business->itineraries : null);
-    $destinations       = Session::exists('inputs') ? Session::get('inputs')['destinations']    : (isset($application) ? $application->business->destinations : null);
-    $trip_dt_from       = Session::exists('inputs') ? Session::get('inputs')['trip_dt_from']    : (isset($application) ? $application->business->trip_dt_from : null);
-    $trip_dt_to         = Session::exists('inputs') ? Session::get('inputs')['trip_dt_to']      : (isset($application) ? $application->business->trip_dt_to : null);
-    $accommodation      = Session::exists('inputs') ? Session::get('inputs')['accommodation']   : (isset($application) ? $application->business->accommodation : null);
-    $accompany          = Session::exists('inputs') ? Session::get('inputs')['accompany']       : (isset($application) ? $application->business->accompany : null);
-    $borne_by           = Session::exists('inputs') ? Session::get('inputs')['borne_by']        : (isset($application) ? $application->business->borne_by : null);
-    $comment            = Session::exists('inputs') ? Session::get('inputs')['comment']         : (isset($application) ? $application->business->comment : null);
-    $subsequent         = Session::exists('inputs') ? Session::get('inputs')['subsequent']      : (isset($application) ? $application->subsequent : null);
-    $budget_position    = Session::exists('inputs') ? Session::get('inputs')['budget_position'] : (isset($application) ? $application->budget_position : null);
-    $file_path          = Session::exists('inputs') ? Session::get('inputs')['file_path']       : (isset($application) ? $application->file_path : null);
+    $itineraries        = Session::exists('inputs') ? Session::get('inputs')['trans']               : (isset($application) ? $application->business->itineraries : null);
+    $destinations       = Session::exists('inputs') ? Session::get('inputs')['destinations']        : (isset($application) ? $application->business->destinations : null);
+    $trip_dt_from       = Session::exists('inputs') ? Session::get('inputs')['trip_dt_from']        : (isset($application) ? $application->business->trip_dt_from : null);
+    $trip_dt_to         = Session::exists('inputs') ? Session::get('inputs')['trip_dt_to']          : (isset($application) ? $application->business->trip_dt_to : null);
+    $accommodation      = Session::exists('inputs') ? Session::get('inputs')['accommodation']       : (isset($application) ? $application->business->accommodation : null);
+    $accompany          = Session::exists('inputs') ? Session::get('inputs')['accompany']           : (isset($application) ? $application->business->accompany : null);
+    $borne_by           = Session::exists('inputs') ? Session::get('inputs')['borne_by']            : (isset($application) ? $application->business->borne_by : null);
+    $comment            = Session::exists('inputs') ? Session::get('inputs')['comment']             : (isset($application) ? $application->business->comment : null);
+    $subsequent         = Session::exists('inputs') ? Session::get('inputs')['subsequent']          : (isset($application) ? $application->subsequent : null);
+    $subsequent_reason  = Session::exists('inputs') ? Session::get('inputs')['subsequent_reason']   : (isset($application) ? $application->subsequent_reason : null);
+    $budget_position    = Session::exists('inputs') ? Session::get('inputs')['budget_position']     : (isset($application) ? $application->budget_position : null);
+    $file_path          = Session::exists('inputs') ? Session::get('inputs')['file_path']           : (isset($application) ? $application->file_path : null);
 
     // get action url
     if(isset($application)){
@@ -490,6 +491,21 @@
                             <input type="hidden" id="subsequent" name="subsequent" value="{{ $subsequent }}">
                             <label class="form-check-label" for="cb_subsequent">{{ __('label.on') }}</label>
                         </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-lg-2 col-form-label text-left">
+                        {{ __('label.application_subsequent_reason') }}
+                    </label>
+                    <div class="col-lg-10">
+                        <textarea id="subsequent_reason" name="subsequent_reason"
+                            class="form-control @error('subsequent_reason') is-invalid @enderror" rows="2" @if($previewFlg) readonly
+                            @endif>{{ $subsequent_reason }}</textarea>
+                        @error('subsequent_reason')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
                     </div>
                 </div>
             </div>

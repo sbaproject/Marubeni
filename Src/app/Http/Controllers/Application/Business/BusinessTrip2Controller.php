@@ -265,6 +265,7 @@ class BusinessTrip2Controller extends Controller
 
                 'chargedbys.*.department'   => __('label.business_department'),
                 'chargedbys.*.percent'      => __('label.percent'),
+                'total_percent'             => __('label.total_percentage'),
             ];
 
             // validate rules
@@ -383,6 +384,21 @@ class BusinessTrip2Controller extends Controller
             // charged bys
             $rules['chargedbys.*.department']   = 'required_select';
             $rules['chargedbys.*.percent']      = 'required|numeric';
+            if (isset($inputs['chargedbys'])) {
+                $totalPercent = 0;
+                $checkTotal = true;
+                foreach ($inputs['chargedbys'] as $item) {
+                    if (empty($item['percent'])) {
+                        $checkTotal = false;
+                        continue;
+                    }
+                    $totalPercent += $item['percent'];
+                }
+                if ($checkTotal) {
+                    $inputs['total_percent'] = $totalPercent;
+                    $rules['total_percent'] = 'equal:100,%';
+                }
+            }
 
             $validator = Validator::make($inputs, $rules, [], $customAttributes);
             if ($validator->fails()) {

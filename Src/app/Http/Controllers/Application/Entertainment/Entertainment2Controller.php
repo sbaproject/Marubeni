@@ -136,7 +136,7 @@ class Entertainment2Controller extends Controller
             Common::setAlertSuccess();
 
             // save success then will open pdf in new tab
-            // session()->flash('pdf_url', route('user.entertainment2.pdf', $application->id));
+            session()->flash('pdf_url', route('user.entertainment2.pdf', $application->id));
 
             return redirect()->route('user.entertainment2.show', $application->id);
         } catch (Exception $ex) {
@@ -159,9 +159,12 @@ class Entertainment2Controller extends Controller
 
             // validate messages
             $customAttributes = [
-                'entertainment_dt'          => __('label.entertainment_entertainment_dt'),
+                'entertainment_dt'          => __('label.entertainment_date'),
                 'est_amount'                => __('label.entertainment_est_amount'),
-                'pay_info'                  => __('label.entertainment_entertainment_dt'),
+                'entertainment_person'      => __('label.entertainment_entertainment_person'),
+                'pay_info'                  => __('label.entertainment_payment_info'),
+
+                'total_percent'             => __('label.total_percentage'),
 
                 'chargedbys.*.department'   => __('label.business_department'),
                 'chargedbys.*.percent'      => __('label.percent'),
@@ -176,6 +179,7 @@ class Entertainment2Controller extends Controller
 
             $rules['entertainment_dt']          = 'required';
             $rules['pay_info']                  = 'required';
+            $rules['entertainment_person']      = 'required';
             $rules['est_amount']                = 'required|numeric';
             // entertainment infos
             $rules['entertainmentinfos.*.cp_name']           = 'required';
@@ -184,6 +188,22 @@ class Entertainment2Controller extends Controller
             // charged bys
             $rules['chargedbys.*.department']   = 'required_select';
             $rules['chargedbys.*.percent']      = 'required|numeric';
+
+            if(isset($inputs['chargedbys'])) {
+                $totalPercent = 0;
+                $checkTotal = true;
+                foreach ($inputs['chargedbys'] as $item) {
+                    if(empty($item['percent'])){
+                        $checkTotal = false;
+                        continue;
+                    }
+                    $totalPercent += $item['percent'];
+                }
+                if($checkTotal){
+                    $inputs['total_percent'] = $totalPercent;
+                    $rules['total_percent'] = 'equal:100,%';
+                }
+            }
 
             $validator = Validator::make($inputs, $rules, [], $customAttributes);
             if ($validator->fails()) {

@@ -76,6 +76,9 @@ return [
     'refresh' => 'Refresh',
     'settlement' => 'Settlement',
     'percent' => 'Percentage',
+    'application_information' => 'Application Information',
+    'day' => 'Day',
+    'total_percentage' => 'Total Percentage',
 
     'popup_title_skip_approver' => 'Skip approval of',
 
@@ -160,6 +163,7 @@ return [
     'application_status_decline'    => 'Declined',
     'application_status_complete'   => 'Completed',
     'application_status_draft'      => 'Draft',
+    'application_subsequent_reason' => 'Reason for Subsequent',
 
     /**
      * Leave Application
@@ -275,16 +279,25 @@ return [
     'entertainment_budget_position'             => 'Budget type',
     'entertainment_describe'                    => 'Estimated amount is over 4,000,000 so Describe',
     'entertainment_total_estimated'             => 'Estimated total',
+    'entertainment_settlement'                  => 'Settlement For Entertainment',
+    'entertainment_applydate'                   => 'Apply Date',
+    'entertainment_approver_date'               => 'Approver / Date',
+    'entertainment_expected_date'               => 'Expected Date',
+    'entertainment_applicant_date'              => 'Applicant / Date',
+    'entertainment_date'                        => 'Entertainment Date',
+    'entertainment_cost_charged'                => 'Cost to be charged to (Sec Code)',
+    'entertainment_payment_info'                => 'Payment Information',
+
     'entertainment' => [
         'reason' => [
             1   => 'Dinner (private sector)',
             2   => 'Dinner (PO)',
-            3   => 'Golf (private)-AH burden',
-            4   => 'Golf (Private)-Sales Department Burden',
+            3   => 'Golf (private sector)-AH burden',
+            4   => 'Golf (Private sector)-Sales Department Burden',
             5   => 'Golf (PO)',
             6   => 'Gift (President and above)',
             7   => 'Gift (Specific Director or Executive Officer)',
-            8   => 'Gifts (Other Directors or Executive Officers)',
+            // 8   => 'Gifts (Other Directors or Executive Officers)',
             9   => 'Gift (manager or person in charge)',
             10  => 'Other',
         ],

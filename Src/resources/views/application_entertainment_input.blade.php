@@ -73,6 +73,7 @@
     $reason_budget_over         = Session::exists('inputs') ? Session::get('inputs')['reason_budget_over']         : (isset($application) ? $application->entertainment->reason_budget_over : null);
     $budget_position            = Session::exists('inputs') ? Session::get('inputs')['budget_position']            : (isset($application) ? $application->budget_position : null);
     $subsequent                 = Session::exists('inputs') ? Session::get('inputs')['subsequent']                 : (isset($application) ? $application->subsequent : null);
+    $subsequent_reason          = Session::exists('inputs') ? Session::get('inputs')['subsequent_reason']          : (isset($application) ? $application->subsequent_reason : null);
     $file_path                  = Session::exists('inputs') ? Session::get('inputs')['file_path']                  : (isset($application) ? $application->file_path : null);
 
     // get action url
@@ -419,7 +420,7 @@
                         {{ __('label.entertainment_check_row') }}<span id="rq-check-row" class="text-danger required"> (*)</span>
                     </label>
                     <div class="col-lg-10 text-lg-left text-left">
-                        <fieldset class="@error('check_row') form-control is-invalid @enderror">
+                        <fieldset id="fs_check_row" class="@error('check_row') form-control is-invalid @enderror">
                             @foreach (config('const.entertainment.check_row') as $key => $value)
                             <label class="radio-inline com_title col-form-label">
                                 <input type="radio" name="rd_check_row" value="{{ $value }}" @if($check_row !== null && $check_row == $value) checked @endif
@@ -442,7 +443,7 @@
                         {{ __('label.entertainment_entertainment_times') }}<span id="rq-has-et_times" class="text-danger required"> (*)</span>
                     </label>
                     <div class="col-lg-10 text-lg-left text-left">
-                        <fieldset class="@error('has_entertainment_times') form-control is-invalid @enderror">
+                        <fieldset id="fs_has_entertainment_times" class="@error('has_entertainment_times') form-control is-invalid @enderror">
                             @foreach (config('const.entertainment.has_et_times') as $key => $value)
                             <label class="radio-inline com_title col-form-label">
                                 <input type="radio" name="rd_has_entertainment_times" value="{{ $value }}" @if($has_et_times !== null && $has_et_times == $value) checked @endif
@@ -457,7 +458,7 @@
                             <strong>{{ $message }}</strong>
                         </span>
                         @enderror
-                        <div class="form-group row">
+                        <div class="form-group row mt-1">
                             <div style="padding-left: 0px" class="col-md-4">
                                 <input type="text" id="txt_entertainment_times"
                                     class="form-control entertainment_times @error('entertainment_times') is-invalid @enderror"
@@ -484,7 +485,7 @@
                         {{ __('label.entertainment_existence_projects') }}<span id="rq-exist-project" class="text-danger required"> (*)</span>
                     </label>
                     <div class="col-lg-10 text-lg-left text-left">
-                        <fieldset class="@error('existence_projects') form-control is-invalid @enderror">
+                        <fieldset id="fs_existence_projects" class="@error('existence_projects') form-control is-invalid @enderror">
                             @foreach (config('const.entertainment.existence_projects') as $key => $value)
                             <label class="radio-inline com_title col-form-label">
                                 <input type="radio" name="rd_existence_projects" value="{{ $value }}" @if($existence_projects !==null &&
@@ -508,7 +509,7 @@
                         {{ __('label.entertainment_includes_family') }}<span id="rq-include-family" class="text-danger required"> (*)</span>
                     </label>
                     <div class="col-lg-10 text-lg-left text-left">
-                        <fieldset class="@error('includes_family') form-control is-invalid @enderror">
+                        <fieldset id="fs_includes_family" class="@error('includes_family') form-control is-invalid @enderror">
                             @foreach (config('const.entertainment.includes_family') as $key => $value)
                             <label class="radio-inline com_title col-form-label">
                                 <input type="radio" name="rd_includes_family" value="{{ $value }}" @if($includes_family !==null &&
@@ -529,9 +530,9 @@
                 <hr>
                 <div class="form-group row">
                     <label class="col-lg-2 col-form-label text-left">
-                        {{ __('label.entertainment_project_name') }}</br>
-                        <i class="fa fa-asterisk" aria-hidden="true" style="font-size: small;color: #df2333f1;"></i>
-                        <label style="color: #df2333f1;">{{ __('label.entertainment_if_need') }}</label>
+                        {{ __('label.entertainment_project_name') }}
+                        {{-- <i class="fa fa-asterisk" aria-hidden="true" style="font-size: small;color: #df2333f1;"></i> --}}
+                        {{-- <label style="color: #df2333f1;">{{ __('label.entertainment_if_need') }}</label> --}}
                         <span id="rq-project-name" class="text-danger required"> (*)</span>
                     </label>
                     <div class="col-lg-10">
@@ -724,6 +725,21 @@
                                 <input type="hidden" id="subsequent" name="subsequent" value="{{ $subsequent }}">
                             <label class="form-check-label" for="cb_subsequent">{{ __('label.on') }}</label>
                         </div>
+
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-lg-2 col-form-label text-left">
+                        {{ __('label.application_subsequent_reason') }}
+                    </label>
+                    <div class="col-lg-10">
+                        <textarea id="subsequent_reason" name="subsequent_reason" class="form-control @error('subsequent_reason') is-invalid @enderror"
+                            rows="2" @if($previewFlg) readonly @endif>{{ $subsequent_reason }}</textarea>
+                        @error('subsequent_reason')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
                     </div>
                 </div>
             </div>

@@ -119,6 +119,7 @@ return [
     'uuid' => 'The :attribute must be a valid UUID.',
     'phone_number' => ':attribute không hợp lệ.',
     'required_select' => 'Vui lòng chọn :attribute.',
+    'equal' => ':attribute phải bằng :value :suffix.',
 
     /*
     |--------------------------------------------------------------------------

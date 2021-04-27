@@ -1,9 +1,10 @@
 @php
-    $entertainment_dt                   = Session::exists('inputs') ? Session::get('inputs')['entertainment_dt']                    : ($application->entertainment2->entertainment_dt ?? null);
-    $entertainmentinfos                              = Session::exists('inputs') ? (Session::get('inputs')['entertainmentinfos'] ?? [])     : ($application->entertainment2->entertainmentinfos ?? null);
-    $est_amount                 = Session::exists('inputs') ? Session::get('inputs')['est_amount']                  : ($application->entertainment2->est_amount ?? null);
-    $pay_info = Session::exists('inputs') ? Session::get('inputs')['pay_info'] : ($application->entertainment2->pay_info ?? null);
-    $chargedbys = Session::exists('inputs') ? (Session::get('inputs')['chargedbys'] ?? []) : ($application->entertainment2->chargedbys ?? null);
+    $entertainment_dt       = Session::exists('inputs') ? Session::get('inputs')['entertainment_dt']            : ($modFlg ? ($application->entertainment2->entertainment_dt ?? null) : ($application->entertainment->entertainment_dt ?? null));
+    $entertainmentinfos     = Session::exists('inputs') ? (Session::get('inputs')['entertainmentinfos'] ?? [])  : ($modFlg ? ($application->entertainment2->entertainmentinfos ?? null) : ($application->entertainment->entertainmentinfos ?? null));
+    $est_amount             = Session::exists('inputs') ? Session::get('inputs')['est_amount']                  : ($modFlg ? ($application->entertainment2->est_amount ?? null) : ($application->entertainment->est_amount ?? null));
+    $entertainment_person   = Session::exists('inputs') ? Session::get('inputs')['entertainment_person']        : ($modFlg ? ($application->entertainment2->entertainment_person ?? null) : ($application->entertainment->entertainment_person ?? null));
+    $pay_info               = Session::exists('inputs') ? Session::get('inputs')['pay_info']                    : ($application->entertainment2->pay_info ?? null);
+    $chargedbys             = Session::exists('inputs') ? (Session::get('inputs')['chargedbys'] ?? [])          : ($application->entertainment2->chargedbys ?? null);
     
     // get action url
     if(isset($modFlg)){
@@ -20,7 +21,7 @@
 @extends('layouts.master')
 
 @section('title')
-{{ __('label.business_settlement') }}
+{{ __('label.entertainment_settlement') }}
 @endsection
 
 @section('css')
@@ -69,12 +70,12 @@
 @endsection
 
 @section('content-header')
-{{ Str::upper(__('label.business_settlement')) }}
+{{ Str::upper(__('label.entertainment_settlement')) }}
 @endsection
 
 @section('content-breadcrumb')
 <li class="breadcrumb-item"><a href="{{ route('user.form.index') }}">{{ __('label.application_list') }}</a></li>
-<li class="breadcrumb-item active">{{ __('label.business_settlement') }}</li>
+<li class="breadcrumb-item active">{{ __('label.entertainment_settlement') }}</li>
 @endsection
 
 @section('content')
@@ -95,7 +96,7 @@
                     </button>
                 </div>
                 <div class="clearfix"></div>
-                <h3>Application Information</h3>
+                <h3>{{ __('label.application_information') }}</h3>
                 <div class="invoice card-body">
                     {{-- Application No --}}
                     <div class="form-group row">
@@ -110,7 +111,7 @@
                     {{-- Apply Date --}}
                     <div class="form-group row">
                         <div class="col-md-2 text-right caption">
-                            <label>Apply Date</label>
+                            <label>{{ __('label.entertainment_applydate') }}</label>
                         </div>
                         <div class="col-md-3">
                             <input type="text" class="form-control" readonly
@@ -121,11 +122,12 @@
                     {{-- Approver / Date --}}
                     <div class="form-group row">
                         <div class="col-md-2 text-right caption">
-                            <label>Approver / Date</label>
+                            <label>{{ __('label.entertainment_approver_date') }}</label>
                         </div>
                         <div class="col-md-10">
                             @isset($application->lastapprovalstep1)
                             {{ $application->lastapprovalstep1->approver_name }}
+                            /
                             {{ \Carbon\Carbon::parse($application->lastapprovalstep1->created_at)->format('d/m/Y H:i') }}
                             @endisset
                         </div>
@@ -134,7 +136,7 @@
                     {{-- Expected Date --}}
                     <div class="form-group row">
                         <div class="col-md-2 text-right caption">
-                            <label>Expected Date</label>
+                            <label>{{ __('label.entertainment_expected_date') }}</label>
                         </div>
                         <div class="col-md-3">
                             <input type="text" class="form-control" readonly
@@ -145,7 +147,7 @@
                     {{-- Entertainment Infos --}}
                     <div class="form-group row">
                         <div class="col-md-2 text-right caption">
-                            <label>Entertainment Infomation</label>
+                            <label>{{ __('label.entertainment_entrainment_infomation') }}</label>
                         </div>
                         <div class="col-md-10">
                             @if (!empty($application->entertainment->entertainmentinfos))
@@ -153,7 +155,7 @@
                             <div class="card card-body card-entertainment-infos">
                                 <div class="form-group row">
                                     <label class="col-md-3 col-form-label text-left">
-                                        Company Name
+                                        {{ __('label.entertainment_cp_name') }}
                                     </label>
                                     <div class="col-md-9">
                                         <input type="text" class="form-control" readonly value="{{ $item['cp_name'] }}">
@@ -161,7 +163,7 @@
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-md-3 col-form-label text-left">
-                                        Title
+                                        {{ __('label.entertainment_title') }}
                                     </label>
                                     <div class="col-md-9">
                                         <input type="text" class="form-control" readonly value="{{ $item['title'] }}">
@@ -169,7 +171,7 @@
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-md-3 col-form-label text-left">
-                                        Name Of Attendants
+                                        {{ __('label.entertainment_name_attendants') }}
                                     </label>
                                     <div class="col-md-9">
                                         <input type="text" class="form-control" readonly value="{{ $item['name_attendants'] }}">
@@ -184,7 +186,7 @@
                     {{-- Type of Entertainment --}}
                     <div class="form-group row">
                         <div class="col-md-2 text-right caption">
-                            <label>Type of Entertainment</label>
+                            <label>{{ __('label.entertainment_entertainment_reason') }}</label>
                         </div>
                         <div class="col-md-4">
                             <input type="text" class="form-control" readonly
@@ -194,7 +196,7 @@
                     {{-- Estimated Amount --}}
                     <div class="form-group row">
                         <div class="col-md-2 text-right caption">
-                            <label>Estimated Amount</label>
+                            <label>{{ __('label.entertainment_est_amount') }}</label>
                         </div>
                         <div class="col-md-10">
                             <div class="form-group row">
@@ -211,7 +213,7 @@
                     {{-- Applicant / Date --}}
                     <div class="form-group row">
                         <div class="col-md-2 text-right caption">
-                            <label>Applicant / Date</label>
+                            <label>{{ __('label.entertainment_applicant_date') }}</label>
                         </div>
                         <div class="col-md-4">
                             {{ $application->applicant->name }}
@@ -227,7 +229,7 @@
                     <div class="form-group row">
                         <div class="col-md-2 text-right caption">
                             <label>
-                                Entertainment Date
+                                {{ __('label.entertainment_date') }}
                                 <span class="text-danger required"> (*)</span>
                             </label>
                         </div>
@@ -254,7 +256,7 @@
                     <div class="form-group row">
                         <div class="col-md-2 text-right caption">
                             <label>
-                                Entertainment Information
+                                {{ __('label.entertainment_entrainment_infomation') }}
                                 <span class="text-danger required"> (*)</span>
                             </label>
                         </div>
@@ -404,11 +406,34 @@
                         </div>
                     </div>
                     <hr>
+                    {{-- Num of persons --}}
+                    <div class="form-group row ">
+                        <label class="col-md-2 col-form-label text-right">
+                            {{ __('label.entertainment_entertainment_person') }}<span class="text-danger required"> (*)</span>
+                        </label>
+                        <div class="col-md-10">
+                            <div class="form-group row">
+                                <div class="col-md-4">
+                                    <input type="text" name="entertainment_person"
+                                        class="form-control entertainment_person @error('entertainment_person') is-invalid @enderror"
+                                        value="{{ $entertainment_person }}" @if($previewFlg) readonly @endif>
+                                </div>
+                                <label class="col-md-8 col-form-label com_title text-lg-left text-left">
+                                    {{ __('label.entertainment_persons') }}
+                                </label>
+                            </div>
+                            @error('entertainment_person')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>
+                    </div>
                     {{-- Estimated Amount --}}
                     <div class="form-group row">
                         <div class="col-md-2 text-right caption">
                             <label>
-                                Estimated Amount
+                                {{ __('label.entertainment_est_amount') }}
                                 <span class="text-danger required"> (*)</span>
                             </label>
                         </div>
@@ -428,13 +453,20 @@
                                 <strong>{{ $message }}</strong>
                             </span>
                             @enderror
+                            <hr style="border: 1px dashed rgba(0,0,0,.1)">
+                            <div style="margin-top: 10px">
+                                <b>{{ __('label.entertainment_total_estimated') }} : <span id="total"></span> VND</b>
+                            </div>
                         </div>
                     </div>
                     {{-- Cost to be charged to (Sec Code) --}}
                     <hr>
                     <div class="form-group row">
                         <div class="col-md-2 text-right">
-                            <label>Pay to Department<span class="text-danger required"> (*)</span></label>
+                            <label>
+                                {{ __('label.entertainment_cost_charged') }}
+                                <span class="text-danger required"> (*)</span>
+                            </label>
                         </div>
                         <div class="col-md-10">
                             <div id="chargedbys_block">
@@ -478,7 +510,7 @@
                                             </span>
                                             <div class="input-group">
                                                 <input type="text" name="chargedbys[{{ $key }}][percent]" style="width: 80px"
-                                                    class="form-control chargedbys_percent @error('chargedbys.'.$key.'.percent') is-invalid @enderror"
+                                                    class="form-control chargedbys_percent @error('chargedbys.'.$key.'.percent') is-invalid @enderror @error('total_percent') is-invalid @enderror"
                                                     value="{{ $chargedbys[$key]['percent'] }}" autocomplete="off" @if($previewFlg) readonly
                                                     @endif>
                                                 <div class="input-group-append">
@@ -571,6 +603,13 @@
                                     </div>
                                 </div>
                             </div>
+                            @error('total_percent')
+                            <div class="mb-1">
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            </div>
+                            @enderror
                             @if(!$previewFlg)
                             <button id="chargedbys-btnAdd" title="{{ __('label.button_addnew') }}"
                                 class="btn bg-gradient-danger @if(!empty($chargedbys) && count($chargedbys) >= 3) d-none @endif">
@@ -584,7 +623,7 @@
                     <div class="form-group row">
                         <div class="col-md-2 text-right caption">
                             <label>
-                                Payment Information
+                                {{ __('label.entertainment_payment_info') }}
                                 <span class="text-danger required"> (*)</span>
                             </label>
                         </div>
@@ -630,39 +669,39 @@
         <br>
         <br>
     </form>
-    
+
     {{-- open PDF in new tab after saved --}}
     @if(session()->has('pdf_url'))
-        <div class="modal fade" id="popup-pdf" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-            aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">
-                            {{ __('msg.save_success') }}
-                            {{ __('msg.sure_open_pdf') }}
-                        </h5>
-                        <button type="button" id="popup_btn_close" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" id="popup_btn_cancel" class="btn bg-gradient-secondary"
-                            data-dismiss="modal">{{ __('label.button_cancel') }}</button>
-                        <button type="button" id="open_pdf" pdf-url="{{ session()->get('pdf_url') }}"
-                             class="btn bg-gradient-success">{{ __('label.button_open_pdf') }}</button>
-                    </div>
+    <div class="modal fade" id="popup-pdf" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">
+                        {{ __('msg.save_success') }}
+                        {{ __('msg.sure_open_pdf') }}
+                    </h5>
+                    <button type="button" id="popup_btn_close" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="popup_btn_cancel" class="btn bg-gradient-secondary"
+                        data-dismiss="modal">{{ __('label.button_cancel') }}</button>
+                    <button type="button" id="open_pdf" pdf-url="{{ session()->get('pdf_url') }}"
+                        class="btn bg-gradient-success">{{ __('label.button_open_pdf') }}</button>
                 </div>
             </div>
         </div>
-
-        <script>
-            $("#popup-pdf").modal('show');
-            $("#open_pdf").on('click', function(){
-                $("#popup-pdf").modal('hide');
-                window.open($(this).attr('pdf-url'));
-            });
-        </script>
+    </div>
+    
+    <script>
+        $("#popup-pdf").modal('show');
+        $("#open_pdf").on('click', function(){
+            $("#popup-pdf").modal('hide');
+            window.open($(this).attr('pdf-url'));
+        });
+    </script>
     @endif
 
 </section>

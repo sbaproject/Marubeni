@@ -252,4 +252,14 @@ return [
         'TWD',
         'OTHER',
     ],
+
+    'daily_allowances_vnd' => [
+        '770000' => 'VND 770,000 /',
+        '660000' => 'VND 660,000 /',
+        '440000' => 'VND 440,000 /',
+    ],
+
+    'daily_allowances_usd' => [
+        '55' => 'USD 55 /',
+    ],
 ];

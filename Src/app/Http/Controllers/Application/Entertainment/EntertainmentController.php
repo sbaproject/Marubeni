@@ -85,6 +85,10 @@ class EntertainmentController extends ApplicationController
             if (!empty($inputs['est_amount']) && floatval($inputs['est_amount']) > 4000000){
                 $rules['reason_budget_over'] = 'required';
             }
+
+            if ($inputs['subsequent']){
+                $rules['subsequent_reason'] = 'required';
+            }
         }
         $customAttributes = [
             'entertainment_dt'              => __('label.entertainment_entertainment_dt'),
@@ -102,6 +106,7 @@ class EntertainmentController extends ApplicationController
             'reason_budget_over'            => __('label.entertainment_describe'),
             'entertainment_person'          => __('label.entertainment_entertainment_person'),
             'est_amount'                    => __('label.entertainment_est_amount'),
+            'subsequent_reason'             => __('label.application_subsequent_reason'),
             'infos.*.cp_name'               => __('label.entertainment_cp_name'),
             'infos.*.title'                 => __('label.entertainment_title'),
             'infos.*.name_attendants'       => __('label.entertainment_name_attendants'),

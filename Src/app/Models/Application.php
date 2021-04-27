@@ -25,6 +25,7 @@ class Application extends Model
         'current_step',
         'status',
         'comment',
+        'subsequent_reason',
         'created_by',
         'updated_by',
         'created_at',

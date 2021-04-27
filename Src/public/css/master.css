@@ -504,3 +504,9 @@ table>tbody>tr>td {
     z-index: 1040;
     transform: translate(50%);
 }
+
+fieldset[disabled] {
+    background-color: #e9ecef;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+}

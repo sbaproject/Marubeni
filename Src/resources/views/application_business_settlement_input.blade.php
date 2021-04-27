@@ -945,12 +945,23 @@
                             <div class="form-group col-md-4 mb-1">
                                 <span class="mb-0 mr-1">{{__('label.amount_per_day')}}</span>
                                 <div class="input-group">
-                                    <input type="text" id="daily1_amount" name="daily1_amount"
+                                    <select id="daily1_amount" name="daily1_amount" style=""
+                                        class="form-control daily-input @error('daily1_amount') is-invalid @enderror">
+                                        <option value="">
+                                            {{ __('label.select') }}
+                                        </option>
+                                        @foreach (config('const.daily_allowances_vnd') as $key => $value)
+                                        <option value="{{ $key }}" @if($daily1_amount==$key) selected @endif>
+                                            {{ $value }} {{ __('label.day') }}
+                                        </option>
+                                        @endforeach
+                                    </select>
+                                    {{-- <input type="text" id="daily1_amount" name="daily1_amount"
                                         class="form-control daily-input amount @error('daily1_amount') is-invalid @enderror" autocomplete="off"
                                         value="{{ $daily1_amount }}">
                                     <div class="input-group-append">
                                         <span class="input-group-text">VND</span>
-                                    </div>
+                                    </div> --}}
                                 </div>
                                 @error('daily1_amount')
                                 <span class="invalid-feedback" role="alert">
@@ -980,12 +991,23 @@
                             <div class="form-group col-md-4 mb-1">
                                 <span class="mb-0 mr-1">{{__('label.amount_per_day')}}</span>
                                 <div class="input-group">
-                                    <input type="text" id="daily2_amount" name="daily2_amount"
+                                    <select id="daily2_amount" name="daily2_amount" style=""
+                                        class="form-control daily-input @error('daily2_amount') is-invalid @enderror">
+                                        <option value="">
+                                            {{ __('label.select') }}
+                                        </option>
+                                        @foreach (config('const.daily_allowances_usd') as $key => $value)
+                                        <option value="{{ $key }}" @if($daily2_amount==$key) selected @endif>
+                                            {{ $value }} {{ __('label.day') }}
+                                        </option>
+                                        @endforeach
+                                    </select>
+                                    {{-- <input type="text" id="daily2_amount" name="daily2_amount"
                                         class="form-control daily-input amount @error('daily2_amount') is-invalid @enderror" autocomplete="off"
                                         value="{{ $daily2_amount }}">
                                     <div class="input-group-append">
                                         <span class="input-group-text">USD</span>
-                                    </div>
+                                    </div> --}}
                                 </div>
                                 @error('daily2_amount')
                                 <span class="invalid-feedback" role="alert">
@@ -1080,7 +1102,7 @@
                                         </span>
                                         <div class="input-group">
                                             <input type="text" name="chargedbys[{{ $key }}][percent]" style="width: 80px"
-                                                class="form-control chargedbys_percent @error('chargedbys.'.$key.'.percent') is-invalid @enderror"
+                                                class="form-control chargedbys_percent @error('chargedbys.'.$key.'.percent') is-invalid @enderror @error('total_percent') is-invalid @enderror"
                                                 value="{{ $chargedbys[$key]['percent'] }}" autocomplete="off" @if($previewFlg) readonly @endif>
                                             <div class="input-group-append">
                                                 <span class="input-group-text">%</span>
@@ -1171,6 +1193,13 @@
                                 </div>
                             </div>
                         </div>
+                        @error('total_percent')
+                        <div class="mb-1">
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        </div>
+                        @enderror
                         @if(!$previewFlg)
                         <button id="chargedbys-btnAdd" title="{{ __('label.button_addnew') }}"
                             class="btn bg-gradient-danger @if(!empty($chargedbys) && count($chargedbys) >= 3) d-none @endif">

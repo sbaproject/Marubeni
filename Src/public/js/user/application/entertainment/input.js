@@ -179,6 +179,11 @@ $(document).ready(function() {
             $('[name="rd_includes_family"]').removeAttr('disabled');
             $('[name="project_name"]').removeAttr('readonly');
 
+            $('#fs_check_row').removeAttr('disabled');
+            $('#fs_has_entertainment_times').removeAttr('disabled');
+            $('#fs_existence_projects').removeAttr('disabled');
+            $('#fs_includes_family').removeAttr('disabled');
+
             $('#rq-check-row').removeClass('d-none');
             $('#rq-has-et_times').removeClass('d-none');
             $('#rq-exist-project').removeClass('d-none');
@@ -198,6 +203,11 @@ $(document).ready(function() {
             $('[name="rd_existence_projects"]').attr('disabled', 'disabled');
             $('[name="rd_includes_family"]').attr('disabled', 'disabled');
             $('[name="project_name"]').attr('readonly', 'readonly').val('');
+
+            $('#fs_check_row').attr('disabled', 'disabled');
+            $('#fs_has_entertainment_times').attr('disabled', 'disabled');
+            $('#fs_existence_projects').attr('disabled', 'disabled');
+            $('#fs_includes_family').attr('disabled', 'disabled');
 
             $('[name="rd_check_row"]').prop('checked', false).change();
             $('[name="rd_has_entertainment_times"]').prop('checked', false).change();

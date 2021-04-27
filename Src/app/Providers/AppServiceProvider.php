@@ -50,5 +50,18 @@ class AppServiceProvider extends ServiceProvider
             }
             return true;
         });
+
+        // equal value
+        Validator::extend('equal', function ($attribute, $value, $parameters, $validator) {
+            // dd($parameters);
+            if ($value != $parameters[0]) {
+                return false;
+            }
+            return true;
+        });
+        Validator::replacer('equal', function ($message, $attr, $rule, $parameters) {
+            $message = str_replace(':value', $parameters[0], $message);
+            return str_replace(':suffix', $parameters[1], $message);
+        });
     }
 }

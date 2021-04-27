@@ -41,21 +41,22 @@
 
 @section('content')
 @php
-    $code_leave     = Session::exists('inputs') ? Session::get('inputs')['code_leave']     :  (isset($application) ? $application->leave->code_leave : null);
-    $paid_type      = Session::exists('inputs') ? Session::get('inputs')['paid_type']      :  (isset($application) ? $application->leave->paid_type : null);
-    $reason_leave   = Session::exists('inputs') ? Session::get('inputs')['reason_leave']   :  (isset($application) ? $application->leave->reason_leave : null);
-    $date_from      = Session::exists('inputs') ? Session::get('inputs')['date_from']      :  (isset($application) ? $application->leave->date_from : null);
-    $date_to        = Session::exists('inputs') ? Session::get('inputs')['date_to']        :  (isset($application) ? $application->leave->date_to : null);
-    $time_day       = Session::exists('inputs') ? Session::get('inputs')['time_day']       :  (isset($application) ? $application->leave->time_day : null);
-    $time_from      = Session::exists('inputs') ? Session::get('inputs')['time_from']      :  (isset($application) ? $application->leave->time_from : null);
-    $time_to        = Session::exists('inputs') ? Session::get('inputs')['time_to']        :  (isset($application) ? $application->leave->time_to : null);
-    $maternity_from = Session::exists('inputs') ? Session::get('inputs')['maternity_from'] :  (isset($application) ? $application->leave->maternity_from : null);
-    $maternity_to   = Session::exists('inputs') ? Session::get('inputs')['maternity_to']   :  (isset($application) ? $application->leave->maternity_to : null);
-    $days_use       = Session::exists('inputs') ? Session::get('inputs')['days_use']       :  (isset($application) ? $application->leave->days_use : null);
-    $times_use      = Session::exists('inputs') ? Session::get('inputs')['times_use']      :  (isset($application) ? $application->leave->times_use : null);
-    $file_path      = Session::exists('inputs') ? Session::get('inputs')['file_path']      :  (isset($application) ? $application->file_path : null);
-    $subsequent     = Session::exists('inputs') ? Session::get('inputs')['subsequent']     :  (isset($application) ? $application->subsequent : null);
-    $applicant      = isset($application) ? $application->applicant : Auth::user();
+    $code_leave         = Session::exists('inputs') ? Session::get('inputs')['code_leave']          :  (isset($application) ? $application->leave->code_leave : null);
+    $paid_type          = Session::exists('inputs') ? Session::get('inputs')['paid_type']           :  (isset($application) ? $application->leave->paid_type : null);
+    $reason_leave       = Session::exists('inputs') ? Session::get('inputs')['reason_leave']        :  (isset($application) ? $application->leave->reason_leave : null);
+    $date_from          = Session::exists('inputs') ? Session::get('inputs')['date_from']           :  (isset($application) ? $application->leave->date_from : null);
+    $date_to            = Session::exists('inputs') ? Session::get('inputs')['date_to']             :  (isset($application) ? $application->leave->date_to : null);
+    $time_day           = Session::exists('inputs') ? Session::get('inputs')['time_day']            :  (isset($application) ? $application->leave->time_day : null);
+    $time_from          = Session::exists('inputs') ? Session::get('inputs')['time_from']           :  (isset($application) ? $application->leave->time_from : null);
+    $time_to            = Session::exists('inputs') ? Session::get('inputs')['time_to']             :  (isset($application) ? $application->leave->time_to : null);
+    $maternity_from     = Session::exists('inputs') ? Session::get('inputs')['maternity_from']      :  (isset($application) ? $application->leave->maternity_from : null);
+    $maternity_to       = Session::exists('inputs') ? Session::get('inputs')['maternity_to']        :  (isset($application) ? $application->leave->maternity_to : null);
+    $days_use           = Session::exists('inputs') ? Session::get('inputs')['days_use']            :  (isset($application) ? $application->leave->days_use : null);
+    $times_use          = Session::exists('inputs') ? Session::get('inputs')['times_use']           :  (isset($application) ? $application->leave->times_use : null);
+    $file_path          = Session::exists('inputs') ? Session::get('inputs')['file_path']           :  (isset($application) ? $application->file_path : null);
+    $subsequent         = Session::exists('inputs') ? Session::get('inputs')['subsequent']          :  (isset($application) ? $application->subsequent : null);
+    $subsequent_reason  = Session::exists('inputs') ? Session::get('inputs')['subsequent_reason']   :  (isset($application) ? $application->subsequent_reason : null);
+    $applicant          = isset($application) ? $application->applicant : Auth::user();
 
     // get action url
     if(isset($application)){
@@ -508,6 +509,21 @@
                             <input type="hidden" id="subsequent" name="subsequent" value="{{ $subsequent }}">
                             <label class="form-check-label" for="cb_subsequent">{{ __('label.on') }}</label>
                         </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-lg-2 col-form-label text-left">
+                        {{ __('label.application_subsequent_reason') }}
+                    </label>
+                    <div class="col-lg-10">
+                        <textarea id="subsequent_reason" name="subsequent_reason"
+                            class="form-control @error('subsequent_reason') is-invalid @enderror" rows="2" @if($previewFlg) readonly
+                            @endif>{{ $subsequent_reason }}</textarea>
+                        @error('subsequent_reason')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
                     </div>
                 </div>
             </div>

@@ -69,6 +69,10 @@ class LeaveApplicationController extends ApplicationController
                     }
                 }
             }
+
+            if ($inputs['subsequent']) {
+                $rules['subsequent_reason'] = 'required';
+            }
         }
 
         $customAttributes = [
@@ -78,6 +82,7 @@ class LeaveApplicationController extends ApplicationController
             'maternity_from'    => __('label.leave.caption_maternity_from'),
             'maternity_to'      => __('label.leave.caption_maternity_to'),
             'days_use'          => __('label.leave.caption_days_use'),
+            'subsequent_reason' => __('label.application_subsequent_reason'),
         ];
 
         return Validator::make($inputs, $rules, [], $customAttributes);

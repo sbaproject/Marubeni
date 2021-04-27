@@ -17,6 +17,7 @@ class CreateEntertainment2Table extends Migration
             $table->id();
             $table->unsignedInteger('application_id')->unique();
             $table->string('entertainment_dt')->nullable();
+            $table->integer('entertainment_person')->nullable();
             $table->decimal('est_amount', 11, 0)->nullable();
             $table->string('charged_to')->nullable()->comment('Format data: [department_id_1]-[value1%],[department_id_2]-[value2%],...');
             $table->string('pay_info')->nullable();
