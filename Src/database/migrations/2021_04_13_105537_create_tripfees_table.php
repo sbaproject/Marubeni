@@ -21,7 +21,7 @@ class CreateTripfeesTable extends Migration
             $table->unsignedInteger('method')->nullable()->comment('1:Air-ticket 2:Train-Bus 3:Taxi 4:Trans-Others 5:Telephone-Internet 6:Communication-Others; 7:Accomodation Fees; 8:Other Fees');
             $table->string('unit', 10)->nullable()->comment('Like USD,VND,SGD,...');
             $table->decimal('exchange_rate', 11 , 0)->default(0)->nullable();
-            $table->decimal('amount', 11, 2)->default(0)->nullable();
+            $table->decimal('amount', 13, 2)->default(0)->nullable();
             $table->text('note')->nullable();
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();

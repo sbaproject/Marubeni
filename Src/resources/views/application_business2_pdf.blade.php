@@ -187,6 +187,12 @@
 		.br {
 			margin-top: 3px;
 		}
+		.txt-right {
+			text-align: right !important;
+		}
+		.txt-center {
+			text-align: center !important;
+		}
 	</style>
 </head>
 
@@ -199,7 +205,7 @@
 				<div class="sub">Marubeni Vietnam Company Limited</div>
 			</td>
 			<td style="text-align: right;text-decoration: underline;">
-				Ver. MVN-1601
+				{{-- Ver. MVN-1601 --}}
 			</td>
 		</tr>
 	</table>
@@ -240,7 +246,7 @@
 		</table>
 	</div>
 
-	<div style="font-weight: bold;margin: 0">Pre-Approval</div>
+	<div style="font-weight: bold;margin: 0">Pre-approval/Chấp thuận trước</div>
 	<div class="caption">
 		Approver / Người duyệt : 
 		@isset($application->lastapprovalstep1)
@@ -428,7 +434,7 @@
 							{{ number_format($sub) }}
 						</td>
 						<td class="data jp" style="width:33%">
-							{{ mb_strlen($item['note']) > 27 ? mb_substr($item['note'], 0, 27).'...' : $item['note'] }}
+							{{ mb_strlen($item['note']) > 40 ? mb_substr($item['note'], 0, 40).'...' : $item['note'] }}
 						</td>
 					</tr>
 				@endforeach
@@ -482,7 +488,7 @@
 					{{ number_format($sub) }}
 				</td>
 				<td class="data jp" style="width:33%">
-					{{ mb_strlen($item['note']) > 27 ? mb_substr($item['note'], 0, 27).'...' : $item['note'] }}
+					{{ mb_strlen($item['note']) > 40 ? mb_substr($item['note'], 0, 40).'...' : $item['note'] }}
 				</td>
 			</tr>
 			@endforeach
@@ -495,62 +501,199 @@
 				<td colspan="5">No data. / Không có dữ liệu.</td>
 			</tr>
 			@endif
-			
+
+			{{-- TripFees - communications --}}
+			@if (isset($inputs['communications']) && count($inputs['communications']) > 0)
+			@php
+			$rowsSpan = count($inputs['communications']);
+			@endphp
+			@foreach ($inputs['communications'] as $index => $item)
+			<tr>
+				@if ($index == 0)
+				<td rowspan="{{ $rowsSpan }}" class="f item1">
+					<div class="caption">{{ trans('label.business_communication',[],'en') }}</div>
+					<div class="caption">{{ trans('label.business_communication',[],'vi') }}</div>
+				</td>
+				@endif
+				<td class="f item2">
+					{{ config('const.trip_fee_type.communication').($index + 1) }}
+				</td>
+				<td class="f item3">
+					@isset($item['method'])
+					<div class="caption">{{ trans('label.business_communications.'.$item['method'],[],'en') }}</div>
+					<div class="caption">{{ trans('label.business_communications.'.$item['method'],[],'vi') }}</div>
+					@endisset
+				</td>
+				<td class="data" style="width:6%;text-align: center">
+					{{ $item['unit'] }}
+				</td>
+				<td class="data" style="width:10%;text-align: right">
+					{{ isset($item['amount']) ? Common::formatNumeralWithoutZeroDecimal($item['amount']) : '' }}
+				</td>
+				<td class="data" style="width:10%;text-align: right">
+					{{ isset($item['exchange_rate']) ? number_format($item['exchange_rate']) : '' }}
+				</td>
+				<td class="data" style="width:10%;text-align: right">
+					@php
+					$amount = $item['amount'] ?? 0;
+					$rate = $item['exchange_rate'] ?? 1;
+					$sub = $amount * $rate;
+					@endphp
+					{{ number_format($sub) }}
+				</td>
+				<td class="data jp" style="width:33%">
+					{{ mb_strlen($item['note']) > 40 ? mb_substr($item['note'], 0, 40).'...' : $item['note'] }}
+				</td>
+			</tr>
+			@endforeach
+			@else
+			<tr>
+				<td @isset($noTripFees) colspan="3" @endisset class="f">
+					<div class="caption">{{ trans('label.business_communication',[],'en') }}</div>
+					<div class="caption">{{ trans('label.business_communication',[],'vi') }}</div>
+				</td>
+				<td colspan="5">No data. / Không có dữ liệu.</td>
+			</tr>
+			@endif
+
+			{{-- TripFees - otherfees --}}
+			@if (isset($inputs['otherfees']) && count($inputs['otherfees']) > 0)
+			@php
+			$rowsSpan = count($inputs['otherfees']);
+			@endphp
+			@foreach ($inputs['otherfees'] as $index => $item)
+			<tr>
+				@if ($index == 0)
+				<td rowspan="{{ $rowsSpan }}" class="f item1">
+					<div class="caption">{{ trans('label.business_other_fees',[],'en') }}</div>
+					<div class="caption">{{ trans('label.business_other_fees',[],'vi') }}</div>
+				</td>
+				@endif
+				<td class="f item2">
+					{{ config('const.trip_fee_type.otherfees').($index + 1) }}
+				</td>
+				<td class="f item3"></td>
+				<td class="data" style="width:6%;text-align: center">
+					{{ $item['unit'] }}
+				</td>
+				<td class="data" style="width:10%;text-align: right">
+					{{ isset($item['amount']) ? Common::formatNumeralWithoutZeroDecimal($item['amount']) : '' }}
+				</td>
+				<td class="data" style="width:10%;text-align: right">
+					{{ isset($item['exchange_rate']) ? number_format($item['exchange_rate']) : '' }}
+				</td>
+				<td class="data" style="width:10%;text-align: right">
+					@php
+					$amount = $item['amount'] ?? 0;
+					$rate = $item['exchange_rate'] ?? 1;
+					$sub = $amount * $rate;
+					@endphp
+					{{ number_format($sub) }}
+				</td>
+				<td class="data jp" style="width:33%">
+					{{ mb_strlen($item['note']) > 40 ? mb_substr($item['note'], 0, 40).'...' : $item['note'] }}
+				</td>
+			</tr>
+			@endforeach
+			@else
+			<tr>
+				<td @isset($noTripFees) colspan="3" @endisset class="f">
+					<div class="caption">{{ trans('label.business_other_fees',[],'en') }}</div>
+					<div class="caption">{{ trans('label.business_other_fees',[],'vi') }}</div>
+				</td>
+				<td colspan="5">No data. / Không có dữ liệu.</td>
+			</tr>
+			@endif
+		</tbody>
+	</table>
 	<div class="br"></div>
 	{{-- Daily allowances --}}
 	<table style="clear: both;">
 		<tbody>
 			<tr>
-				<td rowspan="3" class="f" style="width: 31%">
+				<td rowspan="4" class="f" style="width: 31%">
 					<div class="caption">{{ trans('label.business_daily_allowance',[],'en') }}</div>
 					<div class="caption">{{ trans('label.business_daily_allowance',[],'vi') }}</div>
 				</td>
-				<td class="data" style="width: 30%">
-					{{ Common::formatNumeralWithoutZeroDecimal($inputs['daily1_amount']).' VND' }}
+				<td class="f" style="text-align: center;width:6%;">
+					<div class="caption">Currency</div>
+					<div class="caption">Tiền tệ</div>
 				</td>
-				<td rowspan="2" class="f" style="width: 20%">
-					{{ trans('label.business_number_of_days',[],'en') }}
-					 / 
-					{{ trans('label.business_number_of_days',[],'vi') }}
+				<td class="f" style="text-align: center;width:10%;">
+					<div class="caption">Amount</div>
+					<div class="caption">Số tiền</div>
 				</td>
-				<td>{{ $inputs['daily1_days'] }}</td>
+				<td class="f" style="text-align: center;width:10%;">
+					<div class="caption">Exchange rate</div>
+					<div class="caption">Tỷ giá</div>
+				</td>
+				<td class="f" style="text-align: center;width:10%;">
+					<div class="caption">Days</div>
+					<div class="caption">Số ngày</div>
+				</td>
+				<td class="f" style="text-align: center;width:10%;">
+					<div class="caption">VND(SUB)</div>
+					<div class="caption">Tạm tính</div>
+				</td>
+				<td style="width: 23%"></td>
 			</tr>
 			<tr>
-				<td class="data">
-					{{ Common::formatNumeralWithoutZeroDecimal($inputs['daily2_amount']).' USD' }}
-					{{ '('.Common::formatNumeralWithoutZeroDecimal($inputs['daily2_rate']).' VND/USD)' }}
-				</td>
-				<td>{{ $inputs['daily2_days'] }}</td>
-			</tr>
-			<tr>
-				<td colspan="3" class="data">
+				<td class="data txt-center">VND</td>
+				<td class="data txt-right">{{ isset($inputs['daily1_amount']) ? Common::formatNumeralWithoutZeroDecimal($inputs['daily1_amount']) : '' }}</td>
+				<td class="data txt-right"></td>
+				<td class="data txt-right">{{ $inputs['daily1_days'] }}</td>
+				<td class="data txt-right">
 					@php
-						$daily1 = 0;
-						$daily2 = 0;
-						if(isset($inputs['daily1_amount']) && isset($inputs['daily1_days'])){
-							$daily1 = $inputs['daily1_amount'] * $inputs['daily1_days'];
-						}
-						if(isset($inputs['daily2_amount']) && isset($inputs['daily2_rate']) && isset($inputs['daily2_days'])){
-							$daily2 = $inputs['daily2_amount'] * $inputs['daily2_rate'] * $inputs['daily2_days'];
-						}
-						$totalDaily = $daily1 + $daily2;
+						$totalDaily = 0;
+						$amount = $inputs['daily1_amount'] ?? 0;
+						$days = $inputs['daily1_days'] ?? 0;
+						$sub = $amount * $days;
+						$totalDaily += $sub;
 					@endphp
-					{{ Common::formatNumeralWithoutZeroDecimal($totalDaily).' VND' }}
+					{{ number_format($sub) }}
 				</td>
+				<td></td>
 			</tr>
+			<tr>
+				<td class="data txt-center">USD</td>
+				<td class="data txt-right">
+					{{ isset($inputs['daily2_amount']) ? Common::formatNumeralWithoutZeroDecimal($inputs['daily2_amount']) : '' }}
+				</td>
+				<td class="data txt-right">
+					{{ isset($inputs['daily2_rate']) ? Common::formatNumeralWithoutZeroDecimal($inputs['daily2_rate']) : '' }}
+				</td>
+				<td class="data txt-right">{{ $inputs['daily2_days'] }}</td>
+				<td class="data txt-right">
+					@php
+						$amount = $inputs['daily2_amount'] ?? 0;
+						$rate = $inputs['daily2_rate'] ?? 1;
+						$days = $inputs['daily2_days'] ?? 0;
+						$sub = $amount * $rate * $days;
+						$totalDaily += $sub;
+					@endphp
+					{{ number_format($sub) }}
+				</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td colspan="4" class="txt-right">Total / Tổng</td>
+				<td class="data txt-right">{{ number_format($totalDaily) }}</td>
+				<td></td>
+			</tr>
+			{{-- Total --}}
 			<tr>
 				<td class="f">
 					<div class="caption">{{ trans('label.business_total_expenses',[],'en') }}</div>
 					<div class="caption">{{ trans('label.business_total_expenses',[],'vi') }}</div>
 				</td>
-				<td class="data" style="font-weight: bold;vertical-align: middle">
+				<td colspan="2" class="data txt-right" style="font-weight: bold;vertical-align: middle">
 					@php
 						$totalExpenses = App\Models\Businesstrip2::calculateTotalExpenses($inputs);
 					@endphp
 					{{ Common::formatNumeralWithoutZeroDecimal($totalExpenses).' VND' }}
 				</td>
-				<td colspan="2" class="f">
-					<div class="caption" style="line-height: 5px">Please attach invoices, receipts or any evidence to each expense listed above.</div>
+				<td colspan="4" class="f">
+					<div class="caption">Please attach invoices, receipts or any evidence to each expense listed above.</div>
 					<div class="caption">Các chi phí liệt kê phải đính kèm hóa đơn, chứng từ.</div>
 				</td>
 			</tr>
