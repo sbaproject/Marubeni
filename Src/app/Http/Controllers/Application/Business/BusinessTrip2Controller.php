@@ -13,6 +13,7 @@ use App\Models\Businesstrip;
 use Illuminate\Http\Request;
 use App\Models\Businesstrip2;
 use App\Models\Transportation;
+use App\Models\HistoryApproval;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -528,6 +529,19 @@ class BusinessTrip2Controller extends Controller
 
             // get applicant info
             $inputs['applicant'] = $application->applicant;
+
+            // get last approval of complete application
+            if ($application->status == config('const.application.status.completed')) {
+                $conditions = [
+                    'application_id' => $application->id,
+                    'step' => $application->current_step,
+                    'status' => config('const.application.status.completed'),
+                ];
+                $lastApproval = HistoryApproval::getHistory($conditions)->first();
+                if (!empty($lastApproval)) {
+                    $inputs['lastApproval'] = $lastApproval;
+                }
+            }
         } else {
             $inputs['applicant'] = Auth::user();
         }

@@ -13,11 +13,12 @@ use App\Models\Application;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use App\Models\Businesstrip2;
+use App\Models\Entertainment2;
 use App\Models\Transportation;
+use App\Models\HistoryApproval;
+use App\Models\EntertainmentInfos;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Models\Entertainment2;
-use App\Models\EntertainmentInfos;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
@@ -248,6 +249,19 @@ class Entertainment2Controller extends Controller
 
             // get applicant info
             $inputs['applicant'] = $application->applicant;
+
+            // get last approval of complete application
+            if ($application->status == config('const.application.status.completed')) {
+                $conditions = [
+                    'application_id' => $application->id,
+                    'step' => $application->current_step,
+                    'status' => config('const.application.status.completed'),
+                ];
+                $lastApproval = HistoryApproval::getHistory($conditions)->first();
+                if (!empty($lastApproval)) {
+                    $inputs['lastApproval'] = $lastApproval;
+                }
+            }
         } else {
             $inputs['applicant'] = Auth::user();
         }

@@ -374,7 +374,7 @@
 		<tr>
 			<td class="data">
 				@isset($inputs['est_amount'])
-					{{ number_format($inputs['est_amount']) }}
+					{{ number_format($inputs['est_amount']) }} VND
 				@endisset
 			</td>
 			<td colspan="2" class="f">
@@ -389,7 +389,7 @@
 					$amountPerson = $inputs['est_amount'] ?? 0;
 					$total = $numPerson * $amountPerson;
 				@endphp
-				{{ number_format($total) }}
+				{{ number_format($total) }} VND
 			</td>
 			<td colspan="2" class="f">
 				<div class="caption">Total</div>
