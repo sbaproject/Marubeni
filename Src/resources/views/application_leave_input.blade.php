@@ -159,7 +159,7 @@
                                 $paidTypeReadFlg = true;
                             }
                         @endphp
-                        <fieldset class="@error('paid_type') form-control is-invalid @enderror">
+                        <fieldset id="fs_paid_type" class="@error('paid_type') form-control is-invalid @enderror">
                             @foreach (config('const.paid_type') as $key => $value)
                             <label class="radio-inline">
                                 <input type="radio" name="rd_paid_type" value="{{ $value }}"

@@ -173,7 +173,7 @@ return [
             'golf_po'                   => 5,
             'gift_president'            => 6,
             'gift_specific_director'    => 7,
-            'gift_other_director'       => 8,
+            // 'gift_other_director'       => 8,
             'gift_manager'              => 9,
             'other'                     => 10,
         ],

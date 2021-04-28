@@ -1,4 +1,4 @@
-$(document).ready(function () {
+$(document).ready(function() {
     //=======================================
     // Datetimpicker
     //=======================================
@@ -29,7 +29,7 @@ $(document).ready(function () {
         $('#date_to').val(dateTo.format('YYYYMMDD'));
     }
     // change
-    $("#dateLeaveFrom").on("dp.change", function (e) {
+    $("#dateLeaveFrom").on("dp.change", function(e) {
         $('#dateLeaveTo').data("DateTimePicker").minDate(e.date);
         if (e.date) {
             $('#date_from').val(e.date.format('YYYYMMDD'));
@@ -37,7 +37,7 @@ $(document).ready(function () {
             $('#date_from').val(null);
         }
     });
-    $("#dateLeaveTo").on("dp.change", function (e) {
+    $("#dateLeaveTo").on("dp.change", function(e) {
         $('#dateLeaveFrom').data("DateTimePicker").maxDate(e.date);
         if (e.date) {
             $('#date_to').val(e.date.format('YYYYMMDD'));
@@ -87,17 +87,17 @@ $(document).ready(function () {
         $('#timeLeaveFrom').data("DateTimePicker").maxDate(timeLeaveTo);
     }
     // change
-    $("#timeLeaveDate").on("dp.change", function (e) {
+    $("#timeLeaveDate").on("dp.change", function(e) {
         if (e.date) {
             $('#time_day').val(e.date.format('YYYYMMDD'));
         } else {
             $('#time_day').val(null);
         }
     });
-    $("#timeLeaveFrom").on("dp.change", function (e) {
+    $("#timeLeaveFrom").on("dp.change", function(e) {
         $('#timeLeaveTo').data("DateTimePicker").minDate(e.date);
     });
-    $("#timeLeaveTo").on("dp.change", function (e) {
+    $("#timeLeaveTo").on("dp.change", function(e) {
         $('#timeLeaveFrom').data("DateTimePicker").maxDate(e.date);
     });
 
@@ -132,7 +132,7 @@ $(document).ready(function () {
         $('#maternity_to').val(maternityLeaveTo.format('YYYYMMDD'));
     }
     // change
-    $("#maternityLeaveFrom").on("dp.change", function (e) {
+    $("#maternityLeaveFrom").on("dp.change", function(e) {
         $('#maternityLeaveTo').data("DateTimePicker").minDate(e.date);
         if (e.date) {
             $('#maternity_from').val(e.date.format('YYYYMMDD'));
@@ -140,7 +140,7 @@ $(document).ready(function () {
             $('#maternity_from').val(null);
         }
     });
-    $("#maternityLeaveTo").on("dp.change", function (e) {
+    $("#maternityLeaveTo").on("dp.change", function(e) {
         $('#maternityLeaveFrom').data("DateTimePicker").maxDate(e.date);
         if (e.date) {
             $('#maternity_to').val(e.date.format('YYYYMMDD'));
@@ -156,7 +156,7 @@ $(document).ready(function () {
     new Cleave('.days_use', {
         numericOnly: true,
         blocks: [2],
-        onValueChanged: function (e) {
+        onValueChanged: function(e) {
             $('[name="days_use"]').val(e.target.rawValue);
         }
     });
@@ -179,7 +179,7 @@ $(document).ready(function () {
         // numeralThousandsGroupStyle: 'thousand',
         numeralPositiveOnly: true,
         stripLeadingZeroes: true,
-        onValueChanged: function (e) {
+        onValueChanged: function(e) {
             let maxLength = $($(this)[0].element).attr('max-number');
             let maxValue = $($(this)[0].element).attr('max-value');
             if (e.target.rawValue.length > parseInt(maxLength) || parseInt(e.target.rawValue) > parseInt(maxValue)) {
@@ -193,7 +193,7 @@ $(document).ready(function () {
     //=======================================
     // Subsequen changes
     //=======================================
-    $('[name="cb_subsequent"]').on('change', function () {
+    $('[name="cb_subsequent"]').on('change', function() {
         if ($(this).prop('checked')) {
             $('#subsequent').val(1);
         } else {
@@ -211,12 +211,12 @@ $(document).ready(function () {
     }
 
     // code_leave was changed
-    $('[name="rd_code_leave"]').on('change', function () {
+    $('[name="rd_code_leave"]').on('change', function() {
         $('#code_leave').val($(this).val());
         settingPageByCodeLeave($(this));
     });
 
-    $('[name="rd_paid_type"]').on('change', function () {
+    $('[name="rd_paid_type"]').on('change', function() {
         if ($(this).val() == paid_type.AL) {
             $('#txt_days_use').removeAttr('readonly');
             $('#txt_times_use').removeAttr('readonly');
@@ -241,7 +241,8 @@ $(document).ready(function () {
         $('[data-target="#maternityLeaveFrom"]').removeAttr('readonly');
         $('[data-target="#maternityLeaveTo"]').removeAttr('readonly');
         $('[name="rd_paid_type"]').removeAttr('disabled');
-        
+        $('#fs_paid_type').removeAttr('disabled');
+
         $('#rq_paid_type').removeClass('d-none');
         $('#rq_date_leave').removeClass('d-none');
         $('#rq_maternity_leave').removeClass('d-none');
@@ -271,6 +272,7 @@ $(document).ready(function () {
             $('#timeLeaveFrom').attr('readonly', 'readonly');
             $('#timeLeaveTo').attr('readonly', 'readonly');
             // paid_type
+            $('#fs_paid_type').attr('disabled', 'disabled');
             $('[name="rd_paid_type"]').attr('disabled', 'disabled');
             $('[name="rd_paid_type"]').prop('checked', false);
             $('#rq_paid_type').addClass('d-none');
@@ -289,6 +291,7 @@ $(document).ready(function () {
             $('#rq_maternity_leave').addClass('d-none');
 
             if (codeLeaveSelector.val() != code_leave.SL) {
+                $('#fs_paid_type').attr('disabled', 'disabled');
                 $('[name="rd_paid_type"]').attr('disabled', 'disabled');
                 $('[name="rd_paid_type"]').prop('checked', false);
                 $('#rq_paid_type').addClass('d-none');
@@ -342,7 +345,8 @@ $(document).ready(function () {
             $('[data-target="#maternityLeaveFrom"]').attr('readonly', 'readonly');
             $('[data-target="#maternityLeaveTo"]').attr('readonly', 'readonly');
             $('[name="rd_paid_type"]').attr('disabled', 'disabled');
-            
+            $('#fs_paid_type').attr('disabled', 'disabled');
+
             $('#rq_paid_type').addClass('d-none');
             $('#rq_date_leave').addClass('d-none');
             $('#rq_maternity_leave').addClass('d-none');
@@ -359,7 +363,7 @@ $(document).ready(function () {
     // Browser file
     //=======================================
     $('#input_file').val(null);
-    $('#input_file').on('change', function (e) {
+    $('#input_file').on('change', function(e) {
         //get the file name
         var fileName = e.target.files[0].name;
         if (fileName != '') {
@@ -368,7 +372,7 @@ $(document).ready(function () {
         }
     });
     // remove file
-    $('.file-remove').on('click', function () {
+    $('.file-remove').on('click', function() {
         $('#input_file').val(null);
         $('#file_path').val(null);
         $('.file-name').html($('.file-name').attr('place-holder'));
@@ -376,7 +380,7 @@ $(document).ready(function () {
         $('.file-block').removeClass('d-none');
     });
     // open link attached file
-    $('.file-link').on('click', function () {
+    $('.file-link').on('click', function() {
         $(this).find('a')[0].click();
     });
 
@@ -384,7 +388,7 @@ $(document).ready(function () {
     // Print PDF
     //=======================================
 
-    $('#btnPdf').on('click', function (e) {
+    $('#btnPdf').on('click', function(e) {
 
         e.preventDefault();
 

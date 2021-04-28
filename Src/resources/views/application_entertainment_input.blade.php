@@ -459,7 +459,7 @@
                         </span>
                         @enderror
                         <div class="form-group row mt-1">
-                            <div style="padding-left: 0px" class="col-md-4">
+                            <div style="padding-left: 0px;margin-left:7.5px;" class="col-md-3">
                                 <input type="text" id="txt_entertainment_times"
                                     class="form-control entertainment_times @error('entertainment_times') is-invalid @enderror"
                                     value="{{ $et_times }}" placeholder="{{ __('label.entertainment_entertainment_times') }}" @if($previewFlg
@@ -472,7 +472,7 @@
                                 </span>
                                 @enderror
                             </div>
-                            <label class="col-lg-8 col-form-label com_title text-lg-left text-left">
+                            <label class="col-md-8 col-form-label com_title text-lg-left text-left">
                                 {{ __('label.times') }}<span id="rq_et_times" class="text-danger required"> (*)</span>
                             </label>
                         </div>
