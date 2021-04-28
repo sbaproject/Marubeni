@@ -172,7 +172,7 @@
 			width: 13%;
 		}
 		.item2{
-			width: 2%;
+			width: 3%;
 		}
 		.item3{
 			width: 16%;
@@ -369,27 +369,27 @@
 		@endphp
 		<tbody>
 			<tr>
-				<td colspan="3" class="f" style="text-align: center; @isset($noTripFees) width:31% @endisset">
+				<td colspan="3" class="f" style="text-align: center;">
 					<div class="caption">Item</div>
 					<div class="caption">Hạng mục</div>
 				</td>
-				<td class="f" style="text-align: center; @isset($noTripFees) width:6% @endisset">
+				<td class="f" style="text-align: center; width:6%">
 					<div class="caption">Currency</div>
 					<div class="caption">Tiền tệ</div>
 				</td>
-				<td class="f" style="text-align: center; @isset($noTripFees) width:10% @endisset">
+				<td class="f" style="text-align: center; width:10%">
 					<div class="caption">Amount</div>
 					<div class="caption">Số tiền</div>
 				</td>
-				<td class="f" style="text-align: center; @isset($noTripFees) width:10% @endisset">
+				<td class="f" style="text-align: center; width:10%">
 					<div class="caption">Exchange rate</div>
 					<div class="caption">Tỷ giá</div>
 				</td>
-				<td class="f" style="text-align: center; @isset($noTripFees) width:10% @endisset">
+				<td class="f" style="text-align: center; width:10%">
 					<div class="caption">VND(SUB)</div>
 					<div class="caption">Tạm tính</div>
 				</td>
-				<td class="f" style="text-align: center; @isset($noTripFees) width:33% @endisset">
+				<td class="f" style="text-align: center; width:32%">
 					<div class="caption">Remarks</div>
 					<div class="caption">Ghi chú</div>
 				</td>
@@ -433,18 +433,24 @@
 							@endphp
 							{{ number_format($sub) }}
 						</td>
-						<td class="data jp" style="width:33%">
+						<td class="data jp" style="width:32%">
 							{{ mb_strlen($item['note']) > 40 ? mb_substr($item['note'], 0, 40).'...' : $item['note'] }}
 						</td>
 					</tr>
 				@endforeach
 			@else
 				<tr>
-					<td @isset($noTripFees) colspan="3" @endisset class="f">
+					<td class="f item1">
 						<div class="caption">{{ trans('label.business_trans',[],'en') }}</div>
 						<div class="caption">{{ trans('label.business_trans',[],'vi') }}</div>
 					</td>
-					<td colspan="5">No data. / Không có dữ liệu.</td>
+					<td class="item2"></td>
+					<td class="item3"></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
 				</tr>
 			@endif
 
@@ -487,18 +493,24 @@
 					@endphp
 					{{ number_format($sub) }}
 				</td>
-				<td class="data jp" style="width:33%">
+				<td class="data jp" style="width:32%">
 					{{ mb_strlen($item['note']) > 40 ? mb_substr($item['note'], 0, 40).'...' : $item['note'] }}
 				</td>
 			</tr>
 			@endforeach
 			@else
 			<tr>
-				<td @isset($noTripFees) colspan="3" @endisset class="f">
+				<td class="f item1">
 					<div class="caption">{{ trans('label.business_accommodation_fee',[],'en') }}</div>
 					<div class="caption">{{ trans('label.business_accommodation_fee',[],'vi') }}</div>
 				</td>
-				<td colspan="5">No data. / Không có dữ liệu.</td>
+				<td class="item2"></td>
+				<td class="item3"></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
 			</tr>
 			@endif
 
@@ -541,18 +553,24 @@
 					@endphp
 					{{ number_format($sub) }}
 				</td>
-				<td class="data jp" style="width:33%">
+				<td class="data jp" style="width:32%">
 					{{ mb_strlen($item['note']) > 40 ? mb_substr($item['note'], 0, 40).'...' : $item['note'] }}
 				</td>
 			</tr>
 			@endforeach
 			@else
 			<tr>
-				<td @isset($noTripFees) colspan="3" @endisset class="f">
+				<td class="f item1">
 					<div class="caption">{{ trans('label.business_communication',[],'en') }}</div>
 					<div class="caption">{{ trans('label.business_communication',[],'vi') }}</div>
 				</td>
-				<td colspan="5">No data. / Không có dữ liệu.</td>
+				<td class="item2"></td>
+				<td class="item3"></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
 			</tr>
 			@endif
 
@@ -590,18 +608,24 @@
 					@endphp
 					{{ number_format($sub) }}
 				</td>
-				<td class="data jp" style="width:33%">
+				<td class="data jp" style="width:32%">
 					{{ mb_strlen($item['note']) > 40 ? mb_substr($item['note'], 0, 40).'...' : $item['note'] }}
 				</td>
 			</tr>
 			@endforeach
 			@else
 			<tr>
-				<td @isset($noTripFees) colspan="3" @endisset class="f">
+				<td class="f item1">
 					<div class="caption">{{ trans('label.business_other_fees',[],'en') }}</div>
 					<div class="caption">{{ trans('label.business_other_fees',[],'vi') }}</div>
 				</td>
-				<td colspan="5">No data. / Không có dữ liệu.</td>
+				<td class="item2"></td>
+				<td class="item3"></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
 			</tr>
 			@endif
 		</tbody>
@@ -611,7 +635,7 @@
 	<table style="clear: both;">
 		<tbody>
 			<tr>
-				<td rowspan="4" class="f" style="width: 31%">
+				<td rowspan="4" class="f" style="width: 32%">
 					<div class="caption">{{ trans('label.business_daily_allowance',[],'en') }}</div>
 					<div class="caption">{{ trans('label.business_daily_allowance',[],'vi') }}</div>
 				</td>
@@ -635,7 +659,7 @@
 					<div class="caption">VND(SUB)</div>
 					<div class="caption">Tạm tính</div>
 				</td>
-				<td style="width: 23%"></td>
+				<td style="width: 22%"></td>
 			</tr>
 			<tr>
 				<td class="data txt-center">VND</td>
@@ -710,18 +734,20 @@
 				@foreach ($inputs['chargedbys'] as $index => $item)
 				<tr>
 					@if ($index == 0)
-					<td rowspan="{{ $rowSpan }}" class="f" style="width: 31%">
+					<td rowspan="{{ $rowSpan }}" class="f" style="width: 32%">
 						<div class="caption">{{ trans('label.business_charged_to',[],'en') }}</div>
 						<div class="caption">{{ trans('label.business_charged_to',[],'vi') }}</div>
 					</td>
 					@endif
-					<td style="width: 30%">
+					<td style="width: 26%">
 						@php
 						$department = App\Models\Department::find($item['department']);
 						@endphp
-						@isset($department)
+						@if(isset($department))
 						{{ $department->name }}
-						@endisset
+						@else
+						<div style="height: 10px"></div>
+						@endif
 					</td>
 					<td style="width: 20%">{{ $item['percent'] }}</td>
 					@if ($index == 0)
