@@ -359,7 +359,7 @@
 		@endif
 		@endforeach
 		<tr>
-			<td rowspan="3" class="f">
+			<td rowspan="4" class="f">
 				<div class="caption">Amount</div>
 				<div class="caption">Số tiền thực tế</div>
 			</td>
@@ -380,6 +380,17 @@
 			<td colspan="2" class="f">
 				<div class="caption">Per Person(Excluding VAT)</div>
 				<div class="caption">Số tiền 1 người ( Không gồm VAT)</div>
+			</td>
+		</tr>
+		<tr>
+			<td class="data">
+				@isset($inputs['reason_budget_over'])
+					{{ $inputs['reason_budget_over'] }}
+				@endisset
+			</td>
+			<td colspan="2" class="f">
+				<div class="caption">Describe if the amount per person exceeds 4mil VND (PO:2mil VND)</div>
+				<div class="caption">Mô tả nếu số tiền mỗi người vượt quá 4 triệu đồng (PO: 2 triệu đồng)</div>
 			</td>
 		</tr>
 		<tr>

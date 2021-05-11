@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Application\ApplicationController;
+use App\Models\User;
+use App\Models\Leave;
 
 class LeaveApplicationController extends ApplicationController
 {
@@ -118,6 +120,39 @@ class LeaveApplicationController extends ApplicationController
         }
 
         DB::table('leaves')->updateOrInsert(['application_id' => $applicationId], $leaveData);
+
+
+        // for leave application
+        $leave = Leave::where('application_id', $applicationId)->first();
+        if (!empty($leave)) {
+            // if leave_code is AL or SL (with paid_type = AL)
+            if (
+                $leave->code_leave == config('const.code_leave.AL')
+                || ($leave->code_leave == config('const.code_leave.SL') && $leave->paid_type == config('const.paid_type.AL'))
+            ) {
+                $applicant = User::find($loginUser->id);
+                if (!empty($applicant)) {
+
+                    //--------------------------------------------------
+                    // calculating total annual remaining time of applicant (only for annual leave)
+                    //--------------------------------------------------
+                    $dayUse = empty($leave->days_use) ? 0 : $leave->days_use;
+                    $timeUse = empty($leave->times_use) ? 0 : $leave->times_use;
+                    // working hours per day
+                    $workingHourPerDay = config('const.working_hours_per_day');
+                    // get total remaining time (by hours)
+                    $remainingHours = ($applicant->leave_remaining_days * $workingHourPerDay) + $applicant->leave_remaining_time;
+                    // total hours take this time
+                    $totalHourUse = $remainingHours - (($dayUse * $workingHourPerDay) + $timeUse);
+                    // update annual leave remaining time of applicant
+                    $applicant->leave_remaining_days = intval($totalHourUse / $workingHourPerDay);
+                    $applicant->leave_remaining_time = (($totalHourUse % $workingHourPerDay) / $workingHourPerDay) * $workingHourPerDay;
+
+                    $applicant->updated_by = $loginUser->id;
+                    $applicant->save();
+                }
+            }
+        }
     }
 
     protected function preview(Request $request, $id)

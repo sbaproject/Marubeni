@@ -283,7 +283,7 @@ return [
     'entertainment_applydate'                   => 'Apply Date',
     'entertainment_approver_date'               => 'Approver / Date',
     'entertainment_expected_date'               => 'Expected Date',
-    'entertainment_applicant_date'              => 'Applicant / Date',
+    'entertainment_applicant_date'              => 'Applicant',
     'entertainment_date'                        => 'Entertainment Date',
     'entertainment_cost_charged'                => 'Cost to be charged to (Sec Code)',
     'entertainment_payment_info'                => 'Payment Information',

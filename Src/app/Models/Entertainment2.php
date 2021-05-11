@@ -31,6 +31,7 @@ class Entertainment2 extends Model
         'updated_by',
         'created_at',
         'updated_at',
+        'reason_budget_over',
     ];
 
     protected $appends = [

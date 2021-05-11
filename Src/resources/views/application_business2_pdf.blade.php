@@ -344,14 +344,14 @@
 					@endisset
 				</td>
 				<td class="data jp">{{ $inputs['itineraries'][2]['departure'] ?? '' }}</td>
-				<td class="data jp">{{ $inputs['itineraries'][2]['departure'] ?? '' }}</td>
+				<td class="data jp">{{ $inputs['itineraries'][2]['arrive'] ?? '' }}</td>
 				<td class="data jp">
 					@isset($inputs['itineraries'][3]['trans_date'])
 					{{ date('d/m/Y', strtotime($inputs['itineraries'][3]['trans_date'] ?? null)) }}
 					@endisset
 				</td>
 				<td class="data jp">{{ $inputs['itineraries'][3]['departure'] ?? '' }}</td>
-				<td class="data jp">{{ $inputs['itineraries'][3]['departure'] ?? '' }}</td>
+				<td class="data jp">{{ $inputs['itineraries'][3]['arrive'] ?? '' }}</td>
 			</tr>
 			@endif
 		</tbody>

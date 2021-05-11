@@ -173,6 +173,8 @@ class Entertainment2Controller extends Controller
                 'entertainmentinfos.*.cp_name'           => __('label.entertainment_cp_name'),
                 'entertainmentinfos.*.title'             => __('label.entertainment_title'),
                 'entertainmentinfos.*.name_attendants'   => __('label.entertainment_name_attendants'),
+
+                'reason_budget_over'            => __('label.entertainment_describe'),
             ];
 
             // validate rules
@@ -204,6 +206,10 @@ class Entertainment2Controller extends Controller
                     $inputs['total_percent'] = $totalPercent;
                     $rules['total_percent'] = 'equal:100,%';
                 }
+            }
+
+            if (!empty($inputs['est_amount']) && floatval($inputs['est_amount']) > 4000000){
+                $rules['reason_budget_over'] = 'required';
             }
 
             $validator = Validator::make($inputs, $rules, [], $customAttributes);

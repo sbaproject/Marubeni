@@ -278,7 +278,7 @@ return [
     'entertainment_applydate'                   => 'Ngày nộp đơn',
     'entertainment_approver_date'               => 'Người duyệt / Ngày',
     'entertainment_expected_date'               => 'Ngày dự kiến tiếp khách',
-    'entertainment_applicant_date'              => 'Người đề nghị / Ngày',
+    'entertainment_applicant_date'              => 'Người đề nghị',
     'entertainment_date'                        => 'Ngày tiếp khách',
     'entertainment_cost_charged'                => 'Phòng ban chịu phí',
     'entertainment_payment_info'                => 'Thông tin thanh toán',

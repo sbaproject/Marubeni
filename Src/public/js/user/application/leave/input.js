@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).ready(function () {
     //=======================================
     // Datetimpicker
     //=======================================
@@ -29,7 +29,7 @@ $(document).ready(function() {
         $('#date_to').val(dateTo.format('YYYYMMDD'));
     }
     // change
-    $("#dateLeaveFrom").on("dp.change", function(e) {
+    $("#dateLeaveFrom").on("dp.change", function (e) {
         $('#dateLeaveTo').data("DateTimePicker").minDate(e.date);
         if (e.date) {
             $('#date_from').val(e.date.format('YYYYMMDD'));
@@ -37,7 +37,7 @@ $(document).ready(function() {
             $('#date_from').val(null);
         }
     });
-    $("#dateLeaveTo").on("dp.change", function(e) {
+    $("#dateLeaveTo").on("dp.change", function (e) {
         $('#dateLeaveFrom').data("DateTimePicker").maxDate(e.date);
         if (e.date) {
             $('#date_to').val(e.date.format('YYYYMMDD'));
@@ -87,17 +87,17 @@ $(document).ready(function() {
         $('#timeLeaveFrom').data("DateTimePicker").maxDate(timeLeaveTo);
     }
     // change
-    $("#timeLeaveDate").on("dp.change", function(e) {
+    $("#timeLeaveDate").on("dp.change", function (e) {
         if (e.date) {
             $('#time_day').val(e.date.format('YYYYMMDD'));
         } else {
             $('#time_day').val(null);
         }
     });
-    $("#timeLeaveFrom").on("dp.change", function(e) {
+    $("#timeLeaveFrom").on("dp.change", function (e) {
         $('#timeLeaveTo').data("DateTimePicker").minDate(e.date);
     });
-    $("#timeLeaveTo").on("dp.change", function(e) {
+    $("#timeLeaveTo").on("dp.change", function (e) {
         $('#timeLeaveFrom').data("DateTimePicker").maxDate(e.date);
     });
 
@@ -132,7 +132,7 @@ $(document).ready(function() {
         $('#maternity_to').val(maternityLeaveTo.format('YYYYMMDD'));
     }
     // change
-    $("#maternityLeaveFrom").on("dp.change", function(e) {
+    $("#maternityLeaveFrom").on("dp.change", function (e) {
         $('#maternityLeaveTo').data("DateTimePicker").minDate(e.date);
         if (e.date) {
             $('#maternity_from').val(e.date.format('YYYYMMDD'));
@@ -140,7 +140,7 @@ $(document).ready(function() {
             $('#maternity_from').val(null);
         }
     });
-    $("#maternityLeaveTo").on("dp.change", function(e) {
+    $("#maternityLeaveTo").on("dp.change", function (e) {
         $('#maternityLeaveFrom').data("DateTimePicker").maxDate(e.date);
         if (e.date) {
             $('#maternity_to').val(e.date.format('YYYYMMDD'));
@@ -156,7 +156,7 @@ $(document).ready(function() {
     new Cleave('.days_use', {
         numericOnly: true,
         blocks: [2],
-        onValueChanged: function(e) {
+        onValueChanged: function (e) {
             $('[name="days_use"]').val(e.target.rawValue);
         }
     });
@@ -179,7 +179,7 @@ $(document).ready(function() {
         // numeralThousandsGroupStyle: 'thousand',
         numeralPositiveOnly: true,
         stripLeadingZeroes: true,
-        onValueChanged: function(e) {
+        onValueChanged: function (e) {
             let maxLength = $($(this)[0].element).attr('max-number');
             let maxValue = $($(this)[0].element).attr('max-value');
             if (e.target.rawValue.length > parseInt(maxLength) || parseInt(e.target.rawValue) > parseInt(maxValue)) {
@@ -193,7 +193,7 @@ $(document).ready(function() {
     //=======================================
     // Subsequen changes
     //=======================================
-    $('[name="cb_subsequent"]').on('change', function() {
+    $('[name="cb_subsequent"]').on('change', function () {
         if ($(this).prop('checked')) {
             $('#subsequent').val(1);
         } else {
@@ -211,12 +211,12 @@ $(document).ready(function() {
     }
 
     // code_leave was changed
-    $('[name="rd_code_leave"]').on('change', function() {
+    $('[name="rd_code_leave"]').on('change', function () {
         $('#code_leave').val($(this).val());
         settingPageByCodeLeave($(this));
     });
 
-    $('[name="rd_paid_type"]').on('change', function() {
+    $('[name="rd_paid_type"]').on('change', function () {
         if ($(this).val() == paid_type.AL) {
             $('#txt_days_use').removeAttr('readonly');
             $('#txt_times_use').removeAttr('readonly');
@@ -363,7 +363,7 @@ $(document).ready(function() {
     // Browser file
     //=======================================
     $('#input_file').val(null);
-    $('#input_file').on('change', function(e) {
+    $('#input_file').on('change', function (e) {
         //get the file name
         var fileName = e.target.files[0].name;
         if (fileName != '') {
@@ -372,7 +372,7 @@ $(document).ready(function() {
         }
     });
     // remove file
-    $('.file-remove').on('click', function() {
+    $('.file-remove').on('click', function () {
         $('#input_file').val(null);
         $('#file_path').val(null);
         $('.file-name').html($('.file-name').attr('place-holder'));
@@ -380,7 +380,7 @@ $(document).ready(function() {
         $('.file-block').removeClass('d-none');
     });
     // open link attached file
-    $('.file-link').on('click', function() {
+    $('.file-link').on('click', function () {
         $(this).find('a')[0].click();
     });
 
@@ -388,7 +388,7 @@ $(document).ready(function() {
     // Print PDF
     //=======================================
 
-    $('#btnPdf').on('click', function(e) {
+    $('#btnPdf').on('click', function (e) {
 
         e.preventDefault();
 
@@ -403,4 +403,110 @@ $(document).ready(function() {
         form.submit();
         $('[name="pdf"]').remove();
     });
+
+    $('#txt_days_use').on('keyup', function () {
+
+        let entitled = parseInt($('#entitled').val());
+        let used_days = parseInt($('#used_days').val());
+        let used_time = parseInt($('#used_time').val());
+        let total_time_can_use = (entitled * 8) - ((used_days * 8) + used_time);
+
+        let day_use = parseInt(this.value);
+        let time_use = parseInt($('#txt_times_use').val());
+        if (isNaN(day_use)) { day_use = 0; }
+        if (isNaN(time_use)) { time_use = 0; }
+        let total_want_use = (day_use * 8) + time_use;
+
+        let time_remain = total_time_can_use - total_want_use;
+
+        if (time_remain < 0) {
+
+            time_remain = 0;
+            let numDayMax = Math.floor(total_time_can_use / 8);
+            let numTimeMax = total_time_can_use % 8;
+            if (isNaN(numDayMax)) { numDayMax = 0; }
+            if (isNaN(numTimeMax)) { numTimeMax = 0; }
+            $('#txt_days_use').val(numDayMax);
+            $('#txt_times_use').val(numTimeMax);
+        }
+
+        let numDay = Math.floor(time_remain / 8);
+        let numTime = time_remain % 8;
+        if (isNaN(numDay)) { numDay = 0; }
+        if (isNaN(numTime)) { numTime = 0; }
+
+        $('#remaining_days').val(numDay);
+        $('#remaining_hours').val(numTime);
+    });
+
+    $('#txt_times_use').on('keyup', function () {
+
+        let entitled = parseInt($('#entitled').val());
+        let used_days = parseInt($('#used_days').val());
+        let used_time = parseInt($('#used_time').val());
+        let total_time_can_use = (entitled * 8) - ((used_days * 8) + used_time);
+
+        let day_use = parseInt($('#txt_days_use').val());
+        let time_use = parseInt(this.value);
+        if (isNaN(day_use)) { day_use = 0; }
+        if (isNaN(time_use)) { time_use = 0; }
+        let total_want_use = (day_use * 8) + time_use;
+
+        let time_remain = total_time_can_use - total_want_use;
+
+        if (time_remain < 0) {
+
+            time_remain = 0;
+            let numDayMax = Math.floor(total_time_can_use / 8);
+            let numTimeMax = total_time_can_use % 8;
+            if (isNaN(numDayMax)) { numDayMax = 0; }
+            if (isNaN(numTimeMax)) { numTimeMax = 0; }
+            $('#txt_days_use').val(numDayMax);
+            $('#txt_times_use').val(numTimeMax);
+        }
+
+        let numDay = Math.floor(time_remain / 8);
+        let numTime = time_remain % 8;
+        if (isNaN(numDay)) { numDay = 0; }
+        if (isNaN(numTime)) { numTime = 0; }
+
+        $('#remaining_days').val(numDay);
+        $('#remaining_hours').val(numTime);
+    });
+
+    setValueDaysUseLoadError();
 });
+
+function setValueDaysUseLoadError() {
+    let entitled = parseInt($('#entitled').val());
+    let used_days = parseInt($('#used_days').val());
+    let used_time = parseInt($('#used_time').val());
+    let total_time_can_use = (entitled * 8) - ((used_days * 8) + used_time);
+
+    let day_use = parseInt($('#txt_days_use').val());
+    let time_use = parseInt($('#txt_times_use').val());
+    if (isNaN(day_use)) { day_use = 0; }
+    if (isNaN(time_use)) { time_use = 0; }
+    let total_want_use = (day_use * 8) + time_use;
+
+    let time_remain = total_time_can_use - total_want_use;
+
+    if (time_remain < 0) {
+
+        time_remain = 0;
+        let numDayMax = Math.floor(total_time_can_use / 8);
+        let numTimeMax = total_time_can_use % 8;
+        if (isNaN(numDayMax)) { numDayMax = 0; }
+        if (isNaN(numTimeMax)) { numTimeMax = 0; }
+        $('#txt_days_use').val(numDayMax);
+        $('#txt_times_use').val(numTimeMax);
+    }
+
+    let numDay = Math.floor(time_remain / 8);
+    let numTime = time_remain % 8;
+    if (isNaN(numDay)) { numDay = 0; }
+    if (isNaN(numTime)) { numTime = 0; }
+
+    $('#remaining_days').val(numDay);
+    $('#remaining_hours').val(numTime);
+}

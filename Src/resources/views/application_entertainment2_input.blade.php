@@ -5,6 +5,7 @@
     $entertainment_person   = Session::exists('inputs') ? Session::get('inputs')['entertainment_person']        : ($modFlg ? ($application->entertainment2->entertainment_person ?? null) : ($application->entertainment->entertainment_person ?? null));
     $pay_info               = Session::exists('inputs') ? Session::get('inputs')['pay_info']                    : ($application->entertainment2->pay_info ?? null);
     $chargedbys             = Session::exists('inputs') ? (Session::get('inputs')['chargedbys'] ?? [])          : ($application->entertainment2->chargedbys ?? null);
+    $reason_budget_over     = Session::exists('inputs') ? Session::get('inputs')['reason_budget_over']          : ($modFlg ? ($application->entertainment2->reason_budget_over ?? $application->entertainment->reason_budget_over) : ($application->entertainment->reason_budget_over ?? null));
     
     // get action url
     if(isset($modFlg)){
@@ -217,8 +218,6 @@
                         </div>
                         <div class="col-md-4">
                             {{ $application->applicant->name }}
-                            /
-                            {{ \Carbon\Carbon::parse($application->created_at)->format('d/m/Y H:i') }}
                         </div>
                     </div>
                 </div>
@@ -459,6 +458,21 @@
                             </div>
                         </div>
                     </div>
+                    <div class="form-group row ">
+                    <label
+                        class="col-lg-2 col-form-label text-left text-danger d-flex align-items-left justify-content-left">
+                        {{ __('label.entertainment_reason_budget_over') }}
+                    </label>
+                    <div class="col-lg-10">
+                        <textarea id="reason_budget_over" name="reason_budget_over" class="form-control @error('reason_budget_over') is-invalid @enderror" rows="2"
+                            @if($previewFlg) readonly @endif>{{ $reason_budget_over }}</textarea>
+                        @error('reason_budget_over')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
+                </div>
                     {{-- Cost to be charged to (Sec Code) --}}
                     <hr>
                     <div class="form-group row">
