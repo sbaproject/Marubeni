@@ -22,7 +22,7 @@ return [
 	 * Locations
 	 */
     'location' => [
-        'hn' => 0,
+        'han' => 0,
         'hcm' => 1
     ],
     /**

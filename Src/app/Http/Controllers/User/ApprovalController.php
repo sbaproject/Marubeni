@@ -8,8 +8,8 @@ use App\Libs\Common;
 use App\Models\Step;
 use App\Models\User;
 use App\Models\Leave;
-use App\Models\Department;
-use App\Models\Application;
+use App\Models\Businesstrip2;
+use App\Models\Entertainment2;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -68,6 +68,23 @@ class ApprovalController extends Controller
         // get data
         $sql = $this->getSqlIndex($conditions, $sortable, $fillZero);
         $data = DB::select($sql, $params);
+
+        // check exist in business2, entainment2 -> when step 2
+        foreach ($data as $key => $value) {
+            $del = true;
+            if ($value->current_step === config('const.application.step_type.settlement')) {
+                $busi2 = Businesstrip2::where('application_id', '=', $value->application_id)->first();
+                $enter2 = Entertainment2::where('application_id', '=', $value->application_id)->first();
+                if ($busi2 !== null || $enter2 !== null) {
+                    $del = false;
+                }
+
+                if ($del) {
+                    unset($data[$key]);
+                }
+            }
+        }
+        if (!isset($data)) $data = [];
 
         // paginator
         $page = $request->page;

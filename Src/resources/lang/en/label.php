@@ -36,7 +36,7 @@ return [
     'forgotpassword'    => 'Forgot your password ?',
     'success'           => 'Success',
     'fail'              => 'Fail',
-    'hn'                => 'Ha Noi',
+    'han'                => 'Ha Noi',
     'hcm'               => 'Ho Chi Minh',
     'select'            => 'Select',
     'all'               => 'All',

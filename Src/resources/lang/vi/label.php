@@ -35,7 +35,7 @@ return [
     'forgotpassword'    => 'Quên mật khẩu ?',
     'success'           => 'Thành công',
     'fail'              => 'Thất bại',
-    'hn'                => 'Hà Nội',
+    'han'                => 'Hà Nội',
     'hcm'               => 'Hồ Chí Minh',
     'select'            => 'Vui lòng chọn',
     'all'               => 'Tất cả',
