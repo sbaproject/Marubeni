@@ -98,7 +98,7 @@
                 <div class="form-group row float-right">
                     @if (isset($application))
                         @if ($application->status != config('const.application.status.draft'))
-                            <a class="btn bg-gradient-success" href="{{ route('user.entertainment2.show', $application->id) }}"
+                            <a class="btn bg-gradient-success @if($showButtonSettlementFlg) isDisabled @endif" href="{{ route('user.entertainment2.show', $application->id) }}"
                                 style="margin-right: 10px">
                                 <i class="fas fa-dollar-sign" style="margin-right: 5px; color: #fff;"></i>
                                 {{ __('label.settlement') }}

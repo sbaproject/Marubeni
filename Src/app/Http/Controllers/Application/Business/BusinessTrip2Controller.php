@@ -19,6 +19,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Gate;
 
 /**
  * BusinessTrip Settlement (Step 2)
@@ -31,7 +32,7 @@ class BusinessTrip2Controller extends Controller
 
     public function show(Request $request, $applicationId)
     {
-        $departments = Department::all();
+        $departments = Department::where('role', 1)->get();
 
         $application = Application::findOrFail($applicationId);
 
@@ -40,11 +41,27 @@ class BusinessTrip2Controller extends Controller
             abort(404);
         }
 
-        $previewFlg = false;
+        // check valid permission accessing to application
+        if (Auth::user()->id !== $application->created_by) {
+            if (Gate::denies('admin-gate')) {
+                abort(403);
+            } else {
+                $showWithAdminFlg = true;
+            }
+        }
+        // not allows editing
+        $previewFlg = !$this->checkEditableApplication($application) || isset($showWithAdminFlg) || Common::detectMobile();
 
         $modFlg = !empty($application->business2);
 
         return view('application_business_settlement_input', compact('departments', 'application', 'previewFlg', 'modFlg'));
+    }
+
+    private function checkEditableApplication($application)
+    {
+        return ($application->status == config('const.application.status.draft')
+            ||  ($application->status == config('const.application.status.applying'))
+            ||  $application->status == config('const.application.status.declined'));
     }
 
     public function update(Request $request, $applicationId)

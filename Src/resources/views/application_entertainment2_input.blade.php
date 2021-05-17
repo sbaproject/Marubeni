@@ -10,7 +10,7 @@
     // get action url
     if(isset($modFlg)){
         if($previewFlg){
-            $actionUrl = route('user.entertainment2.preview.pdf', $application->id);
+            $actionUrl = route('user.entertainment2.pdf', $application->id);
         } else {
             $actionUrl = route('user.entertainment2.update', $application->id);
         }
@@ -670,11 +670,13 @@
                     </button>
                 @endif
             @endif --}}
+            @if (!$previewFlg)
             <button type="button" name="apply" value="apply" class="btn bg-gradient-success btn-form" data-toggle="modal"
                 data-target="#popup-confirm" @if(Common::detectMobile()) disabled @endif>
                 <i class="far fa-check-circle" style="margin-right: 5px;"></i>
                 {{ __('label.button_apply') }}
             </button>
+            @endif
             <a href="{{ Common::getHomeUrl() }}" class="btn btn bg-gradient-secondary btn-form btn-cancel">
                 <i class="fa fa-ban" aria-hidden="true" style="margin-right: 5px;"></i>
                 {{ __('label.button_cancel') }}

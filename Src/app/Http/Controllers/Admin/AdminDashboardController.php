@@ -19,7 +19,7 @@ class AdminDashboardController extends Controller
         $data = $request->input();
 
         $locations = config('const.location');
-        $departments = Department::all();
+        $departments = Department::where('role', 0)->get();
         $forms = Form::all();
 
         $str_date = null;

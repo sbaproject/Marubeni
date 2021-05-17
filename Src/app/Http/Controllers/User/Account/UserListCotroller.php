@@ -19,7 +19,7 @@ class UserListCotroller extends Controller
     {
         // dropdownlist items
         $locations = config('const.location');
-        $departments = Department::all();
+        $departments = Department::where('role', 0)->get();
 
         // get parameter query string
         $conditions = $request->only(['location','user_no', 'department', 'name', 'show_del_user']);

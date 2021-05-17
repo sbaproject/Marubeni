@@ -100,6 +100,8 @@
                             @foreach ($list_applications_status as $application_status)
                                 @php
                                     $completedFlg = $intstatus == config('const.application.status.completed');
+                                    $declinedFlg = $intstatus == config('const.application.status.declined');
+                                    $rejectFlg = $intstatus == config('const.application.status.reject');
                                     $finalApproverFlg = $application_status->final_approver_id == $application_status->next_approver_id;
                                 @endphp
                                 <tr class="">
@@ -114,8 +116,8 @@
                                         @endif
                                     </td>
                                     <td>
-                                        @if (!$completedFlg && !$finalApproverFlg)
-                                            <button type="button" name="btnSkip" class="btn bg-gradient-warning btn-sm" title="{{ __('label.button_skip') }}"
+                                        @if (!$completedFlg && !$finalApproverFlg && !($declinedFlg||$rejectFlg))
+                                            <button type="button" tha name="btnSkip" class="btn bg-gradient-warning btn-sm" title="{{ __('label.button_skip') }}"
                                                 data-toggle="modal" data-target="#modal-skip"
                                                 data-skip-who-id="{{ $application_status->next_approver_id }}"
                                                 data-skip-who-name="{{ $application_status->next_approver }}"

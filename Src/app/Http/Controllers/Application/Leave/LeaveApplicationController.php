@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Application\ApplicationController;
+use App\Models\Application;
 use App\Models\User;
 use App\Models\Leave;
 
@@ -122,9 +123,11 @@ class LeaveApplicationController extends ApplicationController
         DB::table('leaves')->updateOrInsert(['application_id' => $applicationId], $leaveData);
 
 
+        $application_check = Application::where('id', $applicationId)->first();
+
         // for leave application
         $leave = Leave::where('application_id', $applicationId)->first();
-        if (!empty($leave)) {
+        if (!empty($leave) && $application_check['status'] == config('const.application.status.applying')) {
             // if leave_code is AL or SL (with paid_type = AL)
             if (
                 $leave->code_leave == config('const.code_leave.AL')
@@ -145,8 +148,8 @@ class LeaveApplicationController extends ApplicationController
                     // total hours take this time
                     $totalHourUse = $remainingHours - (($dayUse * $workingHourPerDay) + $timeUse);
                     // update annual leave remaining time of applicant
-                    $applicant->leave_remaining_days = intval($totalHourUse / $workingHourPerDay);
-                    $applicant->leave_remaining_time = (($totalHourUse % $workingHourPerDay) / $workingHourPerDay) * $workingHourPerDay;
+                    $applicant->leave_remaining_days = intval($totalHourUse / $workingHourPerDay) < 0 ? 0 : intval($totalHourUse / $workingHourPerDay);
+                    $applicant->leave_remaining_time = ((($totalHourUse % $workingHourPerDay) / $workingHourPerDay) * $workingHourPerDay) < 0 ? 0 : ((($totalHourUse % $workingHourPerDay) / $workingHourPerDay) * $workingHourPerDay);
 
                     $applicant->updated_by = $loginUser->id;
                     $applicant->save();

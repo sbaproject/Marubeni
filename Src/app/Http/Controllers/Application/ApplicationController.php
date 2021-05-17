@@ -21,6 +21,8 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use App\Exceptions\NotFoundFlowSettingException;
+use App\Models\Businesstrip2;
+use App\Models\Entertainment2;
 
 class ApplicationController extends Controller
 {
@@ -83,6 +85,10 @@ class ApplicationController extends Controller
             } else {
                 $showWithAdminFlg = true;
             }
+
+            $userCreateFlg = false;
+        }else{
+            $userCreateFlg = true;
         }
 
         // not allows editing
@@ -94,7 +100,25 @@ class ApplicationController extends Controller
         //     $inProgressFlg = DB::table('history_approval')->where('application', $id)->exists();
         // }
 
-        $this->currentCompatData = compact('application', 'previewFlg', 'inProgressFlg');
+        // Check exist in Businesstrip2, Entertainment2
+        $busi2 = Businesstrip2::where('application_id', '=', $application->id)->first();
+        $enter2 = Entertainment2::where('application_id', '=', $application->id)->first();
+        if ($busi2 !== null || $enter2 !== null) {
+            $checkExitBusi2enter2Flg= true;
+        }else{
+            $checkExitBusi2enter2Flg= false;
+        }
+
+        $showButtonSettlementFlg = false;
+        if(!$checkExitBusi2enter2Flg){
+            if(!$userCreateFlg){
+                $showButtonSettlementFlg = true;
+            }
+        }else{
+            $showButtonSettlementFlg = false;
+        }
+
+        $this->currentCompatData = compact('application', 'previewFlg', 'inProgressFlg', 'showButtonSettlementFlg');
     }
 
     public function update(Request $request, $id)
@@ -465,7 +489,9 @@ class ApplicationController extends Controller
             }
         }
 
-        $this->currentCompatData = compact('application', 'previewFlg');
+        $showButtonSettlementFlg = true;
+
+        $this->currentCompatData = compact('application', 'previewFlg', 'showButtonSettlementFlg');
     }
 
     protected function previewPdf(Request $request, $id)

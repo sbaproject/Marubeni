@@ -84,7 +84,7 @@ class User extends Authenticatable
             'locations' => config('const.location'),
             'roles' => config('const.role'),
             'approvals' => config('const.approval'),
-            'departments' => Department::all(),
+            'departments' => Department::where('role', 0)->get(),
             'user' => $user
         ];
 
