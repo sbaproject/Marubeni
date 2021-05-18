@@ -52,7 +52,7 @@ class BusinesstripController extends ApplicationController
             $rules['destinations']      = 'required';
             $rules['accommodation']     = 'required';
             $rules['accompany']         = 'required';
-            $rules['borne_by']          = 'required';
+            //$rules['borne_by']          = 'required';
             $rules['trip_dt_from']      = 'required';
             $rules['trip_dt_to']        = 'required';
             $rules['trans.*.departure'] = 'required';
@@ -68,7 +68,7 @@ class BusinesstripController extends ApplicationController
             'destinations'      => __('label.business_trip_destination'),
             'accommodation'     => __('label.business_accommodation'),
             'accompany'         => __('label.business_accompany'),
-            'borne_by'          => __('label.business_borne_by'),
+            //'borne_by'          => __('label.business_borne_by'),
             'subsequent_reason' => __('label.application_subsequent_reason'),
             'trans.*.departure' => __('label.business_departure'),
             'trans.*.arrive'    => __('label.business_arrival'),
@@ -90,7 +90,7 @@ class BusinesstripController extends ApplicationController
             'trip_dt_to'    => $inputs['trip_dt_to'],
             'accommodation' => $inputs['accommodation'],
             'accompany'     => $inputs['accompany'],
-            'borne_by'      => $inputs['borne_by'],
+            //'borne_by'      => $inputs['borne_by'],
             'comment'       => $inputs['comment'],
             'updated_by'    => $loginUser->id,
             'updated_at'    => Carbon::now(),

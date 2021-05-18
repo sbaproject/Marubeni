@@ -44,7 +44,6 @@
     $trip_dt_to         = Session::exists('inputs') ? Session::get('inputs')['trip_dt_to']          : (isset($application) ? $application->business->trip_dt_to : null);
     $accommodation      = Session::exists('inputs') ? Session::get('inputs')['accommodation']       : (isset($application) ? $application->business->accommodation : null);
     $accompany          = Session::exists('inputs') ? Session::get('inputs')['accompany']           : (isset($application) ? $application->business->accompany : null);
-    $borne_by           = Session::exists('inputs') ? Session::get('inputs')['borne_by']            : (isset($application) ? $application->business->borne_by : null);
     $comment            = Session::exists('inputs') ? Session::get('inputs')['comment']             : (isset($application) ? $application->business->comment : null);
     $subsequent         = Session::exists('inputs') ? Session::get('inputs')['subsequent']          : (isset($application) ? $application->subsequent : null);
     $subsequent_reason  = Session::exists('inputs') ? Session::get('inputs')['subsequent_reason']   : (isset($application) ? $application->subsequent_reason : null);
@@ -379,21 +378,6 @@
                         <input type="text" id="accompany" name="accompany" class="form-control @error('accompany') is-invalid @enderror"
                             autocomplete="off" value="{{ $accompany }}" @if($previewFlg) readonly @endif>
                         @error('accompany')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
-                    </div>
-                </div>
-                <hr>
-                <div class="form-group row">
-                    <div class="col-sm-2 text-left">
-                        <label>{{ __('label.business_borne_by') }}<span class="text-danger required"> (*)</span></label>
-                    </div>
-                    <div class="col-sm-10">
-                        <input type="text" id="borne_by" name="borne_by" class="form-control @error('borne_by') is-invalid @enderror"
-                             autocomplete="off" value="{{ $borne_by }}" @if($previewFlg) readonly @endif>
-                        @error('borne_by')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>

@@ -296,15 +296,6 @@
 					{{ $inputs['accompany'] }}
 				</td>
 			</tr>
-			<tr>
-				<td class="f">
-					<div>Expenses to be borne by</div>
-					<div>Chi phí chịu bởi</div>
-				</td>
-				<td colspan="4" class="data jp">
-					{{ $inputs['borne_by'] }}
-				</td>
-			</tr>
 		</tbody>
 	</table>
 	<p></p>
