@@ -514,5 +514,5 @@ fieldset[disabled] {
 .isDisabled {
     pointer-events: none;
     cursor: default;
-    opacity: 0.2;
+    opacity: 0;
 }

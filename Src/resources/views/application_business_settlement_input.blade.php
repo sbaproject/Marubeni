@@ -152,7 +152,7 @@
                     </div>
                     <div class="col-md-10">
                         <input type="text" id="destinations" name="destinations" class="form-control @error('destinations') is-invalid @enderror"
-                            autocomplete="off" value="{{ $destinations }}">
+                            autocomplete="off" value="{{ $destinations }}" @if($previewFlg) readonly @endif>
                         @error('destinations')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -169,7 +169,7 @@
                     <div class="col-md-2">
                         <input type="text" id="number_of_days" name="number_of_days"
                             class="form-control number_of_days @error('number_of_days') is-invalid @enderror" autocomplete="off"
-                            value="{{ $number_of_days }}">
+                            value="{{ $number_of_days }}" @if($previewFlg) readonly @endif>
                         @error('number_of_days')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -946,7 +946,7 @@
                                 <span class="mb-0 mr-1">{{__('label.amount_per_day')}}</span>
                                 <div class="input-group">
                                     <select id="daily1_amount" name="daily1_amount" style=""
-                                        class="form-control daily-input @error('daily1_amount') is-invalid @enderror">
+                                        class="form-control daily-input @error('daily1_amount') is-invalid @enderror" @if($previewFlg) readonly @endif>
                                         <option value="">
                                             {{ __('label.select') }}
                                         </option>
@@ -958,7 +958,7 @@
                                     </select>
                                     {{-- <input type="text" id="daily1_amount" name="daily1_amount"
                                         class="form-control daily-input amount @error('daily1_amount') is-invalid @enderror" autocomplete="off"
-                                        value="{{ $daily1_amount }}">
+                                        value="{{ $daily1_amount }}" >
                                     <div class="input-group-append">
                                         <span class="input-group-text">VND</span>
                                     </div> --}}
@@ -976,7 +976,7 @@
                                 </span>
                                 <input type="text" id="daily1_days" name="daily1_days"
                                     class="form-control daily-input number_of_days @error('daily1_days') is-invalid @enderror" autocomplete="off"
-                                    value="{{ $daily1_days }}">
+                                    value="{{ $daily1_days }}" @if($previewFlg) readonly @endif>
                                 @error('daily1_days')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -992,7 +992,7 @@
                                 <span class="mb-0 mr-1">{{__('label.amount_per_day')}}</span>
                                 <div class="input-group">
                                     <select id="daily2_amount" name="daily2_amount" style=""
-                                        class="form-control daily-input @error('daily2_amount') is-invalid @enderror">
+                                        class="form-control daily-input @error('daily2_amount') is-invalid @enderror" @if($previewFlg) readonly @endif>
                                         <option value="">
                                             {{ __('label.select') }}
                                         </option>
@@ -1021,7 +1021,7 @@
                                 <div class="input-group">
                                     <input type="text" id="daily2_rate" name="daily2_rate"
                                         class="form-control daily-input rate @error('daily2_rate') is-invalid @enderror" autocomplete="off"
-                                        value="{{ $daily2_rate }}">
+                                        value="{{ $daily2_rate }}" @if($previewFlg) readonly @endif>
                                     <div class="input-group-append">
                                         <span class="input-group-text">USD/VND</span>
                                     </div>
@@ -1039,7 +1039,7 @@
                                 </span>
                                 <input type="text" id="daily2_days" name="daily2_days"
                                     class="form-control daily-input number_of_days @error('daily2_days') is-invalid @enderror" autocomplete="off"
-                                    value="{{ $daily2_days }}">
+                                    value="{{ $daily2_days }}" @if($previewFlg) readonly @endif>
                                 @error('daily2_days')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -1080,7 +1080,7 @@
                                             {{ __('label.business_department') }}<span class="text-danger required"> (*)</span>
                                         </span>
                                         <select name="chargedbys[{{ $key }}][department]" style=""
-                                            class="form-control chargedbys_department @error('chargedbys.'.$key.'.department') is-invalid @enderror">
+                                            class="form-control chargedbys_department @error('chargedbys.'.$key.'.department') is-invalid @enderror" @if($previewFlg) readonly @endif>
                                             <option value="">
                                                 {{ __('label.select') }}
                                             </option>
@@ -1168,7 +1168,7 @@
                                         <span for="">
                                             {{ __('label.business_department') }}<span class="text-danger required"> (*)</span>
                                         </span>
-                                        <select class="form-control chargedbys_department">
+                                        <select class="form-control chargedbys_department" >
                                             <option value="">
                                                 {{ __('label.select') }}
                                             </option>

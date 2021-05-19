@@ -502,7 +502,7 @@
                                                 {{ __('label.business_department') }}<span class="text-danger required"> (*)</span>
                                             </span>
                                             <select name="chargedbys[{{ $key }}][department]" style=""
-                                                class="form-control chargedbys_department @error('chargedbys.'.$key.'.department') is-invalid @enderror">
+                                                class="form-control chargedbys_department @error('chargedbys.'.$key.'.department') is-invalid @enderror" @if($previewFlg) readonly @endif>
                                                 <option value="">
                                                     {{ __('label.select') }}
                                                 </option>

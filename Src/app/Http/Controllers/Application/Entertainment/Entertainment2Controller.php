@@ -50,7 +50,8 @@ class Entertainment2Controller extends Controller
         // check valid permission accessing to application
         if (Auth::user()->id !== $application->created_by) {
             if (Gate::denies('admin-gate')) {
-                abort(403);
+                //abort(403);
+                $showWithAdminFlg = true;
             } else {
                 $showWithAdminFlg = true;
             }
