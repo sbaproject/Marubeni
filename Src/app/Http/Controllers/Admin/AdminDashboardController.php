@@ -83,8 +83,8 @@ class AdminDashboardController extends Controller
             $form_id = $data['form'];
         }
 
-        $location_id = '';
-        if (!empty($data['location'])) {
+        $location_id = null;
+        if (isset($data['location'])) {
             $location_id = $data['location'];
         }
 
@@ -152,9 +152,10 @@ class AdminDashboardController extends Controller
             $list_application->where('applications.form_id', '=', $form_id);
         }
 
-        if (!empty($location_id)){
+        if (isset($location_id)){
             $list_application->where('users.location', '=', $location_id);
         }
+        
         if (!empty($department_id)){
             $list_application->where('users.department_id', '=', $department_id);
         }
