@@ -42,7 +42,7 @@ class SendMailBackground extends Command
         Common::sendApplicationNoticeMail(
             'mails.mail-test',
             'test mail' . Carbon::now(),
-            ['resazipdev@gmail.com'],
+            ['resazip@gmail.com'],
             [],
             []
         );
