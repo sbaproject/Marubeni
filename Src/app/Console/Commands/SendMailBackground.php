@@ -47,6 +47,30 @@ class SendMailBackground extends Command
             []
         );
 
+        Common::sendApplicationNoticeMail(
+            'mails.mail-test',
+            'test mail 2' . Carbon::now(),
+            ['resazipdev@gmail.com'],
+            [],
+            []
+        );
+
+        Common::sendApplicationNoticeMail(
+            'mails.mail-test',
+            'test mail 3' . Carbon::now(),
+            ['resazip@gmail.com'],
+            [],
+            []
+        );
+
+        Common::sendApplicationNoticeMail(
+            'mails.mail-test',
+            'test mail 4' . Carbon::now(),
+            ['resazip@gmail.com'],
+            [],
+            []
+        );
+
         return true;
     }
 }
