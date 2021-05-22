@@ -53,6 +53,16 @@ Route::get('/checkdv', function () {
     // );
 
     // return response()->json('ok');
+    $pathArtisan = base_path('artisan');
+    $cmd  = "php $pathArtisan process:sendmail";
+    if (substr(php_uname(), 0, 7) == "Windows") {
+        // dd($pathArtisan, $cmd, php_uname());
+        $cmd .= " >NUL 2>NUL";
+        pclose(popen('start /B cmd /C "' . $cmd . '"', 'r'));
+    } else {
+        exec($cmd . " > /dev/null 2>/dev/null &");
+    }
+    // $result = true;
     
     return Common::detectEdgeBrowser() . $_SERVER['HTTP_USER_AGENT'];
 });

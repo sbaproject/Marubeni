@@ -13,14 +13,14 @@ class ApplicationNoticeMail extends Mailable
 
     protected $mailTpl;
     protected $title;
-    protected array $params;
+    protected $params;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($mailTemplate, $title, array $msgParams)
+    public function __construct($mailTemplate, $title, $msgParams)
     {
         $this->mailTpl = $mailTemplate;
         $this->title = $title;

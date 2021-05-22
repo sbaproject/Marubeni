@@ -19,7 +19,7 @@ class SendMailBackGround implements ShouldQueue
     protected $title;
     protected $to;
     protected $cc;
-    protected array $params;
+    protected $params;
 
     /**
      * The number of times the job may be attempted.
