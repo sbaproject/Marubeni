@@ -509,6 +509,11 @@
                             <input type="hidden" id="subsequent" name="subsequent" value="{{ $subsequent }}">
                             <label class="form-check-label" for="cb_subsequent">{{ __('label.on') }}</label>
                         </div>
+                        @error('cb_subsequent')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ __('validation.subsequence_required') }}</strong>
+                        </span>
+                        @enderror
                     </div>
                 </div>
                 <div class="form-group row">

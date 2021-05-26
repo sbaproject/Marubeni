@@ -204,8 +204,8 @@
 				<div class="main">Marubeni</div>
 				<div class="sub">Marubeni Vietnam Company Limited</div>
 			</td>
-			<td style="text-align: right;text-decoration: underline;">
-				{{-- Ver. MVN-1601 --}}
+			<td style="text-align: right;">
+				{{ isset($inputs['unfinish']) ? $inputs['unfinish'] : '' }}
 			</td>
 		</tr>
 	</table>

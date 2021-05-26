@@ -59,6 +59,13 @@ class BusinesstripController extends ApplicationController
             $rules['trans.*.arrive']    = 'required';
             $rules['trans.*.method']    = 'required';
 
+
+            $today = strtotime(date("Y-m-d"));
+            $form_date = strtotime($inputs['trip_dt_from']);
+            if ($form_date < $today) {
+                $rules['cb_subsequent'] = 'required';
+            }
+
             if ($inputs['subsequent']) {
                 $rules['subsequent_reason'] = 'required';
             }

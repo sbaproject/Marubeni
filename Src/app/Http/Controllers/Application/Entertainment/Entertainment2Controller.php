@@ -255,6 +255,7 @@ class Entertainment2Controller extends Controller
                 abort(404, 'Your PDF file has expired !');
             }
             $inputs = session()->get('pdf_inputs');
+            $inputs['unfinish']  = '[Unfinished]';
             session()->forget('pdf_inputs');
         }
         // get data from db

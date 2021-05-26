@@ -159,7 +159,7 @@ return [
     'application_status_decline'    => 'Đơn trả về',
     'application_status_complete'   => 'Đơn hoàn tất',
     'application_status_draft'      => 'Bản nháp',
-    'application_subsequent_reason' => 'Reason for Subsequent',
+    'application_subsequent_reason' => 'Lý do tạo thêm',
 
     /**
      * Leave application

@@ -86,6 +86,12 @@ class EntertainmentController extends ApplicationController
                 $rules['reason_budget_over'] = 'required';
             }
 
+            $today = strtotime(date("Y-m-d"));
+            $form_date = strtotime($inputs['entertainment_dt']);
+            if ($form_date < $today) {
+                $rules['cb_subsequent'] = 'required';
+            }
+
             if ($inputs['subsequent']){
                 $rules['subsequent_reason'] = 'required';
             }

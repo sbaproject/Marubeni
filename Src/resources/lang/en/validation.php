@@ -202,5 +202,6 @@ return [
         'leave_remaining_days' => 'Remaining days',
         'leave_remaining_time' => 'Remaining hours',
     ],
+    'subsequence_required' => 'This application is subsequence. Please put a check on Subsequence item',
 
 ];

@@ -54,13 +54,16 @@ class LeaveApplicationController extends ApplicationController
             $rules['code_leave'] = 'required_select';
             $rules['reason_leave'] = 'required';
 
+            $date_from = '';
             if ($inputs['code_leave'] !== null && $inputs['code_leave'] != "empty") {
                 if ($inputs['code_leave'] == config('const.code_leave.ML')) {
                     $rules['maternity_from'] = 'required';
                     $rules['maternity_to'] = 'required';
+                    $date_from = $inputs['maternity_from'];
                 } else {
                     $rules['date_from'] = 'required';
                     $rules['date_to'] = 'required';
+                    $date_from = $inputs['date_from'];
                     if (
                         $inputs['code_leave'] == config('const.code_leave.AL')
                         || $inputs['paid_type'] == config('const.paid_type.AL')
@@ -71,6 +74,12 @@ class LeaveApplicationController extends ApplicationController
                         $rules['paid_type'] = 'required_select';
                     }
                 }
+            }
+
+            $today = strtotime(date("Y-m-d"));
+            $form_date = strtotime($date_from);
+            if ($form_date < $today) {
+                $rules['cb_subsequent'] = 'required';
             }
 
             if ($inputs['subsequent']) {

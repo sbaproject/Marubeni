@@ -201,4 +201,5 @@ return [
         'leave_remaining_days' => 'Số ngày phép còn lại',
         'leave_remaining_time' => 'Số giờ phép còn lại',
     ],
+    'subsequence_required' => 'Ngày tạo đơn nhỏ hơn ngày hiện tại , vui lòng nhấn chọn mục Tạo thêm.',
 ];
