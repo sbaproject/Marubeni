@@ -295,37 +295,38 @@ class ApprovalController extends Controller
                             $newApplication['status']         = config('const.application.status.applying');
                         }
                     } elseif ($application->form_id == config('const.form.leave')) {
+                        // comment this code because leave_remaining_days and leave_remaining_time is subtract when user apply
                         // for leave application
-                        $leave = Leave::where('application_id', $application->id)->first();
-                        if (!empty($leave)) {
-                            // if leave_code is AL or SL (with paid_type = AL)
-                            if (
-                                $leave->code_leave == config('const.code_leave.AL')
-                                || ($leave->code_leave == config('const.code_leave.SL') && $leave->paid_type == config('const.paid_type.AL'))
-                            ) {
-                                $applicant = User::find($application->created_by);
-                                if (!empty($applicant)) {
+                        // $leave = Leave::where('application_id', $application->id)->first();
+                        // if (!empty($leave)) {
+                        //     // if leave_code is AL or SL (with paid_type = AL)
+                        //     if (
+                        //         $leave->code_leave == config('const.code_leave.AL')
+                        //         || ($leave->code_leave == config('const.code_leave.SL') && $leave->paid_type == config('const.paid_type.AL'))
+                        //     ) {
+                        //         $applicant = User::find($application->created_by);
+                        //         if (!empty($applicant)) {
 
-                                    //--------------------------------------------------
-                                    // calculating total annual remaining time of applicant (only for annual leave)
-                                    //--------------------------------------------------
-                                    $dayUse = empty($leave->days_use) ? 0 : $leave->days_use;
-                                    $timeUse = empty($leave->times_use) ? 0 : $leave->times_use;
-                                    // working hours per day
-                                    $workingHourPerDay = config('const.working_hours_per_day');
-                                    // get total remaining time (by hours)
-                                    $remainingHours = ($applicant->leave_remaining_days * $workingHourPerDay) + $applicant->leave_remaining_time;
-                                    // total hours take this time
-                                    $totalHourUse = $remainingHours - (($dayUse * $workingHourPerDay) + $timeUse);
-                                    // update annual leave remaining time of applicant
-                                    $applicant->leave_remaining_days = intval($totalHourUse / $workingHourPerDay);
-                                    $applicant->leave_remaining_time = (($totalHourUse % $workingHourPerDay) / $workingHourPerDay) * $workingHourPerDay;
+                        //             //--------------------------------------------------
+                        //             // calculating total annual remaining time of applicant (only for annual leave)
+                        //             //--------------------------------------------------
+                        //             $dayUse = empty($leave->days_use) ? 0 : $leave->days_use;
+                        //             $timeUse = empty($leave->times_use) ? 0 : $leave->times_use;
+                        //             // working hours per day
+                        //             $workingHourPerDay = config('const.working_hours_per_day');
+                        //             // get total remaining time (by hours)
+                        //             $remainingHours = ($applicant->leave_remaining_days * $workingHourPerDay) + $applicant->leave_remaining_time;
+                        //             // total hours take this time
+                        //             $totalHourUse = $remainingHours - (($dayUse * $workingHourPerDay) + $timeUse);
+                        //             // update annual leave remaining time of applicant
+                        //             $applicant->leave_remaining_days = intval($totalHourUse / $workingHourPerDay);
+                        //             $applicant->leave_remaining_time = (($totalHourUse % $workingHourPerDay) / $workingHourPerDay) * $workingHourPerDay;
 
-                                    $applicant->updated_by = $user->id;
-                                    $applicant->save();
-                                }
-                            }
-                        }
+                        //             $applicant->updated_by = $user->id;
+                        //             $applicant->save();
+                        //         }
+                        //     }
+                        // }
                     }
                 }
             } elseif (isset($request->reject)) {

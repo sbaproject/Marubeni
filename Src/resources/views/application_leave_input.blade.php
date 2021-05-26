@@ -392,14 +392,14 @@
                                             $daysUsedReadFlg = true;
                                         }
                                 @endphp
-                                <input type="text" id="txt_days_use" class="form-control input-custom-2 days_use @error('days_use') is-invalid @enderror" 
+                                <input type="text" id="txt_days_use" name="txt_days_use" data-value="{{ old('txt_days_use', $days_use) }}" class="form-control input-custom-2 days_use @error('days_use') is-invalid @enderror" 
                                     value="{{ $days_use }}" autocomplete="off"
                                     @if(isset($daysUsedReadFlg)) readonly @endif>
-                                    <input type="hidden" name="days_use" value="{{ $days_use }}">
+                                    <input type="hidden" name="days_use" value="{{ old('days_use', $days_use) }}">
                                 &nbsp;&nbsp;
                                 <span>{{ __('label.leave.caption_days') }}</span>
                                 &nbsp;&nbsp;&nbsp;&nbsp;
-                                <input type="text" id="txt_times_use" class="form-control input-custom-2 times_use"
+                                <input type="text" id="txt_times_use" data-value="{{ $times_use }}" class="form-control input-custom-2 times_use"
                                     value="{{ $times_use }}" autocomplete="off" max-number="2" max-value="24"
                                     @if(isset($daysUsedReadFlg)) readonly @endif>
                                     <input type="hidden" name="times_use" value="{{ $times_use }}">

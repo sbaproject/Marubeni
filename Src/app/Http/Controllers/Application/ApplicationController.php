@@ -221,7 +221,7 @@ class ApplicationController extends Controller
             DB::commit();
 
             // send mail to first approver (TO) & CC of each step
-            $this->sendNoticeMail($inputs, $newApplication);
+            // $this->sendNoticeMail($inputs, $newApplication);
         } catch (Exception $ex) {
 
             DB::rollBack();

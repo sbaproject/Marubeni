@@ -411,10 +411,18 @@ $(document).ready(function () {
         let used_time = parseInt($('#used_time').val());
         let total_time_can_use = (entitled * 8) - ((used_days * 8) + used_time);
 
+        let day_use_before = parseInt($("#txt_days_use").data('value'));
+        let time_use_before = parseInt($("#txt_times_use").data('value'));
         let day_use = parseInt(this.value);
         let time_use = parseInt($('#txt_times_use').val());
         if (isNaN(day_use)) { day_use = 0; }
         if (isNaN(time_use)) { time_use = 0; }
+        if (isNaN(day_use_before)) { day_use_before = 0; }
+        if (isNaN(time_use_before)) { time_use_before = 0; }
+
+        day_use = day_use - day_use_before;
+        time_use = time_use - time_use_before;
+
         let total_want_use = (day_use * 8) + time_use;
 
         let time_remain = total_time_can_use - total_want_use;
@@ -446,10 +454,19 @@ $(document).ready(function () {
         let used_time = parseInt($('#used_time').val());
         let total_time_can_use = (entitled * 8) - ((used_days * 8) + used_time);
 
+        let day_use_before = parseInt($("#txt_days_use").data('value'));
+        let time_use_before = parseInt($("#txt_times_use").data('value'));
         let day_use = parseInt($('#txt_days_use').val());
         let time_use = parseInt(this.value);
+
         if (isNaN(day_use)) { day_use = 0; }
         if (isNaN(time_use)) { time_use = 0; }
+        if (isNaN(day_use_before)) { day_use_before = 0; }
+        if (isNaN(time_use_before)) { time_use_before = 0; }
+
+        day_use = day_use - day_use_before;
+        time_use = time_use - time_use_before;
+
         let total_want_use = (day_use * 8) + time_use;
 
         let time_remain = total_time_can_use - total_want_use;
@@ -485,8 +502,16 @@ function setValueDaysUseLoadError() {
 
     let day_use = parseInt($('#txt_days_use').val());
     let time_use = parseInt($('#txt_times_use').val());
+    let day_use_before = parseInt($("#txt_days_use").data('value'));
+    let time_use_before = parseInt($("#txt_times_use").data('value'));
     if (isNaN(day_use)) { day_use = 0; }
     if (isNaN(time_use)) { time_use = 0; }
+    if (isNaN(day_use_before)) { day_use_before = 0; }
+    if (isNaN(time_use_before)) { time_use_before = 0; }
+
+    day_use = day_use - day_use_before;
+    time_use = time_use - time_use_before;
+
     let total_want_use = (day_use * 8) + time_use;
 
     let time_remain = total_time_can_use - total_want_use;

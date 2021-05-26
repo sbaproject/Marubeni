@@ -123,6 +123,9 @@ class LeaveApplicationController extends ApplicationController
             'updated_at'        => Carbon::now(),
         ];
 
+        // echo '<pre>',print_r($inputs,1),'</pre>';
+        // die;
+
         if (empty($application)) {
             $leaveData['application_id'] = $applicationId;
             $leaveData['created_by'] = $loginUser->id;
@@ -145,20 +148,22 @@ class LeaveApplicationController extends ApplicationController
                 $applicant = User::find($loginUser->id);
                 if (!empty($applicant)) {
 
-                    //--------------------------------------------------
-                    // calculating total annual remaining time of applicant (only for annual leave)
-                    //--------------------------------------------------
-                    $dayUse = empty($leave->days_use) ? 0 : $leave->days_use;
-                    $timeUse = empty($leave->times_use) ? 0 : $leave->times_use;
-                    // working hours per day
-                    $workingHourPerDay = config('const.working_hours_per_day');
-                    // get total remaining time (by hours)
-                    $remainingHours = ($applicant->leave_remaining_days * $workingHourPerDay) + $applicant->leave_remaining_time;
-                    // total hours take this time
-                    $totalHourUse = $remainingHours - (($dayUse * $workingHourPerDay) + $timeUse);
-                    // update annual leave remaining time of applicant
-                    $applicant->leave_remaining_days = intval($totalHourUse / $workingHourPerDay) < 0 ? 0 : intval($totalHourUse / $workingHourPerDay);
-                    $applicant->leave_remaining_time = ((($totalHourUse % $workingHourPerDay) / $workingHourPerDay) * $workingHourPerDay) < 0 ? 0 : ((($totalHourUse % $workingHourPerDay) / $workingHourPerDay) * $workingHourPerDay);
+                    // //--------------------------------------------------
+                    // // calculating total annual remaining time of applicant (only for annual leave)
+                    // //--------------------------------------------------
+                    // $dayUse = empty($leave->days_use) ? 0 : $leave->days_use;
+                    // $timeUse = empty($leave->times_use) ? 0 : $leave->times_use;
+                    // // working hours per day
+                    // $workingHourPerDay = config('const.working_hours_per_day');
+                    // // get total remaining time (by hours)
+                    // $remainingHours = ($applicant->leave_remaining_days * $workingHourPerDay) + $applicant->leave_remaining_time;
+                    // // total hours take this time
+                    // $totalHourUse = $remainingHours - (($dayUse * $workingHourPerDay) + $timeUse);
+                    // // update annual leave remaining time of applicant
+                    // $applicant->leave_remaining_days = intval($totalHourUse / $workingHourPerDay) < 0 ? 0 : intval($totalHourUse / $workingHourPerDay);
+                    // $applicant->leave_remaining_time = ((($totalHourUse % $workingHourPerDay) / $workingHourPerDay) * $workingHourPerDay) < 0 ? 0 : ((($totalHourUse % $workingHourPerDay) / $workingHourPerDay) * $workingHourPerDay);
+                    $applicant->leave_remaining_days = $inputs['remaining_days'];
+                    $applicant->leave_remaining_time = $inputs['remaining_hours'];
 
                     $applicant->updated_by = $loginUser->id;
                     $applicant->save();
