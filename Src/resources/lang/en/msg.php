@@ -36,4 +36,7 @@ return [
     'page_error_403' => 'You do not have permission to access this action.',
     'page_error_go_home' => 'Go to home page',
     'page_error_only_desktop' => 'Allows desktop device only ! Your device is mobile.',
+
+    'delete_department_valid' => 'This department can not delete, it is used in Applicant Role!',
+    'delete_applicant_valid' => 'This applicant can not delete, it is used in Approval Flow!'
 ];

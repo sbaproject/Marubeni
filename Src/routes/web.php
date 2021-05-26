@@ -18,6 +18,8 @@ use App\Http\Controllers\User\UserCompanyController;
 use App\Http\Controllers\Admin\AdminBudgetController;
 use App\Http\Controllers\Admin\AdminStatusController;
 use App\Http\Controllers\Admin\AdminCompanyController;
+use App\Http\Controllers\Admin\AdminDepartmentController;
+use App\Http\Controllers\Admin\AdminApplicantController;
 use App\Http\Controllers\User\UserDashboardController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Application\FormListController;
@@ -137,6 +139,26 @@ Route::middleware('checkip')->group(function () {
                         Route::get('edit/{company}', [AdminCompanyController::class, 'show'])->name('show');
                         Route::post('edit/{id}', [AdminCompanyController::class, 'update'])->name('update');
                         Route::post('delete/{id}', [AdminCompanyController::class, 'delete'])->name('delete');
+                    });
+
+                    // Applicant
+                    Route::prefix('applicant')->name('applicant.')->group(function () {
+                        Route::get('/', [AdminApplicantController::class, 'index'])->name('index');
+                        Route::get('add', [AdminApplicantController::class, 'create'])->name('create');
+                        Route::post('add', [AdminApplicantController::class, 'store'])->name('store');
+                        Route::get('edit/{applicant}', [AdminApplicantController::class, 'show'])->name('show');
+                        Route::post('edit/{id}', [AdminApplicantController::class, 'update'])->name('update');
+                        Route::post('delete/{id}', [AdminApplicantController::class, 'delete'])->name('delete');
+                    });
+
+                    // Department
+                    Route::prefix('department')->name('department.')->group(function () {
+                        Route::get('/', [AdminDepartmentController::class, 'index'])->name('index');
+                        Route::get('add', [AdminDepartmentController::class, 'create'])->name('create');
+                        Route::post('add', [AdminDepartmentController::class, 'store'])->name('store');
+                        Route::get('edit/{department}', [AdminDepartmentController::class, 'show'])->name('show');
+                        Route::post('edit/{id}', [AdminDepartmentController::class, 'update'])->name('update');
+                        Route::post('delete/{id}', [AdminDepartmentController::class, 'delete'])->name('delete');
                     });
 
                     // Budget

@@ -87,6 +87,22 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a href="{{ route('admin.department.index') }}" class="nav-link">
+                        <i class="fas fa-angle-right nav-icon"></i>
+                        <p>
+                            {{ __('label.menu_department_list') }}
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('admin.applicant.index') }}" class="nav-link">
+                        <i class="fas fa-angle-right nav-icon"></i>
+                        <p>
+                            {{ __('label.menu_applicant_list') }}
+                        </p>
+                    </a>
+                </li> 
+                <li class="nav-item">
                     <a href="{{ route('admin.budget.show') }}" class="nav-link">
                         <i class="fas fa-angle-right nav-icon"></i>
                         <p>{{ __('label.menu_budget_setting') }}</p>

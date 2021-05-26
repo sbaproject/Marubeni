@@ -169,6 +169,7 @@ return [
         'location' => 'Chi nhánh',
         'department' => 'Phòng ban',
         'role' => 'Vai trò',
+        'department_id' => 'Phòng ban',
         'phone' => 'Điện thoại',
         'approval' => 'Phê duyệt',
         'memo' => 'Ghi chú',

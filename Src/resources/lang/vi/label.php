@@ -448,4 +448,19 @@ return [
     'checkip_mail_subject'      => 'Xác Nhận Truy Cập Mạng Ngoài',
     'checkip_mail_content'      => 'Mã Xác Nhận Truy Cập Mạng Ngoài',
     'checkip_mail_the_code_is'  => 'Mã xác nhận: ',
+
+    'menu_department_list' => 'Phòng ban',
+    'department_no' => 'STT',
+    'department_name' => 'Tên phòng ban',
+    'department_memo' => 'Ghi chú',
+    'menu_department_registration' => 'Thêm mới phòng ban',
+    'menu_department_edit' => 'Sửa phòng ban',
+
+    'menu_applicant_list' => 'Applicants',
+    'applicant_no' => 'STT',
+    'applicant_location' => 'Chi nhánh',
+    'applicant_department' => 'Phòng ban',
+    'applicant_role' => 'Vai trò',
+    'menu_applicant_registration' => 'Thêm mới Applicant',
+    'menu_applicant_edit' => 'Sửa Applicant'
 ];

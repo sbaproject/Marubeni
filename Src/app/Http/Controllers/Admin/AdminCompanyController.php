@@ -77,7 +77,7 @@ class AdminCompanyController extends Controller
         $company->created_by = Auth::user()->id;
         $company->fill($data)->save();
 
-        return Common::redirectRouteWithAlertSuccess('admin_company_index');
+        return Common::redirectRouteWithAlertSuccess('admin.company.index');
     }
 
     public function show(Company $company)
@@ -115,7 +115,7 @@ class AdminCompanyController extends Controller
         $company->updated_by = Auth::user()->id;
         $company->save();
 
-        return Common::redirectRouteWithAlertSuccess('admin_company_index');
+        return Common::redirectRouteWithAlertSuccess('admin.company.index');
     }
 
     public function delete($id)

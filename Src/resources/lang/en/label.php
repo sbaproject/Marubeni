@@ -451,4 +451,19 @@ return [
     'checkip_mail_subject'      => 'Confirm Access External Network',
     'checkip_mail_content'      => 'The Code Confirm Access External Network',
     'checkip_mail_the_code_is'  => 'The Code is: ',
+
+    'menu_department_list' => 'Departments',
+    'department_no' => 'No',
+    'department_name' => 'Name',
+    'department_memo' => 'Memo',
+    'menu_department_registration' => 'Department Add',
+    'menu_department_edit' => 'Department Edit',
+
+    'menu_applicant_list' => 'Applicants',
+    'applicant_no' => 'No',
+    'applicant_location' => 'Location',
+    'applicant_department' => 'Department',
+    'applicant_role' => 'Role',
+    'menu_applicant_registration' => 'Applicant Add',
+    'menu_applicant_edit' => 'Applicant Edit'
 ];

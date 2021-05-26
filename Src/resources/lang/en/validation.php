@@ -169,6 +169,7 @@ return [
         ],
         'location' => 'Location',
         'department' => 'Department',
+        'department_id' => 'Department',
         'role' => 'Position',
         'phone' => 'Phone',
         'approval' => 'Approval',
