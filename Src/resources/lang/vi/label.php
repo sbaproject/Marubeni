@@ -462,5 +462,9 @@ return [
     'applicant_department' => 'Phòng ban',
     'applicant_role' => 'Vai trò',
     'menu_applicant_registration' => 'Thêm mới Applicant',
-    'menu_applicant_edit' => 'Sửa Applicant'
+    'menu_applicant_edit' => 'Sửa Applicant',
+
+    'applied_date' => 'Ngày nộp đơn',
+    'application_approved_date' => 'Ngày phê duyệt đơn',
+    'application_approver' => 'Người phê duyệt đơn',
 ];
