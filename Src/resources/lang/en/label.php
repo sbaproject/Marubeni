@@ -465,5 +465,9 @@ return [
     'applicant_department' => 'Department',
     'applicant_role' => 'Role',
     'menu_applicant_registration' => 'Applicant Add',
-    'menu_applicant_edit' => 'Applicant Edit'
+    'menu_applicant_edit' => 'Applicant Edit',
+
+    'applied_date' => 'Applied date',
+    'application_approved_date' => 'Application approved date',
+    'application_approver' => 'Application approver',
 ];

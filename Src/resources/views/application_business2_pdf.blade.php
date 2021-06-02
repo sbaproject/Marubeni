@@ -204,7 +204,7 @@
 				<div class="main">Marubeni</div>
 				<div class="sub">Marubeni Vietnam Company Limited</div>
 			</td>
-			<td style="text-align: right;">
+			<td style="text-align: right;color: #ff0000; font-size: 15px;">
 				{{ isset($inputs['unfinish']) ? $inputs['unfinish'] : '' }}
 			</td>
 		</tr>
@@ -269,15 +269,6 @@
 				</td>
 				<td colspan="6" class="data jp">
 					{{ $inputs['destinations'] }}
-				</td>
-			</tr>
-			<tr>
-				<td class="f">
-					<div class="caption">Number of days</div>
-					<div class="caption">Số ngày</div>
-				</td>
-				<td colspan="6" class="data jp">
-					{{ $inputs['number_of_days'] }}
 				</td>
 			</tr>
 			<tr>
@@ -354,6 +345,15 @@
 				<td class="data jp">{{ $inputs['itineraries'][3]['arrive'] ?? '' }}</td>
 			</tr>
 			@endif
+			<tr>
+				<td class="f">
+					<div class="caption">Number of days</div>
+					<div class="caption">Số ngày</div>
+				</td>
+				<td colspan="6" class="data jp">
+					{{ $inputs['number_of_days'] }}
+				</td>
+			</tr>
 		</tbody>
 	</table>
 	<div class="br"></div>

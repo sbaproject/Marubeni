@@ -133,14 +133,27 @@
                         <label>{{ __('label.business_instruction_by') }}</label>
                     </div>
                     <div class="col-md-10">
-                        <div>
-                            {{ __('label.date') }} :
-                            @isset($application->lastapprovalstep1)
-                            {{ \Carbon\Carbon::parse($application->lastapprovalstep1->created_at)->format('d/m/Y') }}
-                            @endisset
+                        <div class="row">
+                            <div class="col-md-3">{{ __('label.applied_date') }} :</div>
+                            <div class="col-md-9">
+                           {{ !empty($application->created_at) ? \Carbon\Carbon::parse($application->created_at)->format('d/m/Y H:i') : '' }}
+                            </div>
                         </div>
-                        <div>
-                            {{ __('label.business_approval_no') }} : {{ $application->application_no }}
+                        <div class="row">
+                            <div class="col-md-3">{{ __('label.application_approved_date') }} :</div>
+                            <div class="col-md-9">
+                            @isset($application->lastapprovalstep1)
+                            {{ \Carbon\Carbon::parse($application->lastapprovalstep1->created_at)->format('d/m/Y H:i') }}
+                            @endisset                            
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">{{ __('label.application_approver') }} :</div>
+                            <div class="col-md-9">
+                            @isset($application->lastapprovalstep1)
+                            {{ $application->lastapprovalstep1->approver_name }}
+                            @endisset
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -154,23 +167,6 @@
                         <input type="text" id="destinations" name="destinations" class="form-control @error('destinations') is-invalid @enderror"
                             autocomplete="off" value="{{ $destinations }}" @if($previewFlg) readonly @endif>
                         @error('destinations')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
-                    </div>
-                </div>
-                <hr>
-                {{-- Number of days --}}
-                <div class="form-group row">
-                    <div class="col-md-2 text-left caption">
-                        <label>{{ __('label.business_number_of_days') }}<span class="text-danger required"> (*)</span></label>
-                    </div>
-                    <div class="col-md-2">
-                        <input type="text" id="number_of_days" name="number_of_days"
-                            class="form-control number_of_days @error('number_of_days') is-invalid @enderror" autocomplete="off"
-                            value="{{ $number_of_days }}" @if($previewFlg) readonly @endif>
-                        @error('number_of_days')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
@@ -317,6 +313,23 @@
                             <i class="fas fa-plus"></i>
                         </button>
                         @endif
+                    </div>
+                </div>
+                <hr>
+                {{-- Number of days --}}
+                <div class="form-group row">
+                    <div class="col-md-2 text-left caption">
+                        <label>{{ __('label.business_number_of_days') }}<span class="text-danger required"> (*)</span></label>
+                    </div>
+                    <div class="col-md-2">
+                        <input type="text" id="number_of_days" name="number_of_days"
+                            class="form-control number_of_days @error('number_of_days') is-invalid @enderror" autocomplete="off"
+                            value="{{ $number_of_days }}" @if($previewFlg) readonly @endif>
+                        @error('number_of_days')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
                     </div>
                 </div>
                 <hr>

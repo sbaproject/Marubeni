@@ -341,8 +341,12 @@ class Common
 			$statusName = __('label.approval_action_approval');
 			$statusBadgeCss = 'badge-success';
 		}
+        $pre_text = 'SET / ';
+		if ($step == config('const.application.step_type.application')){
+            $pre_text = 'APP / ';
+		}
 
-		$statusBadgeHtml = "<span class='badge {$statusBadgeCss}'>{$statusName}</span>";
+		$statusBadgeHtml = "<span class='badge {$statusBadgeCss}'>{$pre_text}{$statusName}</span>";
 
 		return $statusBadgeHtml;
 	}
