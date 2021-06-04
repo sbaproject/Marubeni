@@ -116,7 +116,7 @@
                 @if($step->step_type != $start_step)
                    
                     @if($start_step === -1)
-            <h5 class="mt-5">{{ __('label.flow_step') }} {{$step->step_type}}</h5>        
+            <h5 class="mt-5">{{ __('label.flow_step_1') }}</h5>        
             <div class="border border-secondary p-3 wrap-step-1 section-step-{{ $step->step_type }}">
                     @else                      
                     <div class="block-add-approver-{{ $start_step }}">
@@ -125,7 +125,7 @@
                     </div>
                     <div class="section-step section-step-{{ $step->step_type }}">
                       <div class="d-flex justify-between mt-5">
-                        <h5>{{ __('label.flow_step') }} <span class="title-step">{{$step->step_type}}</span></h5>
+                        <h5>{{ __('label.flow_step_2') }} <span class="title-step" style="display: none">{{$step->step_type}}</span></h5>
                         <div><button @if(!$canEdit) disabled="disabled" @endif type="button" data-step="'+step+'" class="btn-del-step btn btn-danger pt-1 pb-1 pl-3 pr-3 mb-1">{{ __('label.flow_delete') }}</button></div>
                       </div>
                       <div class="approver-{{ $step->step_type }}-{{$step_index + 1}}">

@@ -101,7 +101,7 @@
               </div>
             </div>
 
-            <h5 class="mt-5">{{ __('label.flow_step') }} 1</h5>
+            <h5 class="mt-5">{{ __('label.flow_step_1') }}</h5>
             <div class="border border-secondary p-3 wrap-step-1 section-step-1">
                 <div class="text-muted">{{ __('label.flow_approver') }} 1</div>
                 <table class="table table-bordered table-sm">
