@@ -57,8 +57,8 @@ Route::get('/checkdv', function () {
     $cmd  = "php $pathArtisan process:sendmail";
     if (substr(php_uname(), 0, 7) == "Windows") {
         // dd($pathArtisan, $cmd, php_uname());
-        $cmd .= " >NUL 2>NUL";
-        pclose(popen('start /B cmd /C "' . $cmd . '"', 'r'));
+        // $cmd .= " >NUL 2>NUL";
+        pclose(popen('start /b C:\wamp64\bin\php\php7.3.21\php.exe php C:\PVDUC\Marubeni\Src\artisan process:sendmail', 'r'));
     } else {
         exec($cmd . " > /dev/null 2>/dev/null &");
     }
